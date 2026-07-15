@@ -1,0 +1,281 @@
+{
+  "_comment": "Chapter 1 lexicon slice. Greek converted from legacy encoding via font-map.json (all ten words use verified-tier codes only). Glosses are the original program's own gloss strings, extracted verbatim from 1_ALPHAB.TBK's Translation field. Audio IDs follow the naming contract (chapt_1_a_voc1..10); the voc-number-to-lemma pairing assumes the program's alphabetical vocab order matches A_VOC file numbering -- VERIFY by listening. This slice merges into the global lexicon.json.",
+  "lemmas": {
+    "aggelos": {
+      "greek": "ἄγγελος",
+      "translit": "angelos",
+      "gloss": "angel",
+      "pos": "noun",
+      "audio": "chapt_1_a_voc1",
+      "_legacy": "a@ggeloj",
+      "ntFrequency": 175,
+      "glossShort": "angel",
+      "ntFreq": 175
+    },
+    "amen": {
+      "greek": "ἀμήν",
+      "translit": "amēn",
+      "gloss": "truly, verily, amen",
+      "pos": "particle",
+      "audio": "chapt_1_a_voc2",
+      "_legacy": "a]mh<n",
+      "ntFrequency": 129,
+      "glossShort": "truly, verily",
+      "ntFreq": 129
+    },
+    "anthropos": {
+      "greek": "ἄνθρωπος",
+      "translit": "anthrōpos",
+      "gloss": "man, human being",
+      "pos": "noun",
+      "audio": "chapt_1_a_voc3",
+      "_legacy": "a@nqrwpoj",
+      "ntFrequency": 550,
+      "glossShort": "man",
+      "ntFreq": 550
+    },
+    "ego": {
+      "greek": "ἐγώ",
+      "translit": "egō",
+      "gloss": "I",
+      "pos": "pronoun",
+      "audio": "chapt_1_a_voc4",
+      "_legacy": "e]gw<",
+      "ntFrequency": 1175,
+      "glossShort": "I",
+      "ntFreq": 1175
+    },
+    "theos": {
+      "greek": "θεός",
+      "translit": "theos",
+      "gloss": "God",
+      "pos": "noun",
+      "audio": "chapt_1_a_voc5",
+      "_legacy": "qeo<j",
+      "ntFrequency": 1317,
+      "glossShort": "God",
+      "ntFreq": 1317
+    },
+    "kai": {
+      "greek": "καί",
+      "translit": "kai",
+      "gloss": "and, even, also",
+      "pos": "conjunction",
+      "audio": "chapt_1_a_voc6",
+      "_legacy": "kai<",
+      "ntFrequency": 9153,
+      "glossShort": "and, even",
+      "ntFreq": 9153
+    },
+    "kardia": {
+      "greek": "καρδία",
+      "translit": "kardia",
+      "gloss": "heart",
+      "pos": "noun",
+      "audio": "chapt_1_a_voc7",
+      "_legacy": "kardi<a",
+      "ntFrequency": 156,
+      "glossShort": "heart",
+      "ntFreq": 156
+    },
+    "lego": {
+      "greek": "λέγω",
+      "translit": "legō",
+      "gloss": "I say, speak",
+      "pos": "verb",
+      "audio": "chapt_1_a_voc8",
+      "_legacy": "le<gw",
+      "ntFrequency": 2354,
+      "glossShort": "I say",
+      "ntFreq": 2354
+    },
+    "prophetes": {
+      "greek": "προφήτης",
+      "translit": "prophētēs",
+      "gloss": "prophet",
+      "pos": "noun",
+      "audio": "chapt_1_a_voc9",
+      "_legacy": "profh<thj",
+      "ntFrequency": 144,
+      "glossShort": "prophet",
+      "ntFreq": 144
+    },
+    "christos": {
+      "greek": "Χριστός",
+      "translit": "Christos",
+      "gloss": "Christ, Messiah",
+      "pos": "noun",
+      "audio": "chapt_1_a_voc10",
+      "_legacy": "Xristo<j",
+      "ntFrequency": 529,
+      "glossShort": "Christ",
+      "ntFreq": 529
+    }
+  },
+  "exampleWords": {
+    "_comment": "Words used on teaching pages (not chapter vocab). Audio pairing inferred from filenames -- verify by listening.",
+    "arche_dat": {
+      "greek": "ἀρχῇ",
+      "translit": "archē(i)",
+      "gloss": "beginning (Jn 1:1)",
+      "audio": "chapt_1_a_arxei",
+      "_legacy": "a]rx^?"
+    },
+    "skotia_dat": {
+      "greek": "σκοτίᾳ",
+      "translit": "skotia(i)",
+      "gloss": "darkness (Jn 1:5)",
+      "audio": "chapt_1_a_skotia",
+      "_legacy": "skoti<%"
+    },
+    "auto_dat": {
+      "greek": "αὐτῷ",
+      "translit": "autō(i)",
+      "gloss": "him (Jn 1:4)",
+      "audio": null,
+      "_legacy": "au]t&?",
+      "_verify": "no dedicated audio found for autw(i); teaching page may be silent here"
+    },
+    "iesous": {
+      "greek": "Ἰησοῦς",
+      "translit": "Iēsous",
+      "gloss": "Jesus",
+      "audio": "chapt_1_a_jesus",
+      "_legacy": "'Ihsou?j",
+      "_source": "Learn Diphthongs page (verified)"
+    },
+    "huios": {
+      "greek": "υἱός",
+      "translit": "huios",
+      "gloss": "son",
+      "audio": "chapt_1_a_uios",
+      "_legacy": "ui\"o<j",
+      "_source": "Learn Diphthongs page (verified)"
+    },
+    "pisteuo": {
+      "greek": "πιστεύω",
+      "translit": "pisteuō",
+      "gloss": "I believe",
+      "audio": "chapt_1_a_pisteu",
+      "_legacy": "pisteu<w",
+      "_source": "Learn Diphthongs page (verified)"
+    },
+    "eimi": {
+      "greek": "εἰμί",
+      "translit": "eimi",
+      "gloss": "I am",
+      "audio": "chapt_1_a_eimi",
+      "_legacy": null,
+      "_source": "Learn Diphthongs page (verified)"
+    },
+    "oikos": {
+      "greek": "οἶκος",
+      "translit": "oikos",
+      "gloss": "house",
+      "audio": "chapt_1_a_oikos",
+      "_legacy": null,
+      "_source": "Learn Diphthongs page (verified)"
+    },
+    "haima": {
+      "greek": "αἷμα",
+      "translit": "haima",
+      "gloss": "blood",
+      "audio": "chapt_1_a_aima",
+      "_legacy": null,
+      "_source": "Learn Diphthongs page (verified)"
+    },
+    "hupokrites": {
+      "greek": "ὑποκριτής",
+      "translit": "hupokritēs",
+      "gloss": "hypocrite",
+      "audio": "chapt_1_a_hupokr",
+      "_legacy": null,
+      "_source": "Learn Vowels Note (verified)"
+    },
+    "autos": {
+      "greek": "αὐτός",
+      "translit": "autos",
+      "gloss": "he, she, it, self, same",
+      "audio": "chapt_1_a_autos",
+      "_legacy": "au]to<j",
+      "_source": "Learn Diphthongs page (verified)"
+    },
+    "apostolos": {
+      "greek": "Ἀπόστολος",
+      "translit": "Apostolos",
+      "gloss": "apostle",
+      "audio": "chapt_1_a_word1",
+      "_source": "Six Points, point 1 (Final Sigma example -- verified)"
+    },
+    "anthropoi": {
+      "greek": "ἄνθρωποι",
+      "translit": "anthrōpoi",
+      "gloss": "men (nom. pl.) -- Note example: οι final, therefore short",
+      "audio": "chapt_1_a_anthoi",
+      "_source": "Learn Diphthongs Note (verified)"
+    },
+    "anthropois": {
+      "greek": "ἀνθρώποις",
+      "translit": "anthrōpois",
+      "gloss": "to men (dat. pl.) -- Note example: οι not final, therefore long",
+      "audio": "chapt_1_a_antois",
+      "_source": "Learn Diphthongs Note (verified); listen-check 'anthropos' was this dative plural"
+    },
+    "auto_unclear": {
+      "greek": "αυτο",
+      "translit": "auto",
+      "gloss": "(heard on A_AUTOI; role unclear, possibly unused variant)",
+      "audio": "chapt_1_a_autoi",
+      "_verify": "low priority"
+    }
+  },
+  "_ntFreq_note": "ntFreq = New Testament occurrence count, from Review Vocabulary Chart (verified)",
+  "readingLists": {
+    "_comment": "Reading People, Places and Letters Exercise pools. Greek shown unaccented (per screenshots). Audio: personal names = chapt_1_a_name_1..9 + chapt_1_a_nam_10..24 (listen-verified: 1=Abraam, 24=Philippos); places = chapt_1_a_plac_1..9 + chapt_1_a_pla_10..11 (listen-verified: 1=Asia, 11=Samaria); letters reuse alphabet audio.",
+    "personalNames": {
+      "partial": true,
+      "greek": [
+        "Αβρααμ",
+        "Αγριππας",
+        "Ανανιας",
+        "Απολλως",
+        "Βαρναβας",
+        "Δαυιδ",
+        "Ζαχαριας",
+        "Θωμας",
+        "Ιακωβ",
+        "Ιησους"
+      ],
+      "english": [
+        "Abraam",
+        "Agrippas",
+        "Ananias",
+        "Apollos",
+        "Barnabas",
+        "David",
+        "Zacharias",
+        "Thomas",
+        "Jacob",
+        "Jesus"
+      ],
+      "_verify": "24 total (ends Philippos); extract remaining 14 Greek+English pairs from TBK in pipeline"
+    },
+    "placeNames": {
+      "partial": true,
+      "english": [
+        "Asia",
+        "Babylon",
+        "Galilee",
+        "Damascus",
+        "Ephesus",
+        "Jerusalem",
+        "Jordan",
+        "Israel",
+        "Macedonia",
+        "Nazareth",
+        "Samaria"
+      ],
+      "_verify": "English list complete (11, matches A_PLAC count); extract Greek spellings from TBK in pipeline"
+    }
+  }
+}

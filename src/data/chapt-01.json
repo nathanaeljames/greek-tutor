@@ -1,0 +1,1164 @@
+{
+  "_comment": "DRAFT -- Chapter 1 (Alphabet), reconstructed from 1_ALPHAB.TBK strings + CHAPT_1 audio inventory. Fields marked _verify need checking against the running original in DOSBox. Menu structure and instruction texts are extracted verbatim. Audio IDs follow the naming contract.",
+  "id": "chapt_1",
+  "number": 1,
+  "title": "The Greek Alphabet",
+  "references": [
+    "Machen, p. 11",
+    "Wenham, p. 22",
+    "Mounce, p. 11",
+    "Summers/Sawyer, p. 4"
+  ],
+  "objectives": [
+    "say the names for each of the letters of the Greek alphabet",
+    "know the sound each of the letters makes",
+    "recognize the special characteristics of some letters",
+    "identify the vowels and know which ones are short and which ones are long",
+    "identify and pronounce the diphthongs",
+    "recognize the capital letters",
+    "gain an appreciation for the history of the Greek language",
+    "translate and write 10 vocabulary words in Greek"
+  ],
+  "vocab": [
+    "aggelos",
+    "amen",
+    "anthropos",
+    "ego",
+    "theos",
+    "kai",
+    "kardia",
+    "lego",
+    "prophetes",
+    "christos"
+  ],
+  "alphabet": {
+    "_comment": "Shared letter table. audioFull = ~4s clip, letter name & sound. audioName = ~1s A_*N clip, letter name only (chart pages: 'Click on the letter to hear its name'). A_NAME_1..24 are NOT letter names -- they are the 24 Greek personal names (Reading exercise). soundHint from Review Letters Quick Chart; rows theta..omega still to capture (_verify).",
+    "letters": [
+      {
+        "n": 1,
+        "lower": "α",
+        "upper": "Α",
+        "name": "alpha",
+        "translit": "a",
+        "audioFull": "chapt_1_a_alpha",
+        "audioName": "chapt_1_a_alphan",
+        "soundHint": "a in father",
+        "sound": "a in father"
+      },
+      {
+        "n": 2,
+        "lower": "β",
+        "upper": "Β",
+        "name": "beta",
+        "translit": "b",
+        "audioFull": "chapt_1_a_beta",
+        "audioName": "chapt_1_a_betan",
+        "soundHint": "b in bet",
+        "sound": "b in bet"
+      },
+      {
+        "n": 3,
+        "lower": "γ",
+        "upper": "Γ",
+        "name": "gamma",
+        "translit": "g",
+        "audioFull": "chapt_1_a_gamma",
+        "audioName": "chapt_1_a_gamman",
+        "soundHint": "g in get",
+        "sound": "g in get"
+      },
+      {
+        "n": 4,
+        "lower": "δ",
+        "upper": "Δ",
+        "name": "delta",
+        "translit": "d",
+        "audioFull": "chapt_1_a_delta",
+        "audioName": "chapt_1_a_deltan",
+        "soundHint": "d in dog",
+        "sound": "d in dog"
+      },
+      {
+        "n": 5,
+        "lower": "ε",
+        "upper": "Ε",
+        "name": "epsilon",
+        "translit": "e",
+        "audioFull": "chapt_1_a_epsilo",
+        "audioName": "chapt_1_a_epsiln",
+        "soundHint": "e in met",
+        "sound": "e in met"
+      },
+      {
+        "n": 6,
+        "lower": "ζ",
+        "upper": "Ζ",
+        "name": "zeta",
+        "translit": "z",
+        "audioFull": "chapt_1_a_zeta",
+        "audioName": "chapt_1_a_zetan",
+        "soundHint": "z in zebra",
+        "sound": "z in zebra"
+      },
+      {
+        "n": 7,
+        "lower": "η",
+        "upper": "Η",
+        "name": "eta",
+        "translit": "ē",
+        "audioFull": "chapt_1_a_eta",
+        "audioName": "chapt_1_a_etan",
+        "soundHint": "e in obey",
+        "sound": "e in obey"
+      },
+      {
+        "n": 8,
+        "lower": "θ",
+        "upper": "Θ",
+        "name": "theta",
+        "translit": "th",
+        "audioFull": "chapt_1_a_theta",
+        "audioName": "chapt_1_a_thetan",
+        "sound": "th in think"
+      },
+      {
+        "n": 9,
+        "lower": "ι",
+        "upper": "Ι",
+        "name": "iota",
+        "translit": "i",
+        "audioFull": "chapt_1_a_iota",
+        "audioName": "chapt_1_a_iotan",
+        "sound": "i in hit"
+      },
+      {
+        "n": 10,
+        "lower": "κ",
+        "upper": "Κ",
+        "name": "kappa",
+        "translit": "k",
+        "audioFull": "chapt_1_a_kappa",
+        "audioName": "chapt_1_a_kappan",
+        "sound": "k in keep"
+      },
+      {
+        "n": 11,
+        "lower": "λ",
+        "upper": "Λ",
+        "name": "lambda",
+        "translit": "l",
+        "audioFull": "chapt_1_a_lambda",
+        "audioName": "chapt_1_a_lambdn",
+        "sound": "l in let"
+      },
+      {
+        "n": 12,
+        "lower": "μ",
+        "upper": "Μ",
+        "name": "mu",
+        "translit": "m",
+        "audioFull": "chapt_1_a_mu",
+        "audioName": "chapt_1_a_mun",
+        "sound": "m in met"
+      },
+      {
+        "n": 13,
+        "lower": "ν",
+        "upper": "Ν",
+        "name": "nu",
+        "translit": "n",
+        "audioFull": "chapt_1_a_nu",
+        "audioName": "chapt_1_a_nun",
+        "sound": "n in net"
+      },
+      {
+        "n": 14,
+        "lower": "ξ",
+        "upper": "Ξ",
+        "name": "xi",
+        "translit": "x",
+        "audioFull": "chapt_1_a_xi",
+        "audioName": "chapt_1_a_xin",
+        "sound": "x in axe"
+      },
+      {
+        "n": 15,
+        "lower": "ο",
+        "upper": "Ο",
+        "name": "omicron",
+        "translit": "o",
+        "audioFull": "chapt_1_a_omicro",
+        "audioName": "chapt_1_a_omicrn",
+        "sound": "o in not"
+      },
+      {
+        "n": 16,
+        "lower": "π",
+        "upper": "Π",
+        "name": "pi",
+        "translit": "p",
+        "audioFull": "chapt_1_a_pi",
+        "audioName": "chapt_1_a_pin",
+        "sound": "p in pet"
+      },
+      {
+        "n": 17,
+        "lower": "ρ",
+        "upper": "Ρ",
+        "name": "rho",
+        "translit": "r",
+        "audioFull": "chapt_1_a_rho",
+        "audioName": "chapt_1_a_rhon",
+        "sound": "r in rent"
+      },
+      {
+        "n": 18,
+        "lower": "σ/ς",
+        "upper": "Σ",
+        "name": "sigma",
+        "translit": "s",
+        "audioFull": "chapt_1_a_sigma",
+        "audioName": "chapt_1_a_sigman",
+        "sound": "s in set"
+      },
+      {
+        "n": 19,
+        "lower": "τ",
+        "upper": "Τ",
+        "name": "tau",
+        "translit": "t",
+        "audioFull": "chapt_1_a_tau",
+        "audioName": "chapt_1_a_taun",
+        "sound": "t in tent"
+      },
+      {
+        "n": 20,
+        "lower": "υ",
+        "upper": "Υ",
+        "name": "upsilon",
+        "translit": "u",
+        "audioFull": "chapt_1_a_upsilo",
+        "audioName": "chapt_1_a_upsiln",
+        "sound": "oo in hoops"
+      },
+      {
+        "n": 21,
+        "lower": "φ",
+        "upper": "Φ",
+        "name": "phi",
+        "translit": "ph",
+        "audioFull": "chapt_1_a_phi",
+        "audioName": "chapt_1_a_phin",
+        "sound": "ph in phone"
+      },
+      {
+        "n": 22,
+        "lower": "χ",
+        "upper": "Χ",
+        "name": "chi",
+        "translit": "ch",
+        "audioFull": "chapt_1_a_chi",
+        "audioName": "chapt_1_a_chin",
+        "sound": "ch in chemical"
+      },
+      {
+        "n": 23,
+        "lower": "ψ",
+        "upper": "Ψ",
+        "name": "psi",
+        "translit": "ps",
+        "audioFull": "chapt_1_a_psi",
+        "audioName": "chapt_1_a_psin",
+        "sound": "ps in lips"
+      },
+      {
+        "n": 24,
+        "lower": "ω",
+        "upper": "Ω",
+        "name": "omega",
+        "translit": "ō",
+        "audioFull": "chapt_1_a_omega",
+        "audioName": "chapt_1_a_omegan",
+        "sound": "o in home"
+      }
+    ],
+    "diphthongs": [
+      {
+        "greek": "αι",
+        "sound": "as ai in aisle",
+        "example": "αἷμα",
+        "exampleGloss": "blood",
+        "exampleAudio": "chapt_1_a_aima",
+        "audio": "chapt_1_a_ai"
+      },
+      {
+        "greek": "ει",
+        "sound": "as ei in eight",
+        "example": "εἰμί",
+        "exampleGloss": "I am",
+        "exampleAudio": "chapt_1_a_eimi",
+        "audio": "chapt_1_a_ei"
+      },
+      {
+        "greek": "οι",
+        "sound": "as oi in oil",
+        "example": "οἶκος",
+        "exampleGloss": "house",
+        "exampleAudio": "chapt_1_a_oikos",
+        "audio": "chapt_1_a_oi"
+      },
+      {
+        "greek": "αυ",
+        "sound": "as au in sauerkraut",
+        "example": "αὐτός",
+        "exampleGloss": "he, she, it, self, same",
+        "exampleAudio": "chapt_1_a_autos",
+        "audio": "chapt_1_a_au"
+      },
+      {
+        "greek": "ου",
+        "sound": "as ou in boutique",
+        "example": "Ἰησοῦς",
+        "exampleGloss": "Jesus",
+        "exampleAudio": "chapt_1_a_jesus",
+        "audio": "chapt_1_a_ou"
+      },
+      {
+        "greek": "υι",
+        "sound": "as ui in suite",
+        "example": "υἱός",
+        "exampleGloss": "son",
+        "exampleAudio": "chapt_1_a_uios",
+        "audio": "chapt_1_a_ui"
+      },
+      {
+        "greek": "ευ, ηυ",
+        "sound": "as eu in feud",
+        "example": "πιστεύω",
+        "exampleGloss": "I believe",
+        "exampleAudio": "chapt_1_a_pisteu",
+        "audio": "chapt_1_a_eu"
+      }
+    ],
+    "iotaSubscripts": [
+      {
+        "greek": "ᾳ",
+        "sound": "a as in father",
+        "example": "σκοτίᾳ",
+        "audio": "chapt_1_a_aii"
+      },
+      {
+        "greek": "ῃ",
+        "sound": "e as in obey",
+        "example": "ἀρχῇ",
+        "audio": "chapt_1_a_eii"
+      },
+      {
+        "greek": "ῳ",
+        "sound": "o as in home",
+        "example": "αὐτῷ",
+        "audio": "chapt_1_a_oii"
+      }
+    ],
+    "vowels": {
+      "short": [
+        "ε",
+        "ο"
+      ],
+      "longOrShort": [
+        "α",
+        "ι",
+        "υ"
+      ],
+      "long": [
+        "η",
+        "ω"
+      ],
+      "_source": "Learn Vowels page (verified)",
+      "note": "See Learn Vowels note (iota types, alpha, upsilon)."
+    },
+    "diphthongDefinition": "A Diphthong is a combination of two vowels that makes only one sound. The second vowel is either ι or υ.",
+    "iotaSubscriptDefinition": "An Iota Subscript is a diphthong which is formed when an iota follows a long vowel. The iota is written under the vowel (subscript). The pronunciation is the same as the normal vowel. The transliteration is what you would expect from a normal diphthong (ai, ei, and oi).",
+    "_verify_soundHints": "capture chart rows Theta..Omega for remaining soundHint values",
+    "sixPoints": {
+      "title": "Six Points",
+      "partial": true,
+      "points": [
+        {
+          "n": 1,
+          "name": "Final Sigma",
+          "text": "When sigma is the last letter of a word the form ς is used instead of the normal σ.",
+          "example": "ἀπόστολος",
+          "exampleAudio": "chapt_1_a_word1",
+          "note": "For this chapter ignore the accent and breathing marks which are seen above the letters."
+        },
+        {
+          "n": 2,
+          "name": "Nasal Gamma",
+          "text": "When gamma (γ) is followed by γ, κ, χ, or ξ it is pronounced as \"n\" instead of the normal \"g\".",
+          "textPartial": true
+        }
+      ],
+      "_verify": "points 3-6 not yet captured (scroll continues); point 2 text truncated at screenshot edge"
+    }
+  },
+  "learn": [
+    {
+      "id": "c1_learn_objectives",
+      "type": "contentAudio",
+      "title": "Learn Chapter Objectives",
+      "instructions": "",
+      "items": [],
+      "mode": "textPage"
+    },
+    {
+      "id": "c1_learn_letters",
+      "type": "contentAudio",
+      "title": "Learn Letters",
+      "instructions": "Click on letter to hear its name & sound",
+      "itemsFrom": "alphabet.letters",
+      "display": "lower",
+      "play": "audioFull",
+      "mode": "stepper",
+      "ui": {
+        "fields": [
+          "The Letter's Name:",
+          "It sounds like:"
+        ],
+        "buttons": [
+          "Next Letter",
+          "Previous Letter",
+          "Six Points",
+          "Say Alphabet"
+        ],
+        "beginPrompt": "Click on \"Next Letter\" to begin."
+      },
+      "sayAlphabetAudio": "chapt_1_a_alphab",
+      "_verify": "Six Points captured partially (points 1-2); capture points 3-6. Per-letter stepper field text still unconfirmed vs 'sound' hints."
+    },
+    {
+      "id": "c1_learn_translit",
+      "type": "contentAudio",
+      "title": "Learn Letter Transliterations",
+      "instructions": "Click on the letter to hear its name.",
+      "itemsFrom": "alphabet.letters",
+      "display": "lower+translit",
+      "play": "audioShort",
+      "mode": "chart",
+      "references": [
+        "Mounce, pp. 8f",
+        "Wenham, pp. 18f"
+      ]
+    },
+    {
+      "id": "c1_learn_capitals",
+      "type": "contentAudio",
+      "title": "Learn Capital Letters",
+      "instructions": "Click on the letter for its name.",
+      "itemsFrom": "alphabet.letters",
+      "display": "lower=upper",
+      "play": "audioShort",
+      "mode": "chart",
+      "references": [
+        "Mounce, pp. 8f",
+        "Wenham, pp. 18f"
+      ],
+      "note": "Capital letters are used: 1) for proper names (e.g. Peter); 2) for the first word in a quotation (there are no quotation marks in Greek); and 3) for the first word in a paragraph. Early Greek manuscripts, called Uncials, were written totally in capital letters with no spaces between the words. Later Greek manuscripts were written in minuscules (lower case letters) with breaks between the words. Modern texts are written in minuscules. (Mounce, p. 7)"
+    },
+    {
+      "id": "c1_learn_vowels",
+      "type": "contentAudio",
+      "title": "Learn Vowels",
+      "instructions": "",
+      "_verify": "whether vowel letters are clickable for audio",
+      "mode": "chart",
+      "itemsFrom": "alphabet.vowels",
+      "note": "Iota is the most versatile letter. There are three types of iota: 1) It may be short sounding like the \"i\" in \"hit\". 2) It may be long sounding like the \"i\" in \"machine\". 3) It may be a consonant when found in initial positions of proper names where it sounds like a \"y\" in \"yes\". E.g. Ἰησοῦς \"Jesus\". Alpha sounds the same whether long or short. Upsilon sometimes becomes a \"y\" when brought over into English words. E.g. ὑποκριτής \"hypocrite\". (Machen, p. 10; Mounce, pp. 9f.; Wenham, p. 19)"
+    },
+    {
+      "id": "c1_learn_diphthongs",
+      "type": "contentAudio",
+      "title": "Learn Diphthongs",
+      "instructions": "Click on diphthong for sound",
+      "itemsFrom": "alphabet.diphthongs",
+      "mode": "chart",
+      "references": [
+        "Machen, p. 11",
+        "Wenham, p. 20",
+        "Mounce, p. 10"
+      ],
+      "note": "A Diphthong is a combination of two vowels that makes only one sound. The second vowel is either ι or υ.",
+      "_verify": "whether clicking a diphthong plays its sound, the example word, or both",
+      "noteButton": "Diphthongs are generally treated as long vowels. However, when either οι or αι occur at the end of the word, though they are pronounced the same, they are treated as short vowels for accent purposes. ἄνθρωποι (οι is final, therefore short); ἀνθρώποις (οι is not final, therefore long). (Summers/Sawyer, p. 4)"
+    },
+    {
+      "id": "c1_learn_iota_subscripts",
+      "type": "contentAudio",
+      "title": "Learn Iota Subscripts",
+      "instructions": "Click on diphthong for sound",
+      "note": "An Iota Subscript is a diphthong which is formed when an iota follows a long vowel. The iota is written under the vowel (subscript). The pronunciation is the same as the normal vowel. The transliteration is what you would expect from a normal diphthong (ai, ei, and oi).",
+      "itemsFrom": "alphabet.iotaSubscripts",
+      "mode": "chart",
+      "references": [
+        "Machen, p. 11",
+        "Wenham, p. 22",
+        "Mounce, p. 11",
+        "Summers/Sawyer, p. 4"
+      ]
+    },
+    {
+      "id": "c1_learn_history",
+      "type": "contentAudio",
+      "title": "Learn Greek Language History",
+      "instructions": "",
+      "items": [],
+      "_verify": "remaining scrolled text (five stages)",
+      "mode": "textPage",
+      "textPartial": "Greek is one of the oldest members of the Indo-European family of languages. Other members of this family are Sanskrit, which is older, and Latin and its descendants (the Romance languages: French, Spanish, etc.), which are younger. English is derived from the Teutonic branch and Russian from the Slavic branch of the Indo-European family. Hebrew is found in a totally different family--Semitic languages (Aramaic, Akkadian, Ugaritic etc.). The Greek language has developed through five stages: 1) Formative Period: This period extended from \"Linear B\" ..."
+    },
+    {
+      "id": "c1_learn_vocab",
+      "type": "contentAudio",
+      "title": "Learn Vocabulary",
+      "instructions": "_verify",
+      "items": [
+        {
+          "ref": "aggelos"
+        },
+        {
+          "ref": "amen"
+        },
+        {
+          "ref": "anthropos"
+        },
+        {
+          "ref": "ego"
+        },
+        {
+          "ref": "theos"
+        },
+        {
+          "ref": "kai"
+        },
+        {
+          "ref": "kardia"
+        },
+        {
+          "ref": "lego"
+        },
+        {
+          "ref": "prophetes"
+        },
+        {
+          "ref": "christos"
+        }
+      ],
+      "mode": "flashcard",
+      "ui": {
+        "panes": [
+          "Greek Word",
+          "Word Meaning"
+        ],
+        "buttons": [
+          "Previous",
+          "Next",
+          "Hide Greek",
+          "Hide English",
+          "Pronounce",
+          "Show Both",
+          "Start Over"
+        ]
+      },
+      "note": "Ignore the accents and markings over letters for now. These will be learned in the next chapter."
+    },
+    {
+      "id": "c1_learn_bibliography",
+      "type": "contentAudio",
+      "title": "Learn Bibliography",
+      "instructions": "",
+      "items": [],
+      "_verify": "remaining scrolled entries",
+      "mode": "textPage",
+      "textPartial": "First Year Grammars: Kubo, Sakae. A Beginner's New Testament Greek Grammar (Washington D.C.: University Press of America, 1979). LaSor, William S. Handbook of New Testament Greek (Grand Rapids: Eerdmans, 1973). Machen, J. Gresham. New Testament Greek for Beginners (Toronto: The Macmillan Company, 1923). * Mounce, William D. Basics of Biblical Greek: Grammar (Grand Rapids: Zondervan, 1993). Story, J. Lyle and Cullen Story. Greek to Me: ..."
+    }
+  ],
+  "drill": [
+    {
+      "id": "c1_drill_letter_names",
+      "type": "contentAudio",
+      "mode": "exploreGrid",
+      "title": "Letter Names and Sounds Drill",
+      "instructions": "Click on letter to hear its name & sound",
+      "itemsFrom": "alphabet.letters",
+      "display": "lower",
+      "play": "audioFull",
+      "ui": {
+        "fields": [
+          "Letter",
+          "Letter Sound:"
+        ],
+        "buttons": [
+          "Say Alphabet"
+        ]
+      },
+      "sayAlphabetAudio": "chapt_1_a_alphab",
+      "_verify": "what text appears in the Letter / Letter Sound fields per click"
+    },
+    {
+      "id": "c1_drill_translit",
+      "type": "contentAudio",
+      "mode": "exploreGrid",
+      "title": "Transliteration Drill",
+      "instructions": "Click on letter to see its English transliteration",
+      "itemsFrom": "alphabet.letters",
+      "display": "lower",
+      "show": "translit",
+      "references": [
+        "Mounce, pp. 8f",
+        "Wenham, pp. 18f"
+      ],
+      "ui": {
+        "fields": [
+          "Transliteration"
+        ],
+        "buttons": [
+          "Say Alphabet"
+        ]
+      },
+      "sayAlphabetAudio": "chapt_1_a_alphab",
+      "_verify": "whether clicking also plays audio or is display-only"
+    },
+    {
+      "id": "c1_drill_capitals",
+      "type": "contentAudio",
+      "mode": "exploreGrid",
+      "title": "Capital Letters Drill",
+      "instructions": "Click on letter to hear its name & sound",
+      "itemsFrom": "alphabet.letters",
+      "display": "upper",
+      "play": "audioFull",
+      "ui": {
+        "fields": [
+          "Letter",
+          "Letter Sound:"
+        ],
+        "buttons": [
+          "Say Alphabet"
+        ]
+      },
+      "sayAlphabetAudio": "chapt_1_a_alphab"
+    },
+    {
+      "id": "c1_drill_diphthong",
+      "type": "contentAudio",
+      "mode": "exploreGrid",
+      "title": "Diphthong Drill",
+      "instructions": "Click on diphthong for sound",
+      "itemsFrom": "alphabet.diphthongs",
+      "display": "greek",
+      "play": "audio",
+      "show": "translit",
+      "references": [
+        "Mounce, pp. 10f",
+        "Wenham, pp. 18f"
+      ],
+      "ui": {
+        "fields": [
+          "Transliteration"
+        ],
+        "buttons": [
+          "Say Alphabet"
+        ]
+      },
+      "sayAlphabetAudio": "chapt_1_a_alphab",
+      "_verify": "iota subscripts NOT in this drill (7 diphthongs only -- verified); confirm what fills the Transliteration field on click"
+    },
+    {
+      "id": "c1_drill_vocab_gk_en",
+      "type": "select",
+      "title": "Vocabulary: Greek to English Drill",
+      "direction": "greekToEnglish",
+      "mode": "fullOptionGrid",
+      "items": [
+        "aggelos",
+        "amen",
+        "anthropos",
+        "ego",
+        "theos",
+        "kai",
+        "kardia",
+        "lego",
+        "prophetes",
+        "christos"
+      ],
+      "instructions": "Click on the matching word",
+      "promptFrom": {
+        "lexicon": "vocab",
+        "show": "greek",
+        "audio": "pronounceButton"
+      },
+      "options": "gloss",
+      "ui": {
+        "buttons": [
+          "Pronounce",
+          "Score"
+        ],
+        "checkboxes": [
+          "Pronounce Each Drill"
+        ]
+      },
+      "scored": true,
+      "prompt": "greek",
+      "optionCount": 10
+    },
+    {
+      "id": "c1_drill_vocab_en_gk",
+      "type": "select",
+      "title": "Vocabulary: English to Greek Drill",
+      "direction": "englishToGreek",
+      "mode": "fullOptionGrid",
+      "items": [
+        "aggelos",
+        "amen",
+        "anthropos",
+        "ego",
+        "theos",
+        "kai",
+        "kardia",
+        "lego",
+        "prophetes",
+        "christos"
+      ],
+      "instructions": "Click on the matching word",
+      "promptFrom": {
+        "lexicon": "vocab",
+        "show": "glossShort"
+      },
+      "options": "greek",
+      "ui": {
+        "buttons": [
+          "Pronounce",
+          "Score"
+        ],
+        "checkboxes": [
+          "Pronounce Each Drill"
+        ]
+      },
+      "scored": true,
+      "prompt": "gloss",
+      "optionCount": 10
+    }
+  ],
+  "exercise": [
+    {
+      "id": "c1_ex_pronounce",
+      "type": "contentAudio",
+      "mode": "selfCheckStepper",
+      "title": "Pronounce Letters Exercise",
+      "instructions": "What sound does this letter make?",
+      "itemsFrom": "alphabet.letters",
+      "display": "lower",
+      "ui": {
+        "buttons": [
+          "Next Letter",
+          "Check Answer"
+        ],
+        "hint": "Click on \"Check Answer\" to see if you are correct"
+      },
+      "_verify": "on Check Answer: does it play audioFull, audioShort, and/or display the sound text?"
+    },
+    {
+      "id": "c1_ex_letter_to_name",
+      "type": "select",
+      "mode": "fullOptionGrid",
+      "title": "Letter-to-Name Exercise",
+      "instructions": "Click on the name of the letter shown",
+      "generator": {
+        "pool": "alphabet.letters",
+        "prompt": "lower",
+        "options": "name",
+        "optionCount": 24
+      },
+      "scored": true,
+      "ui": {
+        "buttons": [
+          "Score",
+          "Pronounce"
+        ],
+        "checkboxes": [
+          "Pronounce Each Letter"
+        ]
+      }
+    },
+    {
+      "id": "c1_ex_name_to_letter",
+      "type": "select",
+      "mode": "fullOptionGrid",
+      "title": "Name-to-Letter Exercise",
+      "instructions": "Click on the letter of the name shown",
+      "generator": {
+        "pool": "alphabet.letters",
+        "prompt": "name",
+        "options": "lower",
+        "optionCount": 24
+      },
+      "scored": true,
+      "ui": {
+        "buttons": [
+          "Score",
+          "Pronounce"
+        ],
+        "checkboxes": [
+          "Pronounce Each Letter"
+        ]
+      }
+    },
+    {
+      "id": "c1_ex_translit",
+      "type": "select",
+      "mode": "fullOptionGrid",
+      "title": "Transliterate the Letter",
+      "instructions": "What is the English transliteration?",
+      "generator": {
+        "pool": "alphabet.letters",
+        "prompt": "lower",
+        "options": "translit",
+        "optionCount": 24
+      },
+      "scored": true,
+      "ui": {
+        "buttons": [
+          "Score",
+          "Pronounce"
+        ],
+        "checkboxes": [
+          "Pronounce Each Letter"
+        ]
+      }
+    },
+    {
+      "id": "c1_ex_transcribe",
+      "type": "select",
+      "mode": "fullOptionGrid",
+      "title": "Transcribe to Greek Exercise",
+      "instructions": "Click on the letter of the name shown",
+      "generator": {
+        "pool": "alphabet.letters",
+        "prompt": "translit",
+        "options": "lower",
+        "optionCount": 24
+      },
+      "scored": true,
+      "ui": {
+        "buttons": [
+          "Score",
+          "Pronounce"
+        ],
+        "checkboxes": [
+          "Pronounce Each Letter"
+        ]
+      }
+    },
+    {
+      "id": "c1_ex_phonetic",
+      "type": "contentAudio",
+      "mode": "selfCheckSequence",
+      "title": "Phonetic Reading Exercise",
+      "instructions": "Read the Greek-lettered English phrase aloud, then reveal the answer",
+      "items": [
+        {
+          "answer": "Honesty is the best policy"
+        },
+        {
+          "answer": "The pen is mightier than the sword"
+        },
+        {
+          "answer": "Misfortune makes foes of friends"
+        },
+        {
+          "answer": "Better be alone than in bad company"
+        },
+        {
+          "answer": "A good beginning makes a good ending"
+        },
+        {
+          "answer": "Anger is brief madness"
+        },
+        {
+          "answer": "Great griefs are mute"
+        },
+        {
+          "answer": "Look before you leap"
+        },
+        {
+          "answer": "Pennies make dollars"
+        },
+        {
+          "answer": "Kindness is never lost"
+        },
+        {
+          "answer": "A shortcut seldom is"
+        },
+        {
+          "answer": "Time is the best teacher"
+        }
+      ],
+      "ui": {
+        "fields": [
+          "Answer Key:"
+        ],
+        "buttons": [
+          "Previous",
+          "Next",
+          "Answer"
+        ]
+      },
+      "citation": "R. Fergusson, The Facts on File Dictionary of Proverbs",
+      "_verify": "proverb count/order (12 extracted); the displayed Greek-letter phonetic text needs extraction or transcription per item"
+    },
+    {
+      "id": "c1_ex_reading_people_places",
+      "type": "contentAudio",
+      "mode": "selfCheckSequence",
+      "title": "Reading People, Places and Letters Exercise",
+      "instructions": "Click if you desire a different category",
+      "categories": [
+        {
+          "name": "Personal Names",
+          "listRef": "readingLists.personalNames",
+          "audio": [
+            "chapt_1_a_name_1",
+            "chapt_1_a_name_2",
+            "chapt_1_a_name_3",
+            "chapt_1_a_name_4",
+            "chapt_1_a_name_5",
+            "chapt_1_a_name_6",
+            "chapt_1_a_name_7",
+            "chapt_1_a_name_8",
+            "chapt_1_a_name_9",
+            "chapt_1_a_nam_10",
+            "chapt_1_a_nam_11",
+            "chapt_1_a_nam_12",
+            "chapt_1_a_nam_13",
+            "chapt_1_a_nam_14",
+            "chapt_1_a_nam_15",
+            "chapt_1_a_nam_16",
+            "chapt_1_a_nam_17",
+            "chapt_1_a_nam_18",
+            "chapt_1_a_nam_19",
+            "chapt_1_a_nam_20",
+            "chapt_1_a_nam_21",
+            "chapt_1_a_nam_22",
+            "chapt_1_a_nam_23",
+            "chapt_1_a_nam_24"
+          ]
+        },
+        {
+          "name": "Place Names",
+          "listRef": "readingLists.placeNames",
+          "audio": [
+            "chapt_1_a_plac_1",
+            "chapt_1_a_plac_2",
+            "chapt_1_a_plac_3",
+            "chapt_1_a_plac_4",
+            "chapt_1_a_plac_5",
+            "chapt_1_a_plac_6",
+            "chapt_1_a_plac_7",
+            "chapt_1_a_plac_8",
+            "chapt_1_a_plac_9",
+            "chapt_1_a_pla_10",
+            "chapt_1_a_pla_11"
+          ]
+        },
+        {
+          "name": "Letter Names",
+          "listRef": "alphabet.letters"
+        }
+      ],
+      "ui": {
+        "fields": [
+          "Greek Personal Names",
+          "English Personal Names"
+        ],
+        "buttons": [
+          "Previous",
+          "Next",
+          "Answer",
+          "Personal Names",
+          "Place Names",
+          "Letter Names"
+        ]
+      },
+      "_verify": "whether audio plays automatically per item or on Answer"
+    },
+    {
+      "id": "c1_ex_speller",
+      "type": "spell",
+      "title": "Vocabulary Spelling Exercise",
+      "instructions": "Click letters below or use your keyboard to spell it out.",
+      "prompt": "gloss",
+      "items": [
+        {
+          "ref": "aggelos"
+        },
+        {
+          "ref": "amen"
+        },
+        {
+          "ref": "anthropos"
+        },
+        {
+          "ref": "ego"
+        },
+        {
+          "ref": "theos"
+        },
+        {
+          "ref": "kai"
+        },
+        {
+          "ref": "kardia"
+        },
+        {
+          "ref": "lego"
+        },
+        {
+          "ref": "prophetes"
+        },
+        {
+          "ref": "christos"
+        }
+      ],
+      "tiles": {
+        "letters": "24 lowercase + final sigma",
+        "diacritics": [
+          "acute",
+          "grave",
+          "circumflex",
+          "rough breathing",
+          "smooth breathing",
+          "breathing+accent combinations",
+          "ᾳ",
+          "ῃ",
+          "ῳ"
+        ]
+      },
+      "accentsOptional": true,
+      "ui": {
+        "fields": [
+          "English Meaning",
+          "Spell Greek Word"
+        ],
+        "buttons": [
+          "Pronounce",
+          "Previous",
+          "Score",
+          "Next",
+          "Check Answer",
+          "Greek Keyboard"
+        ],
+        "checkboxes": [
+          "Show Answer",
+          "With Accents",
+          "Pronounce Each Exercise"
+        ]
+      },
+      "keyboardEntry": "physical keys map to legacy layout (see font-map _keyboard_layout_note); PWA will map to Unicode directly",
+      "_verify": "exact tile inventory of the two diacritic rows (photo partially legible)"
+    }
+  ],
+  "quickReview": [
+    {
+      "id": "c1_qr_vocab",
+      "type": "contentAudio",
+      "mode": "chart",
+      "title": "Review Vocabulary Chart",
+      "instructions": "",
+      "items": [
+        {
+          "ref": "aggelos"
+        },
+        {
+          "ref": "amen"
+        },
+        {
+          "ref": "anthropos"
+        },
+        {
+          "ref": "ego"
+        },
+        {
+          "ref": "theos"
+        },
+        {
+          "ref": "kai"
+        },
+        {
+          "ref": "kardia"
+        },
+        {
+          "ref": "lego"
+        },
+        {
+          "ref": "prophetes"
+        },
+        {
+          "ref": "christos"
+        }
+      ],
+      "showNtFreq": true,
+      "note": "The number after the translation is the number of times the word occurs in the New Testament.",
+      "ui": {
+        "buttons": [
+          "Say Whole List"
+        ]
+      },
+      "sayWholeListAudio": "chapt_1_a_vocl1"
+    },
+    {
+      "id": "c1_qr_letters",
+      "type": "contentAudio",
+      "mode": "chart",
+      "title": "Review Letters Quick Chart",
+      "instructions": "",
+      "itemsFrom": "alphabet.letters",
+      "columns": [
+        "Letter Name",
+        "Letter",
+        "Capital",
+        "Transliteration",
+        "Pronounce"
+      ],
+      "play": "audioFull",
+      "ui": {
+        "buttons": [
+          "Say Alphabet"
+        ]
+      },
+      "sayAlphabetAudio": "chapt_1_a_alphab",
+      "_verify": "which audio a row click plays (name+sound assumed)",
+      "_source": "all 24 rows verified by screenshots (columns and Pronounce hints match extraction)"
+    }
+  ],
+  "feedback": {
+    "_comment": "Original feedback strings extracted verbatim -- authentic flavor worth preserving in the app",
+    "correct": [
+      "Mastered it",
+      "You make it look easy",
+      "You make it seem simple",
+      "Congratulations",
+      "You've got it down",
+      "Wow, you've mastered this"
+    ],
+    "incorrect": [
+      "Swing and a miss",
+      "Give it another shot",
+      "You can do it",
+      "Persistence will get it",
+      "Peter had trouble with it too",
+      "Its not that bad"
+    ],
+    "scorePrompt": "Give it a try before getting a score"
+  },
+  "objectivesPreamble": "You will be able to:"
+}
