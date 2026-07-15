@@ -32,7 +32,8 @@ export default defineConfig({
             options: {
               cacheName: 'greek-tutor-audio',
               expiration: { maxEntries: 10000 },
-              cacheableResponse: { statuses: [0, 200] }
+              cacheableResponse: { statuses: [0, 200] },
+              rangeRequests: true
             }
           }
         ]

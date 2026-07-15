@@ -17,9 +17,20 @@ export function audioPath(id) {
   return `/audio/${m[1]}/${m[2]}.m4a`;
 }
 
+function warmCache(src) {
+  // Safari plays media via ranged requests (206), which are not cacheable.
+  // Fetch the complete file once so the SW stores a full 200 response;
+  // offline, rangeRequests:true slices this cached copy for the player.
+  if (!('caches' in window)) return;
+  caches.match(src).then(hit => {
+    if (!hit) fetch(src).catch(() => { });
+  });
+}
+
 export function play(id) {
   const src = audioPath(id);
   if (!src) return Promise.resolve(false);
+  warmCache(src);
   if (currentAudio) {
     currentAudio.pause();
     currentAudio = null;
