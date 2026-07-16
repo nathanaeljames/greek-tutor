@@ -75,7 +75,9 @@
     const mq = window.matchMedia('(min-width: 768px)');
     wide = mq.matches;
     const onMq = e => (wide = e.matches);
-    mq.addEventListener('change', onMq);
+    // addEventListener on MediaQueryList needs Safari 14+; fall back for older iOS.
+    if (mq.addEventListener) mq.addEventListener('change', onMq);
+    else mq.addListener(onMq);
 
     handleHashChange();
     window.addEventListener('hashchange', handleHashChange);
@@ -85,7 +87,8 @@
       toastTimer = setTimeout(() => (toast = ''), 3500);
     });
     return () => {
-      mq.removeEventListener('change', onMq);
+      if (mq.removeEventListener) mq.removeEventListener('change', onMq);
+      else mq.removeListener(onMq);
       window.removeEventListener('hashchange', handleHashChange);
     };
   });

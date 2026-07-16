@@ -18,14 +18,20 @@
     { key: 'map', label: 'Map', icon: 'sitemap' }
   ];
 
+  // Setting an identical hash fires no hashchange; dispatch one manually so
+  // the shell still re-applies expansion state (e.g. re-tapping the open tab).
+  function go(hash) {
+    if (location.hash === hash) window.dispatchEvent(new Event('hashchange'));
+    else location.hash = hash;
+  }
   function goSection(section) {
-    location.hash = `#/chapter/${chapterId}/${section}`;
+    go(`#/chapter/${chapterId}/${section}`);
   }
   function goMap() {
     const cur = getCurrentActivity(chapterId);
     const sec = cur ? sectionOfActivity(chapterId, cur) : null;
     setExpanded(chapterId, sec ? [sec] : []);
-    location.hash = `#/chapter/${chapterId}`;
+    go(`#/chapter/${chapterId}`);
   }
   function onTap(item) {
     if (item.key === 'map') goMap();

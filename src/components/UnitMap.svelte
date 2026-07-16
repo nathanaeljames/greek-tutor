@@ -24,13 +24,13 @@
   $: chapterProg = (progressTick, getChapterProgress(chapterId));
   $: pct = chapterProg.total ? Math.round((chapterProg.done / chapterProg.total) * 100) : 0;
 
-  function isOpen(section) {
-    return isSidebar || expandedSections.includes(section);
-  }
-  function rowState(id) {
+  // NOTE: template expressions must reference reactive variables directly
+  // (expandedSections, currentId, progressTick) or Svelte 4 won't re-render
+  // them; helpers therefore take those values as arguments.
+  function rowState(id, current, _tick) {
     const s = getActivityState(id);
     if (s === 'done') return 'done';
-    if (id === currentId) return 'current';
+    if (id === current) return 'current';
     return 'none';
   }
   function go(id) { location.hash = `#/activity/${chapterId}/${id}`; }
@@ -60,19 +60,20 @@
     {#each SECTIONS as section}
       {@const items = chapter[section] || []}
       {@const sp = (progressTick, getSectionProgress(chapterId, section))}
+      {@const open = isSidebar || expandedSections.includes(section)}
       <div class="section-card" bind:this={cardEls[section]}>
-        <button class="section-head" class:open={isOpen(section)} on:click={() => toggle(section)} aria-expanded={isOpen(section)}>
+        <button class="section-head" class:open on:click={() => toggle(section)} aria-expanded={open}>
           {#if !isSidebar}
-            <svg class="chevron" class:down={isOpen(section)} viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6l-6 6" /></svg>
+            <svg class="chevron" class:down={open} viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6l-6 6" /></svg>
           {/if}
           <span class="section-name">{LABELS[section]}</span>
           <span class="section-count">{sp.done} of {sp.count}</span>
         </button>
 
-        {#if isOpen(section)}
+        {#if open}
           <div class="section-body">
             {#each items as act}
-              {@const st = rowState(act.id)}
+              {@const st = rowState(act.id, currentId, progressTick)}
               <button
                 class="act-row"
                 class:active={act.id === highlightActivityId}
