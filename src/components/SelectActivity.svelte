@@ -3,6 +3,7 @@
   // Covers letter exercises (24-option generator) and vocab drills (10 lemmas).
   import { buildSelectQuestions, randomFeedback } from '../lib/content.js';
   import { play } from '../lib/audio.js';
+  import { markCompleted } from '../lib/progress.js';
   export let chapter;
   export let activity;
 
@@ -59,6 +60,7 @@
     } else {
       finished = true;
       feedback = '';
+      if (activity && activity.id) markCompleted(activity.id);
     }
   }
 

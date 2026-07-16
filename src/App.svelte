@@ -1,41 +1,175 @@
 <script>
-  // Minimal hash router: #/ -> TOC, #/chapter/<id> -> menus, #/activity/<chId>/<actId>
-  import { onMount } from 'svelte';
+  // App shell + hash router.
+  //   #/                                Global TOC
+  //   #/chapter/:id                     Chapter hub (accordion Unit Map)
+  //   #/chapter/:id/:section            Hub with one section expanded
+  //   #/activity/:id/:activityId        Activity page
+  // Chrome (top bar, bottom section bar, sequential rail, responsive
+  // sidebar) lives here; the routed components render content only.
+  import { onMount, tick } from 'svelte';
   import ChapterNav from './components/ChapterNav.svelte';
-  import ChapterHome from './components/ChapterHome.svelte';
   import ActivityHost from './components/ActivityHost.svelte';
-  import { onAudioProblem } from './lib/audio.js';
+  import UnitMap from './components/UnitMap.svelte';
+  import TopBar from './components/TopBar.svelte';
+  import BottomBar from './components/BottomBar.svelte';
+  import SequentialRail from './components/SequentialRail.svelte';
+  import EndOfChapterDialog from './components/EndOfChapterDialog.svelte';
+  import { onAudioProblem, stop as stopAudio } from './lib/audio.js';
+  import { getChapter, getActivity, sectionOfActivity, SECTIONS } from './lib/content.js';
+  import { getCurrentActivity, getChapterProgress } from './lib/progress.js';
+  import * as nav from './lib/nav.js';
 
   let route = { view: 'toc' };
+  let wide = false;
+  let expandedSections = [];
+  let showEndDialog = false;
+  let progressTick = 0;
+  let scrollEl;
   let toast = '';
   let toastTimer;
 
   function parseHash() {
     const h = location.hash.replace(/^#\/?/, '');
     const parts = h.split('/').filter(Boolean);
-    if (parts[0] === 'chapter' && parts[1]) route = { view: 'chapter', chapterId: parts[1] };
-    else if (parts[0] === 'activity' && parts[1] && parts[2]) route = { view: 'activity', chapterId: parts[1], activityId: parts.slice(2).join('/') };
-    else route = { view: 'toc' };
+    if (parts[0] === 'activity' && parts[1] && parts[2]) {
+      route = { view: 'activity', chapterId: parts[1], activityId: parts.slice(2).join('/') };
+    } else if (parts[0] === 'chapter' && parts[1]) {
+      const section = SECTIONS.includes(parts[2]) ? parts[2] : null;
+      route = { view: 'chapter', chapterId: parts[1], section };
+    } else {
+      route = { view: 'toc' };
+    }
+  }
+
+  function computeExpansion() {
+    if (route.view !== 'chapter') return;
+    const id = route.chapterId;
+    if (route.section) {
+      nav.setExpanded(id, [route.section]);
+    } else if (!nav.hasAnyExpanded(id)) {
+      const cur = getCurrentActivity(id);
+      const sec = cur ? sectionOfActivity(id, cur) : null;
+      nav.setExpanded(id, sec ? [sec] : []);
+    }
+    expandedSections = nav.getExpanded(id);
+  }
+
+  async function handleHashChange() {
+    stopAudio();                       // audio stops on every route change
+    parseHash();
+    showEndDialog = false;
+    computeExpansion();
+    progressTick += 1;                 // refresh map/sidebar from progress
+    await tick();
+    // Scroll content to top, except the hub :section route (UnitMap scrolls
+    // the target section into view itself).
+    if (scrollEl && !(route.view === 'chapter' && route.section)) scrollEl.scrollTop = 0;
+  }
+
+  function handleToggle(e) {
+    nav.toggleExpanded(route.chapterId, e.detail.section);
+    expandedSections = nav.getExpanded(route.chapterId);
   }
 
   onMount(() => {
-    parseHash();
-    window.addEventListener('hashchange', parseHash);
+    const mq = window.matchMedia('(min-width: 768px)');
+    wide = mq.matches;
+    const onMq = e => (wide = e.matches);
+    mq.addEventListener('change', onMq);
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
     onAudioProblem(msg => {
       toast = msg;
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => (toast = ''), 3500);
     });
-    return () => window.removeEventListener('hashchange', parseHash);
+    return () => {
+      mq.removeEventListener('change', onMq);
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   });
+
+  $: chapter = route.chapterId ? getChapter(route.chapterId) : null;
+  $: activity = route.view === 'activity' ? getActivity(route.chapterId, route.activityId) : null;
+  $: chapterContext = route.view === 'chapter' || route.view === 'activity';
+  $: sidebarVisible = wide && chapterContext;
+  $: bottomBarVisible = !wide && chapterContext;
+  $: activityHighlight = route.view === 'activity' ? route.activityId : null;
+
+  $: activeSection =
+    route.view === 'activity'
+      ? sectionOfActivity(route.chapterId, route.activityId)
+      : route.view === 'chapter'
+        ? (route.section || 'map')
+        : null;
+
+  $: screenTitle =
+    route.view === 'toc'
+      ? 'Greek Tutor'
+      : route.view === 'chapter'
+        ? (chapter ? `${chapter.number}. ${chapter.title}` : 'Chapter')
+        : (activity ? activity.title : 'Activity');
+
+  $: if (typeof document !== 'undefined') {
+    document.title = route.view === 'toc' ? 'Greek Tutor' : `Greek Tutor — ${screenTitle}`;
+  }
+
+  // Wide hub pane needs a live progress read.
+  $: hubProg = route.view === 'chapter' ? (progressTick, getChapterProgress(route.chapterId)) : { done: 0, total: 0 };
+  $: hubPct = hubProg.total ? Math.round((hubProg.done / hubProg.total) * 100) : 0;
 </script>
 
-{#if route.view === 'toc'}
-  <ChapterNav />
-{:else if route.view === 'chapter'}
-  <ChapterHome chapterId={route.chapterId} />
-{:else if route.view === 'activity'}
-  <ActivityHost chapterId={route.chapterId} activityId={route.activityId} />
+<div class="app" class:wide>
+  <TopBar
+    title={screenTitle}
+    showBack={route.view !== 'toc'}
+    backHash={route.view === 'activity' ? `#/chapter/${route.chapterId}` : '#/'}
+    showToc={route.view !== 'toc'} />
+
+  <div class="app-main">
+    {#if sidebarVisible}
+      <aside class="sidebar">
+        <UnitMap chapterId={route.chapterId} variant="sidebar" highlightActivityId={activityHighlight} {progressTick} />
+      </aside>
+    {/if}
+
+    <div class="scroll-area" bind:this={scrollEl}>
+      <div class="content">
+        {#if route.view === 'toc'}
+          <ChapterNav />
+        {:else if route.view === 'chapter'}
+          {#if wide}
+            <div class="hub-pane-wide">
+              <div class="hub-title">{chapter ? `${chapter.number}. ${chapter.title}` : ''}</div>
+              <div class="hub-progress-line">{hubProg.done} of {hubProg.total} complete</div>
+              <div class="progress-track"><div class="progress-fill" style="width:{hubPct}%"></div></div>
+              <p class="hub-hint">Select an activity from the Unit Map to begin.</p>
+            </div>
+          {:else}
+            <UnitMap
+              chapterId={route.chapterId}
+              variant="hub"
+              {expandedSections}
+              focusSection={route.section}
+              {progressTick}
+              on:toggle={handleToggle} />
+          {/if}
+        {:else if route.view === 'activity'}
+          <ActivityHost chapterId={route.chapterId} activityId={route.activityId} on:progress={() => (progressTick += 1)} />
+          <SequentialRail chapterId={route.chapterId} activityId={route.activityId} on:end={() => (showEndDialog = true)} />
+        {/if}
+      </div>
+    </div>
+  </div>
+
+  {#if bottomBarVisible}
+    <BottomBar chapterId={route.chapterId} {activeSection} />
+  {/if}
+</div>
+
+{#if showEndDialog}
+  <EndOfChapterDialog chapterId={route.chapterId} on:close={() => (showEndDialog = false)} />
 {/if}
 
 {#if toast}

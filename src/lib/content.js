@@ -16,14 +16,68 @@ export function isChapterAvailable(id) { return id in chapters; }
 
 export function getLemma(ref) { return lexicon.lemmas[ref] || null; }
 
+export const SECTIONS = ['learn', 'drill', 'exercise', 'quickReview'];
+
 export function getActivity(chapterId, activityId) {
   const ch = getChapter(chapterId);
   if (!ch) return null;
-  for (const section of ['learn', 'drill', 'exercise', 'quickReview']) {
+  for (const section of SECTIONS) {
     const hit = (ch[section] || []).find(a => a.id === activityId);
     if (hit) return { ...hit, section };
   }
   return null;
+}
+
+// Which chapter owns a given activity id (only loaded chapters are searched).
+export function findChapterIdOfActivity(activityId) {
+  for (const id of Object.keys(chapters)) {
+    if (getActivity(id, activityId)) return id;
+  }
+  return null;
+}
+
+// The section key ('learn'|'drill'|'exercise'|'quickReview') an activity lives in.
+export function sectionOfActivity(chapterId, activityId) {
+  const a = getActivity(chapterId, activityId);
+  return a ? a.section : null;
+}
+
+// Ordered activity ids for a chapter. Prefer the authored "sequence" (the
+// original program's interleaved Sequential-Next order); otherwise fall back
+// to the section concatenation learn -> drill -> exercise -> quickReview.
+export function getSequence(chapterId) {
+  const ch = getChapter(chapterId);
+  if (!ch) return [];
+  if (Array.isArray(ch.sequence) && ch.sequence.length) return ch.sequence.slice();
+  const order = [];
+  for (const section of SECTIONS) for (const a of ch[section] || []) order.push(a.id);
+  return order;
+}
+
+// Position of an activity within its chapter's sequence. index === -1 means
+// the activity is not part of the sequence (defensive; caller degrades).
+export function getSequencePosition(chapterId, activityId) {
+  const seq = getSequence(chapterId);
+  const total = seq.length;
+  const index = seq.indexOf(activityId);
+  if (index === -1) return { index: -1, total, prevId: null, nextId: null };
+  return {
+    index,
+    total,
+    prevId: index > 0 ? seq[index - 1] : null,
+    nextId: index < total - 1 ? seq[index + 1] : null
+  };
+}
+
+// The next chapter after this one, per the global TOC, with availability.
+export function getNextChapter(chapterId) {
+  const ch = getChapter(chapterId);
+  if (!ch) return null;
+  const list = toc.chapters || [];
+  const i = list.findIndex(c => c.id === chapterId);
+  if (i === -1 || i + 1 >= list.length) return null;
+  const next = list[i + 1];
+  return { id: next.id, number: next.number, title: next.title, available: isChapterAvailable(next.id) };
 }
 
 // Resolve an activity's items into a uniform [{display, secondary, audio, meta}]
