@@ -1,5 +1,5 @@
 {
-  "_comment": "Chapter 1 lexicon slice. Greek converted from legacy encoding via font-map.json (all ten words use verified-tier codes only). Glosses are the original program's own gloss strings, extracted verbatim from 1_ALPHAB.TBK's Translation field. Audio IDs follow the naming contract (chapt_1_a_voc1..10); the voc-number-to-lemma pairing assumes the program's alphabetical vocab order matches A_VOC file numbering -- VERIFY by listening. This slice merges into the global lexicon.json.",
+  "_comment": "Chapter 1 lexicon slice. Greek converted from legacy encoding via font-map.json (all ten words use verified-tier codes only). Glosses are the original program's own gloss strings, extracted verbatim from 1_ALPHAB.TBK's Translation field. Audio IDs follow the naming contract; A_VOC1..10-to-lemma pairing LISTEN-VERIFIED. This slice merges into the global lexicon.json.",
   "lemmas": {
     "aggelos": {
       "greek": "ἄγγελος",
@@ -122,9 +122,9 @@
       "greek": "αὐτῷ",
       "translit": "autō(i)",
       "gloss": "him (Jn 1:4)",
-      "audio": null,
+      "audio": "chapt_1_a_autoi",
       "_legacy": "au]t&?",
-      "_verify": "no dedicated audio found for autw(i); teaching page may be silent here"
+      "_source": "Learn Iota Subscripts omega-row example (D2 verified 2026-07-17: A_AUTOI is the tap audio for this example)"
     },
     "iesous": {
       "greek": "Ἰησοῦς",
@@ -210,13 +210,6 @@
       "gloss": "to men (dat. pl.) -- Note example: οι not final, therefore long",
       "audio": "chapt_1_a_antois",
       "_source": "Learn Diphthongs Note (verified); listen-check 'anthropos' was this dative plural"
-    },
-    "auto_unclear": {
-      "greek": "αυτο",
-      "translit": "auto",
-      "gloss": "(heard on A_AUTOI; role unclear, possibly unused variant)",
-      "audio": "chapt_1_a_autoi",
-      "_verify": "low priority"
     }
   },
   "_ntFreq_note": "ntFreq = New Testament occurrence count, from Review Vocabulary Chart (verified)",
@@ -342,7 +335,7 @@
         "chapt_1_a_pla_10",
         "chapt_1_a_pla_11"
       ],
-      "_verify": "Greek 'Nazareth' final letter: legacy string truncated in dump (Nazare[q]); Θ assumed (Nazareq -> Ναζαρεθ) -- confirm on screen"
+      "_nazareth": "B5 verified 2026-07-17: final letter is theta (Ναζαρεθ)."
     },
     "letterNames": {
       "greek": [
@@ -398,7 +391,7 @@
         "Omega"
       ],
       "audio": "use alphabet.letters[n].audioShort",
-      "_note": "Greek pane shows the Greek-spelled letter name (e.g. αλφα); spelling of epsilon/upsilon as εψιλον/υψιλον matches the program's phonetic style -- verify two rows on screen"
+      "_note": "Greek pane shows the Greek-spelled letter name. VERIFIED by TBK extraction (2026-07-17): legacy list alfa/bhta/.../eyilon/.../uyilon/.../wmega converts exactly to the 24 spellings above (εψιλον / υψιλον confirmed)."
     }
   }
 }

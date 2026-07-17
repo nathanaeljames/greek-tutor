@@ -1,5 +1,5 @@
 {
-  "_comment": "Introduction pseudo-chapter (INTRO books). Text verbatim from the running original. Structure: single 'learn' list; no drills/exercises. Audio: intro_a_welcom = Welcome page Play button (listen-verify); intro_a_intro1..4 roles unassigned -- listen during transcode and map to pages.",
+  "_comment": "Introduction pseudo-chapter (INTRO books). Welcome/Chapter Structure text verbatim from the running original. Navigation page is REWRITTEN app copy per A2 decision (c) (2026-07-17). Audio roles verified: see audioInventory.",
   "id": "intro",
   "title": "Introduction",
   "learn": [
@@ -73,15 +73,40 @@
       "type": "contentAudio",
       "mode": "textPage",
       "title": "Navigation",
-      "_userDecision": "Original 'Navigation Principles' and 'Special Icon Features' pages describe the Win 3.1 UI (pull-down menus, icon bar, mouse). Options: (a) omit; (b) include verbatim as historical note; (c) rewrite for the app's own navigation. Drafted as (c) placeholder -- REPLACE with user-approved copy.",
+      "_userDecision": "A2 decided 2026-07-17: option (c), rewritten copy. Draft below written by Claude, awaiting Fable's approval -- the in-app 'draft copy' tag renders while this key is present; delete this key once the wording is approved.",
       "content": [
         {
           "type": "heading",
-          "text": "Getting around"
+          "text": "Getting Around"
         },
         {
           "type": "para",
-          "text": "Placeholder: brief description of the app's navigation (section tabs, sequential Previous/Next, the chapter map, and the table of contents) to be written once navigation copy is approved."
+          "text": "Greek Tutor is arranged in chapters. Each chapter is a map of pages grouped into the four levels of learning."
+        },
+        {
+          "type": "numbered",
+          "items": [
+            {
+              "label": "Section tabs",
+              "text": "the bar at the bottom of the screen jumps to the Learn, Drill, Exercise, or Quick Review section of the current chapter."
+            },
+            {
+              "label": "Previous / Next",
+              "text": "the buttons at the bottom of every page walk through the chapter in order, weaving each lesson together with its drills and exercises."
+            },
+            {
+              "label": "Chapter map",
+              "text": "the back arrow at the top left returns to the chapter's map, which lists every page and shows your progress."
+            },
+            {
+              "label": "Table of Contents",
+              "text": "the list icon at the top right returns to the list of chapters at any time."
+            }
+          ]
+        },
+        {
+          "type": "para",
+          "text": "Wherever you see Greek, tap it to hear it pronounced."
         }
       ]
     }
@@ -91,12 +116,13 @@
     "intro_chapter_structure",
     "intro_navigation"
   ],
-  "audioInventory": [
-    "intro_a_welcom",
-    "intro_a_intro1",
-    "intro_a_intro2",
-    "intro_a_intro3",
-    "intro_a_intro4",
-    "intro_d_logwn"
-  ]
+  "audioInventory": {
+    "intro_a_welcom": "Welcome page 'Play' narration (D1 verified)",
+    "intro_a_intro1": "LEGACY: Navigation Principles > Pull Down Menu -- page not carried over; unused",
+    "intro_a_intro2": "LEGACY: Navigation Principles > The Icon Bar -- unused",
+    "intro_a_intro3": "LEGACY: Navigation Principles > Chapter Navigation Bullets -- unused",
+    "intro_a_intro4": "LEGACY: Navigation Principles > The Map -- unused",
+    "intro_d_logwn": "role unknown (low priority; listen when convenient)"
+  },
+  "_audioInventory_note": "Documentation only, not consumed by code. intro1..4 narrate the Win 3.1 navigation pages dropped under A2(c); they stay in the audio pack but nothing references them."
 }

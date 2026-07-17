@@ -1,5 +1,5 @@
 {
-  "_comment": "DRAFT -- Chapter 1 (Alphabet), reconstructed from 1_ALPHAB.TBK strings + CHAPT_1 audio inventory. Fields marked _verify need checking against the running original in DOSBox. Menu structure and instruction texts are extracted verbatim. Audio IDs follow the naming contract.",
+  "_comment": "Chapter 1 (Alphabet), reconstructed from 1_ALPHAB.TBK strings + CHAPT_1 audio inventory, verified against DOSBox (screenshot batches, critique PDF, VERIFY-chapt01 answers 2026-07-17). Menu structure and instruction texts extracted verbatim. Audio IDs follow the naming contract.",
   "id": "chapt_1",
   "number": 1,
   "title": "The Greek Alphabet",
@@ -346,21 +346,27 @@
         "sound": "a as in father",
         "example": "σκοτίᾳ",
         "audio": "chapt_1_a_aii",
-        "translit": "a(i)"
+        "translit": "a(i)",
+        "exampleGloss": "darkness (Jn 1:5)",
+        "exampleAudio": "chapt_1_a_skotia"
       },
       {
         "greek": "ῃ",
         "sound": "e as in obey",
         "example": "ἀρχῇ",
         "audio": "chapt_1_a_eii",
-        "translit": "e(i)"
+        "translit": "e(i)",
+        "exampleGloss": "beginning (Jn 1:1)",
+        "exampleAudio": "chapt_1_a_arxei"
       },
       {
         "greek": "ῳ",
         "sound": "o as in home",
         "example": "αὐτῷ",
         "audio": "chapt_1_a_oii",
-        "translit": "o(i)"
+        "translit": "o(i)",
+        "exampleGloss": "him (Jn 1:4)",
+        "exampleAudio": "chapt_1_a_autoi"
       }
     ],
     "vowels": {
@@ -382,7 +388,7 @@
     },
     "diphthongDefinition": "A Diphthong is a combination of two vowels that makes only one sound. The second vowel is either ι or υ.",
     "iotaSubscriptDefinition": "An Iota Subscript is a diphthong which is formed when an iota follows a long vowel. The iota is written under the vowel (subscript). The pronunciation is the same as the normal vowel. The transliteration is what you would expect from a normal diphthong (ai, ei, and oi).",
-    "_verify_soundHints": "capture chart rows Theta..Omega for remaining soundHint values"
+    "_iotaSubscripts_note": "Example words are tappable in the original and play exampleAudio (D2 verified 2026-07-17: skotia/arche/auto[i]); tile tap plays the subscript vowel sound (aii/eii/oii)."
   },
   "learn": [
     {
@@ -575,7 +581,6 @@
       "type": "contentAudio",
       "title": "Learn Vowels",
       "instructions": "",
-      "_verify": "whether vowel letters are clickable for audio",
       "mode": "chart",
       "itemsFrom": "alphabet.vowels",
       "content": [
@@ -623,7 +628,9 @@
           "type": "refs",
           "text": "Machen, p. 10; Mounce, pp. 9f.; Wenham, p. 19"
         }
-      ]
+      ],
+      "play": "audioShort",
+      "_clickable": "B3 verified 2026-07-17: vowel tiles ARE clickable and play the letter name only (audioShort)"
     },
     {
       "id": "c1_learn_diphthongs",
@@ -638,7 +645,6 @@
         "Mounce, p. 10"
       ],
       "note": "A Diphthong is a combination of two vowels that makes only one sound. The second vowel is either ι or υ.",
-      "_verify": "confirmed via critique: tiles play diphthong sound; example words play example audio",
       "content": [
         {
           "type": "heading",
@@ -739,7 +745,7 @@
       "id": "c1_learn_vocab",
       "type": "contentAudio",
       "title": "Learn Vocabulary",
-      "instructions": "_verify",
+      "instructions": "",
       "items": [
         {
           "ref": "aggelos"
@@ -788,7 +794,8 @@
           "Start Over"
         ]
       },
-      "note": "Ignore the accents and markings over letters for now. These will be learned in the next chapter."
+      "note": "Ignore the accents and markings over letters for now. These will be learned in the next chapter.",
+      "_verify": "original flashcard page instruction line not captured -- render nothing until verified"
     },
     {
       "id": "c1_learn_bibliography",
@@ -796,7 +803,6 @@
       "title": "Learn Bibliography",
       "instructions": "",
       "items": [],
-      "_verify": "one entry transcribed as shown on screen: 'Mouton, J., W. F. Howard, and N. Turner' -- almost certainly the original's typo for Moulton; kept verbatim per fidelity directive, flag for user decision",
       "mode": "textPage",
       "content": [
         {
@@ -841,7 +847,7 @@
             "Greenlee, J. Harold. A Concise Exegetical Grammar of New Testament Greek (Grand Rapids: Eerdmans, 1953).",
             "Levinsohn, Stephen. Discourse Features of New Testament Greek (Dallas: Summer Institute of Linguistics, 1992).",
             "Louw, J. P. Semantics of New Testament Greek (Philadelphia: Fortress Press, 1982).",
-            "Mouton, J., W. F. Howard, and N. Turner. A Grammar of New Testament Greek, 4 vols. (Edinburgh: T. & T. Clark, 1963).",
+            "Moulton, J., W. F. Howard, and N. Turner. A Grammar of New Testament Greek, 4 vols. (Edinburgh: T. & T. Clark, 1963).",
             "Perschbacher, Wesley. New Testament Greek Syntax (Chicago: Moody Press, 1995).",
             "Porter, S.E. Idioms of the Greek New Testament (Sheffield: JSOT, 1992).",
             "Robertson, A.T. A Grammar of the Greek New Testament in Light of Historical Research (Nashville: Broadman, 1923).",
@@ -888,7 +894,7 @@
             "* Kubo, Sakae. A Reader's Greek-English Lexicon of the New Testament and a Beginner's Guide for the Translation of New Testament Greek (Berrien Springs: Andrews University Press, 1975).",
             "Mounce, W. D. Analytical Lexicon of the Greek New Testament (Grand Rapids: Zondervan, 1992).",
             "Perschbacher, W. J. Refresh Your Greek: Practical Helps for Reading the Greek New Testament (Chicago: Moody Press, 1989).",
-            "Rieneker, F. A Linguistic Key to the Greek New Testament (Grand Rapids: Zondervan, 1980)."
+            "Rienecker, F. A Linguistic Key to the Greek New Testament (Grand Rapids: Zondervan, 1980)."
           ]
         },
         {
@@ -911,7 +917,7 @@
           "type": "biblist",
           "items": [
             "Balz, H. and G. Schneider. eds. Exegetical Dictionary of the New Testament (3 vols.) (Grand Rapids: Eerdmans, 1993).",
-            "Brown, Collin, ed. The New International Dictionary of New Testament Theology (3 vols.) (Grand Rapids: Zondervan, 1975).",
+            "Brown, Colin, ed. The New International Dictionary of New Testament Theology (3 vols.) (Grand Rapids: Zondervan, 1975).",
             "Kittel, G. The Theological Dictionary of the New Testament. Trans. G. Bromiley. (9 vols.) (Grand Rapids: Eerdmans, 1979). Also available in a one volume condensed version."
           ]
         },
@@ -930,7 +936,8 @@
             "Moulton, W. and A. Geden. A Concordance to the Greek Testament (Edinburgh: T. & T. Clark, 1978)."
           ]
         }
-      ]
+      ],
+      "_typoNote": "Three scholar names corrected per A1; everything else verbatim."
     }
   ],
   "drill": [
@@ -952,8 +959,7 @@
           "Say Alphabet"
         ]
       },
-      "sayAlphabetAudio": "chapt_1_a_alphab",
-      "_verify": "what text appears in the Letter / Letter Sound fields per click"
+      "sayAlphabetAudio": "chapt_1_a_alphab"
     },
     {
       "id": "c1_drill_translit",
@@ -976,8 +982,7 @@
           "Say Alphabet"
         ]
       },
-      "sayAlphabetAudio": "chapt_1_a_alphab",
-      "_verify": "whether clicking also plays audio or is display-only"
+      "sayAlphabetAudio": "chapt_1_a_alphab"
     },
     {
       "id": "c1_drill_capitals",
@@ -1021,8 +1026,7 @@
           "Say Alphabet"
         ]
       },
-      "sayAlphabetAudio": "chapt_1_a_alphab",
-      "_verify": "iota subscripts NOT in this drill (7 diphthongs only -- verified); confirm what fills the Transliteration field on click"
+      "sayAlphabetAudio": "chapt_1_a_alphab"
     },
     {
       "id": "c1_drill_vocab_gk_en",
@@ -1116,7 +1120,8 @@
         ],
         "hint": "Click on \"Check Answer\" to see if you are correct"
       },
-      "_verify": "on Check Answer: does it play audioFull, audioShort, and/or display the sound text?"
+      "order": "shuffled",
+      "_order_note": "Original presents the 24 letters in RANDOM order without repeats (DOSBox observation 2026-07-17 + TBK shuffle logic / LetterNumbers draw-pool). App must shuffle per session."
     },
     {
       "id": "c1_ex_letter_to_name",
@@ -1349,7 +1354,8 @@
           "Letter Names"
         ]
       },
-      "_verify": "whether audio plays automatically per item or on Answer"
+      "audioTiming": "onAnswer",
+      "_audioTiming_note": "B2 verified 2026-07-17: audio plays only on Answer, not on item appearance."
     },
     {
       "id": "c1_ex_speller",
@@ -1389,20 +1395,6 @@
           "ref": "christos"
         }
       ],
-      "tiles": {
-        "letters": "24 lowercase + final sigma",
-        "diacritics": [
-          "acute",
-          "grave",
-          "circumflex",
-          "rough breathing",
-          "smooth breathing",
-          "breathing+accent combinations",
-          "ᾳ",
-          "ῃ",
-          "ῳ"
-        ]
-      },
       "accentsOptional": true,
       "ui": {
         "fields": [
@@ -1424,7 +1416,98 @@
         ]
       },
       "keyboardEntry": "physical keys map to legacy layout (see font-map _keyboard_layout_note); PWA will map to Unicode directly",
-      "_verify": "exact tile inventory of the two diacritic rows (photo partially legible)"
+      "spellerTiles": {
+        "letters": [
+          "α",
+          "β",
+          "γ",
+          "δ",
+          "ε",
+          "ζ",
+          "η",
+          "θ",
+          "ι",
+          "κ",
+          "λ",
+          "μ",
+          "ν",
+          "ξ",
+          "ο",
+          "π",
+          "ρ",
+          "σ",
+          "τ",
+          "υ",
+          "φ",
+          "χ",
+          "ψ",
+          "ω",
+          "ς"
+        ],
+        "diacritics": [
+          {
+            "name": "acute",
+            "label": "´",
+            "apply": "́"
+          },
+          {
+            "name": "grave",
+            "label": "`",
+            "apply": "̀"
+          },
+          {
+            "name": "circumflex",
+            "label": "῀",
+            "apply": "͂"
+          },
+          {
+            "name": "rough breathing",
+            "label": "῾",
+            "apply": "̔"
+          },
+          {
+            "name": "smooth breathing",
+            "label": "᾿",
+            "apply": "̓"
+          },
+          {
+            "name": "smooth + acute",
+            "label": "῎",
+            "apply": "̓́"
+          },
+          {
+            "name": "rough + acute",
+            "label": "῞",
+            "apply": "̔́"
+          },
+          {
+            "name": "smooth + grave",
+            "label": "῍",
+            "apply": "̓̀"
+          },
+          {
+            "name": "rough + grave",
+            "label": "῝",
+            "apply": "̔̀"
+          },
+          {
+            "name": "smooth + circumflex",
+            "label": "῏",
+            "apply": "̓͂"
+          },
+          {
+            "name": "rough + circumflex",
+            "label": "῟",
+            "apply": "̔͂"
+          }
+        ],
+        "composites": [
+          "ᾳ",
+          "ῃ",
+          "ῳ"
+        ],
+        "_source": "C1 finalized from speller close-up photo (2026-07-17): tile rows are the 24 lowercase letters, then final sigma + 3 single accents + 2 breathings + 1 combo, then 5 more breathing+accent combos + the 3 iota-subscript composites. Inventory = 25 letters + 11 marks + 3 composites (39 tiles). All six breathing+accent combinations exist (incl. rough+grave and smooth+grave). On-screen arrangement is the app's own; this inventory is the contract. Diacritic 'apply' = combining sequence appended to the previous character, then NFC-normalize."
+      }
     }
   ],
   "quickReview": [
@@ -1496,7 +1579,6 @@
         ]
       },
       "sayAlphabetAudio": "chapt_1_a_alphab",
-      "_verify": "which audio a row click plays (name+sound assumed)",
       "_source": "all 24 rows verified by screenshots (columns and Pronounce hints match extraction)"
     }
   ],
@@ -1536,8 +1618,8 @@
     "c1_drill_capitals",
     "c1_learn_vowels",
     "c1_learn_diphthongs",
-    "c1_drill_diphthong",
     "c1_learn_iota_subscripts",
+    "c1_drill_diphthong",
     "c1_ex_phonetic",
     "c1_ex_reading_people_places",
     "c1_learn_history",
@@ -1545,9 +1627,10 @@
     "c1_drill_vocab_gk_en",
     "c1_drill_vocab_en_gk",
     "c1_ex_speller",
-    "c1_learn_bibliography",
     "c1_qr_vocab",
-    "c1_qr_letters"
+    "c1_qr_letters",
+    "c1_learn_bibliography"
   ],
-  "_sequence_note": "Derived from the original's stated Sequential-Next pedagogy (learn segment -> its drills -> its exercises); TBK page-storage order is not authoritative. VERIFY once by walking Sequential Next in DOSBox and reordering if needed."
+  "_sequence_note": "VERIFIED by DOSBox Sequential-Next walk (B1, 2026-07-17). Two corrections vs the earlier derivation: Learn Iota Subscripts precedes Diphthong Drill, and Learn Bibliography is the FINAL page (after both Quick Review charts).",
+  "_typoPolicy": "A1 decision (2026-07-17): bibliographic scholar names corrected (Moulton, Colin Brown, Rienecker); ALL other original text preserved verbatim, including feedback strings ('Its not that bad')."
 }
