@@ -7,6 +7,8 @@
   import { markVisited, markCompleted } from '../lib/progress.js';
   import ContentAudio from './ContentAudio.svelte';
   import SelectActivity from './SelectActivity.svelte';
+  import SpellActivity from './SpellActivity.svelte';
+  import ReadingCategories from './ReadingCategories.svelte';
 
   export let chapterId;
   export let activityId;
@@ -15,13 +17,20 @@
   $: chapter = getChapter(chapterId);
   $: activity = getActivity(chapterId, activityId);
 
+  // Self-directed activities complete on reaching their final item, so they
+  // are NOT auto-completed on visit: selfCheck sequences (Pronounce Letters,
+  // Phonetic Reading) mark themselves in ContentAudio; category reading marks
+  // itself in ReadingCategories.
+  const SELF_PACED = new Set(['selfCheckStepper', 'selfCheckSequence']);
+
   let recordedId = null;
   $: if (activity && activity.id !== recordedId) record(activity);
   function record(a) {
     recordedId = a.id;
     markVisited(a.id);
-    // A contentAudio page (that actually renders content) is done on visit.
-    if (a.type === 'contentAudio' && !a.categories) markCompleted(a.id);
+    // A plain contentAudio page (chart/stepper/textPage/flashcard) is done on
+    // visit. Self-paced and category exercises complete on finish instead.
+    if (a.type === 'contentAudio' && !a.categories && !SELF_PACED.has(a.mode)) markCompleted(a.id);
     dispatch('progress');
   }
 </script>
@@ -31,11 +40,13 @@
     <div class="instructions">{activity.instructions}</div>
   {/if}
   {#if activity.categories}
-    <div class="card">This multi-category exercise arrives in phase 4.</div>
+    <ReadingCategories {chapter} {activity} />
   {:else if activity.type === 'contentAudio'}
     <ContentAudio {chapter} {activity} />
   {:else if activity.type === 'select'}
     <SelectActivity {chapter} {activity} />
+  {:else if activity.type === 'spell'}
+    <SpellActivity {chapter} {activity} />
   {:else}
     <div class="card">This activity type ({activity.type}) arrives in a later phase.</div>
   {/if}

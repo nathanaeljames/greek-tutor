@@ -8,7 +8,6 @@
       "pos": "noun",
       "audio": "chapt_1_a_voc1",
       "_legacy": "a@ggeloj",
-      "ntFrequency": 175,
       "glossShort": "angel",
       "ntFreq": 175
     },
@@ -19,7 +18,6 @@
       "pos": "particle",
       "audio": "chapt_1_a_voc2",
       "_legacy": "a]mh<n",
-      "ntFrequency": 129,
       "glossShort": "truly, verily",
       "ntFreq": 129
     },
@@ -30,7 +28,6 @@
       "pos": "noun",
       "audio": "chapt_1_a_voc3",
       "_legacy": "a@nqrwpoj",
-      "ntFrequency": 550,
       "glossShort": "man",
       "ntFreq": 550
     },
@@ -41,7 +38,6 @@
       "pos": "pronoun",
       "audio": "chapt_1_a_voc4",
       "_legacy": "e]gw<",
-      "ntFrequency": 1175,
       "glossShort": "I",
       "ntFreq": 1175
     },
@@ -52,7 +48,6 @@
       "pos": "noun",
       "audio": "chapt_1_a_voc5",
       "_legacy": "qeo<j",
-      "ntFrequency": 1317,
       "glossShort": "God",
       "ntFreq": 1317
     },
@@ -63,7 +58,6 @@
       "pos": "conjunction",
       "audio": "chapt_1_a_voc6",
       "_legacy": "kai<",
-      "ntFrequency": 9153,
       "glossShort": "and, even",
       "ntFreq": 9153
     },
@@ -74,7 +68,6 @@
       "pos": "noun",
       "audio": "chapt_1_a_voc7",
       "_legacy": "kardi<a",
-      "ntFrequency": 156,
       "glossShort": "heart",
       "ntFreq": 156
     },
@@ -85,7 +78,6 @@
       "pos": "verb",
       "audio": "chapt_1_a_voc8",
       "_legacy": "le<gw",
-      "ntFrequency": 2354,
       "glossShort": "I say",
       "ntFreq": 2354
     },
@@ -96,7 +88,6 @@
       "pos": "noun",
       "audio": "chapt_1_a_voc9",
       "_legacy": "profh<thj",
-      "ntFrequency": 144,
       "glossShort": "prophet",
       "ntFreq": 144
     },
@@ -107,7 +98,6 @@
       "pos": "noun",
       "audio": "chapt_1_a_voc10",
       "_legacy": "Xristo<j",
-      "ntFrequency": 529,
       "glossShort": "Christ",
       "ntFreq": 529
     }
@@ -231,9 +221,8 @@
   },
   "_ntFreq_note": "ntFreq = New Testament occurrence count, from Review Vocabulary Chart (verified)",
   "readingLists": {
-    "_comment": "Reading People, Places and Letters Exercise pools. Greek shown unaccented (per screenshots). Audio: personal names = chapt_1_a_name_1..9 + chapt_1_a_nam_10..24 (listen-verified: 1=Abraam, 24=Philippos); places = chapt_1_a_plac_1..9 + chapt_1_a_pla_10..11 (listen-verified: 1=Asia, 11=Samaria); letters reuse alphabet audio.",
+    "_comment": "Reading People, Places and Letters pools. COMPLETE, TBK-extracted, converted via font-map (Greek shown unaccented as in the original). Audio ids follow the naming contract; endpoints listen-verified (name_1=Abraam, nam_24=Philippos, plac_1=Asia, pla_11=Samaria).",
     "personalNames": {
-      "partial": true,
       "greek": [
         "Αβρααμ",
         "Αγριππας",
@@ -244,24 +233,89 @@
         "Ζαχαριας",
         "Θωμας",
         "Ιακωβ",
-        "Ιησους"
+        "Ιησους",
+        "Ιουδας",
+        "Ιωσηφ",
+        "Λαζαρος",
+        "Μαρθα",
+        "Μαρια",
+        "Παυλος",
+        "Πιλατος",
+        "Πετρος",
+        "Σαυλος",
+        "Σιλας",
+        "Σιμων",
+        "Τιμοθεος",
+        "Τιτος",
+        "Φιλιππος"
       ],
       "english": [
-        "Abraam",
-        "Agrippas",
+        "Abraham",
+        "Agrippa",
         "Ananias",
         "Apollos",
         "Barnabas",
         "David",
-        "Zacharias",
+        "Zachariah",
         "Thomas",
         "Jacob",
-        "Jesus"
+        "Jesus",
+        "Judas",
+        "Joseph",
+        "Lazarus",
+        "Martha",
+        "Mary",
+        "Paul",
+        "Pilate",
+        "Peter",
+        "Saul",
+        "Silas",
+        "Simon",
+        "Timothy",
+        "Titus",
+        "Philip"
       ],
-      "_verify": "24 total (ends Philippos); extract remaining 14 Greek+English pairs from TBK in pipeline"
+      "audio": [
+        "chapt_1_a_name_1",
+        "chapt_1_a_name_2",
+        "chapt_1_a_name_3",
+        "chapt_1_a_name_4",
+        "chapt_1_a_name_5",
+        "chapt_1_a_name_6",
+        "chapt_1_a_name_7",
+        "chapt_1_a_name_8",
+        "chapt_1_a_name_9",
+        "chapt_1_a_nam_10",
+        "chapt_1_a_nam_11",
+        "chapt_1_a_nam_12",
+        "chapt_1_a_nam_13",
+        "chapt_1_a_nam_14",
+        "chapt_1_a_nam_15",
+        "chapt_1_a_nam_16",
+        "chapt_1_a_nam_17",
+        "chapt_1_a_nam_18",
+        "chapt_1_a_nam_19",
+        "chapt_1_a_nam_20",
+        "chapt_1_a_nam_21",
+        "chapt_1_a_nam_22",
+        "chapt_1_a_nam_23",
+        "chapt_1_a_nam_24"
+      ]
     },
     "placeNames": {
-      "partial": true,
+      "greek": [
+        "Ασια",
+        "Βαβυλων",
+        "Γαλιλαια",
+        "Δαμασκος",
+        "Εφεσος",
+        "Ιερουσαλημ",
+        "Ιορδανης",
+        "Ισραηλ",
+        "Μακεδονια",
+        "Ναζαρεθ",
+        "Σαμαρια"
+      ],
       "english": [
         "Asia",
         "Babylon",
@@ -275,7 +329,76 @@
         "Nazareth",
         "Samaria"
       ],
-      "_verify": "English list complete (11, matches A_PLAC count); extract Greek spellings from TBK in pipeline"
+      "audio": [
+        "chapt_1_a_plac_1",
+        "chapt_1_a_plac_2",
+        "chapt_1_a_plac_3",
+        "chapt_1_a_plac_4",
+        "chapt_1_a_plac_5",
+        "chapt_1_a_plac_6",
+        "chapt_1_a_plac_7",
+        "chapt_1_a_plac_8",
+        "chapt_1_a_plac_9",
+        "chapt_1_a_pla_10",
+        "chapt_1_a_pla_11"
+      ],
+      "_verify": "Greek 'Nazareth' final letter: legacy string truncated in dump (Nazare[q]); Θ assumed (Nazareq -> Ναζαρεθ) -- confirm on screen"
+    },
+    "letterNames": {
+      "greek": [
+        "αλφα",
+        "βητα",
+        "γαμμα",
+        "δελτα",
+        "εψιλον",
+        "ζητα",
+        "ητα",
+        "θητα",
+        "ιωτα",
+        "καππα",
+        "λαμβδα",
+        "μυ",
+        "νυ",
+        "ξι",
+        "ομικρον",
+        "πι",
+        "ρω",
+        "σιγμα",
+        "ταυ",
+        "υψιλον",
+        "φι",
+        "χι",
+        "ψι",
+        "ωμεγα"
+      ],
+      "english": [
+        "Alpha",
+        "Beta",
+        "Gamma",
+        "Delta",
+        "Epsilon",
+        "Zeta",
+        "Eta",
+        "Theta",
+        "Iota",
+        "Kappa",
+        "Lambda",
+        "Mu",
+        "Nu",
+        "Xi",
+        "Omicron",
+        "Pi",
+        "Rho",
+        "Sigma",
+        "Tau",
+        "Upsilon",
+        "Phi",
+        "Chi",
+        "Psi",
+        "Omega"
+      ],
+      "audio": "use alphabet.letters[n].audioShort",
+      "_note": "Greek pane shows the Greek-spelled letter name (e.g. αλφα); spelling of epsilon/upsilon as εψιλον/υψιλον matches the program's phonetic style -- verify two rows on screen"
     }
   }
 }

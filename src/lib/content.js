@@ -4,9 +4,14 @@
 
 import toc from '../data/toc.json';
 import chapt1 from '../data/chapt-01.json';
+import intro from '../data/intro.json';
 import lexicon from '../data/lexicon-chapt01.json';
 
-const chapters = { chapt_1: chapt1 };
+// The Introduction is a learn-only pseudo-chapter registered alongside real
+// chapters; it resolves through every content helper the same way (routes,
+// sequence, progress). Sections it lacks (drill/exercise/quickReview) degrade
+// to empty via the `ch[section] || []` guards throughout this module.
+const chapters = { intro, chapt_1: chapt1 };
 
 export function getToc() { return toc; }
 
@@ -15,6 +20,9 @@ export function getChapter(id) { return chapters[id] || null; }
 export function isChapterAvailable(id) { return id in chapters; }
 
 export function getLemma(ref) { return lexicon.lemmas[ref] || null; }
+
+// Reading People, Places and Letters pools (personalNames/placeNames/letterNames).
+export function getReadingLists() { return lexicon.readingLists || {}; }
 
 export const SECTIONS = ['learn', 'drill', 'exercise', 'quickReview'];
 
@@ -103,10 +111,16 @@ export function resolveItems(chapter, activity) {
   }
   if (src === 'alphabet.vowels') {
     const v = chapter.alphabet.vowels;
+    const byChar = {};
+    for (const l of chapter.alphabet.letters) byChar[l.lower] = l;
+    const mk = (g, label, group) => {
+      const l = byChar[g] || {};
+      return { display: g, secondary: label, audio: l.audioShort || null, meta: l, group };
+    };
     const rows = [];
-    for (const g of v.short) rows.push({ display: g, secondary: 'Short', audio: null, meta: {} });
-    for (const g of v.longOrShort) rows.push({ display: g, secondary: 'Long or Short', audio: null, meta: {} });
-    for (const g of v.long) rows.push({ display: g, secondary: 'Long', audio: null, meta: {} });
+    for (const g of v.short) rows.push(mk(g, 'Short', 'short'));
+    for (const g of v.longOrShort) rows.push(mk(g, 'Long or Short', 'longOrShort'));
+    for (const g of v.long) rows.push(mk(g, 'Long', 'long'));
     return rows;
   }
   if (Array.isArray(activity.items)) {
@@ -135,11 +149,18 @@ function pickDisplay(letter, mode) {
 }
 
 function pickAudio(letter, mode) {
+  return letter[pickAudioField(mode)];
+}
+
+// Map a play-mode name to the letter field that holds its audio id. Letter
+// pools default to audioShort (the ~1s A_*N "name only" clips) — chart taps
+// and scored prompts speak the NAME, not the full name-and-sound clip.
+function pickAudioField(mode) {
   switch (mode) {
-    case 'audioShort': return letter.audioShort;
-    case 'audioName': return letter.audioName;
-    case 'audioFull':
-    default: return letter.audioFull;
+    case 'audioName': return 'audioName';
+    case 'audioFull': return 'audioFull';
+    case 'audioShort':
+    default: return 'audioShort';
   }
 }
 
@@ -149,25 +170,31 @@ export function buildSelectQuestions(chapter, activity) {
     const pool = chapter.alphabet.letters;
     const promptField = activity.generator.prompt;
     const optionField = activity.generator.options;
+    // Letter prompts/Pronounce play the name-only clip. Honor an explicit
+    // generator.promptAudio if a pool ever needs the full clip; default short.
+    const audioField = pickAudioField(activity.generator.promptAudio || 'audioShort');
     const options = pool.map(l => ({ id: l.name, label: l[optionField] }));
     const questions = shuffle(pool.map(l => ({
       prompt: l[promptField],
-      promptAudio: l.audioFull,
+      promptAudio: l[audioField],
       answerId: l.name
     })));
-    return { options, questions, optionClass: optionField === 'lower' ? 'wide' : 'wide' };
+    return { options, questions, optionClass: 'wide' };
   }
-  // items-based (vocabulary drills): options are the full lemma set
+  // items-based (vocabulary drills): options are the full lemma set. Both
+  // drills show the SHORT gloss ("truly, verily", "and, even", "Christ");
+  // the full gloss + ntFreq is reserved for the Review Vocabulary Chart.
   const lemmas = (activity.items || []).map(ref => ({ ref, ...getLemma(ref) }));
   const promptSide = activity.prompt === 'greek' ? 'greek' : 'gloss';
   const optionSide = promptSide === 'greek' ? 'gloss' : 'greek';
-  const options = lemmas.map(l => ({ id: l.ref, label: l[optionSide] }));
+  const label = (l, side) => (side === 'gloss' ? (l.glossShort || l.gloss) : l.greek);
+  const options = lemmas.map(l => ({ id: l.ref, label: label(l, optionSide) }));
   const questions = shuffle(lemmas.map(l => ({
-    prompt: l[promptSide],
+    prompt: label(l, promptSide),
     promptAudio: l.audio,
     answerId: l.ref
   })));
-  return { options, questions, optionClass: optionSide === 'greek' ? '' : '' };
+  return { options, questions, optionClass: '' };
 }
 
 export function shuffle(arr) {

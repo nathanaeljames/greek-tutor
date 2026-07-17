@@ -52,12 +52,12 @@
 {#if chapter}
   <div class="unitmap" class:sidebar={isSidebar}>
     <div class="hub-header">
-      <div class="hub-title">{chapter.number}. {chapter.title}</div>
+      <div class="hub-title">{chapter.number != null ? `${chapter.number}. ${chapter.title}` : chapter.title}</div>
       <div class="hub-progress-line">{chapterProg.done} of {chapterProg.total} complete</div>
       <div class="progress-track"><div class="progress-fill" style="width:{pct}%"></div></div>
     </div>
 
-    {#each SECTIONS as section}
+    {#each SECTIONS.filter(s => (chapter[s] || []).length) as section}
       {@const items = chapter[section] || []}
       {@const sp = (progressTick, getSectionProgress(chapterId, section))}
       {@const open = isSidebar || expandedSections.includes(section)}

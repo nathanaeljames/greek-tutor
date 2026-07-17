@@ -100,18 +100,21 @@
   $: bottomBarVisible = !wide && chapterContext;
   $: activityHighlight = route.view === 'activity' ? route.activityId : null;
 
+  // No Map tab: on the plain hub route no section tab is active (null).
   $: activeSection =
     route.view === 'activity'
       ? sectionOfActivity(route.chapterId, route.activityId)
       : route.view === 'chapter'
-        ? (route.section || 'map')
+        ? route.section
         : null;
+
+  const chapterLabel = ch => (ch ? (ch.number != null ? `${ch.number}. ${ch.title}` : ch.title) : 'Chapter');
 
   $: screenTitle =
     route.view === 'toc'
       ? 'Greek Tutor'
       : route.view === 'chapter'
-        ? (chapter ? `${chapter.number}. ${chapter.title}` : 'Chapter')
+        ? chapterLabel(chapter)
         : (activity ? activity.title : 'Activity');
 
   $: if (typeof document !== 'undefined') {
@@ -144,7 +147,7 @@
         {:else if route.view === 'chapter'}
           {#if wide}
             <div class="hub-pane-wide">
-              <div class="hub-title">{chapter ? `${chapter.number}. ${chapter.title}` : ''}</div>
+              <div class="hub-title">{chapter ? chapterLabel(chapter) : ''}</div>
               <div class="hub-progress-line">{hubProg.done} of {hubProg.total} complete</div>
               <div class="progress-track"><div class="progress-fill" style="width:{hubPct}%"></div></div>
               <p class="hub-hint">Select an activity from the Unit Map to begin.</p>

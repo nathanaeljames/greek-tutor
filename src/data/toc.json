@@ -1,40 +1,172 @@
 {
-  "_comment": "Global table of contents, transcribed from the program's Table of Contents menu (DOSBox screenshot, verified). Chapter ids follow the naming contract; special-section ids match their book/audio directories.",
+  "_comment": "Global table of contents (verified from the program's TOC menu). 'intro' is a pseudo-chapter rendered above Chapter 1.",
+  "intro": {
+    "id": "intro",
+    "title": "Introduction"
+  },
   "chapters": [
-    { "id": "chapt_1",  "number": 1,  "title": "Alphabet" },
-    { "id": "chapt_2",  "number": 2,  "title": "Syllables & Accents" },
-    { "id": "chapt_3",  "number": 3,  "title": "Present Active Verbs" },
-    { "id": "chapt_4",  "number": 4,  "title": "Second Declension Nouns" },
-    { "id": "chapt_5",  "number": 5,  "title": "First Declension Nouns" },
-    { "id": "chapt_6",  "number": 6,  "title": "Prepositions" },
-    { "id": "chapt_7",  "number": 7,  "title": "Adjectives" },
-    { "id": "chapt_8",  "number": 8,  "title": "Personal Pronouns" },
-    { "id": "chapt_9",  "number": 9,  "title": "Middle/Passive Verbs" },
-    { "id": "chapt_10", "number": 10, "title": "Future Verbs" },
-    { "id": "chapt_11", "number": 11, "title": "Demonstrative Pronouns" },
-    { "id": "chapt_12", "number": 12, "title": "Imperfect Verbs" },
-    { "id": "chapt_13", "number": 13, "title": "Third Declension Nouns" },
-    { "id": "chapt_14", "number": 14, "title": "Second Aorist Verbs" },
-    { "id": "chapt_15", "number": 15, "title": "First Aorist Verbs" },
-    { "id": "chapt_16", "number": 16, "title": "Aorist & Future Passives" },
-    { "id": "chapt_17", "number": 17, "title": "Contract Verbs" },
-    { "id": "chapt_18", "number": 18, "title": "Perfect Verbs" },
-    { "id": "chapt_19", "number": 19, "title": "Present Participles" },
-    { "id": "chapt_20", "number": 20, "title": "Aorist Participles" },
-    { "id": "chapt_21", "number": 21, "title": "Perfect Participles" },
-    { "id": "chapt_22", "number": 22, "title": "Infinitives" },
-    { "id": "chapt_23", "number": 23, "title": "Subjunctive Verbs" },
-    { "id": "chapt_24", "number": 24, "title": "Imperative Verbs" },
-    { "id": "chapt_25", "number": 25, "title": "Mi Verbs" },
-    { "id": "chapt_26", "number": 26, "title": "Numbers & Interrogatives" },
-    { "id": "chapt_27", "number": 27, "title": "Clause Types" },
-    { "id": "chapt_28", "number": 28, "title": "Case Revisited" }
+    {
+      "id": "chapt_1",
+      "number": 1,
+      "title": "Alphabet"
+    },
+    {
+      "id": "chapt_2",
+      "number": 2,
+      "title": "Syllables & Accents"
+    },
+    {
+      "id": "chapt_3",
+      "number": 3,
+      "title": "Present Active Verbs"
+    },
+    {
+      "id": "chapt_4",
+      "number": 4,
+      "title": "Second Declension Nouns"
+    },
+    {
+      "id": "chapt_5",
+      "number": 5,
+      "title": "First Declension Nouns"
+    },
+    {
+      "id": "chapt_6",
+      "number": 6,
+      "title": "Prepositions"
+    },
+    {
+      "id": "chapt_7",
+      "number": 7,
+      "title": "Adjectives"
+    },
+    {
+      "id": "chapt_8",
+      "number": 8,
+      "title": "Personal Pronouns"
+    },
+    {
+      "id": "chapt_9",
+      "number": 9,
+      "title": "Middle/Passive Verbs"
+    },
+    {
+      "id": "chapt_10",
+      "number": 10,
+      "title": "Future Verbs"
+    },
+    {
+      "id": "chapt_11",
+      "number": 11,
+      "title": "Demonstrative Pronouns"
+    },
+    {
+      "id": "chapt_12",
+      "number": 12,
+      "title": "Imperfect Verbs"
+    },
+    {
+      "id": "chapt_13",
+      "number": 13,
+      "title": "Third Declension Nouns"
+    },
+    {
+      "id": "chapt_14",
+      "number": 14,
+      "title": "Second Aorist Verbs"
+    },
+    {
+      "id": "chapt_15",
+      "number": 15,
+      "title": "First Aorist Verbs"
+    },
+    {
+      "id": "chapt_16",
+      "number": 16,
+      "title": "Aorist & Future Passives"
+    },
+    {
+      "id": "chapt_17",
+      "number": 17,
+      "title": "Contract Verbs"
+    },
+    {
+      "id": "chapt_18",
+      "number": 18,
+      "title": "Perfect Verbs"
+    },
+    {
+      "id": "chapt_19",
+      "number": 19,
+      "title": "Present Participles"
+    },
+    {
+      "id": "chapt_20",
+      "number": 20,
+      "title": "Aorist Participles"
+    },
+    {
+      "id": "chapt_21",
+      "number": 21,
+      "title": "Perfect Participles"
+    },
+    {
+      "id": "chapt_22",
+      "number": 22,
+      "title": "Infinitives"
+    },
+    {
+      "id": "chapt_23",
+      "number": 23,
+      "title": "Subjunctive Verbs"
+    },
+    {
+      "id": "chapt_24",
+      "number": 24,
+      "title": "Imperative Verbs"
+    },
+    {
+      "id": "chapt_25",
+      "number": 25,
+      "title": "Mi Verbs"
+    },
+    {
+      "id": "chapt_26",
+      "number": 26,
+      "title": "Numbers & Interrogatives"
+    },
+    {
+      "id": "chapt_27",
+      "number": 27,
+      "title": "Clause Types"
+    },
+    {
+      "id": "chapt_28",
+      "number": 28,
+      "title": "Case Revisited"
+    }
   ],
   "special": [
-    { "id": "vocab",   "title": "Vocabulary Builder 1-10" },
-    { "id": "john",    "title": "John 1-3" },
-    { "id": "rev_par", "title": "Review Paradigms" },
-    { "id": "rev_voc", "title": "Review Vocabulary" }
+    {
+      "id": "vocab",
+      "title": "Vocabulary Builder 1-10"
+    },
+    {
+      "id": "john",
+      "title": "John 1-3"
+    },
+    {
+      "id": "rev_par",
+      "title": "Review Paradigms"
+    },
+    {
+      "id": "rev_voc",
+      "title": "Review Vocabulary"
+    }
   ],
-  "other_menu_items": ["Introduction", "Map", "Index", "Exit"]
+  "other_menu_items": [
+    "Map",
+    "Index",
+    "Exit"
+  ]
 }

@@ -32,7 +32,7 @@
     "christos"
   ],
   "alphabet": {
-    "_comment": "Shared letter table. audioFull = ~4s clip, letter name & sound. audioName = ~1s A_*N clip, letter name only (chart pages: 'Click on the letter to hear its name'). A_NAME_1..24 are NOT letter names -- they are the 24 Greek personal names (Reading exercise). soundHint from Review Letters Quick Chart; rows theta..omega still to capture (_verify).",
+    "_comment": "Shared letter table. audioFull = A_<letter> (~4s, name & sound). audioShort = A_<letter>N (~1s, name only; listen-verified). Chart/exercise taps and Pronounce/Check Answer use audioShort; the Learn Letters stepper and the Names & Sounds / Capitals drills use audioFull. A_NAME_1..24 are PERSONAL names (readingLists), not letter audio.",
     "letters": [
       {
         "n": 1,
@@ -41,9 +41,8 @@
         "name": "alpha",
         "translit": "a",
         "audioFull": "chapt_1_a_alpha",
-        "audioName": "chapt_1_a_alphan",
-        "soundHint": "a in father",
-        "sound": "a in father"
+        "sound": "a in father",
+        "audioShort": "chapt_1_a_alphan"
       },
       {
         "n": 2,
@@ -52,9 +51,8 @@
         "name": "beta",
         "translit": "b",
         "audioFull": "chapt_1_a_beta",
-        "audioName": "chapt_1_a_betan",
-        "soundHint": "b in bet",
-        "sound": "b in bet"
+        "sound": "b in bet",
+        "audioShort": "chapt_1_a_betan"
       },
       {
         "n": 3,
@@ -63,9 +61,8 @@
         "name": "gamma",
         "translit": "g",
         "audioFull": "chapt_1_a_gamma",
-        "audioName": "chapt_1_a_gamman",
-        "soundHint": "g in get",
-        "sound": "g in get"
+        "sound": "g in get",
+        "audioShort": "chapt_1_a_gamman"
       },
       {
         "n": 4,
@@ -74,9 +71,8 @@
         "name": "delta",
         "translit": "d",
         "audioFull": "chapt_1_a_delta",
-        "audioName": "chapt_1_a_deltan",
-        "soundHint": "d in dog",
-        "sound": "d in dog"
+        "sound": "d in dog",
+        "audioShort": "chapt_1_a_deltan"
       },
       {
         "n": 5,
@@ -85,9 +81,8 @@
         "name": "epsilon",
         "translit": "e",
         "audioFull": "chapt_1_a_epsilo",
-        "audioName": "chapt_1_a_epsiln",
-        "soundHint": "e in met",
-        "sound": "e in met"
+        "sound": "e in met",
+        "audioShort": "chapt_1_a_epsiln"
       },
       {
         "n": 6,
@@ -96,9 +91,8 @@
         "name": "zeta",
         "translit": "z",
         "audioFull": "chapt_1_a_zeta",
-        "audioName": "chapt_1_a_zetan",
-        "soundHint": "z in zebra",
-        "sound": "z in zebra"
+        "sound": "z in zebra",
+        "audioShort": "chapt_1_a_zetan"
       },
       {
         "n": 7,
@@ -107,9 +101,8 @@
         "name": "eta",
         "translit": "ē",
         "audioFull": "chapt_1_a_eta",
-        "audioName": "chapt_1_a_etan",
-        "soundHint": "e in obey",
-        "sound": "e in obey"
+        "sound": "e in obey",
+        "audioShort": "chapt_1_a_etan"
       },
       {
         "n": 8,
@@ -118,8 +111,8 @@
         "name": "theta",
         "translit": "th",
         "audioFull": "chapt_1_a_theta",
-        "audioName": "chapt_1_a_thetan",
-        "sound": "th in think"
+        "sound": "th in think",
+        "audioShort": "chapt_1_a_thetan"
       },
       {
         "n": 9,
@@ -128,8 +121,8 @@
         "name": "iota",
         "translit": "i",
         "audioFull": "chapt_1_a_iota",
-        "audioName": "chapt_1_a_iotan",
-        "sound": "i in hit"
+        "sound": "i in hit",
+        "audioShort": "chapt_1_a_iotan"
       },
       {
         "n": 10,
@@ -138,8 +131,8 @@
         "name": "kappa",
         "translit": "k",
         "audioFull": "chapt_1_a_kappa",
-        "audioName": "chapt_1_a_kappan",
-        "sound": "k in keep"
+        "sound": "k in keep",
+        "audioShort": "chapt_1_a_kappan"
       },
       {
         "n": 11,
@@ -148,8 +141,8 @@
         "name": "lambda",
         "translit": "l",
         "audioFull": "chapt_1_a_lambda",
-        "audioName": "chapt_1_a_lambdn",
-        "sound": "l in let"
+        "sound": "l in let",
+        "audioShort": "chapt_1_a_lambdn"
       },
       {
         "n": 12,
@@ -158,8 +151,8 @@
         "name": "mu",
         "translit": "m",
         "audioFull": "chapt_1_a_mu",
-        "audioName": "chapt_1_a_mun",
-        "sound": "m in met"
+        "sound": "m in met",
+        "audioShort": "chapt_1_a_mun"
       },
       {
         "n": 13,
@@ -168,8 +161,8 @@
         "name": "nu",
         "translit": "n",
         "audioFull": "chapt_1_a_nu",
-        "audioName": "chapt_1_a_nun",
-        "sound": "n in net"
+        "sound": "n in net",
+        "audioShort": "chapt_1_a_nun"
       },
       {
         "n": 14,
@@ -178,8 +171,8 @@
         "name": "xi",
         "translit": "x",
         "audioFull": "chapt_1_a_xi",
-        "audioName": "chapt_1_a_xin",
-        "sound": "x in axe"
+        "sound": "x in axe",
+        "audioShort": "chapt_1_a_xin"
       },
       {
         "n": 15,
@@ -188,8 +181,8 @@
         "name": "omicron",
         "translit": "o",
         "audioFull": "chapt_1_a_omicro",
-        "audioName": "chapt_1_a_omicrn",
-        "sound": "o in not"
+        "sound": "o in not",
+        "audioShort": "chapt_1_a_omicrn"
       },
       {
         "n": 16,
@@ -198,8 +191,8 @@
         "name": "pi",
         "translit": "p",
         "audioFull": "chapt_1_a_pi",
-        "audioName": "chapt_1_a_pin",
-        "sound": "p in pet"
+        "sound": "p in pet",
+        "audioShort": "chapt_1_a_pin"
       },
       {
         "n": 17,
@@ -208,8 +201,8 @@
         "name": "rho",
         "translit": "r",
         "audioFull": "chapt_1_a_rho",
-        "audioName": "chapt_1_a_rhon",
-        "sound": "r in rent"
+        "sound": "r in rent",
+        "audioShort": "chapt_1_a_rhon"
       },
       {
         "n": 18,
@@ -218,8 +211,8 @@
         "name": "sigma",
         "translit": "s",
         "audioFull": "chapt_1_a_sigma",
-        "audioName": "chapt_1_a_sigman",
-        "sound": "s in set"
+        "sound": "s in set",
+        "audioShort": "chapt_1_a_sigman"
       },
       {
         "n": 19,
@@ -228,8 +221,8 @@
         "name": "tau",
         "translit": "t",
         "audioFull": "chapt_1_a_tau",
-        "audioName": "chapt_1_a_taun",
-        "sound": "t in tent"
+        "sound": "t in tent",
+        "audioShort": "chapt_1_a_taun"
       },
       {
         "n": 20,
@@ -238,8 +231,8 @@
         "name": "upsilon",
         "translit": "u",
         "audioFull": "chapt_1_a_upsilo",
-        "audioName": "chapt_1_a_upsiln",
-        "sound": "oo in hoops"
+        "sound": "oo in hoops",
+        "audioShort": "chapt_1_a_upsiln"
       },
       {
         "n": 21,
@@ -248,8 +241,8 @@
         "name": "phi",
         "translit": "ph",
         "audioFull": "chapt_1_a_phi",
-        "audioName": "chapt_1_a_phin",
-        "sound": "ph in phone"
+        "sound": "ph in phone",
+        "audioShort": "chapt_1_a_phin"
       },
       {
         "n": 22,
@@ -258,8 +251,8 @@
         "name": "chi",
         "translit": "ch",
         "audioFull": "chapt_1_a_chi",
-        "audioName": "chapt_1_a_chin",
-        "sound": "ch in chemical"
+        "sound": "ch in chemical",
+        "audioShort": "chapt_1_a_chin"
       },
       {
         "n": 23,
@@ -268,8 +261,8 @@
         "name": "psi",
         "translit": "ps",
         "audioFull": "chapt_1_a_psi",
-        "audioName": "chapt_1_a_psin",
-        "sound": "ps in lips"
+        "sound": "ps in lips",
+        "audioShort": "chapt_1_a_psin"
       },
       {
         "n": 24,
@@ -278,8 +271,8 @@
         "name": "omega",
         "translit": "ō",
         "audioFull": "chapt_1_a_omega",
-        "audioName": "chapt_1_a_omegan",
-        "sound": "o in home"
+        "sound": "o in home",
+        "audioShort": "chapt_1_a_omegan"
       }
     ],
     "diphthongs": [
@@ -289,7 +282,8 @@
         "example": "αἷμα",
         "exampleGloss": "blood",
         "exampleAudio": "chapt_1_a_aima",
-        "audio": "chapt_1_a_ai"
+        "audio": "chapt_1_a_ai",
+        "translit": "ai"
       },
       {
         "greek": "ει",
@@ -297,7 +291,8 @@
         "example": "εἰμί",
         "exampleGloss": "I am",
         "exampleAudio": "chapt_1_a_eimi",
-        "audio": "chapt_1_a_ei"
+        "audio": "chapt_1_a_ei",
+        "translit": "ei"
       },
       {
         "greek": "οι",
@@ -305,7 +300,8 @@
         "example": "οἶκος",
         "exampleGloss": "house",
         "exampleAudio": "chapt_1_a_oikos",
-        "audio": "chapt_1_a_oi"
+        "audio": "chapt_1_a_oi",
+        "translit": "oi"
       },
       {
         "greek": "αυ",
@@ -313,7 +309,8 @@
         "example": "αὐτός",
         "exampleGloss": "he, she, it, self, same",
         "exampleAudio": "chapt_1_a_autos",
-        "audio": "chapt_1_a_au"
+        "audio": "chapt_1_a_au",
+        "translit": "au"
       },
       {
         "greek": "ου",
@@ -321,7 +318,8 @@
         "example": "Ἰησοῦς",
         "exampleGloss": "Jesus",
         "exampleAudio": "chapt_1_a_jesus",
-        "audio": "chapt_1_a_ou"
+        "audio": "chapt_1_a_ou",
+        "translit": "ou"
       },
       {
         "greek": "υι",
@@ -329,7 +327,8 @@
         "example": "υἱός",
         "exampleGloss": "son",
         "exampleAudio": "chapt_1_a_uios",
-        "audio": "chapt_1_a_ui"
+        "audio": "chapt_1_a_ui",
+        "translit": "ui"
       },
       {
         "greek": "ευ, ηυ",
@@ -337,7 +336,8 @@
         "example": "πιστεύω",
         "exampleGloss": "I believe",
         "exampleAudio": "chapt_1_a_pisteu",
-        "audio": "chapt_1_a_eu"
+        "audio": "chapt_1_a_eu",
+        "translit": "eu"
       }
     ],
     "iotaSubscripts": [
@@ -345,19 +345,22 @@
         "greek": "ᾳ",
         "sound": "a as in father",
         "example": "σκοτίᾳ",
-        "audio": "chapt_1_a_aii"
+        "audio": "chapt_1_a_aii",
+        "translit": "a(i)"
       },
       {
         "greek": "ῃ",
         "sound": "e as in obey",
         "example": "ἀρχῇ",
-        "audio": "chapt_1_a_eii"
+        "audio": "chapt_1_a_eii",
+        "translit": "e(i)"
       },
       {
         "greek": "ῳ",
         "sound": "o as in home",
         "example": "αὐτῷ",
-        "audio": "chapt_1_a_oii"
+        "audio": "chapt_1_a_oii",
+        "translit": "o(i)"
       }
     ],
     "vowels": {
@@ -379,28 +382,7 @@
     },
     "diphthongDefinition": "A Diphthong is a combination of two vowels that makes only one sound. The second vowel is either ι or υ.",
     "iotaSubscriptDefinition": "An Iota Subscript is a diphthong which is formed when an iota follows a long vowel. The iota is written under the vowel (subscript). The pronunciation is the same as the normal vowel. The transliteration is what you would expect from a normal diphthong (ai, ei, and oi).",
-    "_verify_soundHints": "capture chart rows Theta..Omega for remaining soundHint values",
-    "sixPoints": {
-      "title": "Six Points",
-      "partial": true,
-      "points": [
-        {
-          "n": 1,
-          "name": "Final Sigma",
-          "text": "When sigma is the last letter of a word the form ς is used instead of the normal σ.",
-          "example": "ἀπόστολος",
-          "exampleAudio": "chapt_1_a_word1",
-          "note": "For this chapter ignore the accent and breathing marks which are seen above the letters."
-        },
-        {
-          "n": 2,
-          "name": "Nasal Gamma",
-          "text": "When gamma (γ) is followed by γ, κ, χ, or ξ it is pronounced as \"n\" instead of the normal \"g\".",
-          "textPartial": true
-        }
-      ],
-      "_verify": "points 3-6 not yet captured (scroll continues); point 2 text truncated at screenshot edge"
-    }
+    "_verify_soundHints": "capture chart rows Theta..Omega for remaining soundHint values"
   },
   "learn": [
     {
@@ -423,7 +405,8 @@
       "ui": {
         "fields": [
           "The Letter's Name:",
-          "It sounds like:"
+          "It sounds like:",
+          "English Transliteration"
         ],
         "buttons": [
           "Next Letter",
@@ -434,7 +417,98 @@
         "beginPrompt": "Click on \"Next Letter\" to begin."
       },
       "sayAlphabetAudio": "chapt_1_a_alphab",
-      "_verify": "Six Points captured partially (points 1-2); capture points 3-6. Per-letter stepper field text still unconfirmed vs 'sound' hints."
+      "sixPointsContent": [
+        {
+          "type": "heading",
+          "text": "Six Points"
+        },
+        {
+          "type": "numbered",
+          "items": [
+            {
+              "label": "Final Sigma",
+              "text": "when sigma is the last letter of a word the form ς is used instead of the normal σ.",
+              "example": {
+                "greek": "ἀπόστολος",
+                "audio": "chapt_1_a_word1"
+              },
+              "note": "NOTE: for this chapter ignore the accent and breathing marks which are seen above the letters."
+            },
+            {
+              "label": "Nasal Gamma",
+              "text": "when gamma (γ) is followed by γ, κ, χ, or ξ it is pronounced as \"n\" instead of the normal \"g.\"",
+              "example": {
+                "greek": "ἄγγελος",
+                "caption": "pronounced \"angelos\"",
+                "audio": "chapt_1_a_voc1"
+              }
+            },
+            {
+              "label": "Letter Confusion",
+              "text": "Be careful not to confuse the following letters",
+              "defList": [
+                [
+                  "η (Eta)",
+                  "with the English n."
+                ],
+                [
+                  "ν (Nu)",
+                  "with the English v."
+                ],
+                [
+                  "ρ (Rho)",
+                  "with the English p."
+                ],
+                [
+                  "ω (Omega)",
+                  "with the English w."
+                ],
+                [
+                  "χ (Chi)",
+                  "with the English x."
+                ]
+              ]
+            },
+            {
+              "label": "Zeta Pronunciation",
+              "text": "ζ is pronounced \"dz\" in some grammars (Machen, Wenham) unless it is the first letter of the word in which case it is pronounced as a \"z\". Greek Tutor will follow this convention. Others always pronounce it as a \"z\" (cf. Mounce)."
+            },
+            {
+              "label": "Linguistic Pronunciation Descriptions",
+              "defList": [
+                [
+                  "Labials (lips)",
+                  "π, β, φ"
+                ],
+                [
+                  "Dentals (teeth)",
+                  "τ, δ, θ"
+                ],
+                [
+                  "Palatals (palate)",
+                  "κ, γ, χ"
+                ],
+                [
+                  "Sibilants",
+                  "σ, ζ, ξ, ψ"
+                ],
+                [
+                  "Liquids",
+                  "λ, μ, ν, ρ"
+                ]
+              ]
+            },
+            {
+              "label": "Pronunciation variations",
+              "text": "There are variations on the pronunciation of several letters. Some will pronounce π as \"pie\" others attempting to be more consistent will pronounce it \"pee\". Omicron also has several variations: 1) as the \"o\" in \"hope\" which is the same as the omega, 2) as the \"o\" in \"Boston\" (\"aw\" like sound), or 3) as the \"o\" in \"not\", in which case it sounds like the alpha. We have adopted the third choice here. It is also particularly difficult to know when the iota is long or short. Some will make the upsilon sound like the German ü. The chi is pronounced by many like the \"ch\" in the Gaelic word \"loch\" but many also pronounce it like the \"ch\" in \"chemical\" which makes it sound like a \"k\". Phi, Chi, Psi some will pronounce with an English long \"i\" rather than as a long Greek iota which is pronounced \"phee\" as in this program. Modern Greek will pronounce many of the letters very differently.\n\nThe point is there is variation in how the letters are pronounced and the student should go with whatever method their teacher suggests. It is a dead language and to get lost on the fine points of phonetics is counterproductive."
+            }
+          ]
+        },
+        {
+          "type": "refs",
+          "text": "Machen, p. 9; Wenham, pp. 18f.; Mounce, pp. 8f.; Summers/Sawyer, p. 5"
+        }
+      ]
     },
     {
       "id": "c1_learn_translit",
@@ -463,7 +537,38 @@
         "Mounce, pp. 8f",
         "Wenham, pp. 18f"
       ],
-      "note": "Capital letters are used: 1) for proper names (e.g. Peter); 2) for the first word in a quotation (there are no quotation marks in Greek); and 3) for the first word in a paragraph. Early Greek manuscripts, called Uncials, were written totally in capital letters with no spaces between the words. Later Greek manuscripts were written in minuscules (lower case letters) with breaks between the words. Modern texts are written in minuscules. (Mounce, p. 7)"
+      "content": [
+        {
+          "type": "heading",
+          "text": "Note"
+        },
+        {
+          "type": "numbered",
+          "preamble": "Capital letters are used:",
+          "items": [
+            {
+              "label": null,
+              "text": "for proper names (e.g. Peter);"
+            },
+            {
+              "label": null,
+              "text": "for the first word in a quotation (there are no quotation marks in Greek); and"
+            },
+            {
+              "label": null,
+              "text": "for the first word in a paragraph."
+            }
+          ]
+        },
+        {
+          "type": "para",
+          "text": "Early Greek manuscripts, called Uncials, were written totally in capital letters with no spaces between the words. Later Greek manuscripts were written in minuscules (lower case letters) with breaks between the words. Modern texts are written in minuscules."
+        },
+        {
+          "type": "refs",
+          "text": "(Mounce, p. 7)"
+        }
+      ]
     },
     {
       "id": "c1_learn_vowels",
@@ -473,7 +578,52 @@
       "_verify": "whether vowel letters are clickable for audio",
       "mode": "chart",
       "itemsFrom": "alphabet.vowels",
-      "note": "Iota is the most versatile letter. There are three types of iota: 1) It may be short sounding like the \"i\" in \"hit\". 2) It may be long sounding like the \"i\" in \"machine\". 3) It may be a consonant when found in initial positions of proper names where it sounds like a \"y\" in \"yes\". E.g. Ἰησοῦς \"Jesus\". Alpha sounds the same whether long or short. Upsilon sometimes becomes a \"y\" when brought over into English words. E.g. ὑποκριτής \"hypocrite\". (Machen, p. 10; Mounce, pp. 9f.; Wenham, p. 19)"
+      "content": [
+        {
+          "type": "heading",
+          "text": "Note"
+        },
+        {
+          "type": "numbered",
+          "preamble": "Iota is the most versatile letter. There are three types of iota:",
+          "items": [
+            {
+              "label": null,
+              "text": "It may be short sounding like the \"i\" in \"hit\"."
+            },
+            {
+              "label": null,
+              "text": "It may be long sounding like the \"i\" in \"machine\"."
+            },
+            {
+              "label": null,
+              "text": "It may be a consonant when found in initial positions of proper names where it sounds like a \"y\" in \"yes\".",
+              "example": {
+                "greek": "Ἰησοῦς",
+                "caption": "\"Jesus\"",
+                "audio": "chapt_1_a_jesus"
+              }
+            }
+          ]
+        },
+        {
+          "type": "para",
+          "text": "Alpha sounds the same whether long or short."
+        },
+        {
+          "type": "para",
+          "text": "Upsilon sometimes becomes a \"y\" when brought over into English words.",
+          "example": {
+            "greek": "ὑποκριτής",
+            "caption": "\"hypocrite\"",
+            "audio": "chapt_1_a_hupokr"
+          }
+        },
+        {
+          "type": "refs",
+          "text": "Machen, p. 10; Mounce, pp. 9f.; Wenham, p. 19"
+        }
+      ]
     },
     {
       "id": "c1_learn_diphthongs",
@@ -488,8 +638,36 @@
         "Mounce, p. 10"
       ],
       "note": "A Diphthong is a combination of two vowels that makes only one sound. The second vowel is either ι or υ.",
-      "_verify": "whether clicking a diphthong plays its sound, the example word, or both",
-      "noteButton": "Diphthongs are generally treated as long vowels. However, when either οι or αι occur at the end of the word, though they are pronounced the same, they are treated as short vowels for accent purposes. ἄνθρωποι (οι is final, therefore short); ἀνθρώποις (οι is not final, therefore long). (Summers/Sawyer, p. 4)"
+      "_verify": "confirmed via critique: tiles play diphthong sound; example words play example audio",
+      "content": [
+        {
+          "type": "heading",
+          "text": "Note"
+        },
+        {
+          "type": "para",
+          "text": "Diphthongs are generally treated as long vowels. However, when either οι or αι occur at the end of the word, though they are pronounced the same, they are treated as short vowels for accent purposes."
+        },
+        {
+          "type": "defList",
+          "rows": [
+            [
+              "ἄνθρωποι",
+              "(οι is final, therefore short)",
+              "chapt_1_a_anthoi"
+            ],
+            [
+              "ἀνθρώποις",
+              "(οι is not final, therefore long)",
+              "chapt_1_a_antois"
+            ]
+          ]
+        },
+        {
+          "type": "refs",
+          "text": "(Summers/Sawyer, p. 4)"
+        }
+      ]
     },
     {
       "id": "c1_learn_iota_subscripts",
@@ -512,9 +690,50 @@
       "title": "Learn Greek Language History",
       "instructions": "",
       "items": [],
-      "_verify": "remaining scrolled text (five stages)",
       "mode": "textPage",
-      "textPartial": "Greek is one of the oldest members of the Indo-European family of languages. Other members of this family are Sanskrit, which is older, and Latin and its descendants (the Romance languages: French, Spanish, etc.), which are younger. English is derived from the Teutonic branch and Russian from the Slavic branch of the Indo-European family. Hebrew is found in a totally different family--Semitic languages (Aramaic, Akkadian, Ugaritic etc.). The Greek language has developed through five stages: 1) Formative Period: This period extended from \"Linear B\" ..."
+      "content": [
+        {
+          "type": "heading",
+          "text": "Greek Language History"
+        },
+        {
+          "type": "para",
+          "text": "Greek is one of the oldest members of the Indo-European family of languages. Other members of this family are Sanskrit, which is older, and Latin and its descendants (the Romance languages: French, Spanish, etc.), which are younger. English is derived from the Teutonic branch and Russian from the Slavic branch of the Indo-European family. Hebrew is found in a totally different family--Semitic languages (Aramaic, Akkadian, Ugaritic etc.)."
+        },
+        {
+          "type": "para",
+          "text": "The Greek language has developed through five stages:"
+        },
+        {
+          "type": "numbered",
+          "items": [
+            {
+              "label": "Formative Period",
+              "text": "This period extended from \"Linear B\" (ca 1200 BC) down through the time of Homer (ca 900 BC)."
+            },
+            {
+              "label": "Classical Period",
+              "text": "The Classical Period was from the time of Homer down to Alexander the Great (330 BC). There were three dialects during this period (Doric, Aeolic, and Ionic). Attic, a branch of Ionic, became the predominant form in which most of the famous classical Greek authors wrote, such as Plato and Aristotle."
+            },
+            {
+              "label": "The Koine Period",
+              "text": "As Alexander spread the Greek language and culture through the ancient world many of the subtleties of classical Greek were lost. Greek was simplified and changed as it interfaced with other cultures. This common language Greek came to be known as Koine (common) Greek. It was the language used from 300 BC to 300 AD. It was in this language that the Septuagint (the Greek translation of Old Testament), the New Testament and the writings of the early Church fathers were written. The nature of Koine eluded scholars because of its simplicity when compared to Classical Greek, which led some scholars to explain it as a \"Holy Ghost\" language created just for the Bible. After the Egyptian papyri, inscriptions, and ostraca were found, scholars realized that the New Testament was written in the common everyday language of the people of those times. At points the New Testament will manifest Hebraisms where the influence of Hebrew and/or Aramaic may be seen."
+            },
+            {
+              "label": "The Byzantine Period",
+              "text": "During the Byzantine Period (A.D. 330-1453), Greek was spoken in the eastern half of the Roman empire which was centered in Constantinople."
+            },
+            {
+              "label": "The Modern Period",
+              "text": "The Modern Period dates from 1453 to the present. Modern Greek is closer to Koine than it is to Classical Greek."
+            }
+          ]
+        },
+        {
+          "type": "refs",
+          "text": "(Dana & Mantey, pp. 1ff.; Mounce, pp. 1f.)"
+        }
+      ]
     },
     {
       "id": "c1_learn_vocab",
@@ -577,9 +796,141 @@
       "title": "Learn Bibliography",
       "instructions": "",
       "items": [],
-      "_verify": "remaining scrolled entries",
+      "_verify": "one entry transcribed as shown on screen: 'Mouton, J., W. F. Howard, and N. Turner' -- almost certainly the original's typo for Moulton; kept verbatim per fidelity directive, flag for user decision",
       "mode": "textPage",
-      "textPartial": "First Year Grammars: Kubo, Sakae. A Beginner's New Testament Greek Grammar (Washington D.C.: University Press of America, 1979). LaSor, William S. Handbook of New Testament Greek (Grand Rapids: Eerdmans, 1973). Machen, J. Gresham. New Testament Greek for Beginners (Toronto: The Macmillan Company, 1923). * Mounce, William D. Basics of Biblical Greek: Grammar (Grand Rapids: Zondervan, 1993). Story, J. Lyle and Cullen Story. Greek to Me: ..."
+      "content": [
+        {
+          "type": "heading",
+          "text": "First Year Grammars"
+        },
+        {
+          "type": "biblist",
+          "starNote": "* = recommended (as starred in the original)",
+          "items": [
+            "Kubo, Sakae. A Beginner's New Testament Greek Grammar (Washington D.C.: University Press of America, 1979).",
+            "LaSor, William S. Handbook of New Testament Greek (Grand Rapids: Eerdmans, 1973).",
+            "Machen, J. Gresham. New Testament Greek for Beginners (Toronto: The Macmillan Company, 1923).",
+            "* Mounce, William D. Basics of Biblical Greek: Grammar (Grand Rapids: Zondervan, 1993).",
+            "Story, J. Lyle and Cullen Story. Greek to Me: Learning New Testament Greek Through Memory Visualization (San Francisco: Harper & Row, 1979).",
+            "Summers, Ray and Thomas Sawyer. Essentials of New Testament Greek (Nashville: Broadman & Holman, 1995).",
+            "Wenham, J. W. The Elements of New Testament Greek (Cambridge: Cambridge University Press, 1965)."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "New Testament Text"
+        },
+        {
+          "type": "biblist",
+          "items": [
+            "* Aland, B., et al., eds. The Greek New Testament, 4th ed. (Stuttgart: United Bible Society, 1993)."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "More Advanced Grammars"
+        },
+        {
+          "type": "biblist",
+          "items": [
+            "Black, David A. Using New Testament Greek in Ministry (Grand Rapids: Baker Book House, 1993).",
+            "Blass, F. and Debrunner, A. trans. R.W. Funk. A Greek Grammar of the New Testament and Other Early Christian Literature (Chicago: University Press, 1961).",
+            "Dana, H.E. and Julius Mantey. A Manual Grammar of the Greek New Testament (Toronto: The Macmillan Company, 1927).",
+            "Fanning, Buist M. Verbal Aspect in New Testament Greek (Oxford: Clarendon Press, 1990).",
+            "Grassmick, John D. Principles and Practice of Greek Exegesis (Dallas: Dallas Theological Seminary, 1974).",
+            "Greenlee, J. Harold. A Concise Exegetical Grammar of New Testament Greek (Grand Rapids: Eerdmans, 1953).",
+            "Levinsohn, Stephen. Discourse Features of New Testament Greek (Dallas: Summer Institute of Linguistics, 1992).",
+            "Louw, J. P. Semantics of New Testament Greek (Philadelphia: Fortress Press, 1982).",
+            "Mouton, J., W. F. Howard, and N. Turner. A Grammar of New Testament Greek, 4 vols. (Edinburgh: T. & T. Clark, 1963).",
+            "Perschbacher, Wesley. New Testament Greek Syntax (Chicago: Moody Press, 1995).",
+            "Porter, S.E. Idioms of the Greek New Testament (Sheffield: JSOT, 1992).",
+            "Robertson, A.T. A Grammar of the Greek New Testament in Light of Historical Research (Nashville: Broadman, 1923).",
+            "Robertson, A.T. and W. Hersey Davis. A New Short Grammar of the Greek Testament (Grand Rapids: Baker Book House, 1931).",
+            "*Wallace, Daniel. An Exegetical Syntax of the Greek New Testament (Grand Rapids: Zondervan, 1995).",
+            "Zerwick, Maximilian. Biblical Greek (Rome: Scripta Pontificii Instituti Biblici, 1963)."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Lexicons"
+        },
+        {
+          "type": "biblist",
+          "items": [
+            "* Bauer, W., Arndt, W., Gingrich, F. and Danker, F. eds. A Greek-English Lexicon of the New Testament and Other Early Christian Literature (Chicago: University of Chicago Press, 1979).",
+            "Liddell, Henry G. and Robert Scott. A Greek-English Lexicon (Oxford: Clarendon Press, 1925).",
+            "Newman, B. M. A Concise Greek-English Dictionary of the New Testament (London: United Bible Societies, 1971).",
+            "Louw, Johannes and Nida, Eugene. Greek-English Lexicon of the New Testament Based on Semantic Domains (New York: United Bible Societies, 1988)."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Vocabulary Lists"
+        },
+        {
+          "type": "biblist",
+          "items": [
+            "* Metzger, Bruce M. Lexical Aids for Students of New Testament Greek (Princeton: Theological Book Agency, 1972).",
+            "Morrison, Clinton and David Barnes. New Testament Word Lists for Rapid Reading of the Greek New Testament (Grand Rapids: Wm. B. Eerdmans, 1966).",
+            "Trenchard, Warren. The Student's Complete Vocabulary Guide to the Greek New Testament (Grand Rapids: Zondervan Publishing House, 1992).",
+            "Van Voorst, Robert. Building Your New Testament Greek Vocabulary (Grand Rapids: Wm. B. Eerdmans, 1990)."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Rapid Reading Aids"
+        },
+        {
+          "type": "biblist",
+          "items": [
+            "Alsop, John R. Index to the Bauer-Arndt-Gingrich Greek Lexicon (Grand Rapids: Zondervan, 1968).",
+            "Douglas, J.D. ed., The New Greek-English Interlinear New Testament (Wheaton: Tyndale, 1990).",
+            "* Kubo, Sakae. A Reader's Greek-English Lexicon of the New Testament and a Beginner's Guide for the Translation of New Testament Greek (Berrien Springs: Andrews University Press, 1975).",
+            "Mounce, W. D. Analytical Lexicon of the Greek New Testament (Grand Rapids: Zondervan, 1992).",
+            "Perschbacher, W. J. Refresh Your Greek: Practical Helps for Reading the Greek New Testament (Chicago: Moody Press, 1989).",
+            "Rieneker, F. A Linguistic Key to the Greek New Testament (Grand Rapids: Zondervan, 1980)."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Textual Criticism"
+        },
+        {
+          "type": "biblist",
+          "items": [
+            "Aland, K. and B. Aland. The Text of the New Testament (Grand Rapids: Eerdmans, 1989).",
+            "Greenlee, J.H. Introduction to New Testament Textual Criticism (Grand Rapids: Eerdmans, 1964).",
+            "Metzger, B. M. The Text of the New Testament: Its Transmission, Corruption, and Restoration (NY: Oxford, 1992)."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Word Study Dictionaries"
+        },
+        {
+          "type": "biblist",
+          "items": [
+            "Balz, H. and G. Schneider. eds. Exegetical Dictionary of the New Testament (3 vols.) (Grand Rapids: Eerdmans, 1993).",
+            "Brown, Collin, ed. The New International Dictionary of New Testament Theology (3 vols.) (Grand Rapids: Zondervan, 1975).",
+            "Kittel, G. The Theological Dictionary of the New Testament. Trans. G. Bromiley. (9 vols.) (Grand Rapids: Eerdmans, 1979). Also available in a one volume condensed version."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Concordances"
+        },
+        {
+          "type": "para",
+          "text": "See a host of electronic concordancing programs."
+        },
+        {
+          "type": "biblist",
+          "items": [
+            "The New Englishman's Greek Concordance of the New Testament (Grand Rapids: Zondervan, 1970).",
+            "Moulton, W. and A. Geden. A Concordance to the Greek Testament (Edinburgh: T. & T. Clark, 1978)."
+          ]
+        }
+      ]
     }
   ],
   "drill": [
@@ -867,40 +1218,48 @@
       "instructions": "Read the Greek-lettered English phrase aloud, then reveal the answer",
       "items": [
         {
+          "display": "ονεστι ιζ θα βεστ πολισι",
           "answer": "Honesty is the best policy"
         },
         {
+          "display": "φαμιλιαριτι βριδς κοντεμπτ",
+          "answer": "Familiarity breeds contempt"
+        },
+        {
+          "display": "θα πεν ιζ μαιτιερ θαν θα σορδ",
           "answer": "The pen is mightier than the sword"
         },
         {
+          "display": "μισφορτευν μειξ φωζ οφ φρενζ",
           "answer": "Misfortune makes foes of friends"
         },
         {
+          "display": "βετερ βι αλων θεν ιν βαδ κομπανι",
           "answer": "Better be alone than in bad company"
         },
         {
+          "display": "α γυδ βιγινιν μειξ α γυδ ενδιγγ",
           "answer": "A good beginning makes a good ending"
         },
         {
+          "display": "αγγερ ιζ βριφ μαδνες",
           "answer": "Anger is brief madness"
         },
         {
+          "display": "γρειτ γριφς αρ μευτ",
           "answer": "Great griefs are mute"
         },
         {
+          "display": "κιπ θα φειθ",
+          "answer": "Keep the faith"
+        },
+        {
+          "display": "λυκ βιφορ ιυ λιπ",
           "answer": "Look before you leap"
         },
         {
+          "display": "πενιζ μακ δολαρζ",
           "answer": "Pennies make dollars"
-        },
-        {
-          "answer": "Kindness is never lost"
-        },
-        {
-          "answer": "A shortcut seldom is"
-        },
-        {
-          "answer": "Time is the best teacher"
         }
       ],
       "ui": {
@@ -914,7 +1273,8 @@
         ]
       },
       "citation": "R. Fergusson, The Facts on File Dictionary of Proverbs",
-      "_verify": "proverb count/order (12 extracted); the displayed Greek-letter phonetic text needs extraction or transcription per item"
+      "_source": "TBK-extracted legacy pairs converted via font-map; all 11 cross-checked against DOSBox screenshots",
+      "_note": "TBK holds a spare unused bank (Kindness is never lost / Run to win / Sloth breeds poverty / A shortcut seldom is / Time is the best teacher) -- not part of the 11-item exercise"
     },
     {
       "id": "c1_ex_reading_people_places",
@@ -1160,5 +1520,34 @@
     ],
     "scorePrompt": "Give it a try before getting a score"
   },
-  "objectivesPreamble": "You will be able to:"
+  "objectivesPreamble": "You will be able to:",
+  "sequence": [
+    "c1_learn_objectives",
+    "c1_learn_letters",
+    "c1_drill_letter_names",
+    "c1_ex_pronounce",
+    "c1_ex_letter_to_name",
+    "c1_ex_name_to_letter",
+    "c1_learn_translit",
+    "c1_drill_translit",
+    "c1_ex_translit",
+    "c1_ex_transcribe",
+    "c1_learn_capitals",
+    "c1_drill_capitals",
+    "c1_learn_vowels",
+    "c1_learn_diphthongs",
+    "c1_drill_diphthong",
+    "c1_learn_iota_subscripts",
+    "c1_ex_phonetic",
+    "c1_ex_reading_people_places",
+    "c1_learn_history",
+    "c1_learn_vocab",
+    "c1_drill_vocab_gk_en",
+    "c1_drill_vocab_en_gk",
+    "c1_ex_speller",
+    "c1_learn_bibliography",
+    "c1_qr_vocab",
+    "c1_qr_letters"
+  ],
+  "_sequence_note": "Derived from the original's stated Sequential-Next pedagogy (learn segment -> its drills -> its exercises); TBK page-storage order is not authoritative. VERIFY once by walking Sequential Next in DOSBox and reordering if needed."
 }

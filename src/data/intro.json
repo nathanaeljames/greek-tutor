@@ -1,0 +1,102 @@
+{
+  "_comment": "Introduction pseudo-chapter (INTRO books). Text verbatim from the running original. Structure: single 'learn' list; no drills/exercises. Audio: intro_a_welcom = Welcome page Play button (listen-verify); intro_a_intro1..4 roles unassigned -- listen during transcode and map to pages.",
+  "id": "intro",
+  "title": "Introduction",
+  "learn": [
+    {
+      "id": "intro_welcome",
+      "type": "contentAudio",
+      "mode": "textPage",
+      "title": "Introduction",
+      "playButton": {
+        "label": "Play",
+        "audio": "intro_a_welcom"
+      },
+      "content": [
+        {
+          "type": "heading",
+          "text": "Introduction"
+        },
+        {
+          "type": "para",
+          "text": "WELCOME -- Greek Tutor attempts to harness the power of interactive multimedia to ease and enhance the learning of New Testament Greek. The author designed the program to be intuitive. It requires no computer skills other than pointing and clicking a mouse to access the topics of study or to respond to drill questions. Interactive multimedia has advantages both for the student and for the instructor."
+        },
+        {
+          "type": "para",
+          "text": "The chapters of Greek Tutor will take you through the basics of Greek (alphabet, nouns, verbs, etc.) into an easy reading approach to the book of John. Several appendices will help you to build your vocabulary and to reinforce your learning."
+        },
+        {
+          "type": "para",
+          "text": "This program will work in conjunction with several textbooks. There is a mini-tutorial which explains how to navigate through the program. -- ENJOY"
+        }
+      ]
+    },
+    {
+      "id": "intro_chapter_structure",
+      "type": "contentAudio",
+      "mode": "textPage",
+      "title": "Chapter Structure",
+      "content": [
+        {
+          "type": "heading",
+          "text": "Chapter Structure"
+        },
+        {
+          "type": "para",
+          "text": "Each chapter is built around four levels of learning:"
+        },
+        {
+          "type": "numbered",
+          "items": [
+            {
+              "label": "Learn Menu",
+              "text": "introduces and teaches you the new material;"
+            },
+            {
+              "label": "Drill Menu",
+              "text": "allows you to practice in a multiple choice format;"
+            },
+            {
+              "label": "Exercise Menu",
+              "text": "gives you detailed practice in spelling out words; and"
+            },
+            {
+              "label": "Quick Review",
+              "text": "charts and verses designed for quick review."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "intro_navigation",
+      "type": "contentAudio",
+      "mode": "textPage",
+      "title": "Navigation",
+      "_userDecision": "Original 'Navigation Principles' and 'Special Icon Features' pages describe the Win 3.1 UI (pull-down menus, icon bar, mouse). Options: (a) omit; (b) include verbatim as historical note; (c) rewrite for the app's own navigation. Drafted as (c) placeholder -- REPLACE with user-approved copy.",
+      "content": [
+        {
+          "type": "heading",
+          "text": "Getting around"
+        },
+        {
+          "type": "para",
+          "text": "Placeholder: brief description of the app's navigation (section tabs, sequential Previous/Next, the chapter map, and the table of contents) to be written once navigation copy is approved."
+        }
+      ]
+    }
+  ],
+  "sequence": [
+    "intro_welcome",
+    "intro_chapter_structure",
+    "intro_navigation"
+  ],
+  "audioInventory": [
+    "intro_a_welcom",
+    "intro_a_intro1",
+    "intro_a_intro2",
+    "intro_a_intro3",
+    "intro_a_intro4",
+    "intro_d_logwn"
+  ]
+}

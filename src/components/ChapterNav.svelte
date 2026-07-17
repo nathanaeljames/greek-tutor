@@ -9,6 +9,13 @@
   <div class="toc-hero-sub">Learn Koine Greek &mdash; based on the ParsonsTech Greek Tutor by Dr. Ted Hildebrandt</div>
 </div>
 
+{#if toc.intro && isChapterAvailable(toc.intro.id)}
+  <button class="menu-item" on:click={() => (location.hash = `#/chapter/${toc.intro.id}`)}>
+    <span class="dot"></span>
+    <span>{toc.intro.title}</span>
+  </button>
+{/if}
+
 <div class="section-label">Chapters</div>
 {#each toc.chapters as ch}
   {#if isChapterAvailable(ch.id)}
