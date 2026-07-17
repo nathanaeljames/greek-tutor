@@ -27,6 +27,19 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
         runtimeCaching: [
           {
+            // The audio manifest must stay reachable offline (Settings + hub
+            // badges) yet still pick up changes online so packs can flag
+            // 'update'. NetworkFirst, registered BEFORE the CacheFirst audio
+            // route below so it wins the match for this one path.
+            urlPattern: ({ url }) => url.pathname.endsWith('/audio/audio-manifest.json'),
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'greek-tutor-manifest',
+              expiration: { maxEntries: 2 },
+              cacheableResponse: { statuses: [0, 200] }
+            }
+          },
+          {
             urlPattern: ({ url }) => url.pathname.includes('/audio/'),
             handler: 'CacheFirst',
             options: {

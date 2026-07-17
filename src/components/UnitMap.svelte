@@ -6,6 +6,7 @@
   import { createEventDispatcher, tick } from 'svelte';
   import { getChapter, SECTIONS } from '../lib/content.js';
   import { getActivityState, getSectionProgress, getChapterProgress, getCurrentActivity } from '../lib/progress.js';
+  import DownloadControl from './DownloadControl.svelte';
 
   export let chapterId;
   export let variant = 'hub';               // 'hub' | 'sidebar'
@@ -55,6 +56,7 @@
       <div class="hub-title">{chapter.number != null ? `${chapter.number}. ${chapter.title}` : chapter.title}</div>
       <div class="hub-progress-line">{chapterProg.done} of {chapterProg.total} complete</div>
       <div class="progress-track"><div class="progress-fill" style="width:{pct}%"></div></div>
+      {#if !isSidebar}<DownloadControl packId={chapterId} />{/if}
     </div>
 
     {#each SECTIONS.filter(s => (chapter[s] || []).length) as section}

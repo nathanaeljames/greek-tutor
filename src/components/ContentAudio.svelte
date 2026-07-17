@@ -4,7 +4,7 @@
   // bespoke pedagogical layouts (equation chart, vowel stair, diphthong rows,
   // review matrices) reconstructed from the original's yellow panels.
   import { slide } from 'svelte/transition';
-  import { resolveItems } from '../lib/content.js';
+  import { resolveItems, shuffle } from '../lib/content.js';
   import { play } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import RichContent from './RichContent.svelte';
@@ -12,7 +12,29 @@
   export let chapter;
   export let activity;
 
-  $: items = resolveItems(chapter, activity);
+  // Items resolve from the data; activities flagged order:"shuffled"
+  // (Pronounce Letters Exercise) get a fresh Fisher-Yates shuffle each visit.
+  // applyOrder is a plain helper fed reactive values as arguments so it never
+  // becomes its own reactive dependency (no self-invalidation loop): it
+  // reshuffles only when the activity id changes (fresh mount or rail-next),
+  // and leaves the order untouched on incidental re-runs (e.g. progressTick).
+  let items = [];
+  let orderedForId = null;
+  $: base = resolveItems(chapter, activity);
+  $: applyOrder(activity.id, activity.order, base);
+  function applyOrder(id, order, baseItems) {
+    if (order === 'shuffled') {
+      if (orderedForId !== id) {
+        orderedForId = id;
+        idx = -1;
+        revealed = false;
+        items = shuffle(baseItems);
+      }
+    } else {
+      orderedForId = null;
+      items = baseItems;
+    }
+  }
   $: mode = activity.mode || 'chart';
   $: id = activity.id;
 
@@ -22,6 +44,7 @@
   $: isEquationChart = isTranslitChart || isCapitalsChart;
   $: isVowels = id === 'c1_learn_vowels';
   $: isDiphthongsLearn = id === 'c1_learn_diphthongs';
+  $: isIotaLearn = id === 'c1_learn_iota_subscripts';
   $: isReviewVocab = id === 'c1_qr_vocab';
   $: isReviewLetters = id === 'c1_qr_letters';
   // Arrow cue restored above the three letter-grid drills.
@@ -80,6 +103,8 @@
   $: letterRows = isReviewLetters ? chapter.alphabet.letters : [];
   // --- Learn Diphthongs rows ---
   $: diphthongs = isDiphthongsLearn ? chapter.alphabet.diphthongs : [];
+  // --- Learn Iota Subscripts rows (same layout as diphthongs) ---
+  $: iotaRows = isIotaLearn ? chapter.alphabet.iotaSubscripts : [];
   // --- Learn Vowels stair groups ---
   $: vowelGroups = isVowels
     ? [
@@ -251,6 +276,26 @@
           <button class="diph-ex" class:tappable={d.exampleAudio} on:click={() => d.exampleAudio && play(d.exampleAudio)}>
             <span class="greek">{d.example}</span>
             <span class="diph-gloss">{d.exampleGloss}</span>
+          </button>
+        </div>
+      {/each}
+    </div>
+  </div>
+  {#if activity.content}<div class="card"><RichContent blocks={activity.content} /></div>{/if}
+  {#if activity.note}<div class="note">{activity.note}</div>{/if}
+
+{:else if isIotaLearn}
+  <!-- Learn Iota Subscripts: rows (subscript vowel / sound / example / gloss).
+       Tile tap plays row.audio; the example word tap plays row.exampleAudio. -->
+  <div class="card">
+    <div class="diph-rows">
+      {#each iotaRows as r}
+        <div class="diph-row">
+          <button class="diph-tile greek" on:click={() => r.audio && play(r.audio)}>{r.greek}</button>
+          <div class="diph-sound">{r.sound}</div>
+          <button class="diph-ex" class:tappable={r.exampleAudio} on:click={() => r.exampleAudio && play(r.exampleAudio)}>
+            <span class="greek">{r.example}</span>
+            <span class="diph-gloss">{r.exampleGloss}</span>
           </button>
         </div>
       {/each}

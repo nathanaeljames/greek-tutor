@@ -15,24 +15,15 @@
     return { ref: it.ref, greek: l.greek || '', gloss: l.gloss || '', audio: l.audio || null };
   });
 
-  // Base lowercase letters (sigma shown medial; final sigma is its own tile).
-  const letterTiles = chapter.alphabet.letters.map(l => (l.lower === 'σ/ς' ? 'σ' : l.lower));
-
-  // Diacritic tiles: [display glyph, combining codepoints to append]. Composite
-  // iota-subscript vowels are inserted whole.
-  const diacriticTiles = [
-    { label: '´', marks: ['́'] },        // acute
-    { label: '`', marks: ['̀'] },        // grave
-    { label: '῀', marks: ['͂'] },        // circumflex
-    { label: '῾', marks: ['̔'] },        // rough breathing
-    { label: '᾿', marks: ['̓'] },        // smooth breathing
-    { label: '῎', marks: ['̓', '́'] }, // smooth + acute
-    { label: '῞', marks: ['̔', '́'] }, // rough + acute
-    { label: '῏', marks: ['̓', '͂'] }, // smooth + circumflex
-    { label: '῟', marks: ['̔', '͂'] }, // rough + circumflex
-    { label: '῍', marks: ['̓', '̀'] }  // smooth + grave
-  ];
-  const compositeTiles = ['ᾳ', 'ῃ', 'ῳ'];
+  // Tile keyboard is data-driven from chapt-01.json `spellerTiles` (the
+  // authoritative 39-tile inventory: 25 letters + 11 diacritic marks + 3
+  // iota-subscript composites). Each diacritic's `apply` is the combining
+  // sequence appended to the previous character before NFC normalization.
+  // Falls back to a minimal derived inventory if the data ever lacks it.
+  const tiles = activity.spellerTiles || {};
+  const letterTiles = tiles.letters || chapter.alphabet.letters.map(l => (l.lower === 'σ/ς' ? 'σ' : l.lower));
+  const diacriticTiles = tiles.diacritics || [];
+  const compositeTiles = tiles.composites || ['ᾳ', 'ῃ', 'ῳ'];
 
   // Physical keyboard: legacy roman->Greek layout (font-map _keyboard_layout_note).
   const KEYMAP = {
@@ -60,9 +51,9 @@
   $: word = words[wordIndex];
 
   function appendChar(ch) { built += ch; }
-  function appendMark(marks) {
+  function appendMark(apply) {
     if (!built) return;                       // nothing to combine onto
-    built = (built + marks.join('')).normalize('NFC');
+    built = (built + apply).normalize('NFC');
   }
   function backspace() {
     if (!built) return;
@@ -165,11 +156,10 @@
       {#each letterTiles as ch}
         <button class="tk-key greek" on:click={() => appendChar(ch)}>{ch}</button>
       {/each}
-      <button class="tk-key greek" on:click={() => appendChar('ς')}>ς</button>
     </div>
     <div class="tk-marks">
       {#each diacriticTiles as d}
-        <button class="tk-key mark" on:click={() => appendMark(d.marks)}>{d.label}</button>
+        <button class="tk-key mark" title={d.name} on:click={() => appendMark(d.apply)}>{d.label}</button>
       {/each}
       {#each compositeTiles as ch}
         <button class="tk-key greek" on:click={() => appendChar(ch)}>{ch}</button>

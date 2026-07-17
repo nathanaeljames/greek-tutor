@@ -15,6 +15,10 @@ const chapters = { intro, chapt_1: chapt1 };
 
 export function getToc() { return toc; }
 
+// Ids of chapters whose content is actually built (drives which audio packs
+// surface on chapter hubs — Settings' "Download all" still covers everything).
+export function getBuiltChapterIds() { return Object.keys(chapters); }
+
 export function getChapter(id) { return chapters[id] || null; }
 
 export function isChapterAvailable(id) { return id in chapters; }

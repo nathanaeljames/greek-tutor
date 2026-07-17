@@ -14,6 +14,8 @@
   import BottomBar from './components/BottomBar.svelte';
   import SequentialRail from './components/SequentialRail.svelte';
   import EndOfChapterDialog from './components/EndOfChapterDialog.svelte';
+  import DownloadControl from './components/DownloadControl.svelte';
+  import Settings from './components/Settings.svelte';
   import { onAudioProblem, stop as stopAudio } from './lib/audio.js';
   import { getChapter, getActivity, sectionOfActivity, SECTIONS } from './lib/content.js';
   import { getCurrentActivity, getChapterProgress } from './lib/progress.js';
@@ -36,6 +38,8 @@
     } else if (parts[0] === 'chapter' && parts[1]) {
       const section = SECTIONS.includes(parts[2]) ? parts[2] : null;
       route = { view: 'chapter', chapterId: parts[1], section };
+    } else if (parts[0] === 'settings') {
+      route = { view: 'settings' };
     } else {
       route = { view: 'toc' };
     }
@@ -113,9 +117,11 @@
   $: screenTitle =
     route.view === 'toc'
       ? 'Greek Tutor'
-      : route.view === 'chapter'
-        ? chapterLabel(chapter)
-        : (activity ? activity.title : 'Activity');
+      : route.view === 'settings'
+        ? 'Storage & Downloads'
+        : route.view === 'chapter'
+          ? chapterLabel(chapter)
+          : (activity ? activity.title : 'Activity');
 
   $: if (typeof document !== 'undefined') {
     document.title = route.view === 'toc' ? 'Greek Tutor' : `Greek Tutor — ${screenTitle}`;
@@ -131,7 +137,8 @@
     title={screenTitle}
     showBack={route.view !== 'toc'}
     backHash={route.view === 'activity' ? `#/chapter/${route.chapterId}` : '#/'}
-    showToc={route.view !== 'toc'} />
+    showToc={route.view !== 'toc'}
+    showSettings={route.view === 'toc'} />
 
   <div class="app-main">
     {#if sidebarVisible}
@@ -144,12 +151,15 @@
       <div class="content">
         {#if route.view === 'toc'}
           <ChapterNav />
+        {:else if route.view === 'settings'}
+          <Settings />
         {:else if route.view === 'chapter'}
           {#if wide}
             <div class="hub-pane-wide">
               <div class="hub-title">{chapter ? chapterLabel(chapter) : ''}</div>
               <div class="hub-progress-line">{hubProg.done} of {hubProg.total} complete</div>
               <div class="progress-track"><div class="progress-fill" style="width:{hubPct}%"></div></div>
+              <DownloadControl packId={route.chapterId} />
               <p class="hub-hint">Select an activity from the Unit Map to begin.</p>
             </div>
           {:else}

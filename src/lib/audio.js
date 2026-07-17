@@ -18,9 +18,14 @@ export function audioPath(id) {
 }
 
 function warmCache(src) {
-  // Safari plays media via ranged requests (206), which are not cacheable.
-  // Fetch the complete file once so the SW stores a full 200 response;
-  // offline, rangeRequests:true slices this cached copy for the player.
+  // Play-time cache-into (the no-pack fallback). Safari plays media via ranged
+  // requests (206), which are not cacheable; fetch the complete file once so the
+  // SW stores a full 200 response that rangeRequests:true can slice offline.
+  // Bulk cache population is now owned by the download manager (downloads.js),
+  // which writes the SAME 'greek-tutor-audio' cache — there is no on-load
+  // full-chapter warm anymore (downloads are explicit taps only). This per-play
+  // warm must stay so offline audio never regresses for users who never tap
+  // Download and just play a file once while online.
   if (!('caches' in window)) return;
   caches.match(src).then(hit => {
     if (!hit) fetch(src).catch(() => { });
