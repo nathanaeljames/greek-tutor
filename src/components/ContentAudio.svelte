@@ -80,7 +80,10 @@
     const item = items[idx];
     if (!item) return;
     if (mode === 'stepper' && item.audio) play(item.audio);            // Learn Letters: audioFull
-    if (mode === 'flashcard' && item.audio) play(item.audio);          // auto-play lemma on Next
+    // Flashcard auto-play on Next — but NOT while the Greek is hidden (P5a):
+    // hearing the lemma would give the answer away. Autoplay resumes when the
+    // mode shows the Greek; tapping "reveal" plays it (the learner asking).
+    if (mode === 'flashcard' && item.audio && vocabMode !== 'hideGreek') play(item.audio);
   }
   // selfCheck sequences (Pronounce Letters / Phonetic Reading) complete on
   // reaching the final item, not on visit.
@@ -193,9 +196,11 @@
     {:else}
       <div class="flash-pane"><div class="label">Greek Word</div>
         {#if showGreek}
-          <div class="value greek">{items[idx].display}</div>
+          <!-- Greek-tap rule (P5b): the visible Greek word pronounces itself. -->
+          <button class="value greek greek-say" on:click={() => items[idx].audio && play(items[idx].audio)}>{items[idx].display}</button>
         {:else}
-          <button class="flash-hidden" on:click={() => (revealG = true)}>Tap to reveal</button>
+          <!-- Revealing plays the lemma (P5a — the learner asked for it). -->
+          <button class="flash-hidden" on:click={() => { revealG = true; if (items[idx].audio) play(items[idx].audio); }}>Tap to reveal</button>
         {/if}</div>
       <div class="flash-pane"><div class="label">Word Meaning</div>
         {#if showEnglish}
@@ -218,7 +223,9 @@
     {#if idx < 0}
       <div class="instructions">{activity.ui?.hint || 'Click Next to begin.'}</div>
     {:else}
-      <div class="prompt greek">{items[idx].display}</div>
+      <!-- Greek-tap rule (P7): the displayed letter plays its audioShort (the
+           same clip Check Answer speaks). The tap never reveals or advances. -->
+      <button class="prompt greek greek-say" on:click={() => { const a = items[idx].audio || (items[idx].meta && items[idx].meta.audioShort); if (a) play(a); }}>{items[idx].display}</button>
       {#if revealed}
         <div class="fields">
           <div class="field"><div class="label">The Letter's Name:</div><div class="value">{items[idx].meta.name || ''}</div></div>

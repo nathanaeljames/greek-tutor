@@ -127,6 +127,12 @@ export function allState() {
   return derived(store, m => m[ALL] || { state: 'none', done: 0, total: 0, error: null });
 }
 
+// Fingerprint of every pack's state (not progress counts), so Settings can
+// re-read the cache file count exactly when a download/clear lands rather
+// than on every per-file tick (P1).
+export const packStatesFingerprint = derived(store, m =>
+  Object.entries(m).map(([id, v]) => `${id}:${v.state}`).sort().join('|'));
+
 export async function storageInfo() {
   const info = { usage: null, quota: null, persisted: false };
   try {
@@ -137,6 +143,66 @@ export async function storageInfo() {
     if (navigator.storage && navigator.storage.persisted) info.persisted = await navigator.storage.persisted();
   } catch (_) { /* leave nulls */ }
   return info;
+}
+
+// ---- P1: single-writer discipline against Vary-key duplication ----
+// The Cache API keys entries by URL *plus* the response's Vary headers, so two
+// writers (the SW CacheFirst /audio/ route caches its network response; we
+// put() the same URL here) can accumulate one entry per Vary-distinct request
+// instead of replacing each other — monotonic storage growth. Every match/
+// delete in this module therefore ignores Vary, and every put is preceded by
+// an ignoreVary delete: one entry per URL, guaranteed, regardless of what
+// Vary header the host serves. The SW route matches with the same option
+// (matchOptions in vite.config.js) so playback can never miss-and-refetch a
+// "different-vary" copy.
+const MATCH_ANY = { ignoreVary: true };
+async function putSingle(cache, src, resp) {
+  await cache.delete(src, MATCH_ANY);
+  await cache.put(src, resp);
+}
+
+// Ground truth the app controls (P1): how many audio files the cache actually
+// holds right now. Settings shows this beside the browser's storage estimate,
+// which iOS is known to update lazily after deletions.
+export async function audioFileCount() {
+  try {
+    if (!('caches' in self)) return null;
+    if (!(await caches.has(CACHE_NAME))) return 0;
+    const cache = await caches.open(CACHE_NAME);
+    return (await cache.keys()).length;
+  } catch (_) { return null; }
+}
+
+// Dev diagnostic (P1, gated behind ?debug in Settings): entry count, summed
+// response bytes, per-URL duplicate keys with their request headers and the
+// response's Vary header, plus all cache names. Desktop-Chrome first — its
+// storage.estimate() is prompt, so growth/reclaim is visible immediately.
+export async function audioCacheDiagnostic() {
+  const out = { cacheNames: [], entryCount: 0, totalBytes: 0, duplicates: [], estimate: null };
+  try {
+    out.cacheNames = await caches.keys();
+    const cache = await caches.open(CACHE_NAME);
+    const reqs = await cache.keys();
+    out.entryCount = reqs.length;
+    const byUrl = new Map();
+    for (const req of reqs) {
+      const resp = await cache.match(req);
+      const bytes = resp ? (await resp.clone().blob()).size : 0;
+      out.totalBytes += bytes;
+      const info = {
+        bytes,
+        vary: resp ? resp.headers.get('vary') : null,
+        reqHeaders: Object.fromEntries(req.headers.entries())
+      };
+      if (!byUrl.has(req.url)) byUrl.set(req.url, []);
+      byUrl.get(req.url).push(info);
+    }
+    for (const [url, entries] of byUrl) {
+      if (entries.length > 1) out.duplicates.push({ url, entries });
+    }
+    if (navigator.storage && navigator.storage.estimate) out.estimate = await navigator.storage.estimate();
+  } catch (e) { out.error = String(e); }
+  return out;
 }
 
 // Simple promise worker pool over a src list. onOne(src) resolves to
@@ -185,13 +251,13 @@ export async function downloadPack(packId, { force = false } = {}) {
   const onOne = async (src) => {
     try {
       if (!force) {
-        const hit = await cache.match(src);
+        const hit = await cache.match(src, MATCH_ANY);
         if (hit) { done += 1; patch(packId, { done }); return; }
       } else {
-        await cache.delete(src);
+        await cache.delete(src, MATCH_ANY);   // SW CacheFirst must miss -> network
       }
       const resp = await fetch(src, { signal: controller.signal });
-      if (resp && resp.ok) { await cache.put(src, resp); done += 1; patch(packId, { done }); }
+      if (resp && resp.ok) { await putSingle(cache, src, resp); done += 1; patch(packId, { done }); }
       else { failures.push(src); }
     } catch (e) {
       if (e.name === 'AbortError') throw e;
@@ -260,10 +326,10 @@ export async function downloadAll() {
 
   const onOne = async (src) => {
     try {
-      const hit = await cache.match(src);
+      const hit = await cache.match(src, MATCH_ANY);
       if (hit) { done += 1; bumpPack(src); patch(ALL, { done }); return; }
       const resp = await fetch(src, { signal: controller.signal });
-      if (resp && resp.ok) { await cache.put(src, resp); done += 1; bumpPack(src); patch(ALL, { done }); }
+      if (resp && resp.ok) { await putSingle(cache, src, resp); done += 1; bumpPack(src); patch(ALL, { done }); }
       else { failures.push(src); }
     } catch (e) {
       if (e.name === 'AbortError') throw e;

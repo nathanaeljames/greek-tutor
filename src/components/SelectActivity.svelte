@@ -9,6 +9,7 @@
 
   let options = [];
   let questions = [];
+  let promptIsGreek = false;   // generator-declared (P6-P9): Greek prompts are tappable
   let qIndex = 0;
   let attempts = 0;
   let correct = 0;
@@ -24,6 +25,7 @@
     const built = buildSelectQuestions(chapter, activity);
     options = built.options;
     questions = built.questions;
+    promptIsGreek = !!built.promptIsGreek;
     qIndex = 0; attempts = 0; correct = 0;
     feedback = ''; picked = null; answered = false; finished = false;
     maybePronounce();
@@ -78,7 +80,14 @@
     </div>
     <div class="controls"><button class="btn" on:click={init}>Start Over</button></div>
   {:else if current}
-    <div class="prompt greek">{current.prompt}</div>
+    <!-- Greek-tap rule (P6/P8/P9): a Greek PROMPT with audio pronounces itself
+         on tap (blue). The tap never answers, advances, or re-shuffles.
+         English prompts stay static; options are answers, never audio taps. -->
+    {#if promptIsGreek && current.promptAudio}
+      <button class="prompt greek greek-say" on:click={() => play(current.promptAudio)}>{current.prompt}</button>
+    {:else}
+      <div class="prompt greek">{current.prompt}</div>
+    {/if}
     <div class="feedback {feedbackKind}">{feedback}</div>
     <div class="grid options wide">
       {#each options as opt}

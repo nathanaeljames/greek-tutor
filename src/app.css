@@ -328,8 +328,14 @@ button { font: inherit; cursor: pointer; }
 
 /* ================= Phase 4 closeout ================= */
 
-/* ---- A4: kill double-tap zoom + 350ms tap delay; KEEP pinch-zoom ---- */
+/* ---- A4/P2: kill double-tap zoom + 350ms tap delay; KEEP pinch-zoom ---- */
 /* (manipulation preserves pinch/pan; we never use user-scalable=no.) */
+/* touch-action does NOT inherit — html/body + interactive selectors alone
+   leave every plain element (headings, panes, padding) at `auto`, and iOS
+   decides double-tap-zoom by the element under the finger. The universal
+   rule is the umbrella; the explicit rules below remain as documentation
+   of intent (P2). Nothing in the app relies on double-tap. */
+*, *::before, *::after { touch-action: manipulation; }
 html, body { touch-action: manipulation; }
 button, a, input, select, textarea, label,
 .tile, .tk-key, .chip, .act-row, .menu-item, .eq-cell, .diph-tile, .diph-ex,
@@ -382,6 +388,15 @@ button, a, input, select, textarea, label,
 .rv-greek { text-align: left; background: transparent; border: none; padding: 0; }
 .rv-greek:active { opacity: 0.6; }
 .rv-gloss { color: var(--teal-dark); }
+
+/* ---- P4-P9: the Greek-tap rule — any DISPLAYED Greek (prompts, flashcard
+   words, reading panes) is tappable and pronounces itself, blue per A6.
+   Answer-option buttons are NEVER audio taps (that would leak answers). ---- */
+.greek-say { display: block; background: transparent; border: none; padding: 0;
+  text-align: left; color: var(--link); cursor: pointer; }
+.greek-say:active { opacity: 0.6; }
+/* Keep the select-prompt layout identical to the static .prompt it replaces. */
+.prompt.greek-say { width: 100%; padding: 18px; text-align: center; }
 
 /* ---- A2: use the width on larger screens instead of a centered phone column ---- */
 @media (min-width: 900px) {

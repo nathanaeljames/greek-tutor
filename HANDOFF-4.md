@@ -482,3 +482,170 @@ on the number.
   repeatable in CI.
 - `sips` (macOS built-in) generated the icon sizes — note for anyone
   regenerating on Linux (use ImageMagick `convert`/`magick` instead).
+
+## 7. Punch list (2026-07-18)
+
+Session date: 2026-07-18, per 4-PUNCHLIST.md, applied on top of the Part B
+audit unit (ordering note honored; tree committed first). Verification ran
+against `npm run build` + `vite preview` with the usual headless-Chrome CDP
+driver: **30/30 functional checks, full 26-item rail walk, hard-offline
+regression, 0 console errors** (offline run shows exactly the one expected
+failed fetch for an un-cached file).
+
+### §0 data drop-in — RECONCILED, not applied verbatim (pipeline warning)
+
+The delivered chapt-01.json was generated from a **pre-audit** copy: besides
+the intended P3 field it reverted the entire B1 mode vocabulary
+(objectivesPage/equationChart/vowelStair/diphthongRows/reviewVocab/
+reviewLetters → textPage/chart) and dropped the three `ui.arrowCue` fields —
+that file would have broken the mode-keyed dispatch. Applied ONLY the
+intended change (c1_drill_letter_names `play: "audioShort"` + the
+`_play_note`) on top of the audit version. **Chat-side pipeline: regenerate
+your working copy from the committed file before the next drop-in.** Also
+corrected the now-stale alphabet `_comment` (it claimed the drills still use
+audioFull).
+
+### P1 — diagnosis findings (the REPEAT storage-growth item)
+
+Ran the full download → report → clear → report → re-download → report cycle
+on desktop Chrome (chapt_1 pack, 120 files, real fetches against preview).
+
+- **Suspect 1 (Vary-key duplication) is DEAD on Chrome.** Measured directly:
+  two `cache.put()`s of the same URL whose requests differ in a header named
+  by the response's `Vary` produce **one** entry — Chrome's put replaces
+  regardless of Vary. Full-cycle inspection confirms: 120 entries after
+  every download, **zero duplicate URLs at every stage**. (Note the
+  precondition IS real: even vite preview serves audio with `Vary: Origin`,
+  and Cache-API *matching* does honor Vary — so the miss-and-refetch waste
+  path existed even though put-duplication does not. WebKit's put behavior
+  was not testable here; the fix below covers it either way.)
+- **Suspect 2 (lazy reclamation reporting) is CONFIRMED — on desktop Chrome,
+  not just iOS.** With the cache provably empty (0 entries, 0 bytes),
+  `storage.estimate()` did NOT drop after Clear (2.30 MB → 2.30 MB) and rose
+  monotonically across cycles (0.8 → 2.3 → 3.8 MB) — exactly the device
+  symptom. After killing and restarting the browser process with the same
+  profile it reconciled only partially (3.9 → 2.7 MB): compaction is real
+  but gradual. **The estimate figure is untrustworthy for "did Clear work"
+  on any engine; the acceptance criterion "estimate drops after Clear" is
+  not achievable and was replaced by the file-count ground truth.**
+- Expected iOS behavior (for Fable's device pass): "N audio files stored"
+  drops to 0 instantly on Clear and returns to the pack count on
+  re-download; the "reported by the browser" line may sit unchanged for a
+  long time and may only fall after the PWA is fully killed and relaunched
+  (possibly days later, when WebKit compacts). Record what you observe here:
+  ________________________________________.
+
+P1 fixes applied (all belt-and-braces, cheap, and WebKit-proof):
+- `downloads.js`: single-writer discipline — every `match`/`delete` uses
+  `{ ignoreVary: true }` (`MATCH_ANY`), and every write goes through
+  `putSingle()` = ignoreVary delete + put (one entry per URL guaranteed).
+  The Update/force path deletes with ignoreVary before refetching.
+- SW routes (vite.config.js): `matchOptions: { ignoreVary: true }` on the
+  CacheFirst audio route AND the NetworkFirst manifest route (offline
+  fallback must hit the stored manifest regardless of host Vary).
+- `audio.js` warmCache match ignores Vary (kills the miss-and-refetch waste).
+- Settings: new "Audio files stored" row — counted from the cache itself via
+  `audioFileCount()`, refreshed on every pack-state transition (new
+  `packStatesFingerprint` derived store covers per-pack rows and Download
+  all, without per-file churn); the estimate row is now labeled "(reported
+  by the browser)" with an iOS-may-lag note.
+- Diagnostic: `audioCacheDiagnostic()` (entry count, summed bytes via
+  `clone().blob()`, duplicate-URL dump with request headers + response Vary,
+  cache names, estimate) surfaces as a "Cache diagnostic (debug)" card in
+  Settings **only when the page URL carries `?debug`** (e.g.
+  `/?debug#/settings`; the flag is read from `location.search`, which
+  survives hash navigation). Verified hidden without the flag. Kept, not
+  removed — Fable needs it for the device pass.
+- Acceptance met (Chrome): entries/bytes 0 after Clear, identical level
+  after re-download (120 entries, ~1.10 MB), file-count row tracks
+  instantly, no duplicates ever, console clean.
+
+### P2 — double-tap zoom (REPEAT): universal touch-action
+
+`*, *::before, *::after { touch-action: manipulation; }` added in app.css
+(A4's html/body + interactive-selector rules kept beneath it as documented
+intent). Rationale recorded in the CSS comment: touch-action does not
+inherit, and iOS keys the double-tap gesture off the element under the
+finger — the universal rule closes the plain-element gap (headings, panes,
+bands). Pinch-zoom and panning are untouched; nothing in the app uses
+double-tap. Verified computed `touch-action: manipulation` on plain
+non-interactive elements; build clean. **Device sign-off is Fable's (the one
+remaining device item); if some older WebKit still zooms, the punch list's
+JS touchend fallback is pre-authorized — not implemented this session.**
+
+### P3 — Letter Names and Sounds Drill speaks the name only
+
+Data change verified in the browser: tapping the Α tile requests
+`/audio/chapt_1/a_alphan.m4a` (audioShort, name only). **Cheat-sheet fact
+(updated): `audioFull`'s ONLY consumer is the Learn Letters stepper**
+(`c1_learn_letters`, `play: "audioFull"` — the one remaining
+`"play": "audioFull"` in the data; alphabet `_comment` now says the same).
+
+### P4–P9 — the Greek-tap rule (NEW STANDING DIRECTIVE)
+
+**Standing rule (chapters 2+ inherit):** any DISPLAYED Greek — prompts,
+flashcard words, reading panes, chart glyphs — is tappable and plays its
+audio, styled blue per the A6 color rule. English translations and
+transliterations are not tappable. The rule covers displayed/prompt Greek,
+NOT answer-option buttons (tapping an option is answering; audio there would
+leak answers). Explicit exceptions: the Phonetic Reading Exercise (phonetic
+English, no audio exists — untappable), speller keyboard tiles (input, not
+pronunciation), and the Review Letters Quick Chart (row-tap behavior frozen
+as-is).
+
+Implementation: one shared `.greek-say` style (app.css) — a chrome-less
+button, blue, layout-preserving (`.prompt.greek-say` keeps the select-prompt
+metrics). Wired per item:
+- **P4** ReadingCategories: the Greek pane is now a `.greek-say` button
+  playing the current item's clip (readingLists audio for names/places, the
+  letter's audioShort for letter names). Answer behavior unchanged
+  (verified reveal + clip).
+- **P5** Learn Vocabulary flashcard: (a) Next no longer autoplays the lemma
+  while mode is Hide Greek (guard on `vocabMode` in `onStep`); autoplay
+  resumes in the other modes; tapping "Tap to reveal" on the Greek pane
+  reveals AND plays (the learner asking). (b) The visible Greek word is a
+  `.greek-say` button that pronounces again. Verified all six behaviors.
+- **P6/P8/P9** — implemented ONCE in SelectActivity: `buildSelectQuestions`
+  now returns a **`promptIsGreek` flag declared by the generator** (letter
+  pools: prompt field `lower`/`upper`; vocab pools: `prompt === 'greek'`) —
+  no glyph heuristics. When the flag is set and the question carries
+  `promptAudio`, the prompt renders as a `.greek-say` button that plays the
+  clip and nothing else (verified: question counter unchanged, no answer, no
+  reshuffle). Covers Vocab Gk→En (lemma audio), Letter-to-Name and
+  Transliterate (audioShort). En→Gk, Name-to-Letter and Transcribe prompts
+  verified still-static DIVs; option buttons verified silent in both drills.
+- **P7** (deviation from the punch list's note: Pronounce Letters is a
+  ContentAudio `selfCheckStepper`, NOT a SelectActivity — so this one is its
+  own two-line change, same pattern): the displayed letter is a `.greek-say`
+  button playing `item.audio || meta.audioShort` — verified byte-identical
+  clip to Check Answer's, and the tap does not reveal the fields.
+
+**Pipeline contract addition (chapters 2+):** select generators/pools must
+carry prompt audio for Greek prompts (letter pools already do via
+audioShort; vocab pools via the lemma's `audio`). If a future vocab
+generator omits it, the prompt silently renders untappable — the flag +
+audio are both required for the tap to appear.
+
+### Verification (punch-list checklist)
+
+- [x] P1 Chrome cycle: entries/bytes 0 after Clear, single level after
+      re-download; duplicate-key inspection documented (none, put replaces);
+      Settings file-count ground truth live; diagnostic gated behind ?debug.
+- [x] P2 universal touch-action in place, computed style verified; build
+      clean; device sign-off noted as Fable's.
+- [x] P3 name-only clip verified; audioFull consumer list = Learn Letters
+      stepper only (asserted in data comment + here).
+- [x] P4–P9: every tap target plays the right clip and is `--link` blue
+      (computed rgb(22,99,199) checked); answer options silent; Phonetic
+      Reading, speller tiles, Review Letters chart untouched (verified);
+      taps never advance/answer/reshuffle.
+- [x] Full 26-item rail walk after all changes: banner "N of 26" + content
+      present on every step ({#key} remount intact), 0 console errors.
+- [x] `npm run build` clean (58 modules, no warnings; precache 15 entries);
+      hard-offline pass (server killed): shell renders, warmed audio plays,
+      unwarmed correctly fails.
+
+### Housekeeping
+- The CDP driver scripts lived in the session scratchpad (not committed);
+  playwright-core as a devDependency remains the standing suggestion
+  (fourth session hand-rolling a driver).

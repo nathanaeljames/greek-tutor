@@ -191,7 +191,10 @@ export function buildSelectQuestions(chapter, activity) {
       promptAudio: l[audioField],
       answerId: l.name
     })));
-    return { options, questions, optionClass: 'wide' };
+    // Greek-tap rule (P6-P9): the generator — not a glyph heuristic — declares
+    // whether the prompt is displayed Greek (tappable, pronounces itself).
+    // 'lower'/'upper' prompts are Greek letters; 'name'/'translit' are English.
+    return { options, questions, optionClass: 'wide', promptIsGreek: promptField === 'lower' || promptField === 'upper' };
   }
   // items-based (vocabulary drills): options are the full lemma set. Both
   // drills show the SHORT gloss ("truly, verily", "and, even", "Christ");
@@ -206,7 +209,9 @@ export function buildSelectQuestions(chapter, activity) {
     promptAudio: l.audio,
     answerId: l.ref
   })));
-  return { options, questions, optionClass: '' };
+  // Gk->En: the Greek prompt word is tappable (plays the lemma). En->Gk: the
+  // English prompt stays untappable; its Greek OPTIONS are answers, never taps.
+  return { options, questions, optionClass: '', promptIsGreek: promptSide === 'greek' };
 }
 
 export function shuffle(arr) {

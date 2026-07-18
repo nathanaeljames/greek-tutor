@@ -70,8 +70,11 @@
   </div>
 
   {#if item}
+    <!-- Greek-tap rule (P4): displayed Greek pronounces itself on tap (blue).
+         Answer keeps its reveal+audio behavior unchanged. -->
     <div class="flash-pane"><div class="label">Greek {category.name}</div>
-      <div class="value greek" style="font-size:2.2rem">{item.greek}</div></div>
+      <button class="value greek greek-say" style="font-size:2.2rem"
+        on:click={() => item.audio && play(item.audio)}>{item.greek}</button></div>
     <div class="flash-pane"><div class="label">English {category.name}</div>
       <div class="value" style="font-size:1.3rem">{answered ? item.english : ''}</div></div>
 

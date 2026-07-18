@@ -32,7 +32,7 @@
     "christos"
   ],
   "alphabet": {
-    "_comment": "Shared letter table. audioFull = A_<letter> (~4s, name & sound). audioShort = A_<letter>N (~1s, name only; listen-verified). Chart/exercise taps and Pronounce/Check Answer use audioShort; the Learn Letters stepper and the Names & Sounds / Capitals drills use audioFull. A_NAME_1..24 are PERSONAL names (readingLists), not letter audio.",
+    "_comment": "Shared letter table. audioFull = A_<letter> (~4s, name & sound). audioShort = A_<letter>N (~1s, name only; listen-verified). Chart/drill/exercise taps and Pronounce/Check Answer use audioShort; audioFull's ONLY consumer is the Learn Letters stepper (punch list P3, 2026-07-18). A_NAME_1..24 are PERSONAL names (readingLists), not letter audio.",
     "letters": [
       {
         "n": 1,

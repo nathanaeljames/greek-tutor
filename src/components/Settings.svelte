@@ -4,12 +4,13 @@
   // "Download all", per-pack rows for built content, and a Clear action.
   import { onMount } from 'svelte';
   import { getBuiltPacks } from '../lib/packs.js';
-  import { allState, downloadAll, cancelAll, clearAllAudio, storageInfo } from '../lib/downloads.js';
+  import { allState, downloadAll, cancelAll, clearAllAudio, storageInfo, audioFileCount, audioCacheDiagnostic, packStatesFingerprint } from '../lib/downloads.js';
   import DownloadControl from './DownloadControl.svelte';
 
   const all = allState();
 
   let storage = { usage: null, quota: null, persisted: false };
+  let fileCount = null;      // ground truth from the cache itself (P1)
   let builtPacks = [];
   let packsFailed = false;   // manifest unreachable (first run offline)
   let confirmClear = false;
@@ -17,7 +18,20 @@
 
   let online = typeof navigator !== 'undefined' ? navigator.onLine : true;
 
-  async function refreshStorage() { storage = await storageInfo(); }
+  // P1 diagnostic, hidden unless the page is loaded with ?debug.
+  const debug = typeof location !== 'undefined' && new URLSearchParams(location.search).has('debug');
+  let diag = null;
+  let diagRunning = false;
+  async function runDiag() {
+    diagRunning = true;
+    diag = await audioCacheDiagnostic();
+    diagRunning = false;
+  }
+
+  async function refreshStorage() {
+    storage = await storageInfo();
+    fileCount = await audioFileCount();
+  }
 
   onMount(() => {
     refreshStorage();
@@ -28,8 +42,9 @@
     return () => { window.removeEventListener('online', up); window.removeEventListener('offline', up); };
   });
 
-  // Refresh the storage estimate when the aggregate download finishes.
-  $: if ($all.state === 'done' || $all.state === 'partial') refreshStorage();
+  // Refresh the storage figures whenever any pack's state transitions (a
+  // download or clear landed) — covers "Download all" AND per-pack rows (P1).
+  $: $packStatesFingerprint, refreshStorage();
 
   function fmtBytes(n) {
     if (n == null) return '—';
@@ -50,8 +65,13 @@
 <div class="settings">
   <section class="card">
     <h2 class="settings-h">Storage</h2>
-    <div class="settings-row"><span>Used</span><span>{fmtBytes(storage.usage)}</span></div>
+    <div class="settings-row"><span>Audio files stored</span><span>{fileCount == null ? '—' : fileCount}</span></div>
+    <div class="settings-row"><span>Used (reported by the browser)</span><span>{fmtBytes(storage.usage)}</span></div>
     <div class="settings-row"><span>Available (quota)</span><span>{fmtBytes(storage.quota)}</span></div>
+    <div class="settings-note">
+      "Audio files stored" is counted from the app's own cache and updates
+      immediately. The browser's "Used" figure may lag behind deletions on iOS.
+    </div>
     <div class="settings-note">
       {#if storage.persisted}
         Persistent storage: <strong>granted</strong>.
@@ -94,6 +114,26 @@
       </div>
     {/if}
   </section>
+
+  {#if debug}
+    <section class="card">
+      <h2 class="settings-h">Cache diagnostic (debug)</h2>
+      <button class="btn secondary" on:click={runDiag} disabled={diagRunning}>{diagRunning ? 'Scanning…' : 'Scan audio cache'}</button>
+      {#if diag}
+        <div class="settings-row"><span>Entries</span><span>{diag.entryCount}</span></div>
+        <div class="settings-row"><span>Summed bytes</span><span>{fmtBytes(diag.totalBytes)} ({diag.totalBytes})</span></div>
+        <div class="settings-row"><span>Duplicate URLs</span><span>{diag.duplicates.length}</span></div>
+        <div class="settings-note">Caches: {diag.cacheNames.join(', ') || '(none)'}</div>
+        {#if diag.estimate}<div class="settings-note">estimate: {fmtBytes(diag.estimate.usage)} used</div>{/if}
+        {#each diag.duplicates as d}
+          <div class="settings-note warn">{d.url}
+            {#each d.entries as e}<br />vary: {e.vary || '(none)'} · req: {JSON.stringify(e.reqHeaders)}{/each}
+          </div>
+        {/each}
+        {#if diag.error}<div class="settings-note warn">{diag.error}</div>{/if}
+      {/if}
+    </section>
+  {/if}
 
   <section class="card">
     <h2 class="settings-h">Clear downloaded audio</h2>

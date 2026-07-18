@@ -27,7 +27,9 @@ function warmCache(src) {
   // warm must stay so offline audio never regresses for users who never tap
   // Download and just play a file once while online.
   if (!('caches' in window)) return;
-  caches.match(src).then(hit => {
+  // ignoreVary: any stored copy of this URL counts as warm (P1 — a Vary
+  // mismatch here would refetch and grow the cache with a duplicate entry).
+  caches.match(src, { ignoreVary: true }).then(hit => {
     if (!hit) fetch(src).catch(() => { });
   }).catch(() => { });   // cache API failure must not surface as unhandled
 }

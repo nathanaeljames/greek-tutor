@@ -45,7 +45,10 @@ export default defineConfig({
             options: {
               cacheName: MANIFEST_CACHE,
               expiration: { maxEntries: 2 },
-              cacheableResponse: { statuses: [0, 200] }
+              cacheableResponse: { statuses: [0, 200] },
+              // P1: offline fallback must hit the stored manifest even if the
+              // host varies its JSON responses (same rationale as the audio route).
+              matchOptions: { ignoreVary: true }
             }
           },
           {
@@ -55,7 +58,12 @@ export default defineConfig({
               cacheName: AUDIO_CACHE,
               expiration: { maxEntries: 10000 },
               cacheableResponse: { statuses: [0, 200] },
-              rangeRequests: true
+              rangeRequests: true,
+              // P1: match ignoring the response's Vary header, so playback hits
+              // whatever entry downloads.js wrote instead of missing-and-
+              // refetching a "different-vary" copy (that refetch path was
+              // itself a duplicator — see downloads.js putSingle).
+              matchOptions: { ignoreVary: true }
             }
           }
         ]
