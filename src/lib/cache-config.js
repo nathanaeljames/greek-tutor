@@ -18,6 +18,18 @@ export const MANIFEST_CACHE = 'greek-tutor-manifest';
 // do not rely on isAudioCacheName's substring accident to protect them.
 export const PROTECTED_CACHES = [AUDIO_CACHE, MANIFEST_CACHE];
 
+// Marker header on DownloadManager bulk fetches. The SW's CacheFirst audio
+// route SKIPS requests carrying it, so a bulk-downloaded file has exactly ONE
+// cache writer (downloads.js putSingle) instead of two racing ones — WebKit's
+// spec-conformant put() appends a second entry for the same URL when the two
+// writers' stored requests differ in a Vary'd header (measured on Safari,
+// 4-STORAGE-PASS/HANDOFF-4 §8; Chrome's put replaces, which is why Chrome
+// counts were always exact). SYNC WARNING: vite.config.js cannot reference
+// this constant inside the route matcher (generateSW stringifies the matcher
+// function into sw.js, where imports don't exist), so the literal
+// 'x-gt-bulk-download' is repeated there — keep the two in sync.
+export const BULK_FETCH_HEADER = 'x-gt-bulk-download';
+
 // True for any cache name that holds audio bytes (the canonical bucket plus any
 // legacy/duplicate the SW may have default-named before cacheName was pinned).
 // BREADTH WARNING: this is a substring match — any future cache whose name

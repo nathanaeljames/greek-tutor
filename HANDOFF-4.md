@@ -649,3 +649,217 @@ audio are both required for the tap to appear.
 - The CDP driver scripts lived in the session scratchpad (not committed);
   playwright-core as a devDependency remains the standing suggestion
   (fourth session hand-rolling a driver).
+
+## 8. Storage pass (2026-07-19, per 4-STORAGE-PASS.md)
+
+Session date: 2026-07-19. Scope: root-cause the device-pass anomalies
+F1-F3 (storage counter) and F6 (spurious "Audio not found" toast), ship
+§3a-3d. All diagnosis below was re-derived from the code and reproduced
+evidence this session (no reuse of §7's conclusions except as measured
+data points). Verification ran against `npm run build` + `vite preview`
+with a hand-rolled headless-Chrome CDP driver, plus a set of Cache-API
+experiments executed in desktop Safari (WebKit) via a local test page.
+
+### 8.1 Evidence chain
+
+E-A (code, PROVED): the built app has TWO writers into
+`greek-tutor-audio` for every bulk-downloaded file. `downloads.js`
+fetches the file and writes it via `putSingle` (ignoreVary delete +
+put, request = bare URL). But that same page `fetch()` is intercepted
+by the SW's CacheFirst audio route, and workbox's strategy caches its
+network response ASYNCHRONOUSLY: the built `workbox-86e04617.js`
+contains `fetchAndCachePut(t){const e=await this.fetch(t),s=e.clone();
+return this.waitUntil(this.cachePut(t,s)),e}` — the response returns
+to the page immediately and the SW's own `cachePut` (request = the
+original fetch Request) lands later, racing (and often following) the
+app's `putSingle` for the same URL.
+
+E-B (measured in desktop Safari 26.5.2, PROVED for desktop WebKit):
+WebKit's `cache.put()` honors Vary where Chrome's replaces. Controlled
+experiments (fresh caches, same URL):
+  - two puts whose requests differ in a header named by the response's
+    `Vary` -> **2 entries** (Chrome measured 1 in §7);
+  - bare-URL put, then a put whose request carries such a header ->
+    **2 entries** (this is exactly "SW cachePut lands after putSingle");
+  - identical/absent varied headers (incl. `Vary: Origin` with no
+    Origin header on either request) -> 1 entry (replaces);
+  - the app's own discipline (ignoreVary delete + put) -> always 1;
+  - 120-URL concurrent put race between a page and a dedicated worker,
+    identical request headers -> 120/120 exact, no duplication (a pure
+    cross-context put race was NOT reproducible on desktop WebKit).
+
+E-C (measured in the built app, headless Chrome, PROVED): the §7 cycle
+is still exact — 120 entries / 120 distinct / 0 duplicate URLs /
+1,113,107 summed bytes after every download and re-download; Clear ->
+0 instantly. This is consistent with E-B: Chrome's put replaces, so its
+second writer is invisible. Whatever explains iOS had to be a
+WebKit-put-semantics difference — E-B supplies exactly that.
+
+E-D (F6, reproduced in the built app pre-fix, PROVED): rapid taps on
+the Learn Vocabulary `.greek-say` word produced 27 `play()` rejections,
+ALL `AbortError`, while the replacement clip played — and the toast
+"Audio not found: /audio/chapt_1/a_voc1.m4a -- add the audio pack to
+public/audio/" appeared. Mechanism: `play(id)` pauses the previous
+still-pending `Audio` (audio.js), whose `play()` promise then rejects
+with AbortError; the old blanket `.catch` toasted EVERY rejection as
+"not found". The audio "playing anyway" is the second element. Also
+explains the device's Next-then-tap sightings (Next autoplays, the tap
+interrupts it) and the randomness (depends on whether the first
+promise had resolved yet — a media-pipeline latency lottery, worse on
+iOS, uncorrelated with tap speed).
+
+### 8.2 PROVED vs INFERRED
+
+PROVED: E-A concurrent double-write exists in the deployed sw.js;
+E-B WebKit put appends Vary-mismatched same-URL entries (desktop
+Safari); E-C Chrome exactness + why Chrome hides the second writer;
+E-D the F6 toast mechanism end to end (reproduced, then re-run
+post-fix: same tap script, 25 AbortErrors, ZERO toasts).
+
+INFERRED (consistent with every observation, not yet device-proved):
+on iOS the SW-side stored request differs from the app's bare put in a
+Vary'd header (e.g. UA-added Accept/Accept-Encoding visible in the SW
+request against whatever Vary Netlify serves — the repo records no
+deploy URL, so the live Vary header could not be curled from here).
+Under E-A+E-B that yields one-OR-two entries per file decided by the
+per-file race -> random 187/192/184/186/197 for 120 files (F1, +56%
+mean), counter > progress mid-Download-All (F2: 5261 at 3619, +45%),
+post-completion growth as the SW's waitUntil backlog drains (F3:
+11719 -> 12344, no user action needed), REAL duplicate bytes (F5:
+136.5 MB vs ~88 MB projection ≈ 1.5x), and the dash as a WebKit
+cache.keys() failure under write load (F3 tail; audioFileCount caught
+it and rendered '—' with no explanation). F4 (Clear -> 0 always) fits:
+cache deletion wipes entries and duplicates alike. The device Copy
+report (§3b) decides this conclusively: Vary-mechanism duplicates show
+differing stored reqHeaders; a WebKit-internal race would show
+identical ones. Either way the fix below removes the second writer.
+
+### 8.3 Ruled out (with evidence)
+
+- App-side duplicate writes: putSingle discipline collapses to one
+  entry even on WebKit (E-B bullet 4); reconcile() and warmCache never
+  write (warm only fetches on a cache MISS, and match ignores Vary).
+- Cross-context put race with identical requests on desktop WebKit:
+  120/120 exact (E-B bullet 5). (Unverifiable for the iOS SW process
+  split — Safari refused SW registration on plain-http localhost, so
+  the SW-context variant of the race experiment timed out; noted, not
+  assumed.)
+- Workbox ExpirationPlugin (maxEntries 10000) deleting entries: it
+  tracks by URL in its own IDB, and distinct URLs (8521) never exceed
+  10000. It also cannot ADD entries. (Watch item for phase 5, §8.6.)
+- Range/206 responses polluting the cache: CacheableResponsePlugin
+  statuses [0,200] rejects them (built sw.js), and the diagnostic has
+  never shown a 206 entry on any engine.
+- Stale pre-migration caches: device C2 could not be checked by Fable
+  (no ?debug reachable in the PWA — fixed by §3a), but Clear->fresh
+  re-download reproduced F1 from a provably empty cache, so carryover
+  cannot be the cause.
+- Manifest/bookkeeping miscounts: the counter reads cache.keys()
+  directly; localStorage bookkeeping only drives badges.
+
+### 8.4 Fixes shipped (all verified in the built app)
+
+1. Single-writer discipline (F1-F3 root-cause fix): bulk downloads
+   fetch with marker header `x-gt-bulk-download` (BULK_FETCH_HEADER in
+   cache-config.js); the SW CacheFirst audio route now EXCLUDES marked
+   requests (vite.config.js — literal header string there because
+   generateSW stringifies the matcher into sw.js; sync warning in both
+   files). Proven in the built app: marked fetch -> 0 cache writes by
+   the SW; unmarked fetch -> cached (warm path intact). The
+   never-tapped-Download play-once-online warm path is unchanged.
+2. §3c honest counter: `audioFileCount()` counts DISTINCT URLs (files,
+   not records — immune to residual duplicates on already-affected
+   installs) and retries once after 400 ms before reporting failure;
+   Settings renders "counting…" while pending and "unavailable — tap to
+   retry" instead of the bare dash. Clear -> 0 behavior preserved
+   (verified). Raw entry count remains visible in the diagnostic so
+   distinct-vs-entries divergence is itself a signal.
+3. §3d toast contract — toast iff the user gets no audio: AbortError
+   (= interrupted by a newer play/stop; the user is getting the newer
+   clip or navigated away) is silent; a rejection on a superseded
+   element is silent (the newest play owns feedback); NotSupportedError
+   keeps the "Audio not found" message; anything else says "Audio
+   couldn't play". Verified: pre-fix tap script now yields 0 toasts
+   with 25 interruptions; hard-offline tap of a never-cached file
+   yields NO audio + exactly one toast.
+4. §3a debug access in the installed PWA: seven taps on the Storage
+   heading in Settings toggle the diagnostic card, persisted in
+   sessionStorage (`greek-tutor-debug-card`); `?debug` still works
+   (both verified, including persistence across hash navigation).
+5. §3b "Copy report": serializes a FRESH full diagnostic to the
+   clipboard as JSON — now with generatedAt, UA, per-cache counts,
+   distinct-URL count, Vary histogram, a sample entry's full response
+   headers (captures what Netlify really serves), read-error count,
+   duplicates with per-entry request headers, estimate, persisted.
+   Clipboard-blocked fallback: the JSON appears in a textarea for
+   manual copy (that path is what headless Chrome verified).
+6. Debug-card "Remove duplicate copies" button (`dedupeAudioCache`):
+   collapses each duplicated URL to one entry — a recovery path for
+   the already-affected iPhone AFTER the report is captured (the card
+   warns: duplicates are the evidence, copy first).
+
+No data-schema changes; nothing for the chat-side pipeline to adopt.
+
+### 8.5 On-device confirmation list for Fable (installed PWA, after deploy + relaunch twice)
+
+1. Settings -> tap "Storage" heading 7 times -> diagnostic card
+   appears. Tap "Copy report", paste into chat. EXPECT: entryCount >
+   distinctUrls on the not-yet-cleared install (the F1-F3 evidence,
+   settles INFERRED vs PROVED); note the sampleResponseHeaders vary
+   value — that is Netlify's real Vary.
+2. Tap "Remove duplicate copies" (after the report!): EXPECT counter ==
+   distinctUrls afterwards.
+3. Clear downloaded audio -> counter 0 immediately (unchanged).
+4. Download the Chapter 1 pack -> counter rises to EXACTLY 120 and
+   stays 120 (re-check after minutes of idle; the old build showed
+   187-197 and drift). Add intro -> exactly 126.
+5. Download All -> during the run the counter never exceeds the
+   progress bar's "done" number; at completion it reads EXACTLY 8521
+   and does not move afterwards. If "unavailable — tap to retry" ever
+   shows, tap retry and report whether it recovers (that replaces the
+   old dash).
+6. Learn Vocabulary: mash the Greek word / Next as fast and as slow as
+   you like. EXPECT: zero "Audio not found" toasts while audio plays.
+   The toast should appear ONLY if you truly get no audio (e.g.
+   airplane mode + a never-downloaded pack).
+7. Airplane-mode chapter-1 walk (regression): unchanged, should pass
+   as before.
+
+### 8.6 Residual risk for the 28-chapter buildout (one paragraph)
+
+If the on-device report shows duplicates with IDENTICAL stored request
+headers, the mechanism is a WebKit-internal put race rather than Vary
+semantics; the shipped single-writer fix removes that race's second
+writer too, but any FUTURE second writer (a new SW route, a
+precache-style audio warm, a second download surface) would silently
+reintroduce ~1.4-1.5x storage and count inflation on iOS only — the
+cheap guard is the diagnostic's entries-vs-distinct row, which should
+read equal on every engine, plus the standing rule: every audio-cache
+write goes through downloads.js putSingle, and any new SW route
+touching /audio/ must exclude `x-gt-bulk-download`. Two watch items at
+full scale: workbox's ExpirationPlugin maxEntries is 10000 against
+8521 manifest files — raise it (one line in vite.config.js) before the
+manifest grows past ~9.5k, or downloads will start silently evicting;
+and `storage.estimate()` remains untrustworthy after deletions on every
+engine (§7), so the counter row stays the only "did it work" signal.
+The multi-day retention observation (VERIFY-4-DEVICE C3) remains open
+with Fable and is unaffected.
+
+### 8.7 Verification checklist (4-STORAGE-PASS §5)
+
+- [x] npm run build clean (58 modules, no warnings; precache 15
+      entries, 223.85 KiB).
+- [x] Full-rail regression walk in the built app: 26 distinct
+      activities, "N of 26" banner + content on every step, 0 console
+      errors.
+- [x] Hard-offline pass (server killed): shell renders, downloaded
+      audio plays silently, never-cached audio toasts exactly once
+      with no audio, counter still reads 120, ?debug card reachable.
+- [x] Reproductions recorded with numbers (above: 27-AbortError F6
+      repro; 120/120/1,113,107-byte cycles; Safari e1-e5 experiment
+      matrix; marked-fetch 0-write / unmarked 1-write exclusion proof).
+- [x] §3a-3d demonstrated in the built app (16/16 + 5/5 scripted
+      checks).
+- [x] Chrome cycle from §7 re-run post-fix and still exact (no
+      regression: same 120 entries / same 1,113,107 bytes).
+- [x] HANDOFF-4.md §8 written (this section).

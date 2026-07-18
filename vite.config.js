@@ -52,7 +52,18 @@ export default defineConfig({
             }
           },
           {
-            urlPattern: ({ url }) => url.pathname.includes('/audio/'),
+            // Single-writer discipline (4-STORAGE-PASS): DownloadManager bulk
+            // fetches carry the x-gt-bulk-download marker (BULK_FETCH_HEADER in
+            // cache-config.js) and are EXCLUDED here, so the SW never races
+            // downloads.js's putSingle on the same URL. WebKit's put() honors
+            // Vary and appends instead of replacing when the racing writers'
+            // request headers differ — the source of the inflated/rising iOS
+            // "Audio files stored" counts. LITERAL header name on purpose:
+            // this function is stringified into the generated sw.js, where the
+            // cache-config import does not exist. Keep in sync with
+            // BULK_FETCH_HEADER.
+            urlPattern: ({ url, request }) =>
+              url.pathname.includes('/audio/') && !request.headers.has('x-gt-bulk-download'),
             handler: 'CacheFirst',
             options: {
               cacheName: AUDIO_CACHE,

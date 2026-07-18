@@ -44,8 +44,28 @@ export function play(id) {
   }
   const audio = new Audio(src);
   currentAudio = audio;
-  return audio.play().then(() => true).catch(() => {
-    if (toastCallback) toastCallback(`Audio not found: ${src} -- add the audio pack to public/audio/`);
+  return audio.play().then(() => true).catch(err => {
+    // Toast contract (4-STORAGE-PASS §3d): toast if and only if the user gets
+    // no audio. play() rejects with AbortError when the pending play is
+    // interrupted by pause()/a new load — in this app that only happens when a
+    // newer play() or stop() superseded it, so the user is already getting the
+    // newer clip (or navigated away): silent. Reproduced in the built app
+    // (F6): rapid greek-say taps -> AbortError on the old element while the
+    // new one plays, which the old blanket catch mis-toasted as "not found".
+    if (err && err.name === 'AbortError') return false;
+    // Superseded while rejecting for any other reason: the newer play() owns
+    // user feedback for its own outcome; a toast here would be about a clip
+    // the user no longer asked for.
+    if (audio !== currentAudio) return false;
+    if (toastCallback) {
+      // NotSupportedError is the "no usable source" rejection — the missing-
+      // file case (dev: pack not dropped into public/audio/; device: not
+      // cached and offline). Anything else is a playback failure, not a
+      // missing file — say so instead of guessing.
+      toastCallback(err && err.name === 'NotSupportedError'
+        ? `Audio not found: ${src} -- add the audio pack to public/audio/`
+        : `Audio couldn't play: ${src}`);
+    }
     return false;
   });
 }

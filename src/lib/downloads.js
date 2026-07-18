@@ -9,7 +9,7 @@
 
 import { writable, derived } from 'svelte/store';
 import { loadManifest, getPacks, getPack } from './packs.js';
-import { AUDIO_CACHE, MANIFEST_CACHE, PROTECTED_CACHES, isAudioCacheName } from './cache-config.js';
+import { AUDIO_CACHE, MANIFEST_CACHE, PROTECTED_CACHES, BULK_FETCH_HEADER, isAudioCacheName } from './cache-config.js';
 
 // Single shared audio bucket (see cache-config.js). DownloadManager, audio.js,
 // and the SW route all key on this one name so usage can never double via a
@@ -161,39 +161,79 @@ async function putSingle(cache, src, resp) {
   await cache.put(src, resp);
 }
 
+// Bulk fetches are marked so the SW's CacheFirst audio route ignores them
+// (single-writer discipline, 4-STORAGE-PASS): without the marker the SW's
+// async waitUntil cachePut races putSingle on every downloaded file, and on
+// WebKit the loser of the race can land as a SECOND entry for the same URL
+// (put honors Vary there — measured; see HANDOFF-4 §8).
+const BULK_HEADERS = { [BULK_FETCH_HEADER]: '1' };
+
 // Ground truth the app controls (P1): how many audio files the cache actually
 // holds right now. Settings shows this beside the browser's storage estimate,
 // which iOS is known to update lazily after deletions.
+// Counts DISTINCT URLs, not raw cache entries (4-STORAGE-PASS §3c): on WebKit
+// a URL can transiently hold more than one Vary-distinct entry, and "files
+// stored" must mean files, not records. Raw entry count stays visible in the
+// diagnostic so the two can be compared on device.
 export async function audioFileCount() {
-  try {
+  const once = async () => {
     if (!('caches' in self)) return null;
     if (!(await caches.has(CACHE_NAME))) return 0;
     const cache = await caches.open(CACHE_NAME);
-    return (await cache.keys()).length;
-  } catch (_) { return null; }
+    const keys = await cache.keys();
+    return new Set(keys.map(r => r.url)).size;
+  };
+  try { return await once(); } catch (_) { /* fall through to one retry */ }
+  // WebKit's cache backend can fail transiently under write load (the F3
+  // dash state). One short retry; then report null and let Settings render
+  // an honest "unavailable" with a retry affordance instead of a bare dash.
+  await new Promise(r => setTimeout(r, 400));
+  try { return await once(); } catch (_) { return null; }
 }
 
-// Dev diagnostic (P1, gated behind ?debug in Settings): entry count, summed
-// response bytes, per-URL duplicate keys with their request headers and the
-// response's Vary header, plus all cache names. Desktop-Chrome first — its
-// storage.estimate() is prompt, so growth/reclaim is visible immediately.
+// Diagnostic (P1, surfaced by ?debug OR the seven-tap toggle in Settings —
+// 4-STORAGE-PASS §3a): entry count vs distinct URLs, per-cache counts, summed
+// response bytes, Vary histogram, per-URL duplicate keys with their request
+// headers and the response's Vary header, a sample entry's response headers
+// (captures what the deployed host actually serves), estimate, UA, timestamp.
+// Serialized as-is by the "Copy report" button (§3b), so every field must be
+// JSON-safe. Per-entry reads are individually guarded: one unreadable record
+// (WebKit under load) must not sink the whole report.
 export async function audioCacheDiagnostic() {
-  const out = { cacheNames: [], entryCount: 0, totalBytes: 0, duplicates: [], estimate: null };
+  const out = {
+    generatedAt: new Date().toISOString(),
+    ua: typeof navigator !== 'undefined' ? navigator.userAgent : null,
+    cacheNames: [], perCacheCounts: {}, entryCount: 0, distinctUrls: 0,
+    totalBytes: 0, readErrors: 0, varyHistogram: {}, sampleResponseHeaders: null,
+    duplicates: [], estimate: null, persisted: null
+  };
   try {
     out.cacheNames = await caches.keys();
+    for (const n of out.cacheNames) {
+      try { out.perCacheCounts[n] = (await (await caches.open(n)).keys()).length; }
+      catch (e) { out.perCacheCounts[n] = 'error: ' + e; }
+    }
     const cache = await caches.open(CACHE_NAME);
     const reqs = await cache.keys();
     out.entryCount = reqs.length;
+    out.distinctUrls = new Set(reqs.map(r => r.url)).size;
     const byUrl = new Map();
     for (const req of reqs) {
-      const resp = await cache.match(req);
-      const bytes = resp ? (await resp.clone().blob()).size : 0;
-      out.totalBytes += bytes;
-      const info = {
-        bytes,
-        vary: resp ? resp.headers.get('vary') : null,
-        reqHeaders: Object.fromEntries(req.headers.entries())
-      };
+      let info;
+      try {
+        const resp = await cache.match(req);
+        const bytes = resp ? (await resp.clone().blob()).size : 0;
+        out.totalBytes += bytes;
+        const vary = resp ? resp.headers.get('vary') : null;
+        out.varyHistogram[String(vary)] = (out.varyHistogram[String(vary)] || 0) + 1;
+        if (!out.sampleResponseHeaders && resp) {
+          out.sampleResponseHeaders = { url: req.url, headers: Object.fromEntries(resp.headers.entries()) };
+        }
+        info = { bytes, vary, reqHeaders: Object.fromEntries(req.headers.entries()) };
+      } catch (e) {
+        out.readErrors += 1;
+        info = { error: String(e), reqHeaders: {} };
+      }
       if (!byUrl.has(req.url)) byUrl.set(req.url, []);
       byUrl.get(req.url).push(info);
     }
@@ -201,6 +241,32 @@ export async function audioCacheDiagnostic() {
       if (entries.length > 1) out.duplicates.push({ url, entries });
     }
     if (navigator.storage && navigator.storage.estimate) out.estimate = await navigator.storage.estimate();
+    if (navigator.storage && navigator.storage.persisted) out.persisted = await navigator.storage.persisted();
+  } catch (e) { out.error = String(e); }
+  return out;
+}
+
+// Debug-card recovery tool: collapse every duplicated URL back to a single
+// entry (keep one response, ignoreVary-delete all copies, re-put). Run AFTER
+// capturing a Copy report — the duplicates ARE the evidence (4-STORAGE-PASS
+// §3 "must not mask evidence").
+export async function dedupeAudioCache() {
+  const out = { scanned: 0, duplicateUrls: 0, removed: 0 };
+  try {
+    if (!('caches' in self) || !(await caches.has(CACHE_NAME))) return out;
+    const cache = await caches.open(CACHE_NAME);
+    const reqs = await cache.keys();
+    out.scanned = reqs.length;
+    const counts = new Map();
+    for (const r of reqs) counts.set(r.url, (counts.get(r.url) || 0) + 1);
+    for (const [url, n] of counts) {
+      if (n < 2) continue;
+      out.duplicateUrls += 1;
+      const keep = await cache.match(url, MATCH_ANY);
+      await cache.delete(url, MATCH_ANY);
+      if (keep) await cache.put(url, keep);
+      out.removed += n - 1;
+    }
   } catch (e) { out.error = String(e); }
   return out;
 }
@@ -256,7 +322,7 @@ export async function downloadPack(packId, { force = false } = {}) {
       } else {
         await cache.delete(src, MATCH_ANY);   // SW CacheFirst must miss -> network
       }
-      const resp = await fetch(src, { signal: controller.signal });
+      const resp = await fetch(src, { signal: controller.signal, headers: BULK_HEADERS });
       if (resp && resp.ok) { await putSingle(cache, src, resp); done += 1; patch(packId, { done }); }
       else { failures.push(src); }
     } catch (e) {
@@ -328,7 +394,7 @@ export async function downloadAll() {
     try {
       const hit = await cache.match(src, MATCH_ANY);
       if (hit) { done += 1; bumpPack(src); patch(ALL, { done }); return; }
-      const resp = await fetch(src, { signal: controller.signal });
+      const resp = await fetch(src, { signal: controller.signal, headers: BULK_HEADERS });
       if (resp && resp.ok) { await putSingle(cache, src, resp); done += 1; bumpPack(src); patch(ALL, { done }); }
       else { failures.push(src); }
     } catch (e) {
