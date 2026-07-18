@@ -455,52 +455,143 @@
               "defList": [
                 [
                   "η (Eta)",
-                  "with the English n."
+                  "with the English n.",
+                  "chapt_1_a_etan"
                 ],
                 [
                   "ν (Nu)",
-                  "with the English v."
+                  "with the English v.",
+                  "chapt_1_a_nun"
                 ],
                 [
                   "ρ (Rho)",
-                  "with the English p."
+                  "with the English p.",
+                  "chapt_1_a_rhon"
                 ],
                 [
                   "ω (Omega)",
-                  "with the English w."
+                  "with the English w.",
+                  "chapt_1_a_omegan"
                 ],
                 [
                   "χ (Chi)",
-                  "with the English x."
+                  "with the English x.",
+                  "chapt_1_a_chin"
                 ]
               ]
             },
             {
               "label": "Zeta Pronunciation",
-              "text": "ζ is pronounced \"dz\" in some grammars (Machen, Wenham) unless it is the first letter of the word in which case it is pronounced as a \"z\". Greek Tutor will follow this convention. Others always pronounce it as a \"z\" (cf. Mounce)."
+              "text": "ζ is pronounced \"dz\" in some grammars (Machen, Wenham) unless it is the first letter of the word in which case it is pronounced as a \"z\". Greek Tutor will follow this convention. Others always pronounce it as a \"z\" (cf. Mounce).",
+              "greekTaps": {
+                "ζ": "chapt_1_a_zetan"
+              }
             },
             {
               "label": "Linguistic Pronunciation Descriptions",
               "defList": [
                 [
                   "Labials (lips)",
-                  "π, β, φ"
+                  {
+                    "letters": [
+                      {
+                        "greek": "π",
+                        "audio": "chapt_1_a_pin"
+                      },
+                      {
+                        "greek": "β",
+                        "audio": "chapt_1_a_betan"
+                      },
+                      {
+                        "greek": "φ",
+                        "audio": "chapt_1_a_phin"
+                      }
+                    ]
+                  }
                 ],
                 [
                   "Dentals (teeth)",
-                  "τ, δ, θ"
+                  {
+                    "letters": [
+                      {
+                        "greek": "τ",
+                        "audio": "chapt_1_a_taun"
+                      },
+                      {
+                        "greek": "δ",
+                        "audio": "chapt_1_a_deltan"
+                      },
+                      {
+                        "greek": "θ",
+                        "audio": "chapt_1_a_thetan"
+                      }
+                    ]
+                  }
                 ],
                 [
                   "Palatals (palate)",
-                  "κ, γ, χ"
+                  {
+                    "letters": [
+                      {
+                        "greek": "κ",
+                        "audio": "chapt_1_a_kappan"
+                      },
+                      {
+                        "greek": "γ",
+                        "audio": "chapt_1_a_gamman"
+                      },
+                      {
+                        "greek": "χ",
+                        "audio": "chapt_1_a_chin"
+                      }
+                    ]
+                  }
                 ],
                 [
                   "Sibilants",
-                  "σ, ζ, ξ, ψ"
+                  {
+                    "letters": [
+                      {
+                        "greek": "σ",
+                        "audio": "chapt_1_a_sigman"
+                      },
+                      {
+                        "greek": "ζ",
+                        "audio": "chapt_1_a_zetan"
+                      },
+                      {
+                        "greek": "ξ",
+                        "audio": "chapt_1_a_xin"
+                      },
+                      {
+                        "greek": "ψ",
+                        "audio": "chapt_1_a_psin"
+                      }
+                    ]
+                  }
                 ],
                 [
                   "Liquids",
-                  "λ, μ, ν, ρ"
+                  {
+                    "letters": [
+                      {
+                        "greek": "λ",
+                        "audio": "chapt_1_a_lambdn"
+                      },
+                      {
+                        "greek": "μ",
+                        "audio": "chapt_1_a_mun"
+                      },
+                      {
+                        "greek": "ν",
+                        "audio": "chapt_1_a_nun"
+                      },
+                      {
+                        "greek": "ρ",
+                        "audio": "chapt_1_a_rhon"
+                      }
+                    ]
+                  }
                 ]
               ]
             },
@@ -514,7 +605,8 @@
           "type": "refs",
           "text": "Machen, p. 9; Wenham, pp. 18f.; Mounce, pp. 8f.; Summers/Sawyer, p. 5"
         }
-      ]
+      ],
+      "_sixPoints_audio_note": "Item 6 of PHASE4-REVIEW (2026-07-18): standalone Greek letters in Six Points are tappable and play the letter NAME (audioShort), matching the original. Greek buried in English prose stays plain UNLESS listed in an item's greekTaps map (exact-substring -> audio id)."
     },
     {
       "id": "c1_learn_translit",
@@ -637,6 +729,7 @@
       "type": "contentAudio",
       "title": "Learn Diphthongs",
       "instructions": "Click on diphthong for sound",
+      "lead": "A Diphthong is a combination of two vowels that makes only one sound. The second vowel is either ι or υ.",
       "itemsFrom": "alphabet.diphthongs",
       "mode": "chart",
       "references": [
@@ -644,7 +737,6 @@
         "Wenham, p. 20",
         "Mounce, p. 10"
       ],
-      "note": "A Diphthong is a combination of two vowels that makes only one sound. The second vowel is either ι or υ.",
       "content": [
         {
           "type": "heading",
@@ -680,7 +772,7 @@
       "type": "contentAudio",
       "title": "Learn Iota Subscripts",
       "instructions": "Click on diphthong for sound",
-      "note": "An Iota Subscript is a diphthong which is formed when an iota follows a long vowel. The iota is written under the vowel (subscript). The pronunciation is the same as the normal vowel. The transliteration is what you would expect from a normal diphthong (ai, ei, and oi).",
+      "lead": "An Iota Subscript is a diphthong which is formed when an iota follows a long vowel. The iota is written under the vowel (subscript). The pronunciation is the same as the normal vowel. The transliteration is what you would expect from a normal diphthong (ai, ei, and oi).",
       "itemsFrom": "alphabet.iotaSubscripts",
       "mode": "chart",
       "references": [
@@ -992,7 +1084,7 @@
       "instructions": "Click on letter to hear its name & sound",
       "itemsFrom": "alphabet.letters",
       "display": "upper",
-      "play": "audioFull",
+      "play": "audioShort",
       "ui": {
         "fields": [
           "Letter",
@@ -1002,7 +1094,8 @@
           "Say Alphabet"
         ]
       },
-      "sayAlphabetAudio": "chapt_1_a_alphab"
+      "sayAlphabetAudio": "chapt_1_a_alphab",
+      "_play_note": "Item 10 verified 2026-07-18: original capitals drill speaks the letter NAME only."
     },
     {
       "id": "c1_drill_diphthong",
@@ -1569,17 +1662,17 @@
         "Letter Name",
         "Letter",
         "Capital",
-        "Transliteration",
-        "Pronounce"
+        "Transliteration"
       ],
-      "play": "audioFull",
+      "play": "audioShort",
       "ui": {
         "buttons": [
           "Say Alphabet"
         ]
       },
       "sayAlphabetAudio": "chapt_1_a_alphab",
-      "_source": "all 24 rows verified by screenshots (columns and Pronounce hints match extraction)"
+      "_source": "all 24 rows verified by screenshots (columns and Pronounce hints match extraction)",
+      "_columns_note": "Item 18 (2026-07-18): Pronounce column removed; four columns respaced equally."
     }
   ],
   "feedback": {
@@ -1632,5 +1725,6 @@
     "c1_learn_bibliography"
   ],
   "_sequence_note": "VERIFIED by DOSBox Sequential-Next walk (B1, 2026-07-17). Two corrections vs the earlier derivation: Learn Iota Subscripts precedes Diphthong Drill, and Learn Bibliography is the FINAL page (after both Quick Review charts).",
-  "_typoPolicy": "A1 decision (2026-07-17): bibliographic scholar names corrected (Moulton, Colin Brown, Rienecker); ALL other original text preserved verbatim, including feedback strings ('Its not that bad')."
+  "_typoPolicy": "A1 decision (2026-07-17): bibliographic scholar names corrected (Moulton, Colin Brown, Rienecker); ALL other original text preserved verbatim, including feedback strings ('Its not that bad').",
+  "_lead_note": "Items 12-13 of PHASE4-REVIEW (2026-07-18): 'lead' is core lesson text rendered prominently ABOVE the chart (original's main-text placement). Green note banners are reserved for parenthetical asides only."
 }

@@ -56,14 +56,24 @@
   let lastClicked = null;
   let sixOpen = false;
 
+  // Learn Vocabulary flashcard visibility (A15). Segmented radio: Show Both /
+  // Hide Greek / Hide English. A hidden pane blanks until tapped (per-card
+  // reveal) or the mode changes. Persists across cards within the session
+  // (component state; {#key activityId} resets it only on leaving the activity).
+  let vocabMode = 'both';                       // 'both' | 'hideGreek' | 'hideEnglish'
+  let revealG = false, revealE = false;
+  $: showGreek = vocabMode !== 'hideGreek' || revealG;
+  $: showEnglish = vocabMode !== 'hideEnglish' || revealE;
+  function setVocabMode(m) { vocabMode = m; revealG = false; revealE = false; }
+
   function clickTile(item) {
     lastClicked = item;
     const a = item.audio || (item.meta && item.meta.audioShort);
     if (a) play(a);
   }
 
-  function next() { idx = Math.min(idx + 1, items.length - 1); revealed = false; onStep(); maybeComplete(); }
-  function prev() { idx = Math.max(idx - 1, 0); revealed = false; onStep(); }
+  function next() { idx = Math.min(idx + 1, items.length - 1); revealed = false; revealG = false; revealE = false; onStep(); maybeComplete(); }
+  function prev() { idx = Math.max(idx - 1, 0); revealed = false; revealG = false; revealE = false; onStep(); }
   function onStep() {
     const item = items[idx];
     if (!item) return;
@@ -116,9 +126,6 @@
 </script>
 
 {#if mode === 'textPage'}
-  {#if activity._userDecision}
-    <div class="draft-tag">Draft copy — pending approval</div>
-  {/if}
   {#if activity.id === 'c1_learn_objectives'}
     <div class="card textpage">
       <strong>{chapter.objectivesPreamble}</strong>
@@ -175,13 +182,26 @@
 
 {:else if mode === 'flashcard'}
   <div class="card">
+    <div class="segmented" role="radiogroup" aria-label="Card visibility">
+      <button class="seg" class:on={vocabMode === 'both'} role="radio" aria-checked={vocabMode === 'both'} on:click={() => setVocabMode('both')}>Show Both</button>
+      <button class="seg" class:on={vocabMode === 'hideGreek'} role="radio" aria-checked={vocabMode === 'hideGreek'} on:click={() => setVocabMode('hideGreek')}>Hide Greek</button>
+      <button class="seg" class:on={vocabMode === 'hideEnglish'} role="radio" aria-checked={vocabMode === 'hideEnglish'} on:click={() => setVocabMode('hideEnglish')}>Hide English</button>
+    </div>
     {#if idx < 0}
       <div class="instructions">Click Next to begin.</div>
     {:else}
       <div class="flash-pane"><div class="label">Greek Word</div>
-        <div class="value greek">{items[idx].display}</div></div>
+        {#if showGreek}
+          <div class="value greek">{items[idx].display}</div>
+        {:else}
+          <button class="flash-hidden" on:click={() => (revealG = true)}>Tap to reveal</button>
+        {/if}</div>
       <div class="flash-pane"><div class="label">Word Meaning</div>
-        <div class="value" style="font-size:1.4rem">{items[idx].secondary}</div></div>
+        {#if showEnglish}
+          <div class="value" style="font-size:1.4rem">{items[idx].secondary}</div>
+        {:else}
+          <button class="value flash-hidden" on:click={() => (revealE = true)}>Tap to reveal</button>
+        {/if}</div>
     {/if}
     <div class="controls">
       <button class="btn secondary" on:click={prev} disabled={idx <= 0}>Previous</button>
@@ -267,6 +287,7 @@
 
 {:else if isDiphthongsLearn}
   <!-- Learn Diphthongs: 7 rows (diphthong / sound / example / gloss) -->
+  {#if activity.lead}<p class="lead-text">{activity.lead}</p>{/if}
   <div class="card">
     <div class="diph-rows">
       {#each diphthongs as d}
@@ -287,6 +308,7 @@
 {:else if isIotaLearn}
   <!-- Learn Iota Subscripts: rows (subscript vowel / sound / example / gloss).
        Tile tap plays row.audio; the example word tap plays row.exampleAudio. -->
+  {#if activity.lead}<p class="lead-text">{activity.lead}</p>{/if}
   <div class="card">
     <div class="diph-rows">
       {#each iotaRows as r}
@@ -305,14 +327,15 @@
   {#if activity.note}<div class="note">{activity.note}</div>{/if}
 
 {:else if isReviewVocab}
-  <!-- Review Vocabulary Chart: Greek (tap = lemma audio) + gloss + ntFreq -->
+  <!-- Review Vocabulary Chart: Greek (tap = lemma audio, blue) + STATIC gloss
+       (dark green) + ntFreq. A17/A6: only the Greek word is tappable. -->
   <div class="card">
     <div class="review-vocab">
       {#each reviewVocabRows as r}
-        <button class="rv-row" on:click={() => r.audio && play(r.audio)}>
-          <span class="rv-greek greek">{r.display}</span>
+        <div class="rv-row">
+          <button class="rv-greek greek" on:click={() => r.audio && play(r.audio)}>{r.display}</button>
           <span class="rv-gloss">{r.secondary}{#if r.meta && r.meta.ntFreq} <span class="rv-freq">({r.meta.ntFreq})</span>{/if}</span>
-        </button>
+        </div>
       {/each}
     </div>
     <div class="controls">
@@ -324,11 +347,12 @@
   </div>
 
 {:else if isReviewLetters}
-  <!-- Review Letters Quick Chart: 5-column compact matrix -->
+  <!-- Review Letters Quick Chart: 4-column compact matrix. Pronounce column
+       dropped (A18); each row still tappable to hear the letter name. -->
   <div class="card">
     <div class="letters-matrix">
       <div class="lm-head">
-        <span>Letter Name</span><span>Letter</span><span>Capital</span><span>Transliteration</span><span>Pronounce</span>
+        <span>Letter Name</span><span>Letter</span><span>Capital</span><span>Transliteration</span>
       </div>
       {#each letterRows as l}
         <button class="lm-row" on:click={() => play(l.audioShort)}>
@@ -336,7 +360,6 @@
           <span class="greek">{l.lower}</span>
           <span class="greek">{l.upper}</span>
           <span class="greek">{l.translit}</span>
-          <span class="lm-spk" aria-hidden="true">🔊</span>
         </button>
       {/each}
     </div>

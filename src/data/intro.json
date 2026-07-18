@@ -73,7 +73,6 @@
       "type": "contentAudio",
       "mode": "textPage",
       "title": "Navigation",
-      "_userDecision": "A2 decided 2026-07-17: option (c), rewritten copy. Draft below written by Claude, awaiting Fable's approval -- the in-app 'draft copy' tag renders while this key is present; delete this key once the wording is approved.",
       "content": [
         {
           "type": "heading",
@@ -108,7 +107,8 @@
           "type": "para",
           "text": "Wherever you see Greek, tap it to hear it pronounced."
         }
-      ]
+      ],
+      "_approved": "Getting Around copy approved by Fable 2026-07-18; draft tag retired."
     }
   ],
   "sequence": [

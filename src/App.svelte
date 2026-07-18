@@ -76,7 +76,7 @@
   }
 
   onMount(() => {
-    const mq = window.matchMedia('(min-width: 768px)');
+    const mq = window.matchMedia('(min-width: 900px)');
     wide = mq.matches;
     const onMq = e => (wide = e.matches);
     // addEventListener on MediaQueryList needs Safari 14+; fall back for older iOS.

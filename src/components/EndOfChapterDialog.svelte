@@ -12,6 +12,7 @@
   $: canAdvance = !!(next && next.available);
 
   function close() { dispatch('close'); }
+  function toChapterMap() { location.hash = `#/chapter/${chapterId}`; close(); }
   function toToc() { location.hash = '#/'; close(); }
   function toNextChapter() {
     if (!canAdvance) return;
@@ -33,6 +34,7 @@
       {#if canAdvance}
         <button class="btn" on:click={toNextChapter}>Next chapter</button>
       {/if}
+      <button class="btn secondary" on:click={toChapterMap}>Chapter map</button>
       <button class="btn secondary" on:click={toToc}>Table of contents</button>
       <button class="btn secondary" on:click={close}>Stay</button>
     </div>

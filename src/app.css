@@ -8,6 +8,7 @@
   --accent: #c0392b;    /* the original's red bullets */
   --ok: #2e7d32;
   --bad: #b3402e;
+  --link: #1663c7;      /* blue = tappable (A6); reserved for tappable Greek/text */
   --radius: 14px;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -192,11 +193,6 @@ button { font: inherit; cursor: pointer; }
 .collapse-head .chevron.down { transform: rotate(90deg); }
 .collapse-body { padding: 0 16px 14px; }
 
-/* ---- Draft-copy tag (Intro navigation placeholder) ---- */
-.draft-tag { display: inline-block; background: #eee7cf; color: #7a6f45; border: 1px dashed #b7a86a;
-  border-radius: 6px; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; margin-bottom: 10px;
-  text-transform: uppercase; letter-spacing: 0.04em; }
-
 /* ---- Equation chart (transliterations / capitals) ---- */
 .equation-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .eq-cell { display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -239,21 +235,21 @@ button { font: inherit; cursor: pointer; }
 .rv-gloss { font-size: 1rem; }
 .rv-freq { color: #8a8472; font-size: 0.9rem; }
 
-/* ---- Review Letters Quick Chart (5-col matrix) ---- */
+/* ---- Review Letters Quick Chart (4-col matrix, A18: Pronounce col dropped) ---- */
 .letters-matrix { display: flex; flex-direction: column; }
-.lm-head, .lm-row { display: grid; grid-template-columns: 1.4fr 0.8fr 0.8fr 1fr 0.7fr; gap: 6px;
-  align-items: center; padding: 8px 4px; }
-.lm-head { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--teal-dark);
+.lm-head, .lm-row { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 8px;
+  align-items: center; padding: 9px 6px; }
+.lm-head { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--teal-dark);
   letter-spacing: 0.02em; border-bottom: 2px solid rgba(0,0,0,0.1); }
 .lm-row { text-align: left; background: transparent; border: none; border-bottom: 1px solid rgba(0,0,0,0.06); }
 .lm-row:active { background: rgba(0,0,0,0.04); }
-.lm-row .greek { font-size: 1.2rem; }
-.lm-name { font-size: 0.95rem; }
-.lm-spk { text-align: center; }
-@media (max-width: 400px) {
-  .lm-head, .lm-row { gap: 4px; font-size: 0.72rem; padding: 7px 2px; }
-  .lm-row .greek { font-size: 1.05rem; }
-  .lm-name { font-size: 0.72rem; }
+.lm-row .greek { font-size: 1.4rem; }
+.lm-name { font-size: 1.02rem; }
+/* Fits four columns down to 320px now that the fifth is gone — no shrink. */
+@media (max-width: 360px) {
+  .lm-head, .lm-row { gap: 5px; padding: 8px 3px; }
+  .lm-row .greek { font-size: 1.2rem; }
+  .lm-name { font-size: 0.9rem; }
 }
 
 /* ---- Arrow cue above drill grids ---- */
@@ -324,3 +320,72 @@ button { font: inherit; cursor: pointer; }
 .pack-row .dl-control { margin-top: 0; flex-shrink: 0; text-align: right; }
 .pack-label { font-size: 0.95rem; font-weight: 600; }
 .pack-count { font-weight: 400; color: #7a7a70; font-size: 0.85rem; }
+
+/* ================= Phase 4 closeout ================= */
+
+/* ---- A4: kill double-tap zoom + 350ms tap delay; KEEP pinch-zoom ---- */
+/* (manipulation preserves pinch/pan; we never use user-scalable=no.) */
+html, body { touch-action: manipulation; }
+button, a, input, select, textarea, label,
+.tile, .tk-key, .chip, .act-row, .menu-item, .eq-cell, .diph-tile, .diph-ex,
+.rv-greek, .lm-row, .rc-defrow, .rc-example, .greek-chip, .greek-tap,
+.seg, .flash-hidden, .icon-btn, .bb-item, .section-head, .collapse-head {
+  touch-action: manipulation;
+}
+
+/* ---- A6: blue = tappable. Blue is reserved for tappable Greek/text; static
+   Greek and static text stay ink / dark green. ---- */
+.tile.greek,
+.eq-cell .greek,
+.diph-tile,
+.diph-ex.tappable .greek,
+.rc-example.tappable .greek,
+.rc-defrow.tappable .rc-term,
+.greek-chip,
+.greek-tap,
+.rv-greek,
+.lm-row .greek { color: var(--link); }
+
+/* Inline tappable Greek inside prose (Six Points greekTaps). */
+.greek-tap { background: transparent; border: none; padding: 0; font: inherit;
+  font-family: 'Times New Roman', 'SBL Greek', Georgia, serif; font-size: 1.15em;
+  color: var(--link); cursor: pointer; }
+
+/* Six Points letters-list rows: a category label + a row of tappable chips. */
+.rc-defrow.letters-row { grid-template-columns: minmax(7em, auto) 1fr; align-items: baseline; }
+.rc-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.greek-chip { background: #fffdf3; border: 1px solid #e7dfbf; border-radius: 8px;
+  padding: 3px 12px; font-size: 1.25rem; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.greek-chip:active { background: #eef4f2; border-color: var(--teal); }
+
+/* ---- A12/A13: lead text above the chart (core lesson text, not a banner) ---- */
+.lead-text { font-size: 1.06rem; line-height: 1.5; color: var(--ink); margin: 2px 0 12px; }
+
+/* ---- A15: Learn Vocabulary segmented control + hideable panes ---- */
+.segmented { display: flex; margin-bottom: 12px; border: 1px solid #d8d0b8;
+  border-radius: 10px; overflow: hidden; }
+.seg { flex: 1; background: white; border: none; border-right: 1px solid #e2dcc8;
+  padding: 9px 6px; font-size: 0.85rem; font-weight: 600; color: var(--teal-dark); }
+.seg:last-child { border-right: none; }
+.seg.on { background: var(--teal); color: white; }
+.flash-hidden { display: block; width: 100%; text-align: center; background: #efe9d6;
+  border: 1px dashed #c9c0a3; border-radius: 8px; color: #8a8272; padding: 12px;
+  font-size: 1rem; font-weight: 600; }
+
+/* ---- A17: Review Vocabulary — only the Greek word is tappable (blue);
+   the gloss is static dark-green text. ---- */
+.rv-greek { text-align: left; background: transparent; border: none; padding: 0; }
+.rv-greek:active { opacity: 0.6; }
+.rv-gloss { color: var(--teal-dark); }
+
+/* ---- A2: use the width on larger screens instead of a centered phone column ---- */
+@media (min-width: 900px) {
+  .content { max-width: 840px; }
+  .chapter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+  .chapter-grid .menu-item { margin-bottom: 0; }
+}
+
+/* ---- A3: nothing may pan horizontally; the sidebar scrolls only vertically ---- */
+.app, .app-main { overflow-x: hidden; }
+.scroll-area { overflow-x: hidden; }
+.sidebar { overflow-x: hidden; min-width: 0; }

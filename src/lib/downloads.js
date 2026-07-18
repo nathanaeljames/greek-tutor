@@ -9,8 +9,12 @@
 
 import { writable, derived } from 'svelte/store';
 import { loadManifest, getPacks, getPack } from './packs.js';
+import { AUDIO_CACHE, isAudioCacheName } from './cache-config.js';
 
-const CACHE_NAME = 'greek-tutor-audio';
+// Single shared audio bucket (see cache-config.js). DownloadManager, audio.js,
+// and the SW route all key on this one name so usage can never double via a
+// duplicate cache (A1/B3).
+const CACHE_NAME = AUDIO_CACHE;
 const BOOK_KEY = 'greek-tutor-downloads-v1';
 const ALL = '__all__';               // aggregate pseudo-pack for "Download all"
 const CONCURRENCY = 4;
@@ -274,14 +278,36 @@ export function cancel(packId) {
 export function cancelAll() { cancel(ALL); }
 
 // Delete every cached audio file and reset all bookkeeping + pack states.
+// Belt-and-braces: deletes EVERY cache whose name matches the audio pattern
+// (not just CACHE_NAME) so a stray duplicate can never keep usage inflated,
+// then resets bookkeeping. Storage figure refresh: callers re-run
+// storageInfo() after this resolves (Settings does).
 export async function clearAllAudio() {
   cancelAll();
   for (const id of Object.keys(controllers)) cancel(id);
-  try { if ('caches' in self) await caches.delete(CACHE_NAME); } catch (_) { /* ignore */ }
+  try {
+    if ('caches' in self) {
+      const names = await caches.keys();
+      await Promise.all(names.filter(isAudioCacheName).map(n => caches.delete(n)));
+    }
+  } catch (_) { /* ignore */ }
   saveBook({ version: 1, packs: {} });
   const packs = await getPacks();
   const reset = {};
   for (const p of packs) reset[p.id] = { state: 'none', done: 0, total: p.count, error: null };
   reset[ALL] = { state: 'none', done: 0, total: 0, error: null };
   store.set(reset);
+}
+
+// One-time startup cleanup for already-deployed installs (the iPhone from
+// Phase 4d): if a legacy or workbox-default-named audio cache exists alongside
+// the canonical bucket, delete it so its bytes stop inflating storage usage.
+// Never touches CACHE_NAME (the live bucket) or the manifest cache.
+export async function migrateLegacyAudioCaches() {
+  try {
+    if (!('caches' in self)) return;
+    const names = await caches.keys();
+    const stale = names.filter(n => n !== CACHE_NAME && isAudioCacheName(n));
+    if (stale.length) await Promise.all(stale.map(n => caches.delete(n)));
+  } catch (_) { /* best effort */ }
 }

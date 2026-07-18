@@ -17,19 +17,22 @@
 {/if}
 
 <div class="section-label">Chapters</div>
-{#each toc.chapters as ch}
-  {#if isChapterAvailable(ch.id)}
-    <button class="menu-item" on:click={() => (location.hash = `#/chapter/${ch.id}`)}>
-      <span class="dot"></span>
-      <span><strong>{ch.number}.</strong> {ch.title}</span>
-    </button>
-  {:else}
-    <div class="menu-item disabled">
-      <span class="dot" style="background:#999"></span>
-      <span><strong>{ch.number}.</strong> {ch.title}</span>
-    </div>
-  {/if}
-{/each}
+<!-- Single column on phones; two-column card grid at >=900px (A2). -->
+<div class="chapter-grid">
+  {#each toc.chapters as ch}
+    {#if isChapterAvailable(ch.id)}
+      <button class="menu-item" on:click={() => (location.hash = `#/chapter/${ch.id}`)}>
+        <span class="dot"></span>
+        <span><strong>{ch.number}.</strong> {ch.title}</span>
+      </button>
+    {:else}
+      <div class="menu-item disabled">
+        <span class="dot" style="background:#999"></span>
+        <span><strong>{ch.number}.</strong> {ch.title}</span>
+      </div>
+    {/if}
+  {/each}
+</div>
 
 <div class="section-label">Coming Later</div>
 {#each toc.special as s}

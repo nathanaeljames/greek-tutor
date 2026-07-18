@@ -1,13 +1,19 @@
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { VitePWA } from 'vite-plugin-pwa';
+// Shared cache-name constants (single source of truth for app + SW). See
+// src/lib/cache-config.js — dependency-free so it imports cleanly here.
+import { AUDIO_CACHE, MANIFEST_CACHE } from './src/lib/cache-config.js';
 
 export default defineConfig({
   plugins: [
     svelte(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icons/icon-192.png', 'icons/icon-512.png'],
+      includeAssets: [
+        'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png',
+        'icons/icon-maskable-512.png', 'icons/lamp-pixel-512.png'
+      ],
       manifest: {
         name: 'Greek Tutor',
         short_name: 'GreekTutor',
@@ -16,9 +22,12 @@ export default defineConfig({
         background_color: '#f5f2e8',
         display: 'standalone',
         orientation: 'portrait',
+        // App icon: the retro pixel-faithful LAMP art (A5). To swap the final
+        // art, point these src paths at the alternative file — one-line change.
         icons: [
-          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
+          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+          { src: 'icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
         ]
       },
       workbox: {
@@ -34,7 +43,7 @@ export default defineConfig({
             urlPattern: ({ url }) => url.pathname.endsWith('/audio/audio-manifest.json'),
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'greek-tutor-manifest',
+              cacheName: MANIFEST_CACHE,
               expiration: { maxEntries: 2 },
               cacheableResponse: { statuses: [0, 200] }
             }
@@ -43,7 +52,7 @@ export default defineConfig({
             urlPattern: ({ url }) => url.pathname.includes('/audio/'),
             handler: 'CacheFirst',
             options: {
-              cacheName: 'greek-tutor-audio',
+              cacheName: AUDIO_CACHE,
               expiration: { maxEntries: 10000 },
               cacheableResponse: { statuses: [0, 200] },
               rangeRequests: true
