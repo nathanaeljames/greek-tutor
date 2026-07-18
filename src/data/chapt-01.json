@@ -1041,7 +1041,7 @@
       "instructions": "Click on letter to hear its name & sound",
       "itemsFrom": "alphabet.letters",
       "display": "lower",
-      "play": "audioFull",
+      "play": "audioShort",
       "ui": {
         "arrowCue": true,
         "fields": [
@@ -1052,7 +1052,8 @@
           "Say Alphabet"
         ]
       },
-      "sayAlphabetAudio": "chapt_1_a_alphab"
+      "sayAlphabetAudio": "chapt_1_a_alphab",
+      "_play_note": "Punch-list item 3 verified 2026-07-18: tapping a letter in the Letter Names and Sounds Drill speaks the letter NAME only (audioShort), not name+sound. audioFull now remains only on the Learn Letters stepper."
     },
     {
       "id": "c1_drill_translit",
