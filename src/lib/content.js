@@ -82,13 +82,21 @@ export function getSequencePosition(chapterId, activityId) {
 }
 
 // The next chapter after this one, per the global TOC, with availability.
+// The intro pseudo-chapter precedes chapter 1, so its end-of-rail dialog can
+// offer "Next chapter" into Chapter 1 (R8).
 export function getNextChapter(chapterId) {
   const ch = getChapter(chapterId);
   if (!ch) return null;
   const list = toc.chapters || [];
-  const i = list.findIndex(c => c.id === chapterId);
-  if (i === -1 || i + 1 >= list.length) return null;
-  const next = list[i + 1];
+  let next = null;
+  if (toc.intro && chapterId === toc.intro.id) {
+    next = list[0] || null;
+  } else {
+    const i = list.findIndex(c => c.id === chapterId);
+    if (i === -1 || i + 1 >= list.length) return null;
+    next = list[i + 1];
+  }
+  if (!next) return null;
   return { id: next.id, number: next.number, title: next.title, available: isChapterAvailable(next.id) };
 }
 

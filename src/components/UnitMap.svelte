@@ -5,7 +5,7 @@
   // progress.js.
   import { createEventDispatcher, tick } from 'svelte';
   import { getChapter, SECTIONS } from '../lib/content.js';
-  import { getActivityState, getSectionProgress, getChapterProgress, getCurrentActivity } from '../lib/progress.js';
+  import { getActivityState, getSectionProgress, getChapterProgress, getCurrentActivity, progressRev } from '../lib/progress.js';
   import DownloadControl from './DownloadControl.svelte';
 
   export let chapterId;
@@ -13,20 +13,20 @@
   export let expandedSections = [];          // hub only; sidebar is all-expanded
   export let focusSection = null;            // hub: scroll this section into view
   export let highlightActivityId = null;     // teal-highlight the open activity
-  export let progressTick = 0;               // bump to force progress re-read
 
   const dispatch = createEventDispatcher();
   const LABELS = { learn: 'Learn', drill: 'Drill', exercise: 'Exercise', quickReview: 'Quick Review' };
 
   $: chapter = getChapter(chapterId);
   $: isSidebar = variant === 'sidebar';
-  // progressTick is read so the block recomputes when progress changes.
-  $: currentId = (progressTick, getCurrentActivity(chapterId));
-  $: chapterProg = (progressTick, getChapterProgress(chapterId));
+  // $progressRev is read so these recompute when progress changes (B4: the
+  // store replaces the old progressTick prop threading).
+  $: currentId = ($progressRev, getCurrentActivity(chapterId));
+  $: chapterProg = ($progressRev, getChapterProgress(chapterId));
   $: pct = chapterProg.total ? Math.round((chapterProg.done / chapterProg.total) * 100) : 0;
 
   // NOTE: template expressions must reference reactive variables directly
-  // (expandedSections, currentId, progressTick) or Svelte 4 won't re-render
+  // (expandedSections, currentId, $progressRev) or Svelte 4 won't re-render
   // them; helpers therefore take those values as arguments.
   function rowState(id, current, _tick) {
     const s = getActivityState(id);
@@ -61,7 +61,7 @@
 
     {#each SECTIONS.filter(s => (chapter[s] || []).length) as section}
       {@const items = chapter[section] || []}
-      {@const sp = (progressTick, getSectionProgress(chapterId, section))}
+      {@const sp = ($progressRev, getSectionProgress(chapterId, section))}
       {@const open = isSidebar || expandedSections.includes(section)}
       <div class="section-card" bind:this={cardEls[section]}>
         <button class="section-head" class:open on:click={() => toggle(section)} aria-expanded={open}>
@@ -75,7 +75,7 @@
         {#if open}
           <div class="section-body">
             {#each items as act}
-              {@const st = rowState(act.id, currentId, progressTick)}
+              {@const st = rowState(act.id, currentId, $progressRev)}
               <button
                 class="act-row"
                 class:active={act.id === highlightActivityId}

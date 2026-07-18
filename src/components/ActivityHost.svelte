@@ -2,7 +2,6 @@
   // Renders one activity's content (chrome supplied by the App shell).
   // Records progress on mount: contentAudio pages count completed on visit;
   // scored activities complete on finish (handled inside their components).
-  import { createEventDispatcher } from 'svelte';
   import { getChapter, getActivity } from '../lib/content.js';
   import { markVisited, markCompleted } from '../lib/progress.js';
   import ContentAudio from './ContentAudio.svelte';
@@ -13,7 +12,6 @@
   export let chapterId;
   export let activityId;
 
-  const dispatch = createEventDispatcher();
   $: chapter = getChapter(chapterId);
   $: activity = getActivity(chapterId, activityId);
 
@@ -30,8 +28,9 @@
     markVisited(a.id);
     // A plain contentAudio page (chart/stepper/textPage/flashcard) is done on
     // visit. Self-paced and category exercises complete on finish instead.
+    // Re-render is driven by progress.js's progressRev store (B4) — no
+    // progress event needs to bubble to the shell.
     if (a.type === 'contentAudio' && !a.categories && !SELF_PACED.has(a.mode)) markCompleted(a.id);
-    dispatch('progress');
   }
 </script>
 

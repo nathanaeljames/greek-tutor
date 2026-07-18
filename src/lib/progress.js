@@ -7,9 +7,17 @@
 // drive the accordion's "up next" affordance and the Map button's default
 // expansion.
 
+import { writable } from 'svelte/store';
 import { getChapter, SECTIONS, getSequence } from './content.js';
 
 const KEY = 'greek-tutor-progress-v1';
+
+// Reactivity bridge (B4): module state is invisible to Svelte, so every
+// mutation bumps this revision store. Components subscribe ($progressRev) and
+// re-read through the unchanged getter interface below — the interface stays
+// synchronous so Phase 6 can swap the backend to IndexedDB behind it.
+export const progressRev = writable(0);
+function bumpRev() { progressRev.update(n => n + 1); }
 
 function load() {
   try {
@@ -45,12 +53,14 @@ export function markVisited(activityId) {
   state.visited[activityId] = true;
   state.current = activityId;
   save();
+  bumpRev();
 }
 
 export function markCompleted(activityId) {
   state.completed[activityId] = true;
   state.visited[activityId] = true;
   save();
+  bumpRev();
 }
 
 export function getSectionProgress(chapterId, section) {

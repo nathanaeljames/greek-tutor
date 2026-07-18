@@ -11,6 +11,7 @@
 
   let storage = { usage: null, quota: null, persisted: false };
   let builtPacks = [];
+  let packsFailed = false;   // manifest unreachable (first run offline)
   let confirmClear = false;
   let clearing = false;
 
@@ -20,7 +21,7 @@
 
   onMount(() => {
     refreshStorage();
-    getBuiltPacks().then(p => (builtPacks = p));
+    getBuiltPacks().then(p => (builtPacks = p)).catch(() => (packsFailed = true));
     const up = () => (online = navigator.onLine);
     window.addEventListener('online', up);
     window.addEventListener('offline', up);
@@ -87,7 +88,11 @@
         <DownloadControl packId={p.id} />
       </div>
     {/each}
-    {#if !builtPacks.length}<div class="settings-note">Loading…</div>{/if}
+    {#if !builtPacks.length}
+      <div class="settings-note">
+        {packsFailed ? 'Audio list unavailable — connect to the internet once to load it.' : 'Loading…'}
+      </div>
+    {/if}
   </section>
 
   <section class="card">

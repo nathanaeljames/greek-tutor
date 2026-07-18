@@ -1,8 +1,10 @@
 <script>
-  // The contentAudio family: chart / exploreGrid / stepper / textPage /
-  // flashcard / selfCheckStepper / selfCheckSequence. Several chart pages have
-  // bespoke pedagogical layouts (equation chart, vowel stair, diphthong rows,
-  // review matrices) reconstructed from the original's yellow panels.
+  // The contentAudio family, dispatched on activity.mode (B1 — never on
+  // activity id): chart / exploreGrid / stepper / textPage / objectivesPage /
+  // flashcard / selfCheckStepper / selfCheckSequence / equationChart /
+  // vowelStair / diphthongRows / reviewVocab / reviewLetters. The bespoke
+  // modes are pedagogical layouts reconstructed from the original's yellow
+  // panels; their per-mode data contracts are documented in HANDOFF-4 §5 (B1).
   import { slide } from 'svelte/transition';
   import { resolveItems, shuffle } from '../lib/content.js';
   import { play } from '../lib/audio.js';
@@ -35,20 +37,20 @@
       items = baseItems;
     }
   }
+  // Dispatch is MODE-keyed (B1): every layout is selected by activity.mode
+  // (plus data-shape fields like display/columns/showNtFreq), never by
+  // activity id — chapters 2+ reuse these layouts under new ids. The mode
+  // vocabulary and per-mode data contracts live in HANDOFF-4 §5 (B1) for the
+  // chat-side pipeline.
   $: mode = activity.mode || 'chart';
-  $: id = activity.id;
 
-  // Which special chart layout (if any) this activity uses.
-  $: isTranslitChart = id === 'c1_learn_translit';
-  $: isCapitalsChart = id === 'c1_learn_capitals';
-  $: isEquationChart = isTranslitChart || isCapitalsChart;
-  $: isVowels = id === 'c1_learn_vowels';
-  $: isDiphthongsLearn = id === 'c1_learn_diphthongs';
-  $: isIotaLearn = id === 'c1_learn_iota_subscripts';
-  $: isReviewVocab = id === 'c1_qr_vocab';
-  $: isReviewLetters = id === 'c1_qr_letters';
-  // Arrow cue restored above the three letter-grid drills.
-  $: showArrowCue = id === 'c1_drill_letter_names' || id === 'c1_drill_translit' || id === 'c1_drill_capitals';
+  // equationChart: each cell is "lower = X". The right-hand side comes from
+  // the activity's display field: 'lower=upper' -> capital, else transliteration.
+  $: eqRightField = activity.display === 'lower=upper' ? 'upper' : 'translit';
+
+  // reviewLetters: header labels come from the data's columns list; the four
+  // cell fields are fixed (name, lower, upper, translit).
+  $: reviewColumns = activity.columns || ['Letter Name', 'Letter', 'Capital', 'Transliteration'];
 
   // --- stepper / flashcard / selfCheck shared state ---
   let idx = -1;
@@ -107,16 +109,8 @@
     return m.name || item.secondary || '';
   }
 
-  // --- Review Vocabulary Chart rows ---
-  $: reviewVocabRows = isReviewVocab ? items : [];
-  // --- Review Letters Quick Chart rows ---
-  $: letterRows = isReviewLetters ? chapter.alphabet.letters : [];
-  // --- Learn Diphthongs rows ---
-  $: diphthongs = isDiphthongsLearn ? chapter.alphabet.diphthongs : [];
-  // --- Learn Iota Subscripts rows (same layout as diphthongs) ---
-  $: iotaRows = isIotaLearn ? chapter.alphabet.iotaSubscripts : [];
-  // --- Learn Vowels stair groups ---
-  $: vowelGroups = isVowels
+  // --- vowelStair groups (items resolved from alphabet.vowels carry group) ---
+  $: vowelGroups = mode === 'vowelStair'
     ? [
         { label: 'Short', rows: items.filter(r => r.group === 'short') },
         { label: 'Long or Short', rows: items.filter(r => r.group === 'longOrShort') },
@@ -125,13 +119,20 @@
     : [];
 </script>
 
-{#if mode === 'textPage'}
-  {#if activity.id === 'c1_learn_objectives'}
-    <div class="card textpage">
-      <strong>{chapter.objectivesPreamble}</strong>
-      <ol>{#each chapter.objectives as o}<li>{o}</li>{/each}</ol>
-    </div>
-  {:else if activity.content}
+<!-- lead: mode-independent intro text rendered above the content card
+     (A12/A13; any contentAudio activity may carry it). -->
+{#if activity.lead}<p class="lead-text">{activity.lead}</p>{/if}
+
+{#if mode === 'objectivesPage'}
+  <!-- The chapter's objectives list (preamble + numbered objectives from the
+       chapter record itself, not the activity). -->
+  <div class="card textpage">
+    <strong>{chapter.objectivesPreamble}</strong>
+    <ol>{#each chapter.objectives as o}<li>{o}</li>{/each}</ol>
+  </div>
+
+{:else if mode === 'textPage'}
+  {#if activity.content}
     <div class="card">
       <RichContent blocks={activity.content} />
       {#if activity.playButton}
@@ -252,22 +253,23 @@
     {#if activity.citation}<div class="rc-refs">{activity.citation}</div>{/if}
   </div>
 
-{:else if isEquationChart}
-  <!-- Learn Letter Transliterations / Learn Capital Letters: equation chart -->
+{:else if mode === 'equationChart'}
+  <!-- Equation chart (letter transliterations / capitals): "lower = X" cells;
+       X picked by the activity's display field (eqRightField). -->
   <div class="card">
     <div class="equation-grid">
-      {#each chapter.alphabet.letters as l}
-        <button class="eq-cell" on:click={() => play(l.audioShort)}>
-          <span class="greek eq-a">{isCapitalsChart ? l.lower : l.lower}</span>
+      {#each items as it}
+        <button class="eq-cell" on:click={() => it.audio && play(it.audio)}>
+          <span class="greek eq-a">{it.meta.lower}</span>
           <span class="eq-eq">=</span>
-          <span class="greek eq-b">{isCapitalsChart ? l.upper : l.translit}</span>
+          <span class="greek eq-b">{it.meta[eqRightField]}</span>
         </button>
       {/each}
     </div>
   </div>
   {#if activity.content}<div class="card"><RichContent blocks={activity.content} /></div>{/if}
 
-{:else if isVowels}
+{:else if mode === 'vowelStair'}
   <!-- Learn Vowels: short / long-or-short / long stair -->
   <div class="card">
     <div class="vowel-stair">
@@ -285,18 +287,20 @@
   </div>
   {#if activity.content}<div class="card"><RichContent blocks={activity.content} /></div>{/if}
 
-{:else if isDiphthongsLearn}
-  <!-- Learn Diphthongs: 7 rows (diphthong / sound / example / gloss) -->
-  {#if activity.lead}<p class="lead-text">{activity.lead}</p>{/if}
+{:else if mode === 'diphthongRows'}
+  <!-- Sound rows (diphthongs AND iota subscripts share this layout): tile
+       (plays row audio) / sound description / tappable example word + gloss.
+       Row fields come from the itemsFrom source rows (meta): greek, sound,
+       example, exampleGloss, exampleAudio. -->
   <div class="card">
     <div class="diph-rows">
-      {#each diphthongs as d}
+      {#each items as it}
         <div class="diph-row">
-          <button class="diph-tile greek" on:click={() => play(d.audio)}>{d.greek}</button>
-          <div class="diph-sound">{d.sound}</div>
-          <button class="diph-ex" class:tappable={d.exampleAudio} on:click={() => d.exampleAudio && play(d.exampleAudio)}>
-            <span class="greek">{d.example}</span>
-            <span class="diph-gloss">{d.exampleGloss}</span>
+          <button class="diph-tile greek" on:click={() => it.audio && play(it.audio)}>{it.meta.greek}</button>
+          <div class="diph-sound">{it.meta.sound}</div>
+          <button class="diph-ex" class:tappable={it.meta.exampleAudio} on:click={() => it.meta.exampleAudio && play(it.meta.exampleAudio)}>
+            <span class="greek">{it.meta.example}</span>
+            <span class="diph-gloss">{it.meta.exampleGloss}</span>
           </button>
         </div>
       {/each}
@@ -305,36 +309,15 @@
   {#if activity.content}<div class="card"><RichContent blocks={activity.content} /></div>{/if}
   {#if activity.note}<div class="note">{activity.note}</div>{/if}
 
-{:else if isIotaLearn}
-  <!-- Learn Iota Subscripts: rows (subscript vowel / sound / example / gloss).
-       Tile tap plays row.audio; the example word tap plays row.exampleAudio. -->
-  {#if activity.lead}<p class="lead-text">{activity.lead}</p>{/if}
-  <div class="card">
-    <div class="diph-rows">
-      {#each iotaRows as r}
-        <div class="diph-row">
-          <button class="diph-tile greek" on:click={() => r.audio && play(r.audio)}>{r.greek}</button>
-          <div class="diph-sound">{r.sound}</div>
-          <button class="diph-ex" class:tappable={r.exampleAudio} on:click={() => r.exampleAudio && play(r.exampleAudio)}>
-            <span class="greek">{r.example}</span>
-            <span class="diph-gloss">{r.exampleGloss}</span>
-          </button>
-        </div>
-      {/each}
-    </div>
-  </div>
-  {#if activity.content}<div class="card"><RichContent blocks={activity.content} /></div>{/if}
-  {#if activity.note}<div class="note">{activity.note}</div>{/if}
-
-{:else if isReviewVocab}
+{:else if mode === 'reviewVocab'}
   <!-- Review Vocabulary Chart: Greek (tap = lemma audio, blue) + STATIC gloss
        (dark green) + ntFreq. A17/A6: only the Greek word is tappable. -->
   <div class="card">
     <div class="review-vocab">
-      {#each reviewVocabRows as r}
+      {#each items as r}
         <div class="rv-row">
           <button class="rv-greek greek" on:click={() => r.audio && play(r.audio)}>{r.display}</button>
-          <span class="rv-gloss">{r.secondary}{#if r.meta && r.meta.ntFreq} <span class="rv-freq">({r.meta.ntFreq})</span>{/if}</span>
+          <span class="rv-gloss">{r.secondary}{#if activity.showNtFreq && r.meta && r.meta.ntFreq} <span class="rv-freq">({r.meta.ntFreq})</span>{/if}</span>
         </div>
       {/each}
     </div>
@@ -346,20 +329,20 @@
     {#if activity.note}<div class="note">{activity.note}</div>{/if}
   </div>
 
-{:else if isReviewLetters}
-  <!-- Review Letters Quick Chart: 4-column compact matrix. Pronounce column
-       dropped (A18); each row still tappable to hear the letter name. -->
+{:else if mode === 'reviewLetters'}
+  <!-- Review Letters Quick Chart: 4-column compact matrix (A18); headers from
+       the data's columns list; each row tappable to hear the letter name. -->
   <div class="card">
     <div class="letters-matrix">
       <div class="lm-head">
-        <span>Letter Name</span><span>Letter</span><span>Capital</span><span>Transliteration</span>
+        {#each reviewColumns as c}<span>{c}</span>{/each}
       </div>
-      {#each letterRows as l}
-        <button class="lm-row" on:click={() => play(l.audioShort)}>
-          <span class="lm-name">{l.name}</span>
-          <span class="greek">{l.lower}</span>
-          <span class="greek">{l.upper}</span>
-          <span class="greek">{l.translit}</span>
+      {#each items as it}
+        <button class="lm-row" on:click={() => it.audio && play(it.audio)}>
+          <span class="lm-name">{it.meta.name}</span>
+          <span class="greek">{it.meta.lower}</span>
+          <span class="greek">{it.meta.upper}</span>
+          <span class="greek">{it.meta.translit}</span>
         </button>
       {/each}
     </div>
@@ -371,9 +354,10 @@
   </div>
 
 {:else}
-  <!-- generic chart / exploreGrid: tap a tile, hear it, see its info -->
+  <!-- generic chart / exploreGrid: tap a tile, hear it, see its info.
+       ui.arrowCue (data) restores the tap-here arrow above the grid. -->
   <div class="card">
-    {#if showArrowCue}<ArrowCue />{/if}
+    {#if activity.ui?.arrowCue}<ArrowCue />{/if}
     <div class="grid letters">
       {#each items as item}
         <button class="tile greek" class:small={item.display.length > 3} on:click={() => clickTile(item)}>

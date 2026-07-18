@@ -19,16 +19,34 @@
   // chips (A6, Six Points "Linguistic Pronunciation Descriptions").
   const isLettersList = v => v && typeof v === 'object' && Array.isArray(v.letters);
 
-  // greekTaps: split an item's text on exact substring matches (first
-  // occurrence per key) and render those substrings as tappable spans. Greek
-  // NOT listed here stays plain (e.g. the red-highlighted π stays untappable).
+  // greekTaps: split an item's text on STANDALONE substring matches (first
+  // standalone occurrence per key) and render those substrings as tappable
+  // spans. Greek NOT listed here stays plain (e.g. the red-highlighted π stays
+  // untappable). Data contract (chat-side pipeline, chapters 2+): a greekTaps
+  // key marks the first occurrence of that exact string whose neighbors are
+  // not Greek letters — a single-letter key like "ζ" can never turn part of a
+  // longer Greek word in the same paragraph into a tap target. Matches render
+  // as plain text nodes inside a <button> (never {@html}).
+  const GREEK_LETTER = /[Ͱ-Ͽἀ-῿]/; // Greek + Greek Extended
+
+  // First occurrence of sub in text where the adjacent characters are not
+  // Greek letters; -1 if none.
+  function standaloneIndexOf(text, sub) {
+    for (let i = text.indexOf(sub); i !== -1; i = text.indexOf(sub, i + 1)) {
+      const before = i > 0 ? text[i - 1] : '';
+      const after = text[i + sub.length] || '';
+      if (!GREEK_LETTER.test(before) && !GREEK_LETTER.test(after)) return i;
+    }
+    return -1;
+  }
+
   function splitTaps(text, taps) {
     let parts = [{ t: text || '' }];
     if (!taps) return parts;
     for (const [sub, audio] of Object.entries(taps)) {
       const next = [];
       for (const p of parts) {
-        const i = p.audio ? -1 : p.t.indexOf(sub);   // only split plain segments
+        const i = p.audio ? -1 : standaloneIndexOf(p.t, sub);   // only split plain segments
         if (i === -1) { next.push(p); continue; }
         if (i > 0) next.push({ t: p.t.slice(0, i) });
         next.push({ t: sub, audio });

@@ -9,7 +9,7 @@
 
 import { writable, derived } from 'svelte/store';
 import { loadManifest, getPacks, getPack } from './packs.js';
-import { AUDIO_CACHE, isAudioCacheName } from './cache-config.js';
+import { AUDIO_CACHE, MANIFEST_CACHE, PROTECTED_CACHES, isAudioCacheName } from './cache-config.js';
 
 // Single shared audio bucket (see cache-config.js). DownloadManager, audio.js,
 // and the SW route all key on this one name so usage can never double via a
@@ -159,9 +159,18 @@ function abortError() { const e = new Error('aborted'); e.name = 'AbortError'; r
 // if cached, by deleting each entry first so the SW CacheFirst route misses and
 // goes to the network.
 export async function downloadPack(packId, { force = false } = {}) {
-  await ensureInit();
-  await requestPersistOnce();
-  const pack = await getPack(packId);
+  // Called straight from click handlers — must never reject (B7). Manifest
+  // fetch failure (e.g. flaky network the online flag missed) becomes an
+  // error state on the pack, not an unhandled rejection.
+  let pack;
+  try {
+    await ensureInit();
+    await requestPersistOnce();
+    pack = await getPack(packId);
+  } catch (_) {
+    patch(packId, { error: 'Could not load the audio list — check your connection and retry.' });
+    return;
+  }
   if (!pack) return;
 
   const controller = new AbortController();
@@ -215,9 +224,16 @@ export async function downloadPack(packId, { force = false } = {}) {
 // Whole-manifest download with one aggregate progress bar (the 88 MB device
 // test). Marks each pack complete as its files land so hub badges catch up.
 export async function downloadAll() {
-  await ensureInit();
-  await requestPersistOnce();
-  const packs = await getPacks();
+  // Same no-reject contract as downloadPack (B7).
+  let packs;
+  try {
+    await ensureInit();
+    await requestPersistOnce();
+    packs = await getPacks();
+  } catch (_) {
+    patch(ALL, { error: 'Could not load the audio list — check your connection and retry.' });
+    return;
+  }
   const allSrcs = [];
   const packOfSrc = new Map();
   for (const p of packs) for (const s of p.srcs) { allSrcs.push(s); packOfSrc.set(s, p.id); }
@@ -288,26 +304,39 @@ export async function clearAllAudio() {
   try {
     if ('caches' in self) {
       const names = await caches.keys();
-      await Promise.all(names.filter(isAudioCacheName).map(n => caches.delete(n)));
+      // Explicit manifest guard: the manifest must stay reachable offline even
+      // if its cache is ever renamed to something containing "audio" (R3).
+      await Promise.all(names
+        .filter(n => isAudioCacheName(n) && n !== MANIFEST_CACHE)
+        .map(n => caches.delete(n)));
     }
   } catch (_) { /* ignore */ }
   saveBook({ version: 1, packs: {} });
-  const packs = await getPacks();
-  const reset = {};
-  for (const p of packs) reset[p.id] = { state: 'none', done: 0, total: p.count, error: null };
-  reset[ALL] = { state: 'none', done: 0, total: 0, error: null };
-  store.set(reset);
+  try {
+    const packs = await getPacks();
+    const reset = {};
+    for (const p of packs) reset[p.id] = { state: 'none', done: 0, total: p.count, error: null };
+    reset[ALL] = { state: 'none', done: 0, total: 0, error: null };
+    store.set(reset);
+  } catch (_) {
+    store.set({});   // manifest unreachable: defaultFor() supplies 'none' states
+  }
 }
 
 // One-time startup cleanup for already-deployed installs (the iPhone from
 // Phase 4d): if a legacy or workbox-default-named audio cache exists alongside
 // the canonical bucket, delete it so its bytes stop inflating storage usage.
-// Never touches CACHE_NAME (the live bucket) or the manifest cache.
+// PROTECTED_CACHES (the canonical audio bucket + the manifest cache) are
+// asserted safe in code, not by naming convention (R3).
+// Ordering invariant: this races SW activation, and that is acceptable ONLY
+// because the SW's audio route uses the same canonical AUDIO_CACHE name
+// (single-sourced from cache-config.js) — the SW can never be writing into a
+// cache this migration deletes. If the SW cache name ever changes, revisit.
 export async function migrateLegacyAudioCaches() {
   try {
     if (!('caches' in self)) return;
     const names = await caches.keys();
-    const stale = names.filter(n => n !== CACHE_NAME && isAudioCacheName(n));
+    const stale = names.filter(n => !PROTECTED_CACHES.includes(n) && isAudioCacheName(n));
     if (stale.length) await Promise.all(stale.map(n => caches.delete(n)));
-  } catch (_) { /* best effort */ }
+  } catch (_) { /* best effort: fire-and-forget from main.js must never reject */ }
 }

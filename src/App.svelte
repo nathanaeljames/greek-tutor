@@ -18,14 +18,13 @@
   import Settings from './components/Settings.svelte';
   import { onAudioProblem, stop as stopAudio } from './lib/audio.js';
   import { getChapter, getActivity, sectionOfActivity, SECTIONS } from './lib/content.js';
-  import { getCurrentActivity, getChapterProgress } from './lib/progress.js';
+  import { getCurrentActivity, getChapterProgress, progressRev } from './lib/progress.js';
   import * as nav from './lib/nav.js';
 
   let route = { view: 'toc' };
   let wide = false;
   let expandedSections = [];
   let showEndDialog = false;
-  let progressTick = 0;
   let scrollEl;
   let toast = '';
   let toastTimer;
@@ -63,7 +62,8 @@
     parseHash();
     showEndDialog = false;
     computeExpansion();
-    progressTick += 1;                 // refresh map/sidebar from progress
+    // Progress re-render is handled by the progressRev store (B4): the
+    // ActivityHost's markVisited/markCompleted bump it on mount.
     await tick();
     // Scroll content to top, except the hub :section route (UnitMap scrolls
     // the target section into view itself).
@@ -127,8 +127,8 @@
     document.title = route.view === 'toc' ? 'Greek Tutor' : `Greek Tutor — ${screenTitle}`;
   }
 
-  // Wide hub pane needs a live progress read.
-  $: hubProg = route.view === 'chapter' ? (progressTick, getChapterProgress(route.chapterId)) : { done: 0, total: 0 };
+  // Wide hub pane needs a live progress read ($progressRev makes it reactive).
+  $: hubProg = route.view === 'chapter' ? ($progressRev, getChapterProgress(route.chapterId)) : { done: 0, total: 0 };
   $: hubPct = hubProg.total ? Math.round((hubProg.done / hubProg.total) * 100) : 0;
 </script>
 
@@ -143,7 +143,7 @@
   <div class="app-main">
     {#if sidebarVisible}
       <aside class="sidebar">
-        <UnitMap chapterId={route.chapterId} variant="sidebar" highlightActivityId={activityHighlight} {progressTick} />
+        <UnitMap chapterId={route.chapterId} variant="sidebar" highlightActivityId={activityHighlight} />
       </aside>
     {/if}
 
@@ -168,11 +168,10 @@
               variant="hub"
               {expandedSections}
               focusSection={route.section}
-              {progressTick}
               on:toggle={handleToggle} />
           {/if}
         {:else if route.view === 'activity'}
-          <ActivityHost chapterId={route.chapterId} activityId={route.activityId} on:progress={() => (progressTick += 1)} />
+          <ActivityHost chapterId={route.chapterId} activityId={route.activityId} />
           <SequentialRail chapterId={route.chapterId} activityId={route.activityId} on:end={() => (showEndDialog = true)} />
         {/if}
       </div>

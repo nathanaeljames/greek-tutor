@@ -29,7 +29,7 @@ function warmCache(src) {
   if (!('caches' in window)) return;
   caches.match(src).then(hit => {
     if (!hit) fetch(src).catch(() => { });
-  });
+  }).catch(() => { });   // cache API failure must not surface as unhandled
 }
 
 export function play(id) {

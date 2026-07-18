@@ -6,6 +6,8 @@ Opus. **Part B (architectural code review) was intentionally NOT started** —
 per the work order, Part B code review, edits, testing, and the Part-B section
 of this handoff are Fable's, later. This document is complete for Part 0 + A
 and stubs Part B with entry notes so Fable can pick it up cold.
+**Update 2026-07-18: Part B is now DONE — §5 was replaced with the real audit
+findings (Fable, per AUDIT-4.md) and §3 lists the audit's file changes.**
 
 > Icon note (deviation from spec §0/A5): the vector icon set (icon.svg,
 > icon-maskable, apple-touch, etc.) was **not** delivered with this spec, and
@@ -221,6 +223,32 @@ Modified:
   `.draft-tag`.
 
 Suggest committing Part 0 + A as one unit before Fable starts Part B.
+(Done: commit caa7a23 "wrapping phase 4 edits".)
+
+**Part B audit changes (2026-07-18, Fable — see §5 for the findings):**
+- `src/lib/cache-config.js` — `PROTECTED_CACHES` guard list + breadth-warning
+  comment (R3).
+- `src/lib/downloads.js` — migration/clear guarded by PROTECTED_CACHES /
+  explicit manifest exclusion; downloadPack/downloadAll/clearAllAudio never
+  reject (R3/B7).
+- `src/lib/packs.js` — getPacks no longer memoizes a rejection (B7).
+- `src/lib/audio.js` — warmCache catch (B7).
+- `src/lib/content.js` — getNextChapter treats intro as preceding ch. 1 (R8).
+- `src/lib/progress.js` — `progressRev` store replaces tick threading (B4).
+- `src/components/ContentAudio.svelte` — mode-keyed dispatch, zero id
+  branches (B1).
+- `src/components/RichContent.svelte` — standalone-boundary greekTaps (R5).
+- `src/components/ActivityHost.svelte` — progress event removed (B4).
+- `src/components/UnitMap.svelte`, `src/App.svelte` — subscribe to
+  progressRev; progressTick prop gone (B4).
+- `src/components/EndOfChapterDialog.svelte` — Escape close + initial focus;
+  action order (R8).
+- `src/components/Settings.svelte` — manifest-unavailable note (B7).
+- `src/app.css` — 768 comment fixed (R1); Review-Letters header wrap at
+  ≤360 px (R6).
+- `src/data/chapt-01.json` — mode vocabulary + ui.arrowCue (B1; the one
+  permitted data edit — full field list in §5).
+- `public/icons/icon-maskable-512.png` — delivered padded variant (R7).
 
 ## 4. Svelte 4 gotchas honored (carried from 4A–4C)
 - `{#key activityId}` is the sanctioned remount lever for "component reused
@@ -230,32 +258,222 @@ Suggest committing Part 0 + A as one unit before Fable starts Part B.
   components must follow the rule (tappable Greek blue; static Greek/text ink or
   dark green), ideally in component-scoped styles (B6).
 
-## 5. Part B — NOT STARTED (Fable)
-Deferred entirely per the work order. Entry notes so it can start cold:
-- **B1 ContentAudio dispatch** is the priority: it currently branches on
-  chapter-1 **activity IDs** (`id === 'c1_learn_translit'`, `'c1_qr_vocab'`,
-  `'c1_learn_diphthongs'`, etc.) rather than on mode/data shape — a real
-  scaling defect for the 27 chapters in Phase 5. Convert id-keyed dispatch to
-  mode/shape-keyed; if it grows past ~400 lines, extract per-mode
-  subcomponents (mechanical). Left untouched this session on purpose.
-- **B2 lifecycle:** the `{#key}` fix (A8) covers the host; grep for other
-  state initialized from props outside reactive statements (e.g.
-  SelectActivity's `init()` at construction, SpellActivity's `words` at
-  construction — both now saved by the remount, but confirm nothing else).
-- **B3 cache topology:** now single-sourced via `cache-config.js`; assert in
-  the review that nothing reintroduces a literal cache-name string.
-- **B4 progress.js module state + progressTick** re-render workaround (App +
-  UnitMap thread `progressTick` through helpers). Convert to a Svelte store if
-  it's small/mechanical; else document the migration.
-- **B5 bundle shape:** chapter JSON is statically imported in `content.js`
-  (`import chapt1 from '../data/chapt-01.json'`). Verify a move to lazy
-  `import.meta.glob` dynamic imports without breaking offline (precache must
-  include the chunks); implement if contained, else document the plan.
-- **B6 app.css** is a growing phase-suffixed monolith (now with a "Phase 4
-  closeout" block). Do not mass-refactor; flag dead selectors + specificity
-  hacks; adopt component-scoped styles for new Phase-5 components.
-- **B7:** anything else load-bearing (routing, a11y, data-contract drift
-  between `content.js` helpers and the JSON).
+## 5. Part B — audit findings (Fable)
+
+Session date: 2026-07-18, per AUDIT-4.md (Part A regression pass + the
+deferred Part B review). All verification below ran against `npm run build`
++ `vite preview` driven by a headless-Chrome CDP driver (Node
+`--experimental-websocket`, same approach as §2): **463 automated UI checks
++ 24 SW/offline checks, 0 console errors**. Suggest committing this audit as
+its own unit ("Phase 4 Part B audit").
+
+### ⚠ Flag for the device pass (Phase 4d): iPad portrait
+The 768→900 breakpoint unification (A2) means **iPad portrait (~768–834 px),
+which previously got the sidebar layout, now gets the phone layout** (bottom
+bar, accordion hub). This is a *behavior change to evaluate on the device*,
+not a bug: if portrait iPad looks worse, the fix is the breakpoint **value**
+only — one `@media (min-width: 900px)` block in app.css + one
+`matchMedia('(min-width: 900px)')` string in App.svelte. Nothing else keys
+on the number.
+
+### Part 1 — regression audit of Part A
+
+- **R1 breakpoint — FIXED (comment only) / VERIFIED.** Repo grep for `768`
+  found a single stale CSS comment (fixed); the only breakpoint sources are
+  the two 900px strings above. Driven at 800 px and 899 px: complete phone
+  layout (bottom bar present + functional, no sidebar, no horizontal
+  scroll); at 900 px and 1024 px: sidebar layout, no bottom bar. No dead
+  band. iPad-portrait flag above.
+- **R2 cache-config dual import — NOT AN ISSUE / VERIFIED.** File is plain
+  dependency-free ESM with the keep-it-that-way comment; `npm run build` and
+  `npm run dev` both work; generated `sw.js` references exactly
+  `greek-tutor-audio` + `greek-tutor-manifest`; no literal cache-name
+  strings in code anywhere in src/ (comments only).
+- **R3 predicate breadth + migration safety — FIXED.** cache-config.js now
+  exports **`PROTECTED_CACHES`** (canonical audio + manifest);
+  `migrateLegacyAudioCaches` filters on it (protection asserted in code, not
+  by naming accident), and `clearAllAudio` explicitly excludes
+  `MANIFEST_CACHE`. Kept the substring predicate + guard list (the spec's
+  option b) with a breadth-warning comment; the SW-activation ordering
+  invariant is documented at the migration site. Verified live: a seeded
+  legacy `workbox-runtime-audio-legacy` cache is deleted on startup while
+  canonical + manifest (and the warmed audio entry) survive; Settings →
+  Clear deletes the audio cache, keeps the manifest, and a later play-warm
+  recreates exactly one audio cache.
+- **R4 `{#key activityId}` blast radius — VERIFIED, one decision recorded.**
+  (a) Pronounce Letters reshuffles on every entry (index reset to the
+  begin-prompt, new order) and does NOT reshuffle on in-page re-runs (order
+  stable across Next clicks) — the 4C `orderedForId` guard was kept; with
+  the remount it is belt-and-braces against in-page reactive re-runs.
+  (b) No second audio-stop path was created; the App-level `stopAudio()` on
+  hashchange remains the single stopper (ContentAudio only plays on user
+  action). (c) Full 26-item rail walked forward AND backward at 390 px and
+  1024 px, banner/count/content checked on every step, no errors and no
+  visible layout flash in per-step screenshots; genuine scroll-jank feel
+  needs device eyes (4d). (d) **Decision recorded:** A15 vocab visibility
+  mode persists across CARDS within a visit and resets when leaving/
+  re-entering the activity (remount side effect) — this matches the spec's
+  "persistence across cards within a session" reading and was verified both
+  ways. (e) Nothing else assumes instance reuse: all remaining
+  prop-at-construction state (SelectActivity `init()`, SpellActivity
+  `words`, ReadingCategories `categories`) sits inside the keyed block.
+- **R5 greekTaps splitter — FIXED.** The splitter now matches only
+  **standalone** occurrences: a key matches where its neighbors are not
+  Greek letters (Greek + Greek Extended ranges), so a single-letter key can
+  never blue half a word; first standalone occurrence per key. No `{@html}`
+  anywhere in the path — matches render as text nodes inside a `<button>`.
+  **Pipeline contract (chapters 2+):** a `greekTaps` key marks the first
+  standalone occurrence of that exact string in the item's `text`.
+- **R6 overflow-x masking — REAL BUG FOUND + FIXED.** Exactly the predicted
+  failure: at 320 px the Review Letters "Transliteration" header ran past
+  the card edge and was silently clipped by the A3 `overflow-x: hidden`
+  rules (A18's "fits to 320px" held for the rows, not the header). Fixed by
+  letting header labels shrink + wrap at ≤360 px. All other 320 px surfaces
+  verified clean: speller tile grid, alphabet exploreGrids, diphthong/iota
+  rows, equation chart, review-vocab rows. **Phase 5 note: clipped content
+  now presents as "missing content", not sideways scroll — test every new
+  chart at 320 px.**
+- **R7 maskable icon — FIXED.** The delivered padded
+  `icon-maskable-512.png` (lamp at ~57% on app green) replaced the
+  full-bleed copy in `public/icons/`; manifest still points at it with
+  `purpose: "maskable"`; it lands in the precache and the dist copy is
+  byte-identical to the delivered file. iOS icon-cache caveat from A5 still
+  applies after deploy.
+- **R8 EndOfChapterDialog — FIXED.** Escape now closes (≡ Stay) and focus
+  moves to the first action on open; no build a11y warnings. The INTRO
+  pseudo-chapter's 3-item rail was a dead end ("intro" isn't in
+  `toc.chapters`, so no next) — `getNextChapter` now treats intro as
+  preceding chapter 1, so the intro's end dialog offers **Next chapter →
+  Chapter 1's first activity** (verified), Chapter map → intro hub
+  (verified), and never claims a wrong coming-soon number. Chapter 1's own
+  dialog correctly says "Chapter 2 is coming soon."
+
+### Part 2 — architectural review
+
+- **B1 ContentAudio dispatch — FIXED (the priority item).** Dispatch is now
+  entirely **mode-keyed**; acceptance met: `grep -r "c1_" src/` finds
+  nothing outside data, and all nine contentAudio pages (the bespoke five
+  plus objectives/drill/qr pages) render **DOM-identical** before/after
+  (whitespace-insensitive diff of the serialized `.content` subtree at
+  390 px; only an empty text node moved). ContentAudio is 386 lines — under
+  the ~400-line extraction threshold, so no subcomponents were split out.
+  **Data vocabulary added to chapt-01.json (chat-side pipeline must adopt
+  for chapters 2+):**
+  - `mode: "objectivesPage"` (was textPage) — renders the chapter record's
+    `objectivesPreamble` + `objectives` list. (c1_learn_objectives)
+  - `mode: "equationChart"` (was chart) — "lower = X" tappable cells from
+    the itemsFrom letters; **X comes from the existing `display` field**
+    (`"lower=upper"` → capital, else transliteration); tap plays the item
+    audio per the `play` field. (c1_learn_translit, c1_learn_capitals)
+  - `mode: "vowelStair"` (was chart) — requires `itemsFrom:
+    "alphabet.vowels"`; rows carry `group` short/longOrShort/long.
+    (c1_learn_vowels)
+  - `mode: "diphthongRows"` (was chart) — ONE mode for the shared
+    diphthong/iota layout (the two branches were identical); rows come from
+    the `itemsFrom` source and need `greek, sound, example, exampleGloss,
+    audio, exampleAudio`. (c1_learn_diphthongs AND c1_learn_iota_subscripts
+    — the spec's suggested separate "iotaRows" value was collapsed into
+    this on purpose: one layout, one mode.)
+  - `mode: "reviewVocab"` (was chart) — lemma-ref items; **`showNtFreq` is
+    now actually honored** (the (n×) frequency renders only when true; it
+    was previously unconditional). (c1_qr_vocab)
+  - `mode: "reviewLetters"` (was chart) — the 4-column matrix; **the
+    existing `columns` list now supplies the header labels** (cell fields
+    stay fixed: name / lower / upper / translit); `play` drives row audio.
+    (c1_qr_letters)
+  - `ui.arrowCue: true` added to c1_drill_letter_names, c1_drill_translit,
+    c1_drill_capitals — replaces the id-list for the arrow cue above
+    exploreGrids.
+  - `lead` is now **mode-independent**: any contentAudio activity may carry
+    it and it renders above the content card (was hardwired to the two row
+    pages).
+- **B2 lifecycle — NOT AN ISSUE.** Audited every route-reachable component
+  outside the keyed block (TopBar, BottomBar, UnitMap, Settings,
+  DownloadControl, SequentialRail, App): all derive from props reactively
+  (`$:`); no construction-time props capture remains outside `{#key}`.
+- **B3 cache topology — invariant asserted.** One audio cache + one
+  manifest cache; names single-sourced from cache-config.js; deletion-safety
+  guarded by `PROTECTED_CACHES` in code; no literal name strings. Nothing
+  further — R2/R3 found no drift.
+- **B4 progressTick — FIXED (store conversion was mechanical).** progress.js
+  now exports a `progressRev` writable (bumped inside
+  markVisited/markCompleted); App, UnitMap and the hub read via
+  `($progressRev, getX(...))` and the `progressTick` prop threading +
+  ActivityHost's `progress` event are gone. **The getter interface is
+  unchanged and synchronous** — Phase 6 still swaps the backend to IndexedDB
+  behind it. Touched exactly progress.js + App + UnitMap + ActivityHost.
+- **B5 bundle shape — DEFERRED, claim PROVEN.** Experiment (reverted):
+  converting chapt-01 to a lazy `import.meta.glob` dynamic import emits
+  `assets/chapt-01-<hash>.js` as its own chunk and **vite-plugin-pwa
+  precaches it** (precache went 15 → 16 entries, chunk present in
+  `precacheAndRoute` in the built sw.js) — offline stays intact, no config
+  changes needed. NOT implemented now because the ripple is real: the sync
+  getters would go async, and the call sites that must be awaited are
+  App.svelte (getChapter/getActivity in reactive statements), UnitMap,
+  BottomBar, SequentialRail (getSequencePosition), EndOfChapterDialog
+  (getSequence/getNextChapter), ActivityHost, progress.js
+  (getChapter/getSequence), packs.js (getBuiltChapterIds). **Migration plan
+  for phase 5:** keep the getters sync against a loaded-chapters registry;
+  add `async loadChapter(id)` that dynamic-imports into the registry; make
+  the App gate activity/hub rendering on the current route's chapter-load
+  promise (one await at the route level, everything below stays sync); TOC
+  availability comes from static toc.json. **Trap discovered:** the glob map
+  must be reachable from executed code — an unused `loadChapters` export is
+  tree-shaken and NO chunk is emitted (the first experiment silently
+  produced nothing).
+- **B6 app.css — flags only.** Automated cross-check of every `.class`
+  selector against src: **no dead selectors** (`.draft-tag` fully gone). One
+  smell, not fixed: `.rv-greek`/`.lm-*` styling is split between the A6
+  blue-token block and the A17/A18 blocks — works, but Phase-5 extractions
+  should carry their styles component-scoped (standing convention, restated).
+- **B7 catch-all — several real fixes.**
+  - **`getPacks()` memoized a rejected promise forever**: first run offline
+    → the pack list (Settings, hub badges) stayed broken until a full
+    reload even after coming back online. Now resets on failure like
+    `loadManifest` does.
+  - `downloadPack` / `downloadAll` / `clearAllAudio` could reject unhandled
+    (manifest fetch failing while `navigator.onLine` is optimistically
+    true; they're called bare from click handlers). All three now never
+    reject: failures become a visible per-pack/aggregate error state
+    ("Could not load the audio list — check your connection and retry.").
+  - Settings' pack list no longer shows an eternal "Loading…" when the
+    manifest is unreachable — explicit "Audio list unavailable" note.
+  - `warmCache`'s `caches.match` chain got a catch (was the one bare
+    promise in audio.js).
+  - Routing: direct-load/refresh verified on every route shape (toc,
+    settings, hub, hub+section, activity, intro variants).
+  - Airplane-mode regression (standing directive 4) verified **hard** —
+    preview server killed, not just DevTools offline emulation (which SW
+    fetches bypass — see nits): app shell renders, a previously-played
+    audio file serves from cache, an unplayed one correctly fails.
+
+### Nits (list-only, no action taken)
+- SpellActivity's keyboard-reference modal and Settings' clear-confirm
+  modal don't have the Escape/initial-focus treatment EndOfChapterDialog
+  now has; copy the pattern when touched next.
+- CDP `Network.emulateNetworkConditions` does NOT affect service-worker
+  fetches — offline tests must kill the server (or use real airplane
+  mode). Cost this session ~one confusing failure; noted for the next
+  driver. Playwright-core as a devDependency remains the standing
+  suggestion (third session hand-rolling a CDP driver).
+- `audio.js` `play()` doesn't abort an in-flight warm fetch when
+  interrupted; harmless (the fetch just completes into cache).
+- The intro dialog would say "Chapter 1 is coming soon" if chapter 1 were
+  ever marked unavailable — correct degradation, noted for completeness.
+
+### Verification (AUDIT-4 checklist)
+- [x] `npm run build` clean: **58 modules, no warnings**; precache 15
+      entries / 210.25 KiB; `npm run dev` boots (R2 dual import).
+- [x] Full 26-item rail walk forward AND backward at 390 px and 1024 px:
+      banner/position/content checked on all 104 steps; bespoke pages
+      DOM-identical to pre-audit capture (B1); 0 console errors.
+- [x] R1 band checks at 800/899/900/1024 px; R6 clip checks at 320 px.
+- [x] Airplane-mode regression (hard offline): shell + cached audio OK.
+- [x] Settings, hub download control, Clear exercised after the
+      downloads.js/cache-config changes; migration + clear predicates
+      verified live in the browser (R3).
+- [x] B5 not implemented — precache proof captured, experiment reverted,
+      final build re-verified after revert.
 
 ## 6. Housekeeping
 - No new runtime dependencies. Test tooling used a throwaway Node CDP driver

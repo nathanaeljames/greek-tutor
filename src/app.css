@@ -114,7 +114,8 @@ button { font: inherit; cursor: pointer; }
 .act-state.done { color: var(--ok); }
 .unitmap.sidebar .section-head { cursor: default; }
 
-/* ---- Sidebar (>=768px) ---- */
+/* ---- Sidebar (rendered by App.svelte only at >=900px, the single wide
+   breakpoint: matchMedia in App.svelte + the @media block at the bottom) ---- */
 .sidebar { width: 280px; flex-shrink: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
   border-right: 1px solid rgba(0, 0, 0, 0.08); background: var(--parchment);
   padding: 14px 12px calc(14px + env(safe-area-inset-bottom)); }
@@ -245,9 +246,13 @@ button { font: inherit; cursor: pointer; }
 .lm-row:active { background: rgba(0,0,0,0.04); }
 .lm-row .greek { font-size: 1.4rem; }
 .lm-name { font-size: 1.02rem; }
-/* Fits four columns down to 320px now that the fifth is gone — no shrink. */
+/* Four columns fit to 320px EXCEPT the "Transliteration" header word, which
+   silently clipped under the A3 overflow-x:hidden rules (audit R6 finding).
+   Let header labels shrink and wrap mid-word rather than vanish. */
 @media (max-width: 360px) {
   .lm-head, .lm-row { gap: 5px; padding: 8px 3px; }
+  .lm-head { font-size: 0.68rem; }
+  .lm-head span { overflow-wrap: anywhere; }
   .lm-row .greek { font-size: 1.2rem; }
   .lm-name { font-size: 0.9rem; }
 }

@@ -397,7 +397,7 @@
       "title": "Learn Chapter Objectives",
       "instructions": "",
       "items": [],
-      "mode": "textPage"
+      "mode": "objectivesPage"
     },
     {
       "id": "c1_learn_letters",
@@ -616,7 +616,7 @@
       "itemsFrom": "alphabet.letters",
       "display": "lower+translit",
       "play": "audioShort",
-      "mode": "chart",
+      "mode": "equationChart",
       "references": [
         "Mounce, pp. 8f",
         "Wenham, pp. 18f"
@@ -630,7 +630,7 @@
       "itemsFrom": "alphabet.letters",
       "display": "lower=upper",
       "play": "audioShort",
-      "mode": "chart",
+      "mode": "equationChart",
       "references": [
         "Mounce, pp. 8f",
         "Wenham, pp. 18f"
@@ -673,7 +673,7 @@
       "type": "contentAudio",
       "title": "Learn Vowels",
       "instructions": "",
-      "mode": "chart",
+      "mode": "vowelStair",
       "itemsFrom": "alphabet.vowels",
       "content": [
         {
@@ -731,7 +731,7 @@
       "instructions": "Click on diphthong for sound",
       "lead": "A Diphthong is a combination of two vowels that makes only one sound. The second vowel is either ι or υ.",
       "itemsFrom": "alphabet.diphthongs",
-      "mode": "chart",
+      "mode": "diphthongRows",
       "references": [
         "Machen, p. 11",
         "Wenham, p. 20",
@@ -774,7 +774,7 @@
       "instructions": "Click on diphthong for sound",
       "lead": "An Iota Subscript is a diphthong which is formed when an iota follows a long vowel. The iota is written under the vowel (subscript). The pronunciation is the same as the normal vowel. The transliteration is what you would expect from a normal diphthong (ai, ei, and oi).",
       "itemsFrom": "alphabet.iotaSubscripts",
-      "mode": "chart",
+      "mode": "diphthongRows",
       "references": [
         "Machen, p. 11",
         "Wenham, p. 22",
@@ -1043,6 +1043,7 @@
       "display": "lower",
       "play": "audioFull",
       "ui": {
+        "arrowCue": true,
         "fields": [
           "Letter",
           "Letter Sound:"
@@ -1067,6 +1068,7 @@
         "Wenham, pp. 18f"
       ],
       "ui": {
+        "arrowCue": true,
         "fields": [
           "Transliteration"
         ],
@@ -1086,6 +1088,7 @@
       "display": "upper",
       "play": "audioShort",
       "ui": {
+        "arrowCue": true,
         "fields": [
           "Letter",
           "Letter Sound:"
@@ -1607,7 +1610,7 @@
     {
       "id": "c1_qr_vocab",
       "type": "contentAudio",
-      "mode": "chart",
+      "mode": "reviewVocab",
       "title": "Review Vocabulary Chart",
       "instructions": "",
       "items": [
@@ -1654,7 +1657,7 @@
     {
       "id": "c1_qr_letters",
       "type": "contentAudio",
-      "mode": "chart",
+      "mode": "reviewLetters",
       "title": "Review Letters Quick Chart",
       "instructions": "",
       "itemsFrom": "alphabet.letters",

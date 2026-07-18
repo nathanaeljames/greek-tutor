@@ -88,6 +88,9 @@ export function getPacks() {
       }));
       packs.sort((a, b) => (order.indexOf(a.id) + 1 || 999) - (order.indexOf(b.id) + 1 || 999) || a.id.localeCompare(b.id));
       return packs;
+    }).catch(err => {
+      packsPromise = null;   // don't memoize failure (mirror loadManifest) — allow retry
+      throw err;
     });
   }
   return packsPromise;
