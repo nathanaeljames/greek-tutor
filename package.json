@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check:lazy-chunk": "node scripts/check-lazy-chunk.mjs",
+    "verify": "npm run build && npm run check:lazy-chunk"
   },
   "dependencies": {
     "idb": "^7.1.1"

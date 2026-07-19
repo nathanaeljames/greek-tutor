@@ -2,7 +2,7 @@
   // End-of-chapter modal (in-app overlay). Mirrors the original's last-page
   // dialog, adapted. Rendered when Next is pressed on the last sequence item.
   import { createEventDispatcher, onMount } from 'svelte';
-  import { getChapter, getNextChapter, getSequence } from '../lib/content.js';
+  import { getChapter, getNextChapter, getSequence, loadChapter } from '../lib/content.js';
 
   export let chapterId;
   const dispatch = createEventDispatcher();
@@ -20,8 +20,17 @@
   function close() { dispatch('close'); }
   function toChapterMap() { location.hash = `#/chapter/${chapterId}`; close(); }
   function toToc() { location.hash = '#/'; close(); }
-  function toNextChapter() {
+  async function toNextChapter() {
     if (!canAdvance) return;
+    // The next chapter is a lazy chunk (5A) and is not loaded yet — its
+    // sequence read would hit an unloaded chapter. Load it first (idempotent;
+    // the route gate then awaits the same memoized promise). On failure, fall
+    // back to the hub route so the gate can surface the error/retry there.
+    try { await loadChapter(next.id); } catch (_) {
+      location.hash = `#/chapter/${next.id}`;
+      close();
+      return;
+    }
     const seq = getSequence(next.id);
     const first = seq[0];
     location.hash = first ? `#/activity/${next.id}/${first}` : `#/chapter/${next.id}`;

@@ -10,7 +10,7 @@
   export let chapter;
   export let activity;
 
-  const lists = getReadingLists();
+  const lists = getReadingLists(chapter.id);
   const letters = chapter.alphabet.letters;
 
   function buildCategory(cat) {

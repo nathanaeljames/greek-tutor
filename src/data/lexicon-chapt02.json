@@ -1,0 +1,430 @@
+{
+ "_comment": "Chapter 2 (Syllables & Accents) lexicon. Lemma glosses + NT frequencies extracted verbatim from 2_ACCENT.TBK review-vocabulary chart. Audio pairing for b_voc1..10 is SCRIPT-VERIFIED (SayWord dispatch table in the TBK maps word ids to wav files directly), except echo=b_voc4 which is by alphabetical elimination -- listen-verify. exampleWords include chapter-1 lemmas reused by chapter-2 drills/exercises (duplicated here deliberately so chapter chunks stay self-contained under B5 lazy loading). Their audio uses chapt_2_a_voc* -- the ORIGINAL ISO duplicates chapter 1's ten vocab WAVs inside CHAPT_2, so the chapter-2 audio pack is self-contained; the transcode pipeline's path-based ids preserve that duplication.",
+ "lemmas": {
+  "adelphos": {
+   "greek": "ἀδελφός",
+   "translit": "adelphos",
+   "gloss": "brother",
+   "pos": "noun",
+   "audio": "chapt_2_b_voc1",
+   "_legacy": "a]delfo<j",
+   "glossShort": "brother",
+   "ntFreq": 343
+  },
+  "akouo": {
+   "greek": "ἀκούω",
+   "translit": "akouō",
+   "gloss": "I hear, obey",
+   "pos": "verb",
+   "audio": "chapt_2_b_voc2",
+   "_legacy": "a]kou<w",
+   "glossShort": "I hear",
+   "ntFreq": 428
+  },
+  "doxa": {
+   "greek": "δόξα",
+   "translit": "doxa",
+   "gloss": "glory, fame",
+   "pos": "noun",
+   "audio": "chapt_2_b_voc3",
+   "_legacy": "do<ca",
+   "glossShort": "glory",
+   "ntFreq": 166
+  },
+  "echo": {
+   "greek": "ἔχω",
+   "translit": "echō",
+   "gloss": "I have, hold",
+   "pos": "verb",
+   "audio": "chapt_2_b_voc4",
+   "_legacy": "e@xw",
+   "glossShort": "I have",
+   "ntFreq": 708,
+   "_verify": "b_voc4 pairing is by alphabetical elimination only (the SayWord table names all others); listen-check"
+  },
+  "kosmos": {
+   "greek": "κόσμος",
+   "translit": "kosmos",
+   "gloss": "world",
+   "pos": "noun",
+   "audio": "chapt_2_b_voc5",
+   "_legacy": "ko<smoj",
+   "glossShort": "world",
+   "ntFreq": 186
+  },
+  "kurios": {
+   "greek": "κύριος",
+   "translit": "kurios",
+   "gloss": "lord, Lord",
+   "pos": "noun",
+   "audio": "chapt_2_b_voc6",
+   "_legacy": "ku<rioj",
+   "glossShort": "lord",
+   "ntFreq": 717
+  },
+  "logos": {
+   "greek": "λόγος",
+   "translit": "logos",
+   "gloss": "word",
+   "pos": "noun",
+   "audio": "chapt_2_b_voc7",
+   "_legacy": "lo<goj",
+   "glossShort": "word",
+   "ntFreq": 330
+  },
+  "petros": {
+   "greek": "Πέτρος",
+   "translit": "Petros",
+   "gloss": "Peter",
+   "pos": "noun",
+   "audio": "chapt_2_b_voc8",
+   "_legacy": "Pe<troj",
+   "glossShort": "Peter",
+   "ntFreq": 156
+  },
+  "huios": {
+   "greek": "υἱός",
+   "translit": "huios",
+   "gloss": "son, descendant",
+   "pos": "noun",
+   "audio": "chapt_2_b_voc9",
+   "_legacy": "ui[o<j",
+   "glossShort": "son",
+   "ntFreq": 377,
+   "_gloss_note": "review chart shows 'son (377)'; the marks page glosses the same word 'son, descendant' -- fuller gloss kept, glossShort matches chart"
+  },
+  "pharisaios": {
+   "greek": "Φαρισαῖος",
+   "translit": "Pharisaios",
+   "gloss": "Pharisee",
+   "pos": "noun",
+   "audio": "chapt_2_b_voc10",
+   "_legacy": "Farisai?oj",
+   "glossShort": "Pharisee",
+   "ntFreq": 98
+  }
+ },
+ "_ntFreq_note": "Frequencies verbatim from the TBK review chart: brother 343, I hear/obey 428, glory/fame 166, I have/hold 708, world 186, lord 717, word 330, Peter 156, son 377, Pharisee 98.",
+ "exampleWords": {
+  "_comment": "Teaching-page words (accent chart, marks pages, proclitic/enclitic lists). Audio pairing from the SayWord script table where named; otherwise inferred from filename -- flagged.",
+  "anthropos": {
+   "greek": "ἄνθρωπος",
+   "gloss": "man (base noun form)",
+   "audio": "chapt_2_a_voc3",
+   "_legacy": "a@nqrwpoj"
+  },
+  "anthropou": {
+   "greek": "ἀνθρώπου",
+   "gloss": "of man",
+   "audio": null,
+   "_legacy": "a]nqrw<pou",
+   "_verify": "no dedicated audio found; chart row may be silent or reuse anthropos"
+  },
+  "anthropo_dat": {
+   "greek": "ἀνθρώπῳ",
+   "gloss": "to/for man",
+   "audio": null,
+   "_legacy": "a]nqrw<p&",
+   "_verify": "no dedicated audio found"
+  },
+  "anthropon": {
+   "greek": "ἄνθρωπον",
+   "gloss": "man (object)",
+   "audio": null,
+   "_legacy": "a@nqrwpon",
+   "_verify": "no dedicated audio found"
+  },
+  "anthrope": {
+   "greek": "ἄνθρωπε",
+   "gloss": "O man",
+   "audio": null,
+   "_legacy": "a@nqrwpe",
+   "_verify": "no dedicated audio found"
+  },
+  "anthropon_gen": {
+   "greek": "ἀνθρώπων",
+   "gloss": "of men",
+   "audio": null,
+   "_legacy": "a]nqrw<pwn",
+   "_verify": "accent rule drill item; audio unknown"
+  },
+  "luo": {
+   "greek": "λύω",
+   "gloss": "I loose",
+   "audio": "chapt_2_b_vb1",
+   "_legacy": "lu<w",
+   "_verify": "vb1..vb6 order inferred from chart row order; listen-check"
+  },
+  "lueis": {
+   "greek": "λύεις",
+   "gloss": "you loose",
+   "audio": "chapt_2_b_vb2",
+   "_legacy": "lu<eij"
+  },
+  "luei": {
+   "greek": "λύει",
+   "gloss": "he/she looses",
+   "audio": "chapt_2_b_vb3",
+   "_legacy": "lu<ei"
+  },
+  "luomen": {
+   "greek": "λύομεν",
+   "gloss": "we loose",
+   "audio": "chapt_2_b_vb4",
+   "_legacy": "lu<omen"
+  },
+  "luete": {
+   "greek": "λύετε",
+   "gloss": "you (pl) loose",
+   "audio": "chapt_2_b_vb5",
+   "_legacy": "lu<ete"
+  },
+  "luousi": {
+   "greek": "λύουσι",
+   "gloss": "they loose",
+   "audio": "chapt_2_b_vb6",
+   "_legacy": "lu<ousi"
+  },
+  "elthen": {
+   "greek": "ἦλθεν",
+   "gloss": "he went (Jn 1:7)",
+   "audio": "chapt_2_b_ac1",
+   "_legacy": "h#lqen",
+   "_verify": "ac1..ac5 pairing inferred from chart button adjacency; listen-check all five"
+  },
+  "ekeinos": {
+   "greek": "ἐκεῖνος",
+   "gloss": "that (Jn 1:8)",
+   "audio": "chapt_2_b_ac2",
+   "_legacy": "e]kei?noj"
+  },
+  "protos_chart": {
+   "greek": "πρῶτος",
+   "gloss": "first, earlier (Jn 1:15)",
+   "audio": "chapt_2_b_ac3",
+   "_legacy": "prw?toj"
+  },
+  "pros_ton_theon": {
+   "greek": "πρὸς τὸν θεόν",
+   "gloss": "(two graves and an acute) (Jn 1:1)",
+   "audio": "chapt_2_b_ac4",
+   "_legacy": "pro>j to>n qeo<n"
+  },
+  "kai_theos_en": {
+   "greek": "καὶ θεὸς ἦν",
+   "gloss": "(two graves and a circumflex) (Jn 1:1)",
+   "audio": "chapt_2_b_ac5",
+   "_legacy": "kai> qeo>j h#n"
+  },
+  "ho_christos": {
+   "greek": "ὁ Χριστός",
+   "gloss": "the Christ (Jn 1:20)",
+   "audio": "chapt_2_b_hoxris",
+   "_legacy": "o[ Xristo<j"
+  },
+  "ho_logos": {
+   "greek": "ὁ λόγος",
+   "gloss": "the word (Jn 1:1)",
+   "audio": "chapt_2_b_hologo",
+   "_legacy": "o[ lo<goj"
+  },
+  "en_arche": {
+   "greek": "Ἐν ἀρχῇ",
+   "gloss": "in the beginning (Jn 1:1)",
+   "audio": "chapt_2_b_enarxn",
+   "_legacy": "]En a]rx^?"
+  },
+  "ou_katelaben": {
+   "greek": "οὐ κατέλαβεν",
+   "gloss": "it did not understand/overcome (Jn 1:5)",
+   "audio": "chapt_2_b_oukate",
+   "_legacy": "ou] kate<laben"
+  },
+  "protos_mou": {
+   "greek": "πρῶτός μου",
+   "gloss": "before me (Jn 1:15)",
+   "audio": "chapt_2_b_protos",
+   "_legacy": "prw?to<j mou"
+  },
+  "ego_eimi": {
+   "greek": "Ἐγώ εἰμι",
+   "gloss": "I am (Jn 6:35)",
+   "audio": "chapt_2_b_egoeim",
+   "_legacy": "]Egw< ei]mi",
+   "_verify": "both b_egoei and b_egoeim exist on the ISO with identical size; which is referenced live needs a check"
+  },
+  "dia": {
+   "greek": "διά",
+   "gloss": "through",
+   "audio": "chapt_2_b_dia",
+   "_legacy": "dia<"
+  },
+  "autou": {
+   "greek": "αὐτοῦ",
+   "gloss": "of him",
+   "audio": "chapt_2_b_autou",
+   "_legacy": "au]tou?"
+  },
+  "di_autou": {
+   "greek": "δι᾽ αὐτοῦ",
+   "gloss": "through him (Jn 1:3,7 cf. Jn 1:39)",
+   "audio": "chapt_2_b_diauto",
+   "_legacy": "di ] au]tou?"
+  },
+  "par_auto": {
+   "greek": "παρ᾽ αὐτῷ",
+   "gloss": "with him",
+   "audio": "chapt_2_b_paraut",
+   "_legacy": "par ] au]t&?",
+   "_verify": "which marks topic shows this example (apostrophe page?) -- confirm placement"
+  },
+  "kai": {
+   "greek": "καί",
+   "gloss": "and",
+   "audio": "chapt_2_b_kai",
+   "_legacy": "kai<"
+  },
+  "ego": {
+   "greek": "ἐγώ",
+   "gloss": "I",
+   "audio": "chapt_2_a_voc4",
+   "_legacy": "e]gw<"
+  },
+  "kago": {
+   "greek": "κἀγώ",
+   "gloss": "and I (crasis; Jn 1:31, 33)",
+   "audio": "chapt_2_b_kago",
+   "_legacy": "ka]gw<"
+  },
+  "moses": {
+   "greek": "Μωϋσῆς",
+   "gloss": "Moses",
+   "audio": "chapt_2_b_moses",
+   "_legacy": "Mwu*sh?j"
+  },
+  "moses_x": {
+   "greek": null,
+   "gloss": null,
+   "audio": "chapt_2_b_mosesx",
+   "_legacy": null,
+   "_verify": "b_mosesx.wav exists and the SayWord table references it; unknown which display form it pairs with (Moses without diaeresis?) -- DOSBox check"
+  },
+  "isaias": {
+   "greek": "Ἠσαΐας",
+   "gloss": "Isaiah",
+   "audio": "chapt_2_b_isaias",
+   "_legacy": null,
+   "_verify": "diaeresis page says 'Note the acute accent placement in Isaiah'; legacy string not captured -- confirm displayed form and accents onscreen"
+  },
+  "achaia": {
+   "greek": "Ἀχαΐα",
+   "gloss": "Achaia",
+   "audio": "chapt_2_b_axaia",
+   "_legacy": "]Axaia",
+   "_verify": "TBK stores bare ']Axaia' without diaeresis/accent codes; displayed form assumed as printed Greek -- confirm onscreen"
+  },
+  "tounoma": {
+   "greek": "τοὔνομα",
+   "gloss": "the name (crasis)",
+   "audio": "chapt_2_b_touvon",
+   "_legacy": "tou]voma",
+   "_verify": "legacy uses unmapped base code 'v' (tou]voma) and both b_tounom/b_touvon wav names appear in scripts while only B_TOUVON.WAV exists on the ISO; v=nu is provisional -- confirm word and audio in DOSBox"
+  },
+  "xautou": {
+   "greek": null,
+   "gloss": null,
+   "audio": "chapt_2_b_xauto",
+   "_legacy": null,
+   "_verify": "B_XAUTO.WAV exists and SayWord maps 'xautou' to it; display form unknown (crasis example?) -- DOSBox check"
+  },
+  "huper": {
+   "greek": "ὑπέρ",
+   "gloss": "for, on behalf of",
+   "audio": "chapt_2_b_huper",
+   "_legacy": "u[pe<r",
+   "_verify": "appears adjacent to huios in the breathing-marks region; assumed rough-breathing example -- confirm which popup shows it"
+  },
+  "apostolos": {
+   "greek": "ἀπόστολος",
+   "gloss": "apostle",
+   "audio": "chapt_2_b_aposto",
+   "_legacy": "a]po<stoloj",
+   "_verify": "drill pool also contains deliberately mis-accented a#postoloj; correct dictionary form constructed -- confirm"
+  },
+  "rema": {
+   "greek": "ῥῆμα",
+   "gloss": "word, saying",
+   "audio": "chapt_2_b_rema",
+   "_legacy": "r[h?ma"
+  },
+  "amen": {
+   "greek": "ἀμήν",
+   "gloss": "truly, verily, amen",
+   "audio": "chapt_2_a_voc2",
+   "_legacy": "a]mh<n"
+  }
+ },
+ "ch1_lemma_mirror": {
+  "_comment": "Chapter-1 vocabulary reused by chapter-2 drills (syllable counting, accent placement). Duplicated so the chapter-2 chunk AND its audio pack are self-contained; audio ids are chapt_2_a_voc* (the ISO ships duplicate copies of these ten WAVs inside CHAPT_2).",
+  "aggelos": {
+   "greek": "ἄγγελος",
+   "gloss": "angel",
+   "audio": "chapt_2_a_voc1",
+   "_legacy": "a@ggeloj"
+  },
+  "amen": {
+   "greek": "ἀμήν",
+   "gloss": "truly, verily, amen",
+   "audio": "chapt_2_a_voc2",
+   "_legacy": "a]mh<n"
+  },
+  "anthropos": {
+   "greek": "ἄνθρωπος",
+   "gloss": "man, human being",
+   "audio": "chapt_2_a_voc3",
+   "_legacy": "a@nqrwpoj"
+  },
+  "ego": {
+   "greek": "ἐγώ",
+   "gloss": "I",
+   "audio": "chapt_2_a_voc4",
+   "_legacy": "e]gw<"
+  },
+  "theos": {
+   "greek": "θεός",
+   "gloss": "God",
+   "audio": "chapt_2_a_voc5",
+   "_legacy": "qeo<j"
+  },
+  "kai": {
+   "greek": "καί",
+   "gloss": "and, even, also",
+   "audio": "chapt_2_a_voc6",
+   "_legacy": "kai<"
+  },
+  "kardia": {
+   "greek": "καρδία",
+   "gloss": "heart",
+   "audio": "chapt_2_a_voc7",
+   "_legacy": "kardi<a"
+  },
+  "lego": {
+   "greek": "λέγω",
+   "gloss": "I say, speak",
+   "audio": "chapt_2_a_voc8",
+   "_legacy": "le<gw"
+  },
+  "prophetes": {
+   "greek": "προφήτης",
+   "gloss": "prophet",
+   "audio": "chapt_2_a_voc9",
+   "_legacy": "profh<thj"
+  },
+  "christos": {
+   "greek": "Χριστός",
+   "gloss": "Christ, Messiah",
+   "audio": "chapt_2_a_voc10",
+   "_legacy": "Xristo<j"
+  }
+ }
+}

@@ -1,32 +1,133 @@
 // Content layer: loads the read-only JSON content and resolves references.
 // Separation of concerns: this module owns all data lookups; components
 // never reach into raw JSON shapes beyond what these helpers return.
+//
+// LAZY CHAPTERS (phase 5A): chapter content + its lexicon are per-chapter
+// dynamic chunks, not static imports, so cold-start JS stays constant as
+// chapters 2-28 land. toc.json and intro.json stay STATIC (the TOC and the
+// intro pseudo-chapter must resolve with no chunk load). A module-level
+// loaded-chapters registry holds { chapter, lexicon } per id; every getter
+// below keeps its synchronous signature and reads from that registry.
+// loadChapter(id) fills it and is awaited once at the App route gate — every
+// caller below the gate stays sync.
+//
+// TREE-SHAKE GUARD (audit lesson, HANDOFF-4 B5): the glob maps below MUST be
+// referenced from executed top-level code (they are: chapterLoaders /
+// lexiconLoaders are built at import time). An unused glob export is
+// tree-shaken and NO per-chapter chunk is emitted — silently. Do not let these
+// maps become unreachable.
 
 import toc from '../data/toc.json';
-import chapt1 from '../data/chapt-01.json';
 import intro from '../data/intro.json';
-import lexicon from '../data/lexicon-chapt01.json';
 
-// The Introduction is a learn-only pseudo-chapter registered alongside real
-// chapters; it resolves through every content helper the same way (routes,
-// sequence, progress). Sections it lacks (drill/exercise/quickReview) degrade
-// to empty via the `ch[section] || []` guards throughout this module.
-const chapters = { intro, chapt_1: chapt1 };
+// Per-chapter chunk loaders, keyed by chapter id. Vite emits one JS chunk per
+// matched file and vite-plugin-pwa precaches each (audit-proven). Filenames are
+// zero-padded with a dash (chapt-01.json); ids are underscore + unpadded number
+// (chapt_1) — derive the id from the filename number so no per-chapter wiring
+// is needed as files land. The lexicon glob tolerates BOTH the chapter-1 naming
+// (lexicon-chapt01.json) and the 2+ pattern (lexicon-chapt-02.json).
+const chapterModules = import.meta.glob('../data/chapt-*.json');
+const lexiconModules = import.meta.glob('../data/lexicon-chapt*.json');
+
+const chapterLoaders = {};   // 'chapt_1' -> () => import('../data/chapt-01.json')
+const lexiconLoaders = {};   // 'chapt_1' -> () => import('../data/lexicon-chapt01.json')
+for (const [path, loader] of Object.entries(chapterModules)) {
+  const m = path.match(/chapt-(\d+)\.json$/);
+  if (m) chapterLoaders[`chapt_${parseInt(m[1], 10)}`] = loader;
+}
+for (const [path, loader] of Object.entries(lexiconModules)) {
+  const m = path.match(/lexicon-chapt-?(\d+)\.json$/);
+  if (m) lexiconLoaders[`chapt_${parseInt(m[1], 10)}`] = loader;
+}
+
+// Loaded-chapters registry: id -> { chapter, lexicon }. The Introduction is a
+// learn-only pseudo-chapter that stays STATIC (small, one-off) and is seeded
+// here so it resolves through every helper the same way (routes, sequence,
+// progress) with no load. Sections a chapter lacks (drill/exercise/quickReview)
+// degrade to empty via the `ch[section] || []` guards throughout this module.
+const registry = { intro: { chapter: intro, lexicon: null } };
+const inflight = {};   // id -> in-flight loadChapter promise, memoized; reset on failure
 
 export function getToc() { return toc; }
 
-// Ids of chapters whose content is actually built (drives which audio packs
-// surface on chapter hubs — Settings' "Download all" still covers everything).
-export function getBuiltChapterIds() { return Object.keys(chapters); }
+// Ids of chapters whose content is BUILT — derived from the glob key paths, so
+// it answers WITHOUT loading any chunk (packs.js and the TOC depend on this
+// being cheap). Intro first, then chapters in glob (path-sorted) order.
+export function getBuiltChapterIds() { return ['intro', ...Object.keys(chapterLoaders)]; }
 
-export function getChapter(id) { return chapters[id] || null; }
+// True if a chapter's chunk is present in the registry (no load, no error).
+export function isChapterLoaded(id) { return !!registry[id]; }
 
-export function isChapterAvailable(id) { return id in chapters; }
+// Load a chapter + its lexicon together into the registry. Async, idempotent,
+// memoizes the in-flight promise per id. On failure the memo is RESET so a
+// retry can succeed (the getPacks rejected-promise-memoized-forever bug, B7).
+// The chapter and lexicon resolve as ONE unit so flashcard/reviewVocab lookups
+// never race a separately-loading lexicon.
+export function loadChapter(id) {
+  if (registry[id]) return Promise.resolve(registry[id]);
+  if (inflight[id]) return inflight[id];
+  const chLoader = chapterLoaders[id];
+  if (!chLoader) return Promise.reject(new Error(`No content chunk for chapter "${id}"`));
+  const lexLoader = lexiconLoaders[id];
+  const p = Promise.all([chLoader(), lexLoader ? lexLoader() : Promise.resolve(null)])
+    .then(([chMod, lexMod]) => {
+      registry[id] = {
+        chapter: chMod.default || chMod,
+        lexicon: lexMod ? (lexMod.default || lexMod) : null
+      };
+      delete inflight[id];
+      return registry[id];
+    })
+    .catch(err => {
+      delete inflight[id];   // reset memo so a retry re-imports (B7 lesson)
+      throw err;
+    });
+  inflight[id] = p;
+  return p;
+}
 
-export function getLemma(ref) { return lexicon.lemmas[ref] || null; }
+export function getChapter(id) {
+  if (!id) return null;
+  const entry = registry[id];
+  if (entry) return entry.chapter;
+  // Availability without a load is legitimate (TOC lists, getNextChapter).
+  // A getter hit on a BUILT-but-unloaded chapter is a programming error under
+  // the route gate — make it loud, not a silent undefined.
+  if (isChapterAvailable(id)) console.error(`getChapter("${id}") before loadChapter — route gate missing?`);
+  return null;
+}
 
-// Reading People, Places and Letters pools (personalNames/placeNames/letterNames).
-export function getReadingLists() { return lexicon.readingLists || {}; }
+// Availability answers from the built set (glob keys + intro), NOT from what is
+// currently loaded — the TOC and getNextChapter must flag a chapter available
+// before its chunk is ever fetched.
+export function isChapterAvailable(id) { return id === 'intro' || id in chapterLoaders; }
+
+// Lemma lookup across LOADED lexicons (the route gate guarantees the active
+// chapter's lexicon is loaded alongside its content). Keeps its ref-only
+// signature; callers below the gate are unchanged.
+export function getLemma(ref) {
+  for (const id in registry) {
+    const lex = registry[id].lexicon;
+    if (lex && lex.lemmas && lex.lemmas[ref]) return lex.lemmas[ref];
+  }
+  return null;
+}
+
+// Reading People, Places and Letters pools (personalNames/placeNames/letterNames)
+// from a chapter's lexicon. Pass the chapter id so multi-chapter loads resolve
+// the RIGHT lexicon (reading-list keys repeat across chapters); falls back to
+// the first loaded lexicon that has reading lists when no id is given.
+export function getReadingLists(chapterId) {
+  const entry = chapterId ? registry[chapterId] : null;
+  let lex = entry ? entry.lexicon : null;
+  if (!lex) {
+    for (const id in registry) {
+      const l = registry[id].lexicon;
+      if (l && l.readingLists) { lex = l; break; }
+    }
+  }
+  return (lex && lex.readingLists) || {};
+}
 
 export const SECTIONS = ['learn', 'drill', 'exercise', 'quickReview'];
 
@@ -42,7 +143,7 @@ export function getActivity(chapterId, activityId) {
 
 // Which chapter owns a given activity id (only loaded chapters are searched).
 export function findChapterIdOfActivity(activityId) {
-  for (const id of Object.keys(chapters)) {
+  for (const id in registry) {
     if (getActivity(id, activityId)) return id;
   }
   return null;

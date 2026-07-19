@@ -1,0 +1,172 @@
+{
+ "_comment": "GREEKTH.TTF legacy ASCII -> Unicode polytonic Greek mapping. Evidence tiers: 'verified' = confirmed by real vocabulary/teaching text in 1_ALPHAB.TBK rendering to known Greek words; 'rendered' = read from glyph-sheet rendering of the font, not yet confirmed by word evidence; 'unknown' = glyph exists but unidentified. Diacritic codes FOLLOW the vowel they modify. Verify 'rendered' and 'unknown' tiers against DOSBox before bulk conversion. UPDATED 2026-07-20 (chapter 2 extraction): '#' and '[' promoted to verified; Greek punctuation ';' ':' identified; 'v' witnessed as a provisional base letter; '!' excluded as Hebrew-region contamination.",
+ "lowercase": {
+  "a": "α",
+  "b": "β",
+  "c": "ξ",
+  "d": "δ",
+  "e": "ε",
+  "f": "φ",
+  "g": "γ",
+  "h": "η",
+  "i": "ι",
+  "j": "ς",
+  "k": "κ",
+  "l": "λ",
+  "m": "μ",
+  "n": "ν",
+  "o": "ο",
+  "p": "π",
+  "q": "θ",
+  "r": "ρ",
+  "s": "σ",
+  "t": "τ",
+  "u": "υ",
+  "w": "ω",
+  "x": "χ",
+  "y": "ψ",
+  "z": "ζ"
+ },
+ "lowercase_evidence": "verified (glyph render + vocab words: qeo<j=θεός, kardi<a=καρδία, le<gw=λέγω, profh<thj=προφήτης, a@nqrwpoj=ἄνθρωπος; j=final sigma verified by every -oj/-hj ending)",
+ "uppercase": {
+  "A": "Α",
+  "B": "Β",
+  "C": "Ξ",
+  "D": "Δ",
+  "E": "Ε",
+  "F": "Φ",
+  "G": "Γ",
+  "H": "Η",
+  "I": "Ι",
+  "J": "Σ",
+  "K": "Κ",
+  "L": "Λ",
+  "M": "Μ",
+  "N": "Ν",
+  "O": "Ο",
+  "P": "Π",
+  "Q": "Θ",
+  "R": "Ρ",
+  "S": "Σ",
+  "T": "Τ",
+  "U": "Υ",
+  "W": "Ω",
+  "X": "Χ",
+  "Y": "Ψ",
+  "Z": "Ζ"
+ },
+ "uppercase_evidence": "rendered (glyph sheet; Xristo<j=Χριστός verifies X). J unconfirmed -- possibly capital final-sigma slot or unused.",
+ "diacritics_verified": {
+  "<": {
+   "unicode": "́",
+   "name": "acute (oxia)",
+   "evidence": "kai<=καί, qeo<j=θεός, e]gw<=ἐγώ, pisteu<w=πιστεύω"
+  },
+  "]": {
+   "unicode": "̓",
+   "name": "smooth breathing (psili)",
+   "evidence": "a]mh<n=ἀμήν, e]gw<=ἐγώ, au]t&?=αὐτῷ"
+  },
+  "@": {
+   "unicode": "̓́",
+   "name": "smooth breathing + acute",
+   "evidence": "a@ggeloj=ἄγγελος, a@nqrwpoj=ἄνθρωπος"
+  },
+  "\"": {
+   "unicode": "̔",
+   "name": "rough breathing (dasia)",
+   "evidence": "ui\"o<j=υἱός"
+  },
+  "?": {
+   "unicode": "͂",
+   "name": "circumflex (perispomeni)",
+   "evidence": "a]rx^?=ἀρχῇ, au]t&?=αὐτῷ, 'Ihsou?j=Ἰησοῦς"
+  },
+  "%": {
+   "unicode": "ᾳ",
+   "name": "alpha + iota subscript (composite)",
+   "evidence": "skoti<%=σκοτίᾳ; iota-subscript teaching page pairs % with 'a as in father'"
+  },
+  "^": {
+   "unicode": "ῃ",
+   "name": "eta + iota subscript (composite)",
+   "evidence": "a]rx^?=ἀρχῇ; teaching page pairs ^ with 'e as in obey'"
+  },
+  "&": {
+   "unicode": "ῳ",
+   "name": "omega + iota subscript (composite)",
+   "evidence": "au]t&?=αὐτῷ; teaching page pairs & with 'o as in home'"
+  },
+  "'": {
+   "unicode": "̓",
+   "name": "smooth breathing (capital/initial position)",
+   "evidence": "'Ihsou?j=Ἰησοῦς"
+  },
+  ">": {
+   "unicode": "̀",
+   "name": "grave (varia)",
+   "evidence": "Greek Keyboard dialog: shift+period keycap shows grave; spelling-exercise tile row includes grave"
+  },
+  "*": {
+   "unicode": "̈",
+   "name": "diaeresis (dialytika)",
+   "evidence": "Greek Keyboard dialog: shift+8 keycap shows diaeresis"
+  },
+  "#": {
+   "unicode": "̓͂",
+   "name": "smooth breathing + circumflex",
+   "evidence": "h#lqen=ἦλθεν (Rule 5 chart, glossed 'he went', Jn 1:7); h#n=ἦν in kai> qeo>j h#n annotated '(two graves and a circumflex)' (Jn 1:1). a#postoloj appears ONLY as a deliberately mis-accented Accent Rule Drill item."
+  },
+  "[": {
+   "unicode": "̔",
+   "name": "rough breathing (dasia) -- second slot",
+   "evidence": "PROMOTED from provisional: chapter 2 teaching text prints 'Rough breathing ( [ )'; ui[o<j=υἱός, u[pe<r=ὑπέρ, r[h?ma=ῥῆμα, o[ lo<goj=ὁ λόγος. Coexists with '\"' (chapter 1 evidence ui\"o<j) -- the book uses BOTH slots for the same mark."
+  }
+ },
+ "unknown_codes": {
+  "_codes": [
+   "$",
+   "{",
+   "}",
+   "~",
+   "|",
+   "\\",
+   "`",
+   "="
+  ],
+  "_note": "Remaining unidentified codes after chapter 2. '$' did not appear in any chapter-2 Greek word (likely a breathing+accent combo awaiting a later-chapter witness, e.g. rough+circumflex). '{ } | ~' witnessed only inside font-metric/table binary junk, '\\\\' only in DOS file paths, '=' only in OpenScript assignments -- all three may not be font codes at all. Do not convert strings containing these codes silently."
+ },
+ "conversion_rules": [
+  "Diacritic codes follow the vowel: process left-to-right, attach combining marks to preceding base character, then normalize to NFC (precomposed polytonic).",
+  "Composite codes % ^ & already include the base vowel -- do not also emit the vowel.",
+  "j is final sigma; s is medial sigma. Trust the source encoding, do not auto-finalize.",
+  "Any string containing an unknown_codes character must be routed to a manual-review list, never silently converted.",
+  "']' doubles as the coronis in crasis (ka]gw< = κἀγώ, same glyph as smooth breathing) and, when standalone between spaces, as the elision apostrophe (di ] au]tou? = δι᾽ αὐτοῦ).",
+  "Initial breathing codes may PRECEDE a capital vowel (']En', ']Egw<', ']Axaia'): attach to the following base letter."
+ ],
+ "_keyboard_layout_note": "Greek Keyboard dialog (verified by photo): physical QWERTY keys type legacy codes 1:1 (Q=theta, W=omega, Y=psi, C=xi, J=final sigma, etc.); shifted number row and punctuation carry the diacritics. Confirms the font-map covers keyboard entry as well as stored text.",
+ "punctuation_verified": {
+  ";": {
+   "unicode": ";",
+   "name": "Greek question mark (erotimatiko)",
+   "evidence": "Punctuation Marks page: 'Question Mark ( ; )  lo<goj;'. NOTE: U+037E NFC-normalizes to ASCII ';' -- store the NFC form.",
+   "_legacy_note": "amhn; / a]mh<n; witnesses"
+  },
+  ":": {
+   "unicode": "·",
+   "name": "Greek colon / ano teleia (raised dot)",
+   "evidence": "Punctuation Marks page: 'Colon ( : )  lo<goj:'. NOTE: U+0387 NFC-normalizes to U+00B7 MIDDLE DOT -- store the NFC form.",
+   "_legacy_note": "e]gw: witness (Marking Recognition pool)"
+  }
+ },
+ "base_provisional": {
+  "v": {
+   "unicode": "ν",
+   "name": "nu (alternate slot?)",
+   "evidence": "SINGLE witness: tou]voma = τοὔνομα (crasis of to onoma; audio file B_TOUVON.WAV). Weak -- verify against DOSBox rendering before trusting in bulk conversion."
+  }
+ },
+ "excluded_codes": {
+  "!": "NOT a Greek font code. Appears only inside embedded HEBREW-font data regions in 2_ACCENT.TBK (Hebrew tutor shared resources: 'Hbaz! to sacrifice', 'fsan! to depart', vocab with Hiphil/Niphal stem labels). The extraction pipeline must detect and exclude Hebrew regions (tell-tales: Hebrew glosses, stem labels (Hi)/(Ni), field names HebrewWord/HideHebrew)."
+ }
+}
