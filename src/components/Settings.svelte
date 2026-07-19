@@ -4,7 +4,7 @@
   // "Download all", per-pack rows for built content, and a Clear action.
   import { onMount } from 'svelte';
   import { getBuiltPacks } from '../lib/packs.js';
-  import { allState, downloadAll, cancelAll, clearAllAudio, storageInfo, audioFileCount, audioCacheDiagnostic, dedupeAudioCache, packStatesFingerprint, audioCount, lastScan, reconcileAudioCache, startupReport } from '../lib/downloads.js';
+  import { allState, downloadAll, cancelAll, clearAllAudio, storageInfo, audioFileCount, audioCacheDiagnostic, packStatesFingerprint, audioCount, lastScan, reconcileAudioCache, startupReport, migrationStatus } from '../lib/downloads.js';
   import DownloadControl from './DownloadControl.svelte';
 
   const all = allState();
@@ -66,20 +66,11 @@
   }
 
   // Copy report (§3b): serialize the diagnostic to JSON so device results can
-  // be pasted back into chat.
-  //
-  // Two device-pass bugs fixed here:
-  //  1. Clipboard was ALWAYS "unavailable": the old code awaited the multi-
-  //     second scan and THEN called clipboard.writeText — by then Safari had
-  //     dropped the user-activation from the tap, so the write always threw.
-  //     Now the write happens against an already-computed diag (scan first via
-  //     "Scan audio cache", then Copy is synchronous-enough to keep activation);
-  //     and the textarea fallback is always populated so a failed clipboard
-  //     never leaves the user empty-handed.
-  //  2. The report was multiple MB (every one of ~3800 duplicate URLs, with
-  //     headers) — it took minutes to paste. audioCacheDiagnostic now caps the
-  //     duplicate DETAIL (duplicatesTotal keeps the true count), so the report
-  //     is a few KB.
+  // be pasted back into chat. The clipboard write runs against an already-
+  // computed diag (scan first via "Scan audio storage", then Copy is
+  // synchronous-enough to keep the tap's user-activation), and the textarea
+  // fallback is always populated so a failed clipboard never leaves the user
+  // empty-handed.
   let copyMsg = '';
   let reportText = '';
   async function copyReport() {
@@ -95,19 +86,6 @@
     } catch (_) {
       copyMsg = 'Clipboard unavailable — select and copy the text below.';
     }
-  }
-
-  // Debug-card recovery tool: collapse duplicate entries. Kept behind debug on
-  // purpose — run it only AFTER a Copy report has captured the duplicates.
-  let dedupeMsg = '';
-  async function runDedupe() {
-    dedupeMsg = 'Working…';
-    const r = await dedupeAudioCache();
-    dedupeMsg = r.error
-      ? `Failed: ${r.error}`
-      : `Removed ${r.removed} duplicate entr${r.removed === 1 ? 'y' : 'ies'} (${r.duplicateUrls} URLs affected).`;
-    await recount();      // duplicates collapsed -> refresh the exact count
-    await refreshStorage();
   }
 
   // Only the browser's storage estimate is fetched here — the file count comes
@@ -176,9 +154,12 @@
       </span></div>
     <div class="settings-row"><span>Used (reported by the browser)</span><span>{fmtBytes(storage.usage)}</span></div>
     <div class="settings-row"><span>Available (quota)</span><span>{fmtBytes(storage.quota)}</span></div>
+    {#if $migrationStatus}
+      <div class="settings-note">Optimizing audio storage… {$migrationStatus.done} of {$migrationStatus.total}</div>
+    {/if}
     <div class="settings-note">
       "Audio files stored" counts the distinct audio files in the app's own
-      cache and updates immediately. The browser's "Used" figure may lag
+      storage and updates immediately. The browser's "Used" figure may lag
       behind deletions on iOS.
     </div>
     <div class="settings-note">
@@ -226,36 +207,27 @@
 
   {#if debug}
     <section class="card">
-      <h2 class="settings-h">Cache diagnostic (debug)</h2>
+      <h2 class="settings-h">Storage diagnostic (debug)</h2>
       <div class="controls">
-        <button class="btn secondary" on:click={runDiag} disabled={diagRunning}>{diagRunning ? 'Scanning…' : 'Scan audio cache'}</button>
+        <button class="btn secondary" on:click={runDiag} disabled={diagRunning}>{diagRunning ? 'Scanning…' : 'Scan audio storage'}</button>
         <button class="btn secondary" on:click={copyReport} disabled={diagRunning}>Copy report</button>
       </div>
-      {#if $lastScan}<div class="settings-note">Last cache scan: {$lastScan.label} — {$lastScan.ms}ms{#if $lastScan.entries != null} ({$lastScan.entries} entries){/if}</div>{/if}
+      {#if $lastScan}<div class="settings-note">Last scan: {$lastScan.label} — {$lastScan.ms}ms{#if $lastScan.entries != null} ({$lastScan.entries} entries){/if}</div>{/if}
+      <!-- Cold-start metric: the phase-4.5 acceptance instrument. After the
+           migration deletes the legacy audio cache, resp-start must be small and
+           must NOT scale with library size (Cache Storage is shell-only). -->
       <div class="settings-note">Cold start (ms since nav): worker {startup.workerStart} · resp-start {startup.responseStart} · resp-end {startup.responseEnd} · js-start {startup.jsStart} · app {startup.appCreated} · DCL {startup.domContentLoaded} · sw {String(startup.swControlled)}</div>
       {#if copyMsg}<div class="settings-note">{copyMsg}</div>{/if}
       {#if reportText}<textarea class="report-out" readonly rows="8">{reportText}</textarea>{/if}
       {#if diag}
-        <div class="settings-row"><span>Entries</span><span>{diag.entryCount}</span></div>
-        <div class="settings-row"><span>Distinct URLs</span><span>{diag.distinctUrls}</span></div>
-        <div class="settings-row"><span>Duplicate URLs</span><span>{diag.duplicatesTotal ?? diag.duplicates.length}</span></div>
-        <div class="settings-row"><span>Summed bytes</span><span>{fmtBytes(diag.totalBytes)} ({diag.totalBytes})</span></div>
-        {#if diag.readErrors}<div class="settings-row"><span>Unreadable entries</span><span>{diag.readErrors}</span></div>{/if}
-        <div class="settings-note">Caches: {Object.entries(diag.perCacheCounts).map(([n, c]) => `${n}: ${c}`).join(' · ') || '(none)'}</div>
-        <div class="settings-note">Vary: {Object.entries(diag.varyHistogram).map(([v, c]) => `${v} ×${c}`).join(' · ') || '(empty cache)'}</div>
+        <div class="settings-row"><span>Audio files in IndexedDB</span><span>{diag.idbCount ?? '—'}</span></div>
+        <div class="settings-row"><span>Migration done</span><span>{String(diag.migrationDone)}</span></div>
+        <div class="settings-row"><span>Legacy audio-cache entries</span><span>{diag.legacyAudioCacheEntries == null ? '(none)' : diag.legacyAudioCacheEntries}</span></div>
+        <div class="settings-note">Caches: {(diag.cacheNames || []).join(' · ') || '(none)'}</div>
         {#if diag.estimate}<div class="settings-note">estimate: {fmtBytes(diag.estimate.usage)} used · persisted: {diag.persisted}</div>{/if}
-        {#each diag.duplicates.slice(0, 12) as d}
-          <div class="settings-note warn">{d.url}
-            {#each d.entries as e}<br />vary: {e.vary || '(none)'} · req: {JSON.stringify(e.reqHeaders)}{/each}
-          </div>
-        {/each}
-        {#if (diag.duplicatesTotal ?? diag.duplicates.length) > 12}<div class="settings-note warn">…and {(diag.duplicatesTotal ?? diag.duplicates.length) - 12} more duplicated URLs (sample in Copy report).</div>{/if}
+        {#if diag.sampleKeys && diag.sampleKeys.length}<div class="settings-note">sample keys: {diag.sampleKeys.join(' · ')}</div>{/if}
+        {#if diag.idbError}<div class="settings-note warn">IDB error: {diag.idbError}</div>{/if}
         {#if diag.error}<div class="settings-note warn">{diag.error}</div>{/if}
-        {#if diag.duplicates.length}
-          <button class="btn secondary" on:click={runDedupe}>Remove duplicate copies</button>
-          <div class="settings-note">Run only after Copy report — duplicates are the evidence.</div>
-        {/if}
-        {#if dedupeMsg}<div class="settings-note">{dedupeMsg}</div>{/if}
       {/if}
     </section>
   {/if}

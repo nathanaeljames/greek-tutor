@@ -1,6 +1,6 @@
 import App from "./App.svelte";
 import "./app.css";
-import { migrateLegacyAudioCaches } from "./lib/downloads.js";
+import { migrateAudioToIDB } from "./lib/downloads.js";
 
 // Startup instrumentation (device pass): mark when our JS begins executing and
 // when the app is constructed, so the debug card can show — via Navigation
@@ -13,15 +13,17 @@ const app = new App({ target: document.getElementById("app") });
 
 try { performance.mark("gt-app-created"); } catch (_) { /* no-op */ }
 
-// One-time cleanup of any legacy/duplicate audio cache from earlier deploys
-// (A1 migration). DEFERRED off startup: the first CacheStorage touch after a
-// cold launch is expensive on WebKit once the whole audio library is cached,
-// and nothing on first paint depends on this cleanup. Runs when the main
+// One-time migration of pre-4.5 installs: drain the legacy 'greek-tutor-audio'
+// Cache Storage bucket into IndexedDB, then delete it (phase 4.5 — see
+// migrateAudioToIDB). DEFERRED off startup: the first CacheStorage touch after
+// a cold launch is expensive on WebKit once the whole audio library is cached,
+// and nothing on first paint depends on this migration. It is chunked and
+// yields, and is idempotent + resumable across launches. Runs when the main
 // thread is idle so it never contributes to the app-load hang.
 if (typeof requestIdleCallback === "function") {
-  requestIdleCallback(() => migrateLegacyAudioCaches(), { timeout: 3000 });
+  requestIdleCallback(() => migrateAudioToIDB(), { timeout: 3000 });
 } else {
-  setTimeout(() => migrateLegacyAudioCaches(), 1500);
+  setTimeout(() => migrateAudioToIDB(), 1500);
 }
 
 export default app;

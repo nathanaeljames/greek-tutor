@@ -30,9 +30,18 @@ piece. Nathanael goes by "Fable" when addressing Claude.
   counter, toast contract) -> **two more device-reported regressions
   surfaced AFTER that pass shipped and were root-caused and fixed in
   this session** (see below). HANDOFF-4.md sections 1-9 is the full
-  record. Docs are now under buildout/ (this reorg's own commit); code
-  state is current as of commit **ba5d0d4** ("adding cold start
-  measure").
+  record.
+- **Phase 4.5 (IndexedDB audio-storage migration) is BUILT and
+  Chrome-verified** (Claude Code, 4.5-SPEC.md -> HANDOFF-4.5.md). Audio
+  bytes now live in IndexedDB as Blobs (src/lib/audio-store.js) and play
+  through Blob object URLs; the service worker is entirely out of the
+  audio path (no /audio/ route, no rangeRequests, no Range). Cache
+  Storage is shell + manifest only, so cold start no longer scales with
+  library size. A one-time deferred migration drains the legacy
+  `greek-tutor-audio` cache into IDB and deletes it. **Not yet
+  device-verified by Fable** — see the device checklist and the
+  first-launch caveat in HANDOFF-4.5.md. Code state before this work was
+  commit **ba5d0d4** ("adding cold start measure").
 - All 8,521 WAVs transcoded to m4a in the repo under public/audio/.
   Chapter 1 (120 files) + Introduction (6 files) are the only BUILT
   content; the rest of the manifest is transcoded audio for content
@@ -95,12 +104,14 @@ re-derive these — they are settled:
    bring-up). **No further app-code change can remove this while audio
    bytes live in Cache Storage.** See the IndexedDB decision below.
 
-## DECISION NEEDED / RECOMMENDED: move audio bytes to IndexedDB before phase 5
+## DECIDED + BUILT: audio bytes moved to IndexedDB (phase 4.5)
 
-This is the one open architectural question blocking a clean start to
-phase 5, and it needs a decision at the top of the next session (chat
-recommended a "phase 4.5"; user had not yet confirmed scheduling as of
-this write-up).
+RESOLVED (Fable decided 2026-07-19; built + Chrome-verified same day —
+4.5-SPEC.md -> HANDOFF-4.5.md). The migration below was done as its own
+pass before phase 5. The Range "known unknown" was DISSOLVED, not
+reimplemented: playback moved to Blob object URLs, so `<audio>` seeks
+natively against local bytes and Range/the SW leave the audio path
+entirely. The section below is kept as the rationale record.
 
 - **What:** stop storing downloaded audio in Cache Storage
   (`greek-tutor-audio`). Store the audio bytes as Blobs in IndexedDB
@@ -269,11 +280,15 @@ this write-up).
 
 ## Immediate queue (as of 2026-07-19)
 
-1. **Decision + scoping: IndexedDB audio-storage migration (phase 4.5)**
-   -- see the DECISION NEEDED section above. Recommended to happen
-   before phase 5 content work; not yet started.
-2. Chat (new conversation): phase 5 vertical-buildout spec, once the
-   4.5 decision is made. Start with chapter 2 extraction (forcing
+1. **Device-verify phase 4.5 on Fable's iPhone + iPad** -- run the
+   HANDOFF-4.5.md device checklist (cold-start metric before vs. after
+   migration; airplane-mode walk; count now exact/stable; Download All
+   backoff path). Mind the first-launch-after-upgrade caveat: the FIRST
+   cold start still pays the old Cache-Storage bring-up once and the
+   migration pays the legacy read once in the background; judge the
+   metric on the SECOND cold launch. Then deploy.
+2. Chat (new conversation): phase 5 vertical-buildout spec. Start with
+   chapter 2 extraction (forcing
    function for the remaining unknown font codes ! # $ { } ~ | \ ` = :
    ; -- the Greek Keyboard photo suggests !/#/$ are breathing+accent
    combos). Pipeline adoption of the mode vocabulary + contracts above.
@@ -286,11 +301,13 @@ this write-up).
 
 ## Known open questions
 
-- The IndexedDB migration decision above -- the only real open item.
+- Phase 4.5 IndexedDB migration: DECIDED + BUILT + Chrome-verified;
+  remaining item is Fable's device verification (queue item 1).
 - Font-map unknown codes resolve at chapter 2.
 - C3 multi-day retention: Download All completed on iPhone AND iPad
   (persistent storage granted on both, quota tens of GB); no report yet
   of files disappearing over days. Still an open watch item, unrelated
   to the three regressions above.
-- Range-request serving over IndexedDB blobs (see the 4.5 decision) --
-  needs scoping, not yet investigated.
+- Range-request serving over IndexedDB blobs: DISSOLVED by 4.5 —
+  playback uses Blob object URLs, so there is no Range/SW in the audio
+  path at all.

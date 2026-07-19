@@ -1,23 +1,27 @@
-// DownloadManager — module singleton owning bulk audio-cache population.
+// DownloadManager — module singleton owning bulk audio population.
 // Downloads survive route changes (state lives here, not in components);
 // components only subscribe/unsubscribe. NEVER auto-starts a download: every
 // fetch is the result of an explicit user tap (rural data budget).
 //
-// Cache: the SAME 'greek-tutor-audio' Cache Storage bucket that audio.js's
-// play-time warm and the SW runtime route use, so a downloaded file is
-// range-sliceable offline by the player with no extra wiring.
+// Phase 4.5: audio bytes live in IndexedDB (audio-store.js), NOT Cache Storage.
+// A downloaded file is a Blob keyed by its absolute path; playback (audio.js)
+// reads the Blob and plays a URL.createObjectURL — no SW, no Range, no cache.
+// This module is the sole WRITER of audio bytes (structurally single-writer:
+// nothing else opens the audio DB), so the round-1 Vary-duplication saga and
+// the x-gt-bulk-download marker are gone.
 
 import { writable, derived } from 'svelte/store';
 import { loadManifest, getPacks, getPack } from './packs.js';
-import { AUDIO_CACHE, MANIFEST_CACHE, PROTECTED_CACHES, BULK_FETCH_HEADER, isAudioCacheName } from './cache-config.js';
+import { AUDIO_CACHE, MANIFEST_CACHE, isAudioCacheName } from './cache-config.js';
+import * as audioStore from './audio-store.js';
 
-// Single shared audio bucket (see cache-config.js). DownloadManager, audio.js,
-// and the SW route all key on this one name so usage can never double via a
-// duplicate cache (A1/B3).
-const CACHE_NAME = AUDIO_CACHE;
 const BOOK_KEY = 'greek-tutor-downloads-v1';
 const ALL = '__all__';               // aggregate pseudo-pack for "Download all"
 const CONCURRENCY = 4;
+// Persist fetched blobs in transactions of this size (matches audio-store's own
+// txn batching): the download loops buffer blobs and flush at this threshold so
+// memory stays bounded even across an 8.5k-file "Download all".
+const PERSIST_BATCH = 100;
 
 // packId -> { state, done, total, error }
 // state: 'none' | 'downloading' | 'partial' | 'done' | 'update'
@@ -27,14 +31,13 @@ let currentHash = null;
 let initPromise = null;
 let persistRequested = false;
 
-// ---- audio-file counter: persisted so it renders INSTANTLY (no cache scan on
+// ---- audio-file counter: persisted so it renders INSTANTLY (no store scan on
 // mount) --------------------------------------------------------------------
-// The "Audio files stored" figure must be trustworthy AND cheap. A full
-// cache.keys() scan is O(files) and, on WebKit with the whole ~8.5k-file
-// library cached, takes SECONDS on the main thread — that was the app-load
-// hang. So we keep the last known count in localStorage and render that
-// immediately; the exact ground-truth scan runs later, off the paint path
-// (deferred reconcile / explicit retry), and corrects the stored value.
+// The "Audio files stored" figure must be trustworthy AND cheap. IDB count() is
+// cheap, but standing directive 10 still stands: NOTHING on the load or route-
+// mount path enumerates the store. We keep the last known count in localStorage
+// and render that immediately; the exact ground-truth count runs later, off the
+// paint path (deferred reconcile / explicit retry), and corrects it.
 const COUNT_KEY = 'greek-tutor-audio-count';
 function readStoredCount() {
   try { const v = localStorage.getItem(COUNT_KEY); return v == null ? null : (parseInt(v, 10) || 0); }
@@ -49,22 +52,21 @@ function setCount(n) {
   catch (_) { /* quota/unavailable: store still holds it for this session */ }
 }
 
-// Run heavy cache work AFTER the current frame so it never blocks first paint
-// or interaction. requestIdleCallback where available (Chrome, iOS 16.4+),
-// else a macrotask.
+// Run heavy work AFTER the current frame so it never blocks first paint or
+// interaction. requestIdleCallback where available (Chrome, iOS 16.4+), else a
+// macrotask.
 function idle(fn) {
   if (typeof requestIdleCallback === 'function') requestIdleCallback(() => fn(), { timeout: 2000 });
   else setTimeout(fn, 0);
 }
 
 // Cheap pathname of a cache-key URL ("https://host/audio/chapt_1/a.m4a" ->
-// "/audio/chapt_1/a.m4a") without constructing a URL object per entry (that
-// was ~8.5k allocations on the reconcile hot path). Audio URLs carry no query.
+// "/audio/chapt_1/a.m4a"). Only the legacy-cache migration needs this now (the
+// Cache Storage keys are absolute URLs; IDB keys are already these paths).
 function pathOf(url) { const i = url.indexOf('/audio/'); return i >= 0 ? url.slice(i) : url; }
 
-// Lightweight perf instrumentation so the device pass can see where load time
-// goes (desktop cannot reproduce WebKit's large-cache scan cost). Last timing
-// is surfaced in the debug card; every scan also logs to the console.
+// Lightweight perf instrumentation so the device pass can see where time goes.
+// Last timing is surfaced in the debug card; every scan also logs to console.
 export const lastScan = writable(null);   // { label, ms, entries }
 function recordScan(label, ms, entries) {
   const rec = { label, ms: Math.round(ms), entries };
@@ -74,14 +76,13 @@ function recordScan(label, ms, entries) {
 const now = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
 
 // Cold-start timing breakdown for the debug card (device pass). All values are
-// ms since navigation start (the same clock as our performance.mark()s), so
-// they localize the load hang precisely:
-//   workerStart..responseStart  = time the SW spent producing the shell
-//     response (large-Cache-Storage bring-up shows up HERE — it is NOT our JS)
-//   responseEnd                 = shell bytes delivered
-//   jsStart / appCreated        = our code executing (blocking here WOULD be us)
-// If responseStart is ~the whole hang and jsStart follows right after, the cost
-// is the platform serving the shell, and no app-code change can remove it.
+// ms since navigation start (same clock as our performance.mark()s). This is
+// the ACCEPTANCE INSTRUMENT for phase 4.5: after migration deletes the legacy
+// audio cache, responseStart (the SW producing the shell) must be small and
+// must NOT scale with library size, because Cache Storage is tiny again.
+//   workerStart..responseStart = time the SW spent producing the shell response
+//   responseEnd                = shell bytes delivered
+//   jsStart / appCreated       = our code executing
 export function startupReport() {
   const out = {
     fetchStart: null, workerStart: null, responseStart: null, responseEnd: null,
@@ -106,15 +107,16 @@ export function startupReport() {
 }
 
 // ---- localStorage bookkeeping (mirrors progress.js versioned-key pattern) ----
+// Shape: { version: 1, packs: { <id>: { complete, manifestHash } }, migrationDone }
 function loadBook() {
   try {
     const raw = localStorage.getItem(BOOK_KEY);
     if (raw) {
       const p = JSON.parse(raw);
-      if (p && p.version === 1) return { version: 1, packs: p.packs || {} };
+      if (p && p.version === 1) return { version: 1, packs: p.packs || {}, migrationDone: !!p.migrationDone };
     }
   } catch (_) { /* corrupt/unavailable -> start clean */ }
-  return { version: 1, packs: {} };
+  return { version: 1, packs: {}, migrationDone: false };
 }
 function saveBook(book) {
   try { localStorage.setItem(BOOK_KEY, JSON.stringify(book)); } catch (_) { /* ignore quota */ }
@@ -153,46 +155,42 @@ function ensureInit() {
         seed[p.id] = { state, done, total: p.count, error: null };
       }
       store.set(seed);
-      // NB: no cache scan here. App load (and every chapter hub, which mounts
-      // DownloadControl -> ensureInit) must never trigger a full cache.keys()
-      // pass — that scan is seconds on WebKit with the whole library cached and
-      // was the app-load hang. Pack badges come from localStorage bookkeeping
+      // NB: no store enumeration here. App load (and every chapter hub, which
+      // mounts DownloadControl -> ensureInit) must never enumerate the audio
+      // store (directive 10). Pack badges come from localStorage bookkeeping
       // (instant); the exact count comes from the persisted audioCount store.
-      // The one reconciling scan runs only when the Storage menu opens
-      // (reconcileAudioCache, called from Settings).
+      // The one reconciling pass runs only when the Storage menu opens
+      // (reconcileAudioCache).
     })().catch(() => { initPromise = null; });
   }
   return initPromise;
 }
 
-// Reconciling cache audit: ONE cache.keys() pass that (a) refreshes the exact
+// Reconciling audit: ONE audioStore.keys() pass that (a) refreshes the exact
 // file count and (b) corrects stale bookkeeping (e.g. the user cleared Safari
 // storage outside the app but our localStorage survived, so a pack badge still
 // claims "downloaded"). Deliberately NOT on the app-load path — only the
-// Storage menu calls this, on mount, and even there it is deferred to idle so
-// the (already-instant, store-backed) count and the rest of Settings render
-// first. `needsReconcile` skips the scan on repeat visits when nothing changed
-// since the last pass; a download/clear sets it true again.
+// Storage menu calls this, on mount, deferred to idle. `needsReconcile` skips
+// it on repeat visits when nothing changed; a download/clear sets it true.
 let needsReconcile = true;
 export function reconcileAudioCache() {
-  if (!needsReconcile || !('caches' in self)) return;
+  if (!needsReconcile) return;
   needsReconcile = false;
   idle(async () => {
     const t0 = now();
-    let n;
+    let n = null;
     try {
       const packs = await getPacks();
-      const cache = await caches.open(CACHE_NAME);
-      const keys = await cache.keys();
-      n = new Set(keys.map(r => r.url)).size;
-      setCount(n);                                    // exact ground truth
-      const have = new Set(keys.map(r => pathOf(r.url)));
+      const keys = await audioStore.keys();
+      const have = new Set(keys);                       // keys are absolute paths
+      n = have.size;
+      setCount(n);                                      // exact ground truth
       const book = loadBook();
       for (const p of packs) {
         const claimed = book.packs[p.id];
         if (!claimed || !claimed.complete) continue;
         const present = p.srcs.filter(s => have.has(s)).length;
-        if (present === p.count) continue;            // claim holds
+        if (present === p.count) continue;              // claim holds
         if (present === 0) {
           setBookPack(p.id, null);
           patch(p.id, { state: 'none', done: 0 });
@@ -226,8 +224,8 @@ export function allState() {
 }
 
 // Fingerprint of every pack's state (not progress counts), so Settings can
-// re-read the cache file count exactly when a download/clear lands rather
-// than on every per-file tick (P1).
+// re-read the browser storage estimate exactly when a download/clear lands
+// rather than on every per-file tick.
 export const packStatesFingerprint = derived(store, m =>
   Object.entries(m).map(([id, v]) => `${id}:${v.state}`).sort().join('|'));
 
@@ -243,55 +241,17 @@ export async function storageInfo() {
   return info;
 }
 
-// ---- P1: single-writer discipline against Vary-key duplication ----
-// The Cache API keys entries by URL *plus* the response's Vary headers, so two
-// writers (the SW CacheFirst /audio/ route caches its network response; we
-// put() the same URL here) can accumulate one entry per Vary-distinct request
-// instead of replacing each other — monotonic storage growth. Every match/
-// delete in this module therefore ignores Vary, and every put is preceded by
-// an ignoreVary delete: one entry per URL, guaranteed, regardless of what
-// Vary header the host serves. The SW route matches with the same option
-// (matchOptions in vite.config.js) so playback can never miss-and-refetch a
-// "different-vary" copy.
-const MATCH_ANY = { ignoreVary: true };
-async function putSingle(cache, src, resp) {
-  await cache.delete(src, MATCH_ANY);
-  await cache.put(src, resp);
-}
-
-// Snapshot which URLs the cache already holds, as one keys() pass -> a JS Set
-// with O(1) membership. The bulk download loops use this INSTEAD of a per-file
-// cache.match(): on WebKit both cache.match and cache.delete scan the cache,
-// so the old per-file "match, then delete-before-put" cost ~O(n) EACH and the
-// whole Download-all was ~O(n²) — it crawled to a stall near the end once the
-// cache was large (the device-pass "halt" that resumed minutes later). One
-// upfront snapshot + a plain put() per file makes it O(n).
-async function presentPaths(cache) {
-  try { return new Set((await cache.keys()).map(r => pathOf(r.url))); }
-  catch (_) { return new Set(); }
-}
-
-// Bulk fetches are marked so the SW's CacheFirst audio route ignores them
-// (single-writer discipline, 4-STORAGE-PASS): without the marker the SW's
-// async waitUntil cachePut races putSingle on every downloaded file, and on
-// WebKit the loser of the race can land as a SECOND entry for the same URL
-// (put honors Vary there — measured; see HANDOFF-4 §8).
-const BULK_HEADERS = { [BULK_FETCH_HEADER]: '1' };
-
-// Per-file fetch with a HARD timeout + a couple of retries.
-// Why: on iOS a fetch() has no built-in timeout, so a single wedged connection
-// (flaky WiFi, a throttling/again-later CDN) leaves `await fetch` pending
-// FOREVER. With CONCURRENCY workers, a few stuck files freeze the whole
-// download with no way to kick it — the device symptom "stalled at 7070, dead
-// for 8 min, and cancel/resume/rescan did nothing" (cancel can't unstick a
-// socket WebKit is holding; a fresh run just gets stuck the same way). A
-// timeout guarantees every fetch settles; retries absorb transient stalls so
-// the run keeps flowing instead of ending at the first hiccup.
-// Error contract for the callers:
+// Per-file fetch with a HARD timeout + a couple of retries + 429/503 backoff.
+// LOAD-BEARING (round-2 device fix): on iOS a fetch() has no built-in timeout,
+// so a single wedged connection leaves `await fetch` pending FOREVER and a few
+// stuck files freeze the whole CONCURRENCY-wide run with no way to kick it. A
+// timeout guarantees every fetch settles; retries absorb transient stalls; the
+// 429/503 backoff is the graceful path if the host throttles the ~8.5k burst.
+// Error contract for callers:
 //   - user cancel  -> AbortError (stop the whole run)
 //   - offline      -> TypeError  (stop the whole run)
-//   - timed out after retries / other -> TimeoutError-ish (per-file failure;
-//     the file lands in `failures` -> 'partial' -> Resume retries it)
+//   - timed out after retries / other -> TimeoutError-ish (per-file failure ->
+//     'partial' -> Resume retries it)
 const FETCH_TIMEOUT_MS = 25000;   // generous: audio files avg ~10 KB, <1 s when healthy
 const FETCH_RETRIES = 2;          // total attempts = FETCH_RETRIES + 1
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
@@ -304,7 +264,7 @@ async function bulkFetch(src, masterSignal) {
     const timer = setTimeout(() => ctl.abort(), FETCH_TIMEOUT_MS);
     let resp;
     try {
-      resp = await fetch(src, { signal: ctl.signal, headers: BULK_HEADERS });
+      resp = await fetch(src, { signal: ctl.signal });
     } catch (e) {
       if (masterSignal.aborted) throw abortError();       // real user cancel -> fatal
       if (e instanceof TypeError) throw e;                // offline -> fatal
@@ -318,8 +278,7 @@ async function bulkFetch(src, masterSignal) {
       masterSignal.removeEventListener('abort', onAbort);
     }
     // CDN rate-limit / temporary unavailability: back off (honoring Retry-After
-    // when present) and retry instead of failing the file — this is the
-    // graceful path if Netlify throttles the ~8.5k-file burst.
+    // when present) and retry instead of failing the file.
     if ((resp.status === 429 || resp.status === 503) && attempt < FETCH_RETRIES) {
       const ra = parseInt(resp.headers.get('retry-after'), 10);
       await sleep(Number.isFinite(ra) ? Math.min(ra * 1000, 10000) : 800 * (attempt + 1));
@@ -329,97 +288,49 @@ async function bulkFetch(src, masterSignal) {
   }
 }
 
-// Ground truth the app controls (P1): how many audio files the cache actually
-// holds right now. Settings shows this beside the browser's storage estimate,
-// which iOS is known to update lazily after deletions.
-// Counts DISTINCT URLs, not raw cache entries (4-STORAGE-PASS §3c): on WebKit
-// a URL can transiently hold more than one Vary-distinct entry, and "files
-// stored" must mean files, not records. Raw entry count stays visible in the
-// diagnostic so the two can be compared on device.
+// Ground truth the app controls: how many audio files are stored right now.
+// Now backed by audioStore.count() (cheap; IDB maintains the count) — the old
+// O(files) Cache Storage scan is gone.
 export async function audioFileCount() {
-  const once = async () => {
-    if (!('caches' in self)) return null;
-    if (!(await caches.has(CACHE_NAME))) return 0;
-    const cache = await caches.open(CACHE_NAME);
-    const keys = await cache.keys();
-    return new Set(keys.map(r => r.url)).size;
-  };
   const t0 = now();
   let n = null;
-  try { n = await once(); }
+  try { n = await audioStore.count(); }
   catch (_) {
-    // WebKit's cache backend can fail transiently under write load (the F3
-    // dash state). One short retry; then report null and let Settings render
-    // an honest "unavailable" with a retry affordance instead of a bare dash.
-    await new Promise(r => setTimeout(r, 400));
-    try { n = await once(); } catch (_) { n = null; }
+    await sleep(400);
+    try { n = await audioStore.count(); } catch (_) { n = null; }
   }
   recordScan('audioFileCount', now() - t0, n);
   if (n != null) setCount(n);       // keep the persisted counter in sync
   return n;
 }
 
-// Refresh the exact count off the paint path, after a download settles. Cheap
-// to schedule; the actual scan runs at idle. Callers that need instant, exact
-// feedback (Clear -> 0) call setCount directly instead.
+// Refresh the exact count off the paint path, after a download settles.
 function scheduleCountRefresh() { idle(() => { audioFileCount(); }); }
 
-// Diagnostic (P1, surfaced by ?debug OR the seven-tap toggle in Settings —
-// 4-STORAGE-PASS §3a): entry count vs distinct URLs, per-cache counts, summed
-// response bytes, Vary histogram, per-URL duplicate keys with their request
-// headers and the response's Vary header, a sample entry's response headers
-// (captures what the deployed host actually serves), estimate, UA, timestamp.
-// Serialized as-is by the "Copy report" button (§3b), so every field must be
-// JSON-safe. Per-entry reads are individually guarded: one unreadable record
-// (WebKit under load) must not sink the whole report.
+// Diagnostic (surfaced by ?debug OR the seven-tap toggle in Settings). Now
+// reports IDB stats (store count, migration done flag, sample keys) plus the
+// state of the legacy Cache Storage bucket during the migration window, and
+// keeps the estimate. Serialized as-is by "Copy report", so every field is
+// JSON-safe.
 export async function audioCacheDiagnostic() {
   const out = {
     generatedAt: new Date().toISOString(),
     ua: typeof navigator !== 'undefined' ? navigator.userAgent : null,
-    cacheNames: [], perCacheCounts: {}, entryCount: 0, distinctUrls: 0,
-    totalBytes: 0, readErrors: 0, varyHistogram: {}, sampleResponseHeaders: null,
-    duplicates: [], duplicatesTotal: 0, estimate: null, persisted: null
+    idbCount: null, migrationDone: false, sampleKeys: [],
+    cacheNames: [], legacyAudioCacheEntries: null,
+    estimate: null, persisted: null
   };
-  // Cap the per-entry duplicate DETAIL that gets serialized: an affected iOS
-  // install had ~3800 duplicated URLs, and dumping every one (with request
-  // headers) made the report multiple MB — too big for the clipboard and
-  // minutes to paste. duplicatesTotal keeps the true count; the sample proves
-  // the mechanism (differing vs identical stored reqHeaders).
-  const DUP_DETAIL_CAP = 40;
   try {
-    out.cacheNames = await caches.keys();
-    for (const n of out.cacheNames) {
-      try { out.perCacheCounts[n] = (await (await caches.open(n)).keys()).length; }
-      catch (e) { out.perCacheCounts[n] = 'error: ' + e; }
-    }
-    const cache = await caches.open(CACHE_NAME);
-    const reqs = await cache.keys();
-    out.entryCount = reqs.length;
-    out.distinctUrls = new Set(reqs.map(r => r.url)).size;
-    const byUrl = new Map();
-    for (const req of reqs) {
-      let info;
-      try {
-        const resp = await cache.match(req);
-        const bytes = resp ? (await resp.clone().blob()).size : 0;
-        out.totalBytes += bytes;
-        const vary = resp ? resp.headers.get('vary') : null;
-        out.varyHistogram[String(vary)] = (out.varyHistogram[String(vary)] || 0) + 1;
-        if (!out.sampleResponseHeaders && resp) {
-          out.sampleResponseHeaders = { url: req.url, headers: Object.fromEntries(resp.headers.entries()) };
-        }
-        info = { bytes, vary, reqHeaders: Object.fromEntries(req.headers.entries()) };
-      } catch (e) {
-        out.readErrors += 1;
-        info = { error: String(e), reqHeaders: {} };
-      }
-      if (!byUrl.has(req.url)) byUrl.set(req.url, []);
-      byUrl.get(req.url).push(info);
-    }
-    for (const [url, entries] of byUrl) {
-      if (entries.length > 1) {
-        out.duplicatesTotal += 1;
-        if (out.duplicates.length < DUP_DETAIL_CAP) out.duplicates.push({ url, entries });
+    out.migrationDone = loadBook().migrationDone;
+    try {
+      const keys = await audioStore.keys();
+      out.idbCount = keys.length;
+      out.sampleKeys = keys.slice(0, 10);
+    } catch (e) { out.idbError = String(e); }
+    if ('caches' in self) {
+      out.cacheNames = await caches.keys();
+      if (await caches.has(AUDIO_CACHE)) {
+        out.legacyAudioCacheEntries = (await (await caches.open(AUDIO_CACHE)).keys()).length;
       }
     }
     if (navigator.storage && navigator.storage.estimate) out.estimate = await navigator.storage.estimate();
@@ -428,34 +339,8 @@ export async function audioCacheDiagnostic() {
   return out;
 }
 
-// Debug-card recovery tool: collapse every duplicated URL back to a single
-// entry (keep one response, ignoreVary-delete all copies, re-put). Run AFTER
-// capturing a Copy report — the duplicates ARE the evidence (4-STORAGE-PASS
-// §3 "must not mask evidence").
-export async function dedupeAudioCache() {
-  const out = { scanned: 0, duplicateUrls: 0, removed: 0 };
-  try {
-    if (!('caches' in self) || !(await caches.has(CACHE_NAME))) return out;
-    const cache = await caches.open(CACHE_NAME);
-    const reqs = await cache.keys();
-    out.scanned = reqs.length;
-    const counts = new Map();
-    for (const r of reqs) counts.set(r.url, (counts.get(r.url) || 0) + 1);
-    for (const [url, n] of counts) {
-      if (n < 2) continue;
-      out.duplicateUrls += 1;
-      const keep = await cache.match(url, MATCH_ANY);
-      await cache.delete(url, MATCH_ANY);
-      if (keep) await cache.put(url, keep);
-      out.removed += n - 1;
-    }
-  } catch (e) { out.error = String(e); }
-  return out;
-}
-
-// Simple promise worker pool over a src list. onOne(src) resolves to
-// 'done' (fetched/cached), 'skip' (already cached), or 'fail'. Throws on abort
-// (AbortError) or offline (TypeError) to stop the whole run.
+// Simple promise worker pool over a src list. onOne(src) does the per-file work.
+// Throws on abort (AbortError) or offline (TypeError) to stop the whole run.
 async function runPool(srcs, onOne, signal) {
   const queue = [...srcs];
   async function worker() {
@@ -469,15 +354,31 @@ async function runPool(srcs, onOne, signal) {
 }
 function abortError() { const e = new Error('aborted'); e.name = 'AbortError'; return e; }
 
+// A buffered writer: download workers push { path, blob } and it flushes to IDB
+// in PERSIST_BATCH-sized putMany transactions, keeping at most ~one batch of
+// blobs in JS memory at a time (critical for the 8.5k-file "Download all").
+function makeBufferedWriter() {
+  const buffer = [];
+  async function flush(all = false) {
+    // splice atomically (single-threaded) so concurrent workers can't double-
+    // persist the same slice.
+    while (buffer.length >= PERSIST_BATCH || (all && buffer.length)) {
+      const chunk = buffer.splice(0, PERSIST_BATCH);
+      await audioStore.putMany(chunk);
+    }
+  }
+  return {
+    add(path, blob) { buffer.push({ path, blob }); },
+    maybeFlush() { return buffer.length >= PERSIST_BATCH ? flush(false) : Promise.resolve(); },
+    drain() { return flush(true); }
+  };
+}
+
 // Download (or resume) one pack. force=true (Update) re-fetches every file even
-// if already cached. The app is the SOLE writer of the audio cache (the SW
-// route excludes our x-gt-bulk-download requests), so a plain put() replaces
-// its own prior entry by URL — no per-file delete is needed for the normal
-// path; skipping it is what keeps the loop O(n) on WebKit.
+// if already stored (the force path also deletes the pack's keys up front so a
+// stale byte can never survive an Update). Resume skips files already in IDB.
 export async function downloadPack(packId, { force = false } = {}) {
-  // Called straight from click handlers — must never reject (B7). Manifest
-  // fetch failure (e.g. flaky network the online flag missed) becomes an
-  // error state on the pack, not an unhandled rejection.
+  // Called straight from click handlers — must never reject (B7).
   let pack;
   try {
     await ensureInit();
@@ -491,11 +392,18 @@ export async function downloadPack(packId, { force = false } = {}) {
 
   const controller = new AbortController();
   controllers[packId] = controller;
-  const cache = await caches.open(CACHE_NAME);
-  // One keys() snapshot up front instead of a cache.match per file (O(n) vs
-  // O(n²) on WebKit). force skips the snapshot: every file is re-fetched.
-  const have = force ? new Set() : await presentPaths(cache);
 
+  // Update path: drop the pack's stored bytes first, then a normal download
+  // repopulates them. Resume path: one keys() read -> skip-if-present set.
+  let have;
+  if (force) {
+    try { await audioStore.deleteMany(pack.srcs); } catch (_) { /* best effort */ }
+    have = new Set();
+  } else {
+    try { have = new Set(await audioStore.keys(`/audio/${packId}/`)); } catch (_) { have = new Set(); }
+  }
+
+  const writer = makeBufferedWriter();
   let done = 0;
   const failures = [];
   let offline = false;
@@ -505,10 +413,12 @@ export async function downloadPack(packId, { force = false } = {}) {
     try {
       if (!force && have.has(src)) { done += 1; patch(packId, { done }); return; }
       const resp = await bulkFetch(src, controller.signal);
-      // Sole-writer plain put(): replaces our own prior entry by URL, no
-      // per-file delete (see downloadPack header + presentPaths).
-      if (resp && resp.ok) { await cache.put(src, resp); done += 1; patch(packId, { done }); }
-      else { failures.push(src); }
+      if (resp && resp.ok) {
+        const blob = await resp.blob();
+        writer.add(src, blob);
+        done += 1; patch(packId, { done });
+        await writer.maybeFlush();
+      } else { failures.push(src); }
     } catch (e) {
       if (e.name === 'AbortError') throw e;   // real user cancel only (bulkFetch converts timeouts)
       if (e instanceof TypeError) { offline = true; controller.abort(); throw abortError(); }
@@ -522,9 +432,11 @@ export async function downloadPack(packId, { force = false } = {}) {
   } catch (e) {
     aborted = true;   // cancel or offline
   } finally {
+    try { await writer.drain(); } catch (_) { /* unpersisted files resume-refetch */ }
     delete controllers[packId];
   }
 
+  needsReconcile = true;
   if (offline) {
     patch(packId, { state: done > 0 ? 'partial' : 'none', done, error: 'Connection lost — progress saved.' });
   } else if (aborted) {
@@ -557,10 +469,12 @@ export async function downloadAll() {
 
   const controller = new AbortController();
   controllers[ALL] = controller;
-  const cache = await caches.open(CACHE_NAME);
-  // Single upfront snapshot -> O(n) whole-library download (see presentPaths).
-  const have = await presentPaths(cache);
+  // Single upfront keys() read -> O(1) skip-if-present per file (no per-file
+  // existence check).
+  let have;
+  try { have = new Set(await audioStore.keys()); } catch (_) { have = new Set(); }
 
+  const writer = makeBufferedWriter();
   let done = 0;
   const donePerPack = {};
   const failures = [];
@@ -578,17 +492,20 @@ export async function downloadAll() {
   };
 
   // Live counter during the run: done is the number of files confirmed present
-  // so far (cache hits + fresh puts), so it can never exceed the progress bar's
-  // "done" number (4-STORAGE-PASS §8.5). In-memory only; the exact persisted
-  // recount lands on completion.
+  // so far (already-stored + fresh fetches), so it can never exceed the progress
+  // bar's "done". In-memory only; the exact persisted recount lands on completion.
   const bumpDone = () => { done += 1; audioCount.set(done); };
 
   const onOne = async (src) => {
     try {
       if (have.has(src)) { bumpDone(); bumpPack(src); patch(ALL, { done }); return; }
       const resp = await bulkFetch(src, controller.signal);
-      if (resp && resp.ok) { await cache.put(src, resp); bumpDone(); bumpPack(src); patch(ALL, { done }); }
-      else { failures.push(src); }
+      if (resp && resp.ok) {
+        const blob = await resp.blob();
+        writer.add(src, blob);
+        bumpDone(); bumpPack(src); patch(ALL, { done });
+        await writer.maybeFlush();
+      } else { failures.push(src); }
     } catch (e) {
       if (e.name === 'AbortError') throw e;   // real user cancel only (bulkFetch converts timeouts)
       if (e instanceof TypeError) { offline = true; controller.abort(); throw abortError(); }
@@ -602,9 +519,11 @@ export async function downloadAll() {
   } catch (e) {
     aborted = true;
   } finally {
+    try { await writer.drain(); } catch (_) { /* unpersisted files resume-refetch */ }
     delete controllers[ALL];
   }
 
+  needsReconcile = true;
   if (offline) patch(ALL, { state: 'partial', done, error: 'Connection lost — progress saved.' });
   else if (aborted) patch(ALL, { state: done > 0 ? 'partial' : 'none', done, error: null });
   else if (failures.length) patch(ALL, { state: 'partial', done, error: `${failures.length} files failed — retry to resume.` });
@@ -618,26 +537,27 @@ export function cancel(packId) {
 }
 export function cancelAll() { cancel(ALL); }
 
-// Delete every cached audio file and reset all bookkeeping + pack states.
-// Belt-and-braces: deletes EVERY cache whose name matches the audio pattern
-// (not just CACHE_NAME) so a stray duplicate can never keep usage inflated,
-// then resets bookkeeping. Storage figure refresh: callers re-run
-// storageInfo() after this resolves (Settings does).
+// Delete every stored audio file and reset all bookkeeping + pack states.
+// Belt-and-braces: also delete every legacy audio-named Cache Storage bucket
+// (the pre-4.5 'greek-tutor-audio' and any workbox-default duplicate) so no
+// stray bytes can keep the browser's usage figure inflated.
 export async function clearAllAudio() {
   cancelAll();
   for (const id of Object.keys(controllers)) cancel(id);
+  try { await audioStore.clearAll(); } catch (_) { /* ignore */ }
   try {
     if ('caches' in self) {
       const names = await caches.keys();
       // Explicit manifest guard: the manifest must stay reachable offline even
-      // if its cache is ever renamed to something containing "audio" (R3).
+      // if its cache is ever renamed to something containing "audio".
       await Promise.all(names
         .filter(n => isAudioCacheName(n) && n !== MANIFEST_CACHE)
         .map(n => caches.delete(n)));
     }
   } catch (_) { /* ignore */ }
-  saveBook({ version: 1, packs: {} });
-  setCount(0);   // F4: counter drops to 0 immediately, exactly, from any state
+  saveBook({ version: 1, packs: {}, migrationDone: loadBook().migrationDone });
+  setCount(0);   // counter drops to 0 immediately, exactly, from any state
+  needsReconcile = true;
   try {
     const packs = await getPacks();
     const reset = {};
@@ -649,20 +569,91 @@ export async function clearAllAudio() {
   }
 }
 
-// One-time startup cleanup for already-deployed installs (the iPhone from
-// Phase 4d): if a legacy or workbox-default-named audio cache exists alongside
-// the canonical bucket, delete it so its bytes stop inflating storage usage.
-// PROTECTED_CACHES (the canonical audio bucket + the manifest cache) are
-// asserted safe in code, not by naming convention (R3).
-// Ordering invariant: this races SW activation, and that is acceptable ONLY
-// because the SW's audio route uses the same canonical AUDIO_CACHE name
-// (single-sourced from cache-config.js) — the SW can never be writing into a
-// cache this migration deletes. If the SW cache name ever changes, revisit.
-export async function migrateLegacyAudioCaches() {
-  try {
-    if (!('caches' in self)) return;
-    const names = await caches.keys();
-    const stale = names.filter(n => !PROTECTED_CACHES.includes(n) && isAudioCacheName(n));
-    if (stale.length) await Promise.all(stale.map(n => caches.delete(n)));
-  } catch (_) { /* best effort: fire-and-forget from main.js must never reject */ }
+// ---- one-time migration of pre-4.5 installs: Cache Storage -> IndexedDB ----
+// Fable's iPhone/iPad hold the full ~8.5k-entry library (plus round-1-era Vary
+// duplicates) in the legacy 'greek-tutor-audio' cache. This drains it into IDB
+// so Cache Storage becomes tiny and cold start stops scaling with library size.
+//
+// Discipline: runs DEFERRED after first paint (idle-scheduled from main.js) —
+// NEVER on the load/mount path. Chunked (~100 unique URLs: read response ->
+// blob -> putMany -> delete those cache entries), yielding between chunks.
+// Idempotent + resumable: keys already in IDB are skipped, an interrupted run
+// picks up the remaining cache entries next launch. Vary duplicates dedupe
+// naturally (same IDB key overwrites), so the migrated count is the DISTINCT
+// path count.
+//
+// KNOWN + ACCEPTED: the FIRST cold start on the upgrade build still pays the old
+// large-Cache-Storage bring-up once (it happens before JS; nothing we can do),
+// and this scan pays the legacy read cost once in the background. After the
+// legacy cache is deleted, cold start is permanently fast. Do not misread the
+// first post-deploy launch as a regression.
+
+// Live migration status for Settings ("Optimizing audio storage… n of m").
+// null when idle/complete/not-needed.
+export const migrationStatus = writable(null);   // { done, total } | null
+
+let migrationPromise = null;
+export function migrateAudioToIDB() {
+  if (!migrationPromise) migrationPromise = runMigration().catch(() => {});
+  return migrationPromise;
+}
+
+async function runMigration() {
+  if (!('caches' in self)) { markMigrationDone(); return; }
+  const book = loadBook();
+  if (book.migrationDone) return;
+
+  // No legacy cache -> nothing to migrate; mark done so we never scan again.
+  if (!(await caches.has(AUDIO_CACHE))) { markMigrationDone(); return; }
+  const cache = await caches.open(AUDIO_CACHE);
+  const reqs = await cache.keys();
+  if (!reqs.length) { await caches.delete(AUDIO_CACHE); markMigrationDone(); return; }
+
+  // Unique by URL (collapses Vary duplicates: many cache entries, one path).
+  const byUrl = new Map();
+  for (const req of reqs) if (!byUrl.has(req.url)) byUrl.set(req.url, req);
+  const urls = [...byUrl.keys()];
+
+  // Skip paths already in IDB (resume / idempotency) for the READ, but still
+  // drain their cache entries below.
+  let already;
+  try { already = new Set(await audioStore.keys()); } catch (_) { already = new Set(); }
+
+  const total = urls.length;
+  let done = 0;
+  migrationStatus.set({ done, total });
+
+  const CHUNK = 100;
+  for (let i = 0; i < urls.length; i += CHUNK) {
+    const slice = urls.slice(i, i + CHUNK);
+    const entries = [];
+    for (const url of slice) {
+      const path = pathOf(url);
+      if (already.has(path)) continue;                 // already migrated: skip read
+      try {
+        const resp = await cache.match(byUrl.get(url), { ignoreVary: true });
+        if (resp) { entries.push({ path, blob: await resp.blob() }); already.add(path); }
+      } catch (_) { /* one unreadable entry must not sink the run */ }
+    }
+    try { await audioStore.putMany(entries); } catch (_) { /* retried next launch */ }
+    // Drain this slice's cache entries (all Vary copies of each URL).
+    for (const url of slice) { try { await cache.delete(url, { ignoreVary: true }); } catch (_) {} }
+    done += slice.length;
+    migrationStatus.set({ done: Math.min(done, total), total });
+    await new Promise(r => setTimeout(r, 0));          // yield between chunks
+  }
+
+  await caches.delete(AUDIO_CACHE);
+  markMigrationDone();
+  migrationStatus.set(null);
+  // Refresh the exact count off the paint path now that bytes live in IDB.
+  scheduleCountRefresh();
+  needsReconcile = true;
+}
+
+function markMigrationDone() {
+  const book = loadBook();
+  book.migrationDone = true;
+  saveBook(book);
+  migrationStatus.set(null);
 }
