@@ -1,5 +1,10 @@
 # Greek Tutor PWA -- Walking Skeleton (Phase 3)
 
+Project docs (specs, phase handoffs, plans, verification records) live in
+[buildout/](buildout/). Start a new working session from
+[buildout/CHAT-HANDOFF.md](buildout/CHAT-HANDOFF.md) -- it is the live
+bootstrap doc and points at everything else.
+
 Offline-first PWA port of the ParsonsTech Greek Tutor. This skeleton has:
 chapter navigation (all 28 chapters listed, Chapter 1 active), the
 contentAudio component (charts, explore grids, letter stepper, flashcards,
