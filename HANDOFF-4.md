@@ -863,3 +863,135 @@ with Fable and is unaffected.
 - [x] Chrome cycle from §7 re-run post-fix and still exact (no
       regression: same 120 entries / same 1,113,107 bytes).
 - [x] HANDOFF-4.md §8 written (this section).
+
+## 9. App-load hang + Download-all halt + Copy-report (2026-07-19, post-deploy device pass 2)
+
+Session date: 2026-07-19. Reported after the §8 deploy: (H1) the installed
+PWA hangs ~5 s (iPhone) / ~2.5 s (iPad) on load, ONLY when the whole audio
+library is cached (no hang with few/zero files); (H2) "Download all" now
+HALTS mid-run for 5-6 min, then resumes and completes at exactly 8521 (it
+was slow-but-continuous before §8); (H3) "Copy report" always said
+"Clipboard unavailable" and the text dump took minutes to paste. Counts
+themselves are now correct (120 / 126 / 8521 exactly; fresh re-download shows
+no duplicates) — so the §8 single-writer fix landed. All diagnosis
+re-derived from the code; correctness reproduced in the built app (headless
+Chrome/CDP). The iOS-specific COST is instrumented, not desktop-reproducible.
+
+### 9.1 Evidence / mechanism (PROVED = code + built-app repro; INFERRED = iOS-only cost)
+
+H1 — app-load hang. PROVED (code): the only O(files) main-thread work on a
+resumed route is a full `cache.keys()` scan — `reconcile()` (ran inline from
+`ensureInit`, plus a `new URL()` per entry) and `audioFileCount()` (Settings
+mount + on EVERY `packStatesFingerprint` change). The TOC route scans
+nothing, so the hang appears when the PWA resumes onto a chapter hub or
+Settings. INFERRED (iOS-only): `cache.keys()` over the ~8.5k-file cache costs
+seconds on WebKit where it is instant on Chrome — which is exactly why §7/§8
+Chrome numbers were always instant and why the hang scales with file count
+and vanishes with few files. Desktop cannot reproduce the seconds (measured
+24 ms for 126 entries here); the fix removes the scan from the paint path
+regardless of the native cost, which is the part the user asked for ("kill or
+defer … initial app load is more important").
+
+H2 — Download-all halt. PROVED (code): the bulk loop did, per file,
+`cache.match(src)` AND `putSingle` (= `cache.delete` + `put`). On WebKit both
+match and delete scan the cache, so each file was ~O(n) and the whole run
+~O(n²) — it degrades to a crawl as the cache fills, i.e. a stall near the
+end that "resumes" as each op slowly completes. This got WORSE in §8: the
+`x-gt-bulk-download` marker excludes the SW, so in §8 the app fetch+puts
+EVERY file itself, whereas in §7 many files were already SW-cached and the
+app's `match` short-circuited without a delete/put. INFERRED (iOS-only): the
+per-op scan cost that makes it a multi-minute freeze — not reproducible on
+localhost (the desktop run pushed 917 files in ~5 s, continuous). A 5-6 min
+TOTAL freeze is ALSO consistent with Netlify/CDN connection throttling on a
+weak uplink (the user's own read); see 9.4 — the app-side O(n²) is removed
+either way.
+
+H3 — Copy report. PROVED (built-app repro): (a) the handler `await`ed the
+multi-second scan BEFORE `clipboard.writeText`, so Safari had dropped the
+tap's user-activation and the write always threw → "Clipboard unavailable".
+(b) The report serialized every one of ~3800 duplicate URLs with per-entry
+headers → multi-MB → minutes to paste. Repro of the fix: report is now
+1210 chars for a 126-entry cache, valid JSON, textarea always populated even
+when the clipboard is blocked.
+
+### 9.2 Fixes shipped (all verified in the built app, headless Chrome/CDP)
+
+1. Persisted, instant counter (H1): `audioCount` writable in downloads.js is
+   seeded synchronously from `localStorage['greek-tutor-audio-count']` and
+   rendered directly by Settings — ZERO cache scan on mount (verified: after
+   reload, Settings shows the persisted 6 at 150 ms). The manager keeps it
+   exact: Clear → `setCount(0)` immediately (F4 preserved); each download
+   settles with a deferred `scheduleCountRefresh()`; `downloadAll` live-sets
+   it to `done` during the run (verified count == progress "done" at every
+   sample, never exceeding it — §8.5 met). `null` = never measured → Settings
+   shows "counting…" and seeds one background scan.
+2. Deferred reconcile (H1): the one startup full-cache scan now runs inside
+   `requestIdleCallback` (macrotask fallback), sets the exact count, and never
+   gates first paint. `new URL()`-per-entry replaced with a cheap `pathOf()`
+   string slice.
+3. Deferred migration (H1): `migrateLegacyAudioCaches()` moved out of the
+   synchronous startup path in main.js into `requestIdleCallback` — the first
+   CacheStorage touch no longer happens during load.
+4. O(n) download loops (H2): both `downloadPack` and `downloadAll` take ONE
+   upfront `presentPaths(cache)` keys-snapshot (a JS Set, O(1) membership)
+   instead of a per-file `cache.match`, and write with a plain `cache.put`
+   (no per-file `delete`) — safe because the app is now the SOLE writer (the
+   SW route excludes the marked request), so `put` replaces its own prior
+   entry by URL. `putSingle` is retained only for the dedupe recovery tool.
+   Verified: 126 entries / 0 duplicates after intro+chapt_1; live counter
+   correct; cancel→partial persisted.
+5. Settings stops full-scanning on pack transitions (H2): the
+   `$packStatesFingerprint` reactive now refreshes only the browser estimate;
+   the count comes from the store. Removes ~10 growing full scans during a
+   Download-all run.
+6. Copy report (H3): scan first (`diag` computed via "Scan audio cache" or a
+   one-shot inside Copy), then serialize + always populate the textarea, then
+   attempt the clipboard — a blocked clipboard no longer leaves the user
+   empty-handed. `audioCacheDiagnostic` caps duplicate DETAIL at 40 and adds
+   `duplicatesTotal` (true count) so the report stays a few KB.
+7. Instrumentation (since desktop can't show the iOS cost): every cache scan
+   records `{label, ms, entries}` into the `lastScan` store, logs
+   `[gt-perf] …` to the console, and the debug card shows "Last cache scan:
+   …ms (N entries)". This is how the device pass measures the real split.
+
+No data-schema changes; nothing for the chat-side pipeline to adopt. SW
+config (vite.config.js) untouched → offline serving unchanged (same cache,
+same CacheFirst ignoreVary route; downloaded files still served by `cache.put`
+exactly as before).
+
+### 9.3 On-device confirmation list for Fable (installed PWA, after deploy + relaunch twice)
+
+1. With the whole library downloaded, cold-launch the PWA onto a chapter hub
+   AND onto Settings. EXPECT: interactive immediately — no multi-second hang.
+   (If any residual delay remains it is WebKit bringing up a 130 MB store,
+   not our JS; report it separately.)
+2. Settings → seven taps on "Storage" → debug card → note "Last cache scan:
+   …ms (N entries)". Paste that number: it is the real on-device cost of one
+   full scan and tells us how much the deferral bought.
+3. "Audio files stored": 120 after chapt_1, 126 with intro, EXACTLY 8521
+   after Download all, 0 immediately after Clear — and each renders the
+   instant on mount (no "counting…" pause once measured once).
+4. Download all: the progress number must advance without a multi-minute
+   frozen stretch. If it still stalls: watch whether the % creeps up slowly
+   (network/Netlify — expected on weak WiFi, see 9.4) or is truly frozen with
+   the device hot (would have been our O(n²) — now fixed; report if seen).
+5. Copy report: EXPECT the textarea fills with a few-KB JSON within a second
+   or two and, if the clipboard is available in the installed PWA, "Report
+   copied". Paste should be instant now.
+
+### 9.4 Residual risk / open (one paragraph)
+
+The app-side causes of H1 and H2 are removed and proven in the built app; the
+iOS-specific magnitudes are inferred and instrumented (9.2 item 7) rather than
+desktop-reproduced. If Download-all still halts on device after this deploy,
+the remaining suspect is network-side (Netlify serving ~8.5k files over a weak
+uplink at CONCURRENCY 4) — the app no longer contributes an O(n²) term; the
+tell is a slowly-creeping vs a frozen progress number. WebKit bringing up a
+130 MB CacheStorage on cold launch is a floor our JS cannot remove; the debug
+card's scan timing (item 2) isolates that from our code. Standing watch items
+from §8.6 still hold (ExpirationPlugin maxEntries 10000 vs 8521 manifest; the
+storage.estimate figure remains untrustworthy after deletions). New standing
+rule: any audio-cache write stays on downloads.js's sole-writer path (plain
+`put`, marker header), and no new code may run a full `cache.keys()` scan on
+the paint path — route scans through the persisted `audioCount` + deferred
+reconcile.

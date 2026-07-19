@@ -3,15 +3,21 @@
   // lesson chrome. Shows storage estimate + persistence, a whole-manifest
   // "Download all", per-pack rows for built content, and a Clear action.
   import { onMount } from 'svelte';
+  import { get } from 'svelte/store';
   import { getBuiltPacks } from '../lib/packs.js';
-  import { allState, downloadAll, cancelAll, clearAllAudio, storageInfo, audioFileCount, audioCacheDiagnostic, dedupeAudioCache, packStatesFingerprint } from '../lib/downloads.js';
+  import { allState, downloadAll, cancelAll, clearAllAudio, storageInfo, audioFileCount, audioCacheDiagnostic, dedupeAudioCache, packStatesFingerprint, audioCount, lastScan } from '../lib/downloads.js';
   import DownloadControl from './DownloadControl.svelte';
 
   const all = allState();
 
+  // "Audio files stored" reads the persisted counter store (audioCount) so it
+  // renders INSTANTLY on mount — no full cache.keys() scan on the paint path
+  // (that scan is what hung app load once the whole library was cached). The
+  // exact value is kept current by the download manager (clear -> 0, a recount
+  // after each download settles, and the deferred reconcile). null = not yet
+  // measured on this device -> "counting…" until the background scan fills it.
   let storage = { usage: null, quota: null, persisted: false };
-  let fileCount = null;      // ground truth from the cache itself (P1)
-  let counting = false;      // distinguish "still counting" from "count failed"
+  let counting = false;      // a manual recount is in flight
   let builtPacks = [];
   let packsFailed = false;   // manifest unreachable (first run offline)
   let confirmClear = false;
@@ -54,24 +60,34 @@
     diagRunning = false;
   }
 
-  // Copy report (§3b): serialize the full diagnostic to the clipboard as JSON
-  // so device results can be pasted back into chat. Always runs a fresh scan
-  // (a stale report is worse than a slow one). If the clipboard API is blocked,
-  // fall back to showing the JSON in a textarea for manual copy.
+  // Copy report (§3b): serialize the diagnostic to JSON so device results can
+  // be pasted back into chat.
+  //
+  // Two device-pass bugs fixed here:
+  //  1. Clipboard was ALWAYS "unavailable": the old code awaited the multi-
+  //     second scan and THEN called clipboard.writeText — by then Safari had
+  //     dropped the user-activation from the tap, so the write always threw.
+  //     Now the write happens against an already-computed diag (scan first via
+  //     "Scan audio cache", then Copy is synchronous-enough to keep activation);
+  //     and the textarea fallback is always populated so a failed clipboard
+  //     never leaves the user empty-handed.
+  //  2. The report was multiple MB (every one of ~3800 duplicate URLs, with
+  //     headers) — it took minutes to paste. audioCacheDiagnostic now caps the
+  //     duplicate DETAIL (duplicatesTotal keeps the true count), so the report
+  //     is a few KB.
   let copyMsg = '';
   let reportText = '';
   async function copyReport() {
-    diagRunning = true;
-    copyMsg = 'Scanning…';
-    diag = await audioCacheDiagnostic();
-    diagRunning = false;
+    if (!diag) {
+      copyMsg = 'Scanning…';
+      await runDiag();          // populate diag first (this is the slow part)
+    }
     const json = JSON.stringify(diag, null, 2);
+    reportText = json;          // always show it: a failed clipboard still copies by hand
     try {
       await navigator.clipboard.writeText(json);
-      copyMsg = 'Report copied to clipboard.';
-      reportText = '';
+      copyMsg = 'Report copied to clipboard (also shown below).';
     } catch (_) {
-      reportText = json;
       copyMsg = 'Clipboard unavailable — select and copy the text below.';
     }
   }
@@ -85,18 +101,31 @@
     dedupeMsg = r.error
       ? `Failed: ${r.error}`
       : `Removed ${r.removed} duplicate entr${r.removed === 1 ? 'y' : 'ies'} (${r.duplicateUrls} URLs affected).`;
+    await recount();      // duplicates collapsed -> refresh the exact count
     await refreshStorage();
   }
 
+  // Only the browser's storage estimate is fetched here — the file count comes
+  // from the audioCount store (kept current by the manager), so this never runs
+  // a full cache scan. estimate() alone was cheap; the scan was the cost.
   async function refreshStorage() {
-    counting = true;
     storage = await storageInfo();
-    fileCount = await audioFileCount();
+  }
+
+  // Manual recount: the one place that runs the real O(files) cache scan, only
+  // on explicit user action (the "unavailable — tap to retry" affordance).
+  async function recount() {
+    counting = true;
+    await audioFileCount();   // updates the audioCount store + persists it
     counting = false;
   }
 
   onMount(() => {
     refreshStorage();
+    // If the count has never been measured on this device, kick one background
+    // scan to fill it (deferred inside audioFileCount's callers; here it is the
+    // only way to seed a first value if the reconcile pass hasn't run yet).
+    if (get(audioCount) == null) recount();
     getBuiltPacks().then(p => (builtPacks = p)).catch(() => (packsFailed = true));
     const up = () => (online = navigator.onLine);
     window.addEventListener('online', up);
@@ -104,8 +133,8 @@
     return () => { window.removeEventListener('online', up); window.removeEventListener('offline', up); };
   });
 
-  // Refresh the storage figures whenever any pack's state transitions (a
-  // download or clear landed) — covers "Download all" AND per-pack rows (P1).
+  // Refresh the browser estimate whenever a download/clear lands (per-pack or
+  // "Download all"). No cache scan here — the count updates via audioCount.
   $: $packStatesFingerprint, refreshStorage();
 
   function fmtBytes(n) {
@@ -133,9 +162,9 @@
     <h2 class="settings-h" on:click={headingTap}>Storage</h2>
     <div class="settings-row"><span>Audio files stored</span>
       <span>
-        {#if fileCount != null}{fileCount}
+        {#if $audioCount != null}{$audioCount}
         {:else if counting}counting…
-        {:else}<button class="count-retry" on:click={refreshStorage}>unavailable — tap to retry</button>{/if}
+        {:else}<button class="count-retry" on:click={recount}>unavailable — tap to retry</button>{/if}
       </span></div>
     <div class="settings-row"><span>Used (reported by the browser)</span><span>{fmtBytes(storage.usage)}</span></div>
     <div class="settings-row"><span>Available (quota)</span><span>{fmtBytes(storage.quota)}</span></div>
@@ -194,12 +223,13 @@
         <button class="btn secondary" on:click={runDiag} disabled={diagRunning}>{diagRunning ? 'Scanning…' : 'Scan audio cache'}</button>
         <button class="btn secondary" on:click={copyReport} disabled={diagRunning}>Copy report</button>
       </div>
+      {#if $lastScan}<div class="settings-note">Last cache scan: {$lastScan.label} — {$lastScan.ms}ms{#if $lastScan.entries != null} ({$lastScan.entries} entries){/if}</div>{/if}
       {#if copyMsg}<div class="settings-note">{copyMsg}</div>{/if}
       {#if reportText}<textarea class="report-out" readonly rows="8">{reportText}</textarea>{/if}
       {#if diag}
         <div class="settings-row"><span>Entries</span><span>{diag.entryCount}</span></div>
         <div class="settings-row"><span>Distinct URLs</span><span>{diag.distinctUrls}</span></div>
-        <div class="settings-row"><span>Duplicate URLs</span><span>{diag.duplicates.length}</span></div>
+        <div class="settings-row"><span>Duplicate URLs</span><span>{diag.duplicatesTotal ?? diag.duplicates.length}</span></div>
         <div class="settings-row"><span>Summed bytes</span><span>{fmtBytes(diag.totalBytes)} ({diag.totalBytes})</span></div>
         {#if diag.readErrors}<div class="settings-row"><span>Unreadable entries</span><span>{diag.readErrors}</span></div>{/if}
         <div class="settings-note">Caches: {Object.entries(diag.perCacheCounts).map(([n, c]) => `${n}: ${c}`).join(' · ') || '(none)'}</div>
@@ -210,7 +240,7 @@
             {#each d.entries as e}<br />vary: {e.vary || '(none)'} · req: {JSON.stringify(e.reqHeaders)}{/each}
           </div>
         {/each}
-        {#if diag.duplicates.length > 12}<div class="settings-note warn">…and {diag.duplicates.length - 12} more duplicated URLs (full list in Copy report).</div>{/if}
+        {#if (diag.duplicatesTotal ?? diag.duplicates.length) > 12}<div class="settings-note warn">…and {(diag.duplicatesTotal ?? diag.duplicates.length) - 12} more duplicated URLs (sample in Copy report).</div>{/if}
         {#if diag.error}<div class="settings-note warn">{diag.error}</div>{/if}
         {#if diag.duplicates.length}
           <button class="btn secondary" on:click={runDedupe}>Remove duplicate copies</button>

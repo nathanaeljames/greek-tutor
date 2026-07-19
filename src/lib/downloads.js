@@ -27,6 +27,52 @@ let currentHash = null;
 let initPromise = null;
 let persistRequested = false;
 
+// ---- audio-file counter: persisted so it renders INSTANTLY (no cache scan on
+// mount) --------------------------------------------------------------------
+// The "Audio files stored" figure must be trustworthy AND cheap. A full
+// cache.keys() scan is O(files) and, on WebKit with the whole ~8.5k-file
+// library cached, takes SECONDS on the main thread — that was the app-load
+// hang. So we keep the last known count in localStorage and render that
+// immediately; the exact ground-truth scan runs later, off the paint path
+// (deferred reconcile / explicit retry), and corrects the stored value.
+const COUNT_KEY = 'greek-tutor-audio-count';
+function readStoredCount() {
+  try { const v = localStorage.getItem(COUNT_KEY); return v == null ? null : (parseInt(v, 10) || 0); }
+  catch (_) { return null; }
+}
+// null = unknown (never measured on this device). Components render "counting…"
+// for null and the exact number otherwise.
+export const audioCount = writable(readStoredCount());
+function setCount(n) {
+  audioCount.set(n);
+  try { if (n == null) localStorage.removeItem(COUNT_KEY); else localStorage.setItem(COUNT_KEY, String(n)); }
+  catch (_) { /* quota/unavailable: store still holds it for this session */ }
+}
+
+// Run heavy cache work AFTER the current frame so it never blocks first paint
+// or interaction. requestIdleCallback where available (Chrome, iOS 16.4+),
+// else a macrotask.
+function idle(fn) {
+  if (typeof requestIdleCallback === 'function') requestIdleCallback(() => fn(), { timeout: 2000 });
+  else setTimeout(fn, 0);
+}
+
+// Cheap pathname of a cache-key URL ("https://host/audio/chapt_1/a.m4a" ->
+// "/audio/chapt_1/a.m4a") without constructing a URL object per entry (that
+// was ~8.5k allocations on the reconcile hot path). Audio URLs carry no query.
+function pathOf(url) { const i = url.indexOf('/audio/'); return i >= 0 ? url.slice(i) : url; }
+
+// Lightweight perf instrumentation so the device pass can see where load time
+// goes (desktop cannot reproduce WebKit's large-cache scan cost). Last timing
+// is surfaced in the debug card; every scan also logs to the console.
+export const lastScan = writable(null);   // { label, ms, entries }
+function recordScan(label, ms, entries) {
+  const rec = { label, ms: Math.round(ms), entries };
+  lastScan.set(rec);
+  try { console.log(`[gt-perf] ${label}: ${rec.ms}ms${entries != null ? ` (${entries} entries)` : ''}`); } catch (_) {}
+}
+const now = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
+
 // ---- localStorage bookkeeping (mirrors progress.js versioned-key pattern) ----
 function loadBook() {
   try {
@@ -82,29 +128,41 @@ function ensureInit() {
 }
 
 // Lazy reconciliation: one cache.keys() pass corrects stale bookkeeping claims
-// (e.g. the user cleared Safari storage but our localStorage survived).
+// (e.g. the user cleared Safari storage but our localStorage survived) AND
+// refreshes the exact file count. DEFERRED to idle: this is the single
+// full-cache scan on the startup path, and running it inline blocked app load
+// for seconds once the whole library was cached (the device-pass hang). It
+// never gates first paint now — the persisted count renders immediately and
+// this corrects it a moment later.
 let reconciled = false;
 async function reconcile(packs) {
   if (reconciled || !('caches' in self)) return;
   reconciled = true;
-  try {
-    const cache = await caches.open(CACHE_NAME);
-    const keys = await cache.keys();
-    const have = new Set(keys.map(r => new URL(r.url).pathname));
-    const book = loadBook();
-    for (const p of packs) {
-      const claimed = book.packs[p.id];
-      if (!claimed || !claimed.complete) continue;
-      const present = p.srcs.filter(s => have.has(s)).length;
-      if (present === p.count) continue;              // claim holds
-      if (present === 0) {
-        setBookPack(p.id, null);
-        patch(p.id, { state: 'none', done: 0 });
-      } else {
-        patch(p.id, { state: 'partial', done: present });
+  idle(async () => {
+    const t0 = now();
+    let n;
+    try {
+      const cache = await caches.open(CACHE_NAME);
+      const keys = await cache.keys();
+      n = new Set(keys.map(r => r.url)).size;
+      setCount(n);                                    // exact ground truth, off the paint path
+      const have = new Set(keys.map(r => pathOf(r.url)));
+      const book = loadBook();
+      for (const p of packs) {
+        const claimed = book.packs[p.id];
+        if (!claimed || !claimed.complete) continue;
+        const present = p.srcs.filter(s => have.has(s)).length;
+        if (present === p.count) continue;            // claim holds
+        if (present === 0) {
+          setBookPack(p.id, null);
+          patch(p.id, { state: 'none', done: 0 });
+        } else {
+          patch(p.id, { state: 'partial', done: present });
+        }
       }
-    }
-  } catch (_) { /* best effort */ }
+    } catch (_) { /* best effort */ }
+    recordScan('reconcile', now() - t0, n);
+  });
 }
 
 // ---- persistent storage: request once, on first user-initiated download ----
@@ -161,6 +219,18 @@ async function putSingle(cache, src, resp) {
   await cache.put(src, resp);
 }
 
+// Snapshot which URLs the cache already holds, as one keys() pass -> a JS Set
+// with O(1) membership. The bulk download loops use this INSTEAD of a per-file
+// cache.match(): on WebKit both cache.match and cache.delete scan the cache,
+// so the old per-file "match, then delete-before-put" cost ~O(n) EACH and the
+// whole Download-all was ~O(n²) — it crawled to a stall near the end once the
+// cache was large (the device-pass "halt" that resumed minutes later). One
+// upfront snapshot + a plain put() per file makes it O(n).
+async function presentPaths(cache) {
+  try { return new Set((await cache.keys()).map(r => pathOf(r.url))); }
+  catch (_) { return new Set(); }
+}
+
 // Bulk fetches are marked so the SW's CacheFirst audio route ignores them
 // (single-writer discipline, 4-STORAGE-PASS): without the marker the SW's
 // async waitUntil cachePut races putSingle on every downloaded file, and on
@@ -183,13 +253,25 @@ export async function audioFileCount() {
     const keys = await cache.keys();
     return new Set(keys.map(r => r.url)).size;
   };
-  try { return await once(); } catch (_) { /* fall through to one retry */ }
-  // WebKit's cache backend can fail transiently under write load (the F3
-  // dash state). One short retry; then report null and let Settings render
-  // an honest "unavailable" with a retry affordance instead of a bare dash.
-  await new Promise(r => setTimeout(r, 400));
-  try { return await once(); } catch (_) { return null; }
+  const t0 = now();
+  let n = null;
+  try { n = await once(); }
+  catch (_) {
+    // WebKit's cache backend can fail transiently under write load (the F3
+    // dash state). One short retry; then report null and let Settings render
+    // an honest "unavailable" with a retry affordance instead of a bare dash.
+    await new Promise(r => setTimeout(r, 400));
+    try { n = await once(); } catch (_) { n = null; }
+  }
+  recordScan('audioFileCount', now() - t0, n);
+  if (n != null) setCount(n);       // keep the persisted counter in sync
+  return n;
 }
+
+// Refresh the exact count off the paint path, after a download settles. Cheap
+// to schedule; the actual scan runs at idle. Callers that need instant, exact
+// feedback (Clear -> 0) call setCount directly instead.
+function scheduleCountRefresh() { idle(() => { audioFileCount(); }); }
 
 // Diagnostic (P1, surfaced by ?debug OR the seven-tap toggle in Settings —
 // 4-STORAGE-PASS §3a): entry count vs distinct URLs, per-cache counts, summed
@@ -205,8 +287,14 @@ export async function audioCacheDiagnostic() {
     ua: typeof navigator !== 'undefined' ? navigator.userAgent : null,
     cacheNames: [], perCacheCounts: {}, entryCount: 0, distinctUrls: 0,
     totalBytes: 0, readErrors: 0, varyHistogram: {}, sampleResponseHeaders: null,
-    duplicates: [], estimate: null, persisted: null
+    duplicates: [], duplicatesTotal: 0, estimate: null, persisted: null
   };
+  // Cap the per-entry duplicate DETAIL that gets serialized: an affected iOS
+  // install had ~3800 duplicated URLs, and dumping every one (with request
+  // headers) made the report multiple MB — too big for the clipboard and
+  // minutes to paste. duplicatesTotal keeps the true count; the sample proves
+  // the mechanism (differing vs identical stored reqHeaders).
+  const DUP_DETAIL_CAP = 40;
   try {
     out.cacheNames = await caches.keys();
     for (const n of out.cacheNames) {
@@ -238,7 +326,10 @@ export async function audioCacheDiagnostic() {
       byUrl.get(req.url).push(info);
     }
     for (const [url, entries] of byUrl) {
-      if (entries.length > 1) out.duplicates.push({ url, entries });
+      if (entries.length > 1) {
+        out.duplicatesTotal += 1;
+        if (out.duplicates.length < DUP_DETAIL_CAP) out.duplicates.push({ url, entries });
+      }
     }
     if (navigator.storage && navigator.storage.estimate) out.estimate = await navigator.storage.estimate();
     if (navigator.storage && navigator.storage.persisted) out.persisted = await navigator.storage.persisted();
@@ -288,8 +379,10 @@ async function runPool(srcs, onOne, signal) {
 function abortError() { const e = new Error('aborted'); e.name = 'AbortError'; return e; }
 
 // Download (or resume) one pack. force=true (Update) re-fetches every file even
-// if cached, by deleting each entry first so the SW CacheFirst route misses and
-// goes to the network.
+// if already cached. The app is the SOLE writer of the audio cache (the SW
+// route excludes our x-gt-bulk-download requests), so a plain put() replaces
+// its own prior entry by URL — no per-file delete is needed for the normal
+// path; skipping it is what keeps the loop O(n) on WebKit.
 export async function downloadPack(packId, { force = false } = {}) {
   // Called straight from click handlers — must never reject (B7). Manifest
   // fetch failure (e.g. flaky network the online flag missed) becomes an
@@ -308,6 +401,9 @@ export async function downloadPack(packId, { force = false } = {}) {
   const controller = new AbortController();
   controllers[packId] = controller;
   const cache = await caches.open(CACHE_NAME);
+  // One keys() snapshot up front instead of a cache.match per file (O(n) vs
+  // O(n²) on WebKit). force skips the snapshot: every file is re-fetched.
+  const have = force ? new Set() : await presentPaths(cache);
 
   let done = 0;
   const failures = [];
@@ -316,14 +412,11 @@ export async function downloadPack(packId, { force = false } = {}) {
 
   const onOne = async (src) => {
     try {
-      if (!force) {
-        const hit = await cache.match(src, MATCH_ANY);
-        if (hit) { done += 1; patch(packId, { done }); return; }
-      } else {
-        await cache.delete(src, MATCH_ANY);   // SW CacheFirst must miss -> network
-      }
+      if (!force && have.has(src)) { done += 1; patch(packId, { done }); return; }
       const resp = await fetch(src, { signal: controller.signal, headers: BULK_HEADERS });
-      if (resp && resp.ok) { await putSingle(cache, src, resp); done += 1; patch(packId, { done }); }
+      // Sole-writer plain put(): replaces our own prior entry by URL, no
+      // per-file delete (see downloadPack header + presentPaths).
+      if (resp && resp.ok) { await cache.put(src, resp); done += 1; patch(packId, { done }); }
       else { failures.push(src); }
     } catch (e) {
       if (e.name === 'AbortError') throw e;
@@ -351,6 +444,7 @@ export async function downloadPack(packId, { force = false } = {}) {
     setBookPack(packId, { complete: true, manifestHash: currentHash });
     patch(packId, { state: 'done', done: pack.count, error: null });
   }
+  scheduleCountRefresh();   // exact recount off the paint path once files landed
 }
 
 // Whole-manifest download with one aggregate progress bar (the 88 MB device
@@ -373,6 +467,8 @@ export async function downloadAll() {
   const controller = new AbortController();
   controllers[ALL] = controller;
   const cache = await caches.open(CACHE_NAME);
+  // Single upfront snapshot -> O(n) whole-library download (see presentPaths).
+  const have = await presentPaths(cache);
 
   let done = 0;
   const donePerPack = {};
@@ -390,12 +486,17 @@ export async function downloadAll() {
     }
   };
 
+  // Live counter during the run: done is the number of files confirmed present
+  // so far (cache hits + fresh puts), so it can never exceed the progress bar's
+  // "done" number (4-STORAGE-PASS §8.5). In-memory only; the exact persisted
+  // recount lands on completion.
+  const bumpDone = () => { done += 1; audioCount.set(done); };
+
   const onOne = async (src) => {
     try {
-      const hit = await cache.match(src, MATCH_ANY);
-      if (hit) { done += 1; bumpPack(src); patch(ALL, { done }); return; }
+      if (have.has(src)) { bumpDone(); bumpPack(src); patch(ALL, { done }); return; }
       const resp = await fetch(src, { signal: controller.signal, headers: BULK_HEADERS });
-      if (resp && resp.ok) { await putSingle(cache, src, resp); done += 1; bumpPack(src); patch(ALL, { done }); }
+      if (resp && resp.ok) { await cache.put(src, resp); bumpDone(); bumpPack(src); patch(ALL, { done }); }
       else { failures.push(src); }
     } catch (e) {
       if (e.name === 'AbortError') throw e;
@@ -417,6 +518,7 @@ export async function downloadAll() {
   else if (aborted) patch(ALL, { state: done > 0 ? 'partial' : 'none', done, error: null });
   else if (failures.length) patch(ALL, { state: 'partial', done, error: `${failures.length} files failed — retry to resume.` });
   else patch(ALL, { state: 'done', done: allSrcs.length, error: null });
+  scheduleCountRefresh();   // exact persisted recount off the paint path
 }
 
 export function cancel(packId) {
@@ -444,6 +546,7 @@ export async function clearAllAudio() {
     }
   } catch (_) { /* ignore */ }
   saveBook({ version: 1, packs: {} });
+  setCount(0);   // F4: counter drops to 0 immediately, exactly, from any state
   try {
     const packs = await getPacks();
     const reset = {};
