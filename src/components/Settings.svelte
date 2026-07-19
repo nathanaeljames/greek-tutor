@@ -4,7 +4,7 @@
   // "Download all", per-pack rows for built content, and a Clear action.
   import { onMount } from 'svelte';
   import { getBuiltPacks } from '../lib/packs.js';
-  import { allState, downloadAll, cancelAll, clearAllAudio, storageInfo, audioFileCount, audioCacheDiagnostic, dedupeAudioCache, packStatesFingerprint, audioCount, lastScan, reconcileAudioCache } from '../lib/downloads.js';
+  import { allState, downloadAll, cancelAll, clearAllAudio, storageInfo, audioFileCount, audioCacheDiagnostic, dedupeAudioCache, packStatesFingerprint, audioCount, lastScan, reconcileAudioCache, startupReport } from '../lib/downloads.js';
   import DownloadControl from './DownloadControl.svelte';
 
   const all = allState();
@@ -50,6 +50,12 @@
       } catch (_) { /* toggle still works for this mount */ }
     }
   }
+
+  // Cold-start timing (reflects the ORIGINAL app load; hash navigation to
+  // Settings does not reset it). Localizes the load hang: SW-serving-shell vs
+  // our JS. Captured in onMount so the gt-app-created mark (set after App's
+  // constructor returns) is already present.
+  let startup = {};
 
   let diag = null;
   let diagRunning = false;
@@ -120,6 +126,7 @@
   }
 
   onMount(() => {
+    startup = startupReport();
     refreshStorage();
     // The one reconciling cache scan (exact count + badge drift) lives HERE, in
     // the Storage menu — NOT on app load. It is deferred to idle and runs at
@@ -225,6 +232,7 @@
         <button class="btn secondary" on:click={copyReport} disabled={diagRunning}>Copy report</button>
       </div>
       {#if $lastScan}<div class="settings-note">Last cache scan: {$lastScan.label} — {$lastScan.ms}ms{#if $lastScan.entries != null} ({$lastScan.entries} entries){/if}</div>{/if}
+      <div class="settings-note">Cold start (ms since nav): worker {startup.workerStart} · resp-start {startup.responseStart} · resp-end {startup.responseEnd} · js-start {startup.jsStart} · app {startup.appCreated} · DCL {startup.domContentLoaded} · sw {String(startup.swControlled)}</div>
       {#if copyMsg}<div class="settings-note">{copyMsg}</div>{/if}
       {#if reportText}<textarea class="report-out" readonly rows="8">{reportText}</textarea>{/if}
       {#if diag}

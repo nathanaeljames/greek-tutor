@@ -73,6 +73,38 @@ function recordScan(label, ms, entries) {
 }
 const now = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
 
+// Cold-start timing breakdown for the debug card (device pass). All values are
+// ms since navigation start (the same clock as our performance.mark()s), so
+// they localize the load hang precisely:
+//   workerStart..responseStart  = time the SW spent producing the shell
+//     response (large-Cache-Storage bring-up shows up HERE — it is NOT our JS)
+//   responseEnd                 = shell bytes delivered
+//   jsStart / appCreated        = our code executing (blocking here WOULD be us)
+// If responseStart is ~the whole hang and jsStart follows right after, the cost
+// is the platform serving the shell, and no app-code change can remove it.
+export function startupReport() {
+  const out = {
+    fetchStart: null, workerStart: null, responseStart: null, responseEnd: null,
+    domContentLoaded: null, jsStart: null, appCreated: null, swControlled: null
+  };
+  try {
+    const nav = (performance.getEntriesByType('navigation') || [])[0];
+    if (nav) {
+      out.fetchStart = Math.round(nav.fetchStart);
+      out.workerStart = Math.round(nav.workerStart);        // 0 when no SW handled it
+      out.responseStart = Math.round(nav.responseStart);
+      out.responseEnd = Math.round(nav.responseEnd);
+      out.domContentLoaded = Math.round(nav.domContentLoadedEventEnd);
+    }
+    const js = performance.getEntriesByName('gt-js-start')[0];
+    const ac = performance.getEntriesByName('gt-app-created')[0];
+    if (js) out.jsStart = Math.round(js.startTime);
+    if (ac) out.appCreated = Math.round(ac.startTime);
+    out.swControlled = !!(typeof navigator !== 'undefined' && navigator.serviceWorker && navigator.serviceWorker.controller);
+  } catch (_) { /* leave nulls */ }
+  return out;
+}
+
 // ---- localStorage bookkeeping (mirrors progress.js versioned-key pattern) ----
 function loadBook() {
   try {
