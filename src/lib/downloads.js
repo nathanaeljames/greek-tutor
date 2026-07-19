@@ -121,31 +121,39 @@ function ensureInit() {
         seed[p.id] = { state, done, total: p.count, error: null };
       }
       store.set(seed);
-      reconcile(packs);   // fire-and-forget cache audit
+      // NB: no cache scan here. App load (and every chapter hub, which mounts
+      // DownloadControl -> ensureInit) must never trigger a full cache.keys()
+      // pass — that scan is seconds on WebKit with the whole library cached and
+      // was the app-load hang. Pack badges come from localStorage bookkeeping
+      // (instant); the exact count comes from the persisted audioCount store.
+      // The one reconciling scan runs only when the Storage menu opens
+      // (reconcileAudioCache, called from Settings).
     })().catch(() => { initPromise = null; });
   }
   return initPromise;
 }
 
-// Lazy reconciliation: one cache.keys() pass corrects stale bookkeeping claims
-// (e.g. the user cleared Safari storage but our localStorage survived) AND
-// refreshes the exact file count. DEFERRED to idle: this is the single
-// full-cache scan on the startup path, and running it inline blocked app load
-// for seconds once the whole library was cached (the device-pass hang). It
-// never gates first paint now — the persisted count renders immediately and
-// this corrects it a moment later.
-let reconciled = false;
-async function reconcile(packs) {
-  if (reconciled || !('caches' in self)) return;
-  reconciled = true;
+// Reconciling cache audit: ONE cache.keys() pass that (a) refreshes the exact
+// file count and (b) corrects stale bookkeeping (e.g. the user cleared Safari
+// storage outside the app but our localStorage survived, so a pack badge still
+// claims "downloaded"). Deliberately NOT on the app-load path — only the
+// Storage menu calls this, on mount, and even there it is deferred to idle so
+// the (already-instant, store-backed) count and the rest of Settings render
+// first. `needsReconcile` skips the scan on repeat visits when nothing changed
+// since the last pass; a download/clear sets it true again.
+let needsReconcile = true;
+export function reconcileAudioCache() {
+  if (!needsReconcile || !('caches' in self)) return;
+  needsReconcile = false;
   idle(async () => {
     const t0 = now();
     let n;
     try {
+      const packs = await getPacks();
       const cache = await caches.open(CACHE_NAME);
       const keys = await cache.keys();
       n = new Set(keys.map(r => r.url)).size;
-      setCount(n);                                    // exact ground truth, off the paint path
+      setCount(n);                                    // exact ground truth
       const have = new Set(keys.map(r => pathOf(r.url)));
       const book = loadBook();
       for (const p of packs) {
@@ -160,7 +168,7 @@ async function reconcile(packs) {
           patch(p.id, { state: 'partial', done: present });
         }
       }
-    } catch (_) { /* best effort */ }
+    } catch (_) { needsReconcile = true; /* let a later open retry */ }
     recordScan('reconcile', now() - t0, n);
   });
 }
@@ -237,6 +245,57 @@ async function presentPaths(cache) {
 // WebKit the loser of the race can land as a SECOND entry for the same URL
 // (put honors Vary there — measured; see HANDOFF-4 §8).
 const BULK_HEADERS = { [BULK_FETCH_HEADER]: '1' };
+
+// Per-file fetch with a HARD timeout + a couple of retries.
+// Why: on iOS a fetch() has no built-in timeout, so a single wedged connection
+// (flaky WiFi, a throttling/again-later CDN) leaves `await fetch` pending
+// FOREVER. With CONCURRENCY workers, a few stuck files freeze the whole
+// download with no way to kick it — the device symptom "stalled at 7070, dead
+// for 8 min, and cancel/resume/rescan did nothing" (cancel can't unstick a
+// socket WebKit is holding; a fresh run just gets stuck the same way). A
+// timeout guarantees every fetch settles; retries absorb transient stalls so
+// the run keeps flowing instead of ending at the first hiccup.
+// Error contract for the callers:
+//   - user cancel  -> AbortError (stop the whole run)
+//   - offline      -> TypeError  (stop the whole run)
+//   - timed out after retries / other -> TimeoutError-ish (per-file failure;
+//     the file lands in `failures` -> 'partial' -> Resume retries it)
+const FETCH_TIMEOUT_MS = 25000;   // generous: audio files avg ~10 KB, <1 s when healthy
+const FETCH_RETRIES = 2;          // total attempts = FETCH_RETRIES + 1
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+async function bulkFetch(src, masterSignal) {
+  for (let attempt = 0; ; attempt++) {
+    if (masterSignal.aborted) throw abortError();
+    const ctl = new AbortController();
+    const onAbort = () => ctl.abort();
+    masterSignal.addEventListener('abort', onAbort, { once: true });
+    const timer = setTimeout(() => ctl.abort(), FETCH_TIMEOUT_MS);
+    let resp;
+    try {
+      resp = await fetch(src, { signal: ctl.signal, headers: BULK_HEADERS });
+    } catch (e) {
+      if (masterSignal.aborted) throw abortError();       // real user cancel -> fatal
+      if (e instanceof TypeError) throw e;                // offline -> fatal
+      if (attempt >= FETCH_RETRIES) {                     // timeout/other, retries spent
+        const te = new Error('fetch timed out'); te.name = 'TimeoutError'; throw te;
+      }
+      await sleep(400 * (attempt + 1));                   // brief backoff, then retry
+      continue;
+    } finally {
+      clearTimeout(timer);
+      masterSignal.removeEventListener('abort', onAbort);
+    }
+    // CDN rate-limit / temporary unavailability: back off (honoring Retry-After
+    // when present) and retry instead of failing the file — this is the
+    // graceful path if Netlify throttles the ~8.5k-file burst.
+    if ((resp.status === 429 || resp.status === 503) && attempt < FETCH_RETRIES) {
+      const ra = parseInt(resp.headers.get('retry-after'), 10);
+      await sleep(Number.isFinite(ra) ? Math.min(ra * 1000, 10000) : 800 * (attempt + 1));
+      continue;
+    }
+    return resp;
+  }
+}
 
 // Ground truth the app controls (P1): how many audio files the cache actually
 // holds right now. Settings shows this beside the browser's storage estimate,
@@ -413,15 +472,15 @@ export async function downloadPack(packId, { force = false } = {}) {
   const onOne = async (src) => {
     try {
       if (!force && have.has(src)) { done += 1; patch(packId, { done }); return; }
-      const resp = await fetch(src, { signal: controller.signal, headers: BULK_HEADERS });
+      const resp = await bulkFetch(src, controller.signal);
       // Sole-writer plain put(): replaces our own prior entry by URL, no
       // per-file delete (see downloadPack header + presentPaths).
       if (resp && resp.ok) { await cache.put(src, resp); done += 1; patch(packId, { done }); }
       else { failures.push(src); }
     } catch (e) {
-      if (e.name === 'AbortError') throw e;
+      if (e.name === 'AbortError') throw e;   // real user cancel only (bulkFetch converts timeouts)
       if (e instanceof TypeError) { offline = true; controller.abort(); throw abortError(); }
-      failures.push(src);   // other per-file error: record, keep going
+      failures.push(src);   // timeout/other per-file error: record, keep going
     }
   };
 
@@ -495,11 +554,11 @@ export async function downloadAll() {
   const onOne = async (src) => {
     try {
       if (have.has(src)) { bumpDone(); bumpPack(src); patch(ALL, { done }); return; }
-      const resp = await fetch(src, { signal: controller.signal, headers: BULK_HEADERS });
+      const resp = await bulkFetch(src, controller.signal);
       if (resp && resp.ok) { await cache.put(src, resp); bumpDone(); bumpPack(src); patch(ALL, { done }); }
       else { failures.push(src); }
     } catch (e) {
-      if (e.name === 'AbortError') throw e;
+      if (e.name === 'AbortError') throw e;   // real user cancel only (bulkFetch converts timeouts)
       if (e instanceof TypeError) { offline = true; controller.abort(); throw abortError(); }
       failures.push(src);
     }

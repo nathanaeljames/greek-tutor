@@ -3,9 +3,8 @@
   // lesson chrome. Shows storage estimate + persistence, a whole-manifest
   // "Download all", per-pack rows for built content, and a Clear action.
   import { onMount } from 'svelte';
-  import { get } from 'svelte/store';
   import { getBuiltPacks } from '../lib/packs.js';
-  import { allState, downloadAll, cancelAll, clearAllAudio, storageInfo, audioFileCount, audioCacheDiagnostic, dedupeAudioCache, packStatesFingerprint, audioCount, lastScan } from '../lib/downloads.js';
+  import { allState, downloadAll, cancelAll, clearAllAudio, storageInfo, audioFileCount, audioCacheDiagnostic, dedupeAudioCache, packStatesFingerprint, audioCount, lastScan, reconcileAudioCache } from '../lib/downloads.js';
   import DownloadControl from './DownloadControl.svelte';
 
   const all = allState();
@@ -122,10 +121,12 @@
 
   onMount(() => {
     refreshStorage();
-    // If the count has never been measured on this device, kick one background
-    // scan to fill it (deferred inside audioFileCount's callers; here it is the
-    // only way to seed a first value if the reconcile pass hasn't run yet).
-    if (get(audioCount) == null) recount();
+    // The one reconciling cache scan (exact count + badge drift) lives HERE, in
+    // the Storage menu — NOT on app load. It is deferred to idle and runs at
+    // most once per session (skipped on repeat opens when nothing changed), so
+    // the store-backed count renders instantly and the scan just confirms it in
+    // the background. This is the answer to "why scan on load" — we no longer do.
+    reconcileAudioCache();
     getBuiltPacks().then(p => (builtPacks = p)).catch(() => (packsFailed = true));
     const up = () => (online = navigator.onLine);
     window.addEventListener('online', up);

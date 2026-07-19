@@ -995,3 +995,37 @@ rule: any audio-cache write stays on downloads.js's sole-writer path (plain
 `put`, marker header), and no new code may run a full `cache.keys()` scan on
 the paint path — route scans through the persisted `audioCount` + deferred
 reconcile.
+
+### 9.5 Round 2 (2026-07-19, after device re-test)
+
+Device re-test showed two things still off: (a) the reconcile scan still ran
+on app LOAD (3398-3918 ms on both devices) — because it was fired from
+`ensureInit`, which every chapter hub triggers via DownloadControl, and the
+§9.2 "defer to idle" only moved it off first paint, not off the load path;
+(b) Download-all still stalled (dead at 7070 for 8 min; cancel/resume/rescan
+did not kick it). Fixes:
+
+- Reconcile REMOVED from `ensureInit` entirely (so app load and every hub
+  never scan). It is now `reconcileAudioCache()`, called ONLY from the Storage
+  menu's onMount, deferred to idle, and guarded by `needsReconcile` so it runs
+  at most once per session. Verified in the built app: app-load @TOC and a
+  chapter-hub visit emit ZERO `[gt-perf]` scans; the first Settings open emits
+  exactly one `reconcile` (487 ms / 728 entries desktop); reopening Settings
+  emits none. Pack badges come from bookkeeping (instant); the count from the
+  persisted `audioCount` store. This is the direct answer to the user's "why
+  scan on load — do it when the Storage menu opens": we now do exactly that.
+- Download resilience: new `bulkFetch()` wraps every bulk file fetch in a hard
+  25 s timeout + 2 retries, and backs off/retries on 429/503 (honoring
+  Retry-After). Root cause of the freeze: iOS `fetch()` has no timeout, so one
+  wedged connection leaves `await fetch` pending forever and, across the 4
+  workers, freezes the whole run with nothing able to kick it (cancel can't
+  unstick a socket WebKit is holding; a fresh run re-wedges). Now every fetch
+  is guaranteed to settle: transient stalls self-heal via retry; a file that
+  still fails becomes a per-file failure -> the run ends 'partial' -> Resume
+  retries only the missing files. Verified: cancel now genuinely stops the run
+  (froze at 724, went to "Resume download all"); download-all + resume reach
+  the exact count. NOTE: if the on-device stall was Netlify throttling the
+  ~8.5k-file burst, the 429/503 backoff addresses it directly; if it was held
+  connections, the timeout does. Either way it can no longer freeze forever.
+  Residual: a hard-throttling CDN can still make the run end 'partial' with
+  many failures — the user just taps Resume (idempotent; skips cached files).
