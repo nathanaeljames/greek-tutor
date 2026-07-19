@@ -158,9 +158,9 @@
       <div class="settings-note">Optimizing audio storage… {$migrationStatus.done} of {$migrationStatus.total}</div>
     {/if}
     <div class="settings-note">
-      "Audio files stored" counts the distinct audio files in the app's own
-      storage and updates immediately. The browser's "Used" figure may lag
-      behind deletions on iOS.
+      "Audio files stored" counts the audio files saved on this device and
+      updates immediately — it's the number to trust. The browser's "Used"
+      figure is unreliable on iOS and may not reflect what's actually stored.
     </div>
     <div class="settings-note">
       {#if storage.persisted}
@@ -234,7 +234,7 @@
 
   <section class="card">
     <h2 class="settings-h">Clear downloaded audio</h2>
-    <div class="settings-note">Removes every cached audio file from this device.</div>
+    <div class="settings-note">Removes every downloaded audio file from this device.</div>
     <button class="btn secondary" on:click={() => (confirmClear = true)}>Clear downloaded audio</button>
   </section>
 </div>
