@@ -38,10 +38,15 @@ piece. Nathanael goes by "Fable" when addressing Claude.
   audio path (no /audio/ route, no rangeRequests, no Range). Cache
   Storage is shell + manifest only, so cold start no longer scales with
   library size. A one-time deferred migration drains the legacy
-  `greek-tutor-audio` cache into IDB and deletes it. **Not yet
-  device-verified by Fable** — see the device checklist and the
-  first-launch caveat in HANDOFF-4.5.md. Code state before this work was
-  commit **ba5d0d4** ("adding cold start measure").
+  `greek-tutor-audio` cache into IDB and deletes it. **SHIPPED and
+  DEVICE-VERIFIED** (commits a233a1f + 196753d, deployed via Netlify CD):
+  on Fable's iPhone the full 8521-file library migrated to IDB and cold
+  start is now instant — resp-start ~19ms (was ~4s), independent of
+  library size; persistent storage granted; file count exact/stable at
+  8521. Not separately re-run post-4.5: the airplane-mode walk and the
+  Download-All timeout/backoff path (both unchanged logic, verified
+  pre-4.5). Code state before 4.5 was commit **ba5d0d4** ("adding cold
+  start measure").
 - All 8,521 WAVs transcoded to m4a in the repo under public/audio/.
   Chapter 1 (120 files) + Introduction (6 files) are the only BUILT
   content; the rest of the manifest is transcoded audio for content
@@ -280,13 +285,10 @@ entirely. The section below is kept as the rationale record.
 
 ## Immediate queue (as of 2026-07-19)
 
-1. **Device-verify phase 4.5 on Fable's iPhone + iPad** -- run the
-   HANDOFF-4.5.md device checklist (cold-start metric before vs. after
-   migration; airplane-mode walk; count now exact/stable; Download All
-   backoff path). Mind the first-launch-after-upgrade caveat: the FIRST
-   cold start still pays the old Cache-Storage bring-up once and the
-   migration pays the legacy read once in the background; judge the
-   metric on the SECOND cold launch. Then deploy.
+1. **Phase 4.5 DONE** (shipped + device-verified; see live state). Only
+   residual: if you want belt-and-braces, re-run the airplane-mode walk
+   and a Download-All on the iPad post-4.5 (both unchanged logic). Not
+   blocking.
 2. Chat (new conversation): phase 5 vertical-buildout spec. Start with
    chapter 2 extraction (forcing
    function for the remaining unknown font codes ! # $ { } ~ | \ ` = :
@@ -301,8 +303,9 @@ entirely. The section below is kept as the rationale record.
 
 ## Known open questions
 
-- Phase 4.5 IndexedDB migration: DECIDED + BUILT + Chrome-verified;
-  remaining item is Fable's device verification (queue item 1).
+- Phase 4.5 IndexedDB migration: DONE — decided, built, Chrome-verified,
+  shipped, and device-verified (instant cold start with 8521 files in
+  IDB). No open item.
 - Font-map unknown codes resolve at chapter 2.
 - C3 multi-day retention: Download All completed on iPhone AND iPad
   (persistent storage granted on both, quota tens of GB); no report yet

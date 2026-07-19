@@ -175,7 +175,22 @@ so the comparison was always false (and the first draft's `getKey(...) !==
 undefined` was always true for the same reason). Now double-awaited. `has()` is
 not on any app hot path, but the fix stands.
 
-## Device checklist for Fable (brief)
+## Device verification result (2026-07-19) — PASSED
+
+Verified on Fable's iPhone after deploy (commits a233a1f + 196753d). The full
+8,521-file library migrated from the legacy cache into IndexedDB, and cold
+start is now instant: the diagnostic cold-start line read **worker 3 ·
+resp-start 19 · resp-end 26 · js-start 36 · app 39 · DCL 45 · sw true** (ms
+since nav) — resp-start ~19 ms against the whole migrated library, vs. the ~4 s
+this pass set out to remove, and it no longer scales with library size.
+"Audio files stored" = 8521, exact and stable; persistent storage granted.
+Note the browser "Used" estimate read 5.2 MB — `storage.estimate()` on iOS is
+unreliable and under-reports IDB, which is why the app trusts its own file
+count instead (Settings copy updated to say so). Not separately re-run: the
+airplane-mode walk and Download-All timeout/backoff path (unchanged logic,
+verified pre-4.5).
+
+## Device checklist for Fable (original, for reference)
 
 1. **Cold-start metric, before/after** (the acceptance test): open Settings →
    seven-tap "Storage" → read the "Cold start (ms since nav)" line. With the
