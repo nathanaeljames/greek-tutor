@@ -16,7 +16,19 @@
   ];
 
   $: chapter = getChapter(chapterId);
-  function enabled(key) { return !!(chapter && (chapter[key] || []).length); }
+  // Reactive enabled-map. In Svelte 4 a template binding like
+  // `class:disabled={!enabled(item.key)}` does NOT track `chapter` as a
+  // dependency (it's hidden inside the function call), so if `chapter` ever
+  // changes without `item` changing, the disabled state would NOT recompute —
+  // leaving the bar stuck greyed until an unrelated re-render. Naming `chapter`
+  // directly here fixes that class of stale-state bug (e.g. after an iOS PWA
+  // resume-from-frozen). See the Svelte-4 reactivity gotcha.
+  $: sectionEnabled = {
+    learn: !!(chapter && (chapter.learn || []).length),
+    drill: !!(chapter && (chapter.drill || []).length),
+    exercise: !!(chapter && (chapter.exercise || []).length),
+    quickReview: !!(chapter && (chapter.quickReview || []).length)
+  };
 
   // Setting an identical hash fires no hashchange; dispatch one manually so
   // the shell still re-applies expansion state (e.g. re-tapping the open tab).
@@ -25,7 +37,7 @@
     else location.hash = hash;
   }
   function onTap(item) {
-    if (!enabled(item.key)) return;
+    if (!sectionEnabled[item.key]) return;
     go(`#/chapter/${chapterId}/${item.key}`);
   }
 </script>
@@ -35,8 +47,8 @@
     <button
       class="bb-item"
       class:active={activeSection === item.key}
-      class:disabled={!enabled(item.key)}
-      disabled={!enabled(item.key)}
+      class:disabled={!sectionEnabled[item.key]}
+      disabled={!sectionEnabled[item.key]}
       on:click={() => onTap(item)}>
       <svg class="bb-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         {#if item.icon === 'book'}
