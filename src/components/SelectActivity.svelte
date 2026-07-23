@@ -10,6 +10,7 @@
   let options = [];
   let questions = [];
   let promptIsGreek = false;   // generator-declared (P6-P9): Greek prompts are tappable
+  let optionClass = 'wide';
   let qIndex = 0;
   let attempts = 0;
   let correct = 0;
@@ -26,20 +27,25 @@
     options = built.options;
     questions = built.questions;
     promptIsGreek = !!built.promptIsGreek;
+    optionClass = built.optionClass || '';
     qIndex = 0; attempts = 0; correct = 0;
     feedback = ''; picked = null; answered = false; finished = false;
     maybePronounce();
   }
 
   $: current = questions[qIndex];
+  $: staticOptions = Array.isArray(activity.optionValues);
+  $: wideOptions = !staticOptions || optionClass === 'wide';
+  $: showPronounce = !staticOptions || !!activity.ui?.buttons?.includes('Pronounce');
+  $: showPronounceEach = !staticOptions || !!activity.ui?.checkboxes?.includes('Pronounce Each Drill');
 
   function maybePronounce() {
     const q = questions[qIndex];
-    if (pronounceEach && q && q.promptAudio) play(q.promptAudio);
+    if (pronounceEach && q && !q.pending && q.promptAudio) play(q.promptAudio);
   }
 
   function choose(opt) {
-    if (answered || finished) return;
+    if (answered || finished || current.pending) return;
     picked = opt.id;
     attempts += 1;
     if (opt.id === current.answerId) {
@@ -70,6 +76,12 @@
     if (attempts === 0) return chapter.feedback?.scorePrompt || 'Give it a try first';
     return `${correct} correct out of ${attempts} attempts (${Math.round((correct / attempts) * 100)}%)`;
   }
+  function sentenceParts(text, underline) {
+    if (!underline) return null;
+    const at = text.indexOf(underline);
+    if (at === -1) return null;
+    return [text.slice(0, at), text.slice(at, at + underline.length), text.slice(at + underline.length)];
+  }
   let showScore = false;
 </script>
 
@@ -85,28 +97,39 @@
          English prompts stay static; options are answers, never audio taps. -->
     {#if promptIsGreek && current.promptAudio}
       <button class="prompt greek greek-say" on:click={() => play(current.promptAudio)}>{current.prompt}</button>
+    {:else if current.underline && sentenceParts(current.prompt, current.underline)}
+      {@const parts = sentenceParts(current.prompt, current.underline)}
+      <div class="prompt select-sentence">{parts[0]}<u>{parts[1]}</u>{parts[2]}</div>
     {:else}
-      <div class="prompt greek">{current.prompt}</div>
+      <div class="prompt" class:greek={promptIsGreek}>{current.prompt}</div>
     {/if}
-    <div class="feedback {feedbackKind}">{feedback}</div>
-    <div class="grid options wide">
-      {#each options as opt}
-        <button
-          class="tile small"
-          class:greek={activity.options === 'greek' || activity.generator?.options === 'lower'}
-          class:correct={answered && opt.id === current.answerId}
-          class:incorrect={picked === opt.id && opt.id !== current.answerId}
-          on:click={() => choose(opt)}>
-          {opt.label}
-        </button>
-      {/each}
-    </div>
+    {#if current.pending}
+      <div class="pending-verification" role="status">This activity item is pending content verification.</div>
+    {:else}
+      <div class="feedback {feedbackKind}">{feedback}</div>
+      <div class="grid options" class:wide={wideOptions}>
+        {#each options as opt}
+          <button
+            class="tile small"
+            class:greek={activity.options === 'greek' || activity.generator?.options === 'lower'}
+            class:correct={answered && opt.id === current.answerId}
+            class:incorrect={picked === opt.id && opt.id !== current.answerId}
+            on:click={() => choose(opt)}>
+            {opt.label}
+          </button>
+        {/each}
+      </div>
+    {/if}
     <div class="controls">
       <button class="btn secondary" on:click={() => (showScore = !showScore)}>Score</button>
-      <button class="btn" on:click={() => current.promptAudio && play(current.promptAudio)}>Pronounce</button>
-      <label style="display:flex; align-items:center; gap:6px; font-size:0.9rem">
-        <input type="checkbox" bind:checked={pronounceEach} /> Pronounce each
-      </label>
+      {#if showPronounce}
+        <button class="btn" disabled={!current.promptAudio} on:click={() => current.promptAudio && play(current.promptAudio)}>Pronounce</button>
+      {/if}
+      {#if showPronounceEach}
+        <label style="display:flex; align-items:center; gap:6px; font-size:0.9rem">
+          <input type="checkbox" bind:checked={pronounceEach} disabled={!current.promptAudio} /> Pronounce each
+        </label>
+      {/if}
     </div>
     {#if showScore}<div class="scorebox">{scoreText()}</div>{/if}
     <div class="scorebox" style="font-weight:400; font-size:0.85rem; margin-top:8px">

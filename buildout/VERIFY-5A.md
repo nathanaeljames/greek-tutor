@@ -63,6 +63,6 @@ E1. Note ANY behavior that feels different from the pre-5A build,
 
 ## Outcome
 
-- [ ] ALL PASS -> proceed to 5B (chapter 2 wiring).
+- [X] ALL PASS -> proceed to 5B (chapter 2 wiring).
 - [ ] Any failure -> report here; 5A gets a diagnose-first follow-up
       spec before any content work starts.

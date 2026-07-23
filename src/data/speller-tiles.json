@@ -1,0 +1,92 @@
+{
+  "letters": [
+    "α",
+    "β",
+    "γ",
+    "δ",
+    "ε",
+    "ζ",
+    "η",
+    "θ",
+    "ι",
+    "κ",
+    "λ",
+    "μ",
+    "ν",
+    "ξ",
+    "ο",
+    "π",
+    "ρ",
+    "σ",
+    "τ",
+    "υ",
+    "φ",
+    "χ",
+    "ψ",
+    "ω",
+    "ς"
+  ],
+  "diacritics": [
+    {
+      "name": "acute",
+      "label": "´",
+      "apply": "́"
+    },
+    {
+      "name": "grave",
+      "label": "`",
+      "apply": "̀"
+    },
+    {
+      "name": "circumflex",
+      "label": "῀",
+      "apply": "͂"
+    },
+    {
+      "name": "rough breathing",
+      "label": "῾",
+      "apply": "̔"
+    },
+    {
+      "name": "smooth breathing",
+      "label": "᾿",
+      "apply": "̓"
+    },
+    {
+      "name": "smooth + acute",
+      "label": "῎",
+      "apply": "̓́"
+    },
+    {
+      "name": "rough + acute",
+      "label": "῞",
+      "apply": "̔́"
+    },
+    {
+      "name": "smooth + grave",
+      "label": "῍",
+      "apply": "̓̀"
+    },
+    {
+      "name": "rough + grave",
+      "label": "῝",
+      "apply": "̔̀"
+    },
+    {
+      "name": "smooth + circumflex",
+      "label": "῏",
+      "apply": "̓͂"
+    },
+    {
+      "name": "rough + circumflex",
+      "label": "῟",
+      "apply": "̔͂"
+    }
+  ],
+  "composites": [
+    "ᾳ",
+    "ῃ",
+    "ῳ"
+  ],
+  "_source": "C1 finalized from speller close-up photo (2026-07-17): tile rows are the 24 lowercase letters, then final sigma + 3 single accents + 2 breathings + 1 combo, then 5 more breathing+accent combos + the 3 iota-subscript composites. Inventory = 25 letters + 11 marks + 3 composites (39 tiles). All six breathing+accent combinations exist (incl. rough+grave and smooth+grave). On-screen arrangement is the app's own; this inventory is the contract. Diacritic 'apply' = combining sequence appended to the previous character, then NFC-normalize."
+}

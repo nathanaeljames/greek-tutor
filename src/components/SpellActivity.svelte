@@ -4,24 +4,28 @@
   // (legacy roman->Greek layout). Diacritic tiles combine onto the previous
   // character and NFC-normalize. Grading honors the "With Accents" toggle.
   import { onMount, onDestroy } from 'svelte';
-  import { getLemma, randomFeedback } from '../lib/content.js';
+  import { getSpellerTiles, getLemma, randomFeedback } from '../lib/content.js';
   import { play } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   export let chapter;
   export let activity;
 
   const words = (activity.items || []).map(it => {
-    const l = getLemma(it.ref) || {};
+    const l = getLemma(it.ref, chapter.id, it.pool) || {};
     return { ref: it.ref, greek: l.greek || '', gloss: l.gloss || '', audio: l.audio || null };
   });
 
-  // Tile keyboard is data-driven from chapt-01.json `spellerTiles` (the
-  // authoritative 39-tile inventory: 25 letters + 11 diacritic marks + 3
+  // Tile keyboard uses the static `speller-tiles.json` contract: the
+  // authoritative 39-tile inventory has 25 letters + 11 diacritic marks + 3
   // iota-subscript composites). Each diacritic's `apply` is the combining
   // sequence appended to the previous character before NFC normalization.
   // Falls back to a minimal derived inventory if the data ever lacks it.
-  const tiles = activity.spellerTiles || {};
-  const letterTiles = tiles.letters || chapter.alphabet.letters.map(l => (l.lower === 'σ/ς' ? 'σ' : l.lower));
+  const tiles = activity.spellerTiles
+    || (activity.spellerTilesRef ? getSpellerTiles(activity.spellerTilesRef) : {});
+  const fallbackLetters = chapter.alphabet && chapter.alphabet.letters
+    ? chapter.alphabet.letters.map(l => (l.lower === 'σ/ς' ? 'σ' : l.lower))
+    : [];
+  const letterTiles = tiles.letters || fallbackLetters;
   const diacriticTiles = tiles.diacritics || [];
   const compositeTiles = tiles.composites || ['ᾳ', 'ῃ', 'ῳ'];
 

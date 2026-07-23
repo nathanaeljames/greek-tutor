@@ -19,6 +19,7 @@
 
 import toc from '../data/toc.json';
 import intro from '../data/intro.json';
+import spellerTiles from '../data/speller-tiles.json';
 
 // Per-chapter chunk loaders, keyed by chapter id. Vite emits one JS chunk per
 // matched file and vite-plugin-pwa precaches each (audit-proven). Filenames are
@@ -49,6 +50,8 @@ const registry = { intro: { chapter: intro, lexicon: null } };
 const inflight = {};   // id -> in-flight loadChapter promise, memoized; reset on failure
 
 export function getToc() { return toc; }
+
+export function getSpellerTiles(_ref) { return spellerTiles; }
 
 // Ids of chapters whose content is BUILT — derived from the glob key paths, so
 // it answers WITHOUT loading any chunk (packs.js and the TOC depend on this
@@ -103,12 +106,29 @@ export function getChapter(id) {
 export function isChapterAvailable(id) { return id === 'intro' || id in chapterLoaders; }
 
 // Lemma lookup across LOADED lexicons (the route gate guarantees the active
-// chapter's lexicon is loaded alongside its content). Keeps its ref-only
-// signature; callers below the gate are unchanged.
-export function getLemma(ref) {
+// chapter's lexicon is loaded alongside its content). Optional chapter/pool
+// context keeps duplicated refs bound to the active chapter's self-contained
+// audio pack (chapter 2 deliberately mirrors chapter 1's first ten lemmas).
+const LEMMA_BUCKETS = ['lemmas', 'exampleWords', 'ch1_lemma_mirror'];
+
+function lemmaFromLexicon(lex, ref) {
+  if (!lex) return null;
+  for (const bucket of LEMMA_BUCKETS) {
+    if (lex[bucket] && lex[bucket][ref]) return lex[bucket][ref];
+  }
+  return null;
+}
+
+export function getLemma(ref, chapterId, pool) {
+  if (chapterId) {
+    const lex = registry[chapterId] && registry[chapterId].lexicon;
+    if (!lex) return null;
+    if (pool && lex[pool] && lex[pool][ref]) return lex[pool][ref];
+    return lemmaFromLexicon(lex, ref);
+  }
   for (const id in registry) {
-    const lex = registry[id].lexicon;
-    if (lex && lex.lemmas && lex.lemmas[ref]) return lex.lemmas[ref];
+    const lemma = lemmaFromLexicon(registry[id].lexicon, ref);
+    if (lemma) return lemma;
   }
   return null;
 }
@@ -239,7 +259,7 @@ export function resolveItems(chapter, activity) {
   if (Array.isArray(activity.items)) {
     return activity.items.map(item => {
       if (item.ref) {
-        const lemma = getLemma(item.ref);
+        const lemma = getLemma(item.ref, chapter.id, item.pool);
         return lemma ? {
           display: lemma.greek, secondary: lemma.gloss, audio: lemma.audio,
           meta: { ...lemma, ref: item.ref }
@@ -297,10 +317,42 @@ export function buildSelectQuestions(chapter, activity) {
     // 'lower'/'upper' prompts are Greek letters; 'name'/'translit' are English.
     return { options, questions, optionClass: 'wide', promptIsGreek: promptField === 'lower' || promptField === 'upper' };
   }
+
+  // Static-option drills use authored optionValues rather than a lexicon-
+  // derived answer grid. Missing prompt/answer fields remain in the sequence
+  // as visible pending-verification questions instead of becoming bad answers.
+  if (Array.isArray(activity.optionValues)) {
+    const promptField = activity.promptFrom && activity.promptFrom.show;
+    const promptIsGreek = promptField === 'greek';
+    const options = activity.optionValues.map(value => ({ id: String(value), label: String(value) }));
+    const questions = shuffle((activity.items || []).map(item => {
+      const lemma = item.ref ? getLemma(item.ref, chapter.id, item.pool) : null;
+      const prompt = promptField === 'sentence'
+        ? item.sentence
+        : promptField === 'greek'
+          ? (item.greek || (lemma && lemma.greek))
+          : item[promptField];
+      const needsUnderline = promptField === 'sentence' && !item.underline;
+      return {
+        prompt: prompt || '',
+        promptAudio: promptIsGreek ? (item.promptAudio || item.audio || (lemma && lemma.audio) || null) : null,
+        answerId: item.answer == null ? null : String(item.answer),
+        underline: item.underline || null,
+        pending: !prompt || item.answer == null || needsUnderline
+      };
+    }));
+    const optionClass = options.every(option => option.label.length <= 8) ? 'wide' : '';
+    return { options, questions, optionClass, promptIsGreek };
+  }
+
   // items-based (vocabulary drills): options are the full lemma set. Both
   // drills show the SHORT gloss ("truly, verily", "and, even", "Christ");
   // the full gloss + ntFreq is reserved for the Review Vocabulary Chart.
-  const lemmas = (activity.items || []).map(ref => ({ ref, ...getLemma(ref) }));
+  const lemmas = (activity.items || []).map(item => {
+    const ref = typeof item === 'string' ? item : item.ref;
+    const pool = typeof item === 'string' ? null : item.pool;
+    return { ref, ...(getLemma(ref, chapter.id, pool) || {}) };
+  });
   const promptSide = activity.prompt === 'greek' ? 'greek' : 'gloss';
   const optionSide = promptSide === 'greek' ? 'gloss' : 'greek';
   const label = (l, side) => (side === 'gloss' ? (l.glossShort || l.gloss) : l.greek);

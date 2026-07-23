@@ -7,6 +7,8 @@
   import ContentAudio from './ContentAudio.svelte';
   import SelectActivity from './SelectActivity.svelte';
   import SpellActivity from './SpellActivity.svelte';
+  import DivideActivity from './DivideActivity.svelte';
+  import PlaceAccentActivity from './PlaceAccentActivity.svelte';
   import ReadingCategories from './ReadingCategories.svelte';
 
   export let chapterId;
@@ -52,6 +54,10 @@
       <SelectActivity {chapter} {activity} />
     {:else if activity.type === 'spell'}
       <SpellActivity {chapter} {activity} />
+    {:else if activity.type === 'divide'}
+      <DivideActivity {chapter} {activity} />
+    {:else if activity.type === 'placeAccent'}
+      <PlaceAccentActivity {chapter} {activity} />
     {:else}
       <div class="card">This activity type ({activity.type}) arrives in a later phase.</div>
     {/if}

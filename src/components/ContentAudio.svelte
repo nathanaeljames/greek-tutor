@@ -2,7 +2,7 @@
   // The contentAudio family, dispatched on activity.mode (B1 — never on
   // activity id): chart / exploreGrid / stepper / textPage / objectivesPage /
   // flashcard / selfCheckStepper / selfCheckSequence / equationChart /
-  // vowelStair / diphthongRows / reviewVocab / reviewLetters. The bespoke
+  // vowelStair / diphthongRows / reviewVocab / reviewLetters / topicPages. The bespoke
   // modes are pedagogical layouts reconstructed from the original's yellow
   // panels; their per-mode data contracts are documented in HANDOFF-4 §5 (B1).
   import { slide } from 'svelte/transition';
@@ -57,6 +57,9 @@
   let revealed = false;
   let lastClicked = null;
   let sixOpen = false;
+  let topicIndex = 0;
+  $: topics = activity.topics || [];
+  $: currentTopic = topics[topicIndex] || null;
 
   // Learn Vocabulary flashcard visibility (A15). Segmented radio: Show Both /
   // Hide Greek / Hide English. A hidden pane blanks until tapped (per-card
@@ -132,6 +135,23 @@
   <div class="card textpage">
     <strong>{chapter.objectivesPreamble}</strong>
     <ol>{#each chapter.objectives as o}<li>{o}</li>{/each}</ol>
+  </div>
+
+{:else if mode === 'topicPages'}
+  <div class="card topic-page">
+    {#if currentTopic}
+      <div class="topic-heading">{currentTopic.title}</div>
+      <RichContent blocks={currentTopic.content || []} />
+      {#if currentTopic._verify}<div class="pending-verification compact">Some topic details are pending verification.</div>{/if}
+    {:else}
+      <div class="pending-verification">Topic content pending verification.</div>
+    {/if}
+    <div class="controls topic-controls">
+      <button class="btn secondary" on:click={() => (topicIndex = Math.max(0, topicIndex - 1))} disabled={topicIndex <= 0}>Previous Topic</button>
+      <span class="topic-count">{topics.length ? topicIndex + 1 : 0} of {topics.length}</span>
+      <button class="btn" on:click={() => (topicIndex = Math.min(topics.length - 1, topicIndex + 1))} disabled={!topics.length || topicIndex >= topics.length - 1}>Next Topic</button>
+    </div>
+    {#if activity._topic_verify}<div class="pending-verification compact">Topic order pending verification.</div>{/if}
   </div>
 
 {:else if mode === 'textPage'}
@@ -329,8 +349,8 @@
       {/each}
     </div>
     <div class="controls">
-      {#if activity.sayWholeListAudio}
-        <button class="btn secondary" on:click={() => play(activity.sayWholeListAudio)}>Say Whole List</button>
+      {#if activity.playAll || activity.sayWholeListAudio}
+        <button class="btn secondary" on:click={() => play(activity.playAll?.audio || activity.sayWholeListAudio)}>{activity.playAll?.label || 'Say Whole List'}</button>
       {/if}
     </div>
     {#if activity.note}<div class="note">{activity.note}</div>{/if}
