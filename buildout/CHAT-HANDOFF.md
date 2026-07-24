@@ -2,11 +2,10 @@
 
 Purpose: this file lets a NEW chat in this Claude Project pick up the
 work with zero re-explanation. Keep it in the project files; update it
-at each phase boundary. Companion doc: PROJECT.md (decisions log, lives
-in project knowledge, not the repo). All other specs/handoffs/plans
-referenced below live alongside this file in buildout/ (2026-07-19
-reorg — they used to sit at repo root; this file is the one that stays
-"live" across phases, everything else is a dated record).
+at each phase boundary. All specs/handoffs/plans referenced below live
+in the repo's buildout/ directory — the repo is the ARCHIVE (nothing is
+ever deleted there); the project files carry only the living subset
+(see "Project-file methodology" below).
 
 ## One-paragraph context
 
@@ -14,303 +13,239 @@ Porting Dr. Ted Hildebrandt's ParsonsTech Greek Tutor (Asymetrix
 ToolBook, Win 3.1, runs in DOSBox) to an offline-first Svelte PWA for
 one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
 internet. Full license from the author. Secondary goal: portfolio
-piece. Nathanael goes by "Fable" when addressing Claude.
+piece. Nathanael goes by "Fable" when addressing Claude (chat).
 
-## Live state (2026-07-19)
+## Live state (2026-07-23)
 
-- Repo: github.com/nathanaeljames/greek-tutor (Netlify CD from main)
-- Deploy: https://greektutorv1.netlify.app -- installed as PWA on the
-  target-class iPhone AND iPad; offline app shell, offline audio
-  replay, and the per-chapter + whole-manifest DownloadManager are
-  DEVICE-VERIFIED, including a full 8521-file Download All.
-- **Phase 4 is FULLY CLOSED**, including the storage-pass work that sat
-  after the original "code-complete" milestone. Sequence: 4a/4b/4c ->
-  closeout Part A (Opus) -> Part B architectural audit (Fable) -> 9-item
-  punch list -> 4-STORAGE-PASS.md (single-writer cache fix, honest
-  counter, toast contract) -> **two more device-reported regressions
-  surfaced AFTER that pass shipped and were root-caused and fixed in
-  this session** (see below). HANDOFF-4.md sections 1-9 is the full
-  record.
-- **Phase 4.5 (IndexedDB audio-storage migration) is BUILT and
-  Chrome-verified** (Claude Code, 4.5-SPEC.md -> HANDOFF-4.5.md). Audio
-  bytes now live in IndexedDB as Blobs (src/lib/audio-store.js) and play
-  through Blob object URLs; the service worker is entirely out of the
-  audio path (no /audio/ route, no rangeRequests, no Range). Cache
-  Storage is shell + manifest only, so cold start no longer scales with
-  library size. A one-time deferred migration drains the legacy
-  `greek-tutor-audio` cache into IDB and deletes it. **SHIPPED and
-  DEVICE-VERIFIED** (commits a233a1f + 196753d, deployed via Netlify CD):
-  on Fable's iPhone the full 8521-file library migrated to IDB and cold
-  start is now instant — resp-start ~19ms (was ~4s), independent of
-  library size; persistent storage granted; file count exact/stable at
-  8521. Not separately re-run post-4.5: the airplane-mode walk and the
-  Download-All timeout/backoff path (both unchanged logic, verified
-  pre-4.5). Code state before 4.5 was commit **ba5d0d4** ("adding cold
-  start measure").
-- All 8,521 WAVs transcoded to m4a in the repo under public/audio/.
-  Chapter 1 (120 files) + Introduction (6 files) are the only BUILT
-  content; the rest of the manifest is transcoded audio for content
-  that doesn't exist yet (chapters 2-28), which is exactly what
-  produced the storage-pass symptoms once a user downloaded all of it.
-- VERIFY-chapt01 fully resolved; Chapter 1 data is considered verified.
-- App icon: DECIDED -- the retro pixel lamp is the app icon.
+- Repo: github.com/nathanaeljames/greek-tutor (Netlify CD from main).
+  Deploy: https://greektutorv1.netlify.app — installed as PWA on the
+  target-class iPhone AND iPad.
+- Phases 1-4.5 CLOSED and device-verified. Audio bytes live in
+  IndexedDB (Blobs + object URLs); the SW precaches the app shell only
+  and is entirely out of the audio path; cold start is instant
+  (resp-start ~20ms) and independent of library size. Full record:
+  repo buildout/HANDOFF-4.5.md. Chapter 1 data fully verified.
+- **5A (B5 lazy chapter loading) SHIPPED + DEVICE-VERIFIED**
+  (VERIFY-5A passed: cold start 20-44ms both devices, airplane-mode
+  ch1 walk clean, offline chunk-precache proven on real WebKit).
+  Chapters load as per-chapter JS chunks via import.meta.glob + a
+  loaded-chapters registry; sync getters below one route-level await;
+  toc/intro stay static. 5A residual lessons harvested below.
+- **5B (chapter 2 wiring) SHIPPED** — implemented by GPT Sol (Codex)
+  with five surgical patches merged from a parallel Opus 4.8 run
+  (buildout/5B-MERGE-SPEC.md). New vocabulary registered: topicPages
+  mode; greekRows + expander RichContent blocks; divide + placeAccent
+  activity types; static option sets in select; speller-tiles.json
+  shared keyboard contract. Both rails green (ch2 20/20, ch1
+  regression 26/26), precache 19, chapter-1 chunk hash unchanged.
+  Record: buildout/HANDOFF-5B-SOL.md.
+- **Chapter 2 data is PARTIALLY PENDING**: chapt-02.json ships with
+  _verify gaps (the 21 syllable-division words, answers for the accent
+  rule / marking recognition / part-of-speech drills, several popup
+  contents). Components render pending states and will consume the
+  data patch without code changes. VERIFY-chapt02.md + its ADDENDUM
+  are the collection instrument; Nathanael's DOSBox pass feeds Fable's
+  data patch. The 5B device pass (VERIFY-5B.md) runs after the patch
+  lands as one combined pass (an early partial run is fine — pending
+  placeholders are expected, not failures).
+- Font map after chapter 2: '#' = smooth+circumflex and '[' = rough
+  breathing VERIFIED; ';' ':' identified as Greek question mark /
+  raised-dot colon (stored NFC-canonical: ';' and U+00B7); 'v'
+  provisionally nu; '!' excluded as Hebrew-region contamination.
+  Remaining unknowns: $ { } ~ | \ ` = (several likely not font codes).
 
-## Post-"code-complete" regressions this session (2026-07-19) — READ THIS FIRST
+## Implementer arrangement (since 2026-07-21)
 
-Three rounds of device-reported bugs came in AFTER 4-STORAGE-PASS.md
-was believed done, each fixed same-session, each documented with
-evidence in HANDOFF-4.md sections 8-9. A brand-new chat should NOT
-re-derive these — they are settled:
-
-1. **Round 1 (section 8, in the original storage-pass work order).**
-   Root cause: WebKit's `cache.put()` honors Vary where Chrome's
-   replaces, so the SW's async CacheFirst route and the app's own
-   bulk-download writer raced onto the same URL and WebKit kept both --
-   monotonic duplicate growth (F1-F3), plus a toast/audio-race bug
-   (F6). Fixed: bulk downloads are marked (`x-gt-bulk-download` header)
-   and the SW route excludes marked requests, so the app is the sole
-   cache writer; toast logic now fires iff the user truly gets no
-   audio.
-2. **Round 2 (section 9, reported after section 8 deployed).** Two NEW
-   regressions introduced BY the section-8 fix, both scaling with
-   library size (invisible at 120 files, severe at 8521): (a) a 3-5s
-   hang before ANYTHING painted, once the whole library was cached;
-   (b) Download All halting for minutes with cancel/resume unable to
-   unstick it. Root causes: (a) `reconcile()` and `audioFileCount()`
-   did full `cache.keys()` scans that got triggered from
-   `ensureInit()`, which every chapter hub mount calls; (b) the
-   bulk-download loop did a `cache.match` + `delete` + `put` PER FILE,
-   which is O(n) each on WebKit -> O(n^2) for the whole run, and iOS
-   `fetch()` has no timeout so one wedged connection froze the entire
-   run forever (cancel can't unstick a held socket). Fixed: the
-   audio-file counter is now a `localStorage`-persisted store
-   (`audioCount` in downloads.js) that renders INSTANTLY, corrected
-   later by a deferred idle scan; the reconcile scan was moved OUT of
-   `ensureInit` entirely and now runs ONLY when the Settings/Storage
-   screen mounts (`reconcileAudioCache`, idle-deferred, once per
-   session); both download loops take one upfront `cache.keys()`
-   snapshot instead of per-file match+delete (O(n) not O(n^2)); every
-   bulk fetch (`bulkFetch()` in downloads.js) now has a 25s hard
-   timeout + 2 retries + 429/503 backoff so a stuck connection can no
-   longer freeze the run.
-3. **Round 3 (section 9.5, reported after round 2 deployed) — the
-   app-load hang was NOT fully fixed by round 2, and its true cause is
-   a PLATFORM LIMIT, not app code.** Device measurement (cold-start
-   Navigation Timing, exposed in the debug card) proved it
-   conclusively: `resp-start` was ~4000ms and `js-start` came right
-   after at ~4016ms -- i.e. the delay is 100% BEFORE our JS runs, while
-   the service worker's fetch handler is resolving. This is WebKit's
-   Cache Storage backing store (one database per ORIGIN, not per named
-   cache) being slow to come online on the first fetch after cold
-   launch once it holds ~8521 audio entries (~90MB+) -- confirmed by
-   the symptom color (white/black = the OS default before ANY of the
-   app's CSS painted, not our cream background) and by the timing
-   matching `reconcile`'s scan cost almost exactly (both pay the same
-   bring-up). **No further app-code change can remove this while audio
-   bytes live in Cache Storage.** See the IndexedDB decision below.
-
-## DECIDED + BUILT: audio bytes moved to IndexedDB (phase 4.5)
-
-RESOLVED (Fable decided 2026-07-19; built + Chrome-verified same day —
-4.5-SPEC.md -> HANDOFF-4.5.md). The migration below was done as its own
-pass before phase 5. The Range "known unknown" was DISSOLVED, not
-reimplemented: playback moved to Blob object URLs, so `<audio>` seeks
-natively against local bytes and Range/the SW leave the audio path
-entirely. The section below is kept as the rationale record.
-
-- **What:** stop storing downloaded audio in Cache Storage
-  (`greek-tutor-audio`). Store the audio bytes as Blobs in IndexedDB
-  instead; Cache Storage goes back to holding only the ~15 shell files
-  (fast to bring up regardless of audio library size, forever).
-  Playback reads the Blob from IndexedDB (object URL, or a SW fetch
-  handler backed by IDB) instead of `caches.match`.
-- **Why now, not later:** the hang is a floor imposed by the audio
-  library's SIZE in Cache Storage, and every phase-5 chapter added
-  makes it worse, never better -- it will not be a nice problem to
-  discover for the first time at chapter 20 with 8x today's diagnostic
-  surface. The abstraction boundary is clean right now
-  (`src/lib/audio.js` + `src/lib/downloads.js` are the ONLY things that
-  touch the audio cache; the data schema/pipeline is unaffected --
-  audio ids, not storage mechanism). That boundary erodes as more
-  chapters/activities/QA surface accumulate on the current assumptions.
-- **Known unknown / the real work:** Range-request serving for
-  seek/scrub currently rides on the SW's `rangeRequests: true` plugin
-  against Cache Storage; IndexedDB blobs need that reimplemented (slice
-  the stored Blob per the `Range` header, either in a SW fetch handler
-  or by avoiding `<audio src>` range-seeking needs entirely -- worth
-  scoping before starting). This is a real architecture change, not a
-  patch -- budget it as its own pass.
-- **If deferred instead:** phase 5 can proceed on the current
-  architecture; the cold-start hang will scale with however much audio
-  a user has downloaded, and is a known, documented, un-fixable-in-JS
-  limitation until this migration happens. Nothing about proceeding
-  with phase 5 content work blocks doing this migration later, but the
-  retrofit gets more expensive with every chapter added on top.
-- **Chat's recommendation:** do it now, scoped as its own pass, before
-  phase 5 content buildout starts. Not yet started -- no code exists
-  for this migration.
-
-## Canonical file locations
-
-- App code + docs: the GitHub repo. buildout/ holds every spec, phase
-  handoff, plan, punch list, and verification record (PLAN.md,
-  NAV-SPEC.md, *-SPEC.md, HANDOFF-*.md, AUDIT-4.md, 4-PUNCHLIST.md,
-  4-STORAGE-PASS.md, VERIFY-4-DEVICE.md). The repo is the source of
-  truth for code AND -- as of the Part B audit, which added mode
-  fields repo-side -- for the DATA FILES too. PROCESS RULE
-  (2026-07-18, after a near-miss where a chat-generated chapt-01.json
-  was built from a stale mirror and would have reverted the audit's
-  mode vocabulary): after ANY repo-side data edit, upload the
-  committed file to project knowledge immediately; chat must
-  regenerate data only from the committed copy, and can self-verify
-  against https://raw.githubusercontent.com/nathanaeljames/greek-tutor/main/
-  (the repo is public and fetchable from chat).
-- Content data (src/data/): chapt-01.json, lexicon-chapt01.json,
-  toc.json (top-level intro + chapters + special), intro.json.
-  Mirrors of the data files + font-map.json live in project knowledge
-  for chat-side work -- when chat updates a data file, Fable must
-  IMMEDIATELY replace the copy in project knowledge.
-- Chat-side pipeline inputs: parsonstech.rar (~286 MB DOSBox bundle)
-  or GreekTutor.iso (~290 MB) must be RE-UPLOADED to any conversation
-  needing extraction (chapters 2+). The bare ISO is easier: pip
-  install pycdlib; iso.get_file_from_iso (paths WITHOUT the ';1'
-  suffix, e.g. /GKTUTOR/CHAPT_1/1_ALPHAB.TBK); strings + font-map.json
-  converts legacy Greek to Unicode.
-
-## Pipeline contracts for chapters 2+ (from HANDOFF-4.md sections 5+7)
-
-- contentAudio mode vocabulary (dispatch is mode-keyed, never by id):
-  objectivesPage, equationChart (uses `display` to pick capital vs
-  translit), vowelStair (rows carry `group`), diphthongRows (ONE mode
-  for diphthong AND iota-subscript layouts; rows need greek/sound/
-  example/exampleGloss/audio/exampleAudio), reviewVocab (honors
-  `showNtFreq`), reviewLetters (`columns` supplies header labels),
-  plus the existing textPage/stepper/flashcard/selfCheckStepper/
-  selfCheckSequence/exploreGrid/fullOptionGrid.
-- `ui.arrowCue: true` marks exploreGrid drills that show the arrow cue.
-- `lead` is mode-independent: any contentAudio activity may carry it;
-  renders prominently above the content card.
-- `greekTaps` keys mark the FIRST STANDALONE occurrence of that exact
-  string (neighbors not Greek letters) in the item's text.
-- Select generators/pools MUST declare `promptIsGreek` and carry
-  `promptAudio` for Greek prompts (letter pools: audioShort; vocab
-  pools: lemma audio). Missing audio = silently untappable prompt.
-- The GREEK-TAP RULE (standing directive 9 below) extends this: any
-  DISPLAYED Greek anywhere is a tap target using the shared
-  `.greek-say` style -- new activity types must wire it, not invent a
-  new pattern.
-- Phase 5 lazy-loading plan (B5, proven but deferred): sync getters
-  over a loaded-chapters registry + `async loadChapter(id)` awaited
-  once at the route level; import.meta.glob chunks ARE precached by
-  vite-plugin-pwa; beware the tree-shake trap (the glob map must be
-  reachable from executed code or no chunk is emitted). This is
-  SEPARATE from the IndexedDB-audio decision above -- one is about JS
-  chunk loading, the other about audio byte storage.
-- Every new chart must be tested at 320px: overflow now CLIPS
-  (overflow-x hidden) instead of scrolling sideways.
-- Any code touching the audio cache MUST go through
-  src/lib/downloads.js's sole-writer discipline (plain `cache.put`,
-  `x-gt-bulk-download` marker header on bulk fetches) -- a second
-  writer reintroduces the round-1 WebKit duplicate-growth bug. And: no
-  new code may run a full `cache.keys()` scan on the app-load or
-  route-mount path -- route it through the persisted `audioCount` store
-  and the Settings-only `reconcileAudioCache()` (round-2/3 lesson).
-
-## Division of labor (standing)
-
-- Claude (chat): TBK extraction pipeline, data files, specs, plans,
-  review of Claude Code handoffs, verification checklists, art/assets.
-- Claude Code (local repo): implements the current *-SPEC.md, iterates
-  against npm run dev / npm run build, writes HANDOFF-*.md back.
+- Fable (Claude, chat): planning, extraction pipeline, data files,
+  specs, review of handoffs, verification checklists.
+- Implementation is currently an EVAL SERIES: GPT Sol (Codex) and
+  Opus 4.8 each run the round's *-SPEC.md; Opus 4.6 grades both
+  (claims-vs-diff audit + letter grade) and, when justified, emits a
+  MERGE-SPEC porting the loser's superior pieces onto the winner's
+  base. The accepted base + merge is what ships. Repo AGENTS.md points
+  implementers at ONBOARD-SOL.md (the implementer onboarding
+  contract).
 - Nathanael: DOSBox verification, device testing, deploys (automatic
-  via push), decisions. Feedback arrives as PHASE*-REVIEW pdfs or
-  direct device-pass reports (as happened for all three storage-pass
-  rounds above).
+  via push), decisions, and running the eval series.
+- Data-file process rule (unchanged, load-bearing): src/data/*.json is
+  authored ONLY by the chat pipeline, regenerated ONLY from committed
+  copies. Implementers never edit data content; DOSBox answers go to
+  FABLE, who produces the patch files; the implementer commits and
+  re-verifies them.
 
-## Standing directives (user-set)
+## Project-file methodology (established 2026-07-23)
+
+Three tiers. The repo buildout/ keeps EVERYTHING forever; project
+files carry only what a new chat needs.
+
+1. CANONICAL LIVING SET — always in project files, updated at
+   boundaries: CHAT-HANDOFF.md (this file), PLAN.md, PHASE5-PLAN.md
+   (during phase 5), PIPELINE-INSIGHTS-v2.md, PROJECT.md,
+   ONBOARD-SOL.md, font-map.json, toc.json, intro.json,
+   transcode_audio.py.
+2. DATA SET — chapt-01.json + lexicon-chapt01.json stay as the schema
+   reference, plus the CURRENT chapter's data files. Once a chapter is
+   device-verified and its pipeline lessons harvested, its data files
+   may rotate out (repo keeps them).
+3. ROLLING ROUND DOCS — the current round's SPEC + any UNRESOLVED
+   VERIFY doc + the PREVIOUS round's HANDOFF. When round N+1 starts,
+   round N-1's spec/handoff leave the project files — but ONLY after
+   their durable lessons are harvested into the canonical set. Never
+   remove an unresolved VERIFY doc. Example: entering 5C, keep
+   5C-SPEC + HANDOFF-5B-SOL + VERIFY-chapt02 (if still open); remove
+   5A/5B specs and HANDOFF-5A (harvested here).
+
+## Harvested 5A/5B lessons (settled — do not re-derive)
+
+- MODULE-MAP CACHE: browsers cache FAILED dynamic imports by URL;
+  resetting the JS promise memo (the B7 lesson) is necessary but NOT
+  sufficient for chunk-load retry. The user-facing Retry does a full
+  location.reload() (fresh document = fresh module map; the shell is
+  precached so the reload is cheap). Near-unreachable in practice
+  since chunks are precached.
+- getBuiltChapterIds / isChapterAvailable answer from glob KEYS
+  without loading any chunk — packs.js, the TOC, and getNextChapter
+  depend on this staying cheap.
+- Lexicon refs live in three buckets (lemmas, exampleWords,
+  ch1_lemma_mirror); getLemma searches all three with
+  preferChapterId + pool context so a ref existing in two loaded
+  chapters resolves to the ACTIVE chapter's copy. Chapter 2 re-audios
+  mirror words to chapt_2_a_voc* for audio-pack self-containment
+  (the original ISO itself duplicates those ten WAVs into CHAPT_2).
+- Pipeline: emit lexicon-chaptNN.json (no dash) going forward; the
+  glob tolerates both current spellings.
+- divide items: division[] = 1-BASED GAP INDICES between grapheme
+  clusters (Intl.Segmenter granularity) — data patches must match.
+- divide hint: hint.contentRef resolves by camelCasing an in-chapter
+  heading ("Three Syllable Rules" -> threeSyllableRules); supply
+  hint.content inline when no in-chapter source exists.
+- Completion semantics as built: contentAudio (incl. topicPages)
+  completes on visit; scored activities (select, spell, divide,
+  placeAccent) complete when EVERY item has been answered correctly
+  at least once (retries allowed). Confirming this matches ch1
+  SelectActivity and the intended design is an open diagnose item
+  (device observation on the Gk->En drill suggested possible
+  divergence).
+- Bottom-nav (Learn/Drill/Exercise/Review) intermittent greyout: seen
+  twice on device, never reproduced, believed addressed in commit
+  fa8132f — WATCH ITEM in VERIFY-5B; if seen again, capture route +
+  steps immediately.
+- Preview/headless artifacts that are NOT bugs: ERR_FILE_NOT_FOUND
+  for deliberately revoked blob: URLs on fast route exits, and for
+  /audio/* autoplay in previews shipping no audio; headless Chrome
+  blocks untrusted-gesture autoplay.
+
+## Pipeline contracts for chapters 3+ (cumulative)
+
+- contentAudio mode vocabulary (dispatch mode-keyed, never by id):
+  objectivesPage, textPage, stepper, flashcard, equationChart,
+  vowelStair, diphthongRows, exploreGrid, fullOptionGrid,
+  selfCheckStepper, selfCheckSequence, reviewVocab (honors showNtFreq
+  and playAll:{audio,label}), reviewLetters, topicPages (topics[] of
+  {id,title,content[]}, in-activity topic stepper).
+- Activity types: contentAudio, select, spell, divide, placeAccent
+  (match/translate/parse/audioPlayer still unbuilt from the original
+  seven-type plan; expect them in later chapters).
+- RichContent blocks: heading, para, numbered, defList (BOTH forms:
+  ch1 tuple rows for tappable Greek; {term,def} objects for English
+  prose — prefer object form for prose), biblist, refs, note,
+  greekRows ({columns?, rows[{label, greek, syllables[], gloss, note,
+  audio}]}; positional layout auto-selected when columns exist +
+  counts match + no gloss — add an explicit layout:"positional" flag
+  for ch3+ to remove the inference), expander ({label, content[]},
+  closed by default, no nesting).
+- numbered items: supply explicit numeric markers OR rely on the <ol>
+  — never both (self-numbering triggers only on /^\(?\d+[.)]/).
+- select static option sets: optionValues[]; answer matches by VALUE;
+  null answer renders a pending state with Skip. Sentence prompts
+  carry {sentence, underline} where underline is the exact word.
+- Greek-tap contract: generators declare promptIsGreek + promptAudio;
+  greekTaps keys mark first STANDALONE occurrences; all displayed
+  Greek uses the shared .greek-say pattern.
+- speller: spellerTilesRef resolves via static
+  src/data/speller-tiles.json (39-tile keyboard contract);
+  single-source it at the next chapt-01 regen (drop the inline copy).
+- Every new chart is tested at 320px (overflow CLIPS, not scrolls).
+- Sequence arrays are pedagogy-derived, DOSBox-verified per chapter;
+  TBK storage order is never the answer.
+- Extraction reality: TBK plain strings + OpenScript fragments are
+  extractable; RICH-TEXT records (exercise word lists, underline
+  formatting, some popups) are NOT — expect roughly 75% extraction
+  with the remainder collected via a per-chapter VERIFY doc + DOSBox
+  screenshots. Format limit, not a session/chunking limit. (A bounded
+  binary rich-text-parser experiment is queued for 5C; success would
+  shrink the manual share for all 26 remaining chapters.)
+- Hebrew contamination: TBKs embed Hebrew-tutor shared resources
+  (Hebrew glosses, (Hi)/(Ni) stem labels, HebrewWord field names) —
+  detect and exclude these regions.
+
+## Standing directives (user-set) — every phase
 
 1. Fidelity to the original: glosses, instruction text, audio
-   semantics, visual arrangement -- never ad-lib content.
+   semantics, visual arrangement — never ad-lib content. Behavioral
+   claims about the original (e.g. auto-advance) require evidence or
+   a VERIFY item.
 2. Visual arrangement is pedagogy: preserve lists/indentation/spatial
-   layouts; no walls of text (keep the affective filter low). Core
-   lesson text renders prominently ABOVE charts; green note banners
-   are for parenthetical asides only.
-3. Sequential Previous/Next rail everywhere, following the original's
-   interleaved order (chapter JSON "sequence" array).
+   layouts; no walls of text. Core lesson text renders prominently
+   ABOVE charts; green note banners are parenthetical asides only.
+3. Sequential Previous/Next rail everywhere, following the chapter
+   JSON "sequence" array.
 4. Offline behavior never regresses; every phase ends with an
    airplane-mode check.
 5. Audio stops on page exit.
 6. No emoji in any deliverable.
-7. NO DEAD-END NEXT (2026-07-18): a greyed-out sequential Next must
-   never exist. At the end of a chapter's rail, Next opens a dialog
-   (Stay / Chapter Map / Table of Contents). Activity-LOCAL steppers
-   (e.g. Next Letter) may grey out at their last item, but the
-   sequential rail must always be present and live on every page.
-8. COLOR SEMANTICS (2026-07-18): blue text exclusively means tappable.
-   Everything non-tappable uses the dark green/ink text colors. Any
-   standalone Greek letter or word is tappable for audio (as in the
-   original) unless it is buried inside English prose; inline
-   exceptions are wired via greekTaps maps in the data.
-9. GREEK-TAP RULE (2026-07-18): all DISPLAYED Greek (prompts,
-   flashcard words, reading panes, chart glyphs) is tappable and
-   plays its audio; English translations/transliterations are not.
-   Covers displayed/prompt Greek, NOT answer-option buttons (option
-   audio would leak answers). Exceptions: Phonetic Reading Exercise
-   (phonetic English, no audio), spelling-keyboard tiles, and the
-   Review Letters Quick Chart (frozen as-is).
-10. NO FULL CACHE SCAN ON THE APP-LOAD OR ROUTE-MOUNT PATH
-    (2026-07-19, added after rounds 2-3 above): any code that needs the
-    exact audio-file count or a cache audit must go through the
-    persisted `audioCount` store / `reconcileAudioCache()` in
-    downloads.js, which only runs from the Settings screen. This is
-    now load-bearing precedent for the IndexedDB decision too --
-    whatever storage layer wins, cold app-load must never pay an
-    O(library size) cost.
+7. NO DEAD-END NEXT: at the end of a chapter's rail, Next opens the
+   end-of-chapter dialog. Activity-LOCAL steppers may grey out; the
+   sequential rail stays live on every page.
+8. COLOR SEMANTICS: blue (--link #1663c7) exclusively means tappable;
+   everything else uses ink/dark-green.
+9. GREEK-TAP RULE: all DISPLAYED Greek is tappable and plays its
+   audio; English is not; option buttons never carry audio.
+   Exceptions: Phonetic Reading Exercise, speller tiles, Review
+   Letters Quick Chart (frozen).
+10. NO FULL CACHE/STORE SCAN ON THE APP-LOAD OR ROUTE-MOUNT PATH.
+    Counts go through the persisted audioCount store / Settings-only
+    reconcileAudioCache().
 
 ## Audio semantics cheat-sheet (most-relitigated facts)
 
 - A_<letter> = name + sound (audioFull); A_<letter>N = name only
-  (audioShort). Charts/drills/exercises/Pronounce/Check Answer all use
-  audioShort. audioFull's ONLY consumer is the Learn Letters stepper.
-- CORRECTIONS (2026-07-18, device-verified): both the CAPITALS drill
-  and the LETTER NAMES AND SOUNDS drill use audioShort (name only) --
-  the earlier audioFull claims for these were wrong.
-- Review Letters Quick Chart taps use audioShort; its Pronounce column
-  was removed (PHASE4-REVIEW item 18).
-- A_NAME_1..24 = PERSONAL names, A_PLAC_1..11 = place names -- Reading
-  exercise pools, NOT letter audio.
-- A_VOC1..10 = vocab lemmas alphabetically (pairing listen-verified);
-  A_VOCL1 = whole list; A_ALPHAB = 27s alphabet recitation.
-- A_INTRO1..4 = legacy Win 3.1 navigation narrations, unused by design.
+  (audioShort). audioFull's ONLY consumer is the Learn Letters
+  stepper; everything else uses audioShort (twice-corrected fact).
+- A_NAME_1..24 = PERSONAL names, A_PLAC_1..11 = place names (Reading
+  exercise pools), NOT letter audio.
+- A_VOC1..10 = ch1 vocab alphabetically (listen-verified);
+  B_VOC1..10 = ch2 vocab (SCRIPT-verified via the TBK SayWord
+  dispatch table, except echo=b_voc4 by elimination).
+  chapt_2_a_voc1..10 are deliberate duplicates of the ch1 clips
+  (pack self-containment — mirrors the ISO).
+- A_INTRO1..4 unused by design.
 
-## Immediate queue (as of 2026-07-19)
+## Immediate queue (as of 2026-07-23)
 
-1. **Phase 4.5 DONE** (shipped + device-verified; see live state). Only
-   residual: if you want belt-and-braces, re-run the airplane-mode walk
-   and a Download-All on the iPad post-4.5 (both unchanged logic). Not
-   blocking.
-2. Chat (new conversation): phase 5 vertical-buildout spec. Start with
-   chapter 2 extraction (forcing
-   function for the remaining unknown font codes ! # $ { } ~ | \ ` = :
-   ; -- the Greek Keyboard photo suggests !/#/$ are breathing+accent
-   combos). Pipeline adoption of the mode vocabulary + contracts above.
-   B5 lazy-loading implementation (JS chunks -- independent of 4.5's
-   audio-byte question). RE-UPLOAD the ISO to that chat.
-3. Carried nits (fix when touched): Escape/initial-focus pattern for
-   the speller-keyboard and clear-confirm modals; playwright-core as a
-   devDependency (five sessions of hand-rolled CDP drivers now,
-   including the CDP-driven verification of every storage-pass round).
+1. Nathanael: DOSBox collection with VERIFY-chapt02.md + ADDENDUM
+   (blockers: B1 sequence walk, D2/D4 drill answers, E1 the 21
+   division words; plus J1 auto-advance evidence, J2 divider glyph,
+   J3 option labels). Return filled doc + screenshots TO FABLE.
+2. Fable: chapter-2 data patch (chapt-02.json, lexicon, font-map
+   promotions) + a short 5B-PATCH-SPEC for the implementer round.
+3. Implementer round (Sol vs Opus 4.8): land the patch, re-run
+   verify, append §9 to HANDOFF-5B-SOL.md.
+4. Nathanael: VERIFY-5B device pass (includes the bottom-nav watch
+   item and the completion-semantics observation).
+5. Then 5C: recon pass over chapters 3-8 (string dumps + audio
+   inventories, no build) + the bounded rich-text parser experiment;
+   PHASE5-PLAN ledger + cohort batching from evidence.
+6. Repo hygiene (anytime): commit ONBOARD-SOL.md to buildout/ and
+   repoint AGENTS.md to the repo-relative path (it currently points
+   at an absolute local path, which won't survive a machine change
+   and hides the doc from the portfolio).
+7. Carried nits (fix when touched): Escape/initial-focus for speller
+   and clear-confirm modals; playwright-core as a devDependency.
 
 ## Known open questions
 
-- Phase 4.5 IndexedDB migration: DONE — decided, built, Chrome-verified,
-  shipped, and device-verified (instant cold start with 8521 files in
-  IDB). No open item.
-- Font-map unknown codes resolve at chapter 2.
-- C3 multi-day retention: Download All completed on iPhone AND iPad
-  (persistent storage granted on both, quota tens of GB); no report yet
-  of files disappearing over days. Still an open watch item, unrelated
-  to the three regressions above.
-- Range-request serving over IndexedDB blobs: DISSOLVED by 4.5 —
-  playback uses Blob object URLs, so there is no Range/SW in the audio
-  path at all.
+- Chapter-2 pending data (see queue) — the only 5B blocker.
+- Completion semantics confirmation (harvested-lessons item above).
+- C3 multi-day retention on device: quiet watch item.
+- Font-map stragglers ($ { } ~ | \ ` =) resolve at chapters 3+.
