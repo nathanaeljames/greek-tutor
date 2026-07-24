@@ -3,6 +3,7 @@
   // Records progress on mount: contentAudio pages count completed on visit;
   // scored activities complete on finish (handled inside their components).
   import { getChapter, getActivity } from '../lib/content.js';
+  import { stripMarkup } from '../lib/markup.js';
   import { markVisited, markCompleted } from '../lib/progress.js';
   import ContentAudio from './ContentAudio.svelte';
   import SelectActivity from './SelectActivity.svelte';
@@ -38,7 +39,7 @@
 
 {#if chapter && activity}
   {#if activity.instructions && !activity.instructions.startsWith('_verify')}
-    <div class="instructions">{activity.instructions}</div>
+    <div class="instructions">{stripMarkup(activity.instructions)}</div>
   {/if}
   <!-- Consecutive routes often render the SAME component type; Svelte would
        reuse the instance and its per-activity state (question list, counters,

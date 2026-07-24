@@ -20,6 +20,7 @@
 import toc from '../data/toc.json';
 import intro from '../data/intro.json';
 import spellerTiles from '../data/speller-tiles.json';
+import { stripMarkup } from './markup.js';
 
 // Per-chapter chunk loaders, keyed by chapter id. Vite emits one JS chunk per
 // matched file and vite-plugin-pwa precaches each (audit-proven). Filenames are
@@ -261,11 +262,11 @@ export function resolveItems(chapter, activity) {
       if (item.ref) {
         const lemma = getLemma(item.ref, chapter.id, item.pool);
         return lemma ? {
-          display: lemma.greek, secondary: lemma.gloss, audio: lemma.audio,
+          display: lemma.greek, secondary: stripMarkup(lemma.gloss), audio: lemma.audio,
           meta: { ...lemma, ref: item.ref }
         } : { display: item.ref, secondary: '(missing lemma)', audio: null, meta: {} };
       }
-      return { display: item.display || '(Greek text -- extraction pending)', secondary: item.answer || '',
+      return { display: item.display || '(Greek text -- extraction pending)', secondary: stripMarkup(item.answer) || '',
                audio: item.audio || null, meta: item };
     });
   }
@@ -334,14 +335,25 @@ export function buildSelectQuestions(chapter, activity) {
           : item[promptField];
       const needsUnderline = promptField === 'sentence' && !item.underline;
       return {
-        prompt: prompt || '',
+        prompt: stripMarkup(prompt) || '',
         promptAudio: promptIsGreek ? (item.promptAudio || item.audio || (lemma && lemma.audio) || null) : null,
         answerId: item.answer == null ? null : String(item.answer),
-        underline: item.underline || null,
+        underline: stripMarkup(item.underline) || null,
+        // Revealed once the item is finalized (one-attempt drills): the gloss,
+        // the properly accented form (Accent Rule), and which grapheme cluster
+        // carries the mark being asked about (Marking Recognition).
+        gloss: stripMarkup(item.gloss || (lemma && (lemma.glossShort || lemma.gloss))) || null,
+        correctForm: item.correctForm || null,
+        redMarkCluster: item.redMarkCluster || null,
         pending: !prompt || item.answer == null || needsUnderline
       };
     }));
-    const optionClass = options.every(option => option.label.length <= 8) ? 'wide' : '';
+    // Option-grid density follows label length: number tiles four-up, short
+    // names two-up, and the Accent Rule's full sentences one per row (the
+    // original stacks those full width; two-up clips nothing but reads badly
+    // at 320px).
+    const longest = options.reduce((n, option) => Math.max(n, option.label.length), 0);
+    const optionClass = longest <= 8 ? 'wide' : longest > 24 ? 'single' : '';
     return { options, questions, optionClass, promptIsGreek };
   }
 

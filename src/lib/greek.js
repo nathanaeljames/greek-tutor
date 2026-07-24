@@ -41,10 +41,26 @@ export function analyzeAccent(answerForm) {
   return { type, position, displayClusters, display: displayClusters.join('') };
 }
 
+// Hyphen join, not the raised dot: that glyph is the Greek colon this very
+// chapter teaches (Learn Other Marks -> Punctuation), so a dot-joined
+// "ἄγ·γε·λος" would read as punctuation to a learner mid-lesson.
 export function dividedForm(greek, division) {
   const gaps = new Set(division || []);
   const clusters = splitGraphemes(greek);
   return clusters.map((cluster, index) =>
-    index < clusters.length - 1 && gaps.has(index + 1) ? `${cluster} · ` : cluster
+    index < clusters.length - 1 && gaps.has(index + 1) ? `${cluster}-` : cluster
   ).join('');
+}
+
+// Marking Recognition asks about ONE mark and draws it red. Splitting the
+// cluster into base + combining mark and coloring only the mark does not
+// work: browsers keep shaping across an inline boundary that differs only in
+// color, so the mark glyph is painted with the BASE run's color and the red
+// never shows (verified in Chrome; the DOM color was correct, the glyph was
+// not). Marking the whole target cluster is the spec's sanctioned fallback.
+export function markClusters(text, redIndex) {
+  return splitGraphemes(text).map((cluster, index) => ({
+    text: cluster,
+    red: index + 1 === redIndex
+  }));
 }

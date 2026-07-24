@@ -47,14 +47,31 @@ button { font: inherit; cursor: pointer; }
 .grid.letters { grid-template-columns: repeat(6, 1fr); }
 .grid.options { grid-template-columns: repeat(2, 1fr); }
 .grid.options.wide { grid-template-columns: repeat(4, 1fr); }
+.grid.options.single { grid-template-columns: 1fr; }
 .tile { background: var(--card); border: 2px solid transparent; border-radius: 10px;
   padding: 10px 4px; font-size: 1.35rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 .tile.small { font-size: 0.95rem; padding: 10px 6px; }
 .tile:active { border-color: var(--teal); }
 .tile.correct { border-color: var(--ok); background: #e6f2e6; }
 .tile.incorrect { border-color: var(--bad); background: #f7e5e1; }
+/* 5B patch 2b: on the chapter-2 static-option drills a SELECTION reads blue
+   and the confirmed answer reads green; red is reserved for the feedback
+   banner. .tile.incorrect stays for chapter 1's retry drills. */
+.tile.selected { border-color: var(--link); background: #e8f0fb; }
+.tile.selected.correct { border-color: var(--ok); background: #e6f2e6; }
 .prompt { font-size: 3rem; text-align: center; padding: 18px; }
 .prompt.select-sentence { font-size: 1.25rem; line-height: 1.5; }
+/* 2e: Marking Recognition asks about ONE mark, drawn red inside the word.
+   The word itself stays a blue greek-say tap (directive 9); the marked
+   grapheme cluster's own color rule beats the inherited link blue. */
+.prompt.red-mark { font-size: 2.5rem; }
+.mark-red { color: var(--accent); }
+/* Revealed after a one-attempt item is finalized: the gloss and, for the
+   Accent Rule drill, the properly accented form. */
+.reveal-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
+  gap: 14px; margin: 2px 0 6px; }
+.reveal-gloss { color: var(--teal-dark); font-size: 1rem; }
+.reveal-form { font-size: 1.6rem; color: var(--ok); }
 .feedback { text-align: center; min-height: 1.5em; font-weight: 600; margin: 8px 0; }
 .feedback.ok { color: var(--ok); }
 .feedback.bad { color: var(--bad); }
@@ -194,12 +211,23 @@ button { font: inherit; cursor: pointer; }
   gap: 8px; width: 100%; align-items: center; }
 .rc-greekhead { padding: 7px 6px; border-bottom: 2px solid rgba(0,0,0,0.1); color: var(--teal-dark);
   font-size: 0.78rem; font-weight: 700; text-align: center; text-transform: uppercase; }
+/* Long headers ("Antepenult Possibilities") must wrap inside their column;
+   without this they overlap the neighboring cell instead of clipping, which
+   overflow checks never catch. break-word keeps whole words together where a
+   column can hold them and only splits a word that cannot fit at all. */
+.rc-greekhead > span { min-width: 0; overflow-wrap: break-word; line-height: 1.25; }
+.syllable-matrix .rc-greekhead { font-size: 0.68rem; letter-spacing: -0.01em; }
 .rc-syllable-row { border: none; border-bottom: 1px solid rgba(0,0,0,0.06); background: transparent;
   padding: 10px 6px; font-size: 1.35rem; text-align: center; }
 .rc-syllable-row.greek-say { color: var(--link); }
 .rc-greekrow { display: grid; grid-template-columns: repeat(var(--greek-cols), minmax(0, 1fr)); gap: 10px;
   align-items: baseline; border-bottom: 1px solid rgba(0,0,0,0.06); padding: 9px 6px; min-width: 0; }
 .rc-greeklabel { font-weight: 600; overflow-wrap: anywhere; }
+/* Accent Possibilities chart: each row is legended in a trailing unheaded
+   column ("Short Ultima" / "Long Ultima") -- English, so it opts out of the
+   row's Greek font. */
+.rc-rowlabel { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.8rem; font-weight: 700; color: var(--teal-dark); overflow-wrap: anywhere; }
 .rc-greekword { min-width: 0; font-size: 1.3rem; }
 .rc-greekword.greek-say { width: auto; color: var(--link); }
 .rc-greekgloss { color: var(--teal-dark); overflow-wrap: anywhere; }
@@ -266,6 +294,7 @@ button { font: inherit; cursor: pointer; }
 .rv-greek { font-size: 1.5rem; }
 .rv-gloss { font-size: 1rem; }
 .rv-freq { color: #8a8472; font-size: 0.9rem; }
+.rv-footnote { font-size: 0.85rem; color: #5a5a52; line-height: 1.45; margin-top: 10px; }
 
 /* ---- Review Letters Quick Chart (4-col matrix, A18: Pronounce col dropped) ---- */
 .letters-matrix { display: flex; flex-direction: column; }
@@ -341,6 +370,14 @@ button { font: inherit; cursor: pointer; }
   align-self: stretch; border: none; border-bottom: 2px solid #b9af91; background: transparent; color: var(--link);
   padding: 0; font-size: 0.65rem; font-weight: 700; }
 .divide-gap.selected { border-color: var(--link); background: #e8f0fb; }
+.divide-gap.correct { border-color: var(--ok); background: #e6f2e6; color: var(--ok); }
+.divide-gap.locked { opacity: 0.35; }
+/* 2c: the original's full-width "only one syllable" bar under the word. */
+.one-syllable-bar { display: block; width: 100%; margin: 4px 0 2px; padding: 11px 10px;
+  border: 2px solid #d8d0b8; border-radius: 10px; background: white; color: var(--ink);
+  font-size: 0.9rem; font-weight: 600; text-align: center; }
+.one-syllable-bar.selected { border-color: var(--link); background: #e8f0fb; color: var(--link); }
+.one-syllable-bar.correct { border-color: var(--ok); background: #e6f2e6; color: var(--ok); }
 .accent-types { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 14px; }
 .accent-slots { display: flex; justify-content: center; width: 100%; min-width: 0; }
 .accent-slot { flex: 1 1 0; min-width: 0; max-width: 48px; display: flex; flex-direction: column; align-items: center;
@@ -349,6 +386,20 @@ button { font: inherit; cursor: pointer; }
 .accent-slot span { font-size: 1.5rem; }
 .accent-slot small { color: #776f5d; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 0.65rem; }
 .accent-slot.selected { border-color: var(--link); background: #e8f0fb; box-shadow: inset 0 0 0 1px var(--link); }
+.accent-slot.correct { border-color: var(--ok); background: #e6f2e6; box-shadow: inset 0 0 0 1px var(--ok); color: var(--ok); }
+/* Accent-type buttons follow the same selection semantics as the slots, so
+   they use the blue/green pair rather than the teal .chip.active state. */
+.accent-types .chip.selected { border-color: var(--link); background: #e8f0fb; color: var(--link); }
+.accent-types .chip.correct { border-color: var(--ok); background: #e6f2e6; color: var(--ok); }
+/* 2d: root word + gloss header above the position row. */
+.accent-root { background: white; border-radius: 8px; padding: 8px 12px; margin-bottom: 14px; }
+.accent-root .label { font-size: 0.75rem; color: var(--teal-dark); font-weight: 700; text-transform: uppercase; }
+.accent-root-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+.accent-root-word { background: transparent; border: none; padding: 0; font-size: 1.7rem;
+  color: var(--link); text-align: left; }
+.accent-root-word:active { opacity: 0.6; }
+.accent-root-gloss { color: var(--teal-dark); font-size: 0.95rem; }
+.exercise-ref { color: var(--teal-dark); font-size: 0.85rem; font-weight: 700; }
 
 /* ---- Reading People, Places and Letters ---- */
 .cat-buttons { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 12px; }
@@ -399,7 +450,8 @@ button, a, input, select, textarea, label,
 .tile, .tk-key, .chip, .act-row, .menu-item, .eq-cell, .diph-tile, .diph-ex,
 .rv-greek, .lm-row, .rc-defrow, .rc-example, .greek-chip, .greek-tap,
 .seg, .flash-hidden, .icon-btn, .bb-item, .section-head, .collapse-head,
-.rc-expander summary, .divide-letter, .divide-gap, .accent-slot {
+.rc-expander summary, .divide-letter, .divide-gap, .accent-slot,
+.one-syllable-bar, .accent-root-word {
   touch-action: manipulation;
 }
 

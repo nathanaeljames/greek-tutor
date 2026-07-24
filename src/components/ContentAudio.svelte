@@ -348,6 +348,9 @@
         </div>
       {/each}
     </div>
+    <!-- The original prints the ntFreq legend under the chart, not as a note
+         banner: it explains the numbers already on screen. -->
+    {#if activity.footnote}<div class="rv-footnote">{activity.footnote}</div>{/if}
     <div class="controls">
       {#if activity.playAll || activity.sayWholeListAudio}
         <button class="btn secondary" on:click={() => play(activity.playAll?.audio || activity.sayWholeListAudio)}>{activity.playAll?.label || 'Say Whole List'}</button>

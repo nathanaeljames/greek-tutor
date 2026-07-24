@@ -1,4 +1,11 @@
 <script>
+  // Syllable Division Exercise: tap the numbered gaps between letters where
+  // the word breaks into syllables, then Check Answer.
+  //
+  // ANSWER POLICY (5B patch 2a): answerPolicy.attemptsPerItem === 1 means
+  // Check Answer finalizes the item right or wrong, reveals the hyphen-joined
+  // divided form, and auto-advances after autoAdvanceMs. The timer is cancelled
+  // on manual Previous/Next and on unmount. Completion = all items ATTEMPTED.
   import { onDestroy } from 'svelte';
   import { play } from '../lib/audio.js';
   import { randomFeedback } from '../lib/content.js';
@@ -12,6 +19,7 @@
   const items = activity.items || [];
   let itemIndex = 0;
   let selected = new Set();
+  let oneSyllable = false;
   let attempts = 0;
   let correct = 0;
   let feedback = '';
@@ -22,12 +30,15 @@
   let showScore = false;
   let pronounceEach = false;
   let advanceTimer = null;
-  const completedItems = new Set();
+  const attemptedItems = new Set();
 
   $: item = items[itemIndex] || null;
   $: letters = splitGraphemes(item && item.greek);
   $: pending = !item || !item.greek || !Array.isArray(item.division);
   $: hintBlocks = resolveHintBlocks(chapter, activity.hint);
+  $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
+  $: autoAdvanceMs = activity.answerPolicy?.autoAdvanceMs ?? 900;
+  $: revealed = answered && oneAttempt;
 
   function resolveHintBlocks(ch, hint) {
     if (!hint) return [];
@@ -44,10 +55,21 @@
   }
 
   function toggleGap(gap) {
+    if (answered) return;
+    oneSyllable = false;
     const next = new Set(selected);
     if (next.has(gap)) next.delete(gap);
     else next.add(gap);
     selected = next;
+    feedback = '';
+  }
+
+  // 2c: the one-syllable bar clears and locks the gap selections; the answer
+  // it submits is the empty division (kai is the pool's only one-syllable word).
+  function toggleOneSyllable() {
+    if (answered) return;
+    oneSyllable = !oneSyllable;
+    if (oneSyllable) selected = new Set();
     feedback = '';
   }
 
@@ -59,23 +81,22 @@
   function check() {
     if (pending || answered) return;
     attempts += 1;
-    if (sameGaps(item.division)) {
-      correct += 1;
-      completedItems.add(itemIndex);
-      feedback = randomFeedback(chapter, 'correct');
-      feedbackKind = 'ok';
+    attemptedItems.add(itemIndex);
+    const right = sameGaps(item.division);
+    if (right) correct += 1;
+    feedback = randomFeedback(chapter, right ? 'correct' : 'incorrect');
+    feedbackKind = right ? 'ok' : 'bad';
+    if (right || oneAttempt) {
       answered = true;
-      if (completedItems.size === items.length) markCompleted(activity.id);
+      if (attemptedItems.size === items.length) markCompleted(activity.id);
       clearTimeout(advanceTimer);
-      advanceTimer = setTimeout(() => move(1), 900);
-    } else {
-      feedback = randomFeedback(chapter, 'incorrect');
-      feedbackKind = 'bad';
+      advanceTimer = setTimeout(() => move(1), autoAdvanceMs);
     }
   }
 
   function resetItem() {
     selected = new Set();
+    oneSyllable = false;
     feedback = '';
     feedbackKind = '';
     answered = false;
@@ -97,6 +118,10 @@
     return `${correct} correct out of ${attempts} attempts (${Math.round((correct / attempts) * 100)}%)`;
   }
 
+  // Answer submitted, so Check Answer is live even with nothing selected once
+  // the one-syllable bar is the answer.
+  $: canCheck = !pending && !answered && (oneSyllable || selected.size > 0);
+
   onDestroy(() => clearTimeout(advanceTimer));
 </script>
 
@@ -112,14 +137,28 @@
           <span class="divide-letter greek">{letter}</span>
         {/if}
         {#if index < letters.length - 1}
-          <button class="divide-gap" class:selected={selected.has(index + 1)} aria-pressed={selected.has(index + 1)} on:click={() => toggleGap(index + 1)}>
+          <button class="divide-gap"
+            class:selected={selected.has(index + 1)}
+            class:correct={revealed && item.division.includes(index + 1)}
+            class:locked={oneSyllable}
+            aria-pressed={selected.has(index + 1)}
+            on:click={() => toggleGap(index + 1)}>
             <span>{index + 1}</span>
           </button>
         {/if}
       {/each}
     </div>
+    {#if activity.oneSyllableButton}
+      <button class="one-syllable-bar"
+        class:selected={oneSyllable}
+        class:correct={revealed && item.division.length === 0}
+        aria-pressed={oneSyllable}
+        on:click={toggleOneSyllable}>
+        {activity.oneSyllableButton}
+      </button>
+    {/if}
     <div class="feedback {feedbackKind}">{feedback}</div>
-    {#if showAnswer}
+    {#if showAnswer || revealed}
       <div class="exercise-answer"><span>Answer</span><span class="greek">{dividedForm(item.greek, item.division)}</span></div>
     {/if}
   {/if}
@@ -129,7 +168,7 @@
     <button class="btn secondary" disabled={itemIndex <= 0} on:click={() => move(-1)}>Previous</button>
     <button class="btn secondary" on:click={() => (showScore = !showScore)}>Score</button>
     <button class="btn secondary" disabled={itemIndex >= items.length - 1} on:click={() => move(1)}>Next</button>
-    <button class="btn" disabled={pending || answered || !selected.size} on:click={check}>Check Answer</button>
+    <button class="btn" disabled={!canCheck} on:click={check}>Check Answer</button>
     <button class="btn secondary" on:click={() => (showHint = !showHint)}>{activity.hint?.label || 'Hint'}</button>
   </div>
   <div class="exercise-checks">

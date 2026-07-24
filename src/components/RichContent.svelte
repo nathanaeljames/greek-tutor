@@ -10,6 +10,7 @@
   // font and play their clip on tap. defList rows [term, value, audio?] play
   // the row's clip when present.
   import { play } from '../lib/audio.js';
+  import Marked from './Marked.svelte';
 
   export let blocks = [];
 
@@ -20,8 +21,13 @@
   // chips (A6, Six Points "Linguistic Pronunciation Descriptions").
   const isLettersList = v => v && typeof v === 'object' && Array.isArray(v.letters);
   const defRows = block => block.rows || (block.items || []).map(item => [item.term, item.def, item.audio]);
+  // A matrix row fills the declared columns with cells instead of the usual
+  // greek-word + gloss pair. Rows may also carry a row LABEL: the Accent
+  // Possibilities chart legends its two rows "Short Ultima" / "Long Ultima"
+  // in a trailing unheaded column.
   const isSyllableMatrix = block => Array.isArray(block.columns)
-    && block.rows.every(row => Array.isArray(row.syllables) && row.syllables.length === block.columns.length && !row.gloss && !row.label);
+    && block.rows.every(row => Array.isArray(row.syllables) && row.syllables.length === block.columns.length && !row.gloss);
+  const hasRowLabels = block => block.rows.some(row => row.label);
 
   // greekTaps: split an item's text on STANDALONE substring matches (first
   // standalone occurrence per key) and render those substrings as tappable
@@ -66,10 +72,10 @@
 <div class="rich">
   {#each blocks as b}
     {#if b.type === 'heading'}
-      <div class="rc-heading">{b.text}</div>
+      <div class="rc-heading"><Marked text={b.text} /></div>
 
     {:else if b.type === 'para'}
-      <p class="rc-para">{b.text}</p>
+      <p class="rc-para"><Marked text={b.text} /></p>
       {#if b.example}
         <button class="rc-example" class:tappable={b.example.audio} on:click={() => playAudio(b.example.audio)}>
           <span class="greek">{b.example.greek}</span>
@@ -78,12 +84,12 @@
       {/if}
 
     {:else if b.type === 'numbered'}
-      {#if b.preamble}<p class="rc-preamble">{b.preamble}</p>{/if}
+      {#if b.preamble}<p class="rc-preamble"><Marked text={b.preamble} /></p>{/if}
       {@const selfNum = (() => { const re = /^\(?\d+[.)]/; return b.items.length > 0 && b.items.every(it => it.label && re.test(it.label)); })()}
       <ol class="rc-list" class:authored-labels={selfNum}>
         {#each b.items as it}
           <li>
-            {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#if it.greekTaps}{#each splitTaps(it.text, it.greekTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}{:else}{it.text || ''}{/if}
+            {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#if it.greekTaps}{#each splitTaps(it.text, it.greekTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}{:else}<Marked text={it.text || ''} />{/if}
             {#if it.example}
               <button class="rc-example" class:tappable={it.example.audio} on:click={() => playAudio(it.example.audio)}>
                 <span class="greek">{it.example.greek}</span>
@@ -104,14 +110,14 @@
                     </div>
                   {:else}
                     <button class="rc-defrow" class:tappable={row[2]} on:click={() => playAudio(row[2])}>
-                      <span class="rc-term greek">{row[0]}</span>
-                      <span class="rc-val greek">{row[1]}</span>
+                      <span class="rc-term greek"><Marked text={row[0]} /></span>
+                      <span class="rc-val greek"><Marked text={row[1]} /></span>
                     </button>
                   {/if}
                 {/each}
               </div>
             {/if}
-            {#if it.note}<div class="rc-inlinenote">{it.note}</div>{/if}
+            {#if it.note}<div class="rc-inlinenote"><Marked text={it.note} /></div>{/if}
           </li>
         {/each}
       </ol>
@@ -130,8 +136,8 @@
             </div>
           {:else}
             <button class="rc-defrow" class:tappable={row[2]} on:click={() => playAudio(row[2])}>
-              <span class="rc-term greek">{row[0]}</span>
-              <span class="rc-val greek">{row[1]}</span>
+              <span class="rc-term greek"><Marked text={row[0]} /></span>
+              <span class="rc-val greek"><Marked text={row[1]} /></span>
             </button>
           {/if}
         {/each}
@@ -139,27 +145,32 @@
 
     {:else if b.type === 'greekRows'}
       {@const syllableMatrix = isSyllableMatrix(b)}
+      {@const rowLabels = syllableMatrix && hasRowLabels(b)}
+      {@const matrixCols = syllableMatrix ? b.columns.length + (rowLabels ? 1 : 0) : 0}
       <div class="rc-greekrows" class:syllable-matrix={syllableMatrix}>
         {#if b.columns}
-          <div class="rc-greekhead" style={`--greek-cols:${b.columns.length}`}>
+          <div class="rc-greekhead" style={`--greek-cols:${syllableMatrix ? matrixCols : b.columns.length}`}>
             {#each b.columns as column}<span>{column}</span>{/each}
+            {#if rowLabels}<span>&nbsp;</span>{/if}
           </div>
         {/if}
         {#each b.rows as row}
           {#if syllableMatrix}
             {#if row.audio}
-              <button class="rc-syllable-row greek greek-say" style={`--greek-cols:${b.columns.length}`} on:click={() => playAudio(row.audio)}>
+              <button class="rc-syllable-row greek greek-say" style={`--greek-cols:${matrixCols}`} on:click={() => playAudio(row.audio)}>
                 {#each row.syllables as syllable}<span>{syllable || '\u00a0'}</span>{/each}
+                {#if rowLabels}<span class="rc-rowlabel">{row.label || '\u00a0'}</span>{/if}
               </button>
             {:else}
-              <div class="rc-syllable-row greek" style={`--greek-cols:${b.columns.length}`}>
+              <div class="rc-syllable-row greek" style={`--greek-cols:${matrixCols}`}>
                 {#each row.syllables as syllable}<span>{syllable || '\u00a0'}</span>{/each}
+                {#if rowLabels}<span class="rc-rowlabel">{row.label || '\u00a0'}</span>{/if}
               </div>
             {/if}
           {:else}
             {@const cellCount = (row.label ? 1 : 0) + (row.greek ? 1 : 0) + (row.gloss != null && row.gloss !== '' ? 1 : 0)}
             <div class="rc-greekrow" style={`--greek-cols:${Math.max(cellCount, 1)}`}>
-              {#if row.label}<span class="rc-greeklabel">{row.label}</span>{/if}
+              {#if row.label}<span class="rc-greeklabel"><Marked text={row.label} /></span>{/if}
               {#if row.greek}
                 {#if row.audio}
                   <button class="rc-greekword greek greek-say" on:click={() => playAudio(row.audio)}>
@@ -175,7 +186,7 @@
                   </span>
                 {/if}
               {/if}
-              {#if row.gloss != null && row.gloss !== ''}<span class="rc-greekgloss">{row.gloss}</span>{/if}
+              {#if row.gloss != null && row.gloss !== ''}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
             </div>
           {/if}
         {/each}
@@ -184,7 +195,7 @@
 
     {:else if b.type === 'expander'}
       <details class="rc-expander">
-        <summary>{b.label}</summary>
+        <summary><Marked text={b.label} /></summary>
         <div class="rc-expander-body">
           {#if b.content && b.content.length}
             <svelte:self blocks={b.content} />
@@ -198,15 +209,15 @@
       {#if b.starNote}<div class="rc-starnote">{b.starNote}</div>{/if}
       <div class="rc-biblist">
         {#each b.items as entry}
-          <div class="rc-bibentry">{entry}</div>
+          <div class="rc-bibentry"><Marked text={entry} /></div>
         {/each}
       </div>
 
     {:else if b.type === 'refs'}
-      <div class="rc-refs">{b.text}</div>
+      <div class="rc-refs"><Marked text={b.text} /></div>
 
     {:else if b.type === 'note'}
-      <div class="note">{b.text}</div>
+      <div class="note"><Marked text={b.text} /></div>
     {/if}
   {/each}
 </div>
