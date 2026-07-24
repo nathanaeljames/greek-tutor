@@ -485,3 +485,61 @@ No chapter 1 behavior, audio architecture, service-worker route, loader,
 progress backend, or data file content was changed. No cache/store scan was
 added to app load or route mount. The `{#key activityId}` remount boundary in
 `ActivityHost` is intact.
+
+### 9.6 Merge ports from the parallel Sol run (5B-PATCH-MERGE-SPEC)
+
+Four surgical ports onto this Opus base. No data edits, no refactors.
+
+1. **Revisit lock** -- `DivideActivity` and `PlaceAccentActivity` now record a
+   finalized item's state in a `results` map and RESTORE it on manual
+   navigation (`restoreItem` / `restoreWord`) instead of resetting it. Under
+   `attemptsPerItem: 1` an answered item stays answered, keeps its revealed
+   form, and cannot re-fire `attempts += 1`. `showAnswer` is left out of the
+   restore path so the reveal stays derived from `revealed = answered &&
+   oneAttempt` and the Show Answer checkbox stays user-controlled.
+2. **Root word inert** -- the Accent Placement root header is now an inert
+   `<span>` rendered in `--ink`, not a `greek-say` button. The item's `audio`
+   (`chapt_2_b_ex2_N`) is indexed to the inflected `answerForm`, not the shared
+   root, so tapping the root played the wrong clip. `.accent-root-word` was
+   removed from the universal `touch-action` selector list and its `:active`
+   rule dropped. The inflected clip stays reachable via Pronounce Each Exercise.
+3. **Responsive accent slots** -- the slots container carries a derived
+   `--accent-size` (`max(14, min(24, 230 / clusterCount))px`); `.accent-slot
+   span` reads it and `.accent-slot + .accent-slot` margin dropped 4px -> 2px so
+   the 12-cluster `ἐβαπτίσθημεν` row fits at 320px.
+4. **Completion at answer time** -- `SelectActivity.choose()` records
+   `markCompleted` for the final item when it is ANSWERED (one-attempt drills
+   only), so leaving the route inside the 4s auto-advance window no longer loses
+   progress. The existing `advance()` completion path stays for the retry
+   drills; double-marking is idempotent.
+
+Retained from the Opus base and explicitly NOT reverted: the whole-cluster red
+mark (`markClusters`), the `isSyllableMatrix` row-label allowance, `stripMarkup`
+coverage, `Marked.svelte` / `markup.js`, and the `single` option-grid class.
+
+**Acceptance results (all via headless Chrome, iPhone UA, 320px):**
+
+- `npm run verify`: PASS. Build clean; `chapt-01-8ZoFoXk9.js` hash UNCHANGED;
+  `chapt-02-CELEYLYt.js` re-emitted, precached, out of the main bundle; precache
+  count 19.
+- Chapter-2 rail 20/20 + end dialog, chapter-1 rail 26/26 + end dialog, zero
+  pending placeholders, zero console/page errors, no horizontal overflow.
+- Patch 1 (Divide): item 1 answered wrong, manual Next then Previous -- item 1
+  still finalized, Check Answer disabled, `ἄγ-γε-λος` still shown, the recorded
+  guess + feedback restored, Score reads 1 attempt not 2. Identical result on
+  PlaceAccent (word 1, `βάπτισαι`, Circumflex+slot restored, 1 attempt).
+- Patch 2: root word renders as a `<span>` in `rgb(34, 37, 42)`, not the link
+  blue.
+- Patch 3: word 2 (`ἐβαπτίσθημεν`) renders all 12 slots with no row clip and
+  `scrollWidth` 320; slot glyph resolved to ~19px.
+- Patch 4: reached the final Accent Rule item (not completed beforehand),
+  answered it, navigated away in <4s -- `completed.c2_drill_accent_rule` is
+  true in localStorage.
+- Full re-run of the 5B-patch divide/place-accent flow suite: 25/25 PASS (the
+  restore change did not disturb the one-attempt finalize/reveal/auto-advance
+  behavior).
+
+VERIFY items V1 (red mark on device), V2 (one-syllable bar vs. the "1" button),
+and V3 (Pronounce Word button + which form it speaks) remain open for
+Nathanael's DOSBox/device pass; the shipped base's behavior for each is recorded
+in the spec.

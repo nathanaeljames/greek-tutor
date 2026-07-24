@@ -34,6 +34,7 @@
   let pronounceEach = false;
   let advanceTimer = null;
   const attemptedWords = new Set();
+  const results = new Map();
 
   $: word = words[wordIndex] || null;
   $: answer = analyzeAccent(word && word.answerForm);
@@ -43,7 +44,19 @@
   $: autoAdvanceMs = activity.answerPolicy?.autoAdvanceMs ?? 900;
   $: revealed = answered && oneAttempt;
 
-  function resetWord() {
+  // Under attemptsPerItem: 1 a finalized word stays finalized on revisit --
+  // reopening it would let a wrong answer be retried and re-count attempts.
+  // showAnswer stays user-controlled; the reveal is derived from `revealed`.
+  function restoreWord() {
+    const result = results.get(wordIndex);
+    if (result) {
+      accentType = result.accentType;
+      accentPosition = result.accentPosition;
+      feedback = result.feedback;
+      feedbackKind = result.feedbackKind;
+      answered = true;
+      return;
+    }
     accentType = null;
     accentPosition = null;
     feedback = '';
@@ -57,7 +70,7 @@
     const nextIndex = Math.max(0, Math.min(words.length - 1, wordIndex + delta));
     if (nextIndex === wordIndex) return;
     wordIndex = nextIndex;
-    resetWord();
+    restoreWord();
     const nextWord = words[wordIndex];
     if (pronounceEach && nextWord && nextWord.audio) play(nextWord.audio);
   }
@@ -77,6 +90,13 @@
     if (ok || oneAttempt) {
       answered = true;
       if (attemptedWords.size === words.length) markCompleted(activity.id);
+      results.set(wordIndex, {
+        accentType,
+        accentPosition,
+        feedback,
+        feedbackKind,
+        correct: ok
+      });
       clearTimeout(advanceTimer);
       advanceTimer = setTimeout(() => move(1), autoAdvanceMs);
     }
@@ -95,7 +115,10 @@
     <div class="accent-root">
       <div class="label">{activity.ui?.header || 'Root Greek Word'}</div>
       <div class="accent-root-line">
-        <button class="accent-root-word greek greek-say" disabled={!word.audio} on:click={() => word.audio && play(word.audio)}>{word.root}</button>
+        <!-- Inert: word.audio (b_ex2_N) belongs to the inflected answerForm,
+             not the root, so tapping the root would play the wrong clip. The
+             inflected clip stays reachable via Pronounce Each Exercise. -->
+        <span class="accent-root-word greek">{word.root}</span>
         {#if word.rootGloss}<span class="accent-root-gloss">({word.rootGloss})</span>{/if}
       </div>
     </div>
@@ -113,7 +136,10 @@
           on:click={() => { if (!answered) { accentType = type; feedback = ''; } }}>{type}</button>
       {/each}
     </div>
-    <div class="accent-slots" aria-label="Choose accent position">
+    <div
+      class="accent-slots"
+      style={`--accent-size:${Math.max(14, Math.min(24, 230 / Math.max(answer.displayClusters.length, 1)))}px`}
+      aria-label="Choose accent position">
       {#each answer.displayClusters as letter, index}
         <button class="accent-slot greek"
           class:selected={accentPosition === index}

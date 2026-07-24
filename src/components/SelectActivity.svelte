@@ -89,6 +89,9 @@
     if (right || oneAttempt) {
       // One attempt: the item is done either way and the answer is revealed.
       answered = true;
+      // Completion is defined by attempted items, so record the final item when
+      // it is ANSWERED. Route exit cancels the timer, not progress.
+      if (oneAttempt && qIndex === questions.length - 1 && activity.id) markCompleted(activity.id);
       clearTimeout(advanceTimer);
       advanceTimer = setTimeout(advance, autoAdvanceMs ?? 900);
     }

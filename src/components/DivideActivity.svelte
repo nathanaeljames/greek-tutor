@@ -31,6 +31,7 @@
   let pronounceEach = false;
   let advanceTimer = null;
   const attemptedItems = new Set();
+  const results = new Map();
 
   $: item = items[itemIndex] || null;
   $: letters = splitGraphemes(item && item.greek);
@@ -89,12 +90,31 @@
     if (right || oneAttempt) {
       answered = true;
       if (attemptedItems.size === items.length) markCompleted(activity.id);
+      results.set(itemIndex, {
+        selected: [...selected],
+        oneSyllable,
+        feedback,
+        feedbackKind,
+        correct: right
+      });
       clearTimeout(advanceTimer);
       advanceTimer = setTimeout(() => move(1), autoAdvanceMs);
     }
   }
 
-  function resetItem() {
+  // Under attemptsPerItem: 1 a finalized item stays finalized on revisit --
+  // reopening it would let a wrong answer be retried and re-count attempts.
+  // showAnswer stays user-controlled; the reveal is derived from `revealed`.
+  function restoreItem() {
+    const result = results.get(itemIndex);
+    if (result) {
+      selected = new Set(result.selected);
+      oneSyllable = result.oneSyllable;
+      feedback = result.feedback;
+      feedbackKind = result.feedbackKind;
+      answered = true;
+      return;
+    }
     selected = new Set();
     oneSyllable = false;
     feedback = '';
@@ -108,7 +128,7 @@
     const nextIndex = Math.max(0, Math.min(items.length - 1, itemIndex + delta));
     if (nextIndex === itemIndex) return;
     itemIndex = nextIndex;
-    resetItem();
+    restoreItem();
     const nextItem = items[itemIndex];
     if (pronounceEach && nextItem && nextItem.audio) play(nextItem.audio);
   }
