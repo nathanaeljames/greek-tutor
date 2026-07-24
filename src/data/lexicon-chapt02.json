@@ -1,5 +1,5 @@
 {
- "_comment": "Chapter 2 (Syllables & Accents) lexicon. Lemma glosses + NT frequencies extracted verbatim from 2_ACCENT.TBK review-vocabulary chart. Audio pairing for b_voc1..10 is SCRIPT-VERIFIED (SayWord dispatch table in the TBK maps word ids to wav files directly), except echo=b_voc4 which is by alphabetical elimination -- listen-verify. exampleWords include chapter-1 lemmas reused by chapter-2 drills/exercises (duplicated here deliberately so chapter chunks stay self-contained under B5 lazy loading). Their audio uses chapt_2_a_voc* -- the ORIGINAL ISO duplicates chapter 1's ten vocab WAVs inside CHAPT_2, so the chapter-2 audio pack is self-contained; the transcode pipeline's path-based ids preserve that duplication.",
+ "_comment": "Chapter 2 (Syllables & Accents) lexicon. Lemma glosses + NT frequencies extracted verbatim from 2_ACCENT.TBK review-vocabulary chart. Audio pairing for b_voc1..10 is SCRIPT-VERIFIED (SayWord dispatch table in the TBK maps word ids to wav files directly), except echo=b_voc4 which is by alphabetical elimination -- listen-verify. exampleWords include chapter-1 lemmas reused by chapter-2 drills/exercises (duplicated here deliberately so chapter chunks stay self-contained under B5 lazy loading). Their audio uses chapt_2_a_voc* -- the ORIGINAL ISO duplicates chapter 1's ten vocab WAVs inside CHAPT_2, so the chapter-2 audio pack is self-contained; the transcode pipeline's path-based ids preserve that duplication. PATCHED 2026-07-24 against the completed VERIFY-chapt02 pass (G1-G4 listen checks, gloss corrections from DOSBox charts, v=nu confirmed).",
  "lemmas": {
   "adelphos": {
    "greek": "ἀδελφός",
@@ -40,7 +40,7 @@
    "_legacy": "e@xw",
    "glossShort": "I have",
    "ntFreq": 708,
-   "_verify": "b_voc4 pairing is by alphabetical elimination only (the SayWord table names all others); listen-check"
+   "_note": "b_voc4 = echo listen-CONFIRMED (VERIFY G1)."
   },
   "kosmos": {
    "greek": "κόσμος",
@@ -118,42 +118,41 @@
    "gloss": "of man",
    "audio": null,
    "_legacy": "a]nqrw<pou",
-   "_verify": "no dedicated audio found; chart row may be silent or reuse anthropos"
+   "_note": "Chart row without dedicated audio in the original; renders ink/inert."
   },
   "anthropo_dat": {
    "greek": "ἀνθρώπῳ",
    "gloss": "to/for man",
    "audio": null,
    "_legacy": "a]nqrw<p&",
-   "_verify": "no dedicated audio found"
+   "_note": "Chart row without dedicated audio in the original; renders ink/inert."
   },
   "anthropon": {
    "greek": "ἄνθρωπον",
    "gloss": "man (object)",
    "audio": null,
    "_legacy": "a@nqrwpon",
-   "_verify": "no dedicated audio found"
+   "_note": "Chart row without dedicated audio in the original; renders ink/inert."
   },
   "anthrope": {
    "greek": "ἄνθρωπε",
    "gloss": "O man",
    "audio": null,
    "_legacy": "a@nqrwpe",
-   "_verify": "no dedicated audio found"
+   "_note": "Chart row without dedicated audio in the original; renders ink/inert."
   },
   "anthropon_gen": {
    "greek": "ἀνθρώπων",
    "gloss": "of men",
    "audio": null,
    "_legacy": "a]nqrw<pwn",
-   "_verify": "accent rule drill item; audio unknown"
+   "_note": "Chart row without dedicated audio in the original; renders ink/inert."
   },
   "luo": {
    "greek": "λύω",
    "gloss": "I loose",
    "audio": "chapt_2_b_vb1",
-   "_legacy": "lu<w",
-   "_verify": "vb1..vb6 order inferred from chart row order; listen-check"
+   "_legacy": "lu<w"
   },
   "lueis": {
    "greek": "λύεις",
@@ -189,8 +188,7 @@
    "greek": "ἦλθεν",
    "gloss": "he went (Jn 1:7)",
    "audio": "chapt_2_b_ac1",
-   "_legacy": "h#lqen",
-   "_verify": "ac1..ac5 pairing inferred from chart button adjacency; listen-check all five"
+   "_legacy": "h#lqen"
   },
   "ekeinos": {
    "greek": "ἐκεῖνος",
@@ -251,7 +249,7 @@
    "gloss": "I am (Jn 6:35)",
    "audio": "chapt_2_b_egoeim",
    "_legacy": "]Egw< ei]mi",
-   "_verify": "both b_egoei and b_egoeim exist on the ISO with identical size; which is referenced live needs a check"
+   "_note": "b_egoei and b_egoeim are identical recordings (G4); egoeim wired."
   },
   "dia": {
    "greek": "διά",
@@ -273,10 +271,10 @@
   },
   "par_auto": {
    "greek": "παρ᾽ αὐτῷ",
-   "gloss": "with him",
+   "gloss": "beside him",
    "audio": "chapt_2_b_paraut",
    "_legacy": "par ] au]t&?",
-   "_verify": "which marks topic shows this example (apostrophe page?) -- confirm placement"
+   "_note": "Used in the Marking Recognition Drill (apostrophe item), not on the Apostrophe learn page."
   },
   "kai": {
    "greek": "καί",
@@ -298,62 +296,56 @@
   },
   "moses": {
    "greek": "Μωϋσῆς",
-   "gloss": "Moses",
+   "gloss": "Moses (Jn 1:45)",
    "audio": "chapt_2_b_moses",
    "_legacy": "Mwu*sh?j"
   },
   "moses_x": {
-   "greek": null,
-   "gloss": null,
+   "greek": "Μωϋσῆς",
+   "gloss": "Moses (accent recorded on the final syllable)",
    "audio": "chapt_2_b_mosesx",
-   "_legacy": null,
-   "_verify": "b_mosesx.wav exists and the SayWord table references it; unknown which display form it pairs with (Moses without diaeresis?) -- DOSBox check"
+   "_note": "G4: same word as b_moses but accented on the final syllable; used by the Marking Recognition Drill."
   },
   "isaias": {
    "greek": "Ἠσαΐας",
-   "gloss": "Isaiah",
+   "gloss": "Isaiah (Jn 1:23)",
    "audio": "chapt_2_b_isaias",
-   "_legacy": null,
-   "_verify": "diaeresis page says 'Note the acute accent placement in Isaiah'; legacy string not captured -- confirm displayed form and accents onscreen"
+   "_legacy": null
   },
   "achaia": {
    "greek": "Ἀχαΐα",
-   "gloss": "Achaia",
+   "gloss": "Achaia (Acts 18:12)",
    "audio": "chapt_2_b_axaia",
-   "_legacy": "]Axaia",
-   "_verify": "TBK stores bare ']Axaia' without diaeresis/accent codes; displayed form assumed as printed Greek -- confirm onscreen"
+   "_legacy": "]Axaia"
   },
   "tounoma": {
    "greek": "τοὔνομα",
    "gloss": "the name (crasis)",
    "audio": "chapt_2_b_touvon",
    "_legacy": "tou]voma",
-   "_verify": "legacy uses unmapped base code 'v' (tou]voma) and both b_tounom/b_touvon wav names appear in scripts while only B_TOUVON.WAV exists on the ISO; v=nu is provisional -- confirm word and audio in DOSBox"
+   "_note": "v = nu CONFIRMED by DOSBox rendering (VERIFY H4)."
   },
   "xautou": {
-   "greek": null,
-   "gloss": null,
+   "greek": "δι᾽ αὐτοῦ",
+   "gloss": "through him",
    "audio": "chapt_2_b_xauto",
-   "_legacy": null,
-   "_verify": "B_XAUTO.WAV exists and SayWord maps 'xautou' to it; display form unknown (crasis example?) -- DOSBox check"
+   "_note": "G4: recording says 'di autou'; used on the Apostrophe learn page. b_diauto is the Marking Recognition Drill's copy."
   },
   "huper": {
    "greek": "ὑπέρ",
-   "gloss": "for, on behalf of",
+   "gloss": "in behalf of, above",
    "audio": "chapt_2_b_huper",
-   "_legacy": "u[pe<r",
-   "_verify": "appears adjacent to huios in the breathing-marks region; assumed rough-breathing example -- confirm which popup shows it"
+   "_legacy": "u[pe<r"
   },
   "apostolos": {
    "greek": "ἀπόστολος",
    "gloss": "apostle",
    "audio": "chapt_2_b_aposto",
-   "_legacy": "a]po<stoloj",
-   "_verify": "drill pool also contains deliberately mis-accented a#postoloj; correct dictionary form constructed -- confirm"
+   "_legacy": "a]po<stoloj"
   },
   "rema": {
    "greek": "ῥῆμα",
-   "gloss": "word, saying",
+   "gloss": "word",
    "audio": "chapt_2_b_rema",
    "_legacy": "r[h?ma"
   },
@@ -362,6 +354,12 @@
    "gloss": "truly, verily, amen",
    "audio": "chapt_2_a_voc2",
    "_legacy": "a]mh<n"
+  },
+  "baptizo_root": {
+   "greek": "Βαπτίζω",
+   "gloss": "to baptize",
+   "audio": null,
+   "_note": "Root word header of the Accent Placement Exercise items 1-10; inflected forms + refs live in the activity items with b_ex2_N audio."
   }
  },
  "ch1_lemma_mirror": {

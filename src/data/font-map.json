@@ -115,12 +115,12 @@
   "#": {
    "unicode": "̓͂",
    "name": "smooth breathing + circumflex",
-   "evidence": "h#lqen=ἦλθεν (Rule 5 chart, glossed 'he went', Jn 1:7); h#n=ἦν in kai> qeo>j h#n annotated '(two graves and a circumflex)' (Jn 1:1). a#postoloj appears ONLY as a deliberately mis-accented Accent Rule Drill item."
+   "evidence": "h#lqen=ἦλθεν (Rule 5 chart, glossed 'he went', Jn 1:7); h#n=ἦν in kai> qeo>j h#n annotated '(two graves and a circumflex)' (Jn 1:1). a#postoloj appears ONLY as a deliberately mis-accented Accent Rule Drill item. DEVICE-CONFIRMED via the Rule 5 chart screenshot (VERIFY H1)."
   },
   "[": {
    "unicode": "̔",
    "name": "rough breathing (dasia) -- second slot",
-   "evidence": "PROMOTED from provisional: chapter 2 teaching text prints 'Rough breathing ( [ )'; ui[o<j=υἱός, u[pe<r=ὑπέρ, r[h?ma=ῥῆμα, o[ lo<goj=ὁ λόγος. Coexists with '\"' (chapter 1 evidence ui\"o<j) -- the book uses BOTH slots for the same mark."
+   "evidence": "PROMOTED from provisional: chapter 2 teaching text prints 'Rough breathing ( [ )'; ui[o<j=υἱός, u[pe<r=ὑπέρ, r[h?ma=ῥῆμα, o[ lo<goj=ὁ λόγος. Coexists with '\"' (chapter 1 evidence ui\"o<j) -- the book uses BOTH slots for the same mark. DEVICE-CONFIRMED via the Breathing Marks page screenshot (VERIFY H2)."
   }
  },
  "unknown_codes": {
@@ -155,18 +155,18 @@
   ":": {
    "unicode": "·",
    "name": "Greek colon / ano teleia (raised dot)",
-   "evidence": "Punctuation Marks page: 'Colon ( : )  lo<goj:'. NOTE: U+0387 NFC-normalizes to U+00B7 MIDDLE DOT -- store the NFC form.",
+   "evidence": "Punctuation Marks page: 'Colon ( : )  lo<goj:'. NOTE: U+0387 NFC-normalizes to U+00B7 MIDDLE DOT -- store the NFC form. DEVICE-CONFIRMED: the original renders the colon as a raised dot (VERIFY H3 screenshot).",
    "_legacy_note": "e]gw: witness (Marking Recognition pool)"
-  }
- },
- "base_provisional": {
-  "v": {
-   "unicode": "ν",
-   "name": "nu (alternate slot?)",
-   "evidence": "SINGLE witness: tou]voma = τοὔνομα (crasis of to onoma; audio file B_TOUVON.WAV). Weak -- verify against DOSBox rendering before trusting in bulk conversion."
   }
  },
  "excluded_codes": {
   "!": "NOT a Greek font code. Appears only inside embedded HEBREW-font data regions in 2_ACCENT.TBK (Hebrew tutor shared resources: 'Hbaz! to sacrifice', 'fsan! to depart', vocab with Hiphil/Niphal stem labels). The extraction pipeline must detect and exclude Hebrew regions (tell-tales: Hebrew glosses, stem labels (Hi)/(Ni), field names HebrewWord/HideHebrew)."
+ },
+ "base_verified_additions": {
+  "v": {
+   "unicode": "ν",
+   "name": "nu (second slot)",
+   "evidence": "PROMOTED from provisional 2026-07-24: DOSBox renders tou]voma as τοὔνομα with a plain nu (VERIFY H4 screenshot)."
+  }
  }
 }
