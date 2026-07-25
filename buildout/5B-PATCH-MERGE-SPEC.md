@@ -203,11 +203,14 @@ acceptance checks above) inline in that section.
   reported per-mark colouring working, evidenced only by computed style. The
   shipped base uses the whole-cluster fallback, which is sanctioned either way —
   V1 confirms it looks right, and settles the technique for chapters 3+.
+  RESPONSE: the current version shows the accent AND letter in red, let's confirm this definitively because if we can isolate the accent only to be colored that is much preferred.
 - **V2 — Syllable Counting one-syllable bar.** In the original, does the drill
   show number buttons 1-4 AND a separate "Click Here If There Is Only One
   Syllable" bar, or does the bar replace the "1" button? The shipped base shows
   both (option "1" appears as a tile and as the bar).
+  RESPONSE: No, the original does not have it for this exercise please remove it
 - **V3 — Pronounce Word.** `c2_ex_accent_placement.ui.buttons` lists "Pronounce
   Word", which is not implemented. Does the original have a per-word pronounce
   button distinct from the Pronounce Each checkbox, and which form does it
   speak — the root or the inflected form?
+  RESPONSE: No idea what you're talking about - which exercise? Most exercises with a "pronounce each" checkbox also have a "pronounce" button which pronounces the same exact thing as pronounce each pronounces

@@ -1,5 +1,5 @@
 {
- "_comment": "Chapter 2 (Syllables & Accents), reconstructed from 2_ACCENT.TBK + CHAPT_2 audio inventory, PATCHED 2026-07-24 against the completed VERIFY-chapt02 DOSBox pass (sequence, all drill/exercise pools and answers, popup contents, and chart corrections). answerPolicy: the original finalizes one attempt per item on Check Answer, reveals the correct form, and auto-advances after ~4s (J1, Nathanael-approved timing); scored activities therefore complete when all items have been ATTEMPTED. UI colors per Nathanael (E1/E2): blue = selected guess, green = confirmed correct after Check Answer, red reserved for incorrect feedback.",
+ "_comment": "Chapter 2 (Syllables & Accents), reconstructed from 2_ACCENT.TBK + CHAPT_2 audio inventory, PATCHED 2026-07-24 against the completed VERIFY-chapt02 DOSBox pass (sequence, all drill/exercise pools and answers, popup contents, and chart corrections). answerPolicy: the original finalizes one attempt per item on Check Answer, reveals the correct form, and auto-advances after ~4s (J1, Nathanael-approved timing); scored activities therefore complete when all items have been ATTEMPTED. UI colors per Nathanael (E1/E2): blue = selected guess, green = confirmed correct after Check Answer, red reserved for incorrect feedback. PATCHED AGAIN 2026-07-26 (5B-SPEC2 data): isolated marks now use SPACING codepoints (U+1FBF/1FFE/1FC0/00B4/0060/00A8) so they render correctly outside words; bibliography items are plain strings; rule-chart inflected rows wired to their b_ex2 clips; syllable-counting one-syllable bar removed (V2); accent rule drill: no auto-advance on incorrect + per-item audio + red first accent; multi-part tappable rows (parts[]) on Apostrophe/Coronis; Grammar Review verbs/nouns restructured per feedback 12/13; Review Marks grouped per feedback 15; liveScore + pronounceEach defaults across scored surfaces; accent placement gains a clearly-labeled circumflex EXTENSION pool (feedback 11, keep/drop decided in VERIFY2).",
  "id": "chapt_2",
  "number": 2,
  "title": "Syllables & Accents",
@@ -418,7 +418,7 @@
        "items": [
         {
          "label": "1)",
-         "text": "Acute ( ́ ): angles upward originally indicating a rising pitch.",
+         "text": "Acute ( ´ ): angles upward originally indicating a rising pitch.",
          "example": {
           "greek": "λέγω",
           "audio": "chapt_2_a_voc8",
@@ -427,7 +427,7 @@
         },
         {
          "label": "2)",
-         "text": "Grave ( ̀ ): angles downward originally indicating a falling pitch.",
+         "text": "Grave ( ` ): angles downward originally indicating a falling pitch.",
          "example": {
           "greek": "ἀδελφὸς",
           "audio": "chapt_2_b_voc1",
@@ -436,7 +436,7 @@
         },
         {
          "label": "3)",
-         "text": "Circumflex ( ͂ ): angles upward then downward originally indicating a rising then falling pitch.",
+         "text": "Circumflex ( ῀ ): angles upward then downward originally indicating a rising then falling pitch.",
          "example": {
           "greek": "αὐτοῦ",
           "audio": "chapt_2_b_autou",
@@ -650,22 +650,26 @@
           {
            "greek": "ἀνθρώπου",
            "gloss": "\"  (penult acute--long ultima causes change)",
-           "_legacy": "a]nqrw<pou"
+           "_legacy": "a]nqrw<pou",
+           "audio": "chapt_2_b_ex2_15"
           },
           {
            "greek": "ἀνθρώπῳ",
            "gloss": "\"  (penult acute--long ultima causes change)",
-           "_legacy": "a]nqrw<p&"
+           "_legacy": "a]nqrw<p&",
+           "audio": "chapt_2_b_ex2_17"
           },
           {
            "greek": "ἄνθρωπον",
            "gloss": "\"  (antepenult acute--short ultima, no change)",
-           "_legacy": "a@nqrwpon"
+           "_legacy": "a@nqrwpon",
+           "audio": "chapt_2_b_ex2_12"
           },
           {
            "greek": "ἄνθρωπε",
            "gloss": "\"  (antepenult acute--short ultima, no change)",
-           "_legacy": "a@nqrwpe"
+           "_legacy": "a@nqrwpe",
+           "_note": "No dedicated clip on the ISO (vocative absent from the b_ex2 pool); renders ink/inert."
           }
          ]
         }
@@ -734,12 +738,14 @@
           {
            "greek": "ἀνθρώπου",
            "gloss": "\"  (penult acute--cannot accent antepenult)",
-           "_legacy": "a]nqrw<pou"
+           "_legacy": "a]nqrw<pou",
+           "audio": "chapt_2_b_ex2_15"
           },
           {
            "greek": "ἀνθρώπῳ",
            "gloss": "\"  (penult acute--cannot accent antepenult)",
-           "_legacy": "a]nqrw<p&"
+           "_legacy": "a]nqrw<p&",
+           "audio": "chapt_2_b_ex2_17"
           }
          ]
         }
@@ -754,11 +760,13 @@
          "rows": [
           {
            "greek": "ἀνθρώπου",
-           "gloss": "\"  (penult acute--long ultima causes change)"
+           "gloss": "\"  (penult acute--long ultima causes change)",
+           "audio": "chapt_2_b_ex2_15"
           },
           {
            "greek": "ἀνθρώπῳ",
-           "gloss": "\"  (penult acute--long ultima causes change)"
+           "gloss": "\"  (penult acute--long ultima causes change)",
+           "audio": "chapt_2_b_ex2_17"
           },
           {
            "greek": "λύω",
@@ -850,9 +858,9 @@
           {
            "label": "Short Ultima",
            "syllables": [
-            "́",
-            "́ or ͂",
-            "́ or ͂"
+            "´",
+            "´ or ῀",
+            "´ or ῀"
            ],
            "greek": ""
           },
@@ -860,8 +868,8 @@
            "label": "Long Ultima",
            "syllables": [
             "None",
-            "́",
-            "́ or ͂ or ̀"
+            "´",
+            "́ or ῀ or ̀"
            ],
            "greek": ""
           }
@@ -892,9 +900,9 @@
           {
            "label": "Short Ultima",
            "syllables": [
-            "́",
-            "́ or ͂",
-            "́ or ͂"
+            "´",
+            "´ or ῀",
+            "´ or ῀"
            ],
            "greek": ""
           },
@@ -902,8 +910,8 @@
            "label": "Long Ultima",
            "syllables": [
             "None",
-            "́",
-            "́ or ͂ or ̀"
+            "´",
+            "́ or ῀ or ̀"
            ],
            "greek": ""
           }
@@ -1020,11 +1028,11 @@
        "items": [
         {
          "label": "1)",
-         "text": "Smooth breathing ( ̓ ):  It does not affect pronunciation."
+         "text": "Smooth breathing ( ᾿ ):  It does not affect pronunciation."
         },
         {
          "label": "2)",
-         "text": "Rough breathing ( ̔ ):  Adds an \"h\" before the sound of the initial vowel."
+         "text": "Rough breathing ( ῾ ):  Adds an \"h\" before the sound of the initial vowel."
         }
        ]
       },
@@ -1034,7 +1042,7 @@
       },
       {
        "type": "expander",
-       "label": "Smooth Breathing ( ̓ )",
+       "label": "Smooth Breathing ( ᾿ )",
        "content": [
         {
          "type": "greekRows",
@@ -1070,7 +1078,7 @@
       },
       {
        "type": "expander",
-       "label": "Rough Breathing ( ̔ )",
+       "label": "Rough Breathing ( ῾ )",
        "content": [
         {
          "type": "greekRows",
@@ -1159,9 +1167,26 @@
        "type": "greekRows",
        "rows": [
         {
-         "greek": "διά + αὐτοῦ becomes δι᾽ αὐτοῦ",
-         "gloss": "",
-         "audio": "chapt_2_b_xauto"
+         "parts": [
+          {
+           "greek": "διά",
+           "audio": "chapt_2_b_dia"
+          },
+          {
+           "text": " + "
+          },
+          {
+           "greek": "αὐτοῦ",
+           "audio": "chapt_2_b_autou"
+          },
+          {
+           "text": " becomes "
+          },
+          {
+           "greek": "δι᾽ αὐτοῦ",
+           "audio": "chapt_2_b_xauto"
+          }
+         ]
         }
        ]
       },
@@ -1177,16 +1202,33 @@
      "content": [
       {
        "type": "para",
-       "text": "Sometimes a final vowel word followed by an initial vowel word will contract together. This is called \"Crasis.\" A coronis ( ̓ ) is used to retain the breathing of the second word."
+       "text": "Sometimes a final vowel word followed by an initial vowel word will contract together. This is called \"Crasis.\" A coronis ( ᾿ ) is used to retain the breathing of the second word."
       },
       {
        "type": "greekRows",
        "rows": [
         {
-         "greek": "καί + ἐγώ becomes κἀγώ",
-         "gloss": "(Jn 1:31, 33)",
-         "audio": "chapt_2_b_kago",
-         "_legacy": "kai< + e]gw< becomes ka]gw<"
+         "parts": [
+          {
+           "greek": "καί",
+           "audio": "chapt_2_b_kai"
+          },
+          {
+           "text": " + "
+          },
+          {
+           "greek": "ἐγώ",
+           "audio": "chapt_2_a_voc4"
+          },
+          {
+           "text": " becomes "
+          },
+          {
+           "greek": "κἀγώ",
+           "audio": "chapt_2_b_kago"
+          }
+         ],
+         "gloss": "(Jn 1:31, 33)"
         }
        ]
       },
@@ -1499,47 +1541,33 @@
        "items": [
         {
          "term": "Tense:",
-         "def": "generally describes the time of action (Present, Future, Past). However, some Greek tenses are used to denote aspect, or type of action, rather than time."
+         "def": "generally describes the time of action (Present, Future, Past).  However, some Greek tenses are used to denote aspect, or type of action, rather than time."
         },
         {
          "term": "Aspect:",
-         "def": "denotes the type of action: Continuous action (the event as a process), Undefined (the event happened) or Perfect (the event happened with effects continuing into the present)."
+         "def": "denotes the type of action:  Continuous action (the event as a process), Undefined (the event happened) or Perfect (the event happened with effects continuing into the present)."
+        },
+        {
+         "term": "Voice:",
+         "def": "Active:  subject does the action,  Middle:  subject does action on or for itself,  Passive:  subject receives the action."
+        },
+        {
+         "term": "Mood:",
+         "def": "how something is said.  Indicative:  statement of fact;  Subjunctive:  desire, probable;  Imperative:  command;  Optative:  wish, remote possibility."
+        },
+        {
+         "term": "Person:",
+         "def": "I, we = first person;  you = second person;  he, she, it, they = third person"
+        },
+        {
+         "term": "Number:",
+         "def": "Singular:  I, you, he, she, it;  Plural:  we, they, you (all)"
         }
        ]
       },
       {
-       "type": "expander",
-       "label": "Parsing Verbs: Voice and Mood",
-       "content": [
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "Voice:",
-           "def": "Active: subject does the action, Middle: subject does action on or for itself, Passive: subject receives the action."
-          },
-          {
-           "term": "Mood:",
-           "def": "how something is said. Indicative: statement of fact; Subjunctive: desire, probable; Imperative: command; Optative: wish, remote possibility."
-          }
-         ]
-        },
-        {
-         "type": "greekRows",
-         "rows": [
-          {
-           "label": "Voice of a Verb",
-           "greek": "",
-           "gloss": "Zachary shot the ball. (Active) / The ball was shot by Zachary. (Passive) / Zachary got a ball for himself. (Middle)"
-          },
-          {
-           "label": "Mood of a Verb",
-           "greek": "",
-           "gloss": "Indicative: He learned Greek well. / Subjunctive: In order that he might learn Greek well... If he studies he may learn Greek well. / Imperative: Learn Greek well. / Optative: O that you might learn Greek well."
-          }
-         ]
-        }
-       ]
+       "type": "refs",
+       "text": "(Story & Story, pp. 9-13)"
       },
       {
        "type": "expander",
@@ -1593,24 +1621,59 @@
       },
       {
        "type": "expander",
-       "label": "Parsing Verbs: Person and Number",
+       "label": "Voice",
        "content": [
+        {
+         "type": "heading",
+         "text": "Voice of a Verb"
+        },
         {
          "type": "defList",
          "items": [
           {
-           "term": "Person:",
-           "def": "I, we = first person; you = second person; he, she, it, they = third person"
+           "term": "",
+           "def": "Zachary shot the ball.  (Active)"
           },
           {
-           "term": "Number:",
-           "def": "Singular: I, you, he, she, it; Plural: we, they, you (all)"
+           "term": "",
+           "def": "The ball was shot by Zachary.  (Passive)"
+          },
+          {
+           "term": "",
+           "def": "Zachary got a ball for himself.  (Middle)"
           }
          ]
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Mood",
+       "content": [
+        {
+         "type": "heading",
+         "text": "Mood of a Verb"
         },
         {
-         "type": "refs",
-         "text": "(Story & Story, pp. 9-13)"
+         "type": "defList",
+         "items": [
+          {
+           "term": "Indicative:",
+           "def": "He learned Greek well."
+          },
+          {
+           "term": "Subjunctive:",
+           "def": "In order that he might learn Greek well...  If he studies he may learn Greek well."
+          },
+          {
+           "term": "Imperative:",
+           "def": "Learn Greek well."
+          },
+          {
+           "term": "Optative:",
+           "def": "O that you might learn Greek well."
+          }
+         ]
         }
        ]
       }
@@ -1629,7 +1692,7 @@
        "items": [
         {
          "term": "Gender:",
-         "def": "The Greek masculine, feminine, and neuter genders are often indicated by the endings attached to the noun. Abstract nouns and objects that are neither male nor female in English are often marked as either masculine or feminine in Greek."
+         "def": "The Greek masculine, feminine, and neuter genders are often indicated by the endings attached to the noun.  Abstract nouns and objects that are neither male nor female in English are often marked as either masculine or feminine in Greek."
         },
         {
          "term": "Number:",
@@ -1639,7 +1702,7 @@
       },
       {
        "type": "para",
-       "text": "Case: In English we have three cases which are seen in how we use our pronouns."
+       "text": "Case:  In English we have three cases which are seen in how we use our pronouns."
       },
       {
        "type": "numbered",
@@ -1663,15 +1726,15 @@
        "text": "Greek adds two more:"
       },
       {
-       "type": "defList",
+       "type": "numbered",
        "items": [
         {
-         "term": "Dative:",
-         "def": "the case marking the indirect object (e.g. I told the story [[u]]to the apostles[[/u]].)"
+         "label": "4)",
+         "text": "Dative:  the case marking the indirect object (e.g. I told the story [[u]]to the apostles[[/u]].)"
         },
         {
-         "term": "Vocative:",
-         "def": "the case of direct address.  (e.g. [[u]]O Lord[[/u]], save me.)"
+         "label": "5)",
+         "text": "Vocative:  the case of direct address.  (e.g. [[u]]O Lord[[/u]], save me.)"
         }
        ]
       },
@@ -1751,21 +1814,11 @@
     {
      "type": "biblist",
      "items": [
-      {
-       "text": "Hewett, James A. New Testament Greek: A Beginning and Intermediate Grammar (Peabody: Hendrickson, 1986), p. 4."
-      },
-      {
-       "text": "Machen, J. Gresham. New Testament Greek for Beginners (Toronto: The Macmillan Company, 1923), pp. 11-18."
-      },
-      {
-       "text": "Mounce, William D. Basics of Biblical Greek: Grammar (Grand Rapids: Zondervan, 1993), pp. 13-17."
-      },
-      {
-       "text": "Summers, Ray and Thomas Sawyer. Essentials of New Testament Greek (Nashville: Broadman & Holman, 1995), pp. 8-9."
-      },
-      {
-       "text": "Wenham, J. W. The Elements of New Testament Greek (Cambridge: Cambridge University Press, 1965), pp. 21-23."
-      }
+      "Hewett, James A. New Testament Greek: A Beginning and Intermediate Grammar (Peabody: Hendrickson, 1986), p. 4.",
+      "Machen, J. Gresham. New Testament Greek for Beginners (Toronto: The Macmillan Company, 1923), pp. 11-18.",
+      "Mounce, William D. Basics of Biblical Greek: Grammar (Grand Rapids: Zondervan, 1993), pp. 13-17.",
+      "Summers, Ray and Thomas Sawyer. Essentials of New Testament Greek (Nashville: Broadman & Holman, 1995), pp. 8-9.",
+      "Wenham, J. W. The Elements of New Testament Greek (Cambridge: Cambridge University Press, 1965), pp. 21-23."
      ]
     }
    ],
@@ -1820,8 +1873,7 @@
     {
      "ref": "kai",
      "pool": "ch1_lemma_mirror",
-     "answer": 1,
-     "oneSyllable": true
+     "answer": 1
     },
     {
      "ref": "kardia",
@@ -1886,23 +1938,31 @@
    ],
    "ui": {
     "buttons": [
+     "Previous",
+     "Next",
      "Pronounce",
+     "Translate",
+     "Hint",
      "Score"
-    ],
-    "special": [
-     "Click Here If There Is Only One Syllable"
     ],
     "checkboxes": [
      "Pronounce Each Drill"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
    },
    "scored": true,
-   "oneSyllableButton": "Click Here If There Is Only One Syllable",
    "answerPolicy": {
     "attemptsPerItem": "retry",
     "autoAdvanceMs": null
    },
-   "_verify_resolved": "Pool + counts DOSBox-confirmed 2026-07-24 (all 20 derived counts matched; kai uses the one-syllable bar). Original's score dialog can overcount on revisits (22/20 witnessed) -- our scoring counts each item once."
+   "_verify_resolved": "Pool + counts DOSBox-confirmed 2026-07-24 (all 20 derived counts matched; kai uses the one-syllable bar). Original's score dialog can overcount on revisits (22/20 witnessed) -- our scoring counts each item once.",
+   "hint": {
+    "contentRef": "threeSyllableRules"
+   },
+   "_v2_note": "One-syllable bar removed per VERIFY V2 (the original counting drill has only buttons 1-4; kai answers '1'). Translate toggles the gloss line, per the original."
   },
   {
    "id": "c2_drill_accent_rule",
@@ -1930,165 +1990,205 @@
      "gloss": "world",
      "correctForm": "κόσμος",
      "answer": "Potential Placement",
-     "_note": "grave off the ultima violates Potential Placement"
+     "_note": "grave off the ultima violates Potential Placement",
+     "audio": "chapt_2_b_voc5"
     },
     {
      "greek": "λεγῶ",
      "gloss": "I say",
      "correctForm": "λέγω",
      "answer": "Verbs Recessive",
-     "_note": "verb accent not recessive"
+     "_note": "verb accent not recessive",
+     "audio": "chapt_2_a_voc8"
     },
     {
      "greek": "ἄδελφος",
      "gloss": "brother",
      "correctForm": "ἀδελφός",
      "answer": "Nouns Retentive",
-     "_note": "noun accent moved off its home syllable"
+     "_note": "noun accent moved off its home syllable",
+     "audio": "chapt_2_b_voc1"
     },
     {
      "greek": "ἄνθρωπου",
      "gloss": "of man",
      "correctForm": "ἀνθρώπου",
-     "answer": "If long ultima then antepenult cannot be accented"
+     "answer": "If long ultima then antepenult cannot be accented",
+     "audio": "chapt_2_b_ex2_15"
     },
     {
      "greek": "ἀνθρώπων",
      "gloss": "of men",
      "correctForm": "ἀνθρώπων",
      "answer": "If long ultima then if penult accented must be acute",
-     "_note": "affirmed: long ultima, penult accented, acute"
+     "_note": "affirmed: long ultima, penult accented, acute",
+     "audio": "chapt_2_b_ex2_13"
     },
     {
      "greek": "πρὸς τὸν θεόν",
      "gloss": "with God",
      "correctForm": "πρὸς τὸν θεόν",
      "answer": "If ultima acute followed by a word it becomes grave",
-     "_note": "affirmed by the graves"
+     "_note": "affirmed by the graves",
+     "audio": "chapt_2_b_ac4"
     },
     {
      "greek": "φαρισαῖος",
      "gloss": "Pharisee",
      "correctForm": "φαρισαῖος",
      "answer": "If short ultima then accented long penult takes circumflex",
-     "_note": "affirmed"
+     "_note": "affirmed",
+     "audio": "chapt_2_b_voc10"
     },
     {
      "greek": "προφήτης",
      "gloss": "prophet",
      "correctForm": "προφήτης",
      "answer": "If long ultima then if penult accented must be acute",
-     "_note": "affirmed"
+     "_note": "affirmed",
+     "audio": "chapt_2_a_voc9"
     },
     {
      "greek": "ἐκεῖνος",
      "gloss": "that",
      "correctForm": "ἐκεῖνος",
      "answer": "If short ultima then accented long penult takes circumflex",
-     "_note": "affirmed"
+     "_note": "affirmed",
+     "audio": "chapt_2_b_ac2"
     },
     {
      "greek": "καὶ θεός ἦν",
      "gloss": "and God was",
      "correctForm": "καὶ θεὸς ἦν",
      "answer": "If ultima acute followed by a word it becomes grave",
-     "_note": "acute retained before a following word violates rule 6"
+     "_note": "acute retained before a following word violates rule 6",
+     "audio": "chapt_2_b_ac5"
     },
     {
      "greek": "πρῶτος",
      "gloss": "first",
      "correctForm": "πρῶτος",
      "answer": "If short ultima then accented long penult takes circumflex",
-     "_note": "affirmed"
+     "_note": "affirmed",
+     "audio": "chapt_2_b_ac3"
     },
     {
      "greek": "ἄνθρωπων",
      "gloss": "of men",
      "correctForm": "ἀνθρώπων",
      "answer": "If long ultima then antepenult cannot be accented",
-     "_note": "antepenult accented despite long ultima"
+     "_note": "antepenult accented despite long ultima",
+     "audio": "chapt_2_b_ex2_13"
     },
     {
      "greek": "κόσμος",
      "gloss": "world",
      "correctForm": "κόσμος",
      "answer": "Nouns Retentive",
-     "_note": "affirmed: noun keeps its accent"
+     "_note": "affirmed: noun keeps its accent",
+     "audio": "chapt_2_b_voc5"
     },
     {
      "greek": "ἐχώ",
      "gloss": "I have",
      "correctForm": "ἔχω",
      "answer": "Verbs Recessive",
-     "_note": "verb accent not recessive"
+     "_note": "verb accent not recessive",
+     "audio": "chapt_2_b_voc4"
     },
     {
      "greek": "ἆποστολος",
      "gloss": "apostle",
      "correctForm": "ἀπόστολος",
      "answer": "Potential Placement",
-     "_note": "circumflex on the antepenult violates Potential Placement (DOSBox-confirmed green)"
+     "_note": "circumflex on the antepenult violates Potential Placement (DOSBox-confirmed green)",
+     "audio": "chapt_2_b_aposto"
     },
     {
      "greek": "ῥῆμα",
      "gloss": "word",
      "correctForm": "ῥῆμα",
      "answer": "If short ultima then accented long penult takes circumflex",
-     "_note": "affirmed"
+     "_note": "affirmed",
+     "audio": "chapt_2_b_rema"
     },
     {
      "greek": "ἀνθρώπῳ",
      "gloss": "to a man",
      "correctForm": "ἀνθρώπῳ",
      "answer": "If long ultima then if penult accented must be acute",
-     "_note": "affirmed"
+     "_note": "affirmed",
+     "audio": "chapt_2_b_ex2_17"
     },
     {
      "greek": "ἀκουώ",
      "gloss": "I hear",
      "correctForm": "ἀκούω",
      "answer": "Verbs Recessive",
-     "_note": "verb accent not recessive"
+     "_note": "verb accent not recessive",
+     "audio": "chapt_2_b_voc2"
     },
     {
      "greek": "ἄκουω",
      "gloss": "I hear",
      "correctForm": "ἀκούω",
      "answer": "If long ultima then antepenult cannot be accented",
-     "_note": "antepenult accented despite long ultima"
+     "_note": "antepenult accented despite long ultima",
+     "audio": "chapt_2_b_voc2"
     },
     {
      "greek": "κᾶρδια",
      "gloss": "heart",
      "correctForm": "καρδία",
      "answer": "Potential Placement",
-     "_note": "circumflex on the antepenult violates Potential Placement (DOSBox-confirmed green)"
+     "_note": "circumflex on the antepenult violates Potential Placement (DOSBox-confirmed green)",
+     "audio": "chapt_2_a_voc7"
     }
    ],
    "ui": {
     "buttons": [
+     "Previous",
+     "Next",
      "Pronounce",
+     "Translate",
      "Hint",
      "Score"
     ],
     "checkboxes": [
      "Pronounce Each Drill"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
    },
    "scored": true,
    "answerPolicy": {
     "attemptsPerItem": 1,
     "revealCorrectForm": true,
-    "autoAdvanceMs": 4000
+    "autoAdvanceMs": 4000,
+    "autoAdvanceOnIncorrect": false
    },
    "hint": {
     "content": [
      {
+      "type": "heading",
+      "text": "Potential Placement"
+     },
+     {
       "type": "defList",
       "items": [
        {
-        "term": "Potential Placement:",
-        "def": "Acute--last 3 syllables / Circumflex--last 2 syllables / Grave--last syllable only"
+        "term": "",
+        "def": "Acute—last 3 syllables"
+       },
+       {
+        "term": "",
+        "def": "Circumflex—last 2 syllables"
+       },
+       {
+        "term": "",
+        "def": "Grave—last syllable only"
        }
       ]
      },
@@ -2127,7 +2227,9 @@
      }
     ]
    },
-   "_answers_note": "Option labels + item pool DOSBox-verified. Per-item answers are RULE-DERIVED from the chapter's own grammar (the collection pass's low score made screenshot-derived answers unreliable); two anchors confirmed green on device (apostolos, kardia -> Potential Placement). Nathanael authorized correctness-first scoring (VERIFY E1)."
+   "_answers_note": "Option labels + item pool DOSBox-verified. Per-item answers are RULE-DERIVED from the chapter's own grammar (the collection pass's low score made screenshot-derived answers unreliable); two anchors confirmed green on device (apostolos, kardia -> Potential Placement). Nathanael authorized correctness-first scoring (VERIFY E1).",
+   "redFirstAccent": true,
+   "_policy_note": "Per device feedback item 6: no auto-advance on an incorrect answer (learner studies the revealed correct form and clicks Next); 4s auto-advance on correct stands. Audio per item wired (b_ex2 clips carry the inflected anthropos forms -- the same clips the original's rule charts play)."
   },
   {
    "id": "c2_drill_marking_recognition",
@@ -2332,12 +2434,19 @@
    ],
    "ui": {
     "buttons": [
+     "Previous",
+     "Next",
      "Pronounce",
+     "Translate",
      "Score"
     ],
     "checkboxes": [
      "Pronounce Each Drill"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
    },
    "scored": true,
    "answerPolicy": {
@@ -2518,7 +2627,15 @@
     "attemptsPerItem": 1,
     "autoAdvanceMs": 4000
    },
-   "_answers_note": "29 items, option labels, underlines, and instruction DOSBox-verified (VERIFY D4 screenshots). Answers anchored by green-confirmed device results (Greek/Noun, amazing/Adjective, multimedia/Adjective, do/Verb, over/Preposition, good/Adjective) and standard grammar for the rest."
+   "_answers_note": "29 items, option labels, underlines, and instruction DOSBox-verified (VERIFY D4 screenshots). Answers anchored by green-confirmed device results (Greek/Noun, amazing/Adjective, multimedia/Adjective, do/Verb, over/Preposition, good/Adjective) and standard grammar for the rest.",
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Score"
+    ],
+    "liveScore": true
+   }
   },
   {
    "id": "c2_drill_vocab_gk_en",
@@ -2803,8 +2920,13 @@
      "Score"
     ],
     "checkboxes": [
+     "Show Answer",
      "Pronounce Each Exercise"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
    },
    "scored": true,
    "hint": {
@@ -3002,8 +3124,13 @@
      "Score"
     ],
     "checkboxes": [
+     "Show Answer",
      "Pronounce Each Exercise"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
    },
    "scored": true,
    "answerPolicy": {
@@ -3014,11 +3141,23 @@
    "hint": {
     "content": [
      {
+      "type": "heading",
+      "text": "Potential Placement"
+     },
+     {
       "type": "defList",
       "items": [
        {
-        "term": "Potential Placement:",
-        "def": "Acute--last 3 syllables / Circumflex--last 2 syllables / Grave--last syllable only"
+        "term": "",
+        "def": "Acute—last 3 syllables"
+       },
+       {
+        "term": "",
+        "def": "Circumflex—last 2 syllables"
+       },
+       {
+        "term": "",
+        "def": "Grave—last syllable only"
        }
       ]
      },
@@ -3057,7 +3196,50 @@
      }
     ]
    },
-   "_answers_note": "COMPLETE REPLACEMENT per VERIFY E2/E3: the pool is NOT the vocabulary list. Two root words (Baptizo x10, anthropos x10); each item shows the root + gloss in the header and an UNACCENTED inflected form (breathing retained) with its Scripture reference; the learner picks Acute or Circumflex (the only two accent buttons in the original) and a letter position. answerForm is the accented form displayed after checking. b_ex2_1..21 audio = these forms in order (the 21st file is unreferenced by the 20 items -- likely the root recitation; wired nowhere pending a listen check). Grave is NOT offered as an option in the original."
+   "_answers_note": "COMPLETE REPLACEMENT per VERIFY E2/E3: the pool is NOT the vocabulary list. Two root words (Baptizo x10, anthropos x10); each item shows the root + gloss in the header and an UNACCENTED inflected form (breathing retained) with its Scripture reference; the learner picks Acute or Circumflex (the only two accent buttons in the original) and a letter position. answerForm is the accented form displayed after checking. b_ex2_1..21 audio = these forms in order (the 21st file is unreferenced by the 20 items -- likely the root recitation; wired nowhere pending a listen check). Grave is NOT offered as an option in the original.",
+   "extendedItems": [
+    {
+     "n": 21,
+     "root": "πρῶτος",
+     "rootGloss": "first, earlier",
+     "answerForm": "πρῶτος",
+     "ref": "Jn 1:15",
+     "audio": "chapt_2_b_ac3"
+    },
+    {
+     "n": 22,
+     "root": "ἐκεῖνος",
+     "rootGloss": "that",
+     "answerForm": "ἐκεῖνος",
+     "ref": "Jn 1:8",
+     "audio": "chapt_2_b_ac2"
+    },
+    {
+     "n": 23,
+     "root": "ῥῆμα",
+     "rootGloss": "word",
+     "answerForm": "ῥῆμα",
+     "ref": "",
+     "audio": "chapt_2_b_rema"
+    },
+    {
+     "n": 24,
+     "root": "Φαρισαῖος",
+     "rootGloss": "Pharisee",
+     "answerForm": "Φαρισαῖος",
+     "ref": "",
+     "audio": "chapt_2_b_voc10"
+    },
+    {
+     "n": 25,
+     "root": "αὐτοῦ",
+     "rootGloss": "of him",
+     "answerForm": "αὐτοῦ",
+     "ref": "",
+     "audio": "chapt_2_b_autou"
+    }
+   ],
+   "_extended_note": "EXTENSION, NOT IN THE ORIGINAL (Nathanael-authorized inquiry, feedback item 11): the original's 20-item pool is acute-only, so five circumflex-bearing chapter words are appended as clearly-labeled extended practice. Grave is impractical standalone (rule 6 requires a following word). Render after item 20 under an 'Extended practice' divider; confirm keep/drop in VERIFY2."
   },
   {
    "id": "c2_ex_speller",
@@ -3211,60 +3393,73 @@
     },
     {
      "type": "greekRows",
+     "title": "Breathing:",
      "rows": [
       {
-       "label": "Breathing: 1) Smooth breathing ( ̓ )",
+       "label": "1)  Smooth breathing ( ᾿ )",
        "greek": "ἀδελφός",
-       "audio": "chapt_2_b_voc1",
-       "_legacy": "a]delfo<j"
+       "audio": "chapt_2_b_voc1"
       },
       {
-       "label": "2) Rough breathing ( ̔ )",
+       "label": "2)  Rough breathing ( ῾ )",
        "greek": "υἱός",
-       "audio": "chapt_2_b_voc9",
-       "_legacy": "ui[o<j"
-      },
+       "audio": "chapt_2_b_voc9"
+      }
+     ]
+    },
+    {
+     "type": "greekRows",
+     "title": "Punctuation:",
+     "rows": [
       {
-       "label": "Punctuation: 1) Period ( . )",
+       "label": "1)  Period ( . )",
        "greek": "λόγος.",
-       "audio": "chapt_2_b_voc7",
-       "_legacy": "lo<goj."
+       "audio": "chapt_2_b_voc7"
       },
       {
-       "label": "2) Comma ( , )",
+       "label": "2)  Comma ( , )",
        "greek": "λόγος,",
-       "audio": "chapt_2_b_voc7",
-       "_legacy": "lo<goj,"
+       "audio": "chapt_2_b_voc7"
       },
       {
-       "label": "3) Colon ( · )",
+       "label": "3)  Colon ( · )",
        "greek": "λόγος·",
-       "audio": "chapt_2_b_voc7",
-       "_legacy": "lo<goj:"
+       "audio": "chapt_2_b_voc7"
       },
       {
-       "label": "4) Question Mark ( ; )",
+       "label": "4)  Question Mark ( ; )",
        "greek": "λόγος;",
-       "audio": "chapt_2_b_voc7",
-       "_legacy": "lo<goj;"
-      },
+       "audio": "chapt_2_b_voc7"
+      }
+     ]
+    },
+    {
+     "type": "greekRows",
+     "title": "Apostrophe:  ( ᾽ )  elided letters",
+     "rows": [
       {
-       "label": "Apostrophe: ( ᾽ ) elided letters",
        "greek": "δι᾽ αὐτοῦ",
-       "audio": "chapt_2_b_diauto",
-       "_legacy": "di ] au]tou?"
-      },
+       "audio": "chapt_2_b_diauto"
+      }
+     ]
+    },
+    {
+     "type": "greekRows",
+     "title": "Coronis:  ( ᾿ )  words joined",
+     "rows": [
       {
-       "label": "Coronis: ( ̓ ) words joined",
        "greek": "κἀγώ",
-       "audio": "chapt_2_b_kago",
-       "_legacy": "ka]gw<"
-      },
+       "audio": "chapt_2_b_kago"
+      }
+     ]
+    },
+    {
+     "type": "greekRows",
+     "title": "Diaeresis:  ( ¨ )  vowels separately pronounced",
+     "rows": [
       {
-       "label": "Diaeresis: ( ̈ ) vowels separately pronounced",
        "greek": "Μωϋσῆς",
-       "audio": "chapt_2_b_moses",
-       "_legacy": "Mwu*sh?j"
+       "audio": "chapt_2_b_moses"
       }
      ]
     }

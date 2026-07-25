@@ -54,24 +54,39 @@ piece. Nathanael goes by "Fable" when addressing Claude (chat).
   provisionally nu; '!' excluded as Hebrew-region contamination.
   Remaining unknowns: $ { } ~ | \ ` = (several likely not font codes).
 
-## Implementer arrangement (since 2026-07-21)
+## Buildout process v2 (established 2026-07-26; applies to buildout phases)
 
-- Fable (Claude, chat): planning, extraction pipeline, data files,
-  specs, review of handoffs, verification checklists.
-- Implementation is currently an EVAL SERIES: GPT Sol (Codex) and
-  Opus 4.8 each run the round's *-SPEC.md; Opus 4.6 grades both
-  (claims-vs-diff audit + letter grade) and, when justified, emits a
-  MERGE-SPEC porting the loser's superior pieces onto the winner's
-  base. The accepted base + merge is what ships. Repo AGENTS.md points
-  implementers at ONBOARD-SOL.md (the implementer onboarding
-  contract).
-- Nathanael: DOSBox verification, device testing, deploys (automatic
-  via push), decisions, and running the eval series.
-- Data-file process rule (unchanged, load-bearing): src/data/*.json is
-  authored ONLY by the chat pipeline, regenerated ONLY from committed
-  copies. Implementers never edit data content; DOSBox answers go to
-  FABLE, who produces the patch files; the implementer commits and
-  re-verifies them.
+Per-cohort loop with fixed document naming (# = round number):
+1. Automated extraction (Fable) -> data files + <cohort>-RECON-TASKS.md
+   listing what strings/scripts could not yield.
+2. Nathanael's manual recon -> <cohort>-RECON-RESULTS.md (+ PDFs).
+3. Fable: RECON-RESULTS + canonical project knowledge (CHAT-HANDOFF.md
+   and PIPELINE-INSIGHTS-v2.md ARE the stored prior knowledge) ->
+   complete SPEC#.md. Specs are COMPLETE: no partial specs pending
+   data; build most of the chapter in one go.
+4. BOTH implementer models (currently Sol/Codex and Opus-class/Claude
+   Code) execute the same SPEC# in isolated repo copies. Each returns
+   SPEC#-RESULTS-<MODEL>.md (the handoff; replaces HANDOFF-* naming)
+   and SPEC#-BUILD-<MODEL>.md: exact git diff + full thought/tool log
+   + wall-clock time. Specs must instruct producing both.
+5. The grading chat (GRADER-PROMPT.md v2) audits claims against the
+   BUILD diffs, grades, picks the winner, and when justified emits
+   XPATCH#.md porting the loser's superior pieces onto the winner.
+6. The WINNING model applies XPATCH# (if any), updates its
+   SPEC#-RESULTS with an XPATCH section (no BUILD doc for this phase),
+   and authors VERIFY#.md reviewing build+patch and listing device
+   tests.
+7. Nathanael's device pass -> VERIFY#-RESULTS (PDF/answers + edited
+   checklists).
+8. Fable: VERIFY#-RESULTS + SPEC#-RESULTS -> the next sequential
+   SPEC#. Repeat 4-8 until the cohort closes.
+Fable provides data files and CHAT-HANDOFF updates wherever
+appropriate and checks project files against the repo every turn.
+
+Data-file process rule (unchanged, load-bearing): src/data/*.json is
+authored ONLY by the chat pipeline from committed copies; implementers
+commit delivered files as-is and never edit content; DOSBox/device
+answers route to Fable.
 
 ## Project-file methodology (established 2026-07-23)
 
@@ -134,6 +149,22 @@ files carry only what a new chat needs.
   for deliberately revoked blob: URLs on fast route exits, and for
   /audio/* autoplay in previews shipping no audio; headless Chrome
   blocks untrusted-gesture autoplay.
+
+- Chapter-2 round-2 findings (settled): isolated diacritics must be
+  encoded as SPACING codepoints in data (combining marks after a
+  space/paren render as garbage); biblist items are plain strings
+  (object items rendered [object Object]); the b_ex2_11..20 clips ARE
+  the inflected anthropos forms and double as the rule-chart row
+  audio; greekRows rows support parts[] for multi-tap phrases and
+  title for grouped charts; scored surfaces carry ui.liveScore +
+  defaults.pronounceEach; accent rule drill: no auto-advance on
+  incorrect (original behavior), 4s on correct; the original accent
+  placement pool is acute-only -- a 5-item circumflex EXTENSION
+  (authorized departure) ships pending VERIFY2 keep/drop.
+- Completion semantics CONFIRMED on device (VERIFY-5B D2): retry-type
+  drills complete on all-items-correct; one-attempt activities
+  complete on all-attempted. Bottom-nav greyout: not reproduced across
+  4+ full walks post-fa8132f -- closed unless it recurs.
 
 ## Pipeline contracts for chapters 3+ (cumulative)
 
@@ -221,27 +252,20 @@ files carry only what a new chat needs.
   (pack self-containment — mirrors the ISO).
 - A_INTRO1..4 unused by design.
 
-## Immediate queue (as of 2026-07-23)
+## Immediate queue (as of 2026-07-26)
 
-1. Nathanael: DOSBox collection with VERIFY-chapt02.md + ADDENDUM
-   (blockers: B1 sequence walk, D2/D4 drill answers, E1 the 21
-   division words; plus J1 auto-advance evidence, J2 divider glyph,
-   J3 option labels). Return filled doc + screenshots TO FABLE.
-2. Fable: chapter-2 data patch (chapt-02.json, lexicon, font-map
-   promotions) + a short 5B-PATCH-SPEC for the implementer round.
-3. Implementer round (Sol vs Opus 4.8): land the patch, re-run
-   verify, append §9 to HANDOFF-5B-SOL.md.
-4. Nathanael: VERIFY-5B device pass (includes the bottom-nav watch
-   item and the completion-semantics observation).
-5. Then 5C: recon pass over chapters 3-8 (string dumps + audio
-   inventories, no build) + the bounded rich-text parser experiment;
-   PHASE5-PLAN ledger + cohort batching from evidence.
-6. Repo hygiene (anytime): commit ONBOARD-SOL.md to buildout/ and
-   repoint AGENTS.md to the repo-relative path (it currently points
-   at an absolute local path, which won't survive a machine change
-   and hides the doc from the portfolio).
-7. Carried nits (fix when touched): Escape/initial-focus for speller
-   and clear-confirm modals; playwright-core as a devDependency.
+1. Implementer round: 5B-SPEC2.md (device-feedback corrections, first
+   round under process v2) against the replacement chapt-02.json.
+   Both models; RESULTS + BUILD docs back; grading chat runs
+   GRADER-PROMPT v2; XPATCH if justified; winner authors VERIFY2.
+2. Nathanael: VERIFY2 device pass (key items: rounded circumflex on
+   iOS, mark-only red technique, extended accent-placement items
+   keep/drop, bibliography, division-exercise ergonomics).
+3. Chapter 2 closes when VERIFY2 returns clean; then 5C: recon pass
+   chapters 3-8 + the bounded rich-text parser experiment; produce
+   5D-RECON-TASKS per process v2; PHASE5-PLAN cohort batching.
+4. Carried nits: Escape/initial-focus on modals; playwright-core as
+   devDependency; debug-card precache-count line (optional).
 
 ## Known open questions
 
