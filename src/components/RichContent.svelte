@@ -10,9 +10,26 @@
   // font and play their clip on tap. defList rows [term, value, audio?] play
   // the row's clip when present.
   import { play } from '../lib/audio.js';
+  import { splitMarkRun } from '../lib/greek.js';
   import Marked from './Marked.svelte';
 
   export let blocks = [];
+
+  // The 6 Accent Rules topic ships the "Chart: Accent Possibilities" expander
+  // TWICE, byte-identical (feedback 5: it renders twice on both devices). Data
+  // content is not ours to edit, so the renderer drops a repeat of an expander
+  // label already seen in the same block array.
+  $: shown = dedupeExpanders(blocks);
+  function dedupeExpanders(list) {
+    const seen = new Set();
+    return (list || []).filter(block => {
+      if (block.type !== 'expander') return true;
+      const key = block.label || '';
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
 
   function playAudio(id) { if (id) play(id); }
 
@@ -21,6 +38,10 @@
   // chips (A6, Six Points "Linguistic Pronunciation Descriptions").
   const isLettersList = v => v && typeof v === 'object' && Array.isArray(v.letters);
   const defRows = block => block.rows || (block.items || []).map(item => [item.term, item.def, item.audio]);
+  // The accent hints ship term-less entries ("Acute—last 3 syllables" on its
+  // own line, 5B-SPEC2 C7). With no term there is no two-column rhythm to
+  // keep, so those lists render as hanging-indent lines instead.
+  const isTermless = block => defRows(block).every(row => !row[0]);
   // A matrix row fills the declared columns with cells instead of the usual
   // greek-word + gloss pair. Rows may also carry a row LABEL: the Accent
   // Possibilities chart legends its two rows "Short Ultima" / "Long Ultima"
@@ -70,7 +91,7 @@
 </script>
 
 <div class="rich">
-  {#each blocks as b}
+  {#each shown as b}
     {#if b.type === 'heading'}
       <div class="rc-heading"><Marked text={b.text} /></div>
 
@@ -100,7 +121,7 @@
               <div class="rc-deflist nested">
                 {#each it.defList as row}
                   {#if isLettersList(row[1])}
-                    <div class="rc-defrow letters-row">
+                    <div class="rc-defrow letters-row" class:no-term={!row[0]}>
                       <span class="rc-term">{row[0]}</span>
                       <span class="rc-chips">
                         {#each row[1].letters as lt}
@@ -108,11 +129,16 @@
                         {/each}
                       </span>
                     </div>
-                  {:else}
-                    <button class="rc-defrow" class:tappable={row[2]} on:click={() => playAudio(row[2])}>
+                  {:else if row[2]}
+                    <button class="rc-defrow tappable" class:no-term={!row[0]} on:click={() => playAudio(row[2])}>
                       <span class="rc-term greek"><Marked text={row[0]} /></span>
                       <span class="rc-val greek"><Marked text={row[1]} /></span>
                     </button>
+                  {:else}
+                    <div class="rc-defrow static" class:no-term={!row[0]}>
+                      <span class="rc-term greek"><Marked text={row[0]} /></span>
+                      <span class="rc-val greek"><Marked text={row[1]} /></span>
+                    </div>
                   {/if}
                 {/each}
               </div>
@@ -123,10 +149,10 @@
       </ol>
 
     {:else if b.type === 'defList'}
-      <div class="rc-deflist">
+      <div class="rc-deflist" class:termless={isTermless(b)}>
         {#each defRows(b) as row}
           {#if isLettersList(row[1])}
-            <div class="rc-defrow letters-row">
+            <div class="rc-defrow letters-row" class:no-term={!row[0]}>
               <span class="rc-term">{row[0]}</span>
               <span class="rc-chips">
                 {#each row[1].letters as lt}
@@ -134,11 +160,16 @@
                 {/each}
               </span>
             </div>
-          {:else}
-            <button class="rc-defrow" class:tappable={row[2]} on:click={() => playAudio(row[2])}>
+          {:else if row[2]}
+            <button class="rc-defrow tappable" class:no-term={!row[0]} on:click={() => playAudio(row[2])}>
               <span class="rc-term greek"><Marked text={row[0]} /></span>
               <span class="rc-val greek"><Marked text={row[1]} /></span>
             </button>
+          {:else}
+            <div class="rc-defrow static" class:no-term={!row[0]}>
+              <span class="rc-term greek"><Marked text={row[0]} /></span>
+              <span class="rc-val greek"><Marked text={row[1]} /></span>
+            </div>
           {/if}
         {/each}
       </div>
@@ -147,26 +178,55 @@
       {@const syllableMatrix = isSyllableMatrix(b)}
       {@const rowLabels = syllableMatrix && hasRowLabels(b)}
       {@const matrixCols = syllableMatrix ? b.columns.length + (rowLabels ? 1 : 0) : 0}
-      <div class="rc-greekrows" class:syllable-matrix={syllableMatrix}>
+      {@const gridVars = `--greek-cols:${syllableMatrix ? matrixCols : (b.columns || []).length};--greek-datacols:${(b.columns || []).length}`}
+      <div class="rc-greekrows" class:syllable-matrix={syllableMatrix} class:row-labels={rowLabels} class:titled={b.title}>
+        <!-- B5: Review Marks groups its rows under a title ("Breathing:",
+             "Punctuation:", "Apostrophe:  ( ᾽ )  elided letters"). The title
+             owns its line in the heading green; the rows hang beneath it. -->
+        {#if b.title}<div class="rc-greektitle"><Marked text={b.title} /></div>{/if}
         {#if b.columns}
-          <div class="rc-greekhead" style={`--greek-cols:${syllableMatrix ? matrixCols : b.columns.length}`}>
+          <div class="rc-greekhead" style={gridVars}>
             {#each b.columns as column}<span>{column}</span>{/each}
-            {#if rowLabels}<span>&nbsp;</span>{/if}
+            {#if rowLabels}<span class="rc-headspacer">&nbsp;</span>{/if}
           </div>
         {/if}
         {#each b.rows as row}
           {#if syllableMatrix}
+            <!-- One tap target spanning the whole row: the chunks sit under
+                 their own column headers but the WORD is what is tapped
+                 (5B-SPEC2 B2). A chunk may legitimately be empty -- kosmos has
+                 no antepenult -- so empty cells hold their column open. -->
             {#if row.audio}
-              <button class="rc-syllable-row greek greek-say" style={`--greek-cols:${matrixCols}`} on:click={() => playAudio(row.audio)}>
-                {#each row.syllables as syllable}<span>{syllable || '\u00a0'}</span>{/each}
-                {#if rowLabels}<span class="rc-rowlabel">{row.label || '\u00a0'}</span>{/if}
+              <button class="rc-syllable-row greek greek-say" style={gridVars} on:click={() => playAudio(row.audio)}>
+                {#each row.syllables as syllable}<span class="rc-cell">{#each splitMarkRun(syllable) as run}{#if run.mark}<span class="isolated-mark as-mark">{run.t}</span>{:else}{run.t}{/if}{/each}{#if !syllable}&nbsp;{/if}</span>{/each}
+                {#if rowLabels}<span class="rc-cell rc-rowlabel">{row.label || '\u00a0'}</span>{/if}
               </button>
             {:else}
-              <div class="rc-syllable-row greek" style={`--greek-cols:${matrixCols}`}>
-                {#each row.syllables as syllable}<span>{syllable || '\u00a0'}</span>{/each}
-                {#if rowLabels}<span class="rc-rowlabel">{row.label || '\u00a0'}</span>{/if}
+              <div class="rc-syllable-row greek" style={gridVars}>
+                {#each row.syllables as syllable}<span class="rc-cell">{#each splitMarkRun(syllable) as run}{#if run.mark}<span class="isolated-mark as-mark">{run.t}</span>{:else}{run.t}{/if}{/each}{#if !syllable}&nbsp;{/if}</span>{/each}
+                {#if rowLabels}<span class="rc-cell rc-rowlabel">{row.label || '\u00a0'}</span>{/if}
               </div>
             {/if}
+          {:else if row.parts}
+            <!-- C6: an equation row (\u03b4\u03b9\u03ac + \u03b1\u1f50\u03c4\u03bf\u1fe6 becomes \u03b4\u03b9\u1fbd \u03b1\u1f50\u03c4\u03bf\u1fe6). Each Greek
+                 part is its OWN tap target with its own clip; the connecting
+                 words are inert ink. -->
+            <div class="rc-greekrow parts-row" style="--greek-cols:1">
+              <span class="rc-parts">
+                {#each row.parts as part}
+                  {#if part.greek}
+                    {#if part.audio}
+                      <button class="rc-part greek greek-say" on:click={() => playAudio(part.audio)}>{part.greek}</button>
+                    {:else}
+                      <span class="rc-part greek">{part.greek}</span>
+                    {/if}
+                  {:else}
+                    <span class="rc-parttext">{part.text}</span>
+                  {/if}
+                {/each}
+                {#if row.gloss != null && row.gloss !== ''}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
+              </span>
+            </div>
           {:else}
             {@const cellCount = (row.label ? 1 : 0) + (row.greek ? 1 : 0) + (row.gloss != null && row.gloss !== '' ? 1 : 0)}
             <div class="rc-greekrow" style={`--greek-cols:${Math.max(cellCount, 1)}`}>
@@ -208,8 +268,16 @@
     {:else if b.type === 'biblist'}
       {#if b.starNote}<div class="rc-starnote">{b.starNote}</div>{/if}
       <div class="rc-biblist">
+        <!-- B6: a biblist entry is a plain string. An object-form entry once
+             shipped and rendered as "[object Object]" five times over; the
+             guard makes the shape failure visible instead of garbled. The
+             build-time equivalent is scripts/check-content-shapes.mjs. -->
         {#each b.items as entry}
-          <div class="rc-bibentry"><Marked text={entry} /></div>
+          {#if typeof entry === 'string'}
+            <div class="rc-bibentry"><Marked text={entry} /></div>
+          {:else}
+            <div class="pending-verification compact">Bibliography entry is not a string — data shape error.</div>
+          {/if}
         {/each}
       </div>
 

@@ -12,9 +12,16 @@
   //   { attemptsPerItem: "retry" } / absent — the original retry loop: a wrong
   //     tap leaves the item open, only a correct tap advances (chapter 1 and
   //     the Syllable Counting drill).
+  //   { autoAdvanceOnIncorrect: false } — a WRONG answer is still final, but
+  //     nothing moves: the learner studies the revealed form for as long as
+  //     they like and clicks Next (5B-SPEC2 C4, Accent Rule drill).
+  //
+  // CONTROLS come from activity.ui.buttons, so each drill shows exactly the
+  // original's button block (Previous / Next / Pronounce / Translate / Hint /
+  // Score); chapter 1's two-button drills are unaffected.
   import { onDestroy } from 'svelte';
-  import { buildSelectQuestions, randomFeedback } from '../lib/content.js';
-  import { markClusters } from '../lib/greek.js';
+  import { buildSelectQuestions, randomFeedback, resolveHintBlocks } from '../lib/content.js';
+  import { combiningForMarkName, firstAccentCluster, markOverlayParts } from '../lib/greek.js';
   import { play } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import RichContent from './RichContent.svelte';
@@ -35,7 +42,11 @@
   let pronounceEach = true;
   let finished = false;
   let showHint = false;
+  let showGloss = false;
+  let showScore = false;
   let advanceTimer = null;
+  const attemptedItems = new Set();
+  const results = new Map();
 
   init();
   function init() {
@@ -46,6 +57,11 @@
     optionClass = built.optionClass || '';
     qIndex = 0; attempts = 0; correct = 0;
     feedback = ''; picked = null; answered = false; finished = false;
+    showGloss = false;
+    attemptedItems.clear();
+    results.clear();
+    pronounceEach = activity.ui?.defaults?.pronounceEach ?? true;
+    showScore = !!activity.ui?.liveScore;
     clearTimeout(advanceTimer);
     maybePronounce();
   }
@@ -53,25 +69,51 @@
   $: current = questions[qIndex];
   $: staticOptions = Array.isArray(activity.optionValues);
   $: wideOptions = !staticOptions || optionClass === 'wide';
-  $: showPronounce = !staticOptions || !!activity.ui?.buttons?.includes('Pronounce');
+  $: uiButtons = activity.ui?.buttons || [];
+  $: showPronounce = !staticOptions || uiButtons.includes('Pronounce');
+  $: showStepper = uiButtons.includes('Previous') || uiButtons.includes('Next');
+  $: showTranslate = uiButtons.includes('Translate');
   $: showPronounceEach = !staticOptions || !!activity.ui?.checkboxes?.includes('Pronounce Each Drill');
-  $: hintBlocks = (activity.hint && activity.hint.content) || [];
+  $: hintBlocks = resolveHintBlocks(chapter, activity.hint);
   $: showHintButton = hintBlocks.length > 0;
+  // Grouped button block (the original stacks them two-up) once there are more
+  // than the chapter-1 pair.
+  $: groupedControls = 1 + (showPronounce ? 1 : 0) + (showStepper ? 2 : 0)
+    + (showTranslate ? 1 : 0) + (showHintButton ? 1 : 0) > 3;
   // One-attempt drills finalize on the option tap; retry drills keep the loop.
   $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
   $: autoAdvanceMs = activity.answerPolicy?.autoAdvanceMs ?? null;
+  $: waitOnIncorrect = activity.answerPolicy?.autoAdvanceOnIncorrect === false;
   // 2c: the original's full-width "only one syllable" bar under the word. In
   // this drill it answers "1" -- the same value as the first number tile.
   $: oneSyllableOption = activity.oneSyllableButton
     ? options.find(option => option.id === '1') || null
     : null;
 
-  // 2e: the mark being asked about is rendered RED -- that IS the question.
-  // redMarkCluster is a 1-based grapheme cluster; see markClusters() for why
-  // the whole cluster reddens rather than just its diacritic.
-  $: redParts = current && current.redMarkCluster
-    ? markClusters(current.prompt, current.redMarkCluster)
-    : null;
+  // The mark being asked about is drawn RED -- that IS the question. The
+  // Marking Recognition drill names the cluster (redMarkCluster); the Accent
+  // Rule drill reddens the word's FIRST accent. Both resolve to the same
+  // overlay parts, which colour ONLY the mark (5B-SPEC2 C5).
+  $: redParts = current ? redPartsFor(current) : null;
+  function redPartsFor(question) {
+    if (question.redMarkCluster) {
+      return markOverlayParts(question.prompt, question.redMarkCluster, combiningForMarkName(question.answerId));
+    }
+    if (activity.redFirstAccent) {
+      const first = firstAccentCluster(question.prompt);
+      if (first.index > 0) return markOverlayParts(question.prompt, first.index, first.mark);
+    }
+    return null;
+  }
+
+  // Live score (5B-SPEC2 C3): a reactive statement, so the line re-renders on
+  // every answer. The old score box called scoreText() from the template with
+  // no reactive dependency and went stale the moment it was opened.
+  $: scoreLine = scoreText(attempts, correct);
+  function scoreText(a, c) {
+    if (a === 0) return chapter.feedback?.scorePrompt || 'Give it a try first';
+    return `${c} correct out of ${a} attempts (${Math.round((c / a) * 100)}%)`;
+  }
 
   function maybePronounce() {
     const q = questions[qIndex];
@@ -82,6 +124,7 @@
     if (answered || finished || current.pending) return;
     picked = opt.id;
     attempts += 1;
+    attemptedItems.add(qIndex);
     const right = opt.id === current.answerId;
     if (right) correct += 1;
     feedback = randomFeedback(chapter, right ? 'correct' : 'incorrect');
@@ -89,11 +132,12 @@
     if (right || oneAttempt) {
       // One attempt: the item is done either way and the answer is revealed.
       answered = true;
+      results.set(qIndex, { picked, feedback, feedbackKind });
       // Completion is defined by attempted items, so record the final item when
       // it is ANSWERED. Route exit cancels the timer, not progress.
-      if (oneAttempt && qIndex === questions.length - 1 && activity.id) markCompleted(activity.id);
+      if (oneAttempt && attemptedItems.size === questions.length && activity.id) markCompleted(activity.id);
       clearTimeout(advanceTimer);
-      advanceTimer = setTimeout(advance, autoAdvanceMs ?? 900);
+      if (right || !waitOnIncorrect) advanceTimer = setTimeout(advance, autoAdvanceMs ?? 900);
     }
   }
 
@@ -101,7 +145,7 @@
     clearTimeout(advanceTimer);
     if (qIndex < questions.length - 1) {
       qIndex += 1;
-      picked = null; answered = false; feedback = ''; feedbackKind = '';
+      restore();
       maybePronounce();
     } else {
       finished = true;
@@ -110,17 +154,36 @@
     }
   }
 
-  function scoreText() {
-    if (attempts === 0) return chapter.feedback?.scorePrompt || 'Give it a try first';
-    return `${correct} correct out of ${attempts} attempts (${Math.round((correct / attempts) * 100)}%)`;
+  // Under attemptsPerItem: 1 a finalized item stays finalized on revisit --
+  // reopening it would let a wrong answer be retried and re-count attempts.
+  function restore() {
+    const result = results.get(qIndex);
+    showGloss = false;
+    if (result && oneAttempt) {
+      picked = result.picked;
+      feedback = result.feedback;
+      feedbackKind = result.feedbackKind;
+      answered = true;
+      return;
+    }
+    picked = null; answered = false; feedback = ''; feedbackKind = '';
   }
+
+  function move(delta) {
+    clearTimeout(advanceTimer);
+    const nextIndex = Math.max(0, Math.min(questions.length - 1, qIndex + delta));
+    if (nextIndex === qIndex) return;
+    qIndex = nextIndex;
+    restore();
+    maybePronounce();
+  }
+
   function sentenceParts(text, underline) {
     if (!underline) return null;
     const at = text.indexOf(underline);
     if (at === -1) return null;
     return [text.slice(0, at), text.slice(at, at + underline.length), text.slice(at + underline.length)];
   }
-  let showScore = false;
 
   onDestroy(() => clearTimeout(advanceTimer));
 </script>
@@ -128,17 +191,16 @@
 <div class="card">
   {#if finished}
     <div class="scorebox" style="font-size:1.2rem; padding: 20px 0">
-      Finished! {scoreText()}
+      Finished! {scoreLine}
     </div>
     <div class="controls"><button class="btn" on:click={init}>Start Over</button></div>
   {:else if current}
     <!-- Greek-tap rule (P6/P8/P9): a Greek PROMPT with audio pronounces itself
-         on tap (blue). The tap never answers, advances, or re-shuffles.
-         English prompts stay static; options are answers, never audio taps. -->
+         on tap (blue). The tap never answers, advances, or re-shuffles. -->
     {#if redParts}
       <!-- Still displayed Greek, so still a greek-say tap (directive 9); the
            asked-about mark simply overrides the blue with red. -->
-      <button class="prompt greek greek-say red-mark" disabled={!current.promptAudio} on:click={() => current.promptAudio && play(current.promptAudio)}>{#each redParts as part}<span class:mark-red={part.red}>{part.text}</span>{/each}</button>
+      <button class="prompt greek greek-say red-mark" disabled={!current.promptAudio} on:click={() => current.promptAudio && play(current.promptAudio)}>{#each redParts as part}{#if part.overlay}<span class="rm-cluster"><span class="rm-base">{part.base}</span><span class="rm-mark">{part.overlay}</span></span>{:else if part.red}<span class="mark-red">{part.text}</span>{:else}{part.text}{/if}{/each}</button>
     {:else if promptIsGreek && current.promptAudio}
       <button class="prompt greek greek-say" on:click={() => play(current.promptAudio)}>{current.prompt}</button>
     {:else if current.underline && sentenceParts(current.prompt, current.underline)}
@@ -150,11 +212,13 @@
     {#if current.pending}
       <div class="pending-verification" role="status">This activity item is pending content verification.</div>
     {:else}
+      <!-- Translate: the original's gloss line under the word, on demand. -->
+      {#if showGloss && current.gloss}<div class="gloss-line">{current.gloss}</div>{/if}
       <!-- Reveal on a finalized item: the gloss, and the properly accented
            form the Accent Rule drill's misaccented prompt should have had. -->
       {#if answered && (current.gloss || current.correctForm)}
         <div class="reveal-row">
-          {#if current.gloss}<span class="reveal-gloss">{current.gloss}</span>{/if}
+          {#if current.gloss && !showGloss}<span class="reveal-gloss">{current.gloss}</span>{/if}
           {#if current.correctForm}<span class="reveal-form greek">{current.correctForm}</span>{/if}
         </div>
       {/if}
@@ -182,21 +246,28 @@
         </button>
       {/if}
     {/if}
-    <div class="controls">
-      <button class="btn secondary" on:click={() => (showScore = !showScore)}>Score</button>
+    <div class="controls" class:grouped={groupedControls}>
+      {#if showStepper}
+        <button class="btn secondary" disabled={qIndex <= 0} on:click={() => move(-1)}>Previous</button>
+        <button class="btn secondary" disabled={qIndex >= questions.length - 1} on:click={() => move(1)}>Next</button>
+      {/if}
       {#if showPronounce}
         <button class="btn" disabled={!current.promptAudio} on:click={() => current.promptAudio && play(current.promptAudio)}>Pronounce</button>
+      {/if}
+      {#if showTranslate}
+        <button class="btn secondary" disabled={!current.gloss} on:click={() => (showGloss = !showGloss)}>Translate</button>
       {/if}
       {#if showHintButton}
         <button class="btn secondary" on:click={() => (showHint = !showHint)}>Hint</button>
       {/if}
-      {#if showPronounceEach}
-        <label style="display:flex; align-items:center; gap:6px; font-size:0.9rem">
-          <input type="checkbox" bind:checked={pronounceEach} disabled={!current.promptAudio} /> Pronounce each
-        </label>
-      {/if}
+      <button class="btn secondary" on:click={() => (showScore = !showScore)}>Score</button>
     </div>
-    {#if showScore}<div class="scorebox">{scoreText()}</div>{/if}
+    {#if showPronounceEach}
+      <div class="exercise-checks">
+        <label><input type="checkbox" bind:checked={pronounceEach} /> Pronounce each</label>
+      </div>
+    {/if}
+    {#if showScore}<div class="scorebox live-score">{scoreLine}</div>{/if}
     <div class="scorebox" style="font-weight:400; font-size:0.85rem; margin-top:8px">
       {qIndex + 1} of {questions.length}
     </div>

@@ -2,13 +2,19 @@
   // Syllable Division Exercise: tap the numbered gaps between letters where
   // the word breaks into syllables, then Check Answer.
   //
+  // LAYOUT (5B-SPEC2 C2) follows the original: a numbered BUTTON above each
+  // gap with an arrow pointing down into the space between the two letters.
+  // Sizing is breakpoint-static, not per-word -- the whole pool is measured
+  // once by its LONGEST word so the letters are as large as that word allows
+  // and every other word renders at the same size.
+  //
   // ANSWER POLICY (5B patch 2a): answerPolicy.attemptsPerItem === 1 means
   // Check Answer finalizes the item right or wrong, reveals the hyphen-joined
   // divided form, and auto-advances after autoAdvanceMs. The timer is cancelled
   // on manual Previous/Next and on unmount. Completion = all items ATTEMPTED.
   import { onDestroy } from 'svelte';
   import { play } from '../lib/audio.js';
-  import { randomFeedback } from '../lib/content.js';
+  import { randomFeedback, resolveHintBlocks } from '../lib/content.js';
   import { dividedForm, splitGraphemes } from '../lib/greek.js';
   import { markCompleted } from '../lib/progress.js';
   import RichContent from './RichContent.svelte';
@@ -27,11 +33,31 @@
   let answered = false;
   let showAnswer = false;
   let showHint = false;
-  let showScore = false;
-  let pronounceEach = false;
+  let showScore = !!activity.ui?.liveScore;
+  let pronounceEach = activity.ui?.defaults?.pronounceEach ?? false;
   let advanceTimer = null;
   const attemptedItems = new Set();
   const results = new Map();
+
+  // Fat-finger sizing (C2). The row is measured, not guessed: a hidden probe
+  // renders the pool's longest word at a reference size, so the glyphs' real
+  // advance widths -- not a character count -- decide how large the letters can
+  // be. `railWidth` re-measures at every breakpoint; the WORD does not change
+  // the size, so stepping through the pool never resizes anything.
+  const PROBE_PX = 100;
+  const GAP_RATIO = 0.34;          // gap column as a share of the letter size
+  const MAX_LETTER_PX = 76;        // stop growing on tablet widths
+  const longest = items.reduce((best, item) => {
+    const count = splitGraphemes(item.greek).length;
+    return count > best.count ? { count, greek: item.greek } : best;
+  }, { count: 0, greek: '' });
+  let railWidth = 0;
+  let probeWidth = 0;
+  $: letterSize = (railWidth > 0 && probeWidth > 0 && longest.count > 0)
+    ? Math.max(16, Math.min(MAX_LETTER_PX,
+        railWidth / (probeWidth / PROBE_PX + GAP_RATIO * Math.max(longest.count - 1, 0))))
+    : 24;
+  $: gapSize = Math.max(11, letterSize * GAP_RATIO);
 
   $: item = items[itemIndex] || null;
   $: letters = splitGraphemes(item && item.greek);
@@ -40,20 +66,9 @@
   $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
   $: autoAdvanceMs = activity.answerPolicy?.autoAdvanceMs ?? 900;
   $: revealed = answered && oneAttempt;
-
-  function resolveHintBlocks(ch, hint) {
-    if (!hint) return [];
-    if (Array.isArray(hint.content)) return hint.content;
-    if (!hint.contentRef) return [];
-    const toRef = text => (text || '').replace(/[^A-Za-z0-9]+(.)/g, (_, c) => c.toUpperCase()).replace(/^[A-Z]/, c => c.toLowerCase());
-    for (const section of ['learn', 'drill', 'exercise', 'quickReview']) {
-      for (const candidate of ch[section] || []) {
-        const blocks = candidate.content || [];
-        if (blocks.some(block => block.type === 'heading' && toRef(block.text) === hint.contentRef)) return blocks;
-      }
-    }
-    return [];
-  }
+  // Live score (C3): reactive, so the line follows every answer instead of
+  // freezing at whatever it said when the box was opened.
+  $: scoreLine = scoreText(attempts, correct);
 
   function toggleGap(gap) {
     if (answered) return;
@@ -133,9 +148,9 @@
     if (pronounceEach && nextItem && nextItem.audio) play(nextItem.audio);
   }
 
-  function scoreText() {
-    if (!attempts) return chapter.feedback?.scorePrompt || 'Give it a try first';
-    return `${correct} correct out of ${attempts} attempts (${Math.round((correct / attempts) * 100)}%)`;
+  function scoreText(a, c) {
+    if (!a) return chapter.feedback?.scorePrompt || 'Give it a try first';
+    return `${c} correct out of ${a} attempts (${Math.round((c / a) * 100)}%)`;
   }
 
   // Answer submitted, so Check Answer is live even with nothing selected once
@@ -146,27 +161,39 @@
 </script>
 
 <div class="card divide-activity">
+  <!-- Off-screen probe: the pool's longest word at a known size. Its measured
+       width is what the live row is scaled from. -->
+  <span class="divide-probe greek" style="font-size:{PROBE_PX}px" bind:clientWidth={probeWidth}>{longest.greek}</span>
   {#if pending}
     <div class="pending-verification" role="status">Syllable-division word {itemIndex + 1} is pending content verification.</div>
   {:else}
-    <div class="divide-word" style={`--divide-size:${Math.max(13, Math.min(32, 240 / Math.max(letters.length + (letters.length - 1) * 0.55, 1)))}px`} aria-label="Choose syllable division gaps">
-      {#each letters as letter, index}
-        {#if item.audio}
-          <button class="divide-letter greek greek-say" aria-label="Pronounce word" on:click={() => play(item.audio)}>{letter}</button>
-        {:else}
-          <span class="divide-letter greek">{letter}</span>
-        {/if}
-        {#if index < letters.length - 1}
-          <button class="divide-gap"
-            class:selected={selected.has(index + 1)}
-            class:correct={revealed && item.division.includes(index + 1)}
-            class:locked={oneSyllable}
-            aria-pressed={selected.has(index + 1)}
-            on:click={() => toggleGap(index + 1)}>
-            <span>{index + 1}</span>
-          </button>
-        {/if}
-      {/each}
+    <div class="divide-rail" bind:clientWidth={railWidth}>
+      <div class="divide-word"
+        style={`--divide-size:${letterSize}px; --gap-size:${gapSize}px`}
+        aria-label="Choose syllable division gaps">
+        {#each letters as letter, index}
+          {#if item.audio}
+            <button class="divide-letter greek greek-say" aria-label="Pronounce word" on:click={() => play(item.audio)}>{letter}</button>
+          {:else}
+            <span class="divide-letter greek">{letter}</span>
+          {/if}
+          {#if index < letters.length - 1}
+            <button class="divide-gap"
+              class:selected={selected.has(index + 1)}
+              class:correct={revealed && item.division.includes(index + 1)}
+              class:locked={oneSyllable}
+              aria-pressed={selected.has(index + 1)}
+              aria-label={`Divide after letter ${index + 1}`}
+              on:click={() => toggleGap(index + 1)}>
+              <span class="gap-num">{index + 1}</span>
+              <svg class="gap-arrow" viewBox="0 0 12 24" width="12" height="24" aria-hidden="true">
+                <path d="M6 1 V16" stroke="currentColor" stroke-width="2" fill="none" />
+                <path d="M1.5 15 L6 22 L10.5 15 Z" fill="currentColor" />
+              </svg>
+            </button>
+          {/if}
+        {/each}
+      </div>
     </div>
     {#if activity.oneSyllableButton}
       <button class="one-syllable-bar"
@@ -183,20 +210,20 @@
     {/if}
   {/if}
 
-  <div class="controls">
+  <div class="controls grouped">
+    <button class="btn" disabled={!canCheck} on:click={check}>Check Answer</button>
     <button class="btn" disabled={!item?.audio} on:click={() => item?.audio && play(item.audio)}>Pronounce</button>
     <button class="btn secondary" disabled={itemIndex <= 0} on:click={() => move(-1)}>Previous</button>
-    <button class="btn secondary" on:click={() => (showScore = !showScore)}>Score</button>
     <button class="btn secondary" disabled={itemIndex >= items.length - 1} on:click={() => move(1)}>Next</button>
-    <button class="btn" disabled={!canCheck} on:click={check}>Check Answer</button>
     <button class="btn secondary" on:click={() => (showHint = !showHint)}>{activity.hint?.label || 'Hint'}</button>
+    <button class="btn secondary" on:click={() => (showScore = !showScore)}>Score</button>
   </div>
   <div class="exercise-checks">
     <label><input type="checkbox" bind:checked={showAnswer} disabled={pending} /> Show Answer</label>
-    <label><input type="checkbox" bind:checked={pronounceEach} disabled={!item?.audio} /> Pronounce Each Exercise</label>
+    <label><input type="checkbox" bind:checked={pronounceEach} /> Pronounce Each Exercise</label>
   </div>
+  {#if showScore}<div class="scorebox live-score">{scoreLine}</div>{/if}
   <div class="scorebox exercise-count">{itemIndex + 1} of {items.length}</div>
-  {#if showScore}<div class="scorebox">{scoreText()}</div>{/if}
 </div>
 
 {#if showHint}

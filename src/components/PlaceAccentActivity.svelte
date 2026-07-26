@@ -19,7 +19,12 @@
   export let chapter;
   export let activity;
 
-  const words = activity.items || [];
+  // EXTENDED PRACTICE (5B-SPEC2 C7): the original's 20-item pool is acute-only,
+  // so the data appends circumflex-bearing chapter words as clearly-labelled
+  // extra items. They share the scoring line but NOT the completion bar --
+  // finishing the chapter still means finishing the original twenty.
+  const baseWords = activity.items || [];
+  const words = [...baseWords, ...(activity.extendedItems || [])];
   let wordIndex = 0;
   let accentType = null;
   let accentPosition = null;
@@ -30,8 +35,8 @@
   let answered = false;
   let showAnswer = false;
   let showHint = false;
-  let showScore = false;
-  let pronounceEach = false;
+  let showScore = !!activity.ui?.liveScore;
+  let pronounceEach = activity.ui?.defaults?.pronounceEach ?? false;
   let advanceTimer = null;
   const attemptedWords = new Set();
   const results = new Map();
@@ -43,6 +48,12 @@
   $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
   $: autoAdvanceMs = activity.answerPolicy?.autoAdvanceMs ?? 900;
   $: revealed = answered && oneAttempt;
+  $: isExtended = wordIndex >= baseWords.length;
+  // A root identical to the answer form would print the answer above the slots.
+  $: showRootWord = !!(word && word.root)
+    && (!word.answerForm || word.root.normalize('NFC') !== word.answerForm.normalize('NFC'));
+  // Live score (C3): reactive so it tracks every answer instead of freezing.
+  $: scoreLine = scoreText(attempts, correct);
 
   // Under attemptsPerItem: 1 a finalized word stays finalized on revisit --
   // reopening it would let a wrong answer be retried and re-count attempts.
@@ -89,7 +100,8 @@
     feedbackKind = ok ? 'ok' : 'bad';
     if (ok || oneAttempt) {
       answered = true;
-      if (attemptedWords.size === words.length) markCompleted(activity.id);
+      // Completion counts the ORIGINAL pool only; the extension is optional.
+      if (baseWords.every((_, index) => attemptedWords.has(index))) markCompleted(activity.id);
       results.set(wordIndex, {
         accentType,
         accentPosition,
@@ -102,24 +114,31 @@
     }
   }
 
-  function scoreText() {
-    if (!attempts) return chapter.feedback?.scorePrompt || 'Give it a try first';
-    return `${correct} correct out of ${attempts} attempts (${Math.round((correct / attempts) * 100)}%)`;
+  function scoreText(a, c) {
+    if (!a) return chapter.feedback?.scorePrompt || 'Give it a try first';
+    return `${c} correct out of ${a} attempts (${Math.round((c / a) * 100)}%)`;
   }
 
   onDestroy(() => clearTimeout(advanceTimer));
 </script>
 
 <div class="card accent-activity">
-  {#if word && (word.root || word.rootGloss)}
+  {#if isExtended}
+    <div class="extended-divider">Extended practice — not in the original</div>
+  {/if}
+  <!-- The header exists to show the ROOT an inflected form derives from
+       (Βαπτίζω -> βάπτισαι). On the extended items the root IS the answer form,
+       so printing it accented would show the learner both the accent type and
+       its position before they choose. Those items show the gloss alone. -->
+  {#if word && (showRootWord || word.rootGloss)}
     <div class="accent-root">
-      <div class="label">{activity.ui?.header || 'Root Greek Word'}</div>
+      <div class="label">{showRootWord ? (activity.ui?.header || 'Root Greek Word') : 'Word Meaning'}</div>
       <div class="accent-root-line">
         <!-- Inert: word.audio (b_ex2_N) belongs to the inflected answerForm,
              not the root, so tapping the root would play the wrong clip. The
              inflected clip stays reachable via Pronounce Each Exercise. -->
-        <span class="accent-root-word greek">{word.root}</span>
-        {#if word.rootGloss}<span class="accent-root-gloss">({word.rootGloss})</span>{/if}
+        {#if showRootWord}<span class="accent-root-word greek">{word.root}</span>{/if}
+        {#if word.rootGloss}<span class="accent-root-gloss">{showRootWord ? `(${word.rootGloss})` : word.rootGloss}</span>{/if}
       </div>
     </div>
   {/if}
@@ -156,23 +175,27 @@
     {/if}
   {/if}
 
-  <div class="controls">
-    <button class="btn" disabled={!word?.audio} on:click={() => word?.audio && play(word.audio)}>Pronounce</button>
-    <button class="btn secondary" disabled={wordIndex <= 0} on:click={() => move(-1)}>Previous</button>
-    <button class="btn secondary" on:click={() => (showScore = !showScore)}>Score</button>
-    <button class="btn secondary" disabled={wordIndex >= words.length - 1} on:click={() => move(1)}>Next</button>
+  <div class="controls grouped">
     <button class="btn" disabled={pending || answered || accentType == null || accentPosition == null} on:click={check}>Check Answer</button>
+    <!-- V3 resolved: "Pronounce Word" speaks the CURRENT item's clip -- the
+         same clip Pronounce Each plays. There is no separate root recording. -->
+    <button class="btn" disabled={!word?.audio} on:click={() => word?.audio && play(word.audio)}>Pronounce Word</button>
+    <button class="btn secondary" disabled={wordIndex <= 0} on:click={() => move(-1)}>Previous</button>
+    <button class="btn secondary" disabled={wordIndex >= words.length - 1} on:click={() => move(1)}>Next</button>
     {#if hintBlocks.length}
       <button class="btn secondary" on:click={() => (showHint = !showHint)}>{activity.hint?.label || 'Hint'}</button>
     {/if}
+    <button class="btn secondary" on:click={() => (showScore = !showScore)}>Score</button>
   </div>
   <div class="exercise-checks">
     <label><input type="checkbox" bind:checked={showAnswer} disabled={pending} /> Show Answer</label>
-    <label><input type="checkbox" bind:checked={pronounceEach} disabled={!word?.audio} /> Pronounce Each Exercise</label>
+    <label><input type="checkbox" bind:checked={pronounceEach} /> Pronounce Each Exercise</label>
     {#if word?.ref}<span class="exercise-ref">{word.ref}</span>{/if}
   </div>
-  <div class="scorebox exercise-count">{wordIndex + 1} of {words.length}</div>
-  {#if showScore}<div class="scorebox">{scoreText()}</div>{/if}
+  {#if showScore}<div class="scorebox live-score">{scoreLine}</div>{/if}
+  <div class="scorebox exercise-count">
+    {wordIndex + 1} of {words.length}{#if activity.extendedItems?.length}&nbsp;({baseWords.length} in the original){/if}
+  </div>
 </div>
 
 {#if showHint && hintBlocks.length}

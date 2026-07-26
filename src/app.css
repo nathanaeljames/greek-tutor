@@ -9,6 +9,12 @@
   --ok: #2e7d32;
   --bad: #b3402e;
   --link: #1663c7;      /* blue = tappable (A6); reserved for tappable Greek/text */
+  /* Non-tappable EMPHASIS (definition terms, chart legends, group titles).
+     Blue means tappable and nothing else (directive 8), so emphasis that is
+     not a tap target reads in the heading green instead (5B-SPEC2 B4). */
+  --accent-ink: #1f5f57;
+  /* The mark being asked about, drawn as bright as the original's (C5). */
+  --mark-red: #e00000;
   --radius: 14px;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -16,6 +22,16 @@ html, body { margin: 0; padding: 0; background: var(--parchment); color: var(--i
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
 .greek { font-family: 'Times New Roman', 'SBL Greek', Georgia, serif; }
 button { font: inherit; cursor: pointer; }
+/* ---- Isolated marks shown outside a word (5B-SPEC2 B1) ----
+   "Acute ( ´ )" must never break across lines, and the mark itself is drawn
+   large: the original deliberately enlarges these glyphs and at body size a
+   breathing is indistinguishable from an acute. The mark keeps the speller
+   keyboard's font stack (.tk-key.mark) -- the one surface confirmed on device
+   to draw U+1FC0 as the rounded perispomeni rather than a tilde. */
+.mark-group { white-space: nowrap; }
+.isolated-mark.as-mark { display: inline-block; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.45em; line-height: 1; padding: 0 0.06em; vertical-align: -0.08em; }
+.isolated-mark.greek { font-family: 'Times New Roman', 'SBL Greek', Georgia, serif; font-size: 1.15em; }
 /* ---- App shell: fixed top bar, scrolling middle, fixed bottom bar ---- */
 .app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; }
 .app-main { flex: 1; min-height: 0; display: flex; }
@@ -61,11 +77,26 @@ button { font: inherit; cursor: pointer; }
 .tile.selected.correct { border-color: var(--ok); background: #e6f2e6; }
 .prompt { font-size: 3rem; text-align: center; padding: 18px; }
 .prompt.select-sentence { font-size: 1.25rem; line-height: 1.5; }
-/* 2e: Marking Recognition asks about ONE mark, drawn red inside the word.
-   The word itself stays a blue greek-say tap (directive 9); the marked
-   grapheme cluster's own color rule beats the inherited link blue. */
+/* Marking Recognition / Accent Rule ask about ONE mark, drawn red inside the
+   word. The word itself stays a blue greek-say tap (directive 9).
+   C5: colouring an inline combining-mark span does not work -- the browser
+   shapes across the boundary and paints the mark with the BASE run's colour.
+   The cluster is therefore rendered WITHOUT its mark and the mark is laid over
+   it as a free-standing spacing glyph, which shapes independently. The spacing
+   glyph is designed to sit at accent height on its own baseline, so aligning
+   the two baselines puts it where the combining mark would have been. */
 .prompt.red-mark { font-size: 2.5rem; }
-.mark-red { color: var(--accent); }
+.mark-red { color: var(--mark-red); }
+.rm-cluster { position: relative; display: inline-block; }
+.rm-base { color: inherit; }
+/* Same font path as the isolated marks (the body Greek serif draws U+1FC0 as a
+   TILDE), and nudged down: a spacing mark is drawn for the tallest base it may
+   sit on, so over a lowercase vowel it lands ~0.08em high. Measured against
+   the precomposed glyphs, not guessed. */
+.rm-mark { position: absolute; left: 0; right: 0; bottom: 0; text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.15; transform: translateY(0.08em);
+  color: var(--mark-red); pointer-events: none; }
 /* Revealed after a one-attempt item is finalized: the gloss and, for the
    Accent Rule drill, the properly accented form. */
 .reveal-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
@@ -76,6 +107,23 @@ button { font: inherit; cursor: pointer; }
 .feedback.ok { color: var(--ok); }
 .feedback.bad { color: var(--bad); }
 .controls { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
+/* The original stacks a drill's six controls in a compact two-up block rather
+   than a wrapping row (5B-SPEC2 C1). */
+.controls.grouped { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 340px; margin-left: auto; margin-right: auto; }
+.controls.grouped .btn { padding: 10px 8px; }
+@media (min-width: 560px) {
+  .controls.grouped { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 520px; }
+}
+/* Live score: always-on under the scored surfaces, updating on every answer. */
+.live-score { margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: #fffdf3;
+  font-size: 0.95rem; }
+/* Beyond the original's twenty items; labelled so it never reads as fidelity. */
+.extended-divider { margin: 0 0 12px; padding: 8px 10px; border-radius: 8px;
+  background: #fff8d6; border-left: 4px solid var(--teal); color: var(--accent-ink);
+  font-size: 0.85rem; font-weight: 700; text-align: center; }
+/* Translate: the gloss line under the prompt word. */
+.gloss-line { text-align: center; color: var(--accent-ink); font-size: 1.05rem; margin: -6px 0 6px; }
 .btn { background: var(--teal); color: white; border: none; border-radius: 10px;
   padding: 10px 16px; font-weight: 600; }
 .btn.secondary { background: #d9d4c3; color: var(--ink); }
@@ -185,7 +233,7 @@ button { font: inherit; cursor: pointer; }
 .rc-num { font-weight: 600; margin-right: 0.15em; }
 .rc-example { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 8px;
   background: #fffdf3; border: 1px solid #e7dfbf; border-radius: 8px; padding: 6px 12px;
-  margin: 8px 0 2px; font-size: 1rem; text-align: left; }
+  margin: 8px 0 2px; font-size: 1rem; text-align: left; color: var(--ink); }
 .rc-example .greek { font-size: 1.3rem; }
 .rc-example.tappable { cursor: pointer; }
 .rc-caption { color: #6b6b63; font-style: italic; }
@@ -195,11 +243,29 @@ button { font: inherit; cursor: pointer; }
 .rc-deflist.nested { margin-top: 8px; }
 .rc-defrow { display: grid; grid-template-columns: minmax(6em, auto) 1fr auto; gap: 10px;
   align-items: baseline; text-align: left; background: transparent; border: none;
-  padding: 5px 6px; border-radius: 8px; font-size: 1rem; }
+  padding: 5px 6px; border-radius: 8px; font-size: 1rem;
+  /* B4: a definition row is a <button> so a row WITH audio can be tapped, but
+     WebKit paints unstyled button text in its own system blue -- which read as
+     "tappable" on every grammar-review term. Colour is explicit here so the UA
+     default can never claim the blue. */
+  color: var(--ink); }
 .rc-defrow.tappable { cursor: pointer; }
 .rc-defrow.tappable:active { background: rgba(0,0,0,0.04); }
-.rc-term { font-weight: 600; }
+/* XPATCH1: a row with no clip is not a control. Rendering it as a <div>
+   removes the UA-blue vector at its source and keeps phantom buttons out of
+   the tab order and the accessibility tree; the colour rule above stays as
+   belt and braces. */
+.rc-defrow.static { color: var(--ink); cursor: default; }
+.rc-term { font-weight: 600; color: var(--accent-ink); }
 .rc-val { color: var(--ink); }
+/* C7: term-less entries (the accent hints' "Acute—last 3 syllables") are one
+   hanging-indent line each, not a two-column table with an empty first column. */
+.rc-deflist.termless .rc-defrow { display: block; padding-left: 1.4em; text-indent: -1.4em; }
+.rc-deflist.termless .rc-term { display: none; }
+/* Every term-less list in the chapter is English prose (the accent hints and
+   the grammar-review examples); the Greek serif is a chapter-1-era default
+   that does not belong on them. */
+.rc-deflist.termless .rc-val { font-family: inherit; }
 .rc-starnote { font-size: 0.875rem; color: #6b6b63; margin-bottom: 8px; }
 .rc-biblist { display: flex; flex-direction: column; gap: 8px; }
 .rc-bibentry { padding-left: 1.4em; text-indent: -1.4em; font-size: 0.9375rem; line-height: 1.5; }
@@ -216,10 +282,62 @@ button { font: inherit; cursor: pointer; }
    overflow checks never catch. break-word keeps whole words together where a
    column can hold them and only splits a word that cannot fit at all. */
 .rc-greekhead > span { min-width: 0; overflow-wrap: break-word; line-height: 1.25; }
-.syllable-matrix .rc-greekhead { font-size: 0.68rem; letter-spacing: -0.01em; }
+/* B3: the possibilities chart's headers are three long words in three narrow
+   columns. Dropping the uppercasing buys ~25% width, which is the difference
+   between wrapping at the space and breaking mid-word. */
+.syllable-matrix .rc-greekhead { font-size: 0.66rem; letter-spacing: 0; text-transform: none; }
 .rc-syllable-row { border: none; border-bottom: 1px solid rgba(0,0,0,0.06); background: transparent;
   padding: 10px 6px; font-size: 1.35rem; text-align: center; }
-.rc-syllable-row.greek-say { color: var(--link); }
+/* B2: a tappable matrix row is a BUTTON, and .greek-say (later in the file,
+   same specificity) was winning the display/text-align cascade -- the row
+   collapsed to a block and the chunks ran together as one plain-looking word
+   instead of sitting under their column headers. Two classes beat one. */
+.rc-greekrows .rc-syllable-row.greek-say { display: grid; padding: 10px 6px; text-align: center; color: var(--link); }
+/* Clear column separation: each chunk is a real cell with its own rule, as in
+   the original's ruled chart. */
+.syllable-matrix .rc-cell { padding: 2px 4px; }
+.syllable-matrix .rc-cell + .rc-cell { border-left: 1px solid rgba(0,0,0,0.12); }
+.syllable-matrix .rc-greekhead > span + span { border-left: 1px solid rgba(0,0,0,0.12); }
+/* B3: the Accent Possibilities chart is nothing but mark glyphs, so its cells
+   get room to breathe and the marks their enlarged treatment. A cell reads
+   "´ or ῀" and must stay on ONE line to be legible as a set of alternatives. */
+.syllable-matrix .rc-syllable-row { padding: 16px 4px; font-size: 1.05rem; }
+/* Cell tokens ("´", "or", "῀") stay whole and wrap as units rather than
+   breaking a mark away from the alternative it belongs to. */
+.syllable-matrix .rc-cell { display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: center; gap: 0 6px; }
+.syllable-matrix .rc-cell .isolated-mark.as-mark { font-size: 1.6em; }
+.syllable-matrix .rc-cell.rc-rowlabel { display: block; white-space: normal; }
+/* The Accent Possibilities chart is three data columns plus a row legend.
+   Four columns inside 256px leaves ~64px each, which breaks both the headers
+   and the legend mid-word. On phone widths the legend therefore CAPTIONS its
+   row (full width, above it) and the three data columns get the space; the
+   original's four-column form returns as soon as there is room for it. */
+.rc-greekrows.row-labels .rc-greekhead,
+.rc-greekrows.row-labels .rc-syllable-row {
+  grid-template-columns: repeat(var(--greek-datacols), minmax(0, 1fr));
+}
+.rc-greekrows.row-labels .rc-headspacer { display: none; }
+.rc-greekrows.row-labels .rc-cell.rc-rowlabel { grid-column: 1 / -1; order: -1;
+  border-left: none; margin-bottom: 8px; }
+@media (min-width: 560px) {
+  .rc-greekrows.row-labels .rc-greekhead,
+  .rc-greekrows.row-labels .rc-syllable-row {
+    grid-template-columns: repeat(var(--greek-datacols), minmax(0, 1fr)) minmax(0, 0.7fr);
+  }
+  .rc-greekrows.row-labels .rc-headspacer { display: block; }
+  .rc-greekrows.row-labels .rc-cell.rc-rowlabel { grid-column: auto; order: 0;
+    border-left: 1px solid rgba(0,0,0,0.12); margin-bottom: 0; }
+}
+/* B5: Review Marks groups rows under a title line; the rows hang beneath it. */
+.rc-greektitle { color: var(--accent-ink); font-weight: 700; margin: 12px 0 2px; }
+.rc-greekrows.titled { margin: 0 0 6px; }
+.rc-greekrows.titled .rc-greekrow { padding-left: 1.1em; grid-template-columns: 1.6fr 1fr; }
+/* C6: an equation row -- each Greek part its own tap target, connectors inert. */
+.rc-parts { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 4px; }
+.rc-part { font-size: 1.35rem; }
+.rc-part.greek-say { display: inline; width: auto; color: var(--link); }
+.rc-parttext { color: var(--ink); }
 .rc-greekrow { display: grid; grid-template-columns: repeat(var(--greek-cols), minmax(0, 1fr)); gap: 10px;
   align-items: baseline; border-bottom: 1px solid rgba(0,0,0,0.06); padding: 9px 6px; min-width: 0; }
 .rc-greeklabel { font-weight: 600; overflow-wrap: anywhere; }
@@ -227,7 +345,8 @@ button { font: inherit; cursor: pointer; }
    column ("Short Ultima" / "Long Ultima") -- English, so it opts out of the
    row's Greek font. */
 .rc-rowlabel { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 0.8rem; font-weight: 700; color: var(--teal-dark); overflow-wrap: anywhere; }
+  font-size: 0.75rem; font-weight: 700; color: var(--accent-ink); overflow-wrap: break-word;
+  white-space: normal; line-height: 1.25; }
 .rc-greekword { min-width: 0; font-size: 1.3rem; }
 .rc-greekword.greek-say { width: auto; color: var(--link); }
 .rc-greekgloss { color: var(--teal-dark); overflow-wrap: anywhere; }
@@ -361,16 +480,28 @@ button { font: inherit; cursor: pointer; }
   padding: 10px; border-radius: 8px; background: white; }
 .exercise-answer > span:first-child { color: var(--teal-dark); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
 .exercise-answer .greek { font-size: 1.45rem; }
-.divide-word { display: flex; align-items: center; justify-content: center; width: 100%; min-width: 0;
-  padding: 20px 0; white-space: nowrap; }
-.divide-letter { flex: 0 1 auto; min-width: 0; border: none; background: transparent; padding: 0;
-  font-size: var(--divide-size); line-height: 1.4; }
+/* C2: numbered buttons ABOVE the letters, each with an arrow pointing down
+   into its gap, exactly as the original. The rail is measured (see the probe
+   in DivideActivity) so the pool's longest word fills the width and every word
+   renders at that one size. */
+.divide-probe { position: absolute; visibility: hidden; white-space: nowrap; pointer-events: none;
+  left: -9999px; top: 0; }
+.divide-rail { width: 100%; min-width: 0; }
+.divide-word { display: flex; align-items: flex-end; justify-content: center; width: 100%; min-width: 0;
+  padding: 14px 0 10px; white-space: nowrap; }
+.divide-letter { flex: 0 0 auto; min-width: 0; border: none; background: transparent; padding: 0;
+  font-size: var(--divide-size); line-height: 1.1; color: var(--ink); }
 .divide-letter.greek-say { display: inline-block; color: var(--link); text-align: center; }
-.divide-gap { flex: 0 1 calc(var(--divide-size) * 0.55); width: calc(var(--divide-size) * 0.55); min-width: 8px;
-  align-self: stretch; border: none; border-bottom: 2px solid #b9af91; background: transparent; color: var(--link);
-  padding: 0; font-size: 0.65rem; font-weight: 700; }
-.divide-gap.selected { border-color: var(--link); background: #e8f0fb; }
-.divide-gap.correct { border-color: var(--ok); background: #e6f2e6; color: var(--ok); }
+.divide-gap { flex: 0 0 var(--gap-size); width: var(--gap-size); min-width: 11px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 2px;
+  border: none; background: transparent; color: #9a927c; padding: 0; }
+.divide-gap .gap-num { display: block; width: 100%; border: 1.5px solid #cfc6aa; border-radius: 6px;
+  background: #fffdf3; color: var(--ink); font-size: 0.68rem; font-weight: 700; line-height: 1.7; }
+.divide-gap .gap-arrow { display: block; height: calc(var(--divide-size) * 0.9); width: 100%; }
+.divide-gap.selected { color: var(--link); }
+.divide-gap.selected .gap-num { border-color: var(--link); background: #e8f0fb; color: var(--link); }
+.divide-gap.correct { color: var(--ok); }
+.divide-gap.correct .gap-num { border-color: var(--ok); background: #e6f2e6; color: var(--ok); }
 .divide-gap.locked { opacity: 0.35; }
 /* 2c: the original's full-width "only one syllable" bar under the word. */
 .one-syllable-bar { display: block; width: 100%; margin: 4px 0 2px; padding: 11px 10px;

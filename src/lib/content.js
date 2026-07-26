@@ -379,6 +379,24 @@ export function buildSelectQuestions(chapter, activity) {
   return { options, questions, optionClass: '', promptIsGreek: promptSide === 'greek' };
 }
 
+// An activity's Hint either carries its own blocks or REFERS to a chart that
+// already exists elsewhere in the chapter (the Syllable Counting drill and the
+// Division exercise both open the Three Syllable Rules). Resolving the
+// reference keeps the hint from duplicating -- or inventing -- authored copy.
+export function resolveHintBlocks(chapter, hint) {
+  if (!hint) return [];
+  if (Array.isArray(hint.content)) return hint.content;
+  if (!hint.contentRef) return [];
+  const toRef = text => (text || '').replace(/[^A-Za-z0-9]+(.)/g, (_, c) => c.toUpperCase()).replace(/^[A-Z]/, c => c.toLowerCase());
+  for (const section of SECTIONS) {
+    for (const candidate of chapter[section] || []) {
+      const blocks = candidate.content || [];
+      if (blocks.some(block => block.type === 'heading' && toRef(block.text) === hint.contentRef)) return blocks;
+    }
+  }
+  return [];
+}
+
 export function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
