@@ -1,5 +1,5 @@
 {
- "_comment": "Chapter 2 (Syllables & Accents) lexicon. Lemma glosses + NT frequencies extracted verbatim from 2_ACCENT.TBK review-vocabulary chart. Audio pairing for b_voc1..10 is SCRIPT-VERIFIED (SayWord dispatch table in the TBK maps word ids to wav files directly), except echo=b_voc4 which is by alphabetical elimination -- listen-verify. exampleWords include chapter-1 lemmas reused by chapter-2 drills/exercises (duplicated here deliberately so chapter chunks stay self-contained under B5 lazy loading). Their audio uses chapt_2_a_voc* -- the ORIGINAL ISO duplicates chapter 1's ten vocab WAVs inside CHAPT_2, so the chapter-2 audio pack is self-contained; the transcode pipeline's path-based ids preserve that duplication. PATCHED 2026-07-24 against the completed VERIFY-chapt02 pass (G1-G4 listen checks, gloss corrections from DOSBox charts, v=nu confirmed).",
+ "_comment": "Chapter 2 (Syllables & Accents) lexicon. Lemma glosses + NT frequencies extracted verbatim from 2_ACCENT.TBK review-vocabulary chart. Audio pairing for b_voc1..10 is SCRIPT-VERIFIED (SayWord dispatch table in the TBK maps word ids to wav files directly), except echo=b_voc4 which is by alphabetical elimination — listen-verify. exampleWords include chapter-1 lemmas reused by chapter-2 drills/exercises (duplicated here deliberately so chapter chunks stay self-contained under B5 lazy loading). Their audio uses chapt_2_a_voc* — the ORIGINAL ISO duplicates chapter 1's ten vocab WAVs inside CHAPT_2, so the chapter-2 audio pack is self-contained; the transcode pipeline's path-based ids preserve that duplication. PATCHED 2026-07-24 against the completed VERIFY-chapt02 pass (G1-G4 listen checks, gloss corrections from DOSBox charts, v=nu confirmed).",
  "lemmas": {
   "adelphos": {
    "greek": "ἀδελφός",
@@ -91,7 +91,7 @@
    "_legacy": "ui[o<j",
    "glossShort": "son",
    "ntFreq": 377,
-   "_gloss_note": "review chart shows 'son (377)'; the marks page glosses the same word 'son, descendant' -- fuller gloss kept, glossShort matches chart"
+   "_gloss_note": "review chart shows 'son (377)'; the marks page glosses the same word 'son, descendant' — fuller gloss kept, glossShort matches chart"
   },
   "pharisaios": {
    "greek": "Φαρισαῖος",
@@ -106,7 +106,7 @@
  },
  "_ntFreq_note": "Frequencies verbatim from the TBK review chart: brother 343, I hear/obey 428, glory/fame 166, I have/hold 708, world 186, lord 717, word 330, Peter 156, son 377, Pharisee 98.",
  "exampleWords": {
-  "_comment": "Teaching-page words (accent chart, marks pages, proclitic/enclitic lists). Audio pairing from the SayWord script table where named; otherwise inferred from filename -- flagged.",
+  "_comment": "Teaching-page words (accent chart, marks pages, proclitic/enclitic lists). Audio pairing from the SayWord script table where named; otherwise inferred from filename — flagged.",
   "anthropos": {
    "greek": "ἄνθρωπος",
    "gloss": "man (base noun form)",

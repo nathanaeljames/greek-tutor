@@ -266,7 +266,7 @@ export function resolveItems(chapter, activity) {
           meta: { ...lemma, ref: item.ref }
         } : { display: item.ref, secondary: '(missing lemma)', audio: null, meta: {} };
       }
-      return { display: item.display || '(Greek text -- extraction pending)', secondary: stripMarkup(item.answer) || '',
+      return { display: item.display || '(Greek text — extraction pending)', secondary: stripMarkup(item.answer) || '',
                audio: item.audio || null, meta: item };
     });
   }

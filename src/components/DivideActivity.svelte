@@ -4,15 +4,14 @@
   //
   // LAYOUT (5B-SPEC2 C2) follows the original: a numbered BUTTON above each
   // gap with an arrow pointing down into the space between the two letters.
-  // Sizing is breakpoint-static, not per-word -- the whole pool is measured
-  // once by its LONGEST word so the letters are as large as that word allows
-  // and every other word renders at the same size.
+  // Sizing is per-word and measured (5B-SPEC3 D2): each word is fitted to the
+  // rail so its letters and its gap buttons are as large as that word allows.
   //
   // ANSWER POLICY (5B patch 2a): answerPolicy.attemptsPerItem === 1 means
   // Check Answer finalizes the item right or wrong, reveals the hyphen-joined
   // divided form, and auto-advances after autoAdvanceMs. The timer is cancelled
   // on manual Previous/Next and on unmount. Completion = all items ATTEMPTED.
-  import { onDestroy } from 'svelte';
+  import { afterUpdate, onDestroy, onMount } from 'svelte';
   import { play } from '../lib/audio.js';
   import { randomFeedback, resolveHintBlocks } from '../lib/content.js';
   import { dividedForm, splitGraphemes } from '../lib/greek.js';
@@ -33,31 +32,80 @@
   let answered = false;
   let showAnswer = false;
   let showHint = false;
-  let showScore = !!activity.ui?.liveScore;
+  // D1: hidden until the first Score press; ui.liveScore governs whether the
+  // revealed line keeps updating, not whether it starts open.
+  let showScore = false;
   let pronounceEach = activity.ui?.defaults?.pronounceEach ?? false;
   let advanceTimer = null;
   const attemptedItems = new Set();
   const results = new Map();
 
-  // Fat-finger sizing (C2). The row is measured, not guessed: a hidden probe
-  // renders the pool's longest word at a reference size, so the glyphs' real
-  // advance widths -- not a character count -- decide how large the letters can
-  // be. `railWidth` re-measures at every breakpoint; the WORD does not change
-  // the size, so stepping through the pool never resizes anything.
+  // Fat-finger sizing (C2, reworked by 5B-SPEC3 D2). The row is measured, not
+  // guessed: a hidden probe renders the word at a reference size, so the
+  // glyphs' real advance widths -- not a character count -- decide how large
+  // the letters can be, and `railWidth` re-measures at every breakpoint.
+  //
+  // D2 changes two things. The gap column is 0.68 of the letter size (was
+  // 0.34), so a gap BUTTON is about twice as wide; and the measurement now
+  // follows the CURRENT word rather than the pool's longest, per the spec's
+  // "the gap buttons scale with the word ... filling available width". C2 sized
+  // the whole pool by its longest word so stepping never resized the row; that
+  // bought visual stability at the cost of leaving a three-letter word using a
+  // third of the screen, which is exactly what VERIFY2 item 3 objected to.
+  // Tap targets win: ἐγώ now fills the rail, and φαρισαῖος -- 9 clusters and 8
+  // gaps in 330px -- is the arithmetic floor, not a sizing choice.
   const PROBE_PX = 100;
-  const GAP_RATIO = 0.34;          // gap column as a share of the letter size
+  const GAP_RATIO = 0.68;          // gap column as a share of the letter size
   const MAX_LETTER_PX = 76;        // stop growing on tablet widths
-  const longest = items.reduce((best, item) => {
-    const count = splitGraphemes(item.greek).length;
-    return count > best.count ? { count, greek: item.greek } : best;
-  }, { count: 0, greek: '' });
+  const MIN_GAP_PX = 22;           // preferred floor for a gap button
+  const MIN_LETTER_PX = 20;        // below this the word stops being readable
   let railWidth = 0;
+  let probeEl;
   let probeWidth = 0;
-  $: letterSize = (railWidth > 0 && probeWidth > 0 && longest.count > 0)
-    ? Math.max(16, Math.min(MAX_LETTER_PX,
-        railWidth / (probeWidth / PROBE_PX + GAP_RATIO * Math.max(longest.count - 1, 0))))
-    : 24;
-  $: gapSize = Math.max(11, letterSize * GAP_RATIO);
+  let fontEpoch = 0;
+  // The probe is measured by hand, NOT with bind:clientWidth. That binding
+  // reported the width once, while font-display:block still had the row laid
+  // out in the fallback face, and never reported the reflow when the bundled
+  // Greek font swapped in -- so every row was sized from metrics ~15% too
+  // narrow and the longest words silently clipped (overflow-x is hidden
+  // app-wide, so nothing errors and nothing scrolls). Two mechanisms cover it:
+  // afterUpdate for the render-ordering case (a fresh item's letters reach the
+  // DOM before its probe has been remeasured), and the ResizeObserver in
+  // onMount for the font swap. The guard stops the re-render loop after one
+  // pass.
+  afterUpdate(() => {
+    if (!probeEl) return;
+    const width = probeEl.getBoundingClientRect().width;
+    if (Math.abs(width - probeWidth) > 0.5) probeWidth = width;
+  });
+  $: letterCount = letters.length;
+  // fontEpoch is a dependency, not an input: bumping it when document.fonts
+  // settles forces one more render, and afterUpdate above then re-measures the
+  // probe against the face that actually shipped.
+  $: sizing = fitRow(railWidth, probeWidth, letterCount, fontEpoch);
+  $: letterSize = sizing.letter;
+  $: gapSize = sizing.gap;
+
+  // The row must always FIT: overflow-x is hidden app-wide, so a row that is
+  // too wide is not scrollable, it is deleted. So the gap floor is a
+  // preference, not a guarantee -- a nine-cluster word at 320px cannot have
+  // both 22px targets and readable letters, and the letters win at that point.
+  function fitRow(rail, probe, count) {   // fontEpoch is a trigger only
+    const gaps = Math.max(count - 1, 0);
+    if (!(rail > 0 && probe > 0 && count > 0)) return { letter: 24, gap: MIN_GAP_PX };
+    const ratio = probe / PROBE_PX;
+    // Budget slightly under the rail: per-glyph rounding accumulates across a
+    // long word, and being 2px over means 2px CLIPPED, not 2px scrolled.
+    rail = rail * 0.98;
+    let letter = Math.min(MAX_LETTER_PX, rail / (ratio + GAP_RATIO * gaps));
+    let gap = letter * GAP_RATIO;
+    if (gap < MIN_GAP_PX && gaps > 0) {
+      // Buy the floor back out of the letters, but only while they stay legible.
+      const shrunk = (rail - MIN_GAP_PX * gaps) / ratio;
+      if (shrunk >= MIN_LETTER_PX) { letter = shrunk; gap = MIN_GAP_PX; }
+    }
+    return { letter: Math.max(MIN_LETTER_PX, letter), gap: Math.max(11, gap) };
+  }
 
   $: item = items[itemIndex] || null;
   $: letters = splitGraphemes(item && item.greek);
@@ -157,13 +205,28 @@
   // the one-syllable bar is the answer.
   $: canCheck = !pending && !answered && (oneSyllable || selected.size > 0);
 
-  onDestroy(() => clearTimeout(advanceTimer));
+  let probeObserver = null;
+  onMount(() => {
+    if (typeof document !== 'undefined' && document.fonts) {
+      document.fonts.ready.then(() => { fontEpoch += 1; });
+    }
+    if (typeof ResizeObserver === 'undefined' || !probeEl) return;
+    probeObserver = new ResizeObserver(() => {
+      probeWidth = probeEl.getBoundingClientRect().width;
+    });
+    probeObserver.observe(probeEl);
+  });
+
+  onDestroy(() => {
+    clearTimeout(advanceTimer);
+    if (probeObserver) probeObserver.disconnect();
+  });
 </script>
 
 <div class="card divide-activity">
-  <!-- Off-screen probe: the pool's longest word at a known size. Its measured
-       width is what the live row is scaled from. -->
-  <span class="divide-probe greek" style="font-size:{PROBE_PX}px" bind:clientWidth={probeWidth}>{longest.greek}</span>
+  <!-- Off-screen probe: the CURRENT word at a known size. Its measured width is
+       what the live row is scaled from, so the row re-fits on every item. -->
+  <span class="divide-probe greek" style="font-size:{PROBE_PX}px" aria-hidden="true" bind:this={probeEl}>{item ? item.greek : ''}</span>
   {#if pending}
     <div class="pending-verification" role="status">Syllable-division word {itemIndex + 1} is pending content verification.</div>
   {:else}

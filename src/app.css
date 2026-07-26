@@ -1,5 +1,36 @@
 /* Design: clean modern take on the original's teal-and-parchment palette */
+
+/* ---- THE GREEK FACE (5B-SPEC3 B1) ----
+   One bundled, self-hosted, subsetted polytonic font for EVERY Greek surface.
+   The chapter-2 "tilde" saga was a two-font split: Times New Roman (and every
+   other Greek serif tested -- Gentium, Cardo, EB Garamond, GFS Didot, Noto
+   Serif, Libertinus, FreeSerif, DejaVu) draws the perispomeni as a TILDE, while
+   the system stack draws the rounded arch the original uses. GreekTutor Serif
+   is Noto Serif with its perispomeni redrawn as an inverted breve
+   (src/assets/fonts/NOTICE.md, scripts/make-greek-font.py), so no surface can
+   disagree with another again.
+   font-display: block -- a flash of Times Greek would be worse than a beat of
+   invisibility, and the file is precached, so the beat only exists on the very
+   first load. */
+@font-face {
+  font-family: 'GreekTutor Serif';
+  src: url('./assets/fonts/greektutor-serif-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'GreekTutor Serif';
+  src: url('./assets/fonts/greektutor-serif-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
 :root {
+  /* The single Greek stack. Nothing may hand-roll its own: Times New Roman is
+     demoted to last resort so no Greek path can fall through to its tilde. */
+  --greek-font: 'GreekTutor Serif', 'SBL Greek', 'Times New Roman', Georgia, serif;
   --teal: #2a7d72;
   --teal-dark: #1f5f57;
   --parchment: #f5f2e8;
@@ -20,18 +51,18 @@
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; padding: 0; background: var(--parchment); color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-.greek { font-family: 'Times New Roman', 'SBL Greek', Georgia, serif; }
+.greek { font-family: var(--greek-font); }
 button { font: inherit; cursor: pointer; }
 /* ---- Isolated marks shown outside a word (5B-SPEC2 B1) ----
    "Acute ( ´ )" must never break across lines, and the mark itself is drawn
    large: the original deliberately enlarges these glyphs and at body size a
-   breathing is indistinguishable from an acute. The mark keeps the speller
-   keyboard's font stack (.tk-key.mark) -- the one surface confirmed on device
-   to draw U+1FC0 as the rounded perispomeni rather than a tilde. */
+   breathing is indistinguishable from an acute. B2: these used to run on the
+   system stack because it was the one face drawing a rounded perispomeni. The
+   bundled font draws it too, so they join every other Greek surface. */
 .mark-group { white-space: nowrap; }
-.isolated-mark.as-mark { display: inline-block; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+.isolated-mark.as-mark { display: inline-block; font-family: var(--greek-font);
   font-size: 1.45em; line-height: 1; padding: 0 0.06em; vertical-align: -0.08em; }
-.isolated-mark.greek { font-family: 'Times New Roman', 'SBL Greek', Georgia, serif; font-size: 1.15em; }
+.isolated-mark.greek { font-family: var(--greek-font); font-size: 1.15em; }
 /* ---- App shell: fixed top bar, scrolling middle, fixed bottom bar ---- */
 .app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; }
 .app-main { flex: 1; min-height: 0; display: flex; }
@@ -89,14 +120,61 @@ button { font: inherit; cursor: pointer; }
 .mark-red { color: var(--mark-red); }
 .rm-cluster { position: relative; display: inline-block; }
 .rm-base { color: inherit; }
-/* Same font path as the isolated marks (the body Greek serif draws U+1FC0 as a
-   TILDE), and nudged down: a spacing mark is drawn for the tallest base it may
-   sit on, so over a lowercase vowel it lands ~0.08em high. Measured against
-   the precomposed glyphs, not guessed. */
-.rm-mark { position: absolute; left: 0; right: 0; bottom: 0; text-align: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.15; transform: translateY(0.08em);
-  color: var(--mark-red); pointer-events: none; }
+/* ---- MARK GEOMETRY TABLE (5B-SPEC3 C, rules M1-M6) ----
+   The overlay carries the cluster's WHOLE mark set (greek.js markOverlayParts),
+   so these offsets are the only thing deciding where marks sit -- there is no
+   second, base-drawn mark left on the vowel to collide with. This is the
+   standing rule set for chapters 3+: a new combination gets a row here, never a
+   per-word nudge.
+
+     --mx  horizontal offset from the base's centre  (+ right)
+     --my  vertical offset from the spacing glyph's natural seat (+ down)
+
+   Every constant below is READ OFF THE BUNDLED FONT rather than eyeballed: the
+   precomposed polytonic glyphs are composites (base + spacing-mark components),
+   so the type designer's own component offsets ARE the table. Divide by the
+   1000-unit em: e.g. in this font a-smooth-circumflex places the circumflex
+   224 units above its natural seat, hence the -0.224em lift in M3, and a
+   capital lowers its mark 70-82 units, hence M5's +0.075em.
+
+   M1  a single accent sits centred on the vowel, at the glyph's natural
+   height (the Greek composites all use a zero y-offset over lowercase). On a
+   diphthong the mark belongs to the SECOND vowel's cluster already, so
+   "above the second vowel" needs no rule of its own. */
+.rm-marks { position: absolute; left: 0; right: 0; bottom: 0; height: 0;
+  pointer-events: none; }
+.rm-mark { position: absolute; left: 50%; bottom: 0; display: block;
+  line-height: 1.15; white-space: pre; color: inherit;
+  --mx: 0em; --my: 0em;
+  transform: translate(calc(-50% + var(--mx)), var(--my)); }
+.rm-mark.red { color: var(--mark-red); }
+/* M2  breathing + acute/grave: SIDE BY SIDE, breathing left (ἄ, ἂ, ὕ). The
+   font straddles the vowel's centre asymmetrically -- the breathing sits
+   further out than the accent -- because the two glyphs are different widths. */
+.rm-marks.pair .rm-mark.left  { --mx: -0.11em; }
+.rm-marks.pair .rm-mark.right { --mx: 0.05em; }
+/* M3  breathing + circumflex: STACKED, breathing below, circumflex above
+   (ἆ in ἆποστολος, ἦ in ἦν). Both stay centred; only the lift changes. */
+.rm-marks.stack .rm-mark.lower { --my: 0em; }
+.rm-marks.stack .rm-mark.upper { --my: -0.224em; }
+/* M4  diaeresis + accent: the accent goes ABOVE the dots, centred (ΐ in
+   Ἀχαΐα). The dots are shorter than a breathing, so the lift is smaller than
+   M3's; the font's own dieresistonos would set the accent beside the dots
+   instead, which is not what this chapter teaches. */
+.rm-marks.diaeresis .rm-mark.lower { --my: 0em; }
+.rm-marks.diaeresis .rm-mark.upper { --my: -0.16em; }
+/* M5  capitals carry the mark set at the UPPER LEFT of (before) the letter,
+   not above it (Ἀ, Ἠ, Ἐ) -- so these anchor on the base's LEFT EDGE, not its
+   centre, and drop 0.075em to sit at cap height. A pair keeps M2's 0.16em
+   spread, just moved out in front of the letter. */
+.rm-marks.capital .rm-mark { left: 0; --mx: 0.06em; --my: 0.075em;
+  transform: translate(calc(-100% + var(--mx)), var(--my)); }
+.rm-marks.capital.pair .rm-mark.left  { --mx: -0.10em; }
+.rm-marks.capital.pair .rm-mark.right { --mx: 0.06em; }
+.rm-marks.capital.stack .rm-mark.upper,
+.rm-marks.capital.diaeresis .rm-mark.upper { --my: -0.149em; }
+/* M6  iota subscript is never overlaid: it stays in the base string, so ᾧ
+   keeps its subscript while the circumflex is lifted. Nothing to declare. */
 /* Revealed after a one-attempt item is finalized: the gloss and, for the
    Accent Rule drill, the properly accented form. */
 .reveal-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
@@ -115,13 +193,9 @@ button { font: inherit; cursor: pointer; }
 @media (min-width: 560px) {
   .controls.grouped { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 520px; }
 }
-/* Live score: always-on under the scored surfaces, updating on every answer. */
+/* Score line: hidden until the first Score press (D1), live from then on. */
 .live-score { margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: #fffdf3;
   font-size: 0.95rem; }
-/* Beyond the original's twenty items; labelled so it never reads as fidelity. */
-.extended-divider { margin: 0 0 12px; padding: 8px 10px; border-radius: 8px;
-  background: #fff8d6; border-left: 4px solid var(--teal); color: var(--accent-ink);
-  font-size: 0.85rem; font-weight: 700; text-align: center; }
 /* Translate: the gloss line under the prompt word. */
 .gloss-line { text-align: center; color: var(--accent-ink); font-size: 1.05rem; margin: -6px 0 6px; }
 .btn { background: var(--teal); color: white; border: none; border-radius: 10px;
@@ -224,6 +298,11 @@ button { font: inherit; cursor: pointer; }
 .rc-below { margin-top: 14px; }
 .rc-heading { text-align: center; font-size: 1.2rem; font-weight: 500; margin: 14px 0 10px; color: var(--teal-dark); }
 .rc-heading:first-child { margin-top: 0; }
+/* D4: a subheading owns its line, left-aligned in the heading green, with the
+   content that follows sitting flush beneath it (no hanging indent). */
+.rc-subheading { text-align: left; font-size: 1.02rem; font-weight: 700;
+  color: var(--accent-ink); margin: 14px 0 2px; }
+.rc-subheading:first-child { margin-top: 0; }
 .rc-para { margin: 0 0 10px; }
 .rc-preamble { margin: 0 0 6px; }
 .rc-list { margin: 0 0 10px; padding-left: 1.5em; }
@@ -456,7 +535,9 @@ button { font: inherit; cursor: pointer; }
 .tk-key { background: white; border: 1px solid #ddd6c2; border-radius: 8px; padding: 10px 0;
   font-size: 1.3rem; min-height: 44px; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
 .tk-key:active { background: #eef4f2; border-color: var(--teal); }
-.tk-key.mark { font-size: 1.4rem; color: var(--teal-dark); }
+/* B2: the diacritic tiles are Greek marks, so they take the Greek face too --
+   they were the last surface still drawing marks from a different source. */
+.tk-key.mark { font-family: var(--greek-font); font-size: 1.4rem; color: var(--teal-dark); }
 .tk-edit { display: flex; gap: 8px; justify-content: center; margin-top: 8px; }
 .spell-answer { text-align: center; margin-top: 12px; font-size: 1.3rem; }
 .spell-answer .label { font-size: 0.75rem; color: var(--teal-dark); font-weight: 700; text-transform: uppercase; margin-right: 8px; }
@@ -482,9 +563,13 @@ button { font: inherit; cursor: pointer; }
 .exercise-answer .greek { font-size: 1.45rem; }
 /* C2: numbered buttons ABOVE the letters, each with an arrow pointing down
    into its gap, exactly as the original. The rail is measured (see the probe
-   in DivideActivity) so the pool's longest word fills the width and every word
-   renders at that one size. */
-.divide-probe { position: absolute; visibility: hidden; white-space: nowrap; pointer-events: none;
+   in DivideActivity) and each word is fitted to it, so every word fills the
+   width and its gap buttons grow with it (D2). */
+/* Off-screen, NOT visibility:hidden: an invisible probe was not being
+   re-laid-out when the bundled Greek font swapped in, so its measured width
+   stayed at the fallback face's metrics. Parked far off-canvas instead, where
+   it lays out and reflows like any painted text. */
+.divide-probe { position: absolute; white-space: nowrap; pointer-events: none;
   left: -9999px; top: 0; }
 .divide-rail { width: 100%; min-width: 0; }
 .divide-word { display: flex; align-items: flex-end; justify-content: center; width: 100%; min-width: 0;
@@ -492,11 +577,18 @@ button { font: inherit; cursor: pointer; }
 .divide-letter { flex: 0 0 auto; min-width: 0; border: none; background: transparent; padding: 0;
   font-size: var(--divide-size); line-height: 1.1; color: var(--ink); }
 .divide-letter.greek-say { display: inline-block; color: var(--link); text-align: center; }
+/* D2: the numbered button IS the tap target, and it takes the whole gap
+   column, label sized off the column width -- so a wider column means a
+   genuinely bigger button, not a bigger gap around the same small chip.
+   No meaningful min-width here: DivideActivity fits the row to the rail and
+   owns the gap width. A CSS floor re-widened the gaps after that fit and
+   pushed the longest words past the rail, where overflow-x:hidden ate them. */
 .divide-gap { flex: 0 0 var(--gap-size); width: var(--gap-size); min-width: 11px;
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 2px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px;
   border: none; background: transparent; color: #9a927c; padding: 0; }
-.divide-gap .gap-num { display: block; width: 100%; border: 1.5px solid #cfc6aa; border-radius: 6px;
-  background: #fffdf3; color: var(--ink); font-size: 0.68rem; font-weight: 700; line-height: 1.7; }
+.divide-gap .gap-num { display: block; width: 100%; border: 1.5px solid #cfc6aa; border-radius: 8px;
+  background: #fffdf3; color: var(--ink); font-weight: 700;
+  font-size: calc(var(--gap-size) * 0.46); line-height: 1.8; }
 .divide-gap .gap-arrow { display: block; height: calc(var(--divide-size) * 0.9); width: 100%; }
 .divide-gap.selected { color: var(--link); }
 .divide-gap.selected .gap-num { border-color: var(--link); background: #e8f0fb; color: var(--link); }
@@ -599,7 +691,7 @@ button, a, input, select, textarea, label,
 
 /* Inline tappable Greek inside prose (Six Points greekTaps). */
 .greek-tap { background: transparent; border: none; padding: 0; font: inherit;
-  font-family: 'Times New Roman', 'SBL Greek', Georgia, serif; font-size: 1.15em;
+  font-family: var(--greek-font); font-size: 1.15em;
   color: var(--link); cursor: pointer; }
 
 /* Six Points letters-list rows: a category label + a row of tappable chips. */

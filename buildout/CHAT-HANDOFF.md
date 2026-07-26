@@ -210,6 +210,29 @@ files carry only what a new chat needs.
   (Hebrew glosses, (Hi)/(Ni) stem labels, HebrewWord field names) —
   detect and exclude these regions.
 
+## Typography and mark-rendering canon (established 5B closeout)
+
+- TYPO POLICY A1, third extension: typographic normalization is
+  authorized alongside spellfixes — double hyphens become em dashes
+  (data-side, applied by the pipeline to all future chapters).
+- ONE GREEK FONT: a self-hosted subsetted polytonic webfont (rounded
+  perispomeni; Noto Serif source unless SPEC3 RESULTS records
+  otherwise) leads every Greek stack; Times New Roman demoted to last
+  resort. Its file ships in the app-shell precache. NO Greek surface
+  may use a different glyph source — the SPEC2 tilde saga came from a
+  two-font split.
+- MARK GEOMETRY RULES M1-M6 (formalized in 5B-SPEC3 §C, offset table
+  in the SPEC3 RESULTS): single accent centered (second vowel of
+  diphthongs); breathing+acute/grave side by side, breathing left;
+  breathing+circumflex stacked, circumflex above; diaeresis takes the
+  accent above it; capitals carry marks upper-left; iota subscript
+  never overlaid. Red-mark rendering strips ALL marks and overlays
+  the full set (target red, rest ink). These are standing rules for
+  every future chapter — never nudge-until-pretty.
+- Accent placement pools: original 20 acute items + 5 circumflex
+  extension items merged/interleaved (Nathanael-approved departure);
+  'extended: true' is provenance only, never rendered.
+
 ## Standing directives (user-set) — every phase
 
 1. Fidelity to the original: glosses, instruction text, audio
@@ -252,20 +275,20 @@ files carry only what a new chat needs.
   (pack self-containment — mirrors the ISO).
 - A_INTRO1..4 unused by design.
 
-## Immediate queue (as of 2026-07-26)
+## Immediate queue (as of 2026-07-26, evening)
 
-1. Implementer round: 5B-SPEC2.md (device-feedback corrections, first
-   round under process v2) against the replacement chapt-02.json.
-   Both models; RESULTS + BUILD docs back; grading chat runs
-   GRADER-PROMPT v2; XPATCH if justified; winner authors VERIFY2.
-2. Nathanael: VERIFY2 device pass (key items: rounded circumflex on
-   iOS, mark-only red technique, extended accent-placement items
-   keep/drop, bibliography, division-exercise ergonomics).
-3. Chapter 2 closes when VERIFY2 returns clean; then 5C: recon pass
-   chapters 3-8 + the bounded rich-text parser experiment; produce
-   5D-RECON-TASKS per process v2; PHASE5-PLAN cohort batching.
+1. Implementer round 5B-SPEC3.md (closeout: bundled Greek font, mark
+   geometry M1-M6, score-line visibility, division ergonomics)
+   against the patch3 data files. RESULTS + BUILD docs back (suffix
+   -FABLE if Fable runs it in Claude Code); grading per
+   GRADER-PROMPT v2; XPATCH if justified.
+2. Nathanael: VERIFY3 device pass (expected tiny: font on iOS, mark
+   anchors, division feel). Clean VERIFY3 = CHAPTER 2 CLOSED.
+3. Then 5C: recon chapters 3-8 + the rich-text parser experiment ->
+   5D-RECON-TASKS.md; PHASE5-PLAN cohort batching; promote the SPEC3
+   mark-geometry offset table into this file.
 4. Carried nits: Escape/initial-focus on modals; playwright-core as
-   devDependency; debug-card precache-count line (optional).
+   devDependency.
 
 ## Known open questions
 

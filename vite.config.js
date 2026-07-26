@@ -21,7 +21,7 @@ export default defineConfig({
       manifest: {
         name: 'Greek Tutor',
         short_name: 'GreekTutor',
-        description: 'Learn Koine Greek -- offline-first port of the ParsonsTech Greek Tutor',
+        description: 'Learn Koine Greek — offline-first port of the ParsonsTech Greek Tutor',
         theme_color: '#2a7d72',
         background_color: '#f5f2e8',
         display: 'standalone',

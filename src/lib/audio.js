@@ -79,7 +79,7 @@ export async function play(id) {
   //    LAW — toast iff no audio).
   if (!blob) {
     if (toastCallback) {
-      toastCallback(`Audio not found: ${src} -- add the audio pack to public/audio/`);
+      toastCallback(`Audio not found: ${src} — add the audio pack to public/audio/`);
     }
     return false;
   }

@@ -61,7 +61,10 @@
     attemptedItems.clear();
     results.clear();
     pronounceEach = activity.ui?.defaults?.pronounceEach ?? true;
-    showScore = !!activity.ui?.liveScore;
+    // D1: the score line starts HIDDEN on every scored surface. ui.liveScore
+    // says the line updates live once revealed, not that it opens by itself --
+    // Score is what reveals it, as in the original, and toggles it after.
+    showScore = false;
     clearTimeout(advanceTimer);
     maybePronounce();
   }
@@ -200,7 +203,10 @@
     {#if redParts}
       <!-- Still displayed Greek, so still a greek-say tap (directive 9); the
            asked-about mark simply overrides the blue with red. -->
-      <button class="prompt greek greek-say red-mark" disabled={!current.promptAudio} on:click={() => current.promptAudio && play(current.promptAudio)}>{#each redParts as part}{#if part.overlay}<span class="rm-cluster"><span class="rm-base">{part.base}</span><span class="rm-mark">{part.overlay}</span></span>{:else if part.red}<span class="mark-red">{part.text}</span>{:else}{part.text}{/if}{/each}</button>
+      <!-- The rendered cluster is base-minus-marks plus positioned mark glyphs,
+           which reads as an unaccented word to a screen reader; the label
+           restores the real prompt. -->
+      <button class="prompt greek greek-say red-mark" aria-label={current.prompt} disabled={!current.promptAudio} on:click={() => current.promptAudio && play(current.promptAudio)}>{#each redParts as part}{#if part.marks}<span class="rm-cluster"><span class="rm-base">{part.base}</span><span class="rm-marks {part.layout}" class:capital={part.capital} aria-hidden="true">{#each part.marks as mark}<span class="rm-mark {mark.slot}" class:red={mark.red}>{mark.glyph}</span>{/each}</span></span>{:else if part.red}<span class="mark-red">{part.text}</span>{:else}{part.text}{/if}{/each}</button>
     {:else if promptIsGreek && current.promptAudio}
       <button class="prompt greek greek-say" on:click={() => play(current.promptAudio)}>{current.prompt}</button>
     {:else if current.underline && sentenceParts(current.prompt, current.underline)}

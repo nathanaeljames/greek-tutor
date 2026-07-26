@@ -1,5 +1,5 @@
 {
- "_comment": "Chapter 2 (Syllables & Accents), reconstructed from 2_ACCENT.TBK + CHAPT_2 audio inventory, PATCHED 2026-07-24 against the completed VERIFY-chapt02 DOSBox pass (sequence, all drill/exercise pools and answers, popup contents, and chart corrections). answerPolicy: the original finalizes one attempt per item on Check Answer, reveals the correct form, and auto-advances after ~4s (J1, Nathanael-approved timing); scored activities therefore complete when all items have been ATTEMPTED. UI colors per Nathanael (E1/E2): blue = selected guess, green = confirmed correct after Check Answer, red reserved for incorrect feedback. PATCHED AGAIN 2026-07-26 (5B-SPEC2 data): isolated marks now use SPACING codepoints (U+1FBF/1FFE/1FC0/00B4/0060/00A8) so they render correctly outside words; bibliography items are plain strings; rule-chart inflected rows wired to their b_ex2 clips; syllable-counting one-syllable bar removed (V2); accent rule drill: no auto-advance on incorrect + per-item audio + red first accent; multi-part tappable rows (parts[]) on Apostrophe/Coronis; Grammar Review verbs/nouns restructured per feedback 12/13; Review Marks grouped per feedback 15; liveScore + pronounceEach defaults across scored surfaces; accent placement gains a clearly-labeled circumflex EXTENSION pool (feedback 11, keep/drop decided in VERIFY2).",
+ "_comment": "Chapter 2 (Syllables & Accents), reconstructed from 2_ACCENT.TBK + CHAPT_2 audio inventory, PATCHED 2026-07-24 against the completed VERIFY-chapt02 DOSBox pass (sequence, all drill/exercise pools and answers, popup contents, and chart corrections). answerPolicy: the original finalizes one attempt per item on Check Answer, reveals the correct form, and auto-advances after ~4s (J1, Nathanael-approved timing); scored activities therefore complete when all items have been ATTEMPTED. UI colors per Nathanael (E1/E2): blue = selected guess, green = confirmed correct after Check Answer, red reserved for incorrect feedback. PATCHED AGAIN 2026-07-26 (5B-SPEC2 data): isolated marks now use SPACING codepoints (U+1FBF/1FFE/1FC0/00B4/0060/00A8) so they render correctly outside words; bibliography items are plain strings; rule-chart inflected rows wired to their b_ex2 clips; syllable-counting one-syllable bar removed (V2); accent rule drill: no auto-advance on incorrect + per-item audio + red first accent; multi-part tappable rows (parts[]) on Apostrophe/Coronis; Grammar Review verbs/nouns restructured per feedback 12/13; Review Marks grouped per feedback 15; liveScore + pronounceEach defaults across scored surfaces; accent placement gains a clearly-labeled circumflex EXTENSION pool (feedback 11, keep/drop decided in VERIFY2). PATCH3 2026-07-26 (5B-SPEC3 data): double-hyphens normalized to em dashes chapter-wide (typo policy A1 extension); accent-placement extension merged+shuffled into a 25-item pool, banner retired; anthrope wired to the base-form stand-in clip; Nouns topic restructured with subheading blocks (new RichContent type).",
  "id": "chapt_2",
  "number": 2,
  "title": "Syllables & Accents",
@@ -649,27 +649,28 @@
           },
           {
            "greek": "ἀνθρώπου",
-           "gloss": "\"  (penult acute--long ultima causes change)",
+           "gloss": "\"  (penult acute—long ultima causes change)",
            "_legacy": "a]nqrw<pou",
            "audio": "chapt_2_b_ex2_15"
           },
           {
            "greek": "ἀνθρώπῳ",
-           "gloss": "\"  (penult acute--long ultima causes change)",
+           "gloss": "\"  (penult acute—long ultima causes change)",
            "_legacy": "a]nqrw<p&",
            "audio": "chapt_2_b_ex2_17"
           },
           {
            "greek": "ἄνθρωπον",
-           "gloss": "\"  (antepenult acute--short ultima, no change)",
+           "gloss": "\"  (antepenult acute—short ultima, no change)",
            "_legacy": "a@nqrwpon",
            "audio": "chapt_2_b_ex2_12"
           },
           {
            "greek": "ἄνθρωπε",
-           "gloss": "\"  (antepenult acute--short ultima, no change)",
+           "gloss": "\"  (antepenult acute—short ultima, no change)",
            "_legacy": "a@nqrwpe",
-           "_note": "No dedicated clip on the ISO (vocative absent from the b_ex2 pool); renders ink/inert."
+           "_note": "STAND-IN AUDIO: the ISO has no vocative clip; plays the base-form recording (a_voc3) per Nathanael's directive that every chart word be tappable (VERIFY2 item 4). Flag if a dedicated clip surfaces in a later chapter.",
+           "audio": "chapt_2_a_voc3"
           }
          ]
         }
@@ -702,19 +703,19 @@
           },
           {
            "greek": "λύομεν",
-           "gloss": "we loose (antepenult acute--recessive)",
+           "gloss": "we loose (antepenult acute—recessive)",
            "audio": "chapt_2_b_vb4",
            "_legacy": "lu<omen"
           },
           {
            "greek": "λύετε",
-           "gloss": "you (pl) loose (antepenult acute--recessive)",
+           "gloss": "you (pl) loose (antepenult acute—recessive)",
            "audio": "chapt_2_b_vb5",
            "_legacy": "lu<ete"
           },
           {
            "greek": "λύουσι",
-           "gloss": "they loose (antepenult acute--recessive)",
+           "gloss": "they loose (antepenult acute—recessive)",
            "audio": "chapt_2_b_vb6",
            "_legacy": "lu<ousi"
           }
@@ -737,13 +738,13 @@
           },
           {
            "greek": "ἀνθρώπου",
-           "gloss": "\"  (penult acute--cannot accent antepenult)",
+           "gloss": "\"  (penult acute—cannot accent antepenult)",
            "_legacy": "a]nqrw<pou",
            "audio": "chapt_2_b_ex2_15"
           },
           {
            "greek": "ἀνθρώπῳ",
-           "gloss": "\"  (penult acute--cannot accent antepenult)",
+           "gloss": "\"  (penult acute—cannot accent antepenult)",
            "_legacy": "a]nqrw<p&",
            "audio": "chapt_2_b_ex2_17"
           }
@@ -760,12 +761,12 @@
          "rows": [
           {
            "greek": "ἀνθρώπου",
-           "gloss": "\"  (penult acute--long ultima causes change)",
+           "gloss": "\"  (penult acute—long ultima causes change)",
            "audio": "chapt_2_b_ex2_15"
           },
           {
            "greek": "ἀνθρώπῳ",
-           "gloss": "\"  (penult acute--long ultima causes change)",
+           "gloss": "\"  (penult acute—long ultima causes change)",
            "audio": "chapt_2_b_ex2_17"
           },
           {
@@ -796,19 +797,19 @@
          "rows": [
           {
            "greek": "ἦλθεν",
-           "gloss": "he went (short ultima--long penult) (Jn 1:7)",
+           "gloss": "he went (short ultima—long penult) (Jn 1:7)",
            "audio": "chapt_2_b_ac1",
            "_legacy": "h#lqen"
           },
           {
            "greek": "ἐκεῖνος",
-           "gloss": "that (short ultima--long penult) (Jn 1:8)",
+           "gloss": "that (short ultima—long penult) (Jn 1:8)",
            "audio": "chapt_2_b_ac2",
            "_legacy": "e]kei?noj"
           },
           {
            "greek": "πρῶτος",
-           "gloss": "first, earlier (short ultima--long penult) (Jn 1:15)",
+           "gloss": "first, earlier (short ultima—long penult) (Jn 1:15)",
            "audio": "chapt_2_b_ac3",
            "_legacy": "prw?toj"
           }
@@ -1372,11 +1373,11 @@
        "items": [
         {
          "label": "1)",
-         "text": "subject--about which something is said, and"
+         "text": "subject—about which something is said, and"
         },
         {
          "label": "2)",
-         "text": "predicate--that which is said about the subject."
+         "text": "predicate—that which is said about the subject."
         }
        ]
       },
@@ -1688,21 +1689,28 @@
        "text": "Nouns in Greek have gender, number and case."
       },
       {
-       "type": "defList",
-       "items": [
-        {
-         "term": "Gender:",
-         "def": "The Greek masculine, feminine, and neuter genders are often indicated by the endings attached to the noun.  Abstract nouns and objects that are neither male nor female in English are often marked as either masculine or feminine in Greek."
-        },
-        {
-         "term": "Number:",
-         "def": "as an \"s\" often marks an English word as being plural, likewise, Greek endings mark whether a noun is singular or plural (e.g. book, books)."
-        }
-       ]
+       "type": "subheading",
+       "text": "Gender:"
       },
       {
        "type": "para",
-       "text": "Case:  In English we have three cases which are seen in how we use our pronouns."
+       "text": "The Greek masculine, feminine, and neuter genders are often indicated by the endings attached to the noun.  Abstract nouns and objects that are neither male nor female in English are often marked as either masculine or feminine in Greek."
+      },
+      {
+       "type": "subheading",
+       "text": "Number:"
+      },
+      {
+       "type": "para",
+       "text": "as an \"s\" often marks an English word as being plural, likewise, Greek endings mark whether a noun is singular or plural (e.g. book, books)."
+      },
+      {
+       "type": "subheading",
+       "text": "Case:"
+      },
+      {
+       "type": "para",
+       "text": "In English we have three cases which are seen in how we use our pronouns."
       },
       {
        "type": "numbered",
@@ -1958,7 +1966,7 @@
     "attemptsPerItem": "retry",
     "autoAdvanceMs": null
    },
-   "_verify_resolved": "Pool + counts DOSBox-confirmed 2026-07-24 (all 20 derived counts matched; kai uses the one-syllable bar). Original's score dialog can overcount on revisits (22/20 witnessed) -- our scoring counts each item once.",
+   "_verify_resolved": "Pool + counts DOSBox-confirmed 2026-07-24 (all 20 derived counts matched; kai uses the one-syllable bar). Original's score dialog can overcount on revisits (22/20 witnessed) — our scoring counts each item once.",
    "hint": {
     "contentRef": "threeSyllableRules"
    },
@@ -2229,7 +2237,7 @@
    },
    "_answers_note": "Option labels + item pool DOSBox-verified. Per-item answers are RULE-DERIVED from the chapter's own grammar (the collection pass's low score made screenshot-derived answers unreliable); two anchors confirmed green on device (apostolos, kardia -> Potential Placement). Nathanael authorized correctness-first scoring (VERIFY E1).",
    "redFirstAccent": true,
-   "_policy_note": "Per device feedback item 6: no auto-advance on an incorrect answer (learner studies the revealed correct form and clicks Next); 4s auto-advance on correct stands. Audio per item wired (b_ex2 clips carry the inflected anthropos forms -- the same clips the original's rule charts play)."
+   "_policy_note": "Per device feedback item 6: no auto-advance on an incorrect answer (learner studies the revealed correct form and clicks Next); 4s auto-advance on correct stands. Audio per item wired (b_ex2 clips carry the inflected anthropos forms — the same clips the original's rule charts play)."
   },
   {
    "id": "c2_drill_marking_recognition",
@@ -2453,7 +2461,7 @@
     "attemptsPerItem": 1,
     "autoAdvanceMs": 4000
    },
-   "_answers_note": "25-item pool, order, options, and instruction DOSBox-verified. Answers read from the red-rendered mark in the screenshots (redMarkCluster = 1-based grapheme cluster carrying the red mark; item 18's mark assignment is the one judgment call). Original's score dialog says 'Drills Available: 35' -- an original bug (both passes yielded the same 25 items); we use 25."
+   "_answers_note": "25-item pool, order, options, and instruction DOSBox-verified. Answers read from the red-rendered mark in the screenshots (redMarkCluster = 1-based grapheme cluster carrying the red mark; item 18's mark assignment is the one judgment call). Original's score dialog says 'Drills Available: 35' — an original bug (both passes yielded the same 25 items); we use 25."
   },
   {
    "id": "c2_drill_part_of_speech",
@@ -2978,6 +2986,15 @@
     },
     {
      "n": 4,
+     "root": "πρῶτος",
+     "rootGloss": "first, earlier",
+     "answerForm": "πρῶτος",
+     "ref": "Jn 1:15",
+     "audio": "chapt_2_b_ac3",
+     "extended": true
+    },
+    {
+     "n": 5,
      "root": "Βαπτίζω",
      "rootGloss": "to baptize",
      "answerForm": "ἐβάπτισα",
@@ -2985,7 +3002,7 @@
      "audio": "chapt_2_b_ex2_4"
     },
     {
-     "n": 5,
+     "n": 6,
      "root": "Βαπτίζω",
      "rootGloss": "to baptize",
      "answerForm": "ἐβάπτιζεν",
@@ -2993,7 +3010,7 @@
      "audio": "chapt_2_b_ex2_5"
     },
     {
-     "n": 6,
+     "n": 7,
      "root": "Βαπτίζω",
      "rootGloss": "to baptize",
      "answerForm": "βαπτίζει",
@@ -3001,7 +3018,7 @@
      "audio": "chapt_2_b_ex2_6"
     },
     {
-     "n": 7,
+     "n": 8,
      "root": "Βαπτίζω",
      "rootGloss": "to baptize",
      "answerForm": "βαπτισθήτω",
@@ -3009,7 +3026,16 @@
      "audio": "chapt_2_b_ex2_7"
     },
     {
-     "n": 8,
+     "n": 9,
+     "root": "ἐκεῖνος",
+     "rootGloss": "that",
+     "answerForm": "ἐκεῖνος",
+     "ref": "Jn 1:8",
+     "audio": "chapt_2_b_ac2",
+     "extended": true
+    },
+    {
+     "n": 10,
      "root": "Βαπτίζω",
      "rootGloss": "to baptize",
      "answerForm": "βαπτίζεις",
@@ -3017,7 +3043,7 @@
      "audio": "chapt_2_b_ex2_8"
     },
     {
-     "n": 9,
+     "n": 11,
      "root": "Βαπτίζω",
      "rootGloss": "to baptize",
      "answerForm": "βαπτίζομαι",
@@ -3025,7 +3051,7 @@
      "audio": "chapt_2_b_ex2_9"
     },
     {
-     "n": 10,
+     "n": 12,
      "root": "Βαπτίζω",
      "rootGloss": "to baptize",
      "answerForm": "ἐβαπτίζοντο",
@@ -3033,7 +3059,7 @@
      "audio": "chapt_2_b_ex2_10"
     },
     {
-     "n": 11,
+     "n": 13,
      "root": "ἄνθρωπος",
      "rootGloss": "man",
      "answerForm": "ἄνθρωπος",
@@ -3041,7 +3067,16 @@
      "audio": "chapt_2_b_ex2_11"
     },
     {
-     "n": 12,
+     "n": 14,
+     "root": "ῥῆμα",
+     "rootGloss": "word",
+     "answerForm": "ῥῆμα",
+     "ref": "",
+     "audio": "chapt_2_b_rema",
+     "extended": true
+    },
+    {
+     "n": 15,
      "root": "ἄνθρωπος",
      "rootGloss": "man",
      "answerForm": "ἄνθρωπον",
@@ -3049,7 +3084,7 @@
      "audio": "chapt_2_b_ex2_12"
     },
     {
-     "n": 13,
+     "n": 16,
      "root": "ἄνθρωπος",
      "rootGloss": "man",
      "answerForm": "ἀνθρώπων",
@@ -3057,7 +3092,7 @@
      "audio": "chapt_2_b_ex2_13"
     },
     {
-     "n": 14,
+     "n": 17,
      "root": "ἄνθρωπος",
      "rootGloss": "man",
      "answerForm": "ἄνθρωποι",
@@ -3065,7 +3100,7 @@
      "audio": "chapt_2_b_ex2_14"
     },
     {
-     "n": 15,
+     "n": 18,
      "root": "ἄνθρωπος",
      "rootGloss": "man",
      "answerForm": "ἀνθρώπου",
@@ -3073,7 +3108,16 @@
      "audio": "chapt_2_b_ex2_15"
     },
     {
-     "n": 16,
+     "n": 19,
+     "root": "Φαρισαῖος",
+     "rootGloss": "Pharisee",
+     "answerForm": "Φαρισαῖος",
+     "ref": "",
+     "audio": "chapt_2_b_voc10",
+     "extended": true
+    },
+    {
+     "n": 20,
      "root": "ἄνθρωπος",
      "rootGloss": "man",
      "answerForm": "ἀνθρώποις",
@@ -3081,7 +3125,7 @@
      "audio": "chapt_2_b_ex2_16"
     },
     {
-     "n": 17,
+     "n": 21,
      "root": "ἄνθρωπος",
      "rootGloss": "man",
      "answerForm": "ἀνθρώπῳ",
@@ -3089,7 +3133,7 @@
      "audio": "chapt_2_b_ex2_17"
     },
     {
-     "n": 18,
+     "n": 22,
      "root": "ἄνθρωπος",
      "rootGloss": "man",
      "answerForm": "ἀνθρώπων",
@@ -3097,7 +3141,16 @@
      "audio": "chapt_2_b_ex2_18"
     },
     {
-     "n": 19,
+     "n": 23,
+     "root": "αὐτοῦ",
+     "rootGloss": "of him",
+     "answerForm": "αὐτοῦ",
+     "ref": "",
+     "audio": "chapt_2_b_autou",
+     "extended": true
+    },
+    {
+     "n": 24,
      "root": "ἄνθρωπος",
      "rootGloss": "man",
      "answerForm": "ἀνθρώπους",
@@ -3105,7 +3158,7 @@
      "audio": "chapt_2_b_ex2_19"
     },
     {
-     "n": 20,
+     "n": 25,
      "root": "ἄνθρωπος",
      "rootGloss": "man",
      "answerForm": "ἄνθρωπον",
@@ -3196,50 +3249,8 @@
      }
     ]
    },
-   "_answers_note": "COMPLETE REPLACEMENT per VERIFY E2/E3: the pool is NOT the vocabulary list. Two root words (Baptizo x10, anthropos x10); each item shows the root + gloss in the header and an UNACCENTED inflected form (breathing retained) with its Scripture reference; the learner picks Acute or Circumflex (the only two accent buttons in the original) and a letter position. answerForm is the accented form displayed after checking. b_ex2_1..21 audio = these forms in order (the 21st file is unreferenced by the 20 items -- likely the root recitation; wired nowhere pending a listen check). Grave is NOT offered as an option in the original.",
-   "extendedItems": [
-    {
-     "n": 21,
-     "root": "πρῶτος",
-     "rootGloss": "first, earlier",
-     "answerForm": "πρῶτος",
-     "ref": "Jn 1:15",
-     "audio": "chapt_2_b_ac3"
-    },
-    {
-     "n": 22,
-     "root": "ἐκεῖνος",
-     "rootGloss": "that",
-     "answerForm": "ἐκεῖνος",
-     "ref": "Jn 1:8",
-     "audio": "chapt_2_b_ac2"
-    },
-    {
-     "n": 23,
-     "root": "ῥῆμα",
-     "rootGloss": "word",
-     "answerForm": "ῥῆμα",
-     "ref": "",
-     "audio": "chapt_2_b_rema"
-    },
-    {
-     "n": 24,
-     "root": "Φαρισαῖος",
-     "rootGloss": "Pharisee",
-     "answerForm": "Φαρισαῖος",
-     "ref": "",
-     "audio": "chapt_2_b_voc10"
-    },
-    {
-     "n": 25,
-     "root": "αὐτοῦ",
-     "rootGloss": "of him",
-     "answerForm": "αὐτοῦ",
-     "ref": "",
-     "audio": "chapt_2_b_autou"
-    }
-   ],
-   "_extended_note": "EXTENSION, NOT IN THE ORIGINAL (Nathanael-authorized inquiry, feedback item 11): the original's 20-item pool is acute-only, so five circumflex-bearing chapter words are appended as clearly-labeled extended practice. Grave is impractical standalone (rule 6 requires a following word). Render after item 20 under an 'Extended practice' divider; confirm keep/drop in VERIFY2."
+   "_answers_note": "COMPLETE REPLACEMENT per VERIFY E2/E3: the pool is NOT the vocabulary list. Two root words (Baptizo x10, anthropos x10); each item shows the root + gloss in the header and an UNACCENTED inflected form (breathing retained) with its Scripture reference; the learner picks Acute or Circumflex (the only two accent buttons in the original) and a letter position. answerForm is the accented form displayed after checking. b_ex2_1..21 audio = these forms in order (the 21st file is unreferenced by the 20 items — likely the root recitation; wired nowhere pending a listen check). Grave is NOT offered as an option in the original.",
+   "_pool_note": "25-item pool: the original's 20 acute items plus 5 circumflex extension items MERGED AND INTERLEAVED at fixed positions (VERIFY2 item 7: extension approved, banner removed, shuffled so the circumflex items are not deducible). Each item keeps its own audio regardless of position. Completion = all 25 attempted. 'extended: true' retained for provenance only — never rendered."
   },
   {
    "id": "c2_ex_speller",

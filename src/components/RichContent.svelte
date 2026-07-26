@@ -4,8 +4,9 @@
   // is pedagogy: headings, hanging-indent bibliographies, aligned definition
   // rows and underlined list lead-ins are all load-bearing, not decoration.
   //
-  // Block types: heading | para | numbered | defList | biblist | refs | note |
-  // greekRows | expander.
+  // Block types: heading | subheading | para | numbered | defList | biblist |
+  // refs | note | greekRows | expander. An unknown type renders LOUD (see the
+  // dispatch's final else) rather than vanishing.
   // Trailing { greek, caption?, audio? } "example" objects render in the Greek
   // font and play their clip on tap. defList rows [term, value, audio?] play
   // the row's clip when present.
@@ -94,6 +95,13 @@
   {#each shown as b}
     {#if b.type === 'heading'}
       <div class="rc-heading"><Marked text={b.text} /></div>
+
+    {:else if b.type === 'subheading'}
+      <!-- D4: a run-in label promoted to its own line (Grammar Review Nouns:
+           "Gender:" / "Number:" / "Case:"). Left-aligned heading green, and the
+           prose under it is an ordinary para -- no hanging indent, which is
+           what made the two-column defList wrong for this content. -->
+      <div class="rc-subheading"><Marked text={b.text} /></div>
 
     {:else if b.type === 'para'}
       <p class="rc-para"><Marked text={b.text} /></p>
@@ -286,6 +294,14 @@
 
     {:else if b.type === 'note'}
       <div class="note"><Marked text={b.text} /></div>
+
+    {:else}
+      <!-- Unknown block type. Silence here would DELETE authored teaching
+           content with nothing to notice (the biblist lesson: a shape failure
+           that only fails visually needs a loud failure). The build-time twin
+           is scripts/check-content-shapes.mjs, which fails the build on any
+           type this dispatch does not handle. -->
+      <div class="pending-verification compact" role="status">Unsupported content block "{b.type}" — renderer needs updating.</div>
     {/if}
   {/each}
 </div>

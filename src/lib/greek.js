@@ -94,6 +94,19 @@ export function combiningForMarkName(name) { return MARK_BY_NAME[name] || null; 
 
 export function spacingForm(mark) { return SPACING_FOR_COMBINING[mark] || mark; }
 
+// The overlay (below) replaces a mark the BASE would otherwise have drawn, so
+// it must use the very glyph the precomposed form uses. Greek text sets its
+// acute and grave from U+0384/U+1FEF -- narrower and steeper than the Latin-1
+// U+00B4/U+0060 the chart cells carry -- and a swap here is visible at prompt
+// size. The other four are the same drawing either way.
+const OVERLAY_FOR_COMBINING = {
+  ...SPACING_FOR_COMBINING,
+  '́': '΄',   // acute  -> Greek tonos, not U+00B4
+  '̀': '`'    // grave  -> Greek varia, not U+0060
+};
+
+export function overlayForm(mark) { return OVERLAY_FOR_COMBINING[mark] || spacingForm(mark); }
+
 // Replace any combining mark in an isolated (base-less) string with its
 // spacing twin. The Accent Possibilities chart's "Long Ultima" ultima cell
 // still ships combining acute/grave; rendering them as-is is unreadable.
@@ -129,18 +142,30 @@ export function firstAccentCluster(text) {
   return { index: -1, mark: null };
 }
 
+// ---- MARK GEOMETRY (5B-SPEC3 C, rules M1-M6) ----
+//
 // Marking Recognition / Accent Rule ask about ONE mark and draw it red.
 // Colouring the mark INLINE does not work: browsers keep shaping across an
 // inline boundary that differs only in colour, so the mark glyph is painted
 // with the BASE run's colour (verified by screenshot in the 5B patch -- the
-// DOM colour was right, the pixels were not). 5B-SPEC2 C5 settles it: render
-// the target cluster's BASE with the mark removed and OVERLAY the mark as a
-// free-standing spacing glyph, absolutely positioned over the base. No inline
-// boundary, so nothing to shape across.
+// DOM colour was right, the pixels were not). 5B-SPEC2 C5 settled the fix:
+// render the base without the mark and OVERLAY the mark as a free-standing
+// spacing glyph. 5B-SPEC3 C closes the hole that left: mixing an overlaid mark
+// with marks still drawn by the base put two glyphs in one place on every
+// multi-mark cluster (breathing + acute collided on anthropou/adelphos/akouo;
+// circumflex sat on the breathing in apostolos).
+//
+// FULL-OVERLAY RULE: if any mark in a cluster must be coloured, ALL of that
+// cluster's marks come off the base and the whole set is overlaid -- target in
+// --mark-red, the rest in ink. Nothing is then drawn twice, and the positions
+// come from one table (M1-M6, keyed by `layout` + `slot` below and realised as
+// em offsets in app.css) rather than per-word nudging.
 //
 // Returns render segments in source order:
 //   { text }                     plain ink run
-//   { base, overlay }            the target cluster, split for the overlay
+//   { base, marks, layout }      the target cluster: base stripped of its marks
+//                                (iota subscript stays -- M6), plus the mark set
+//                                as { glyph, kind, slot, red } in source order
 //   { text, red: true }          the whole cluster reddens because it IS the
 //                                mark (apostrophe, colon, question) -- there is
 //                                no base to separate it from
@@ -150,6 +175,44 @@ export function firstAccentCluster(text) {
 // alpha, while its circumflex sits on 7). Reddening it would tell the learner
 // the answer is "Circumflex" while the red sits on an unmarked letter, so the
 // cluster renders plain: absent signal beats false signal (XPATCH1).
+const MARK_KIND = {
+  '̓': 'breathing',   // smooth breathing / coronis (U+0343 decomposes here)
+  '̔': 'breathing',   // rough breathing
+  '́': 'accent',
+  '̀': 'accent',
+  '͂': 'circumflex',
+  '̈': 'diaeresis'
+};
+// Iota subscript is part of the BASE rendering and is never lifted (M6).
+const IOTA_SUBSCRIPT = 'ͅ';
+
+// The one place the M1-M5 arrangement is decided. `layout` picks the geometry
+// class; `slot` picks each mark's position within it.
+//   M1 single      -> layout 'single', slot 'only'   (centred; on a diphthong
+//                     the mark already belongs to the SECOND vowel's cluster,
+//                     so "above the second vowel" needs no special case)
+//   M2 breath+acute/grave -> 'pair',  slots 'left' (breathing) / 'right'
+//   M3 breath+circumflex  -> 'stack', slots 'lower' (breathing) / 'upper'
+//   M4 diaeresis+accent   -> 'diaeresis', slots 'lower' (dots) / 'upper'
+//   M5 capital base       -> the same layout, flagged `capital`: the set moves
+//                            to the upper LEFT of the letter instead of above it
+function arrangeMarks(kinds) {
+  const has = kind => kinds.includes(kind);
+  if (kinds.length < 2) return { layout: 'single', slots: kinds.map(() => 'only') };
+  // M4 is its own case, not a variant of M3: the dots are shorter than a
+  // breathing, so the accent above them needs a different lift.
+  const layout = has('diaeresis') ? 'diaeresis'
+    : (has('breathing') && has('accent')) ? 'pair'
+    : 'stack';
+  return {
+    layout,
+    slots: kinds.map(kind => {
+      if (layout === 'pair') return kind === 'breathing' ? 'left' : 'right';
+      return kind === 'breathing' || kind === 'diaeresis' ? 'lower' : 'upper';
+    })
+  };
+}
+
 export function markOverlayParts(text, redIndex, preferredMark) {
   const clusters = splitGraphemes(text);
   const parts = [];
@@ -161,7 +224,7 @@ export function markOverlayParts(text, redIndex, preferredMark) {
   clusters.forEach((cluster, index) => {
     if (index + 1 !== redIndex) { pushText(cluster, false); return; }
     const chars = Array.from(cluster.normalize('NFD'));
-    const marks = chars.filter(char => SPACING_FOR_COMBINING[char]);
+    const marks = chars.filter(char => MARK_KIND[char]);
     const target = (preferredMark && marks.includes(preferredMark)) ? preferredMark : marks[0];
     if (!target) {
       // No combining mark to lift off. Either the cluster IS the mark
@@ -171,12 +234,20 @@ export function markOverlayParts(text, redIndex, preferredMark) {
       pushText(cluster, !/\p{L}/u.test(cluster));
       return;
     }
-    let dropped = false;
-    const base = chars.filter(char => {
-      if (!dropped && char === target) { dropped = true; return false; }
-      return true;
-    }).join('').normalize('NFC');
-    parts.push({ base, overlay: spacingForm(target) });
+    const base = chars.filter(char => !MARK_KIND[char]).join('').normalize('NFC');
+    const kinds = marks.map(mark => MARK_KIND[mark]);
+    const { layout, slots } = arrangeMarks(kinds);
+    let reddened = false;
+    parts.push({
+      base,
+      layout,
+      capital: /\p{Lu}/u.test(base.replace(IOTA_SUBSCRIPT, '')),
+      marks: marks.map((mark, position) => {
+        // Exactly one mark is the question, even if the cluster repeats a kind.
+        const red = !reddened && mark === target && (reddened = true);
+        return { glyph: overlayForm(mark), kind: kinds[position], slot: slots[position], red };
+      })
+    });
   });
   return parts;
 }

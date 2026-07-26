@@ -19,12 +19,12 @@
   export let chapter;
   export let activity;
 
-  // EXTENDED PRACTICE (5B-SPEC2 C7): the original's 20-item pool is acute-only,
-  // so the data appends circumflex-bearing chapter words as clearly-labelled
-  // extra items. They share the scoring line but NOT the completion bar --
-  // finishing the chapter still means finishing the original twenty.
-  const baseWords = activity.items || [];
-  const words = [...baseWords, ...(activity.extendedItems || [])];
+  // POOL (5B-SPEC3 A1/item 7): the five circumflex extension items are now
+  // MERGED and interleaved into the authored pool at fixed positions, with no
+  // banner -- a labelled block at the end made every extension item deducibly
+  // a circumflex. The items carry `extended: true` for provenance only; it is
+  // never rendered and never affects scoring, and completion is all 25.
+  const words = activity.items || [];
   let wordIndex = 0;
   let accentType = null;
   let accentPosition = null;
@@ -35,7 +35,9 @@
   let answered = false;
   let showAnswer = false;
   let showHint = false;
-  let showScore = !!activity.ui?.liveScore;
+  // D1: hidden until the first Score press; ui.liveScore governs whether the
+  // revealed line keeps updating, not whether it starts open.
+  let showScore = false;
   let pronounceEach = activity.ui?.defaults?.pronounceEach ?? false;
   let advanceTimer = null;
   const attemptedWords = new Set();
@@ -48,7 +50,6 @@
   $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
   $: autoAdvanceMs = activity.answerPolicy?.autoAdvanceMs ?? 900;
   $: revealed = answered && oneAttempt;
-  $: isExtended = wordIndex >= baseWords.length;
   // A root identical to the answer form would print the answer above the slots.
   $: showRootWord = !!(word && word.root)
     && (!word.answerForm || word.root.normalize('NFC') !== word.answerForm.normalize('NFC'));
@@ -100,8 +101,7 @@
     feedbackKind = ok ? 'ok' : 'bad';
     if (ok || oneAttempt) {
       answered = true;
-      // Completion counts the ORIGINAL pool only; the extension is optional.
-      if (baseWords.every((_, index) => attemptedWords.has(index))) markCompleted(activity.id);
+      if (attemptedWords.size === words.length) markCompleted(activity.id);
       results.set(wordIndex, {
         accentType,
         accentPosition,
@@ -123,13 +123,12 @@
 </script>
 
 <div class="card accent-activity">
-  {#if isExtended}
-    <div class="extended-divider">Extended practice — not in the original</div>
-  {/if}
   <!-- The header exists to show the ROOT an inflected form derives from
-       (Βαπτίζω -> βάπτισαι). On the extended items the root IS the answer form,
-       so printing it accented would show the learner both the accent type and
-       its position before they choose. Those items show the gloss alone. -->
+       (Βαπτίζω -> βάπτισαι). On the merged circumflex items the root IS the
+       answer form, so printing it accented would show the learner both the
+       accent type and its position before they choose. Those items show the
+       gloss alone -- which is also what keeps them indistinguishable from the
+       original twenty now that the banner is gone. -->
   {#if word && (showRootWord || word.rootGloss)}
     <div class="accent-root">
       <div class="label">{showRootWord ? (activity.ui?.header || 'Root Greek Word') : 'Word Meaning'}</div>
@@ -193,9 +192,7 @@
     {#if word?.ref}<span class="exercise-ref">{word.ref}</span>{/if}
   </div>
   {#if showScore}<div class="scorebox live-score">{scoreLine}</div>{/if}
-  <div class="scorebox exercise-count">
-    {wordIndex + 1} of {words.length}{#if activity.extendedItems?.length}&nbsp;({baseWords.length} in the original){/if}
-  </div>
+  <div class="scorebox exercise-count">{wordIndex + 1} of {words.length}</div>
 </div>
 
 {#if showHint && hintBlocks.length}
