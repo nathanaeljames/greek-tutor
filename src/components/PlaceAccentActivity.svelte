@@ -50,9 +50,16 @@
   $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
   $: autoAdvanceMs = activity.answerPolicy?.autoAdvanceMs ?? 900;
   $: revealed = answered && oneAttempt;
-  // A root identical to the answer form would print the answer above the slots.
-  $: showRootWord = !!(word && word.root)
-    && (!word.answerForm || word.root.normalize('NFC') !== word.answerForm.normalize('NFC'));
+  // ROOT DISPLAY (5B-SPEC4 D2). Every item shows a Greek word in the header --
+  // VERIFY3 item 3 found six that showed only a gloss. Those six are the ones
+  // whose root IS their answer form (the original's ἄνθρωπος item and the five
+  // merged circumflex items), where printing the root prints the accented
+  // answer directly above the unaccented slots. Nathanael's call of three
+  // options: print it with its ACCENT stripped and its breathings kept, so
+  // there is Greek on every item and none of them answers itself.
+  $: rootIdentical = !!(word && word.root && word.answerForm)
+    && word.root.normalize('NFC') === word.answerForm.normalize('NFC');
+  $: rootWord = !word || !word.root ? '' : (rootIdentical ? analyzeAccent(word.root).display : word.root);
   // Live score (C3): reactive so it tracks every answer instead of freezing.
   $: scoreLine = scoreText(attempts, correct);
 
@@ -123,21 +130,19 @@
 </script>
 
 <div class="card accent-activity">
-  <!-- The header exists to show the ROOT an inflected form derives from
-       (Βαπτίζω -> βάπτισαι). On the merged circumflex items the root IS the
-       answer form, so printing it accented would show the learner both the
-       accent type and its position before they choose. Those items show the
-       gloss alone -- which is also what keeps them indistinguishable from the
-       original twenty now that the banner is gone. -->
-  {#if word && (showRootWord || word.rootGloss)}
+  <!-- The header shows the ROOT an inflected form derives from (Βαπτίζω ->
+       βάπτισαι), plus its gloss. Where the root IS the answer form it is
+       printed unaccented (see rootWord above), and the label says so rather
+       than calling an unaccented string a root. -->
+  {#if word && (rootWord || word.rootGloss)}
     <div class="accent-root">
-      <div class="label">{showRootWord ? (activity.ui?.header || 'Root Greek Word') : 'Word Meaning'}</div>
+      <div class="label">{rootIdentical ? 'Greek Word (Unaccented)' : (activity.ui?.header || 'Root Greek Word')}</div>
       <div class="accent-root-line">
         <!-- Inert: word.audio (b_ex2_N) belongs to the inflected answerForm,
              not the root, so tapping the root would play the wrong clip. The
              inflected clip stays reachable via Pronounce Each Exercise. -->
-        {#if showRootWord}<span class="accent-root-word greek">{word.root}</span>{/if}
-        {#if word.rootGloss}<span class="accent-root-gloss">{showRootWord ? `(${word.rootGloss})` : word.rootGloss}</span>{/if}
+        {#if rootWord}<span class="accent-root-word greek">{rootWord}</span>{/if}
+        {#if word.rootGloss}<span class="accent-root-gloss">{rootWord ? `(${word.rootGloss})` : word.rootGloss}</span>{/if}
       </div>
     </div>
   {/if}

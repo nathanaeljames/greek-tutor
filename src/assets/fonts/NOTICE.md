@@ -28,5 +28,22 @@ Rebuild with:
 
     pip install fonttools brotli
     python3 scripts/make-greek-font.py NotoSerif[wdth,wght].ttf
+    python3 scripts/make-mark-geometry.py
 
 The source file is Google Fonts' `ofl/notoserif/NotoSerif[wdth,wght].ttf`.
+
+## The second step is not optional
+
+`src/lib/mark-geometry.json` is DERIVED FROM THIS FONT FILE. The red-mark
+drills draw one diacritic in a different colour, which cannot be done in place
+(the browser shapes across the inline boundary and paints the mark with the
+base run's colour), so the cluster is rendered without its marks and the marks
+are drawn over it. Where they go comes from this font's own composite glyph
+offsets — the acute sits at +0.205em over alpha, +0.334em over omega, −0.028em
+over iota — read out by `scripts/make-mark-geometry.py` (5B-SPEC4 B; SPEC3's
+six-rule approximation is what VERIFY3 caught riding low and off-centre).
+
+Change the font without regenerating the table and every manually placed mark
+in chapters 2+ drifts, quietly and only by a hair. Regenerate in the same
+commit. `npm run check:shapes` fails the build if a reddened cluster has no
+row in the table, but it cannot tell a stale row from a fresh one.

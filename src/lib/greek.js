@@ -1,6 +1,8 @@
 // Unicode helpers shared by the chapter-2 syllable and accent activities.
 // Work in NFD only while inspecting marks, then return NFC for display.
 
+import MARK_GEOMETRY from './mark-geometry.json';
+
 const ACCENT_MARKS = {
   '\u0301': 'Acute',
   '\u0300': 'Grave',
@@ -142,7 +144,7 @@ export function firstAccentCluster(text) {
   return { index: -1, mark: null };
 }
 
-// ---- MARK GEOMETRY (5B-SPEC3 C, rules M1-M6) ----
+// ---- MARK GEOMETRY (5B-SPEC4 B, replacing SPEC3's rules M1-M6) ----
 //
 // Marking Recognition / Accent Rule ask about ONE mark and draw it red.
 // Colouring the mark INLINE does not work: browsers keep shaping across an
@@ -150,31 +152,43 @@ export function firstAccentCluster(text) {
 // with the BASE run's colour (verified by screenshot in the 5B patch -- the
 // DOM colour was right, the pixels were not). 5B-SPEC2 C5 settled the fix:
 // render the base without the mark and OVERLAY the mark as a free-standing
-// spacing glyph. 5B-SPEC3 C closes the hole that left: mixing an overlaid mark
-// with marks still drawn by the base put two glyphs in one place on every
-// multi-mark cluster (breathing + acute collided on anthropou/adelphos/akouo;
-// circumflex sat on the breathing in apostolos).
+// glyph. SPEC3 added the FULL-OVERLAY rule -- if any mark in a cluster is
+// coloured, ALL of that cluster's marks come off the base, so nothing is ever
+// drawn twice in one place.
 //
-// FULL-OVERLAY RULE: if any mark in a cluster must be coloured, ALL of that
-// cluster's marks come off the base and the whole set is overlaid -- target in
-// --mark-red, the rest in ink. Nothing is then drawn twice, and the positions
-// come from one table (M1-M6, keyed by `layout` + `slot` below and realised as
-// em offsets in app.css) rather than per-word nudging.
+// What SPEC3 got wrong was WHERE. It positioned the overlay from six
+// hand-written CSS rules (single / breathing+accent / breathing+circumflex /
+// diaeresis+accent / capital / iota subscript). The font does not use six
+// rules: it carries a distinct offset pair for each of ~220 precomposed
+// characters, and they differ by base letter as much as by combination -- the
+// acute over alpha sits at +0.205em, over omega at +0.334em, over iota at
+// -0.028em. Six constants averaged across that, which is why VERIFY3 saw marks
+// riding low, sitting right of the iota in kai, and off-centre in a diaeresis
+// while the PRINTED text was always right.
+//
+// So the offsets now come from the font itself: scripts/make-mark-geometry.py
+// reads each precomposed glyph's composite components and writes
+// mark-geometry.json. Rendering the base glyph at the origin and each mark
+// glyph at its recorded offset reproduces the printed character by
+// construction -- which is exactly VERIFY3's instruction, "produce the word
+// with the accent using the actual text, and then move the manually positioned
+// accents to perfectly overlap that".
 //
 // Returns render segments in source order:
 //   { text }                     plain ink run
-//   { base, marks, layout }      the target cluster: base stripped of its marks
-//                                (iota subscript stays -- M6), plus the mark set
-//                                as { glyph, kind, slot, red } in source order
+//   { base, marks, bx, aw }      the target cluster: base stripped of its marks
+//                                (iota subscript stays -- it is part of the base
+//                                glyph), plus the mark set as
+//                                { glyph, x, y, clip, red }, offsets in em from
+//                                the base glyph's origin
 //   { text, red: true }          the whole cluster reddens because it IS the
 //                                mark (apostrophe, colon, question) -- there is
 //                                no base to separate it from
 //
 // A target cluster carrying NO mark at all is an authoring error, not a shape
-// the overlay cannot handle (chapt-02's φαρισαῖος points at cluster 6, a bare
-// alpha, while its circumflex sits on 7). Reddening it would tell the learner
-// the answer is "Circumflex" while the red sits on an unmarked letter, so the
-// cluster renders plain: absent signal beats false signal (XPATCH1).
+// the overlay cannot handle. Reddening it would tell the learner the answer is
+// "Circumflex" while the red sits on an unmarked letter, so the cluster renders
+// plain: absent signal beats false signal (XPATCH1).
 const MARK_KIND = {
   '̓': 'breathing',   // smooth breathing / coronis (U+0343 decomposes here)
   '̔': 'breathing',   // rough breathing
@@ -183,24 +197,24 @@ const MARK_KIND = {
   '͂': 'circumflex',
   '̈': 'diaeresis'
 };
-// Iota subscript is part of the BASE rendering and is never lifted (M6).
+// Iota subscript is part of the BASE rendering and is never lifted.
 const IOTA_SUBSCRIPT = 'ͅ';
 
-// The one place the M1-M5 arrangement is decided. `layout` picks the geometry
-// class; `slot` picks each mark's position within it.
-//   M1 single      -> layout 'single', slot 'only'   (centred; on a diphthong
-//                     the mark already belongs to the SECOND vowel's cluster,
-//                     so "above the second vowel" needs no special case)
-//   M2 breath+acute/grave -> 'pair',  slots 'left' (breathing) / 'right'
-//   M3 breath+circumflex  -> 'stack', slots 'lower' (breathing) / 'upper'
-//   M4 diaeresis+accent   -> 'diaeresis', slots 'lower' (dots) / 'upper'
-//   M5 capital base       -> the same layout, flagged `capital`: the set moves
-//                            to the upper LEFT of the letter instead of above it
+const GEOMETRY = MARK_GEOMETRY.clusters;
+
+// Clusters that had to fall back to the legacy rule table, by NFC form. The
+// build guard (scripts/check-content-shapes.mjs) proves the shipped data never
+// reaches this, but a fallback in the field must be findable rather than a
+// silently slightly-wrong mark.
+export const markGeometryFallbacks = new Set();
+
+// LEGACY fallback only: a combination with no precomposed codepoint (an
+// NFD-only stack) has no font composite to read, so it is arranged by the old
+// M1-M5 classes. Positions are approximate by construction -- that is the
+// point of preferring the table.
 function arrangeMarks(kinds) {
   const has = kind => kinds.includes(kind);
   if (kinds.length < 2) return { layout: 'single', slots: kinds.map(() => 'only') };
-  // M4 is its own case, not a variant of M3: the dots are shorter than a
-  // breathing, so the accent above them needs a different lift.
   const layout = has('diaeresis') ? 'diaeresis'
     : (has('breathing') && has('accent')) ? 'pair'
     : 'stack';
@@ -209,6 +223,18 @@ function arrangeMarks(kinds) {
     slots: kinds.map(kind => {
       if (layout === 'pair') return kind === 'breathing' ? 'left' : 'right';
       return kind === 'breathing' || kind === 'diaeresis' ? 'lower' : 'upper';
+    })
+  };
+}
+
+function legacyCluster(marks, kinds, target) {
+  const { layout, slots } = arrangeMarks(kinds);
+  let reddened = false;
+  return {
+    layout,
+    marks: marks.map((mark, position) => {
+      const red = !reddened && mark === target && (reddened = true);
+      return { glyph: overlayForm(mark), slot: slots[position], red };
     })
   };
 }
@@ -234,19 +260,32 @@ export function markOverlayParts(text, redIndex, preferredMark) {
       pushText(cluster, !/\p{L}/u.test(cluster));
       return;
     }
+    const nfc = cluster.normalize('NFC');
+    const entry = GEOMETRY[nfc];
+    if (entry) {
+      // Every row whose mark IS the asked-about one reddens. Normally that is
+      // one glyph; for the fused dialytika-tonos outline it is the two clipped
+      // bands that draw the dots, which are one mark drawn in two pieces.
+      parts.push({
+        base: entry.base,
+        bx: entry.bx || 0,
+        aw: entry.aw || 0,
+        marks: entry.marks.map(mark => ({
+          glyph: mark.g, x: mark.x, y: mark.y, clip: mark.clip || null, red: mark.m === target
+        }))
+      });
+      return;
+    }
+    if (!markGeometryFallbacks.has(nfc)) {
+      markGeometryFallbacks.add(nfc);
+      console.warn(`mark-geometry: no font row for "${nfc}" — falling back to the approximate rule table.`);
+    }
     const base = chars.filter(char => !MARK_KIND[char]).join('').normalize('NFC');
     const kinds = marks.map(mark => MARK_KIND[mark]);
-    const { layout, slots } = arrangeMarks(kinds);
-    let reddened = false;
     parts.push({
       base,
-      layout,
       capital: /\p{Lu}/u.test(base.replace(IOTA_SUBSCRIPT, '')),
-      marks: marks.map((mark, position) => {
-        // Exactly one mark is the question, even if the cluster repeats a kind.
-        const red = !reddened && mark === target && (reddened = true);
-        return { glyph: overlayForm(mark), kind: kinds[position], slot: slots[position], red };
-      })
+      ...legacyCluster(marks, kinds, target)
     });
   });
   return parts;

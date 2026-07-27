@@ -1,5 +1,5 @@
 {
- "_comment": "Chapter 2 (Syllables & Accents), reconstructed from 2_ACCENT.TBK + CHAPT_2 audio inventory, PATCHED 2026-07-24 against the completed VERIFY-chapt02 DOSBox pass (sequence, all drill/exercise pools and answers, popup contents, and chart corrections). answerPolicy: the original finalizes one attempt per item on Check Answer, reveals the correct form, and auto-advances after ~4s (J1, Nathanael-approved timing); scored activities therefore complete when all items have been ATTEMPTED. UI colors per Nathanael (E1/E2): blue = selected guess, green = confirmed correct after Check Answer, red reserved for incorrect feedback. PATCHED AGAIN 2026-07-26 (5B-SPEC2 data): isolated marks now use SPACING codepoints (U+1FBF/1FFE/1FC0/00B4/0060/00A8) so they render correctly outside words; bibliography items are plain strings; rule-chart inflected rows wired to their b_ex2 clips; syllable-counting one-syllable bar removed (V2); accent rule drill: no auto-advance on incorrect + per-item audio + red first accent; multi-part tappable rows (parts[]) on Apostrophe/Coronis; Grammar Review verbs/nouns restructured per feedback 12/13; Review Marks grouped per feedback 15; liveScore + pronounceEach defaults across scored surfaces; accent placement gains a clearly-labeled circumflex EXTENSION pool (feedback 11, keep/drop decided in VERIFY2). PATCH3 2026-07-26 (5B-SPEC3 data): double-hyphens normalized to em dashes chapter-wide (typo policy A1 extension); accent-placement extension merged+shuffled into a 25-item pool, banner retired; anthrope wired to the base-form stand-in clip; Nouns topic restructured with subheading blocks (new RichContent type).",
+ "_comment": "Chapter 2 (Syllables & Accents), reconstructed from 2_ACCENT.TBK + CHAPT_2 audio inventory, PATCHED 2026-07-24 against the completed VERIFY-chapt02 DOSBox pass (sequence, all drill/exercise pools and answers, popup contents, and chart corrections). answerPolicy: the original finalizes one attempt per item on Check Answer, reveals the correct form, and auto-advances after ~4s (J1, Nathanael-approved timing); scored activities therefore complete when all items have been ATTEMPTED. UI colors per Nathanael (E1/E2): blue = selected guess, green = confirmed correct after Check Answer, red reserved for incorrect feedback. PATCHED AGAIN 2026-07-26 (5B-SPEC2 data): isolated marks now use SPACING codepoints (U+1FBF/1FFE/1FC0/00B4/0060/00A8) so they render correctly outside words; bibliography items are plain strings; rule-chart inflected rows wired to their b_ex2 clips; syllable-counting one-syllable bar removed (V2); accent rule drill: no auto-advance on incorrect + per-item audio + red first accent; multi-part tappable rows (parts[]) on Apostrophe/Coronis; Grammar Review verbs/nouns restructured per feedback 12/13; Review Marks grouped per feedback 15; liveScore + pronounceEach defaults across scored surfaces; accent placement gains a clearly-labeled circumflex EXTENSION pool (feedback 11, keep/drop decided in VERIFY2). PATCH3 2026-07-26 (5B-SPEC3 data): double-hyphens normalized to em dashes chapter-wide (typo policy A1 extension); accent-placement extension merged+shuffled into a 25-item pool, banner retired; anthrope wired to the base-form stand-in clip; Nouns topic restructured with subheading blocks (new RichContent type). PATCH4 2026-07-27 (5B-SPEC4 data, VERIFY3): the Rule 1/3/4 chart ditto marks (idem./ibid. in the original, flattened into a literal quote when the chart became rows) print the translation 'man' instead, including Rule 3's 'Base noun form'; anthrope wired to b_ex2_21, identified as the vocative clip; the marking-recognition pharisaios item points at cluster 7 (the circumflex) instead of cluster 6 (a bare alpha, which rendered nothing red); syllable-division instructions and buttons rewritten for the drag-a-divider rebuild.",
  "id": "chapt_2",
  "number": 2,
  "title": "Syllables & Accents",
@@ -649,28 +649,28 @@
           },
           {
            "greek": "ἀνθρώπου",
-           "gloss": "\"  (penult acute—long ultima causes change)",
+           "gloss": "man (penult acute—long ultima causes change)",
            "_legacy": "a]nqrw<pou",
            "audio": "chapt_2_b_ex2_15"
           },
           {
            "greek": "ἀνθρώπῳ",
-           "gloss": "\"  (penult acute—long ultima causes change)",
+           "gloss": "man (penult acute—long ultima causes change)",
            "_legacy": "a]nqrw<p&",
            "audio": "chapt_2_b_ex2_17"
           },
           {
            "greek": "ἄνθρωπον",
-           "gloss": "\"  (antepenult acute—short ultima, no change)",
+           "gloss": "man (antepenult acute—short ultima, no change)",
            "_legacy": "a@nqrwpon",
            "audio": "chapt_2_b_ex2_12"
           },
           {
            "greek": "ἄνθρωπε",
-           "gloss": "\"  (antepenult acute—short ultima, no change)",
+           "gloss": "man (antepenult acute—short ultima, no change)",
            "_legacy": "a@nqrwpe",
-           "_note": "STAND-IN AUDIO: the ISO has no vocative clip; plays the base-form recording (a_voc3) per Nathanael's directive that every chart word be tappable (VERIFY2 item 4). Flag if a dedicated clip surfaces in a later chapter.",
-           "audio": "chapt_2_a_voc3"
+           "_note": "b_ex2_21 IDENTIFIED (VERIFY3 item 2): the 21st accent-placement clip, unreferenced by the 20 exercise items, is the vocative. Replaces the a_voc3 stand-in wired in SPEC3.",
+           "audio": "chapt_2_b_ex2_21"
           }
          ]
         }
@@ -732,19 +732,19 @@
          "rows": [
           {
            "greek": "ἄνθρωπος",
-           "gloss": "Base noun form (antepenult accented, acute)",
+           "gloss": "man (antepenult accented, acute)",
            "audio": "chapt_2_a_voc3",
            "_legacy": "a@nqrwpoj"
           },
           {
            "greek": "ἀνθρώπου",
-           "gloss": "\"  (penult acute—cannot accent antepenult)",
+           "gloss": "man (penult acute—cannot accent antepenult)",
            "_legacy": "a]nqrw<pou",
            "audio": "chapt_2_b_ex2_15"
           },
           {
            "greek": "ἀνθρώπῳ",
-           "gloss": "\"  (penult acute—cannot accent antepenult)",
+           "gloss": "man (penult acute—cannot accent antepenult)",
            "_legacy": "a]nqrw<p&",
            "audio": "chapt_2_b_ex2_17"
           }
@@ -761,12 +761,12 @@
          "rows": [
           {
            "greek": "ἀνθρώπου",
-           "gloss": "\"  (penult acute—long ultima causes change)",
+           "gloss": "man (penult acute—long ultima causes change)",
            "audio": "chapt_2_b_ex2_15"
           },
           {
            "greek": "ἀνθρώπῳ",
-           "gloss": "\"  (penult acute—long ultima causes change)",
+           "gloss": "man (penult acute—long ultima causes change)",
            "audio": "chapt_2_b_ex2_17"
           },
           {
@@ -2366,7 +2366,7 @@
      "gloss": "Pharisee",
      "answer": "Circumflex",
      "audio": "chapt_2_b_voc10",
-     "redMarkCluster": 6
+     "redMarkCluster": 7
     },
     {
      "greek": "θεὸς",
@@ -2727,7 +2727,7 @@
    "id": "c2_ex_syllable_division",
    "type": "divide",
    "title": "Syllable Division Exercise",
-   "instructions": "Click on the number(s) where the word is divided into syllables.  Then click Check Answer.",
+   "instructions": "Tap the word where a syllable ends to place a divider, then drag it to fine-tune.  Tap again elsewhere to add another.  Then click \"Check Answer,\" or \"Clear Answer\" to start the word over.",
    "items": [
     {
      "n": 1,
@@ -2921,6 +2921,7 @@
    "ui": {
     "buttons": [
      "Check Answer",
+     "Clear Answer",
      "Previous",
      "Next",
      "Pronounce Word",

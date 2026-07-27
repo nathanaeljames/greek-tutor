@@ -137,9 +137,9 @@
   "anthrope": {
    "greek": "ἄνθρωπε",
    "gloss": "O man",
-   "audio": null,
+   "audio": "chapt_2_b_ex2_21",
    "_legacy": "a@nqrwpe",
-   "_note": "Chart row without dedicated audio in the original; renders ink/inert."
+   "_note": "b_ex2_21 identified as the vocative clip (VERIFY3 item 2); the row was inert through SPEC2 and carried an a_voc3 stand-in in SPEC3."
   },
   "anthropon_gen": {
    "greek": "ἀνθρώπων",

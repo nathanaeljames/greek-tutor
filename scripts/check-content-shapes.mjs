@@ -68,9 +68,54 @@ for (const file of files) {
   });
 }
 
+// ---- RED-MARK GEOMETRY COVERAGE (5B-SPEC4 B2) ----
+// Every cluster a drill reddens must have a row in the generated font table.
+// A cluster that misses it still renders, via the legacy rule table, and looks
+// ALMOST right -- which is the exact failure VERIFY3 spent a round finding.
+// Almost-right is not something a device pass should have to catch twice, so
+// it fails the build instead.
+const GEOMETRY = JSON.parse(readFileSync('src/lib/mark-geometry.json', 'utf8')).clusters;
+const ACCENTS = new Set(['́', '̀', '͂']);
+const MARKS = new Set([...ACCENTS, '̓', '̔', '̈']);
+const segment = text => [...new Intl.Segmenter('el', { granularity: 'grapheme' }).segment(text)].map(p => p.segment);
+
+for (const file of files) {
+  const data = JSON.parse(readFileSync(join(DATA, file), 'utf8'));
+  walk(data, file, (activity, path) => {
+    if (activity.type !== 'select') return;
+    for (const [index, item] of (activity.items || []).entries()) {
+      if (!item.greek) continue;
+      const clusters = segment(item.greek);
+      let target = null;
+      if (item.redMarkCluster) target = item.redMarkCluster;
+      else if (activity.redFirstAccent) {
+        target = clusters.findIndex(c => [...c.normalize('NFD')].some(ch => ACCENTS.has(ch))) + 1 || null;
+      }
+      if (!target) continue;
+      const cluster = clusters[target - 1];
+      if (cluster == null) {
+        problems.push(`${path}.items[${index}]: redMarkCluster ${target} is past the end of "${item.greek}".`);
+        continue;
+      }
+      // Apostrophe, raised-dot colon and question mark ARE the mark: there is
+      // no base letter to lift them off, so those clusters redden whole and
+      // need no geometry row.
+      if (!/\p{L}/u.test(cluster)) continue;
+      const marks = [...cluster.normalize('NFD')].filter(ch => MARKS.has(ch));
+      if (!marks.length) {
+        problems.push(`${path}.items[${index}]: redMarkCluster ${target} of "${item.greek}" is "${cluster}", which carries no mark — nothing would render red.`);
+        continue;
+      }
+      if (!GEOMETRY[cluster.normalize('NFC')]) {
+        problems.push(`${path}.items[${index}]: "${cluster}" of "${item.greek}" has no mark-geometry row; it would fall back to the approximate rule table.`);
+      }
+    }
+  });
+}
+
 if (problems.length) {
   for (const problem of problems) console.error(`FAIL: ${problem}`);
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; greekRows rows carry content).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; greekRows rows carry content; every reddened cluster has a font-derived geometry row).`);

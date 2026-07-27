@@ -1,17 +1,33 @@
 <script>
-  // Syllable Division Exercise: tap the numbered gaps between letters where
-  // the word breaks into syllables, then Check Answer.
+  // Syllable Division Exercise.
   //
-  // LAYOUT (5B-SPEC2 C2) follows the original: a numbered BUTTON above each
-  // gap with an arrow pointing down into the space between the two letters.
-  // Sizing is per-word and measured (5B-SPEC3 D2): each word is fitted to the
-  // rail so its letters and its gap buttons are as large as that word allows.
+  // REBUILT IN 5B-SPEC4 C. Through SPEC3 this was the original's numbered
+  // buttons-and-arrows above each gap; VERIFY3 struck that whole thread out and
+  // replaced it: "Fuck it, I'm completely re-imagining this exercise." The word
+  // is now the only control. Tap it to drop a DIVIDER at the nearest place
+  // between two letters and drag it; tap somewhere else to drop another; tap
+  // where one already is to move that one instead. Clear Answer wipes them.
+  //
+  // Three things follow from that and are easy to undo by accident:
+  //   * ONE TYPE SIZE for the whole pool (C1). The longest word sets it and
+  //     every other word matches, so stepping through the pool never resizes
+  //     the type. SPEC2 did this, SPEC3 reversed it to per-word, VERIFY3
+  //     reverses it back and is the last word.
+  //   * THE WORD IS NOT AN AUDIO TAP any more. It cannot be: a tap on it places
+  //     a divider. It therefore renders in INK, not the tappable blue, and
+  //     Pronounce / Pronounce Each are the audio path. This is a standing
+  //     exception to directive 9, alongside Phonetic Reading and the speller.
+  //   * CLEAR ANSWER RE-OPENS A FINISHED ITEM, which attemptsPerItem: 1
+  //     otherwise forbids. VERIFY3 asks for it by name ("upon revisiting a
+  //     previously answered word, all cursors and answer texts should
+  //     disappear and let the user try that word again"). Score history
+  //     already spent is not rewound.
   //
   // ANSWER POLICY (5B patch 2a): answerPolicy.attemptsPerItem === 1 means
   // Check Answer finalizes the item right or wrong, reveals the hyphen-joined
   // divided form, and auto-advances after autoAdvanceMs. The timer is cancelled
-  // on manual Previous/Next and on unmount. Completion = all items ATTEMPTED.
-  import { afterUpdate, onDestroy, onMount } from 'svelte';
+  // on manual Previous/Next, on Clear Answer and on unmount.
+  import { afterUpdate, onDestroy, onMount, tick } from 'svelte';
   import { play } from '../lib/audio.js';
   import { randomFeedback, resolveHintBlocks } from '../lib/content.js';
   import { dividedForm, splitGraphemes } from '../lib/greek.js';
@@ -23,7 +39,7 @@
 
   const items = activity.items || [];
   let itemIndex = 0;
-  let selected = new Set();
+  let dividers = new Set();      // 1-based gap indices, same contract as division[]
   let oneSyllable = false;
   let attempts = 0;
   let correct = 0;
@@ -32,114 +48,180 @@
   let answered = false;
   let showAnswer = false;
   let showHint = false;
-  // D1: hidden until the first Score press; ui.liveScore governs whether the
-  // revealed line keeps updating, not whether it starts open.
+  // D1 (SPEC3): hidden until the first Score press; ui.liveScore governs whether
+  // the revealed line keeps updating, not whether it starts open.
   let showScore = false;
   let pronounceEach = activity.ui?.defaults?.pronounceEach ?? false;
   let advanceTimer = null;
   const attemptedItems = new Set();
   const results = new Map();
 
-  // Fat-finger sizing (C2, reworked by 5B-SPEC3 D2). The row is measured, not
-  // guessed: a hidden probe renders the word at a reference size, so the
-  // glyphs' real advance widths -- not a character count -- decide how large
-  // the letters can be, and `railWidth` re-measures at every breakpoint.
-  //
-  // D2 changes two things. The gap column is 0.68 of the letter size (was
-  // 0.34), so a gap BUTTON is about twice as wide; and the measurement now
-  // follows the CURRENT word rather than the pool's longest, per the spec's
-  // "the gap buttons scale with the word ... filling available width". C2 sized
-  // the whole pool by its longest word so stepping never resized the row; that
-  // bought visual stability at the cost of leaving a three-letter word using a
-  // third of the screen, which is exactly what VERIFY2 item 3 objected to.
-  // Tap targets win: ἐγώ now fills the rail, and φαρισαῖος -- 9 clusters and 8
-  // gaps in 330px -- is the arithmetic floor, not a sizing choice.
+  // ---- SIZING (C1): one size, set by the longest word in the pool ----
+  // Measured, not guessed: a hidden probe renders every word at a reference
+  // size so real glyph advances -- not a character count -- decide how large
+  // the type can be. bind:clientWidth is NOT used: it reports once, while
+  // font-display:block still has the row in the fallback face, and never
+  // reports the reflow when the bundled Greek font swaps in (SPEC3 finding 3).
   const PROBE_PX = 100;
-  const GAP_RATIO = 0.68;          // gap column as a share of the letter size
-  const MAX_LETTER_PX = 76;        // stop growing on tablet widths
-  const MIN_GAP_PX = 22;           // preferred floor for a gap button
-  const MIN_LETTER_PX = 20;        // below this the word stops being readable
+  const LETTER_GAP_EM = 0.12;   // lane for the divider, in em of the letter size
+  const MAX_LETTER_PX = 84;
+  const MIN_LETTER_PX = 20;
   let railWidth = 0;
-  let probeEl;
-  let probeWidth = 0;
+  let probeEls = [];
+  let probeWidths = [];
   let fontEpoch = 0;
-  // The probe is measured by hand, NOT with bind:clientWidth. That binding
-  // reported the width once, while font-display:block still had the row laid
-  // out in the fallback face, and never reported the reflow when the bundled
-  // Greek font swapped in -- so every row was sized from metrics ~15% too
-  // narrow and the longest words silently clipped (overflow-x is hidden
-  // app-wide, so nothing errors and nothing scrolls). Two mechanisms cover it:
-  // afterUpdate for the render-ordering case (a fresh item's letters reach the
-  // DOM before its probe has been remeasured), and the ResizeObserver in
-  // onMount for the font swap. The guard stops the re-render loop after one
-  // pass.
-  afterUpdate(() => {
-    if (!probeEl) return;
-    const width = probeEl.getBoundingClientRect().width;
-    if (Math.abs(width - probeWidth) > 0.5) probeWidth = width;
-  });
-  $: letterCount = letters.length;
-  // fontEpoch is a dependency, not an input: bumping it when document.fonts
-  // settles forces one more render, and afterUpdate above then re-measures the
-  // probe against the face that actually shipped.
-  $: sizing = fitRow(railWidth, probeWidth, letterCount, fontEpoch);
-  $: letterSize = sizing.letter;
-  $: gapSize = sizing.gap;
+
+  $: itemLetters = items.map(item => splitGraphemes(item && item.greek));
+  $: letters = itemLetters[itemIndex] || [];
+  $: letterSize = fitPool(railWidth, probeWidths, itemLetters, fontEpoch);
+  $: letterGap = letterSize * LETTER_GAP_EM;
 
   // The row must always FIT: overflow-x is hidden app-wide, so a row that is
-  // too wide is not scrollable, it is deleted. So the gap floor is a
-  // preference, not a guarantee -- a nine-cluster word at 320px cannot have
-  // both 22px targets and readable letters, and the letters win at that point.
-  function fitRow(rail, probe, count) {   // fontEpoch is a trigger only
-    const gaps = Math.max(count - 1, 0);
-    if (!(rail > 0 && probe > 0 && count > 0)) return { letter: 24, gap: MIN_GAP_PX };
-    const ratio = probe / PROBE_PX;
+  // too wide is not scrollable, it is deleted.
+  function fitPool(rail, widths, clusters) {   // fontEpoch is a trigger only
+    if (!(rail > 0) || !widths.length) return 28;
+    let worst = 0;
+    for (let i = 0; i < clusters.length; i++) {
+      const width = widths[i] || 0;
+      if (!width) continue;
+      worst = Math.max(worst, width / PROBE_PX + Math.max(clusters[i].length - 1, 0) * LETTER_GAP_EM);
+    }
+    if (!worst) return 28;
     // Budget slightly under the rail: per-glyph rounding accumulates across a
     // long word, and being 2px over means 2px CLIPPED, not 2px scrolled.
-    rail = rail * 0.98;
-    let letter = Math.min(MAX_LETTER_PX, rail / (ratio + GAP_RATIO * gaps));
-    let gap = letter * GAP_RATIO;
-    if (gap < MIN_GAP_PX && gaps > 0) {
-      // Buy the floor back out of the letters, but only while they stay legible.
-      const shrunk = (rail - MIN_GAP_PX * gaps) / ratio;
-      if (shrunk >= MIN_LETTER_PX) { letter = shrunk; gap = MIN_GAP_PX; }
+    return Math.max(MIN_LETTER_PX, Math.min(MAX_LETTER_PX, (rail * 0.97) / worst));
+  }
+
+  // ---- DIVIDER GEOMETRY ----
+  // gapCentres[g] is the x of the lane between letter g and letter g+1,
+  // relative to the word element. Read from the laid-out letters rather than
+  // computed, so letter-spacing, kerning and the font swap are all accounted
+  // for by the browser.
+  let wordEl;
+  let letterEls = [];
+  let gapCentres = [];
+  let dragging = null;          // gap index being dragged, or null
+  let dragPointer = null;
+
+  function measureGaps() {
+    if (!wordEl) return;
+    const origin = wordEl.getBoundingClientRect().left;
+    const next = [];
+    for (let i = 1; i < letters.length; i++) {
+      const before = letterEls[i - 1];
+      const after = letterEls[i];
+      if (!before || !after) return;
+      next[i] = (before.getBoundingClientRect().right + after.getBoundingClientRect().left) / 2 - origin;
     }
-    return { letter: Math.max(MIN_LETTER_PX, letter), gap: Math.max(11, gap) };
+    if (next.length !== gapCentres.length || next.some((x, i) => Math.abs(x - gapCentres[i]) > 0.5)) {
+      gapCentres = next;
+    }
+  }
+  afterUpdate(() => {
+    for (let i = 0; i < probeEls.length; i++) {
+      if (!probeEls[i]) continue;
+      const width = probeEls[i].getBoundingClientRect().width;
+      if (Math.abs(width - (probeWidths[i] || 0)) > 0.5) probeWidths[i] = width;
+    }
+    probeWidths = probeWidths;
+    measureGaps();
+  });
+
+  function nearestGap(clientX) {
+    if (!wordEl || gapCentres.length < 2) return null;
+    const x = clientX - wordEl.getBoundingClientRect().left;
+    let best = null;
+    let bestDistance = Infinity;
+    for (let i = 1; i < gapCentres.length; i++) {
+      const distance = Math.abs(x - gapCentres[i]);
+      if (distance < bestDistance) { bestDistance = distance; best = i; }
+    }
+    return best;
+  }
+
+  // A little bump per letter crossed. Android honours it; iOS Safari has no
+  // Vibration API at all, so this must be a no-op there rather than a throw.
+  function bump() {
+    try { navigator.vibrate && navigator.vibrate(8); } catch { /* no haptics */ }
+  }
+
+  function onPointerDown(event) {
+    if (answered || pending) return;
+    const gap = nearestGap(event.clientX);
+    if (gap == null) return;
+    event.preventDefault();
+    oneSyllable = false;
+    feedback = '';
+    // Landing on an existing divider grabs it; anywhere else creates one.
+    if (!dividers.has(gap)) {
+      dividers = new Set(dividers).add(gap);
+      bump();
+    }
+    dragging = gap;
+    dragPointer = event.pointerId;
+    try { event.currentTarget.setPointerCapture(event.pointerId); } catch { /* not captureable */ }
+  }
+
+  function onPointerMove(event) {
+    if (dragging == null || event.pointerId !== dragPointer) return;
+    const gap = nearestGap(event.clientX);
+    // An occupied lane is not a drop target: two dividers in one place would
+    // silently become one and the learner would not know which they lost.
+    if (gap == null || gap === dragging || dividers.has(gap)) return;
+    const next = new Set(dividers);
+    next.delete(dragging);
+    next.add(gap);
+    dividers = next;
+    dragging = gap;
+    bump();
+  }
+
+  function endDrag(event) {
+    if (event && dragPointer != null && event.pointerId !== dragPointer) return;
+    dragging = null;
+    dragPointer = null;
+  }
+
+  // ---- KEYBOARD (the word is a control, so it needs one) ----
+  let focusGap = 1;
+  function onKeyDown(event) {
+    if (answered || pending || letters.length < 2) return;
+    const last = letters.length - 1;
+    if (event.key === 'ArrowRight') { focusGap = Math.min(last, focusGap + 1); }
+    else if (event.key === 'ArrowLeft') { focusGap = Math.max(1, focusGap - 1); }
+    else if (event.key === ' ' || event.key === 'Enter') {
+      const next = new Set(dividers);
+      if (next.has(focusGap)) next.delete(focusGap); else next.add(focusGap);
+      dividers = next;
+      oneSyllable = false;
+      feedback = '';
+    } else return;
+    event.preventDefault();
   }
 
   $: item = items[itemIndex] || null;
-  $: letters = splitGraphemes(item && item.greek);
   $: pending = !item || !item.greek || !Array.isArray(item.division);
   $: hintBlocks = resolveHintBlocks(chapter, activity.hint);
   $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
   $: autoAdvanceMs = activity.answerPolicy?.autoAdvanceMs ?? 900;
   $: revealed = answered && oneAttempt;
+  $: answerGaps = new Set((!pending && item.division) || []);
   // Live score (C3): reactive, so the line follows every answer instead of
   // freezing at whatever it said when the box was opened.
   $: scoreLine = scoreText(attempts, correct);
 
-  function toggleGap(gap) {
-    if (answered) return;
-    oneSyllable = false;
-    const next = new Set(selected);
-    if (next.has(gap)) next.delete(gap);
-    else next.add(gap);
-    selected = next;
-    feedback = '';
-  }
-
-  // 2c: the one-syllable bar clears and locks the gap selections; the answer
-  // it submits is the empty division (kai is the pool's only one-syllable word).
+  // The one-syllable bar clears and locks the divider lane; the answer it
+  // submits is the empty division (kai is the pool's only one-syllable word).
   function toggleOneSyllable() {
     if (answered) return;
     oneSyllable = !oneSyllable;
-    if (oneSyllable) selected = new Set();
+    if (oneSyllable) dividers = new Set();
     feedback = '';
   }
 
   function sameGaps(answer) {
-    if (selected.size !== answer.length) return false;
-    return answer.every(gap => selected.has(gap));
+    if (dividers.size !== answer.length) return false;
+    return answer.every(gap => dividers.has(gap));
   }
 
   function check() {
@@ -152,9 +234,10 @@
     feedbackKind = right ? 'ok' : 'bad';
     if (right || oneAttempt) {
       answered = true;
+      endDrag();
       if (attemptedItems.size === items.length) markCompleted(activity.id);
       results.set(itemIndex, {
-        selected: [...selected],
+        dividers: [...dividers],
         oneSyllable,
         feedback,
         feedbackKind,
@@ -165,20 +248,31 @@
     }
   }
 
-  // Under attemptsPerItem: 1 a finalized item stays finalized on revisit --
-  // reopening it would let a wrong answer be retried and re-count attempts.
-  // showAnswer stays user-controlled; the reveal is derived from `revealed`.
+  // C4. Wipes the dividers AND the finalized result, so a word already answered
+  // can be tried again on a revisit -- the one place attemptsPerItem: 1 gives
+  // way. Attempts already counted stay counted.
+  function clearAnswer() {
+    clearTimeout(advanceTimer);
+    endDrag();
+    results.delete(itemIndex);
+    dividers = new Set();
+    oneSyllable = false;
+    feedback = '';
+    feedbackKind = '';
+    answered = false;
+  }
+
   function restoreItem() {
     const result = results.get(itemIndex);
     if (result) {
-      selected = new Set(result.selected);
+      dividers = new Set(result.dividers);
       oneSyllable = result.oneSyllable;
       feedback = result.feedback;
       feedbackKind = result.feedbackKind;
       answered = true;
       return;
     }
-    selected = new Set();
+    dividers = new Set();
     oneSyllable = false;
     feedback = '';
     feedbackKind = '';
@@ -188,9 +282,12 @@
 
   function move(delta) {
     clearTimeout(advanceTimer);
+    endDrag();
     const nextIndex = Math.max(0, Math.min(items.length - 1, itemIndex + delta));
     if (nextIndex === itemIndex) return;
     itemIndex = nextIndex;
+    focusGap = 1;
+    gapCentres = [];
     restoreItem();
     const nextItem = items[itemIndex];
     if (pronounceEach && nextItem && nextItem.audio) play(nextItem.audio);
@@ -201,59 +298,69 @@
     return `${c} correct out of ${a} attempts (${Math.round((c / a) * 100)}%)`;
   }
 
-  // Answer submitted, so Check Answer is live even with nothing selected once
-  // the one-syllable bar is the answer.
-  $: canCheck = !pending && !answered && (oneSyllable || selected.size > 0);
+  // Answer submitted, so Check Answer is live even with nothing placed once the
+  // one-syllable bar is the answer.
+  $: canCheck = !pending && !answered && (oneSyllable || dividers.size > 0);
+  $: canClear = !pending && (answered || oneSyllable || dividers.size > 0);
 
-  let probeObserver = null;
-  onMount(() => {
+  let observer = null;
+  onMount(async () => {
     if (typeof document !== 'undefined' && document.fonts) {
-      document.fonts.ready.then(() => { fontEpoch += 1; });
+      // The bundled face changes every advance in the row; re-measure once it
+      // has actually arrived rather than trusting the fallback's metrics.
+      document.fonts.ready.then(async () => { fontEpoch += 1; await tick(); measureGaps(); });
     }
-    if (typeof ResizeObserver === 'undefined' || !probeEl) return;
-    probeObserver = new ResizeObserver(() => {
-      probeWidth = probeEl.getBoundingClientRect().width;
-    });
-    probeObserver.observe(probeEl);
+    if (typeof ResizeObserver === 'undefined') return;
+    observer = new ResizeObserver(() => measureGaps());
+    if (wordEl) observer.observe(wordEl);
   });
 
   onDestroy(() => {
     clearTimeout(advanceTimer);
-    if (probeObserver) probeObserver.disconnect();
+    if (observer) observer.disconnect();
   });
 </script>
 
 <div class="card divide-activity">
-  <!-- Off-screen probe: the CURRENT word at a known size. Its measured width is
-       what the live row is scaled from, so the row re-fits on every item. -->
-  <span class="divide-probe greek" style="font-size:{PROBE_PX}px" aria-hidden="true" bind:this={probeEl}>{item ? item.greek : ''}</span>
+  <!-- Off-screen probe: EVERY word at a known size. The widest sets the type
+       size for the whole pool, so stepping never resizes the row (C1). -->
+  <div class="divide-probes" aria-hidden="true">
+    {#each items as probe, index}
+      <span class="greek" style="font-size:{PROBE_PX}px" bind:this={probeEls[index]}>{probe.greek || ''}</span>
+    {/each}
+  </div>
   {#if pending}
     <div class="pending-verification" role="status">Syllable-division word {itemIndex + 1} is pending content verification.</div>
   {:else}
     <div class="divide-rail" bind:clientWidth={railWidth}>
-      <div class="divide-word"
-        style={`--divide-size:${letterSize}px; --gap-size:${gapSize}px`}
-        aria-label="Choose syllable division gaps">
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+      <div class="divide-word greek"
+        class:answered={revealed}
+        bind:this={wordEl}
+        style={`--divide-size:${letterSize}px; --letter-gap:${letterGap}px`}
+        role="application"
+        tabindex={pending ? -1 : 0}
+        aria-label={`Place syllable dividers in ${item.greek}. Arrow keys move, space places.`}
+        on:pointerdown={onPointerDown}
+        on:pointermove={onPointerMove}
+        on:pointerup={endDrag}
+        on:pointercancel={endDrag}
+        on:keydown={onKeyDown}>
         {#each letters as letter, index}
-          {#if item.audio}
-            <button class="divide-letter greek greek-say" aria-label="Pronounce word" on:click={() => play(item.audio)}>{letter}</button>
-          {:else}
-            <span class="divide-letter greek">{letter}</span>
-          {/if}
-          {#if index < letters.length - 1}
-            <button class="divide-gap"
-              class:selected={selected.has(index + 1)}
-              class:correct={revealed && item.division.includes(index + 1)}
-              class:locked={oneSyllable}
-              aria-pressed={selected.has(index + 1)}
-              aria-label={`Divide after letter ${index + 1}`}
-              on:click={() => toggleGap(index + 1)}>
-              <span class="gap-num">{index + 1}</span>
-              <svg class="gap-arrow" viewBox="0 0 12 24" width="12" height="24" aria-hidden="true">
-                <path d="M6 1 V16" stroke="currentColor" stroke-width="2" fill="none" />
-                <path d="M1.5 15 L6 22 L10.5 15 Z" fill="currentColor" />
-              </svg>
-            </button>
+          <span class="divide-letter" bind:this={letterEls[index]}>{letter}</span>
+        {/each}
+        <!-- Dividers ride above the letters in their own layer so a letter's
+             ink never sits on top of one. Correct positions show green after
+             Check Answer, including ones the learner missed; a divider in the
+             wrong lane shows red (C5). -->
+        {#each gapCentres as centre, gap}
+          {#if gap > 0 && (dividers.has(gap) || (revealed && answerGaps.has(gap)))}
+            <span class="divide-cursor"
+              class:correct={revealed && answerGaps.has(gap)}
+              class:wrong={revealed && !answerGaps.has(gap)}
+              class:dragging={dragging === gap}
+              style={`left:${centre}px`}
+              aria-hidden="true"></span>
           {/if}
         {/each}
       </div>
@@ -275,6 +382,7 @@
 
   <div class="controls grouped">
     <button class="btn" disabled={!canCheck} on:click={check}>Check Answer</button>
+    <button class="btn secondary" disabled={!canClear} on:click={clearAnswer}>Clear Answer</button>
     <button class="btn" disabled={!item?.audio} on:click={() => item?.audio && play(item.audio)}>Pronounce</button>
     <button class="btn secondary" disabled={itemIndex <= 0} on:click={() => move(-1)}>Previous</button>
     <button class="btn secondary" disabled={itemIndex >= items.length - 1} on:click={() => move(1)}>Next</button>
