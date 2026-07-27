@@ -22,18 +22,23 @@ COHORT 5A — B5 lazy chapter loading. Spec: 5A-SPEC.md. Gate: VERIFY-5A.
   Status: SHIPPED + DEVICE-VERIFIED (2026-07-23).
 
 COHORT 5B — Chapter 2 (Syllables & Accents), solo (font-map forcing
-  function + first scale-out run). Spec: 5B-SPEC.md (+ 5B-MERGE-SPEC
-  porting Opus-run patches onto the Sol base). Gate: VERIFY-chapt02
-  (data) + VERIFY-5B (device).
-  Status: CODE SHIPPED (HANDOFF-5B-SOL.md). DATA PARTIALLY PENDING —
-  awaiting the VERIFY-chapt02 DOSBox pass, then Fable's data patch
-  (5B-PATCH-SPEC) and the combined VERIFY-5B device pass.
+  function + first scale-out run). Specs: 5B-SPEC.md (+ 5B-MERGE-SPEC
+  porting Opus-run patches onto the Sol base), then 5B-SPEC2/3/4.
+  Gates: VERIFY-chapt02 (data), VERIFY-5B, VERIFY2, VERIFY3 (device).
+  Status: CLOSED AND DEVICE-VERIFIED (2026-07-27). Four implementer
+  rounds; the VERIFY4 document phase was skipped because Nathanael's
+  visual pass on the SPEC4 tree was a full pass. Data complete, no
+  pending placeholders. Handoff: 5B-SPEC4-RESULTS.md.
+  Cost note for batching: chapter 2 took four rounds, but three of
+  them were TYPOGRAPHY, not content — one Greek face for the whole app
+  and a font-derived mark-geometry table, both now standing
+  infrastructure. Chapters 3+ inherit them and should not repeat that.
 
 COHORT 5C — RECON PASS (chat-side, no build): string-dump + audio
   inventory chapters 3-8+; PLUS a bounded binary rich-text parser
   experiment (success would shrink the manual VERIFY share for all
   remaining chapters). Output: evidence-based cohort batches below.
-  Status: PENDING 5B closure.
+  Status: OPEN (5B closed 2026-07-27).
 
 COHORT 5D+ — chapters 3-28 per recon findings. Expectation (inference,
   to be replaced by 5C evidence): chapters 3-6 each carry one-time
@@ -50,10 +55,18 @@ Chapter 1 (final): objectivesPage, textPage, stepper, flashcard,
 equationChart, vowelStair, diphthongRows, exploreGrid, fullOptionGrid,
 selfCheckStepper, selfCheckSequence, reviewVocab, reviewLetters.
 
-Added in 5B: mode topicPages; RichContent blocks greekRows + expander
-(+ defList object form, numbered self-labeling, reviewVocab playAll);
-activity types divide + placeAccent; select static option sets;
-speller-tiles.json shared keyboard contract.
+Added in 5B: mode topicPages; RichContent blocks greekRows, expander
+and subheading (+ defList object form, numbered self-labeling,
+reviewVocab playAll); activity types divide + placeAccent; select
+static option sets, and on select drills the red-mark contract
+(redMarkCluster / redFirstAccent); speller-tiles.json shared keyboard
+contract.
+
+Also standing infrastructure from 5B, inherited by every chapter and
+NOT to be re-derived: the bundled derived Greek face (GreekTutor Serif,
+scripts/make-greek-font.py) and the font-derived mark-geometry table
+(scripts/make-mark-geometry.py -> src/lib/mark-geometry.json, 221
+clusters). They are a matched pair — rebuild one, regenerate the other.
 
 Registry debt for 5C+: explicit layout flag on greekRows; single-source
 speller tiles at next chapt-01 regen; lexicon-chaptNN naming (no dash).
