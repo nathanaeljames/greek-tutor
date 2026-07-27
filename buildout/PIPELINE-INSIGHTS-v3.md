@@ -1,0 +1,500 @@
+# PIPELINE-INSIGHTS-v3.md — Greek Tutor extraction pipeline
+
+Supersedes PIPELINE-INSIGHTS-v2.md (chapter-1 pilot, 2026-07-12/19 + the
+phase-4 closeout audit + the punch-list session). Revised 2026-07-27 at
+chapter-2 closeout.
+
+**What changed from v2, in one paragraph.** v2 carried both the extraction
+mechanics AND the data contract the app consumes. CHAT-HANDOFF.md now owns the
+data contract and updates it every round, so v2's §III/§IV/§V had silently gone
+stale — its "Complete mode inventory" was missing `topicPages`, its block-type
+list was missing three blocks, and its unknown-font-code list had been resolved
+by chapter 2. Two documents claiming the same authority is the actual hazard, so
+v3 hands the contract to CHAT-HANDOFF and keeps what only this document knows:
+how to get bytes out of the ISO and turn them into correct Unicode. Everything
+v2 said about stages 1-2 and 5-7, the environment, the chapter-1 corrections and
+the tool list is carried over intact.
+
+---
+
+## 0. Scope and authority (read this before using anything below)
+
+| Question | Authoritative document |
+| --- | --- |
+| How do I get a chapter's TBK and audio out of the ISO? | **this file** |
+| What does a legacy ASCII code mean in Greek? | **`src/data/font-map.json` in the repo**, which this file describes but does not restate |
+| What `mode` / block type / activity type may a chapter use? | **CHAT-HANDOFF.md**, "Pipeline contracts for chapters 3+" |
+| Which audio id does a surface play? | **CHAT-HANDOFF.md**, "Audio semantics cheat-sheet" |
+| What are the standing UI/pedagogy directives? | **CHAT-HANDOFF.md**, "Standing directives" |
+| What is the round-by-round build process? | **CHAT-HANDOFF.md**, "Buildout process v2" |
+| How are implementer rounds graded? | **GRADER-PROMPT.md** (the grading chat's standing prompt) |
+| Where do marks get positioned, and how is the Greek font built? | **CHAT-HANDOFF.md**, "Typography and mark-rendering canon" — app-side, generated, not a pipeline concern |
+
+If this file and CHAT-HANDOFF disagree about a contract, **CHAT-HANDOFF wins**
+and this file has a bug. Say so rather than reconciling silently.
+
+PROCESS RULE (2026-07-18, after a near-miss reversion, unchanged): the GitHub
+repo is the source of truth for data files, not project-knowledge mirrors. After
+ANY repo-side data edit, the committed file must be uploaded to project
+knowledge immediately. Chat regenerates data only from the committed copy and
+can self-verify against the public repo:
+`https://raw.githubusercontent.com/nathanaeljames/greek-tutor/main/src/data/chapt-01.json`
+
+---
+
+## I. Architecture overview
+
+The pipeline converts legacy ParsonsTech Greek Tutor assets (Asymetrix ToolBook
+.TBK files + WAV audio, distributed inside a DOSBox bundle as an ISO inside a
+RAR) into a modern Unicode-first JSON data model consumed by a Svelte PWA. Two
+execution environments:
+
+    CHAT-SIDE (Claude's environment):
+      parsonstech.rar -> GreekTutor.iso -> .TBK files -> JSON data files
+      OR: GreekTutor.iso uploaded directly (preferred -- smaller, simpler)
+      Tools: libarchive-c (RAR only), pycdlib, fonttools, Pillow, stdlib
+      Output: chapt-NN.json, lexicon-chaptNN.json, toc.json, intro.json,
+              font-map.json
+
+    USER-SIDE (local machine):
+      GreekTutor.iso -> GKTUTOR/ -> transcode_audio.py -> .m4a files
+      Tools: Python 3.9+, ffmpeg
+      Output: public/audio/ tree + audio-manifest.json (8,521 entries)
+
+The two sides never exchange intermediate artifacts. They share only the NAMING
+CONTRACT (audio id = lowercased path with `/` -> `_`, e.g. `chapt_1_a_alpha`)
+and the finished JSON data files.
+
+NAMING CORRECTION from v2: emit **`lexicon-chaptNN.json`** — no dash before the
+number. v2 wrote `lexicon-chapt-XX.json`. The content glob tolerates both
+current spellings, but new chapters use the undashed form.
+
+---
+
+## II. Pipeline stages (in execution order)
+
+### Stage 1: RAR -> ISO extraction (OR direct ISO upload)
+
+PREFERRED: upload `GreekTutor.iso` directly (~290 MB). This eliminates Stage 1
+entirely and saves the ~2 min foreground extraction.
+
+If only the RAR is available:
+
+    INPUT:  /mnt/user-data/uploads/parsonstech.rar (~286 MB)
+    OUTPUT: /home/claude/GreekTutor.iso (~277 MB)
+
+```python
+import libarchive
+target = 'parsonstech/GreekTutor.iso'
+with libarchive.file_reader('/mnt/user-data/uploads/parsonstech.rar') as arc:
+    for entry in arc:
+        if entry.pathname == target:
+            with open('GreekTutor.iso', 'wb') as out:
+                for block in entry.get_blocks():
+                    out.write(block)
+            break
+```
+
+CRITICAL: must run in FOREGROUND (timeout ~1-2 min). Background jobs (nohup, &)
+die silently in this environment.
+
+Failures encountered, chronologically:
+
+1. `unrar-cffi` `RarFile.read()` — OOM killed. Buffers the entire 277 MB
+   decompressed file in RAM before writing.
+2. `unrar-cffi` `RarFile.open()` streaming — also OOM. Despite the streaming
+   API, the library decompresses internally.
+3. `libarchive-c` with nohup background — silently died.
+4. `libarchive-c` FOREGROUND — SUCCESS. C-native streaming, constant memory.
+
+LESSON: `libarchive-c` is the ONLY reliable RAR library in this environment
+(`pip install libarchive-c`; depends on system libarchive, pre-installed).
+Always foreground. Never `unrar-cffi` for files over ~50 MB.
+
+### Stage 2: ISO -> TBK extraction
+
+```python
+import pycdlib
+iso = pycdlib.PyCdlib()
+iso.open('/mnt/user-data/uploads/GreekTutor.iso')
+
+for child in iso.list_children(iso_path='/GKTUTOR'):
+    name = child.file_identifier().decode()
+    if name not in ('.', '..'):
+        print(name, 'DIR' if child.is_dir() else child.get_data_length())
+
+# Paths WITHOUT the ';1' version suffix -- pycdlib resolves without it.
+iso.get_file_from_iso(
+    local_path='/home/claude/1_ALPHAB.TBK',
+    iso_path='/GKTUTOR/CHAPT_1/1_ALPHAB.TBK'
+)
+iso.close()
+```
+
+ISO directory structure (confirmed):
+
+    /GKTUTOR/CHAPT_1/  through  /GKTUTOR/CHAPT_28/
+    /GKTUTOR/INTRO/
+    /GKTUTOR/INDEX/
+    /GKTUTOR/JOHN/       Gospel of John readings
+    /GKTUTOR/REV_PAR/    Review parsing
+    /GKTUTOR/REV_VOC/    Review vocabulary
+    /GKTUTOR/VOCAB/      Vocabulary index
+    root: GREEKTH.TTF, GKTRANS.TTF, GRK.BMP, LAMP.ICO, ...
+
+`pip install pycdlib` (pure Python, no system deps).
+
+### Stage 3: Font mapping (legacy ASCII -> Unicode Greek)
+
+**`src/data/font-map.json` in the repo is the authoritative map. Do not restate
+it here and do not re-derive it.** This section records only how it was built
+and what is still open.
+
+Method: render each ASCII glyph with Pillow + fontTools, identify the Greek
+letter, cross-check against TBK word strings, confirm against user screenshots.
+
+The base letter map (a=alpha … z=zeta, uppercase parallel) is STABLE and was
+verified three ways: glyph rendering, TBK word cross-reference, and the Greek
+Keyboard dialog screenshot — which turned out to be the Rosetta Stone for the
+diacritics, because the physical QWERTY keys type the legacy codes 1:1 and the
+shifted number row carries the marks.
+
+STATUS AFTER CHAPTER 2 (this is what changed since v2):
+
+- **Resolved by chapter-2 word evidence:** `#` = smooth breathing + circumflex
+  (ἦλθεν, ἦν); `[` = rough breathing, **second slot**; `;` = Greek question mark
+  (store NFC, which is ASCII `;`); `:` = Greek raised-dot colon / ano teleia
+  (store NFC, which is U+00B7); `v` = nu, second slot.
+- **Excluded, not resolved:** `!` is NOT a Greek font code. It appears only
+  inside embedded HEBREW-font regions in `2_ACCENT.TBK` — the TBKs carry shared
+  resources from the publisher's Hebrew tutor. See Stage 4.
+- **Still unknown:** `$ { } ~ | \ ` =`. `$` did not appear in any chapter-2
+  Greek word and is probably a breathing+accent combination awaiting a
+  later-chapter witness (rough+circumflex is the obvious gap). `{ } | ~` were
+  witnessed only inside font-metric binary junk, `\` only in DOS paths, `=`
+  only in OpenScript assignments — several are probably not font codes at all.
+  **Never convert a string containing these silently.**
+
+TRAP, and it cost time: **the book uses BOTH `"` and `[` for rough breathing.**
+Chapter 1 evidence gave `"` (υἱός), chapter 2 teaching text prints
+"Rough breathing ( [ )" and uses `[` throughout. Both slots are correct. Do not
+"fix" one into the other; `font-map.json` records both deliberately. Expect
+more second-slot duplicates in later chapters and add them rather than choosing.
+
+LESSON (unchanged from v2, reinforced by chapter 2): font mapping needs THREE
+independent evidence sources — glyph rendering, TBK word cross-reference, and a
+device/DOSBox screenshot. No single source has ever been sufficient.
+
+### Stage 4: TBK string extraction (content text)
+
+```python
+import re
+data = open('2_ACCENT.TBK', 'rb').read()
+runs = re.findall(rb'[\x20-\x7e]{8,}', data)
+```
+
+WHAT WORKS WELL: activity and page names; instruction and feedback strings;
+English text (proverb answers, name lists, bibliography); legacy-font Greek
+(convertible via font-map); audio filenames referenced in OpenScript
+(`play waveFile...`); script logic fragments (shuffle algorithms, draw-pool
+patterns, and — chapter 2's find — the `SayWord` dispatch table, which pairs
+vocabulary to audio ids without a listening pass).
+
+WHAT DOES NOT WORK: rich text with line structure (length-prefixed binary
+records); page storage order (never the pedagogical order); complete
+proverb/name lists where separators are non-printable.
+
+**HEBREW CONTAMINATION (new in chapter 2, applies to every chapter).** The TBKs
+embed shared resources from the same publisher's Hebrew tutor. Chapter 2's
+`2_ACCENT.TBK` contains Hebrew glosses ("to sacrifice", "to depart"), Hiphil /
+Niphal stem labels `(Hi)` `(Ni)`, and field names `HebrewWord` / `HideHebrew`.
+An extractor that does not detect and exclude these regions will invent font
+codes out of them — that is exactly how `!` got onto the unknown list. Tell-tales
+to scan for: the stem labels, the `Hebrew*` field names, and glosses with no
+Greek anywhere near them.
+
+EXTRACTION CEILING: roughly **75%**, and it is a FORMAT limit, not a session or
+chunking limit — rich-text records are length-prefixed binary and no amount of
+regex reaches them. The remaining quarter (exercise word lists, underline
+formatting, some popup contents) comes from DOSBox screenshots via the
+per-chapter recon loop.
+
+QUEUED FOR 5C: a bounded **binary rich-text parser experiment**. If it works it
+shrinks the manual share for all 26 remaining chapters, which is the single
+highest-leverage item left in the pipeline. If it does not, the recon loop
+stands as-is.
+
+USEFUL HABIT: print 20 lines of context around each hit rather than raw grep
+output. Page structure is legible in the neighbourhood and invisible in the
+match.
+
+### Stage 5: Legacy Greek -> Unicode conversion
+
+Character-by-character substitution for base letters; diacritics applied as
+Unicode combining marks; then **NFC normalize**. Diacritic codes FOLLOW the
+vowel they modify.
+
+    "a]rx^?" -> alpha + smooth breathing + rho + chi + eta-with-circumflex
+             -> NFC -> ἀρχῇ
+
+Three rules that are the pipeline's, not the renderer's:
+
+1. **Isolated diacritics must be SPACING codepoints, not combining ones.** A
+   diacritic shown outside a word — "Acute ( ´ )", a chart cell reading
+   "´ or ῀" — has no base to sit on, and a combining mark after a space or a
+   paren renders as a hairline or a dotted circle. Author U+1FBF / U+1FFE /
+   U+1FC0 / U+00B4 / U+0060 / U+00A8 in those positions. (Chapter 2 shipped
+   this wrong once and it was visible on device.)
+2. **NFC everywhere**, including the two punctuation marks that normalize into
+   something other than themselves: the Greek question mark U+037E becomes
+   ASCII `;`, and the ano teleia U+0387 becomes U+00B7 MIDDLE DOT. Store the
+   normalized form.
+3. **Typographic normalization is authorized** alongside scholar-name spellfixes
+   (typo policy A1, third extension): double hyphens become em dashes,
+   data-side, applied by the pipeline to every future chapter.
+
+PITFALL: strings containing a code from the unknown set must be flagged with a
+`_verify` marker AND must carry the raw legacy string alongside the best-effort
+conversion. `_legacy` fields exist for exactly this and have repeatedly paid for
+themselves.
+
+### Stage 6: Audio pipeline (user-side)
+
+`transcode_audio.py`, delivered. AAC `.m4a` at 32 kbps mono 11025 Hz. Run once
+over all 8,521 files. Idempotent, collision-safe (path-based ids),
+cross-platform.
+
+PER-CHAPTER SELF-CONTAINMENT: a chapter's audio pack must be complete on its
+own. Where a chapter reuses an earlier chapter's word, the ISO itself ships a
+duplicate WAV inside the later chapter's folder (chapter 2 duplicates all ten
+chapter-1 vocabulary clips as `CHAPT_2/A_VOC*`), and the data references the
+LOCAL copy. Follow the ISO; do not cross-reference packs to save bytes.
+
+### Stage 7: JSON assembly
+
+The synthesis stage. Chapter 1 took four passes; see §VIII for what to expect
+now.
+
+Assemble against **CHAT-HANDOFF's "Pipeline contracts for chapters 3+"**, which
+is the live list of modes, RichContent blocks, activity types and their required
+fields. It is deliberately not duplicated here — v2 duplicated it and the copy
+went stale within one chapter.
+
+Validation before delivery (programmatic, every chapter):
+
+- `sequence` covers every activity id exactly once, and nothing else.
+- Every audio id resolves in `audio-manifest.json`.
+- Every `mode` is in the known vocabulary; every content block `type` has a
+  renderer (the repo's `npm run check:shapes` enforces this at build time and
+  fails loudly on an unknown block).
+- No `c1_`-prefixed references anywhere outside chapter 1.
+- All Greek is NFC-normalized.
+- Isolated marks are spacing codepoints (grep the data for combining marks
+  preceded by a space or a paren).
+
+---
+
+## III. The data contract lives in CHAT-HANDOFF
+
+v2 carried the mode inventory, the RichContent block list, the audio semantics
+and the Greek-tap rule here. They now live in **CHAT-HANDOFF.md** and change
+every implementer round. Read them there.
+
+The one thing worth repeating, because it is a pipeline habit rather than a
+contract: **dispatch is mode-keyed, never id-keyed.** Every `contentAudio`
+activity carries an explicit `mode`. There are zero chapter-prefixed string
+comparisons in component code and there must continue to be zero. A new chapter
+that needs a new visual arrangement gets a NEW MODE registered in
+CHAT-HANDOFF and PHASE5-PLAN, not a special case keyed on its id.
+
+Likewise: **field names are frozen.** The chapter-1 pilot went through three
+naming rounds (`audioName` -> `audioShort`, `soundHint` -> `sound`) before
+stabilizing. Reuse the chapter-1 schema; do not re-derive names.
+
+---
+
+## IV. Data integrity rules the PIPELINE enforces
+
+These are authoring rules — they are the pipeline's to get right, and a renderer
+cannot rescue them.
+
+- **glossShort vs gloss.** Abbreviated for drills ("Christ"), full for review
+  charts ("Christ, Messiah"). Both required on every lemma.
+- **Lexicon buckets.** Three: `lemmas` (the chapter's own vocabulary),
+  `exampleWords` (teaching-page words), and `ch1_lemma_mirror` (earlier-chapter
+  words this chapter reuses, re-audioed to this chapter's pack per Stage 6).
+  Lookup searches all three with chapter preference, so a ref existing in two
+  loaded chapters resolves to the ACTIVE chapter's copy.
+- **`sequence` is pedagogy-derived**, DOSBox-verified per chapter. TBK storage
+  order is never the answer.
+- **`greekTaps`** marks the first STANDALONE occurrence of a Greek substring in
+  an item's text. Keys match only where the neighbours are not Greek letters
+  (Greek and Greek Extended ranges).
+- **`biblist` items are plain strings.** Object-form entries are valid JSON,
+  valid block type, and render `[object Object]` — chapter 2 shipped five of
+  them. Build-guarded now.
+- **`division[]` (divide activities) is 1-BASED GAP INDICES** between grapheme
+  clusters at `Intl.Segmenter` granularity: gap *i* sits between cluster *i* and
+  cluster *i+1*. A one-syllable word is the empty array.
+- **`redMarkCluster` (select drills) must point at a cluster that actually
+  carries the mark the item asks about.** Chapter 2 shipped a `φαρισαῖος` item
+  pointing at a bare alpha for two rounds; it rendered with nothing red at all,
+  asking "which mark is red?" of a page with no red on it. Build-guarded now —
+  `npm run check:shapes` fails on an index past the end of the word, on a
+  cluster with no mark, and on a cluster with no mark-geometry row.
+- **`optionValues` (static option sets)** match answers by VALUE, not index. A
+  `null` answer renders a pending state with Skip, which is the honest way to
+  ship an unverified item.
+- **Every new chart is tested at 320px.** Overflow is CLIPPED, not scrolled
+  (app-wide `overflow-x: hidden`), so a too-wide chart is deleted rather than
+  swipeable, and nothing errors.
+
+---
+
+## V. Environment constraints (hard-won, unchanged)
+
+1. **Background jobs die silently.** All long-running work must be foreground
+   with a timeout guard.
+2. **Working directory resets between sessions.** Only uploads, project
+   knowledge and `present_files` outputs persist.
+3. The ISO/RAR persists within a conversation but NOT across conversations. A
+   new chat must re-upload.
+4. ISO extraction takes ~1-2 minutes foreground.
+5. `pip install` needs `--break-system-packages`.
+6. The ISO can be uploaded directly (~290 MB) — preferred over the RAR, since
+   it skips Stage 1 entirely.
+
+---
+
+## VI. Chapter-1 corrections log (history — do not re-derive)
+
+Every correction made during the pilot, so the pipeline does not repeat them:
+
+- Bibliography names: Moulton (not Mouton), Colin Brown (not Collin), Rienecker
+  (not Rieneker). All other text stays verbatim, including feedback strings like
+  "Its not that bad" (typo policy A1: scholar names only).
+- Sequence order: Learn Iota Subscripts precedes Diphthong Drill; Learn
+  Bibliography is the FINAL page, after both Quick Review charts.
+- Iota subscript examples are tappable: σκοτίᾳ (darkness, Jn 1:5), ἀρχῇ
+  (beginning, Jn 1:1), αὐτῷ (him, Jn 1:4). Each carries `exampleAudio`.
+- Ναζαρέθ ends in theta.
+- Letter-name spellings from TBK extraction: `eyilon` = epsilon (not eysilon),
+  `uyilon` = upsilon.
+- Pronounce Letters exercise order is SHUFFLED per visit (TBK shuffle script +
+  DOSBox observation).
+- Speller tile inventory: 25 letters + 11 diacritic marks + 3 composites = 39
+  tiles, including all six breathing+accent combinations.
+- Reading exercise audio plays only on Answer, not on item appearance.
+- Vowel tiles ARE clickable and play `audioShort`.
+- Intro audio: `a_intro1..4` narrate the Win 3.1 navigation pages and are UNUSED
+  by design; `a_welcom` is the Welcome page Play.
+- Diphthongs / Iota Subscripts: the definition text is `lead` (core lesson
+  material above the chart), not a green note banner.
+- Review Letters Quick Chart: Pronounce column removed; four columns remain.
+- `audioFull`'s ONLY consumer is the Learn Letters stepper. Everything else uses
+  `audioShort`. This was corrected TWICE (the Capitals drill, then the Letter
+  Names and Sounds drill) — assume `audioShort` and require evidence for the
+  other.
+- `A_NAME_1..24` are PERSONAL names and `A_PLAC_1..11` are place names, both for
+  the Reading exercise pools. They are not letter audio; this was an early
+  mistake that cost a round.
+
+---
+
+## VII. Chapter-2 corrections log (new)
+
+- The accent-placement exercise pool is **not the vocabulary list**. It is two
+  root words (Βαπτίζω ×10, ἄνθρωπος ×10), each item showing the root plus its
+  gloss and an UNACCENTED inflected form with a Scripture reference. Grave is
+  not offered as an option in the original — only Acute and Circumflex.
+- `b_ex2_1..20` are those inflected forms in order. **`b_ex2_21` is the vocative
+  ἄνθρωπε**, unreferenced by the twenty items — it was assumed to be a root
+  recitation for two rounds before the device pass identified it.
+- `b_ex2_11..20` double as the Rule-chart row audio in Learn 3 Accents.
+- `B_VOC1..10` = chapter-2 vocabulary, SCRIPT-verified via the TBK `SayWord`
+  dispatch table (`b_voc4` = ἔχω by elimination, later listen-confirmed).
+- `b_egoei` and `b_egoeim` are identical recordings; `b_moses` and `b_mosesx`
+  are the same word accented on different syllables and the drill needs the
+  second.
+- Syllable divisions come from the original's own charts, not from modern
+  practice: κύριος divides κύρ-ι-ος per an explicit chart note, Πέτρος =
+  Πέτ-ρος, Χριστός = Χρισ-τός.
+- The Syllable Counting Drill has only buttons 1-4 — no one-syllable bar (καί
+  answers "1").
+- The Marking Recognition score dialog in the original says "Drills Available:
+  35" but both DOSBox passes yielded the same 25 items. That is an original bug;
+  the port uses 25.
+- Chart ditto marks: the original's `"` under a chart column means *idem./ibid.*
+  Flattening a chart into rows turns it into a literal quote character opening
+  every gloss. Print the translation instead.
+- Chapter 2 authorized one content DEPARTURE from the original: a five-item
+  circumflex extension merged and interleaved into the twenty-item accent
+  placement pool, unlabelled, `extended: true` for provenance only. Kept after
+  device verification.
+
+---
+
+## VIII. Scale-out protocol (chapters 3-28)
+
+**The round-by-round process is CHAT-HANDOFF's "Buildout process v2"** —
+automated extraction produces a RECON-TASKS list, Nathanael's manual recon
+returns RECON-RESULTS, chat writes a COMPLETE spec, both implementer models
+build it in isolated copies, a grading chat picks a winner and may emit an
+XPATCH, and the round ends with a VERIFY device pass. v2 of this document
+described an earlier, simpler loop; that loop is superseded.
+
+What remains this document's, per chapter:
+
+1. **EXTRACT** the chapter's `.TBK` from the ISO (Stage 2).
+2. **DUMP STRINGS** with context windows (Stage 4), excluding Hebrew regions.
+3. **INVENTORY** the chapter's audio from the ISO directory.
+4. **CONVERT** via `font-map.json`, flagging unknown codes (Stages 3 and 5).
+5. **ASSEMBLE** against CHAT-HANDOFF's contracts (Stage 7).
+6. **VALIDATE** programmatically (Stage 7 checklist).
+7. **DERIVE SCORED-DRILL ANSWERS BY RULE before asking a human.** Chapter 2's
+   answer keys (syllable counts, accent-rule assignments, parts of speech,
+   divisions) were all deterministic from the chapter's own taught rules and
+   charts, and every derived answer survived device verification. Route only
+   SPOT-CHECKS of derived answers to recon — plus content that is genuinely
+   arbitrary (word pools, underline choices, popup prose).
+8. **LIST WHAT COULD NOT BE REACHED** — this becomes the cohort's RECON-TASKS
+   document, and it is where the ~25% format ceiling gets handed to a human.
+
+CONVERGENCE, honestly stated. v2 predicted "1-2 passes per chapter". Chapter 2
+took four implementer rounds — but **three of those were typography, not
+content**: one Greek face for the whole app, and a mark-geometry table derived
+from that face. Both are now standing infrastructure that every later chapter
+inherits and none should re-derive. The content itself converged in roughly the
+predicted span. Do not budget chapters 3+ against chapter 2's round count; do
+budget for the fact that the FIRST chapter to need a new activity type will pay
+a similar one-time cost.
+
+Also settled and no longer a plan: **lazy chapter loading shipped in 5A**
+(2026-07-23). Chapters load as per-chapter JS chunks via `import.meta.glob` over
+a loaded-chapters registry, awaited once at the route level; vite-plugin-pwa
+precaches the emitted chunks. The trap v2 flagged is real and still guarded in
+CI: the glob map must be reachable from executed code or the chunk is
+tree-shaken and no output is emitted, silently.
+
+---
+
+## IX. Tool reference
+
+```bash
+# Chat-side
+pip install libarchive-c --break-system-packages   # RAR streaming (foreground!)
+pip install pycdlib      --break-system-packages   # ISO9660 reads
+pip install fonttools    --break-system-packages   # TTF glyph inspection
+pip install Pillow       --break-system-packages   # glyph rendering
+
+# User-side
+brew install ffmpeg         # macOS
+winget install Gyan.FFmpeg  # Windows
+# transcode_audio.py needs no pip packages
+```
+
+Repo-side build scripts (NOT this pipeline's, but the same `fonttools`
+dependency, and listed so nobody re-derives them): `scripts/make-greek-font.py`
+derives the bundled Greek face, and `scripts/make-mark-geometry.py` generates
+`src/lib/mark-geometry.json` from it. They are a matched pair — rebuild one and
+regenerate the other in the same commit. See CHAT-HANDOFF's typography canon.
