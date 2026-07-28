@@ -2,7 +2,8 @@
 
 Supersedes PIPELINE-INSIGHTS-v2.md (chapter-1 pilot, 2026-07-12/19 + the
 phase-4 closeout audit + the punch-list session). Revised 2026-07-27 at
-chapter-2 closeout.
+chapter-2 closeout; AMENDED 2026-07-28 at 5C closeout (Stage 3 status,
+Stage 4 Hebrew model, NEW Stage 4b rich-text parsing, §VIII ceiling).
 
 **What changed from v2, in one paragraph.** v2 carried both the extraction
 mechanics AND the data contract the app consumes. CHAT-HANDOFF.md now owns the
@@ -14,6 +15,17 @@ v3 hands the contract to CHAT-HANDOFF and keeps what only this document knows:
 how to get bytes out of the ISO and turn them into correct Unicode. Everything
 v2 said about stages 1-2 and 5-7, the environment, the chapter-1 corrections and
 the tool list is carried over intact.
+
+**What the 5C amendment changed, in one paragraph.** Three things. First, `$`
+and `!` moved from unknown to verified (rough+circumflex and rough+acute) on
+chapter 3-8 word evidence — `!` is a REVERSAL of the chapter-2 exclusion, with
+both findings compatible. Second, the Hebrew-contamination tell-tale list was
+wrong in an expensive direction: `Hebrew*` FIELD NAMES belong to the shared
+drill engine and appear inside legitimate Greek drills, so keying regions on
+them over-flags ~25% of every TBK; the corrected tell-tales are in Stage 4.
+Third and largest: the bounded rich-text parser experiment SUCCEEDED, so the
+"~75% format ceiling" this document used to declare is retired — Stage 4b
+documents the record structure and `scripts/tbk_richtext.py`.
 
 ---
 
@@ -52,7 +64,8 @@ execution environments:
     CHAT-SIDE (Claude's environment):
       parsonstech.rar -> GreekTutor.iso -> .TBK files -> JSON data files
       OR: GreekTutor.iso uploaded directly (preferred -- smaller, simpler)
-      Tools: libarchive-c (RAR only), pycdlib, fonttools, Pillow, stdlib
+      Tools: libarchive-c (RAR only), pycdlib, fonttools, Pillow, stdlib,
+             scripts/tbk_richtext.py (rich-text records, since 5C)
       Output: chapt-NN.json, lexicon-chaptNN.json, toc.json, intro.json,
               font-map.json
 
@@ -159,31 +172,40 @@ Keyboard dialog screenshot — which turned out to be the Rosetta Stone for the
 diacritics, because the physical QWERTY keys type the legacy codes 1:1 and the
 shifted number row carries the marks.
 
-STATUS AFTER CHAPTER 2 (this is what changed since v2):
+STATUS AFTER 5C RECON (chapters 3-8, 2026-07-28):
 
 - **Resolved by chapter-2 word evidence:** `#` = smooth breathing + circumflex
   (ἦλθεν, ἦν); `[` = rough breathing, **second slot**; `;` = Greek question mark
   (store NFC, which is ASCII `;`); `:` = Greek raised-dot colon / ano teleia
   (store NFC, which is U+00B7); `v` = nu, second slot.
-- **Excluded, not resolved:** `!` is NOT a Greek font code. It appears only
-  inside embedded HEBREW-font regions in `2_ACCENT.TBK` — the TBKs carry shared
-  resources from the publisher's Hebrew tutor. See Stage 4.
-- **Still unknown:** `$ { } ~ | \ ` =`. `$` did not appear in any chapter-2
-  Greek word and is probably a breathing+accent combination awaiting a
-  later-chapter witness (rough+circumflex is the obvious gap). `{ } | ~` were
-  witnessed only inside font-metric binary junk, `\` only in DOS paths, `=`
-  only in OpenScript assignments — several are probably not font codes at all.
-  **Never convert a string containing these silently.**
+- **Resolved by 5C word evidence (chapters 3-8):** `$` = rough breathing +
+  circumflex — `w$rai` = ὧραι in the ch5 hōra paradigm chart, `ou$toj` = οὗτος
+  in a ch7 Lk 2:25 sentence; exactly the gap v3 predicted. `!` = rough
+  breathing + acute — clean ch5 witnesses `w!ra` ὥρα, `w!raj` ὥρας, `w!raij`
+  ὥραις, `w!ran` ὥραν, `w!r%` ὥρᾳ. This REVERSES the chapter-2 exclusion of
+  `!`; both findings are compatible (chapter 2's only `!` hits really were in
+  Hebrew regions, and no ch2 Greek word carries rough+acute on one letter).
+  `!` ALSO occurs inside Hebrew-font regions — Stage 4 region exclusion runs
+  BEFORE conversion, always.
+- **Still unknown:** `{ } ~ | \ ` =`. `{ } | ~` witnessed only inside
+  font-metric binary junk, `\` only in DOS paths, `=` only in OpenScript
+  comparisons/assignments (5C re-confirmed: `="lo<goj"`-style answer-check
+  literals — themselves a useful answer-extraction source). Most likely none
+  are font codes. **Never convert a string containing these silently.**
 
 TRAP, and it cost time: **the book uses BOTH `"` and `[` for rough breathing.**
 Chapter 1 evidence gave `"` (υἱός), chapter 2 teaching text prints
 "Rough breathing ( [ )" and uses `[` throughout. Both slots are correct. Do not
 "fix" one into the other; `font-map.json` records both deliberately. Expect
 more second-slot duplicates in later chapters and add them rather than choosing.
+The `!` reversal above is the same lesson in another form: absence in one
+chapter's Greek is not absence from the font.
 
 LESSON (unchanged from v2, reinforced by chapter 2): font mapping needs THREE
 independent evidence sources — glyph rendering, TBK word cross-reference, and a
-device/DOSBox screenshot. No single source has ever been sufficient.
+device/DOSBox screenshot. No single source has ever been sufficient. (`$` and
+`!` currently carry two of three — rendering + word evidence; a DOSBox
+screenshot of the ch5 hōra chart rides along with 5E recon as the third.)
 
 ### Stage 4: TBK string extraction (content text)
 
@@ -197,36 +219,98 @@ WHAT WORKS WELL: activity and page names; instruction and feedback strings;
 English text (proverb answers, name lists, bibliography); legacy-font Greek
 (convertible via font-map); audio filenames referenced in OpenScript
 (`play waveFile...`); script logic fragments (shuffle algorithms, draw-pool
-patterns, and — chapter 2's find — the `SayWord` dispatch table, which pairs
-vocabulary to audio ids without a listening pass).
+patterns, the `SayWord` dispatch tables, and — 5C's find — `="…"` OpenScript
+answer-check literals); and, since 5C, DRILL POOL FIELDS: chapters 3+ store
+prompt pools, per-item option columns, gloss pools and Scripture-reference
+pools as parallel CRLF-line list fields that plain string runs reach directly
+(the chapter-2-era assumption that exercise word lists were unreachable was a
+chapter-2 artifact, not a format fact).
 
-WHAT DOES NOT WORK: rich text with line structure (length-prefixed binary
-records); page storage order (never the pedagogical order); complete
-proverb/name lists where separators are non-printable.
+WHAT PLAIN STRINGS STILL DO NOT GIVE: line-level FORMATTING (underline spans,
+Greek-vs-English font runs), which is exactly what Stage 4b's parser recovers;
+page storage order (never the pedagogical order — that stays a recon item).
 
-**HEBREW CONTAMINATION (new in chapter 2, applies to every chapter).** The TBKs
-embed shared resources from the same publisher's Hebrew tutor. Chapter 2's
-`2_ACCENT.TBK` contains Hebrew glosses ("to sacrifice", "to depart"), Hiphil /
-Niphal stem labels `(Hi)` `(Ni)`, and field names `HebrewWord` / `HideHebrew`.
-An extractor that does not detect and exclude these regions will invent font
-codes out of them — that is exactly how `!` got onto the unknown list. Tell-tales
-to scan for: the stem labels, the `Hebrew*` field names, and glosses with no
-Greek anywhere near them.
+**HEBREW CONTAMINATION — MODEL CORRECTED AT 5C (supersedes the v3 original).**
+The TBKs embed shared resources from the same publisher's Hebrew tutor, and an
+extractor must exclude those regions or it will invent font codes (the original
+`!` confusion). BUT: the tell-tale list matters. `HebrewWord`, `HebrewWords`,
+`HebrewWordCounter`, `HideHebrew` and similar are FIELD NAMES OF THE SHARED
+DRILL ENGINE and occur inside fully legitimate GREEK drills — the chapter-2
+part-of-speech pool lives in a field literally named "HebrewWord", and ch5's
+Greek spelling pools sit adjacent to "HebrewWordCounter". Keying exclusion
+regions on `Hebrew*` names over-flags roughly a quarter of every TBK. Reliable
+tell-tales for ACTUAL Hebrew-content regions are:
 
-EXTRACTION CEILING: roughly **75%**, and it is a FORMAT limit, not a session or
-chunking limit — rich-text records are length-prefixed binary and no amount of
-regex reaches them. The remaining quarter (exercise word lists, underline
-formatting, some popup contents) comes from DOSBox screenshots via the
-per-chapter recon loop.
+- `(Hi)` / `(Ni)` (Hiphil/Niphal) stem labels;
+- Hebrew glosses ("to sacrifice", "to depart") with no Greek anywhere nearby;
+- the Attributive/Predicate/Substantive "Hints" popups whose agreement list
+  includes "Definiteness" — a Hebrew agreement category (Greek agrees in
+  case). These popups sit near many chapters' drill pages and are excluded
+  from the port wholesale.
 
-QUEUED FOR 5C: a bounded **binary rich-text parser experiment**. If it works it
-shrinks the manual share for all 26 remaining chapters, which is the single
-highest-leverage item left in the pipeline. If it does not, the recon loop
-stands as-is.
+Exclude regions around THOSE; treat `Hebrew*` field names as engine plumbing.
+
+EXTRACTION CEILING, RETIRED. v3 originally declared "roughly 75%, a format
+limit". After 5C: plain strings reach the pools, and Stage 4b's parser reaches
+the rich-text records (formatting included). The residual MANUAL share is now:
+sequence/menu order, screen-layout confirmation for NEW modes, behavior only a
+running program shows (timing, scoring, shuffle), and spot-checks of
+rule-derived answers. That is a per-chapter recon list measured in a dozen-odd
+items, not a quarter of the content.
 
 USEFUL HABIT: print 20 lines of context around each hit rather than raw grep
 output. Page structure is legible in the neighbourhood and invisible in the
 match.
+
+### Stage 4b: Rich-text record parsing (NEW at 5C — scripts/tbk_richtext.py)
+
+ToolBook stores field text with per-span formatting as two adjacent
+structures. Empirically derived from chapter-2 ground truth (DOSBox-verified
+underline data), validated on chapter 1, blind-tested on chapters 5 and 3:
+
+    TEXT RECORD:   [b0:1] [len:u16 LE] [text: len bytes]
+      b0 observed 0x01/0x02/0x04, meaning unknown, not needed.
+      CRLF line breaks; Greek is legacy font-coded.
+
+    FORMAT-RUN TABLE (follows its text, near but not adjacent):
+      [nruns:u16] [nruns:u16] [00 00] [01 00] [7 bytes]
+      then (nruns - 1) records of 11 bytes each:
+          [charOffset:u16 LE] [formatId:u16 LE] [7 aux bytes]
+      Run 0 is IMPLICIT (offset 0, default format). charOffset is a
+      plain BYTE offset into the field text (CRLF counts 2).
+
+`formatId` values are file-scoped format-record references. The parser
+classifies them per file by anchoring: spans whose text contains legacy
+diacritic codes between letters vote "greek"; unambiguous English spans vote
+"english"; the map then propagates to every span. Underline surfaces the same
+way (a distinct formatId on the underlined span) — multiple formatIds can all
+mean underline within one field, so treat "non-default" as the signal and the
+anchored map as the classifier.
+
+VALIDATION RECORD (the honesty section): every underline span in the
+chapter-2 part-of-speech pool decoded to exactly the device-verified
+{sentence, underline} data. The blind chapter-5 test recovered the complete
+hōra and doxa paradigm charts (row/column labels, Greek cells, the Mounce
+citation), the First Declension Noun Drill sentence pool WITH underlined-word
+spans, four parallel Greek option columns, the gloss pool and the per-item
+Scripture reference pool. Chapter 3 recovers both Present Active paradigm
+surfaces and the vocab chart. Recovered pairs per chapter: 23-37 across
+ch1/2/3/5.
+
+KNOWN LIMITS (declared): field NAMES are located by proximity heuristics, not
+an object-tree walk; adjacent fields can abut with no separator and a few
+boundaries stay ambiguous — report, don't guess; the 7 aux bytes per run are
+not understood; formatId -> concrete style is anchored per file, never decoded
+from the format records themselves; fields with uniform formatting have no run
+table (and are plain-string-reachable anyway). Isolated single letters cannot
+anchor (the ch1 alphabet grid classifies as the default map) — harmless, since
+letter grids are known content.
+
+USAGE: `python3 scripts/tbk_richtext.py <chapter>.TBK [limit]` prints each
+recovered record with classified spans. Import `associate`,
+`build_format_map`, `classify_spans` for pipeline use. The script lives in the
+repo for provenance and is a CHAT-PIPELINE tool — it is not part of the app
+build and has no runtime footprint.
 
 ### Stage 5: Legacy Greek -> Unicode conversion
 
@@ -244,7 +328,9 @@ Three rules that are the pipeline's, not the renderer's:
    "´ or ῀" — has no base to sit on, and a combining mark after a space or a
    paren renders as a hairline or a dotted circle. Author U+1FBF / U+1FFE /
    U+1FC0 / U+00B4 / U+0060 / U+00A8 in those positions. (Chapter 2 shipped
-   this wrong once and it was visible on device.)
+   this wrong once and it was visible on device.) Stage 4b helps here: the
+   parser marks isolated marks as Greek-font spans, confirming they are marks
+   and not ASCII punctuation.
 2. **NFC everywhere**, including the two punctuation marks that normalize into
    something other than themselves: the Greek question mark U+037E becomes
    ASCII `;`, and the ano teleia U+0387 becomes U+00B7 MIDDLE DOT. Store the
@@ -267,8 +353,11 @@ cross-platform.
 PER-CHAPTER SELF-CONTAINMENT: a chapter's audio pack must be complete on its
 own. Where a chapter reuses an earlier chapter's word, the ISO itself ships a
 duplicate WAV inside the later chapter's folder (chapter 2 duplicates all ten
-chapter-1 vocabulary clips as `CHAPT_2/A_VOC*`), and the data references the
-LOCAL copy. Follow the ISO; do not cross-reference packs to save bytes.
+chapter-1 vocabulary clips as `CHAPT_2/A_VOC*`; chapters 4-8 duplicate every
+earlier Scripture Memory clip forward for the cumulative review), and the data
+references the LOCAL copy. Follow the ISO; do not cross-reference packs to
+save bytes. (5C noted `I_RM623B.WAV` — chapter 9's verse — pre-shipped inside
+CHAPT_8: follow the ISO there too.)
 
 ### Stage 7: JSON assembly
 
@@ -401,7 +490,7 @@ Every correction made during the pilot, so the pipeline does not repeat them:
 
 ---
 
-## VII. Chapter-2 corrections log (new)
+## VII. Chapter-2 corrections log
 
 - The accent-placement exercise pool is **not the vocabulary list**. It is two
   root words (Βαπτίζω ×10, ἄνθρωπος ×10), each item showing the root plus its
@@ -446,28 +535,31 @@ described an earlier, simpler loop; that loop is superseded.
 What remains this document's, per chapter:
 
 1. **EXTRACT** the chapter's `.TBK` from the ISO (Stage 2).
-2. **DUMP STRINGS** with context windows (Stage 4), excluding Hebrew regions.
-3. **INVENTORY** the chapter's audio from the ISO directory.
-4. **CONVERT** via `font-map.json`, flagging unknown codes (Stages 3 and 5).
-5. **ASSEMBLE** against CHAT-HANDOFF's contracts (Stage 7).
-6. **VALIDATE** programmatically (Stage 7 checklist).
-7. **DERIVE SCORED-DRILL ANSWERS BY RULE before asking a human.** Chapter 2's
-   answer keys (syllable counts, accent-rule assignments, parts of speech,
-   divisions) were all deterministic from the chapter's own taught rules and
-   charts, and every derived answer survived device verification. Route only
-   SPOT-CHECKS of derived answers to recon — plus content that is genuinely
-   arbitrary (word pools, underline choices, popup prose).
-8. **LIST WHAT COULD NOT BE REACHED** — this becomes the cohort's RECON-TASKS
-   document, and it is where the ~25% format ceiling gets handed to a human.
+2. **DUMP STRINGS** with context windows (Stage 4), excluding Hebrew regions
+   per the CORRECTED tell-tale model.
+3. **PARSE RICH-TEXT RECORDS** with `scripts/tbk_richtext.py` (Stage 4b) —
+   paradigm charts, underline spans, Greek-font runs, drill pools.
+4. **INVENTORY** the chapter's audio from the ISO directory.
+5. **CONVERT** via `font-map.json`, flagging unknown codes (Stages 3 and 5).
+6. **ASSEMBLE** against CHAT-HANDOFF's contracts (Stage 7).
+7. **VALIDATE** programmatically (Stage 7 checklist).
+8. **DERIVE SCORED-DRILL ANSWERS BY RULE before asking a human.** Chapter 2's
+   answer keys were all deterministic from the chapter's own taught rules and
+   charts, and every derived answer survived device verification. Chapter 3+
+   parsing/translation answers are equally rule-determined. Route only
+   SPOT-CHECKS of derived answers to recon — plus what only a running program
+   shows: sequence order, new-mode layout, timing/scoring behavior.
+9. **LIST WHAT COULD NOT BE REACHED** — this becomes the cohort's RECON-TASKS
+   document. Post-5C this is a confirmations list, not a data-collection list.
 
 CONVERGENCE, honestly stated. v2 predicted "1-2 passes per chapter". Chapter 2
 took four implementer rounds — but **three of those were typography, not
-content**: one Greek face for the whole app, and a mark-geometry table derived
-from that face. Both are now standing infrastructure that every later chapter
-inherits and none should re-derive. The content itself converged in roughly the
-predicted span. Do not budget chapters 3+ against chapter 2's round count; do
-budget for the fact that the FIRST chapter to need a new activity type will pay
-a similar one-time cost.
+content**, now standing infrastructure. The content itself converged in roughly
+the predicted span. Do not budget chapters 3+ against chapter 2's round count;
+do budget for the fact that the FIRST chapter to need a new activity type will
+pay a similar one-time cost — per the 5C recon that chapter is CHAPTER 3
+(paradigm mode + parse/translate variants + the Scripture Memory family), after
+which chapters 4-8 are reuse.
 
 Also settled and no longer a plan: **lazy chapter loading shipped in 5A**
 (2026-07-23). Chapters load as per-chapter JS chunks via `import.meta.glob` over
@@ -486,6 +578,7 @@ pip install libarchive-c --break-system-packages   # RAR streaming (foreground!)
 pip install pycdlib      --break-system-packages   # ISO9660 reads
 pip install fonttools    --break-system-packages   # TTF glyph inspection
 pip install Pillow       --break-system-packages   # glyph rendering
+python3 scripts/tbk_richtext.py <ch>.TBK           # rich-text records (5C)
 
 # User-side
 brew install ffmpeg         # macOS
@@ -498,3 +591,5 @@ dependency, and listed so nobody re-derives them): `scripts/make-greek-font.py`
 derives the bundled Greek face, and `scripts/make-mark-geometry.py` generates
 `src/lib/mark-geometry.json` from it. They are a matched pair — rebuild one and
 regenerate the other in the same commit. See CHAT-HANDOFF's typography canon.
+`scripts/tbk_richtext.py` is extraction-side only (chat pipeline provenance);
+it has no build or runtime role.

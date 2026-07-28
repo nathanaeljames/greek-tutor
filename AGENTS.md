@@ -1,7 +1,7 @@
 # Greek Tutor project guidance
 
 Before making changes in this repository, read
-`buildout/ONBOARD-SOL.md` in full. It is the
+`buildout/archive/ONBOARD-SOL.md` in full. It is the
 authoritative implementer onboarding and persistent project memory for this
 workspace. Follow it together with the active `buildout/*-SPEC.md`.
 

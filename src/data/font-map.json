@@ -121,11 +121,20 @@
    "unicode": "̔",
    "name": "rough breathing (dasia) -- second slot",
    "evidence": "PROMOTED from provisional: chapter 2 teaching text prints 'Rough breathing ( [ )'; ui[o<j=υἱός, u[pe<r=ὑπέρ, r[h?ma=ῥῆμα, o[ lo<goj=ὁ λόγος. Coexists with '\"' (chapter 1 evidence ui\"o<j) -- the book uses BOTH slots for the same mark. DEVICE-CONFIRMED via the Breathing Marks page screenshot (VERIFY H2)."
+  },
+  "$": {
+   "unicode": "̔͂",
+   "name": "rough breathing + circumflex",
+   "evidence": "w$rai=ὧραι (ch5 hōra paradigm chart, Nom./Voc. plural cell, alongside w!ra/w!raj/w[rw?n); ou$toj=οὗτος (ch7 sentence 'kai> o[ a@nqrwpoj ou$toj di<kaioj', glossed 'and this man was righteous (Lk 2:25)'). 5C recon, 2026-07-28; fills the rough+circumflex gap v3 predicted."
+  },
+  "!": {
+   "unicode": "̔́",
+   "name": "rough breathing + acute",
+   "evidence": "REVERSAL of the chapter-2 exclusion: ch5 hōra paradigm and drill pools give clean Greek witnesses w!ra=ὥρα, w!raj=ὥρας, w!raij=ὥραις, w!ran=ὥραν, w!r%=ὥρᾳ. Chapter 2's only '!' hits were genuinely inside Hebrew regions (no ch2 Greek word carries rough+acute on one letter), so both findings stand. '!' ALSO occurs in Hebrew-font regions -- run region exclusion before conversion, per the both-slots trap. 5C recon, 2026-07-28."
   }
  },
  "unknown_codes": {
   "_codes": [
-   "$",
    "{",
    "}",
    "~",
@@ -134,7 +143,7 @@
    "`",
    "="
   ],
-  "_note": "Remaining unidentified codes after chapter 2. '$' did not appear in any chapter-2 Greek word (likely a breathing+accent combo awaiting a later-chapter witness, e.g. rough+circumflex). '{ } | ~' witnessed only inside font-metric/table binary junk, '\\\\' only in DOS file paths, '=' only in OpenScript assignments -- all three may not be font codes at all. Do not convert strings containing these codes silently."
+  "_note": "Remaining unidentified after 5C recon (chapters 3-8): '{ } | ~' witnessed only inside font-metric/table binary junk; '\\\\' only in DOS file paths; '=' only in OpenScript comparisons/assignments (5C re-confirmed: =\"lo<goj\"-style script literals, never in rendered text). All are most likely not font codes. Do not convert strings containing these codes silently. '$' and '!' were promoted to diacritics_verified by 5C word evidence."
  },
  "conversion_rules": [
   "Diacritic codes follow the vowel: process left-to-right, attach combining marks to preceding base character, then normalize to NFC (precomposed polytonic).",

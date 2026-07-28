@@ -1,7 +1,7 @@
 # PHASE5-PLAN.md — vertical buildout roadmap (LIVING DOCUMENT)
 
-Status date: 2026-07-23. Roadmap only; per-cohort detail lives in the
-numbered specs. Updated at every cohort boundary.
+Status date: 2026-07-28 (5C closed). Roadmap only; per-cohort detail
+lives in the numbered specs. Updated at every cohort boundary.
 
 ## Principles (unchanged)
 
@@ -10,7 +10,7 @@ numbered specs. Updated at every cohort boundary.
 2. Every cohort ends with a VERIFY-*.md returned by Nathanael before
    the next cohort's spec is drafted.
 3. Every cohort ends with an airplane-mode check + 320px chart checks.
-4. Pipeline protocol: PIPELINE-INSIGHTS-v2.md §VIII + the mode
+4. Pipeline protocol: PIPELINE-INSIGHTS-v3.md §VIII + the mode
    vocabulary contracts in CHAT-HANDOFF.md. New modes are REGISTERED
    here, never invented silently.
 5. Data files regenerate only from committed copies; DOSBox answers
@@ -21,33 +21,64 @@ numbered specs. Updated at every cohort boundary.
 COHORT 5A — B5 lazy chapter loading. Spec: 5A-SPEC.md. Gate: VERIFY-5A.
   Status: SHIPPED + DEVICE-VERIFIED (2026-07-23).
 
-COHORT 5B — Chapter 2 (Syllables & Accents), solo (font-map forcing
-  function + first scale-out run). Specs: 5B-SPEC.md (+ 5B-MERGE-SPEC
-  porting Opus-run patches onto the Sol base), then 5B-SPEC2/3/4.
-  Gates: VERIFY-chapt02 (data), VERIFY-5B, VERIFY2, VERIFY3 (device).
-  Status: CLOSED AND DEVICE-VERIFIED (2026-07-27). Four implementer
-  rounds; the VERIFY4 document phase was skipped because Nathanael's
-  visual pass on the SPEC4 tree was a full pass. Data complete, no
-  pending placeholders. Handoff: 5B-SPEC4-RESULTS.md.
-  Cost note for batching: chapter 2 took four rounds, but three of
-  them were TYPOGRAPHY, not content — one Greek face for the whole app
-  and a font-derived mark-geometry table, both now standing
-  infrastructure. Chapters 3+ inherit them and should not repeat that.
+COHORT 5B — Chapter 2 (Syllables & Accents), solo. Specs: 5B-SPEC.md
+  (+ 5B-MERGE-SPEC), 5B-SPEC2/3/4. Gates: VERIFY-chapt02, VERIFY-5B,
+  VERIFY2, VERIFY3. Status: CLOSED AND DEVICE-VERIFIED (2026-07-27).
+  Cost note: four rounds, three of them typography now inherited as
+  standing infrastructure. Handoff: 5B-SPEC4-RESULTS.md.
 
-COHORT 5C — RECON PASS (chat-side, no build): string-dump + audio
-  inventory chapters 3-8+; PLUS a bounded binary rich-text parser
-  experiment (success would shrink the manual VERIFY share for all
-  remaining chapters). Output: evidence-based cohort batches below.
-  Status: OPEN (5B closed 2026-07-27).
+COHORT 5C — RECON PASS chapters 3-8 + bounded rich-text parser
+  experiment. Chat-side only, no build. Status: CLOSED 2026-07-28.
+  Record: 5C-RECON-FINDINGS.md (repo). Outcomes: `$` and `!` promoted
+  in font-map.json; Hebrew tell-tale model corrected; PARSER
+  EXPERIMENT SUCCEEDED (scripts/tbk_richtext.py) — drill pools,
+  paradigm charts, underline spans and Greek-font runs are now
+  machine-extractable; the 75% ceiling is retired (see
+  PIPELINE-INSIGHTS-v3 Stage 4b).
 
-COHORT 5D+ — chapters 3-28 per recon findings. Expectation (inference,
-  to be replaced by 5C evidence): chapters 3-6 each carry one-time
-  paradigm/parsing mode design (match/translate/parse/audioPlayer
-  types from the original plan likely activate here); later chapters
-  increasingly pure reuse.
+The ledger below replaces the old 5D+ placeholder. Evidence basis:
+chapters 3-8 string+audio recon; chapters 9-28 sized by ISO volume
+and title only (marked INFERENCE — each cohort's own extraction pass
+confirms before its spec).
+
+COHORT 5D — Chapter 3 (Present Active Verbs), SOLO. The one-time-cost
+  chapter: registers paradigm mode (+ Say Whole Paradigm), parse and
+  translate select variants, and the Scripture Memory family
+  (word-stepper drill, whole-verse speller, cumulative review chart).
+  Recon: 5D-RECON-TASKS.md (issued with this plan). Gate: VERIFY per
+  process v2.
+
+COHORT 5E — Chapters 4 + 5 (Second/First Declension Nouns), BATCHED.
+  Near-pure reuse of 5D vocabulary: noun/article paradigms, the
+  case+number drill, the underlined-English drill (ch2 contract).
+  Small novelty absorbed here: Declining Noun Drill option grid.
+
+COHORT 5F — Chapters 6 + 7 + 8 (Prepositions, Adjectives, Pronouns),
+  BATCHED. Reuse at volume. Contains the cohort's only interaction
+  novelties: Spell Greek Phrase (space tile), the ch8 two-step
+  person-then-case drill, and the possible ch6 prepositions graphic
+  (recon question — if it is a real spatial diagram, decide render
+  approach in the spec).
+
+COHORT 5G+ (INFERENCE, pending each cohort's extraction pass) —
+  chapters 9-28 grouped by grammatical family, expecting the first
+  chapter of each family to carry the novelty and the rest to reuse:
+  * 5G: 9-10 (Middle/Passive, Future) — first non-active paradigms.
+  * 5H: 11-12 (Demonstratives, Imperfect).
+  * 5I: 13-14-15-16 (3rd Declension, Aorists, Passives) — volume run.
+  * 5J: 17-18 (Contract, Perfect).
+  * 5K: 19-20-21 (Participles) — likely one new paradigm-display
+    wrinkle at 19, then reuse.
+  * 5L: 22-23-24 (Infinitives, Subjunctive, Imperative).
+  * 5M: 25-26-27-28 (Mi Verbs, Numbers/Interrogatives, Clauses, Case
+    Revisited) — 26-28 titles suggest chart/reading-heavy pages;
+    confirm at extraction.
 
 END-OF-PHASE — cross-chapter surfaces (REV_VOC, REV_PAR, JOHN, VOCAB
-  index), deliberately last.
+index), deliberately last. Note from 5C: chapter TBKs link to
+vocab\vocab1.tbk from every "Learn Vocabulary Builder" page — that
+page's treatment inside chapters is a 5D design decision; the VOCAB
+book itself stays end-of-phase.
 
 ## Mode/type vocabulary registry
 
@@ -58,26 +89,36 @@ selfCheckStepper, selfCheckSequence, reviewVocab, reviewLetters.
 Added in 5B: mode topicPages; RichContent blocks greekRows, expander
 and subheading (+ defList object form, numbered self-labeling,
 reviewVocab playAll); activity types divide + placeAccent; select
-static option sets, and on select drills the red-mark contract
-(redMarkCluster / redFirstAccent); speller-tiles.json shared keyboard
-contract.
+static option sets, red-mark contract, speller-tiles.json shared
+keyboard contract.
 
-Also standing infrastructure from 5B, inherited by every chapter and
-NOT to be re-derived: the bundled derived Greek face (GreekTutor Serif,
-scripts/make-greek-font.py) and the font-derived mark-geometry table
-(scripts/make-mark-geometry.py -> src/lib/mark-geometry.json, 221
-clusters). They are a matched pair — rebuild one, regenerate the other.
+To be REGISTERED in 5D (names finalized in the 5D spec): a paradigm
+chart mode (per-cell audio + Say Whole Paradigm); select variants for
+parsing and translation prompts; a Scripture Memory activity family
+(word-stepper drill, whole-verse spelling exercise, cumulative
+review-verses chart). Expected later: whatever 5F needs for the
+two-step drill and phrase speller. match/audioPlayer from the
+original seven-type plan have NOT yet been witnessed in chapters 3-8;
+parse/translate resolve to select variants.
 
-Registry debt for 5C+: explicit layout flag on greekRows; single-source
-speller tiles at next chapt-01 regen; lexicon-chaptNN naming (no dash).
+Standing infrastructure from 5B, inherited and not re-derived: the
+bundled derived Greek face + the font-derived mark-geometry table
+(matched pair). New from 5C: scripts/tbk_richtext.py (extraction-side,
+chat pipeline tool — lives in the repo for provenance, not in the app
+build).
+
+Registry debt for 5D+: explicit layout flag on greekRows;
+single-source speller tiles at next chapt-01 regen; lexicon-chaptNN
+naming (no dash).
 
 ## Font-map unknowns tracker
 
-Resolved by chapter 2 word evidence: '#' smooth+circumflex (ἦλθεν,
-ἦν); '[' rough breathing (υἱός, ὑπέρ, ῥῆμα + teaching text); ';'
-Greek question mark; ':' raised-dot colon (NFC: ';' and U+00B7);
-'v' = nu PROVISIONAL (single witness τοὔνομα, VERIFY H4); '!'
-EXCLUDED (Hebrew-region contamination).
-Still unknown: $ { } ~ | \ ` =  ('{ } | ~' seen only in font-metric
-junk, '\' only in DOS paths, '=' only in OpenScript — likely not font
-codes; '$' likely a breathing+accent combo awaiting a later witness).
+Resolved by ch2: '#' smooth+circumflex; '[' rough (second slot); ';'
+question mark; ':' raised-dot colon; 'v' nu provisional.
+Resolved by 5C recon (chapters 3-8 word evidence): '$' =
+rough+circumflex (ὧραι, οὗτος); '!' = rough+acute (ὥρα family) —
+REVERSING the ch2 exclusion; '!' also appears in Hebrew regions, so
+region exclusion still precedes conversion.
+Still unknown: { } ~ | \ `  (all junk-context only) and '=' (OpenScript
+comparator, re-confirmed in 5C). None witnessed in rendered text;
+never convert silently.

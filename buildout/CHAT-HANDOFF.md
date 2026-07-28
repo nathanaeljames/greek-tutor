@@ -15,7 +15,7 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
 internet. Full license from the author. Secondary goal: portfolio
 piece. Nathanael goes by "Fable" when addressing Claude (chat).
 
-## Live state (2026-07-27)
+## Live state (2026-07-28)
 
 - Repo: github.com/nathanaeljames/greek-tutor (Netlify CD from main).
   Deploy: https://greektutorv1.netlify.app — installed as PWA on the
@@ -44,16 +44,32 @@ piece. Nathanael goes by "Fable" when addressing Claude (chat).
   Records, in the repo: 5B-SPEC{,2,3,4}.md, 5B-SPEC{2,3}-RESULTS-OPUS.md,
   5B-SPEC4-RESULTS.md, the matching BUILD docs, 5B-XPATCH1.md,
   HANDOFF-5B-{SOL,OPUS}.md.
-- Vocabulary registered across the cohort: topicPages mode; greekRows,
+- **5C (recon chapters 3-8 + rich-text parser experiment) CLOSED,
+  2026-07-28, chat-side only.** Record: buildout/5C-RECON-FINDINGS.md.
+  Headlines: (1) chapters 3-8 share one fixed skeleton and their
+  novelty concentrates in CHAPTER 3 (paradigm mode, parse/translate
+  select variants, Scripture Memory family); (2) the RICH-TEXT PARSER
+  EXPERIMENT SUCCEEDED — scripts/tbk_richtext.py recovers field text
+  plus underline spans and Greek-vs-English font runs, validated
+  against ch2 device-verified data and blind-tested on ch5/ch3; the
+  old "~75% extraction ceiling" is retired; (3) drill pools (prompts,
+  option columns, refs) are plain-string-reachable in chapters 3+;
+  (4) font-map: `$` = rough+circumflex and `!` = rough+acute
+  VERIFIED by word evidence (the `!` finding reverses ch2's exclusion;
+  `!` also appears in Hebrew regions, so region exclusion still runs
+  first); (5) Hebrew tell-tale model corrected — `Hebrew*` FIELD NAMES
+  are shared-engine plumbing inside legitimate Greek drills, not
+  contamination markers. Details: PIPELINE-INSIGHTS-v3 Stages 3/4/4b.
+- Vocabulary registered across 5B: topicPages mode; greekRows,
   expander and subheading RichContent blocks; divide + placeAccent
   activity types; static option sets in select; speller-tiles.json
   shared keyboard contract; a bundled derived Greek webfont; a
   font-derived mark-geometry table.
-- Font map after chapter 2: '#' = smooth+circumflex and '[' = rough
-  breathing VERIFIED; ';' ':' identified as Greek question mark /
-  raised-dot colon (stored NFC-canonical: ';' and U+00B7); 'v'
-  provisionally nu; '!' excluded as Hebrew-region contamination.
-  Remaining unknowns: $ { } ~ | \ ` = (several likely not font codes).
+- Font map after 5C: '#' smooth+circumflex, '[' rough (second slot),
+  ';' question mark, ':' raised-dot colon, 'v' nu provisional,
+  '$' rough+circumflex, '!' rough+acute (all word-verified).
+  Remaining unknowns: { } ~ | \ ` (junk-context only) and '='
+  (OpenScript comparator) — likely none are font codes.
 
 ## Buildout process v2 (established 2026-07-26; applies to buildout phases)
 
@@ -62,7 +78,7 @@ Per-cohort loop with fixed document naming (# = round number):
    listing what strings/scripts could not yield.
 2. Nathanael's manual recon -> <cohort>-RECON-RESULTS.md (+ PDFs).
 3. Fable: RECON-RESULTS + canonical project knowledge (CHAT-HANDOFF.md
-   and PIPELINE-INSIGHTS-v2.md ARE the stored prior knowledge) ->
+   and PIPELINE-INSIGHTS-v3.md ARE the stored prior knowledge) ->
    complete SPEC#.md. Specs are COMPLETE: no partial specs pending
    data; build most of the chapter in one go.
 4. BOTH implementer models (currently Sol/Codex and Opus-class/Claude
@@ -96,7 +112,7 @@ files carry only what a new chat needs.
 
 1. CANONICAL LIVING SET — always in project files, updated at
    boundaries: CHAT-HANDOFF.md (this file), PLAN.md, PHASE5-PLAN.md
-   (during phase 5), PIPELINE-INSIGHTS-v2.md, PROJECT.md,
+   (during phase 5), PIPELINE-INSIGHTS-v3.md, PROJECT.md,
    ONBOARD-SOL.md, font-map.json, toc.json, intro.json,
    transcode_audio.py.
 2. DATA SET — chapt-01.json + lexicon-chapt01.json stay as the schema
@@ -111,12 +127,14 @@ files carry only what a new chat needs.
    doc.
    BUILD docs never enter the project files. They exist for the
    grading chat and are 75-120 KB of diff; the repo archives them.
-   Applied entering 5C (2026-07-27): keep 5B-SPEC4-RESULTS.md as the
-   previous round's handoff; drop 5B-SPEC{,2,3}*.md, 5B-XPATCH1.md,
-   HANDOFF-5B-{SOL,OPUS}.md, VERIFY-5B.md and VERIFY-chapt02{,-ADDENDUM}.md
-   — all harvested here, chapter 2 closed, nothing unresolved.
+   Applied entering 5D (2026-07-28): 5B-SPEC4-RESULTS.md rotates out
+   (chapter 2 closed, lessons harvested here and in v3); the rolling
+   set becomes 5D-RECON-TASKS.md and, when produced, chapt-03 data
+   files. chapt-02.json + lexicon-chapt02.json may rotate out at
+   Nathanael's discretion (device-verified, lessons harvested) —
+   chapt-01 stays as the schema reference.
 
-## Harvested 5A/5B lessons (settled — do not re-derive)
+## Harvested 5A/5B/5C lessons (settled — do not re-derive)
 
 - MODULE-MAP CACHE: browsers cache FAILED dynamic imports by URL;
   resetting the JS promise memo (the B7 lesson) is necessary but NOT
@@ -166,7 +184,6 @@ files carry only what a new chat needs.
   for deliberately revoked blob: URLs on fast route exits, and for
   /audio/* autoplay in previews shipping no audio; headless Chrome
   blocks untrusted-gesture autoplay.
-
 - Chapter-2 round-2 findings (settled): isolated diacritics must be
   encoded as SPACING codepoints in data (combining marks after a
   space/paren render as garbage); biblist items are plain strings
@@ -190,64 +207,22 @@ files carry only what a new chat needs.
   component default in Select/Divide/PlaceAccent/Spell is what a
   device pass reads as "1 second", and one shared constant would move
   all four if it ever comes back.
-
-## Pipeline contracts for chapters 3+ (cumulative)
-
-- contentAudio mode vocabulary (dispatch mode-keyed, never by id):
-  objectivesPage, textPage, stepper, flashcard, equationChart,
-  vowelStair, diphthongRows, exploreGrid, fullOptionGrid,
-  selfCheckStepper, selfCheckSequence, reviewVocab (honors showNtFreq
-  and playAll:{audio,label}), reviewLetters, topicPages (topics[] of
-  {id,title,content[]}, in-activity topic stepper).
-- Activity types: contentAudio, select, spell, divide, placeAccent
-  (match/translate/parse/audioPlayer still unbuilt from the original
-  seven-type plan; expect them in later chapters).
-- RichContent blocks: heading, para, numbered, defList (BOTH forms:
-  ch1 tuple rows for tappable Greek; {term,def} objects for English
-  prose — prefer object form for prose), biblist, refs, note,
-  greekRows ({columns?, rows[{label, greek, syllables[], gloss, note,
-  audio}]}; positional layout auto-selected when columns exist +
-  counts match + no gloss — add an explicit layout:"positional" flag
-  for ch3+ to remove the inference), expander ({label, content[]},
-  closed by default, no nesting).
-- numbered items: supply explicit numeric markers OR rely on the <ol>
-  — never both (self-numbering triggers only on /^\(?\d+[.)]/).
-- select static option sets: optionValues[]; answer matches by VALUE;
-  null answer renders a pending state with Skip. Sentence prompts
-  carry {sentence, underline} where underline is the exact word.
-- Greek-tap contract: generators declare promptIsGreek + promptAudio;
-  greekTaps keys mark first STANDALONE occurrences; all displayed
-  Greek uses the shared .greek-say pattern.
-- RED-MARK ITEMS (select drills): redMarkCluster is the 1-BASED
-  grapheme-cluster index and MUST point at a cluster that carries the
-  mark the item asks about. A cluster that IS the mark (apostrophe,
-  raised-dot colon, question mark) reddens whole and needs no index
-  arithmetic. `npm run check:shapes` FAILS the build on an index past
-  the end of the word, on a cluster with no mark, and on any cluster
-  missing from mark-geometry.json — chapter 2 shipped a φαρισαῖος item
-  pointing at a bare alpha for two rounds, which rendered with nothing
-  red at all.
-- divide items: no numbered gap buttons any more (SPEC4 rebuilt the
-  exercise as draggable dividers on the word). The DATA contract is
-  unchanged — division[] is still 1-based gap indices — and the word is
-  no longer an audio tap, so pools need per-item audio only for
-  Pronounce.
-- speller: spellerTilesRef resolves via static
-  src/data/speller-tiles.json (39-tile keyboard contract);
-  single-source it at the next chapt-01 regen (drop the inline copy).
-- Every new chart is tested at 320px (overflow CLIPS, not scrolls).
-- Sequence arrays are pedagogy-derived, DOSBox-verified per chapter;
-  TBK storage order is never the answer.
-- Extraction reality: TBK plain strings + OpenScript fragments are
-  extractable; RICH-TEXT records (exercise word lists, underline
-  formatting, some popups) are NOT — expect roughly 75% extraction
-  with the remainder collected via a per-chapter VERIFY doc + DOSBox
-  screenshots. Format limit, not a session/chunking limit. (A bounded
-  binary rich-text-parser experiment is queued for 5C; success would
-  shrink the manual share for all 26 remaining chapters.)
-- Hebrew contamination: TBKs embed Hebrew-tutor shared resources
-  (Hebrew glosses, (Hi)/(Ni) stem labels, HebrewWord field names) —
-  detect and exclude these regions.
+- 5C extraction reality (REPLACES the old ~75% ceiling note): TBK
+  plain strings reach names, instructions, scripts, AND chapters-3+
+  drill pools (prompt/option/ref columns); scripts/tbk_richtext.py
+  (Stage 4b of PIPELINE-INSIGHTS-v3) reaches rich-text records —
+  paradigm charts, underline spans, Greek-vs-English font runs. The
+  residual MANUAL share per chapter is sequence order, new-mode
+  screen layout, run-time behavior (timing/scoring/shuffle) and
+  spot-checks of rule-derived answers.
+- Hebrew contamination (CORRECTED at 5C): TBKs embed Hebrew-tutor
+  shared resources, but `Hebrew*` FIELD NAMES are shared drill-engine
+  plumbing that appears inside legitimate GREEK drills (ch2's
+  part-of-speech pool lives in a field named "HebrewWord"). Reliable
+  tell-tales: (Hi)/(Ni) stem labels, Hebrew glosses with no Greek
+  nearby, and the Attributive/Predicate/Substantive "Hints" popups
+  (their agreement list includes "Definiteness" — a Hebrew category).
+  Exclude regions around those; never key on Hebrew* names.
 
 ## Typography and mark-rendering canon (established 5B closeout)
 
@@ -343,30 +318,48 @@ files carry only what a new chat needs.
   chapt_2_a_voc1..10 are deliberate duplicates of the ch1 clips
   (pack self-containment — mirrors the ISO).
 - A_INTRO1..4 unused by design.
+- Chapters 3-8 (5C recon): per-chapter prefix c_..h_; N_voc1..10 +
+  N_vocl (Say Whole List); N_sm* word-by-word Scripture Memory +
+  whole-verse clip; paradigm cell audio per form; drill-item clip
+  families (f_tpd1..40, g_atd/g_etd, h_d2_/h_d3_). Earlier chapters'
+  sm clips duplicate FORWARD for cumulative review (follow the ISO;
+  i_rm623b pre-ships in CHAPT_8). Full taxonomy:
+  buildout/5C-RECON-FINDINGS.md §3.
 
-## Immediate queue (as of 2026-07-27 — chapter 2 CLOSED)
+## Immediate queue (as of 2026-07-28 — 5C CLOSED)
 
-1. **5C opens.** Recon chapters 3-8 + the bounded binary rich-text
-   parser experiment -> 5C-RECON-TASKS.md; PHASE5-PLAN cohort
-   batching. The parser is the leverage item: success shrinks the
-   manual DOSBox share for all 26 remaining chapters.
-2. Chapter 3+ data authoring runs the per-cohort loop unchanged
-   (process v2 above). Nothing about chapter 2 blocks it.
-3. Data debt to clear at the next chapt-01/intro regen: residual "--"
-   in chapt-01.json.learn[7].content[1].text, intro.json.learn[0]
+1. **Nathanael: commit the 5C deliverables** — scripts/tbk_richtext.py,
+   buildout/5C-RECON-FINDINGS.md, buildout/5D-RECON-TASKS.md, updated
+   PHASE5-PLAN.md + PIPELINE-INSIGHTS-v3.md + CHAT-HANDOFF.md +
+   src/data/font-map.json — then upload the committed copies to
+   project files immediately (process rule).
+2. **5D opens (chapter 3, solo).** Nathanael runs 5D-RECON-TASKS.md in
+   DOSBox -> 5D-RECON-RESULTS; chat then assembles chapt-03 data +
+   the complete 5D spec (registers paradigm mode, parse/translate
+   select variants, Scripture Memory family — names finalized in the
+   spec).
+3. ONBOARD-SOL.md still owed to buildout/; AGENTS.md still needs
+   repointing from the absolute local Mac path to repo-relative.
+4. Data debt at the next chapt-01/intro regen: residual "--" in
+   chapt-01.json.learn[7].content[1].text, intro.json.learn[0]
    .content[1].text and .content[3].text, and lexicon-chapt01.json
    exampleWords.anthropoi.gloss / .anthropois.gloss. Chapter 2 is
    clean; these predate the em-dash policy.
-4. Carried nits: Escape/initial-focus on modals; playwright-core as a
+5. Carried nits: Escape/initial-focus on modals; playwright-core as a
    devDependency (three rounds now have driven the real UI from a
    scratchpad install).
-5. Quiet watch item for the next implementer round, not a blocker: the
+6. Quiet watch item for the next implementer round, not a blocker: the
    mark-geometry table is generated from the REGULAR weight only.
    Correct today — every red-overlay surface sets Greek at 400. A bold
    red-mark surface would need a second table.
 
 ## Known open questions
 
-- Completion semantics confirmation (harvested-lessons item above).
 - C3 multi-day retention on device: quiet watch item.
-- Font-map stragglers ($ { } ~ | \ ` =) resolve at chapters 3+.
+- DOSBox screenshot of the ch5 hōra paradigm chart (third evidence
+  source for '$'/'!') rides along with 5E recon — not blocking; two
+  independent word witnesses each already.
+- "Learn Vocabulary Builder" treatment inside chapters (local page vs
+  launcher into the VOCAB book) — 5D recon item D2 decides.
+- Font-map stragglers { } ~ | \ ` = — likely not font codes; resolve
+  passively as later chapters are extracted.
