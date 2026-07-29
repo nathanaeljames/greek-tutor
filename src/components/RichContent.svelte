@@ -47,6 +47,14 @@
   // chips (A6, Six Points "Linguistic Pronunciation Descriptions").
   const isLettersList = v => v && typeof v === 'object' && Array.isArray(v.letters);
   const defRows = block => block.rows || (block.items || []).map(item => [item.term, item.def, item.audio]);
+  // A numbered item is either an object { label?, text, ... } or a BARE STRING.
+  // Chapters 1-2 and the intro ship the object form; chapter 3 ships strings.
+  // A string item used to render as an EMPTY <li> — the number printed, the
+  // sentence did not, and nothing errored (device feedback, 5D: the Voice,
+  // Mood, Person and Translation topics showed "1. 2. 3." over blank lines).
+  // Same lesson as biblist in chapter 2: normalize the shape at the renderer,
+  // because the data is not ours to edit.
+  const listItems = block => (block.items || []).map(it => (typeof it === 'string' ? { text: it } : (it || {})));
   // The accent hints ship term-less entries ("Acute—last 3 syllables" on its
   // own line, 5B-SPEC2 C7). With no term there is no two-column rhythm to
   // keep, so those lists render as hanging-indent lines instead.
@@ -122,9 +130,10 @@
 
     {:else if b.type === 'numbered'}
       {#if b.preamble}<p class="rc-preamble"><Marked text={b.preamble} /></p>{/if}
-      {@const selfNum = (() => { const re = /^\(?\d+[.)]/; return b.items.length > 0 && b.items.every(it => it.label && re.test(it.label)); })()}
+      {@const items = listItems(b)}
+      {@const selfNum = (() => { const re = /^\(?\d+[.)]/; return items.length > 0 && items.every(it => it.label && re.test(it.label)); })()}
       <ol class="rc-list" class:authored-labels={selfNum}>
-        {#each b.items as it}
+        {#each items as it}
           <li>
             {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#if it.greekTaps}{#each splitTaps(it.text, it.greekTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}{:else}<Marked text={it.text || ''} />{/if}
             {#if it.example}

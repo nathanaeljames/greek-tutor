@@ -66,6 +66,26 @@ for (const file of files) {
         }
       });
     }
+    // A numbered item renders as an <li>: either a bare string, or an object
+    // carrying a label and/or text. Anything else prints the number over an
+    // EMPTY line — which is exactly how chapter 3's Voice/Mood/Person/
+    // Translation lists shipped in 5D (string items against a renderer that
+    // only read it.text). Silent, unerrored, and invisible to a rail walk that
+    // only asks "did a card render", so it gets a build-time check.
+    if (block.type === 'numbered') {
+      if (!Array.isArray(block.items) || !block.items.length) {
+        problems.push(`${path}: numbered has no items array.`);
+        return;
+      }
+      block.items.forEach((entry, index) => {
+        const empty = typeof entry === 'string'
+          ? !entry.trim()
+          : !entry || typeof entry !== 'object' || (!String(entry.label || '').trim() && !String(entry.text || '').trim());
+        if (empty) {
+          problems.push(`${path}.items[${index}]: numbered item renders nothing (no string, label or text).`);
+        }
+      });
+    }
     // Every contentAudio mode must have a branch in ContentAudio.svelte; an
     // unknown one silently falls through to the generic chart layout.
     if (block.type === 'contentAudio' && block.mode && !CONTENT_MODES.has(block.mode)) {
@@ -216,4 +236,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard).`);

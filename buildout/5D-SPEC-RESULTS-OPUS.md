@@ -295,6 +295,90 @@ resolved path was checked against the shipped pack on disk. All present:
   the next reader, and a pipeline pass could drop it in favour of
   `spellerTilesRef: "chapt_1"`, which is what ch2 and ch3 already use.
 
+## AMENDMENT 1 (2026-07-29) — blank numbered lists on device: a RENDERER
+## bug, not a pipeline failure
+
+Nathanael's device pass caught four teaching lists rendering as bare
+numbers over empty lines: **Learn English Concepts / Voice, Mood and
+Person, and Learn Verbs / Translation**. Screenshots show "1. 2. 3."
+with nothing after them.
+
+His first read was that the rich-text extraction had missed the text.
+It had not. **The text is in the delivered data, complete and
+verbatim** — for example `chapt-03.json` learn[1].topics[2].content[1]:
+
+```
+"Active voice:  subject does the action of the verb."
+"Passive voice:  subject receives the action of the verb."
+"Middle voice:  where the subject acts on him/herself (reflexive) or ..."
+```
+
+The defect is mine, in `RichContent.svelte`.
+
+**Root cause.** A `numbered` item comes in two shapes. Chapters 1-2 and
+the intro ship objects — `{ label, text }` — and chapter 3 ships **bare
+strings**. The renderer only ever read `it.label` and `it.text`, so a
+string item produced an `<li>` with the `<ol>` marker and no content.
+Valid JSON, registered block type, no console error, and a card that
+renders — so the 320px/768px rail walks, which assert "a card
+rendered, zero console errors", passed straight over it. This is the
+chapter-2 biblist lesson repeating in a new block type (object items
+rendered `[object Object]` there; string items render *nothing* here),
+and I did not generalize that lesson when I read the chapter-3 data.
+
+**Fix (code only — no data edited).**
+1. `RichContent.svelte` gains `listItems(block)`, which normalizes a
+   string item to `{ text }` before the `numbered` branch iterates. Same
+   remedy as `dedupeExpanders` and `suppressTitle`: the data is not ours
+   to edit, so the renderer absorbs the shape.
+2. `scripts/check-content-shapes.mjs` gains a `numbered` rule — every
+   item must be a non-empty string, or an object with a non-empty label
+   or text. Negative-tested by injecting `""` and `{label: null}` into a
+   scratch copy of chapt-03.json; both were caught with their exact
+   paths. Green on the real data.
+
+**Verified** by SSR-rendering the real `RichContent` against the real
+blocks (temporary vite `--ssr` probe, removed after the run): all four
+chapter-3 lists now print 3/3/3/2 items with text, and both chapter-1
+object forms (labelled and unlabelled) plus chapter-2's authored "1)"
+labels are byte-for-byte unaffected. `npm run verify` green; precache
+23 entries / 553.51 KiB (+0.08 KiB, index CSS/JS only, no new entries);
+**all three chapter chunk hashes unchanged** — `chapt-01-8ZoFoXk9.js`,
+`chapt-02-B6HjUK2Y.js`, `chapt-03-DCLxQLAM.js` — confirming no data file
+was touched.
+
+**Process lesson for the grading/next round.** My behavioural suite
+asserted structure (option counts, modal rows, advance timing) and my
+rail walks asserted "renders + no console errors". Neither asserts that
+authored TEXT reaches the screen. A walk that diffs rendered text
+against the source strings would have caught this in Phase 2; the new
+check:shapes rule is the cheap build-time substitute, but the coverage
+gap is real and worth a spec line next round.
+
+### Two genuine pipeline observations for Fable (data-side, not edited)
+
+Both are fidelity nits, NOT the cause of the blank lists:
+
+1. **Chapter 3 emits `numbered` items as bare strings; chapters 1-2 and
+   the intro emit `{ label, text }`.** The renderer now accepts both,
+   but the object form carries more: it is what drives the run-in lead
+   ("Formative Period — This period extended...") and the authored-label
+   path. Standardizing the assembler on `{ label, text }` would let
+   chapter 3's lists read like chapter 1's.
+2. **The original underlines the list lead-ins and the port does not.**
+   In DOSBox, "Active voice", "Passive voice", "Middle voice",
+   "Indicative mood", "First person" etc. are underlined blue hotwords
+   that open the green Examples popups. Chapter 3's strings carry no
+   `[[u]]` markup (ch2 uses it 22 times), so the emphasis is lost. The
+   popups themselves DID port — they are the `expander` blocks under
+   each list — so this is typography and the implicit list-to-expander
+   linkage, not missing content. Worth checking whether
+   `tbk_richtext.py` dropped the underline spans on these records or
+   whether the assembler discarded them.
+3. Minor, same family: the original numbers these lists "1) 2) 3)";
+   bare strings get the browser's "1. 2. 3.". Chapters 1-2 preserve the
+   original's punctuation through authored labels.
+
 ## Carried into VERIFY-5D
 
 1. The five `pist*` audio clips — listen-check (D16 conflict). Wiring
@@ -306,3 +390,5 @@ resolved path was checked against the shipped pack on disk. All present:
 6. D-18 — the checking policy as felt on device, especially whether
    "With Accents" ON should also require the raised dot.
 7. D-19 — the two-column English-to-Greek grids on ch1 and ch2.
+8. The four numbered lists fixed in AMENDMENT 1 — re-check on device
+   that Voice, Mood, Person and Translation now print their text.
