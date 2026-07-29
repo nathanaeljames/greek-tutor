@@ -60,6 +60,17 @@ piece. Nathanael goes by "Fable" when addressing Claude (chat).
   first); (5) Hebrew tell-tale model corrected — `Hebrew*` FIELD NAMES
   are shared-engine plumbing inside legitimate Greek drills, not
   contamination markers. Details: PIPELINE-INSIGHTS-v3 Stages 3/4/4b.
+- **5D OPEN (chapter 3, solo) — spec issued 2026-07-28.** Recon
+  returned (5D-RECON-RESULTS, D1-D16); chapt-03.json +
+  lexicon-chapt03.json assembled and Stage-7-validated (all 28
+  derived Greek Verb Drill answers matched the TBK's own option
+  columns); 5D-SPEC.md issued to both implementers. Phase 0 of the
+  spec is a KEYBOARD CHECKPOINT (space + punctuation for the shared
+  speller) that pauses for Nathanael's layout/policy choice before
+  spellVerse builds. Two original ch3 defects corrected data-side
+  with _legacy provenance (pistu<ei, pisteuou<sin). Open _verify:
+  Objectives page wording; the five pist* audio clips (D16 heard
+  c_pistei on the pisteuete item, conflicting with name inference).
 - Vocabulary registered across 5B: topicPages mode; greekRows,
   expander and subheading RichContent blocks; divide + placeAccent
   activity types; static option sets in select; speller-tiles.json
@@ -105,6 +116,16 @@ authored ONLY by the chat pipeline from committed copies; implementers
 commit delivered files as-is and never edit content; DOSBox/device
 answers route to Fable.
 
+Recon-tasks rule (2026-07-28, from D1): RECON-TASKS documents
+pre-compile the expected rail/menu order from extraction and ask for
+YES/NO verification — never ask for the order open-ended.
+
+Divergence rule (2026-07-28): every deliberate departure from the
+original is logged in DIVERGENCE-LOG.md (canonical living set) at
+decision time, numbered D-n, never renumbered. Fidelity restorations
+are not logged. The advance-timing rule matrix (advanceClass x two
+shared constants) also lives there.
+
 ## Project-file methodology (established 2026-07-23)
 
 Three tiers. The repo buildout/ keeps EVERYTHING forever; project
@@ -112,7 +133,8 @@ files carry only what a new chat needs.
 
 1. CANONICAL LIVING SET — always in project files, updated at
    boundaries: CHAT-HANDOFF.md (this file), PLAN.md, PHASE5-PLAN.md
-   (during phase 5), PIPELINE-INSIGHTS-v3.md, PROJECT.md,
+   (during phase 5), PIPELINE-INSIGHTS-v3.md, DIVERGENCE-LOG.md,
+   PROJECT.md,
    ONBOARD-SOL.md, font-map.json, toc.json, intro.json,
    transcode_audio.py.
 2. DATA SET — chapt-01.json + lexicon-chapt01.json stay as the schema
@@ -127,12 +149,14 @@ files carry only what a new chat needs.
    doc.
    BUILD docs never enter the project files. They exist for the
    grading chat and are 75-120 KB of diff; the repo archives them.
-   Applied entering 5D (2026-07-28): 5B-SPEC4-RESULTS.md rotates out
-   (chapter 2 closed, lessons harvested here and in v3); the rolling
-   set becomes 5D-RECON-TASKS.md and, when produced, chapt-03 data
-   files. chapt-02.json + lexicon-chapt02.json may rotate out at
-   Nathanael's discretion (device-verified, lessons harvested) —
-   chapt-01 stays as the schema reference.
+   Applied at 5D spec issue (2026-07-28): 5B-SPEC4-RESULTS.md rotated
+   out (chapter 2 closed, lessons harvested here and in v3). Rolling
+   set now: 5D-SPEC.md + chapt-03.json + lexicon-chapt03.json
+   (5D-RECON-TASKS.md leaves once its D-answers are absorbed, which
+   they are — the spec and data carry them). chapt-02.json +
+   lexicon-chapt02.json may rotate out at Nathanael's discretion
+   (device-verified, lessons harvested) — chapt-01 stays as the
+   schema reference.
 
 ## Harvested 5A/5B/5C lessons (settled — do not re-derive)
 
@@ -326,32 +350,39 @@ files carry only what a new chat needs.
   i_rm623b pre-ships in CHAPT_8). Full taxonomy:
   buildout/5C-RECON-FINDINGS.md §3.
 
-## Immediate queue (as of 2026-07-28 — 5C CLOSED)
+## Immediate queue (as of 2026-07-28 — 5D SPEC ISSUED)
 
-1. **Nathanael: commit the 5C deliverables** — scripts/tbk_richtext.py,
-   buildout/5C-RECON-FINDINGS.md, buildout/5D-RECON-TASKS.md, updated
-   PHASE5-PLAN.md + PIPELINE-INSIGHTS-v3.md + CHAT-HANDOFF.md +
-   src/data/font-map.json — then upload the committed copies to
-   project files immediately (process rule).
-2. **5D opens (chapter 3, solo).** Nathanael runs 5D-RECON-TASKS.md in
-   DOSBox -> 5D-RECON-RESULTS; chat then assembles chapt-03 data +
-   the complete 5D spec (registers paradigm mode, parse/translate
-   select variants, Scripture Memory family — names finalized in the
-   spec).
-3. ONBOARD-SOL.md still owed to buildout/; AGENTS.md still needs
+1. **Nathanael: commit the 5D deliverables** — src/data/chapt-03.json
+   + src/data/lexicon-chapt03.json (as-is, implementers never edit
+   content), buildout/5D-SPEC.md, DIVERGENCE-LOG.md (canonical, repo
+   root or buildout/), scripts/assemble_ch3.py (pipeline provenance)
+   — then upload chapt-03.json, lexicon-chapt03.json, 5D-SPEC.md,
+   DIVERGENCE-LOG.md and this CHAT-HANDOFF.md to project files
+   immediately (process rule).
+2. **Both implementers run 5D-SPEC.md.** Phase 0 (keyboard
+   checkpoint: required-key research, 2-3 wireframes, checking
+   policy) returns to Nathanael for selection BEFORE the spellVerse
+   build; all non-keyboard work proceeds meanwhile. Deliverables:
+   5D-SPEC-RESULTS-<MODEL>.md + 5D-SPEC-BUILD-<MODEL>.md; grading
+   per GRADER-PROMPT v2; winner authors VERIFY-5D.md.
+3. VERIFY-5D must carry: the pist* audio listen-check (five clips),
+   Objectives page wording, D-10 (c_ending restoration) and D-16
+   (movable-nu leniency) keep/drop, and the two timing constants
+   ratification (D-14).
+4. ONBOARD-SOL.md still owed to buildout/; AGENTS.md still needs
    repointing from the absolute local Mac path to repo-relative.
-4. Data debt at the next chapt-01/intro regen: residual "--" in
+5. Data debt at the next chapt-01/intro regen: residual "--" in
    chapt-01.json.learn[7].content[1].text, intro.json.learn[0]
    .content[1].text and .content[3].text, and lexicon-chapt01.json
    exampleWords.anthropoi.gloss / .anthropois.gloss. Chapter 2 is
    clean; these predate the em-dash policy.
-5. Carried nits: Escape/initial-focus on modals; playwright-core as a
+6. Carried nits: Escape/initial-focus on modals; playwright-core as a
    devDependency (three rounds now have driven the real UI from a
    scratchpad install).
-6. Quiet watch item for the next implementer round, not a blocker: the
-   mark-geometry table is generated from the REGULAR weight only.
-   Correct today — every red-overlay surface sets Greek at 400. A bold
-   red-mark surface would need a second table.
+7. Quiet watch item for the next implementer round, not a blocker:
+   the mark-geometry table is generated from the REGULAR weight only.
+   Correct today — every red-overlay surface sets Greek at 400. A
+   bold red-mark surface would need a second table.
 
 ## Known open questions
 
@@ -359,7 +390,8 @@ files carry only what a new chat needs.
 - DOSBox screenshot of the ch5 hōra paradigm chart (third evidence
   source for '$'/'!') rides along with 5E recon — not blocking; two
   independent word witnesses each already.
-- "Learn Vocabulary Builder" treatment inside chapters (local page vs
-  launcher into the VOCAB book) — 5D recon item D2 decides.
+- "Learn Vocabulary Builder": D2 answered — the chapter rail as
+  verified (D1) does not include it; nothing visibly book-jumps. NOT
+  ported in 5D; revisit only if a later chapter surfaces it in-rail.
 - Font-map stragglers { } ~ | \ ` = — likely not font codes; resolve
   passively as later chapters are extracted.

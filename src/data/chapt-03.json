@@ -1,0 +1,2253 @@
+{
+ "_comment": "Chapter 3 (Present Active Verbs), assembled 2026-07-28 from 3_VERBS.TBK + CHAPT_3 audio + 5D-RECON-RESULTS (DOSBox pass). Pools and answers are TBK-extracted and rule-derived (validated in assembly: every derived Greek Verb Drill answer matched one of the three TBK option-column entries). Learn prose typed verbatim from the DOSBox screenshots. Two original defects corrected data-side with provenance: pistu<ei -> pisteu<ei (VTD item 26), pisteuou<sin -> pisteu<ousin (GVD item 24 option). Timing/advance semantics live app-side in shared constants; items record only the policy class.",
+ "id": "chapt_3",
+ "number": 3,
+ "title": "Present Active Verbs",
+ "references": "(see per-topic refs)",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "Recognize and translate the present active indicative verb forms.",
+  "Learn the present active indicative paradigm of λύω.",
+  "Master ten new vocabulary words.",
+  "Memorize John 14:6a."
+ ],
+ "_objectives_verify": "Preamble TBK-confirmed; item wording to be checked against the DOSBox Objectives page (not in the D-pass screenshot set).",
+ "vocab": [
+  "alla",
+  "apostolos",
+  "blepo",
+  "gar",
+  "ginosko",
+  "iesous",
+  "lambano",
+  "luo",
+  "ouranos",
+  "pisteuo"
+ ],
+ "learn": [
+  {
+   "id": "c3_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives"
+  },
+  {
+   "id": "c3_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "Verbs are words of action or state of being."
+      },
+      {
+       "type": "para",
+       "text": "Zachary drove the car.\nElliott is a good kid."
+      },
+      {
+       "type": "para",
+       "text": "We use verbs to make statements, give commands or express wishes."
+      },
+      {
+       "type": "para",
+       "text": "Come here. — command\nZach may play basketball this year. — wish"
+      },
+      {
+       "type": "refs",
+       "text": "(Mounce, pp. 116.; Wenham, p. 2; Summers, pp. 11ff)"
+      }
+     ]
+    },
+    {
+     "id": "tenseAspect",
+     "title": "Tense/Aspect",
+     "content": [
+      {
+       "type": "para",
+       "text": "Tense in English refers to the time of the action of the verb:"
+      },
+      {
+       "type": "para",
+       "text": "Present:  Annette swims.\nPast:  Annette swam.\nFuture:  Annette will swim."
+      },
+      {
+       "type": "para",
+       "text": "In Greek, tense is used to refer not only to time, (when the event happened), but also to aspect (the type of action)."
+      }
+     ]
+    },
+    {
+     "id": "voice",
+     "title": "Voice",
+     "content": [
+      {
+       "type": "para",
+       "text": "English has two voices to which Greek adds a third:"
+      },
+      {
+       "type": "numbered",
+       "items": [
+        "Active voice:  subject does the action of the verb.",
+        "Passive voice:  subject receives the action of the verb.",
+        "Middle voice:  where the subject acts on him/herself (reflexive) or members of a group interact among themselves (reciprocal).  In Greek, self-interest may be reflected in the middle voice."
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Active Voice Examples",
+       "content": [
+        {
+         "type": "para",
+         "text": "Terry hit the ball.\nJoy kissed Andy."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Passive Voice Examples",
+       "content": [
+        {
+         "type": "para",
+         "text": "Terry was hit by the ball.\nJoy was kissed by Andy."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Middle Voice Examples",
+       "content": [
+        {
+         "type": "para",
+         "text": "Terry kicked himself. — reflexive\nThe players patted each other. — reciprocal"
+        },
+        {
+         "type": "para",
+         "text": "Middle verbs in Greek are usually (75% of the time) translated as an active or the middle changes the whole root meaning from the active form.  In this program, the middle will be translated active unless otherwise indicated."
+        },
+        {
+         "type": "refs",
+         "text": "(Mounce, p. 149; Summer, pp. 50-51)"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "mood",
+     "title": "Mood",
+     "content": [
+      {
+       "type": "para",
+       "text": "Mood refers to the kind of reality of the action, or how the action of the verb is regarded."
+      },
+      {
+       "type": "numbered",
+       "items": [
+        "Indicative mood—simply states that something happened, e.g. Peter prays.",
+        "Imperative mood—gives a command or exhortation, e.g.  Pray, Peter!",
+        "Subjunctive mood—expresses a wish, possibility or potentiality, e.g.  Peter may pray."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "person",
+     "title": "Person",
+     "content": [
+      {
+       "type": "para",
+       "text": "There are 3 persons in Greek."
+      },
+      {
+       "type": "numbered",
+       "items": [
+        "First person is the person(s) speaking (I or we).",
+        "Second person is the person(s) spoken to (you [singular or plural]).",
+        "Third person is the person(s) or thing(s) spoken about (he, she, they, it)."
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "First Person Examples",
+       "content": [
+        {
+         "type": "para",
+         "text": "I studied Greek.\nWe studied Greek."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Second Person Examples",
+       "content": [
+        {
+         "type": "para",
+         "text": "You studied Greek.\nYou both studied Greek."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Third Person Examples",
+       "content": [
+        {
+         "type": "para",
+         "text": "She studied Greek.\nThey studied Greek."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "numberAgreement",
+     "title": "Number and Agreement",
+     "content": [
+      {
+       "type": "para",
+       "text": "Both English and Greek distinguish between singular (I, you, he, she, it) and the plural (we, you, they)."
+      },
+      {
+       "type": "para",
+       "text": "Verbs must agree with their subjects in both person and number."
+      },
+      {
+       "type": "para",
+       "text": "He hits the ball.\nThey hit the ball.  (not \"they hits the ball.\")"
+      },
+      {
+       "type": "refs",
+       "text": "(Mounce, p. 116)"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c3_learn_verbs",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Verbs:  Present Active Indicative",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "The present active indicative will be our first verb paradigm.  It is the most frequently used \"tense\" in the New Testament (over 4000 times).  Active means that the subject does the action of the verb as opposed to the middle or passive voices.  The Indicative mood makes a statement as opposed to the Imperative or Subjunctive moods which we will study later."
+      },
+      {
+       "type": "para",
+       "text": "Each form will be composed of a:"
+      },
+      {
+       "type": "para",
+       "text": "Stem + Pronominal ending — λύ + ω",
+       "_note": "λύ and ω here are morpheme fragments with no standalone clips; rendered in ink, not tappable (Greek-tap exception, logged)"
+      }
+     ]
+    },
+    {
+     "id": "translation",
+     "title": "Translation",
+     "content": [
+      {
+       "type": "para",
+       "text": "The Present tense may denote either undefined (event simply happens) or continuous aspect (event was a process)."
+      },
+      {
+       "type": "para",
+       "text": "Thus it can be translated:"
+      },
+      {
+       "type": "numbered",
+       "items": [
+        "Undefined action:   I loose, I run",
+        "Continuous action:  I am loosing, I am running"
+       ]
+      },
+      {
+       "type": "para",
+       "text": "The context will determine which should be used."
+      },
+      {
+       "type": "expander",
+       "label": "Historical Present",
+       "content": [
+        {
+         "type": "para",
+         "text": "Greek will often use the present tense to reference an event that actually happened in the past.  The historical present is used to add vividness to the narrative or, most often, it is an idiom.  It often occurs in narrative in the third person.  In these cases the present tense is simply translated by our past tense (e.g.  \"he says\" becomes \"he said\")."
+        }
+       ]
+      },
+      {
+       "type": "refs",
+       "text": "(Mounce, p. 115;  Machen, p. 20;  Summers, pp. 12)"
+      }
+     ]
+    },
+    {
+     "id": "paradigm",
+     "title": "Paradigm",
+     "content": [
+      {
+       "type": "paradigm",
+       "title": "Paradigm",
+       "lemma": {
+        "greek": "λύω",
+        "gloss": "to loose, destroy",
+        "audio": "chapt_3_c_luw"
+       },
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "person": "1.",
+         "cells": [
+          {
+           "greek": "λύω",
+           "gloss": "I loose/am loosing",
+           "audio": "chapt_3_c_luw"
+          },
+          {
+           "greek": "λύομεν",
+           "gloss": "We loose/are loosing",
+           "audio": "chapt_3_c_luomen"
+          }
+         ]
+        },
+        {
+         "person": "2.",
+         "cells": [
+          {
+           "greek": "λύεις",
+           "gloss": "You loose/are loosing",
+           "audio": "chapt_3_c_lueis"
+          },
+          {
+           "greek": "λύετε",
+           "gloss": "You loose/are loosing",
+           "audio": "chapt_3_c_luete"
+          }
+         ]
+        },
+        {
+         "person": "3.",
+         "cells": [
+          {
+           "greek": "λύει",
+           "gloss": "He/she/it looses/is loosing",
+           "audio": "chapt_3_c_luei"
+          },
+          {
+           "greek": "λύουσι",
+           "gloss": "They loose/are loosing",
+           "audio": "chapt_3_c_luousi"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Whole Paradigm",
+        "audio": "chapt_3_c_paipar"
+       },
+       "endings": {
+        "label": "Endings",
+        "audio": "chapt_3_c_ending",
+        "_note": "Endings audio RESTORED (divergence log D-10): the original has a c_ending clip but the Endings button plays nothing (D15).",
+        "rows": [
+         [
+          "-ω",
+          "I",
+          "-ομεν",
+          "we"
+         ],
+         [
+          "-εις",
+          "you",
+          "-ετε",
+          "you"
+         ],
+         [
+          "-ει",
+          "he/she/it",
+          "-ουσι",
+          "they"
+         ]
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "id": "movableNu",
+     "title": "Movable Nu ( ν )",
+     "content": [
+      {
+       "type": "para",
+       "text": "Sometimes a nu ( ν ) is added to the end of words ending in σι or ε, especially when it is followed by a word that begins with a vowel.  In English we do something similar with \"a book\" and \"an item.\"  Thus sometimes the third plural form will be:"
+      },
+      {
+       "type": "para",
+       "text": "λύουσιν instead of λύουσι"
+      },
+      {
+       "type": "refs",
+       "text": "(Machen, p. 27;  Summers, p. 13)"
+      }
+     ]
+    },
+    {
+     "id": "secondPersonPlural",
+     "title": "Second Person Plural",
+     "content": [
+      {
+       "type": "para",
+       "text": "In English we make no distinction between a \"you\" singular and a \"you\" which is plural (\"you all\").  Some grammars use \"thou\" for the singular and \"ye\" for the plural.  Such usage is archaic and hence we will use \"you\" for both second person singular and plural.  You should be aware that in Greek a sharp distinction is made."
+      },
+      {
+       "type": "refs",
+       "text": "(Machen, p. 22)"
+      }
+     ]
+    },
+    {
+     "id": "parsingFormat",
+     "title": "Parsing Format",
+     "content": [
+      {
+       "type": "para",
+       "text": "Verbs are parsed or conjugated in the following format:"
+      },
+      {
+       "type": "para",
+       "text": "Tense, voice, mood, person, number, lexical root, English meaning"
+      },
+      {
+       "type": "para",
+       "text": "E.g.  λύω, present active indicative 1st person, singular from λύω meaning \"I loose, destroy.\""
+      }
+     ]
+    }
+   ],
+   "greekTaps": {
+    "λύουσιν": "chapt_3_c_luousn",
+    "λύουσι": "chapt_3_c_luousi",
+    "λύω": "chapt_3_c_luw"
+   }
+  },
+  {
+   "id": "c3_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "lemmas"
+  },
+  {
+   "id": "c3_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory",
+   "reference": "John 14:6a",
+   "words": [
+    {
+     "greek": "λέγει",
+     "gloss": "he said",
+     "audio": "chapt_3_c_sm1"
+    },
+    {
+     "greek": "αὐτῷ",
+     "gloss": "to him",
+     "audio": "chapt_3_c_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": null,
+     "audio": "chapt_3_c_sm3"
+    },
+    {
+     "greek": "Ἰησοῦς,",
+     "gloss": "Jesus",
+     "audio": "chapt_3_c_sm4"
+    },
+    {
+     "greek": "Ἐγώ",
+     "gloss": "I",
+     "audio": "chapt_3_c_sm5"
+    },
+    {
+     "greek": "εἰμι",
+     "gloss": "I am",
+     "audio": "chapt_3_c_sm6"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_3_c_sm7"
+    },
+    {
+     "greek": "ὁδὸς",
+     "gloss": "way",
+     "audio": "chapt_3_c_sm8"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_3_c_sm9"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_3_c_sm10"
+    },
+    {
+     "greek": "ἀλήθεια",
+     "gloss": "truth",
+     "audio": "chapt_3_c_sm11"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_3_c_sm12"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_3_c_sm13"
+    },
+    {
+     "greek": "ζωή·",
+     "gloss": "life:",
+     "audio": "chapt_3_c_sm14"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_3_c_sm14_6"
+   }
+  },
+  {
+   "id": "c3_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham.  New Testament Greek for Beginners (Toronto:  The Macmillan Company, 1923), pp. 20-22.",
+      "Mounce, William D.  Basics of Biblical Greek:  Grammar (Grand Rapids:  Zondervan, 1993), pp. 115-32.",
+      "Summers, Ray and Thomas Sawyer.  Essentials of New Testament Greek (Nashville:  Broadman & Holman, 1995), pp. 11-13.",
+      "Wenham, J. W.  The Elements of New Testament Greek (Cambridge:  Cambridge University Press, 1965), pp. 25-28."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c3_drill_verb_translating",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Verb Translating Drill",
+   "instructions": "Click on the correct translation",
+   "promptIsGreek": true,
+   "optionsPerItem": true,
+   "items": [
+    {
+     "greek": "λύει",
+     "audio": "chapt_3_c_luei",
+     "ref": "Luk 13:15",
+     "translate": "to loose",
+     "optionValues": [
+      "I loose",
+      "we loose",
+      "you loose (sg)",
+      "you loose (pl)",
+      "he/she/it looses",
+      "they loose"
+     ],
+     "answer": "he/she/it looses"
+    },
+    {
+     "greek": "λύουσιν",
+     "audio": "chapt_3_c_luousn",
+     "ref": "Mk 11:4",
+     "translate": "to loose",
+     "optionValues": [
+      "I loose",
+      "we loose",
+      "you loose (sg)",
+      "you loose (pl)",
+      "he/she/it looses",
+      "they loose"
+     ],
+     "answer": "they loose"
+    },
+    {
+     "greek": "λύετε",
+     "audio": "chapt_3_c_luete",
+     "ref": "Luk 19:31",
+     "translate": "to loose",
+     "optionValues": [
+      "I loose",
+      "we loose",
+      "you loose (sg)",
+      "you loose (pl)",
+      "he/she/it looses",
+      "they loose"
+     ],
+     "answer": "you loose (pl)"
+    },
+    {
+     "greek": "ἀκούετε",
+     "audio": "chapt_3_c_akouet",
+     "ref": "Mat 10:27",
+     "translate": "to hear",
+     "optionValues": [
+      "I hear",
+      "we hear",
+      "you hear (sg)",
+      "you hear (pl)",
+      "he/she/it hears",
+      "they hear"
+     ],
+     "answer": "you hear (pl)"
+    },
+    {
+     "greek": "ἀκούω",
+     "audio": "chapt_3_c_akouw",
+     "ref": "Luk 9:9",
+     "translate": "to hear",
+     "optionValues": [
+      "I hear",
+      "we hear",
+      "you hear (sg)",
+      "you hear (pl)",
+      "he/she/it hears",
+      "they hear"
+     ],
+     "answer": "I hear"
+    },
+    {
+     "greek": "ἀκούει",
+     "audio": "chapt_3_c_akouei",
+     "ref": "Mat 7:24",
+     "translate": "to hear",
+     "optionValues": [
+      "I hear",
+      "we hear",
+      "you hear (sg)",
+      "you hear (pl)",
+      "he/she/it hears",
+      "they hear"
+     ],
+     "answer": "he/she/it hears"
+    },
+    {
+     "greek": "ἀκούομεν",
+     "audio": "chapt_3_c_akouom",
+     "ref": "Acts 2:8",
+     "translate": "to hear",
+     "optionValues": [
+      "I hear",
+      "we hear",
+      "you hear (sg)",
+      "you hear (pl)",
+      "he/she/it hears",
+      "they hear"
+     ],
+     "answer": "we hear"
+    },
+    {
+     "greek": "ἀκούεις",
+     "audio": "chapt_3_c_akoues",
+     "ref": "Mat 21:16",
+     "translate": "to hear",
+     "optionValues": [
+      "I hear",
+      "we hear",
+      "you hear (sg)",
+      "you hear (pl)",
+      "he/she/it hears",
+      "they hear"
+     ],
+     "answer": "you hear (sg)"
+    },
+    {
+     "greek": "ἀκούουσιν",
+     "audio": "chapt_3_c_akouou",
+     "ref": "Mat 11:5",
+     "translate": "to hear",
+     "optionValues": [
+      "I hear",
+      "we hear",
+      "you hear (sg)",
+      "you hear (pl)",
+      "he/she/it hears",
+      "they hear"
+     ],
+     "answer": "they hear"
+    },
+    {
+     "greek": "λέγει",
+     "audio": "chapt_3_c_legei",
+     "ref": "Mat 4:6",
+     "translate": "to say",
+     "optionValues": [
+      "I say",
+      "we say",
+      "you say (sg)",
+      "you say (pl)",
+      "he/she/it says",
+      "they say"
+     ],
+     "answer": "he/she/it says"
+    },
+    {
+     "greek": "λέγομεν",
+     "audio": "chapt_3_c_legome",
+     "ref": "Jn 8:48",
+     "translate": "to say",
+     "optionValues": [
+      "I say",
+      "we say",
+      "you say (sg)",
+      "you say (pl)",
+      "he/she/it says",
+      "they say"
+     ],
+     "answer": "we say"
+    },
+    {
+     "greek": "λέγετε",
+     "audio": "chapt_3_c_legete",
+     "ref": "Mat 15:5",
+     "translate": "to say",
+     "optionValues": [
+      "I say",
+      "we say",
+      "you say (sg)",
+      "you say (pl)",
+      "he/she/it says",
+      "they say"
+     ],
+     "answer": "you say (pl)"
+    },
+    {
+     "greek": "λέγουσιν",
+     "audio": "chapt_3_c_legous",
+     "ref": "Mat 9:28",
+     "translate": "to say",
+     "optionValues": [
+      "I say",
+      "we say",
+      "you say (sg)",
+      "you say (pl)",
+      "he/she/it says",
+      "they say"
+     ],
+     "answer": "they say"
+    },
+    {
+     "greek": "λέγω",
+     "audio": "chapt_3_c_legw",
+     "ref": "Mat 3:9",
+     "translate": "to say",
+     "optionValues": [
+      "I say",
+      "we say",
+      "you say (sg)",
+      "you say (pl)",
+      "he/she/it says",
+      "they say"
+     ],
+     "answer": "I say"
+    },
+    {
+     "greek": "λέγεις",
+     "audio": "chapt_3_c_legeis",
+     "ref": "Mat 26:70",
+     "translate": "to say",
+     "optionValues": [
+      "I say",
+      "we say",
+      "you say (sg)",
+      "you say (pl)",
+      "he/she/it says",
+      "they say"
+     ],
+     "answer": "you say (sg)"
+    },
+    {
+     "greek": "βλέπεις",
+     "audio": "chapt_3_c_blepes",
+     "ref": "Mat 7:3",
+     "translate": "to see",
+     "optionValues": [
+      "I see",
+      "we see",
+      "you see (sg)",
+      "you see (pl)",
+      "he/she/it sees",
+      "they see"
+     ],
+     "answer": "you see (sg)"
+    },
+    {
+     "greek": "βλέπομεν",
+     "audio": "chapt_3_c_blepam",
+     "ref": "Jn 9:41",
+     "translate": "to see",
+     "optionValues": [
+      "I see",
+      "we see",
+      "you see (sg)",
+      "you see (pl)",
+      "he/she/it sees",
+      "they see"
+     ],
+     "answer": "we see"
+    },
+    {
+     "greek": "βλέπει",
+     "audio": "chapt_3_c_blepei",
+     "ref": "Luk 24:12",
+     "translate": "to see",
+     "optionValues": [
+      "I see",
+      "we see",
+      "you see (sg)",
+      "you see (pl)",
+      "he/she/it sees",
+      "they see"
+     ],
+     "answer": "he/she/it sees"
+    },
+    {
+     "greek": "βλέπω",
+     "audio": "chapt_3_c_blepw",
+     "ref": "Mk 8:24",
+     "translate": "to see",
+     "optionValues": [
+      "I see",
+      "we see",
+      "you see (sg)",
+      "you see (pl)",
+      "he/she/it sees",
+      "they see"
+     ],
+     "answer": "I see"
+    },
+    {
+     "greek": "βλέπουσιν",
+     "audio": "chapt_3_c_blepsn",
+     "ref": "Mat 13:13",
+     "translate": "to see",
+     "optionValues": [
+      "I see",
+      "we see",
+      "you see (sg)",
+      "you see (pl)",
+      "he/she/it sees",
+      "they see"
+     ],
+     "answer": "they see"
+    },
+    {
+     "greek": "βλέπετε",
+     "audio": "chapt_3_c_blepet",
+     "ref": "Mat 11:4",
+     "translate": "to see",
+     "optionValues": [
+      "I see",
+      "we see",
+      "you see (sg)",
+      "you see (pl)",
+      "he/she/it sees",
+      "they see"
+     ],
+     "answer": "you see (pl)"
+    },
+    {
+     "greek": "βλέπουσι",
+     "audio": "chapt_3_c_blepou",
+     "ref": "Mat 18:10",
+     "translate": "to see",
+     "optionValues": [
+      "I see",
+      "we see",
+      "you see (sg)",
+      "you see (pl)",
+      "he/she/it sees",
+      "they see"
+     ],
+     "answer": "they see"
+    },
+    {
+     "greek": "πιστεύεις",
+     "audio": "chapt_3_c_piseis",
+     "ref": "Jn 1:50",
+     "translate": "to believe",
+     "optionValues": [
+      "I believe",
+      "we believe",
+      "you believe (sg)",
+      "you believe (pl)",
+      "he/she/it believes",
+      "they believe"
+     ],
+     "answer": "you believe (sg)",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong."
+    },
+    {
+     "greek": "πιστεύομεν",
+     "audio": "chapt_3_c_pisome",
+     "ref": "Jn 4:42",
+     "translate": "to believe",
+     "optionValues": [
+      "I believe",
+      "we believe",
+      "you believe (sg)",
+      "you believe (pl)",
+      "he/she/it believes",
+      "they believe"
+     ],
+     "answer": "we believe",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong."
+    },
+    {
+     "greek": "πιστεύω",
+     "audio": "chapt_3_c_pistew",
+     "ref": "Mk 9:24",
+     "translate": "to believe",
+     "optionValues": [
+      "I believe",
+      "we believe",
+      "you believe (sg)",
+      "you believe (pl)",
+      "he/she/it believes",
+      "they believe"
+     ],
+     "answer": "I believe",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong."
+    },
+    {
+     "greek": "πιστεύει",
+     "audio": "chapt_3_c_pistei",
+     "ref": "Jn 12:44",
+     "translate": "to believe",
+     "optionValues": [
+      "I believe",
+      "we believe",
+      "you believe (sg)",
+      "you believe (pl)",
+      "he/she/it believes",
+      "they believe"
+     ],
+     "answer": "he/she/it believes",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong.",
+     "_legacy": "pistu<ei",
+     "_note": "original TBK typo, corrected (divergence log D-8)"
+    },
+    {
+     "greek": "πιστεύετε",
+     "audio": "chapt_3_c_pisete",
+     "ref": "Mat 9:28",
+     "translate": "to believe",
+     "optionValues": [
+      "I believe",
+      "we believe",
+      "you believe (sg)",
+      "you believe (pl)",
+      "he/she/it believes",
+      "they believe"
+     ],
+     "answer": "you believe (pl)",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong."
+    },
+    {
+     "greek": "πιστεύουσιν",
+     "audio": "chapt_3_c_pisous",
+     "ref": "Luk 8:13",
+     "translate": "to believe",
+     "optionValues": [
+      "I believe",
+      "we believe",
+      "you believe (sg)",
+      "you believe (pl)",
+      "he/she/it believes",
+      "they believe"
+     ],
+     "answer": "they believe",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong."
+    }
+   ],
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Translate",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "paradigm"
+   },
+   "scored": true,
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   },
+   "_policy_note": "One attempt per item; auto-advance on correct via the shared correctAdvanceMs constant; incorrect shows feedback and waits for Next (original ch3 behavior, D9-D11)."
+  },
+  {
+   "id": "c3_drill_greek_verb",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Greek Verb Drill",
+   "instructions": "Click on the correct Greek Verb form",
+   "promptIsGreek": false,
+   "optionsAreGreek": true,
+   "optionsPerItem": true,
+   "items": [
+    {
+     "prompt": "he is loosing",
+     "ref": "Luk 13:15",
+     "options": [
+      "λύω",
+      "λύουσιν",
+      "λύει"
+     ],
+     "answer": "λύει",
+     "audio": "chapt_3_c_luei"
+    },
+    {
+     "prompt": "he is saying",
+     "ref": "Mat 4:6",
+     "options": [
+      "λέγει",
+      "λέγομεν",
+      "λέγουσιν"
+     ],
+     "answer": "λέγει",
+     "audio": "chapt_3_c_legei"
+    },
+    {
+     "prompt": "you are seeing (sg)",
+     "ref": "Mat 7:3",
+     "options": [
+      "βλέπεις",
+      "βλέπετε",
+      "βλέπουσιν"
+     ],
+     "answer": "βλέπεις",
+     "audio": "chapt_3_c_blepes"
+    },
+    {
+     "prompt": "you are hearing (pl)",
+     "ref": "Mat 10:27",
+     "options": [
+      "ἀκούομεν",
+      "ἀκούετε",
+      "ἀκούει"
+     ],
+     "answer": "ἀκούετε",
+     "audio": "chapt_3_c_akouet"
+    },
+    {
+     "prompt": "they are seeing",
+     "ref": "Mat 13:16",
+     "options": [
+      "βλέπουσιν",
+      "βλέπω",
+      "βλέπεις"
+     ],
+     "answer": "βλέπουσιν",
+     "audio": "chapt_3_c_blepsn"
+    },
+    {
+     "prompt": "you are believing (pl)",
+     "ref": "Mat 9:28",
+     "options": [
+      "πιστεύεις",
+      "πιστεύομεν",
+      "πιστεύετε"
+     ],
+     "answer": "πιστεύετε",
+     "audio": "chapt_3_c_pisete"
+    },
+    {
+     "prompt": "we are hearing",
+     "ref": "Acts 2:8",
+     "options": [
+      "ἀκούεις",
+      "ἀκούομεν",
+      "ἀκούουσιν"
+     ],
+     "answer": "ἀκούομεν",
+     "audio": "chapt_3_c_akouom"
+    },
+    {
+     "prompt": "they are saying",
+     "ref": "Mat 9:28",
+     "options": [
+      "λέγει",
+      "λέγετε",
+      "λέγουσιν"
+     ],
+     "answer": "λέγουσιν",
+     "audio": "chapt_3_c_legous"
+    },
+    {
+     "prompt": "you see (pl)",
+     "ref": "Mat 11:4",
+     "options": [
+      "βλέπετε",
+      "βλέπει",
+      "βλέπουσι"
+     ],
+     "answer": "βλέπετε",
+     "audio": "chapt_3_c_blepet"
+    },
+    {
+     "prompt": "they are loosing",
+     "ref": "Mk 11:4",
+     "options": [
+      "λύουσιν",
+      "λύετε",
+      "λύει"
+     ],
+     "answer": "λύουσιν",
+     "audio": "chapt_3_c_luousn"
+    },
+    {
+     "prompt": "he is believing",
+     "ref": "Jn 12:44",
+     "options": [
+      "πιστεύω",
+      "πιστεύεις",
+      "πιστεύει"
+     ],
+     "answer": "πιστεύει",
+     "audio": "chapt_3_c_pistei"
+    },
+    {
+     "prompt": "you are saying (pl)",
+     "ref": "Mat 15:5",
+     "options": [
+      "λέγετε",
+      "λέγουσιν",
+      "λέγεις"
+     ],
+     "answer": "λέγετε",
+     "audio": "chapt_3_c_legete"
+    },
+    {
+     "prompt": "you are hearing (sg)",
+     "ref": "Mat 21:16",
+     "options": [
+      "ἀκούουσιν",
+      "ἀκούεις",
+      "ἀκούομεν"
+     ],
+     "answer": "ἀκούεις",
+     "audio": "chapt_3_c_akoues"
+    },
+    {
+     "prompt": "they are believing (pl)",
+     "ref": "Luk 8:13",
+     "options": [
+      "πιστεύουσιν",
+      "πιστεύει",
+      "πιστεύετε"
+     ],
+     "answer": "πιστεύουσιν",
+     "audio": "chapt_3_c_pisous"
+    },
+    {
+     "prompt": "we are seeing",
+     "ref": "Jn 9:41",
+     "options": [
+      "βλέπεις",
+      "βλέπομεν",
+      "βλέπω"
+     ],
+     "answer": "βλέπομεν",
+     "audio": "chapt_3_c_blepam"
+    },
+    {
+     "prompt": "you are loosing (pl)",
+     "ref": "Luk 19:31",
+     "options": [
+      "λύει",
+      "λύουσιν",
+      "λύετε"
+     ],
+     "answer": "λύετε",
+     "audio": "chapt_3_c_luete"
+    },
+    {
+     "prompt": "you are saying (sg)",
+     "ref": "Mat 26:70",
+     "options": [
+      "λέγετε",
+      "λέγεις",
+      "λέγει"
+     ],
+     "answer": "λέγεις",
+     "audio": "chapt_3_c_legeis"
+    },
+    {
+     "prompt": "he/she/it is seeing",
+     "ref": "Luk 24:12",
+     "options": [
+      "βλέπεις",
+      "βλέπομεν",
+      "βλέπει"
+     ],
+     "answer": "βλέπει",
+     "audio": "chapt_3_c_blepei"
+    },
+    {
+     "prompt": "I am seeing",
+     "ref": "Mk 8:24",
+     "options": [
+      "βλέπετε",
+      "βλέπεις",
+      "βλέπω"
+     ],
+     "answer": "βλέπω",
+     "audio": "chapt_3_c_blepw"
+    },
+    {
+     "prompt": "I am hearing",
+     "ref": "Luk 9:9",
+     "options": [
+      "ἀκούω",
+      "ἀκούομεν",
+      "ἀκούετε"
+     ],
+     "answer": "ἀκούω",
+     "audio": "chapt_3_c_akouw"
+    },
+    {
+     "prompt": "they are hearing",
+     "ref": "Mat 11:5",
+     "options": [
+      "ἀκούετε",
+      "ἀκούομεν",
+      "ἀκούουσιν"
+     ],
+     "answer": "ἀκούουσιν",
+     "audio": "chapt_3_c_akouou"
+    },
+    {
+     "prompt": "they are seeing",
+     "ref": "Mat 18:10",
+     "options": [
+      "βλέπομεν",
+      "βλέπουσι",
+      "βλέπεις"
+     ],
+     "answer": "βλέπουσι",
+     "audio": "chapt_3_c_blepou"
+    },
+    {
+     "prompt": "you are believing (sg)",
+     "ref": "Jn 1:50",
+     "options": [
+      "πιστεύει",
+      "πιστεύεις",
+      "πιστεύω"
+     ],
+     "answer": "πιστεύεις",
+     "audio": "chapt_3_c_piseis"
+    },
+    {
+     "prompt": "we are believing",
+     "ref": "Jn 4:42",
+     "options": [
+      "πιστεύομεν",
+      "πιστεύετε",
+      "πιστεύουσιν"
+     ],
+     "answer": "πιστεύομεν",
+     "audio": "chapt_3_c_pisome"
+    },
+    {
+     "prompt": "I am believing",
+     "ref": "Mk 9:24",
+     "options": [
+      "πιστεύει",
+      "πιστεύω",
+      "πιστεύετε"
+     ],
+     "answer": "πιστεύω",
+     "audio": "chapt_3_c_pistew"
+    },
+    {
+     "prompt": "we are saying",
+     "ref": "Jn 8:48",
+     "options": [
+      "λέγομεν",
+      "λέγεις",
+      "λέγουσιν"
+     ],
+     "answer": "λέγομεν",
+     "audio": "chapt_3_c_legome"
+    },
+    {
+     "prompt": "he/she/it is hearing",
+     "ref": "Mat 7:24",
+     "options": [
+      "ἀκούεις",
+      "ἀκούουσιν",
+      "ἀκούει"
+     ],
+     "answer": "ἀκούει",
+     "audio": "chapt_3_c_akouei"
+    },
+    {
+     "prompt": "I am saying",
+     "ref": "Mat 3:9",
+     "options": [
+      "λέγει",
+      "λέγω",
+      "λέγομεν"
+     ],
+     "answer": "λέγω",
+     "audio": "chapt_3_c_legw"
+    }
+   ],
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "paradigm"
+   },
+   "scored": true,
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   },
+   "_policy_note": "One attempt per item; auto-advance on correct via the shared correctAdvanceMs constant; incorrect shows feedback and waits for Next (original ch3 behavior, D9-D11)."
+  },
+  {
+   "id": "c3_drill_parsing",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Parsing Drill",
+   "instructions": "Click on the matching parsing",
+   "promptIsGreek": true,
+   "items": [
+    {
+     "greek": "λύει",
+     "audio": "chapt_3_c_luei",
+     "ref": "Lk 13:15",
+     "translate": "he looses",
+     "answer": "Third Person Singular Present Active Indicative"
+    },
+    {
+     "greek": "λύουσιν",
+     "audio": "chapt_3_c_luousn",
+     "ref": "Mk 11:4",
+     "translate": "they loose",
+     "answer": "Third Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "λύετε",
+     "audio": "chapt_3_c_luete",
+     "ref": "Lk 19:31",
+     "translate": "you loose (pl)",
+     "answer": "Second Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "ἀκούετε",
+     "audio": "chapt_3_c_akouet",
+     "ref": "Mt 10:27",
+     "translate": "you hear (pl)",
+     "answer": "Second Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "ἀκούω",
+     "audio": "chapt_3_c_akouw",
+     "ref": "Lk 9:9",
+     "translate": "I hear",
+     "answer": "First Person Singular Present Active Indicative"
+    },
+    {
+     "greek": "ἀκούει",
+     "audio": "chapt_3_c_akouei",
+     "ref": "Mt 7:24",
+     "translate": "he hears",
+     "answer": "Third Person Singular Present Active Indicative"
+    },
+    {
+     "greek": "ἀκούομεν",
+     "audio": "chapt_3_c_akouom",
+     "ref": "Acts 2:8",
+     "translate": "we hear",
+     "answer": "First Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "ἀκούεις",
+     "audio": "chapt_3_c_akoues",
+     "ref": "Mt 21:16",
+     "translate": "you hear (sg)",
+     "answer": "Second Person Singular Present Active Indicative"
+    },
+    {
+     "greek": "ἀκούουσιν",
+     "audio": "chapt_3_c_akouou",
+     "ref": "Mt 11:5",
+     "translate": "they hear",
+     "answer": "Third Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "λέγει",
+     "audio": "chapt_3_c_legei",
+     "ref": "Mt 4:6",
+     "translate": "he says",
+     "answer": "Third Person Singular Present Active Indicative"
+    },
+    {
+     "greek": "λέγομεν",
+     "audio": "chapt_3_c_legome",
+     "ref": "Jn 8:48",
+     "translate": "we say",
+     "answer": "First Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "λέγετε",
+     "audio": "chapt_3_c_legete",
+     "ref": "Mt 15:5",
+     "translate": "you say (pl)",
+     "answer": "Second Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "λέγουσιν",
+     "audio": "chapt_3_c_legous",
+     "ref": "Mt 9:28",
+     "translate": "they say",
+     "answer": "Third Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "λέγω",
+     "audio": "chapt_3_c_legw",
+     "ref": "Mt 3:9",
+     "translate": "I say",
+     "answer": "First Person Singular Present Active Indicative"
+    },
+    {
+     "greek": "λέγεις",
+     "audio": "chapt_3_c_legeis",
+     "ref": "Mt 26:70",
+     "translate": "you say (sg)",
+     "answer": "Second Person Singular Present Active Indicative"
+    },
+    {
+     "greek": "βλέπεις",
+     "audio": "chapt_3_c_blepes",
+     "ref": "Mt 7:3",
+     "translate": "you see (sg)",
+     "answer": "Second Person Singular Present Active Indicative"
+    },
+    {
+     "greek": "βλέπομεν",
+     "audio": "chapt_3_c_blepam",
+     "ref": "Jn 9:41",
+     "translate": "we see",
+     "answer": "First Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "βλέπει",
+     "audio": "chapt_3_c_blepei",
+     "ref": "Lk 24:12",
+     "translate": "he sees",
+     "answer": "Third Person Singular Present Active Indicative"
+    },
+    {
+     "greek": "βλέπω",
+     "audio": "chapt_3_c_blepw",
+     "ref": "Mk 8:24",
+     "translate": "I see",
+     "answer": "First Person Singular Present Active Indicative"
+    },
+    {
+     "greek": "βλέπουσιν",
+     "audio": "chapt_3_c_blepsn",
+     "ref": "Mt 13:13",
+     "translate": "they see",
+     "answer": "Third Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "βλέπετε",
+     "audio": "chapt_3_c_blepet",
+     "ref": "Mt 11:4",
+     "translate": "you see (pl)",
+     "answer": "Second Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "βλέπουσι",
+     "audio": "chapt_3_c_blepou",
+     "ref": "Mt 18:10",
+     "translate": "they see",
+     "answer": "Third Person Plural Present Active Indicative"
+    },
+    {
+     "greek": "πιστεύεις",
+     "audio": "chapt_3_c_piseis",
+     "ref": "Jn 1:50",
+     "translate": "you believe (sg)",
+     "answer": "Second Person Singular Present Active Indicative",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong."
+    },
+    {
+     "greek": "πιστεύομεν",
+     "audio": "chapt_3_c_pisome",
+     "ref": "Jn 4:42",
+     "translate": "we believe",
+     "answer": "First Person Plural Present Active Indicative",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong."
+    },
+    {
+     "greek": "πιστεύω",
+     "audio": "chapt_3_c_pistew",
+     "ref": "Mk 9:24",
+     "translate": "I believe",
+     "answer": "First Person Singular Present Active Indicative",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong."
+    },
+    {
+     "greek": "πιστεύει",
+     "audio": "chapt_3_c_pistei",
+     "ref": "Jn 12:44",
+     "translate": "he believes",
+     "answer": "Third Person Singular Present Active Indicative",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong."
+    },
+    {
+     "greek": "πιστεύετε",
+     "audio": "chapt_3_c_pisete",
+     "ref": "Mt 9:28",
+     "translate": "you believe (pl)",
+     "answer": "Second Person Plural Present Active Indicative",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong."
+    },
+    {
+     "greek": "πιστεύουσιν",
+     "audio": "chapt_3_c_pisous",
+     "ref": "Lk 8:13",
+     "translate": "they believe pt",
+     "answer": "Third Person Plural Present Active Indicative",
+     "_verify": "Audio wired by filename inference. D16 device note heard c_pistei on the pisteuete item, which conflicts with name logic (c_pisete); the original may be miswired on the pist* row (same row carries the pistu<ei typo). VERIFY: listen-check the five pisteuo clips; correctness-first if the original is wrong."
+    }
+   ],
+   "options": "static",
+   "optionValues": [
+    "First Person Singular Present Active Indicative",
+    "Second Person Singular Present Active Indicative",
+    "Third Person Singular Present Active Indicative",
+    "First Person Plural Present Active Indicative",
+    "Second Person Plural Present Active Indicative",
+    "Third Person Plural Present Active Indicative"
+   ],
+   "optionGroups": [
+    3,
+    3
+   ],
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Translate",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "paradigm"
+   },
+   "scored": true,
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   },
+   "_policy_note": "One attempt per item; auto-advance on correct via the shared correctAdvanceMs constant; incorrect shows feedback and waits for Next (original ch3 behavior, D9-D11)."
+  },
+  {
+   "id": "c3_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptFrom": {
+    "lexicon": "lemmas",
+    "show": "greek",
+    "audio": "pronounceButton"
+   },
+   "options": "glossShortPool",
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   }
+  },
+  {
+   "id": "c3_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "promptFrom": {
+    "lexicon": "lemmas",
+    "show": "gloss"
+   },
+   "options": "greekPool",
+   "optionsAreGreek": true,
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   }
+  },
+  {
+   "id": "c3_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "items": [
+    {
+     "greek": "λέγει",
+     "answer": "he says",
+     "audio": "chapt_3_c_sm1"
+    },
+    {
+     "greek": "αὐτῷ",
+     "answer": "to him",
+     "audio": "chapt_3_c_sm2"
+    },
+    {
+     "greek": "Ἰησοῦς",
+     "answer": "Jesus",
+     "audio": "chapt_3_c_sm4"
+    },
+    {
+     "greek": "Ἐγώ",
+     "answer": "I",
+     "audio": "chapt_3_c_sm5"
+    },
+    {
+     "greek": "εἰμι",
+     "answer": "I am",
+     "audio": "chapt_3_c_sm6"
+    },
+    {
+     "greek": "ἡ",
+     "answer": "the",
+     "audio": "chapt_3_c_sm7"
+    },
+    {
+     "greek": "ὁδὸς",
+     "answer": "way",
+     "audio": "chapt_3_c_sm8"
+    },
+    {
+     "greek": "καὶ",
+     "answer": "and",
+     "audio": "chapt_3_c_sm9"
+    },
+    {
+     "greek": "ἀλήθεια",
+     "answer": "truth",
+     "audio": "chapt_3_c_sm11"
+    },
+    {
+     "greek": "ζωή",
+     "answer": "life",
+     "audio": "chapt_3_c_sm14"
+    }
+   ],
+   "options": "static",
+   "optionValues": [
+    "and",
+    "life",
+    "he says",
+    "the",
+    "I",
+    "to him",
+    "I am",
+    "truth",
+    "Jesus",
+    "way"
+   ],
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "scored": true,
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "autoBoth"
+   },
+   "_policy_note": "Auto-advances on BOTH outcomes (original: ~2s correct / ~4s incorrect, D7); uses the shared correct/incorrect advance constants."
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c3_ex_verb_speller",
+   "type": "spell",
+   "title": "Present Active Verb Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "gloss",
+   "accentsOptional": true,
+   "items": [
+    {
+     "gloss": "he looses",
+     "greek": "λύει",
+     "audio": "chapt_3_c_luei"
+    },
+    {
+     "gloss": "you loose (pl)",
+     "greek": "λύετε",
+     "audio": "chapt_3_c_luete"
+    },
+    {
+     "gloss": "they loose",
+     "greek": "λύουσιν",
+     "audio": "chapt_3_c_luousn",
+     "_verify": "movable-nu leniency: checker should accept the form with or without final nu (original acceptance behavior unverified)"
+    },
+    {
+     "gloss": "we hear",
+     "greek": "ἀκούομεν",
+     "audio": "chapt_3_c_akouom"
+    },
+    {
+     "gloss": "I hear",
+     "greek": "ἀκούω",
+     "audio": "chapt_3_c_akouw"
+    },
+    {
+     "gloss": "he/she hears",
+     "greek": "ἀκούει",
+     "audio": "chapt_3_c_akouei"
+    },
+    {
+     "gloss": "you hear (pl)",
+     "greek": "ἀκούετε",
+     "audio": "chapt_3_c_akouet"
+    },
+    {
+     "gloss": "you hear (sg)",
+     "greek": "ἀκούεις",
+     "audio": "chapt_3_c_akoues"
+    },
+    {
+     "gloss": "they hear",
+     "greek": "ἀκούουσιν",
+     "audio": "chapt_3_c_akouou",
+     "_verify": "movable-nu leniency: checker should accept the form with or without final nu (original acceptance behavior unverified)"
+    },
+    {
+     "gloss": "you say (sg)",
+     "greek": "λέγεις",
+     "audio": "chapt_3_c_legeis"
+    },
+    {
+     "gloss": "we say",
+     "greek": "λέγομεν",
+     "audio": "chapt_3_c_legome"
+    },
+    {
+     "gloss": "you say (pl)",
+     "greek": "λέγετε",
+     "audio": "chapt_3_c_legete"
+    },
+    {
+     "gloss": "he/she says",
+     "greek": "λέγει",
+     "audio": "chapt_3_c_legei"
+    },
+    {
+     "gloss": "I say",
+     "greek": "λέγω",
+     "audio": "chapt_3_c_legw"
+    },
+    {
+     "gloss": "they say",
+     "greek": "λέγουσιν",
+     "audio": "chapt_3_c_legous",
+     "_verify": "movable-nu leniency: checker should accept the form with or without final nu (original acceptance behavior unverified)"
+    },
+    {
+     "gloss": "we see",
+     "greek": "βλέπομεν",
+     "audio": "chapt_3_c_blepam"
+    },
+    {
+     "gloss": "you see (sg)",
+     "greek": "βλέπεις",
+     "audio": "chapt_3_c_blepes"
+    },
+    {
+     "gloss": "you see (pl)",
+     "greek": "βλέπετε",
+     "audio": "chapt_3_c_blepet"
+    },
+    {
+     "gloss": "they see",
+     "greek": "βλέπουσιν",
+     "audio": "chapt_3_c_blepsn",
+     "_verify": "movable-nu leniency: checker should accept the form with or without final nu (original acceptance behavior unverified)"
+    },
+    {
+     "gloss": "I see",
+     "greek": "βλέπω",
+     "audio": "chapt_3_c_blepw"
+    },
+    {
+     "gloss": "he/she sees",
+     "greek": "βλέπει",
+     "audio": "chapt_3_c_blepei"
+    },
+    {
+     "gloss": "I believe",
+     "greek": "πιστεύω",
+     "audio": "chapt_3_c_pistew"
+    },
+    {
+     "gloss": "you believe (sg)",
+     "greek": "πιστεύεις",
+     "audio": "chapt_3_c_piseis"
+    },
+    {
+     "gloss": "they believe",
+     "greek": "πιστεύουσιν",
+     "audio": "chapt_3_c_pisous",
+     "_verify": "movable-nu leniency: checker should accept the form with or without final nu (original acceptance behavior unverified)"
+    },
+    {
+     "gloss": "we believe",
+     "greek": "πιστεύομεν",
+     "audio": "chapt_3_c_pisome"
+    },
+    {
+     "gloss": "you believe (pl)",
+     "greek": "πιστεύετε",
+     "audio": "chapt_3_c_pisete"
+    },
+    {
+     "gloss": "he/she believess believes",
+     "greek": "πιστεύει",
+     "audio": "chapt_3_c_pistei"
+    }
+   ],
+   "spellerTilesRef": "chapt_1",
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ]
+   }
+  },
+  {
+   "id": "c3_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "gloss",
+   "accentsOptional": true,
+   "items": [
+    {
+     "ref": "alla"
+    },
+    {
+     "ref": "apostolos"
+    },
+    {
+     "ref": "blepo"
+    },
+    {
+     "ref": "gar"
+    },
+    {
+     "ref": "ginosko"
+    },
+    {
+     "ref": "iesous"
+    },
+    {
+     "ref": "lambano"
+    },
+    {
+     "ref": "luo"
+    },
+    {
+     "ref": "ouranos"
+    },
+    {
+     "ref": "pisteuo"
+    }
+   ],
+   "spellerTilesRef": "chapt_1",
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ]
+   }
+  },
+  {
+   "id": "c3_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of John 14:6a then click \"Check Answer\"",
+   "reference": "John 14:6a",
+   "answerWords": [
+    "λέγει",
+    "αὐτῷ",
+    "ὁ",
+    "Ἰησοῦς,",
+    "Ἐγώ",
+    "εἰμι",
+    "ἡ",
+    "ὁδὸς",
+    "καὶ",
+    "ἡ",
+    "ἀλήθεια",
+    "καὶ",
+    "ἡ",
+    "ζωή·"
+   ],
+   "translation": "Jesus said to him, I am the way, the truth and the life.",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "majorHint": {
+    "alwaysAvailable": true,
+    "_note": "DEPARTURE (divergence log D-11, Nathanael D8): original hides the verse after typing begins; the port keeps Major Hint available at all times."
+   },
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Major Hint",
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "With Accents"
+    ],
+    "_restart_note": "DEPARTURE (D-12): \"Repeat This Exercise\" renamed \"Restart Exercise\" (Nathanael D8)."
+   },
+   "audio": "chapt_3_c_sm14_6",
+   "_keyboard_note": "Requires the extended speller keyboard (space + punctuation) delivered by the 5D spec Phase 0 checkpoint."
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c3_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "lemmas",
+   "showNtFreq": true,
+   "playAll": {
+    "audio": "chapt_3_c_vocl3",
+    "label": "Say Whole List"
+   }
+  },
+  {
+   "id": "c3_qr_paradigm",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Present Active Indicative Paradigm",
+   "chartTitle": "Present Active Indicative Paradigm",
+   "paradigm": {
+    "lemma": {
+     "greek": "λύω",
+     "gloss": "to loose, destroy",
+     "audio": "chapt_3_c_luw"
+    },
+    "columns": [
+     "Singular",
+     "Plural"
+    ],
+    "rows": [
+     {
+      "person": "1.",
+      "cells": [
+       {
+        "greek": "λύω",
+        "gloss": "I loose/am loosing",
+        "audio": "chapt_3_c_luw"
+       },
+       {
+        "greek": "λύομεν",
+        "gloss": "We loose/are loosing",
+        "audio": "chapt_3_c_luomen"
+       }
+      ]
+     },
+     {
+      "person": "2.",
+      "cells": [
+       {
+        "greek": "λύεις",
+        "gloss": "You loose/are loosing",
+        "audio": "chapt_3_c_lueis"
+       },
+       {
+        "greek": "λύετε",
+        "gloss": "You loose/are loosing",
+        "audio": "chapt_3_c_luete"
+       }
+      ]
+     },
+     {
+      "person": "3.",
+      "cells": [
+       {
+        "greek": "λύει",
+        "gloss": "He/she/it looses/is loosing",
+        "audio": "chapt_3_c_luei"
+       },
+       {
+        "greek": "λύουσι",
+        "gloss": "They loose/are loosing",
+        "audio": "chapt_3_c_luousi"
+       }
+      ]
+     }
+    ],
+    "sayWhole": {
+     "label": "Say Whole Paradigm",
+     "audio": "chapt_3_c_paipar"
+    }
+   },
+   "_note": "Same grid as the Learn page, no Endings button (D5); cells play the c_ form clips."
+  },
+  {
+   "id": "c3_qr_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory",
+   "reference": "John 14:6a",
+   "words": [
+    {
+     "greek": "λέγει",
+     "gloss": "he said",
+     "audio": "chapt_3_c_sm1"
+    },
+    {
+     "greek": "αὐτῷ",
+     "gloss": "to him",
+     "audio": "chapt_3_c_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": null,
+     "audio": "chapt_3_c_sm3"
+    },
+    {
+     "greek": "Ἰησοῦς,",
+     "gloss": "Jesus",
+     "audio": "chapt_3_c_sm4"
+    },
+    {
+     "greek": "Ἐγώ",
+     "gloss": "I",
+     "audio": "chapt_3_c_sm5"
+    },
+    {
+     "greek": "εἰμι",
+     "gloss": "I am",
+     "audio": "chapt_3_c_sm6"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_3_c_sm7"
+    },
+    {
+     "greek": "ὁδὸς",
+     "gloss": "way",
+     "audio": "chapt_3_c_sm8"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_3_c_sm9"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_3_c_sm10"
+    },
+    {
+     "greek": "ἀλήθεια",
+     "gloss": "truth",
+     "audio": "chapt_3_c_sm11"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_3_c_sm12"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_3_c_sm13"
+    },
+    {
+     "greek": "ζωή·",
+     "gloss": "life:",
+     "audio": "chapt_3_c_sm14"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_3_c_sm14_6"
+   }
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Perfect!",
+   "Right On!",
+   "Great!",
+   "Fantastic!",
+   "Yes",
+   "Congratulations"
+  ],
+  "incorrect": [
+   "Try again",
+   "Repetition will get it",
+   "Swing and a miss",
+   "Not quite!"
+  ]
+ },
+ "sequence": [
+  "c3_learn_objectives",
+  "c3_learn_english_concepts",
+  "c3_learn_verbs",
+  "c3_drill_verb_translating",
+  "c3_drill_greek_verb",
+  "c3_drill_parsing",
+  "c3_ex_verb_speller",
+  "c3_learn_vocab",
+  "c3_drill_vocab_gk_en",
+  "c3_drill_vocab_en_gk",
+  "c3_ex_vocab_speller",
+  "c3_learn_scripture",
+  "c3_drill_scripture_memory",
+  "c3_ex_scripture_speller",
+  "c3_qr_vocab",
+  "c3_qr_paradigm",
+  "c3_qr_scripture",
+  "c3_learn_bibliography"
+ ],
+ "_sequence_note": "DOSBox-verified rail order, 5D-RECON-RESULTS D1 (Nathanael, 2026-07-28)."
+}

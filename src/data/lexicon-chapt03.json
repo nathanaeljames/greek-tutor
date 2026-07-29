@@ -1,0 +1,106 @@
+{
+ "_comment": "Chapter 3 lexicon, assembled 2026-07-28 from 3_VERBS.TBK (cohort 5D). Vocabulary order is the TBK list order (alphabetical), which matches c_voc1..10. ntFreq values are the standard Mounce counts. Inflected drill forms live inline in chapt-03.json, not here. No mirror bucket: CHAPT_3 ships only c_* audio (no a_/b_ duplicates), so chapter 3 reuses nothing from earlier packs.",
+ "lemmas": {
+  "alla": {
+   "greek": "ἀλλά",
+   "translit": "alla",
+   "gloss": "but, yet",
+   "glossShort": "but",
+   "pos": "conj",
+   "audio": "chapt_3_c_voc1",
+   "_legacy": "a]lla<",
+   "ntFreq": 638
+  },
+  "apostolos": {
+   "greek": "ἀπόστολος",
+   "translit": "apostolos",
+   "gloss": "apostle, messenger",
+   "glossShort": "apostle",
+   "pos": "noun",
+   "audio": "chapt_3_c_voc2",
+   "_legacy": "a]po<stoloj",
+   "ntFreq": 80
+  },
+  "blepo": {
+   "greek": "βλέπω",
+   "translit": "blepo",
+   "gloss": "I see",
+   "glossShort": "I see",
+   "pos": "verb",
+   "audio": "chapt_3_c_voc3",
+   "_legacy": "ble<pw",
+   "ntFreq": 133
+  },
+  "gar": {
+   "greek": "γάρ",
+   "translit": "gar",
+   "gloss": "for, then",
+   "glossShort": "for",
+   "pos": "conj",
+   "audio": "chapt_3_c_voc4",
+   "_legacy": "ga<r",
+   "ntFreq": 1041
+  },
+  "ginosko": {
+   "greek": "γινώσκω",
+   "translit": "ginosko",
+   "gloss": "I know, learn",
+   "glossShort": "I know",
+   "pos": "verb",
+   "audio": "chapt_3_c_voc5",
+   "_legacy": "ginw<skw",
+   "ntFreq": 222
+  },
+  "iesous": {
+   "greek": "Ἰησοῦς",
+   "translit": "iesous",
+   "gloss": "Jesus",
+   "glossShort": "Jesus",
+   "pos": "noun",
+   "audio": "chapt_3_c_voc6",
+   "_legacy": "]Ihsou?j",
+   "ntFreq": 917
+  },
+  "lambano": {
+   "greek": "λαμβάνω",
+   "translit": "lambano",
+   "gloss": "I take, receive",
+   "glossShort": "I take",
+   "pos": "verb",
+   "audio": "chapt_3_c_voc7",
+   "_legacy": "lamba<nw",
+   "ntFreq": 258
+  },
+  "luo": {
+   "greek": "λύω",
+   "translit": "luo",
+   "gloss": "I loose, destroy",
+   "glossShort": "I loose",
+   "pos": "verb",
+   "audio": "chapt_3_c_voc8",
+   "_legacy": "lu<w",
+   "ntFreq": 42
+  },
+  "ouranos": {
+   "greek": "οὐρανός",
+   "translit": "ouranos",
+   "gloss": "heaven",
+   "glossShort": "heaven",
+   "pos": "noun",
+   "audio": "chapt_3_c_voc9",
+   "_legacy": "ou]rano<j",
+   "ntFreq": 273
+  },
+  "pisteuo": {
+   "greek": "πιστεύω",
+   "translit": "pisteuo",
+   "gloss": "I believe",
+   "glossShort": "I believe",
+   "pos": "verb",
+   "audio": "chapt_3_c_voc10",
+   "_legacy": "pisteu<w",
+   "ntFreq": 241
+  }
+ },
+ "exampleWords": {}
+}
