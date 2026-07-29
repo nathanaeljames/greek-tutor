@@ -59,6 +59,36 @@ D-15 | ch3+ | Speller keyboard extended app-wide (space +
      punctuation per the 5D Phase 0 checkpoint; layout chosen by
      Nathanael). Original on-screen keyboard has no space key. |
      Nathanael, 5D-RECON D8.
+     RESOLVED 2026-07-28 at the Phase 0 checkpoint — LAYOUT A: one
+     added bottom row, four punctuation keys (comma, raised dot,
+     period, Greek question mark) plus a space bar that takes the rest
+     of the row and drops to a full-width row of its own where there
+     is not room. Letter and mark rows untouched. Inventory is now
+     25 letters + 11 marks + 3 composites + 4 punctuation + space
+     (44 tiles). Ships in speller-tiles.json, the SHARED contract; the
+     component reads it in preference to any inline
+     activity.spellerTiles copy, so chapter 1's byte-identical inline
+     duplicate can no longer fork the keyboard.
+D-18 | app | SPELLING CHECK POLICY (5D Phase 0, Nathanael). "With
+     Accents" OFF: accent/breathing/subscript-insensitive, case-
+     insensitive, final sigma = sigma, punctuation optional, movable
+     nu optional, whitespace normalized. ON: every mark exact —
+     and nothing else changes (still case-insensitive, still
+     punctuation-optional per the data flag, still movable-nu
+     lenient). CASE IS NEVER REQUIRED under either setting: the
+     shared keyboard has no capitals and the decision was to keep it
+     that way rather than add a shift layer. This also RETROACTIVELY
+     fixes chapters 1-2, where Χριστός / Π- / Φ- items had been
+     unwinnable with "With Accents" ON since their cohorts shipped.
+     | Nathanael, 5D Phase 0.
+D-19 | app | English-to-Greek vocabulary drills drop from a four-
+     column to a two-column option grid. Ten polytonic Greek words
+     four-up need ~33px more than a 320px screen has, and overflow-x
+     is hidden app-wide, so the longest words were being clipped in
+     silence (measured on ch1, ch2 AND ch3; the expression is
+     identical in the shipped build, so it predates this cohort). The
+     24-letter grids keep four columns — single glyphs, no width
+     problem. | 5D, measured; confirm in VERIFY-5D.
 D-16 | ch3 | Movable-nu leniency: verb spelling checker accepts
      3rd-plural forms with or without final nu (original acceptance
      behavior unverified). | 5D assembly, _verify pending.
@@ -74,6 +104,13 @@ D-17 | intro | "Getting Around" navigation copy is new-authored (the
 | manualOnIncorrect | 1 | ADVANCE_CORRECT_MS auto | feedback + manual Next, options lock | ch3 verb/translating/parsing + vocab drills; expected ch4-8 case/translation drills |
 | autoBoth | 1 | ADVANCE_CORRECT_MS auto | ADVANCE_INCORRECT_MS auto | ch3+ Scripture Memory Drill; ch2 one-attempt reveal surfaces (migrate at next touch) |
 | manual | n/a | manual | manual | all spell/spellVerse/divide/placeAccent (Check Answer flows) |
+
+Implemented 5D in src/lib/timing.js: the two constants plus
+resolveAdvance(answerPolicy), which maps BOTH the advanceClass field
+(ch3+) and chapter 2's older attemptsPerItem/autoAdvanceMs/
+autoAdvanceOnIncorrect triple onto the same three classes. An explicit
+autoAdvanceMs still wins, so chapter 2's shipped ~4s feel is unchanged
+until it is retuned. No component file contains a timing number.
 
 Original observed timings for the record: ch2 one-attempt reveal ~4s
 (J1); ch3 drills ~2s correct, manual incorrect; ch3 SM drill ~2s/~4s.

@@ -5,16 +5,24 @@
   // rows and underlined list lead-ins are all load-bearing, not decoration.
   //
   // Block types: heading | subheading | para | numbered | defList | biblist |
-  // refs | note | greekRows | expander. An unknown type renders LOUD (see the
-  // dispatch's final else) rather than vanishing.
+  // refs | note | greekRows | expander | paradigm. An unknown type renders LOUD
+  // (see the dispatch's final else) rather than vanishing.
   // Trailing { greek, caption?, audio? } "example" objects render in the Greek
   // font and play their clip on tap. defList rows [term, value, audio?] play
   // the row's clip when present.
   import { play } from '../lib/audio.js';
   import { splitMarkRun } from '../lib/greek.js';
   import Marked from './Marked.svelte';
+  import Paradigm from './Paradigm.svelte';
 
   export let blocks = [];
+  // The heading the HOST already printed above these blocks (topicPages prints
+  // the topic title). A chart whose own title repeats it prints one heading,
+  // not two — the chapter-3 Paradigm topic is titled "Paradigm" and so is its
+  // chart. Same principle as dedupeExpanders below: the data is not ours to
+  // edit, so the renderer declines to say it twice.
+  export let suppressTitle = null;
+  const sameTitle = t => !!t && !!suppressTitle && t.trim() === suppressTitle.trim();
 
   // The 6 Accent Rules topic ships the "Chart: Accent Possibilities" expander
   // TWICE, byte-identical (feedback 5: it renders twice on both devices). Data
@@ -260,6 +268,12 @@
         {/each}
         {#if b._verify}<div class="pending-verification compact">Some chart details are pending verification.</div>{/if}
       </div>
+
+    {:else if b.type === 'paradigm'}
+      <!-- A conjugation/declension chart. Its own component because the same
+           grid is ALSO a full-page contentAudio mode (paradigmChart) and the
+           Hint popup on three chapter-3 drills — one renderer, three hosts. -->
+      <Paradigm paradigm={b} title={sameTitle(b.title) ? null : b.title} />
 
     {:else if b.type === 'expander'}
       <details class="rc-expander">

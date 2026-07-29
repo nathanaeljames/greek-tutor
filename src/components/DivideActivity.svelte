@@ -32,6 +32,7 @@
   import { randomFeedback, resolveHintBlocks } from '../lib/content.js';
   import { dividedForm, splitGraphemes } from '../lib/greek.js';
   import { markCompleted } from '../lib/progress.js';
+  import { resolveAdvance } from '../lib/timing.js';
   import RichContent from './RichContent.svelte';
 
   export let chapter;
@@ -203,7 +204,7 @@
   $: pending = !item || !item.greek || !Array.isArray(item.division);
   $: hintBlocks = resolveHintBlocks(chapter, activity.hint);
   $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
-  $: autoAdvanceMs = activity.answerPolicy?.autoAdvanceMs ?? 900;
+  $: autoAdvanceMs = resolveAdvance(activity.answerPolicy).correctMs;
   $: revealed = answered && oneAttempt;
   $: answerGaps = new Set((!pending && item.division) || []);
   // Live score (C3): reactive, so the line follows every answer instead of

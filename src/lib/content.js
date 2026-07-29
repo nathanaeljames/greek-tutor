@@ -270,7 +270,31 @@ export function resolveItems(chapter, activity) {
                audio: item.audio || null, meta: item };
     });
   }
+  // 5D convention: instead of spelling out ten {ref} items, an activity names
+  // a lexicon BUCKET (pool: "lemmas") and the chapter's own vocab list
+  // supplies the refs. Same resolved shape, so flashcard and reviewVocab are
+  // untouched.
+  if (activity.pool || (activity.promptFrom && activity.promptFrom.lexicon)) {
+    return lemmaPool(chapter, activity).map(lemma => ({
+      display: lemma.greek, secondary: stripMarkup(lemma.gloss), audio: lemma.audio, meta: lemma
+    }));
+  }
   return [];
+}
+
+// The lemma list a vocabulary surface works over: either an explicit items
+// array (chapters 1-2) or a named lexicon bucket over the chapter's vocab
+// refs (chapter 3 onward). Both yield { ref, ...lemma } records.
+function lemmaPool(chapter, activity) {
+  if (Array.isArray(activity.items) && activity.items.length) {
+    return activity.items.map(item => {
+      const ref = typeof item === 'string' ? item : item.ref;
+      const pool = typeof item === 'string' ? null : item.pool;
+      return { ref, ...(getLemma(ref, chapter.id, pool) || {}) };
+    });
+  }
+  const bucket = activity.pool || (activity.promptFrom && activity.promptFrom.lexicon) || 'lemmas';
+  return (chapter.vocab || []).map(ref => ({ ref, ...(getLemma(ref, chapter.id, bucket) || {}) }));
 }
 
 function pickDisplay(letter, mode) {
@@ -319,53 +343,74 @@ export function buildSelectQuestions(chapter, activity) {
     return { options, questions, optionClass: 'wide', promptIsGreek: promptField === 'lower' || promptField === 'upper' };
   }
 
-  // Static-option drills use authored optionValues rather than a lexicon-
-  // derived answer grid. Missing prompt/answer fields remain in the sequence
+  // AUTHORED-OPTION drills: the option set comes from the data rather than
+  // from a lexicon-derived answer grid. Two flavours share this branch —
+  // activity-level optionValues (one grid for the whole drill: chapter 2's
+  // four drills, chapter 3's Parsing and Scripture Memory drills) and
+  // PER-ITEM options (5D: the Verb Translating drill's six verb-family
+  // translations, the Greek Verb Drill's three Greek forms). An item's own
+  // optionValues/options win; the activity-level set is the fallback, so a
+  // drill may mix the two. Missing prompt/answer fields remain in the sequence
   // as visible pending-verification questions instead of becoming bad answers.
-  if (Array.isArray(activity.optionValues)) {
+  if (activity.optionsPerItem || Array.isArray(activity.optionValues)) {
     const promptField = activity.promptFrom && activity.promptFrom.show;
-    const promptIsGreek = promptField === 'greek';
-    const options = activity.optionValues.map(value => ({ id: String(value), label: String(value) }));
+    // 5D: an activity may DECLARE its prompt side rather than implying it via
+    // promptFrom (the ch3 drills have no promptFrom — their prompts are inline
+    // on the items). Same Greek-tap contract either way: declared, never
+    // guessed from the glyphs.
+    const promptIsGreek = activity.promptIsGreek != null ? !!activity.promptIsGreek : promptField === 'greek';
+    const toOptions = values => (values || []).map(value => ({ id: String(value), label: String(value) }));
+    const options = toOptions(activity.optionValues);
     const questions = shuffle((activity.items || []).map(item => {
       const lemma = item.ref ? getLemma(item.ref, chapter.id, item.pool) : null;
       const prompt = promptField === 'sentence'
         ? item.sentence
-        : promptField === 'greek'
+        : promptIsGreek
           ? (item.greek || (lemma && lemma.greek))
-          : item[promptField];
+          : (item.prompt != null ? item.prompt : (promptField ? item[promptField] : undefined));
       const needsUnderline = promptField === 'sentence' && !item.underline;
+      const itemOptions = item.optionValues || item.options;
       return {
         prompt: stripMarkup(prompt) || '',
         promptAudio: promptIsGreek ? (item.promptAudio || item.audio || (lemma && lemma.audio) || null) : null,
+        // The answer's OWN clip, for surfaces where Pronounce speaks the
+        // answer rather than the prompt (Greek Verb Drill: English prompt,
+        // Greek answer). Never played before the item is finalized.
+        answerAudio: promptIsGreek ? null : (item.audio || null),
         answerId: item.answer == null ? null : String(item.answer),
+        options: itemOptions ? toOptions(itemOptions) : null,
         underline: stripMarkup(item.underline) || null,
+        // `ref` is overloaded in the data: chapter 2's syllable drill uses it
+        // as a LEXICON key, chapter 3's drills as a scripture citation to
+        // print beside the prompt. Whether it resolved to a lemma is the
+        // discriminator — no id-keyed special case needed.
+        citation: !lemma && item.ref ? item.ref : null,
         // Revealed once the item is finalized (one-attempt drills): the gloss,
         // the properly accented form (Accent Rule), and which grapheme cluster
         // carries the mark being asked about (Marking Recognition).
         gloss: stripMarkup(item.gloss || (lemma && (lemma.glossShort || lemma.gloss))) || null,
+        // 5D: what the Translate button reveals under the prompt. Distinct
+        // from `gloss`, which chapter 2's one-attempt drills reveal on their
+        // own once an item is answered — a translation is shown on request.
+        translate: stripMarkup(item.translate) || null,
         correctForm: item.correctForm || null,
         redMarkCluster: item.redMarkCluster || null,
         pending: !prompt || item.answer == null || needsUnderline
       };
     }));
-    // Option-grid density follows label length: number tiles four-up, short
-    // names two-up, and the Accent Rule's full sentences one per row (the
-    // original stacks those full width; two-up clips nothing but reads badly
-    // at 320px).
-    const longest = options.reduce((n, option) => Math.max(n, option.label.length), 0);
-    const optionClass = longest <= 8 ? 'wide' : longest > 24 ? 'single' : '';
-    return { options, questions, optionClass, promptIsGreek };
+    return { options, questions, optionClass: optionClassFor(activity, options, questions), promptIsGreek };
   }
 
-  // items-based (vocabulary drills): options are the full lemma set. Both
-  // drills show the SHORT gloss ("truly, verily", "and, even", "Christ");
-  // the full gloss + ntFreq is reserved for the Review Vocabulary Chart.
-  const lemmas = (activity.items || []).map(item => {
-    const ref = typeof item === 'string' ? item : item.ref;
-    const pool = typeof item === 'string' ? null : item.pool;
-    return { ref, ...(getLemma(ref, chapter.id, pool) || {}) };
-  });
-  const promptSide = activity.prompt === 'greek' ? 'greek' : 'gloss';
+  // Vocabulary drills: options are the full lemma set. Both drills show the
+  // SHORT gloss ("truly, verily", "and, even", "Christ"); the full gloss +
+  // ntFreq is reserved for the Review Vocabulary Chart.
+  const lemmas = lemmaPool(chapter, activity);
+  // Chapters 1-2 declare the prompt side with `prompt`; chapter 3 declares it
+  // as promptFrom.show. Either way it is DECLARED — the Greek-tap rule may
+  // never be inferred from the glyphs (P6-P9).
+  const promptSide = activity.prompt
+    ? (activity.prompt === 'greek' ? 'greek' : 'gloss')
+    : ((activity.promptFrom && activity.promptFrom.show) === 'greek' ? 'greek' : 'gloss');
   const optionSide = promptSide === 'greek' ? 'gloss' : 'greek';
   const label = (l, side) => (side === 'gloss' ? (l.glossShort || l.gloss) : l.greek);
   const options = lemmas.map(l => ({ id: l.ref, label: label(l, optionSide) }));
@@ -377,6 +422,45 @@ export function buildSelectQuestions(chapter, activity) {
   // Gk->En: the Greek prompt word is tappable (plays the lemma). En->Gk: the
   // English prompt stays untappable; its Greek OPTIONS are answers, never taps.
   return { options, questions, optionClass: '', promptIsGreek: promptSide === 'greek' };
+}
+
+// Option-grid density, from the data — never from the activity id.
+//   grouped  the drill declares optionGroups ([3,3]); the component lays the
+//            groups out as separate stacks (ch3 Parsing).
+//   single   labels too long for two columns (ch2's Accent Rule sentences,
+//            ch3's six full parsings), or a per-item GREEK option set, which
+//            the original stacks (ch3 Greek Verb Drill's three forms).
+//   wide     four-up, for number/one-glyph tiles only (ch2 syllable counting).
+//   ''       the two-column default: ch2's mark and part-of-speech grids,
+//            ch3's 2x3 verb translations and 2x5 Scripture Memory grid.
+function optionClassFor(activity, activityOptions, questions) {
+  if (Array.isArray(activity.optionGroups) && activity.optionGroups.length) return 'grouped';
+  if (activity.optionsPerItem && activity.optionsAreGreek) return 'single';
+  const all = activityOptions.length
+    ? activityOptions
+    : questions.reduce((acc, q) => acc.concat(q.options || []), []);
+  const longest = all.reduce((n, option) => Math.max(n, option.label.length), 0);
+  if (longest > 24) return 'single';
+  return longest <= 3 ? 'wide' : '';
+}
+
+// A hintRef names a CHART TYPE that already exists in the chapter — chapter
+// 3's three verb drills all open the same λύω paradigm the Learn page draws
+// (the original's Hint popup). Resolving by block type keeps the hint from
+// duplicating, or inventing, authored content and stays mode-keyed: any later
+// chapter whose drills point at their own paradigm gets this for free.
+export function resolveHintRef(chapter, ref) {
+  if (!chapter || !ref) return null;
+  let found = null;
+  const walk = node => {
+    if (found || !node) return;
+    if (Array.isArray(node)) { node.forEach(walk); return; }
+    if (typeof node !== 'object') return;
+    if (node.type === ref) { found = node; return; }
+    for (const key of Object.keys(node)) walk(node[key]);
+  };
+  for (const section of SECTIONS) walk(chapter[section]);
+  return found;
 }
 
 // An activity's Hint either carries its own blocks or REFERS to a chart that

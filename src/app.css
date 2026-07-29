@@ -557,6 +557,123 @@ button { font: inherit; cursor: pointer; }
 .kb-greek { font-size: 1.25rem; }
 .kb-ref { max-width: 420px; }
 
+/* ================= Chapter 3 (5D) ================= */
+
+/* ---- PARADIGM CHART ----
+   One grid, three hosts (Learn topic block, Quick Review page, drill Hint
+   popup). Person column + one column per number; each cell is a tappable
+   Greek form over its gloss. The glosses are the widest thing in the chart
+   ("He/she/it looses/is loosing"), so the columns are fr units with min-width
+   0 and the text wraps — at 320px the two data columns get ~110px each and
+   the gloss runs to three lines rather than clipping. */
+.paradigm { margin: 6px 0 2px; }
+.pg-title { text-align: center; font-size: 1.1rem; font-weight: 700; color: var(--teal-dark);
+  margin-bottom: 8px; }
+.pg-lemma { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
+  gap: 4px 12px; width: 100%; background: transparent; border: none; padding: 2px 0 10px; }
+.pg-lemma-greek { font-size: 1.7rem; color: var(--link); }
+.pg-lemma-gloss { color: var(--teal-dark); font-size: 0.95rem; }
+.pg-grid { display: flex; flex-direction: column; }
+.pg-head, .pg-row { display: grid; grid-template-columns: 1.6em repeat(var(--pg-cols, 2), minmax(0, 1fr));
+  gap: 6px; align-items: stretch; }
+.pg-head { padding: 6px 2px; border-bottom: 2px solid rgba(0,0,0,0.1); color: var(--teal-dark);
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; text-align: center; }
+.pg-head > span { min-width: 0; overflow-wrap: break-word; }
+.pg-row { border-bottom: 1px solid rgba(0,0,0,0.06); }
+.pg-person { display: flex; align-items: center; justify-content: flex-start;
+  color: var(--teal-dark); font-weight: 700; font-size: 0.9rem; }
+.pg-cell { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0;
+  background: transparent; border: none; padding: 9px 2px; text-align: center; }
+.pg-cell:active { background: rgba(0,0,0,0.04); border-radius: 8px; }
+.pg-cell:disabled { cursor: default; }
+.pg-greek { font-size: 1.35rem; color: var(--link); overflow-wrap: anywhere; }
+.pg-cell:disabled .pg-greek { color: var(--ink); }
+.pg-gloss { font-size: 0.78rem; line-height: 1.3; color: var(--teal-dark); overflow-wrap: break-word; }
+/* The original keeps Say Whole Paradigm / Endings INSIDE the chart frame. */
+.pg-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
+
+/* Endings popup: the same two number columns, ending over its English. The
+   endings are bare morphemes with no clips, so they stay INK — the tappable
+   blue would promise audio that does not exist. */
+.pg-endings { max-width: 380px; }
+.pg-endgrid { display: flex; flex-direction: column; margin: 4px 0 2px; }
+.pg-endhead { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
+  padding: 5px 2px; border-bottom: 2px solid rgba(0,0,0,0.1); color: var(--teal-dark);
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase; text-align: center; }
+.pg-endrow { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
+  padding: 8px 2px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+.pg-endpair { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; }
+.pg-ending { font-size: 1.3rem; color: var(--ink); }
+.pg-endgloss { font-size: 0.78rem; color: var(--teal-dark); overflow-wrap: break-word; text-align: center; }
+
+/* Hint popup: the paradigm over the drill (the original's Hint window). */
+.hint-modal { max-width: 400px; max-height: 86vh; overflow-y: auto; }
+
+/* ---- INTERLINEAR VERSE (Scripture Memory) ----
+   Greek row over gloss row, wrapping as whole words so a word never parts
+   company with its gloss (D6). Each word is its own tap target and clip. */
+.ilv { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 4px 14px; }
+.ilv-word { display: flex; flex-direction: column; align-items: center; gap: 1px;
+  background: transparent; border: none; padding: 4px 2px; }
+.ilv-word:active { background: rgba(0,0,0,0.04); border-radius: 8px; }
+.ilv-word:disabled { cursor: default; }
+.ilv-greek { font-size: 1.5rem; line-height: 1.35; color: var(--link); }
+.ilv-word:disabled .ilv-greek { color: var(--ink); }
+/* A word with no gloss (the article before Ἰησοῦς) keeps its slot so the two
+   rows stay on their own baselines instead of jostling. */
+.ilv-gloss { font-size: 0.78rem; line-height: 1.3; color: var(--teal-dark); min-height: 1.3em;
+  white-space: pre; }
+.ilv-ref { text-align: right; color: var(--teal-dark); font-size: 0.85rem; font-weight: 700;
+  margin-top: 10px; }
+
+/* ---- Drill additions ---- */
+/* The scripture citation the original prints with the drill word. */
+.prompt-citation { text-align: center; color: var(--teal-dark); font-size: 0.82rem;
+  font-weight: 700; margin: -10px 0 6px; }
+/* advanceClass manualOnIncorrect: the item is final and nothing is moving. */
+.await-next { text-align: center; color: var(--teal-dark); font-size: 0.9rem;
+  font-weight: 600; margin-top: 10px; }
+/* optionGroups [3,3]: two separated stacks. Six 46-character parsing labels
+   cannot share 320px in two columns, so the groups stack vertically on the
+   phone (still visibly two blocks, divided) and sit side by side once there is
+   room, which is the original's arrangement. */
+.option-groups { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.option-group { gap: 8px; }
+.option-group + .option-group { border-top: 1px solid rgba(0,0,0,0.12); padding-top: 10px; }
+@media (min-width: 560px) {
+  .option-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .option-group + .option-group { border-top: none; border-left: 1px solid rgba(0,0,0,0.12);
+    padding-top: 0; padding-left: 12px; }
+}
+
+/* ---- SHARED KEYBOARD: punctuation + space row (D-15, Phase 0 layout A) ----
+   The letter and mark rows above are untouched. This row keeps the four
+   punctuation keys at a real touch target and gives the rest to the space
+   bar, which is the key the whole-verse speller lives on. */
+.tk-punct { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+.tk-punct .tk-key { flex: 0 0 auto; min-width: 44px; }
+.tk-key.punct { font-family: var(--greek-font); color: var(--teal-dark); }
+/* The space bar takes the rest of the row where there is room and drops to a
+   full-width row of its own where there is not — four 44px punctuation keys
+   leave only 64px inside 320px, which is a space bar in name only. The
+   flex-basis is what decides: it wraps when the remainder is under 140px. */
+.tk-key.tk-space { flex: 1 1 140px; min-width: 140px; font-size: 0.85rem; font-weight: 600;
+  color: var(--teal-dark); }
+
+/* ---- WHOLE-VERSE SPELLER ---- */
+.sv-ref { text-align: right; color: var(--teal-dark); font-size: 0.85rem; font-weight: 700;
+  margin-bottom: 8px; }
+/* Free-typed multi-word Greek: wraps, and grows instead of scrolling sideways. */
+.spellverse .sv-target { font-size: 1.35rem; line-height: 1.5; min-height: 4.5rem;
+  display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+.sv-detail { text-align: center; color: var(--teal-dark); font-size: 0.95rem; margin: -4px 0 8px; }
+.sv-word { font-size: 1.2rem; }
+.sv-hint { background: #fffdf3; border: 1px solid #e7dfbf; border-radius: 10px;
+  padding: 10px 12px; margin: 10px 0; }
+.sv-hint .label { font-size: 0.75rem; color: var(--teal-dark); font-weight: 700; text-transform: uppercase; }
+.sv-verse { font-size: 1.25rem; line-height: 1.5; margin: 4px 0 6px; overflow-wrap: anywhere; }
+.sv-translation { font-size: 0.95rem; color: var(--teal-dark); }
+
 /* ---- Chapter 2 divide / placeAccent activities ---- */
 .exercise-checks { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 12px 0;
   font-size: 0.9rem; }
@@ -670,6 +787,7 @@ button, a, input, select, textarea, label,
 .rv-greek, .lm-row, .rc-defrow, .rc-example, .greek-chip, .greek-tap,
 .seg, .flash-hidden, .icon-btn, .bb-item, .section-head, .collapse-head,
 .rc-expander summary, .accent-slot,
+.pg-cell, .pg-lemma, .ilv-word,
 .one-syllable-bar {
   touch-action: manipulation;
 }

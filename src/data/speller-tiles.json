@@ -88,5 +88,33 @@
     "ῃ",
     "ῳ"
   ],
-  "_source": "C1 finalized from speller close-up photo (2026-07-17): tile rows are the 24 lowercase letters, then final sigma + 3 single accents + 2 breathings + 1 combo, then 5 more breathing+accent combos + the 3 iota-subscript composites. Inventory = 25 letters + 11 marks + 3 composites (39 tiles). All six breathing+accent combinations exist (incl. rough+grave and smooth+grave). On-screen arrangement is the app's own; this inventory is the contract. Diacritic 'apply' = combining sequence appended to the previous character, then NFC-normalize."
+  "punctuation": [
+    {
+      "name": "comma",
+      "label": ",",
+      "insert": ","
+    },
+    {
+      "name": "raised dot",
+      "label": "·",
+      "insert": "·"
+    },
+    {
+      "name": "period",
+      "label": ".",
+      "insert": "."
+    },
+    {
+      "name": "question mark",
+      "label": ";",
+      "insert": ";"
+    }
+  ],
+  "space": {
+    "name": "space",
+    "label": "space",
+    "insert": " "
+  },
+  "_source": "C1 finalized from speller close-up photo (2026-07-17): tile rows are the 24 lowercase letters, then final sigma + 3 single accents + 2 breathings + 1 combo, then 5 more breathing+accent combos + the 3 iota-subscript composites. Inventory = 25 letters + 11 marks + 3 composites (39 tiles). All six breathing+accent combinations exist (incl. rough+grave and smooth+grave). On-screen arrangement is the app's own; this inventory is the contract. Diacritic 'apply' = combining sequence appended to the previous character, then NFC-normalize.",
+  "_extension_5d": "5D Phase 0 (divergence log D-15, layout A chosen by Nathanael): one added bottom row of 4 punctuation keys + a space bar. The original on-screen keyboard has neither, and the chapter-3 Scripture Memory Spelling Exercise types a 14-word verse; chapter 6's Spell Greek Phrase needs the space too. Punctuation covers the Scripture Memory family through chapter 8 (comma, raised dot, period) plus the Greek question mark. NO CAPITALS and no shift layer: the checking policy folds case under both 'With Accents' settings instead. The question-mark tile inserts U+003B, which is what U+037E normalizes to under NFC. This file is the SHARED contract for every spell surface app-wide; SpellActivity reads it in preference to any inline activity.spellerTiles copy so a chapter cannot fork the keyboard."
 }

@@ -1,40 +1,35 @@
 <script>
-  // Vocabulary Spelling Exercise. English meaning is shown; the student spells
-  // the Greek word using the on-screen tile keyboard or a physical keyboard
-  // (legacy roman->Greek layout). Diacritic tiles combine onto the previous
-  // character and NFC-normalize. Grading honors the "With Accents" toggle.
+  // Word Spelling Exercise (Vocabulary, and from chapter 3 the Present Active
+  // Verb speller). English meaning is shown; the student spells the Greek word
+  // using the shared tile keyboard or a physical keyboard (legacy roman->Greek
+  // layout). Diacritic tiles combine onto the previous character and
+  // NFC-normalize. Grading honors the "With Accents" toggle and otherwise
+  // follows the one shared policy in lib/answer-check.js.
   import { onMount, onDestroy } from 'svelte';
-  import { getSpellerTiles, getLemma, randomFeedback } from '../lib/content.js';
+  import { getLemma, randomFeedback } from '../lib/content.js';
   import { play } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
+  import { spellingMatches } from '../lib/answer-check.js';
+  import { ADVANCE_CORRECT_MS } from '../lib/timing.js';
+  import SpellerKeyboard, { KEYMAP, PUNCT_KEYS } from './SpellerKeyboard.svelte';
   export let chapter;
   export let activity;
 
+  // Two item shapes. {ref} looks the word up in the chapter's lexicon (the
+  // vocabulary spellers); {gloss, greek, audio} carries it inline (chapter 3's
+  // verb speller, whose 27 inflected forms are not lexicon lemmas).
   const words = (activity.items || []).map(it => {
+    if (it.greek) return { ref: null, greek: it.greek, gloss: it.gloss || '', audio: it.audio || null };
     const l = getLemma(it.ref, chapter.id, it.pool) || {};
     return { ref: it.ref, greek: l.greek || '', gloss: l.gloss || '', audio: l.audio || null };
   });
 
-  // Tile keyboard uses the static `speller-tiles.json` contract: the
-  // authoritative 39-tile inventory has 25 letters + 11 diacritic marks + 3
-  // iota-subscript composites). Each diacritic's `apply` is the combining
-  // sequence appended to the previous character before NFC normalization.
-  // Falls back to a minimal derived inventory if the data ever lacks it.
-  const tiles = activity.spellerTiles
-    || (activity.spellerTilesRef ? getSpellerTiles(activity.spellerTilesRef) : {});
+  // The tile keyboard is a shared component reading the shared
+  // speller-tiles.json contract. Chapter 1's inline copy is handed over only
+  // as a last-resort fallback — see SpellerKeyboard for why it must not win.
   const fallbackLetters = chapter.alphabet && chapter.alphabet.letters
     ? chapter.alphabet.letters.map(l => (l.lower === 'σ/ς' ? 'σ' : l.lower))
     : [];
-  const letterTiles = tiles.letters || fallbackLetters;
-  const diacriticTiles = tiles.diacritics || [];
-  const compositeTiles = tiles.composites || ['ᾳ', 'ῃ', 'ῳ'];
-
-  // Physical keyboard: legacy roman->Greek layout (font-map _keyboard_layout_note).
-  const KEYMAP = {
-    a: 'α', b: 'β', g: 'γ', d: 'δ', e: 'ε', z: 'ζ', h: 'η', q: 'θ', i: 'ι',
-    k: 'κ', l: 'λ', m: 'μ', n: 'ν', c: 'ξ', o: 'ο', p: 'π', r: 'ρ', s: 'σ',
-    t: 'τ', u: 'υ', f: 'φ', x: 'χ', y: 'ψ', w: 'ω', j: 'ς'
-  };
 
   let wordIndex = 0;
   let built = '';
@@ -70,15 +65,15 @@
   }
   function clearInput() { built = ''; }
 
-  function stripAccents(s) {
-    return s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/ς/g, 'σ');
-  }
-
   function check() {
     if (!word) return;
-    const ok = withAccents
-      ? built.normalize('NFC') === word.greek.normalize('NFC')
-      : stripAccents(built) === stripAccents(word.greek);
+    // One shared policy (Phase 0): "With Accents" ON requires every mark to be
+    // right; case, punctuation and the movable nu stay lenient either way.
+    const ok = spellingMatches(built, word.greek, {
+      withAccents,
+      punctuationOptional: activity.punctuationOptional !== false,
+      movableNu: activity.movableNu !== false
+    });
     totalAttempts += 1;
     if (ok) {
       totalCorrect += 1;
@@ -87,7 +82,7 @@
       feedbackKind = 'ok';
       if (completedWords.size === words.length) markCompleted(activity.id);
       clearTimeout(advanceTimer);
-      advanceTimer = setTimeout(() => goNext(), 900);
+      advanceTimer = setTimeout(() => goNext(), ADVANCE_CORRECT_MS);
     } else {
       feedback = randomFeedback(chapter, 'incorrect');
       feedbackKind = 'bad';
@@ -122,6 +117,8 @@
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (e.key === 'Backspace') { e.preventDefault(); backspace(); return; }
     if (e.key === 'Enter') { e.preventDefault(); check(); return; }
+    // Space would scroll the page, so it is claimed here as well as mapped.
+    if (PUNCT_KEYS[e.key]) { e.preventDefault(); appendChar(PUNCT_KEYS[e.key]); return; }
     const g = KEYMAP[e.key.toLowerCase()];
     if (g) { e.preventDefault(); appendChar(g); }
   }
@@ -154,26 +151,16 @@
     <label><input type="checkbox" bind:checked={pronounceEach} /> Pronounce Each Exercise</label>
   </div>
 
-  <!-- Tile keyboard -->
-  <div class="tile-keyboard">
-    <div class="tk-letters">
-      {#each letterTiles as ch}
-        <button class="tk-key greek" on:click={() => appendChar(ch)}>{ch}</button>
-      {/each}
-    </div>
-    <div class="tk-marks">
-      {#each diacriticTiles as d}
-        <button class="tk-key mark" title={d.name} on:click={() => appendMark(d.apply)}>{d.label}</button>
-      {/each}
-      {#each compositeTiles as ch}
-        <button class="tk-key greek" on:click={() => appendChar(ch)}>{ch}</button>
-      {/each}
-    </div>
-    <div class="tk-edit">
-      <button class="btn secondary" on:click={backspace}>⌫ Backspace</button>
-      <button class="btn secondary" on:click={clearInput}>Clear</button>
-    </div>
-  </div>
+  <!-- Tile keyboard: the one shared keyboard, app-wide (D-15). -->
+  <SpellerKeyboard
+    tilesRef={activity.spellerTilesRef}
+    inlineTiles={activity.spellerTiles}
+    {fallbackLetters}
+    bind:showHelp={showKeyboard}
+    on:insert={e => appendChar(e.detail)}
+    on:mark={e => appendMark(e.detail)}
+    on:backspace={backspace}
+    on:clear={clearInput} />
 
   {#if showAnswer}
     <div class="spell-answer"><span class="label">Answer</span> <span class="greek">{word ? word.greek : ''}</span></div>
@@ -190,18 +177,3 @@
   {/if}
 </div>
 
-{#if showKeyboard}
-  <div class="modal-overlay">
-    <div class="modal kb-ref" role="dialog" aria-label="Greek keyboard reference">
-      <h2 class="modal-title">Greek Keyboard</h2>
-      <p class="modal-body">Type these keys to enter Greek letters:</p>
-      <div class="kb-grid">
-        {#each Object.entries(KEYMAP) as [k, g]}
-          <div class="kb-cell"><span class="kb-roman">{k}</span><span class="kb-greek greek">{g}</span></div>
-        {/each}
-      </div>
-      <p class="modal-note">Diacritics: use the mark tiles (they combine onto the previous letter). Enter = Check, Backspace = delete.</p>
-      <div class="modal-actions"><button class="btn" on:click={() => (showKeyboard = false)}>Close</button></div>
-    </div>
-  </div>
-{/if}

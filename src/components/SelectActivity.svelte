@@ -3,28 +3,32 @@
   // Covers letter exercises (24-option generator), vocab drills (10 lemmas)
   // and chapter 2's four static-option drills.
   //
-  // ANSWER POLICY (5B patch 2a). activity.answerPolicy decides what a tap on an
-  // option means:
-  //   { attemptsPerItem: 1, autoAdvanceMs: 4000 } — the tap FINALIZES the item
-  //     right or wrong, the answer is revealed, and the drill auto-advances
-  //     after autoAdvanceMs (cancelled on unmount). Completion = every item
-  //     ATTEMPTED, not every item correct.
-  //   { attemptsPerItem: "retry" } / absent — the original retry loop: a wrong
-  //     tap leaves the item open, only a correct tap advances (chapter 1 and
-  //     the Syllable Counting drill).
-  //   { autoAdvanceOnIncorrect: false } — a WRONG answer is still final, but
-  //     nothing moves: the learner studies the revealed form for as long as
-  //     they like and clicks Next (5B-SPEC2 C4, Accent Rule drill).
+  // ANSWER POLICY. activity.answerPolicy declares WHAT a tap on an option
+  // means; src/lib/timing.js decides how long anything waits (D-14 — no
+  // timing number lives in this file). The three classes:
+  //   retry              a wrong tap leaves the item open; only a correct tap
+  //                      advances (chapter 1, Syllable Counting).
+  //   manualOnIncorrect  one attempt; correct auto-advances, incorrect reveals
+  //                      the answer, LOCKS the options and waits for Next
+  //                      (ch2 Accent Rule, ch3's five drills).
+  //   autoBoth           one attempt; both outcomes auto-advance, incorrect on
+  //                      the longer wait (ch3 Scripture Memory Drill).
+  // Chapter 2's older attemptsPerItem/autoAdvanceMs/autoAdvanceOnIncorrect
+  // fields map onto the same three classes, so its shipped feel is unchanged.
+  // Completion: one-attempt drills complete on all-ATTEMPTED, retry drills on
+  // all-correct.
   //
   // CONTROLS come from activity.ui.buttons, so each drill shows exactly the
   // original's button block (Previous / Next / Pronounce / Translate / Hint /
   // Score); chapter 1's two-button drills are unaffected.
   import { onDestroy } from 'svelte';
-  import { buildSelectQuestions, randomFeedback, resolveHintBlocks } from '../lib/content.js';
+  import { buildSelectQuestions, randomFeedback, resolveHintBlocks, resolveHintRef } from '../lib/content.js';
   import { combiningForMarkName, firstAccentCluster, markOverlayParts } from '../lib/greek.js';
   import { play } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
+  import { resolveAdvance } from '../lib/timing.js';
   import RichContent from './RichContent.svelte';
+  import Paradigm from './Paradigm.svelte';
   export let chapter;
   export let activity;
 
@@ -70,23 +74,57 @@
   }
 
   $: current = questions[qIndex];
-  $: staticOptions = Array.isArray(activity.optionValues);
-  $: wideOptions = !staticOptions || optionClass === 'wide';
+  // An item may carry its OWN option set (5D: the six verb-family
+  // translations, the three Greek forms) — item-level first, activity-level
+  // as the fallback.
+  $: currentOptions = (current && current.options) || options;
+  $: authoredOptions = !!activity.optionsPerItem || Array.isArray(activity.optionValues);
+  // Four-up unless the labels are GREEK WORDS. The English-to-Greek vocabulary
+  // drills put ten polytonic words in a four-column grid, which needs ~33px
+  // more than a 320px screen has; overflow-x is hidden app-wide, so the ends
+  // of the longest words were being cut off in silence rather than wrapping
+  // (measured on ch1, ch2 and ch3 — it predates this cohort and the same
+  // expression is in the shipped build). The 24-letter grids keep their four
+  // columns because their generator declares optionClass 'wide' explicitly:
+  // single glyphs, no width problem.
+  $: wideOptions = optionClass === 'wide' || (!authoredOptions && !greekOptions);
+  // optionGroups ([3,3]) splits the option list into visually separated
+  // stacks, as the original's Parsing drill does. Groups stack vertically at
+  // phone width and sit side by side once there is room (the six full parsing
+  // labels are 46 characters — two columns inside 320px would be unreadable).
+  $: optionGroups = optionClass === 'grouped' ? sliceGroups(currentOptions, activity.optionGroups) : null;
+  $: greekOptions = !!activity.optionsAreGreek || activity.options === 'greek' || activity.generator?.options === 'lower';
   $: uiButtons = activity.ui?.buttons || [];
-  $: showPronounce = !staticOptions || uiButtons.includes('Pronounce');
+  $: showPronounce = !authoredOptions || uiButtons.includes('Pronounce');
   $: showStepper = uiButtons.includes('Previous') || uiButtons.includes('Next');
   $: showTranslate = uiButtons.includes('Translate');
-  $: showPronounceEach = !staticOptions || !!activity.ui?.checkboxes?.includes('Pronounce Each Drill');
+  $: showPronounceEach = !authoredOptions || !!activity.ui?.checkboxes?.includes('Pronounce Each Drill');
+  // A hint either carries its own blocks (chapter 2's inline charts, rendered
+  // below the card) or NAMES a chart the chapter already draws — chapter 3's
+  // three verb drills all open the λύω paradigm, which the original shows as a
+  // popup, so a hintRef opens a modal.
   $: hintBlocks = resolveHintBlocks(chapter, activity.hint);
-  $: showHintButton = hintBlocks.length > 0;
+  $: hintChart = activity.ui?.hintRef ? resolveHintRef(chapter, activity.ui.hintRef) : null;
+  $: showHintButton = hintBlocks.length > 0 || !!hintChart;
   // Grouped button block (the original stacks them two-up) once there are more
   // than the chapter-1 pair.
   $: groupedControls = 1 + (showPronounce ? 1 : 0) + (showStepper ? 2 : 0)
     + (showTranslate ? 1 : 0) + (showHintButton ? 1 : 0) > 3;
-  // One-attempt drills finalize on the option tap; retry drills keep the loop.
-  $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
-  $: autoAdvanceMs = activity.answerPolicy?.autoAdvanceMs ?? null;
-  $: waitOnIncorrect = activity.answerPolicy?.autoAdvanceOnIncorrect === false;
+  // Timing and advance semantics: declared by the data, resolved centrally.
+  $: advancePolicy = resolveAdvance(activity.answerPolicy);
+  $: oneAttempt = advancePolicy.oneAttempt;
+  // The "Click Next to continue" state: the item is final, wrong, and nothing
+  // is going to move on its own.
+  $: waitingForNext = answered && oneAttempt && !advancePolicy.autoOnIncorrect
+    && picked !== null && picked !== current?.answerId;
+
+  function sliceGroups(list, sizes) {
+    const groups = [];
+    let at = 0;
+    for (const size of sizes || []) { groups.push(list.slice(at, at + size)); at += size; }
+    if (at < list.length) groups.push(list.slice(at));   // never drop an option
+    return groups;
+  }
   // 2c: the original's full-width "only one syllable" bar under the word. In
   // this drill it answers "1" -- the same value as the first number tile.
   $: oneSyllableOption = activity.oneSyllableButton
@@ -120,6 +158,8 @@
 
   function maybePronounce() {
     const q = questions[qIndex];
+    // Prompt audio only. A drill whose ANSWER is the Greek (Greek Verb Drill)
+    // has no prompt clip, and speaking the answer here would hand it over.
     if (pronounceEach && q && !q.pending && q.promptAudio) play(q.promptAudio);
   }
 
@@ -132,6 +172,8 @@
     if (right) correct += 1;
     feedback = randomFeedback(chapter, right ? 'correct' : 'incorrect');
     feedbackKind = right ? 'ok' : 'bad';
+    // English-prompt / Greek-answer drills speak the answer once it is won.
+    if (right && pronounceEach && current.answerAudio) play(current.answerAudio);
     if (right || oneAttempt) {
       // One attempt: the item is done either way and the answer is revealed.
       answered = true;
@@ -140,7 +182,10 @@
       // it is ANSWERED. Route exit cancels the timer, not progress.
       if (oneAttempt && attemptedItems.size === questions.length && activity.id) markCompleted(activity.id);
       clearTimeout(advanceTimer);
-      if (right || !waitOnIncorrect) advanceTimer = setTimeout(advance, autoAdvanceMs ?? 900);
+      if (right) advanceTimer = setTimeout(advance, advancePolicy.correctMs);
+      else if (advancePolicy.autoOnIncorrect) advanceTimer = setTimeout(advance, advancePolicy.incorrectMs);
+      // manualOnIncorrect: nothing is scheduled — the options are locked and
+      // the learner reads the revealed answer until they press Next.
     }
   }
 
@@ -191,6 +236,8 @@
   onDestroy(() => clearTimeout(advanceTimer));
 </script>
 
+<svelte:window on:keydown={showHint ? (e) => { if (e.key === 'Escape') showHint = false; } : null} />
+
 <div class="card">
   {#if finished}
     <div class="scorebox" style="font-size:1.2rem; padding: 20px 0">
@@ -221,11 +268,13 @@
     {:else}
       <div class="prompt" class:greek={promptIsGreek}>{current.prompt}</div>
     {/if}
+    <!-- The scripture citation the original prints beside the drill word. -->
+    {#if current.citation}<div class="prompt-citation">{current.citation}</div>{/if}
     {#if current.pending}
       <div class="pending-verification" role="status">This activity item is pending content verification.</div>
     {:else}
       <!-- Translate: the original's gloss line under the word, on demand. -->
-      {#if showGloss && current.gloss}<div class="gloss-line">{current.gloss}</div>{/if}
+      {#if showGloss && (current.translate || current.gloss)}<div class="gloss-line">{current.translate || current.gloss}</div>{/if}
       <!-- Reveal on a finalized item: the gloss, and the properly accented
            form the Accent Rule drill's misaccented prompt should have had. -->
       {#if answered && (current.gloss || current.correctForm)}
@@ -235,19 +284,44 @@
         </div>
       {/if}
       <div class="feedback {feedbackKind}">{feedback}</div>
-      <div class="grid options" class:wide={wideOptions} class:single={optionClass === 'single'}>
-        {#each options as opt}
-          <button
-            class="tile small"
-            class:greek={activity.options === 'greek' || activity.generator?.options === 'lower'}
-            class:selected={staticOptions && picked === opt.id}
-            class:correct={answered && opt.id === current.answerId}
-            class:incorrect={!staticOptions && picked === opt.id && opt.id !== current.answerId}
-            on:click={() => choose(opt)}>
-            {opt.label}
-          </button>
-        {/each}
-      </div>
+      {#if optionGroups}
+        <!-- Parsing drill: two separated stacks, as the original draws them. -->
+        <div class="option-groups">
+          {#each optionGroups as group}
+            <div class="grid options single option-group">
+              {#each group as opt}
+                <button
+                  class="tile small"
+                  class:greek={greekOptions}
+                  class:selected={authoredOptions && picked === opt.id}
+                  class:correct={answered && opt.id === current.answerId}
+                  class:incorrect={!authoredOptions && picked === opt.id && opt.id !== current.answerId}
+                  on:click={() => choose(opt)}>
+                  {opt.label}
+                </button>
+              {/each}
+            </div>
+          {/each}
+        </div>
+      {:else}
+        <div class="grid options" class:wide={wideOptions} class:single={optionClass === 'single'}>
+          {#each currentOptions as opt}
+            <button
+              class="tile small"
+              class:greek={greekOptions}
+              class:selected={authoredOptions && picked === opt.id}
+              class:correct={answered && opt.id === current.answerId}
+              class:incorrect={!authoredOptions && picked === opt.id && opt.id !== current.answerId}
+              on:click={() => choose(opt)}>
+              {opt.label}
+            </button>
+          {/each}
+        </div>
+      {/if}
+      <!-- One attempt, wrong, nothing auto-advancing: say so rather than
+           leaving a locked grid with no explanation (advanceClass
+           manualOnIncorrect). The sequential rail's Next works too. -->
+      {#if waitingForNext}<div class="await-next" role="status">Click Next to continue</div>{/if}
       {#if oneSyllableOption}
         <button
           class="one-syllable-bar"
@@ -264,10 +338,14 @@
         <button class="btn secondary" disabled={qIndex >= questions.length - 1} on:click={() => move(1)}>Next</button>
       {/if}
       {#if showPronounce}
-        <button class="btn" disabled={!current.promptAudio} on:click={() => current.promptAudio && play(current.promptAudio)}>Pronounce</button>
+        <!-- Speaks the prompt where the prompt is the Greek; on the Greek Verb
+             Drill (English prompt) it speaks the answer form, which is what
+             the original's Pronounce does there. -->
+        {@const say = current.promptAudio || current.answerAudio}
+        <button class="btn" disabled={!say} on:click={() => say && play(say)}>Pronounce</button>
       {/if}
       {#if showTranslate}
-        <button class="btn secondary" disabled={!current.gloss} on:click={() => (showGloss = !showGloss)}>Translate</button>
+        <button class="btn secondary" disabled={!(current.translate || current.gloss)} on:click={() => (showGloss = !showGloss)}>Translate</button>
       {/if}
       {#if showHintButton}
         <button class="btn secondary" on:click={() => (showHint = !showHint)}>Hint</button>
@@ -286,7 +364,18 @@
   {/if}
 </div>
 
-{#if showHint && hintBlocks.length}
+{#if showHint && hintChart}
+  <!-- The original's Hint POPUP: the chapter's paradigm chart over the drill. -->
+  <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
+    <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
+      <Paradigm paradigm={hintChart} title={hintChart.title} />
+      <div class="modal-actions">
+        <!-- svelte-ignore a11y-autofocus -->
+        <button class="btn" autofocus on:click={() => (showHint = false)}>Close</button>
+      </div>
+    </div>
+  </div>
+{:else if showHint && hintBlocks.length}
   <div class="card">
     <RichContent blocks={hintBlocks} />
   </div>

@@ -2,7 +2,8 @@
   // The contentAudio family, dispatched on activity.mode (B1 — never on
   // activity id): chart / exploreGrid / stepper / textPage / objectivesPage /
   // flashcard / selfCheckStepper / selfCheckSequence / equationChart /
-  // vowelStair / diphthongRows / reviewVocab / reviewLetters / topicPages. The bespoke
+  // vowelStair / diphthongRows / reviewVocab / reviewLetters / topicPages /
+  // paradigmChart / interlinearVerse. The bespoke
   // modes are pedagogical layouts reconstructed from the original's yellow
   // panels; their per-mode data contracts are documented in HANDOFF-4 §5 (B1).
   import { slide } from 'svelte/transition';
@@ -11,6 +12,7 @@
   import { markCompleted } from '../lib/progress.js';
   import RichContent from './RichContent.svelte';
   import ArrowCue from './ArrowCue.svelte';
+  import Paradigm from './Paradigm.svelte';
   export let chapter;
   export let activity;
 
@@ -141,7 +143,7 @@
   <div class="card topic-page">
     {#if currentTopic}
       <div class="topic-heading">{currentTopic.title}</div>
-      <RichContent blocks={currentTopic.content || []} />
+      <RichContent blocks={currentTopic.content || []} suppressTitle={currentTopic.title} />
       {#if currentTopic._verify}<div class="pending-verification compact">Some topic details are pending verification.</div>{/if}
     {:else}
       <div class="pending-verification">Topic content pending verification.</div>
@@ -152,6 +154,37 @@
       <button class="btn" on:click={() => (topicIndex = Math.min(topics.length - 1, topicIndex + 1))} disabled={!topics.length || topicIndex >= topics.length - 1}>Next Topic</button>
     </div>
     {#if activity._topic_verify}<div class="pending-verification compact">Topic order pending verification.</div>{/if}
+  </div>
+
+{:else if mode === 'paradigmChart'}
+  <!-- Quick Review's full-page paradigm: the same chart the Learn topic and
+       the drill Hint render, with the chart title above it. The Endings button
+       simply isn't there when the data omits the endings block. -->
+  <div class="card">
+    <Paradigm paradigm={activity.paradigm || {}} title={activity.chartTitle} />
+  </div>
+
+{:else if mode === 'interlinearVerse'}
+  <!-- Scripture Memory: the verse set as flowing Greek with each word's gloss
+       under it, wrapping as a unit so a word never parts company with its
+       gloss. Every Greek word is tappable and plays its own c_sm clip; a word
+       with no gloss (the article before Ἰησοῦς) still renders and still
+       plays, holding its column open so the two rows stay aligned. -->
+  <div class="card">
+    <div class="ilv">
+      {#each activity.words || [] as w}
+        <button class="ilv-word" disabled={!w.audio} on:click={() => w.audio && play(w.audio)}>
+          <span class="greek ilv-greek">{w.greek}</span>
+          <span class="ilv-gloss">{w.gloss || ' '}</span>
+        </button>
+      {/each}
+    </div>
+    {#if activity.reference}<div class="ilv-ref">{activity.reference}</div>{/if}
+    {#if activity.sayWhole}
+      <div class="controls">
+        <button class="btn secondary" on:click={() => play(activity.sayWhole.audio)}>{activity.sayWhole.label || 'Say Whole Verse'}</button>
+      </div>
+    {/if}
   </div>
 
 {:else if mode === 'textPage'}

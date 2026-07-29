@@ -8,6 +8,7 @@
   import ContentAudio from './ContentAudio.svelte';
   import SelectActivity from './SelectActivity.svelte';
   import SpellActivity from './SpellActivity.svelte';
+  import SpellVerseActivity from './SpellVerseActivity.svelte';
   import DivideActivity from './DivideActivity.svelte';
   import PlaceAccentActivity from './PlaceAccentActivity.svelte';
   import ReadingCategories from './ReadingCategories.svelte';
@@ -55,6 +56,8 @@
       <SelectActivity {chapter} {activity} />
     {:else if activity.type === 'spell'}
       <SpellActivity {chapter} {activity} />
+    {:else if activity.type === 'spellVerse'}
+      <SpellVerseActivity {chapter} {activity} />
     {:else if activity.type === 'divide'}
       <DivideActivity {chapter} {activity} />
     {:else if activity.type === 'placeAccent'}

@@ -14,6 +14,7 @@
   import { randomFeedback } from '../lib/content.js';
   import { analyzeAccent, splitGraphemes } from '../lib/greek.js';
   import { markCompleted } from '../lib/progress.js';
+  import { resolveAdvance } from '../lib/timing.js';
   import RichContent from './RichContent.svelte';
 
   export let chapter;
@@ -48,7 +49,7 @@
   $: pending = !word || !word.answerForm || !answer.type || answer.position < 0;
   $: hintBlocks = (activity.hint && activity.hint.content) || [];
   $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
-  $: autoAdvanceMs = activity.answerPolicy?.autoAdvanceMs ?? 900;
+  $: autoAdvanceMs = resolveAdvance(activity.answerPolicy).correctMs;
   $: revealed = answered && oneAttempt;
   // ROOT DISPLAY (5B-SPEC4 D2). Every item shows a Greek word in the header --
   // VERIFY3 item 3 found six that showed only a gloss. Those six are the ones
