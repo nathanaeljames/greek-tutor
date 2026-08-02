@@ -11,6 +11,13 @@
 export const ADVANCE_CORRECT_MS = 900;
 export const ADVANCE_INCORRECT_MS = 2500;
 
+// How long a Major Hint stays on screen before clearing itself (5D device
+// pass, Nathanael). The hint is a GLANCE, not a crib sheet: it is available at
+// any time (D-11), but the learner has to ask for it again rather than leaving
+// the verse parked next to the answer box while they copy it out. Lives here
+// for the same reason the advance constants do — one number, one place.
+export const HINT_VISIBLE_MS = 7000;
+
 // The three advance classes (D-14 matrix):
 //   retry             attempts until correct; correct auto-advances, a wrong
 //                     answer leaves the item open (ch1 drills, ch2 syllable

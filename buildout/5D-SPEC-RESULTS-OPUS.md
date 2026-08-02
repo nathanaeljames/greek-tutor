@@ -379,6 +379,124 @@ Both are fidelity nits, NOT the cause of the blank lists:
    bare strings get the browser's "1. 2. 3.". Chapters 1-2 preserve the
    original's punctuation through authored labels.
 
+## AMENDMENT 2 (2026-08-01) — formatting pass against the DOSBox screenshots,
+## and a 7-second Major Hint
+
+Nathanael walked the rebuilt chapter-3 Learn pages beside the DOSBox
+originals. The TEXT is now all present (Amendment 1), but the
+ARRANGEMENT was not: the original's indents, line breaks and hanging
+indents had been flattened into running prose. Visual arrangement is
+pedagogy (standing directive 2), so these are content losses, not
+cosmetics. Four fixes, all renderer/CSS — **no data file was edited.**
+
+### 1. Example blocks: line breaks and indent restored
+
+The largest loss. The original sets its examples as an INDENTED PANEL,
+one example per line, under the sentence that introduces them. The port
+collapsed each into a single running paragraph:
+
+| Original | Port (before) |
+| --- | --- |
+| Zachary drove the car.<br>Elliott is a good kid. | Zachary drove the car. Elliott is a good kid. |
+| Present:  Annette swims.<br>Past:  Annette swam.<br>Future:  Annette will swim. | Present: Annette swims. Past: Annette swam. Future: Annette will swim. |
+| He hits the ball.<br>They hit the ball. (not "they hits the ball.") | He hits the ball. They hit the ball. (not ...) |
+
+The breaks were in the data all along, as `\n` inside the para text; the
+renderer let HTML collapse them.
+
+`RichContent` now classes a para that carries its own line breaks as an
+`example-block` and renders it `white-space: pre-wrap` with a 1.75em
+indent. **pre-wrap, not pre-line**, deliberately: the original aligns
+the tense table on its intercolumn gap, and `Present:  Annette swims.`
+keeps that double space only under pre-wrap. Long lines still wrap
+normally at 320px.
+
+Audited before shipping the rule: **chapters 1, 2 and the intro contain
+ZERO multi-line paras** (10 in chapter 3, all of them example panels),
+so no device-verified page can shift under it. Confirmed by SSR probe —
+ch1 and ch2 render byte-identically.
+
+Surfaces restored: Learn English Concepts / Introduction (2 blocks),
+Tense/Aspect, Number and Agreement; the six Voice and Person expander
+popups (Terry hit the ball, I studied Greek, ...).
+
+### 2. Numbered lists print "1)" like the original
+
+The original writes `1) 2) 3)`; chapter 3's bare-string lists were
+getting the browser's default `1. 2. 3.`. Chapter 2 already matches,
+because its items ship authored "1)" labels. The list marker is now a
+generated counter with `content: counter(rc-item) ")"` — a counter and
+`::before` rather than `::marker` content, which Safari only learned
+recently — absolutely positioned so the hanging indent survives and
+wrapped lines still align under the text, never under the number.
+
+This also reaches chapter 1's four lists (Six Points, the capitals note,
+the three types of iota, the five stages of Greek), which is a visual
+change to a device-verified chapter. It moves them TOWARD the original's
+house style rather than away, but it is flagged in VERIFY-5D for
+confirmation rather than assumed.
+
+### 3. Source citations set flush left
+
+`.rc-refs` was right-aligned. The original sets citations flush left (or
+indented) at the foot of the panel, never right — and right-aligning
+also orphaned the tail of a long one on its own line
+("... Summers, pp. / 11ff)"). Now left. Also reaches ch1/ch2; flagged.
+
+### 4. Major Hint clears itself after 7 seconds (D-11 tuned)
+
+Nathanael's call at the device pass. The hint stays ALWAYS AVAILABLE —
+D-11 stands, the original's "hide it once typing begins" is not coming
+back — but it is now a glance rather than a crib sheet parked beside the
+answer box while the verse is copied out. Tapping Major Hint shows the
+verse and translation for `HINT_VISIBLE_MS`, then it clears itself;
+tapping again buys another 7 seconds; tapping while it is up dismisses
+it early. The timer is cancelled on Restart Exercise and on unmount.
+
+The constant lives in `src/lib/timing.js` beside the advance constants,
+not in the component — same rule as D-14: one number, one place, and
+Nathanael retunes the feel by editing that file.
+
+### What could NOT be fixed in code — for Fable
+
+The original's UNDERLINES cannot be recovered from the shipped data.
+Chapter 3 carries no `[[u]]` markup at all (chapter 2 uses it 22 times),
+and the underlined words are pedagogically chosen — they point at the
+verb, or mark the term the popup explains — so the renderer cannot infer
+them. `Marked.svelte` already renders `[[u]]...[[/u]]` wherever it
+appears, so a data patch alone lights these up with no code change. The
+full set, read off the DOSBox screenshots:
+
+- **EC / Introduction** — Zachary [[u]]drove[[/u]] the car; Elliott
+  [[u]]is[[/u]] a good kid; [[u]]Come[[/u]] here; Zach [[u]]may
+  play[[/u]] basketball this year.
+- **EC / Number and Agreement** — He [[u]]hits[[/u]] the ball; They
+  [[u]]hit[[/u]] the ball.
+- **EC / Voice, Mood, Person** — the list lead-ins: Active voice,
+  Passive voice, Middle voice; Indicative mood, Imperative mood,
+  Subjunctive mood; First person, Second person, Third person. In the
+  original these are also blue hotwords opening the Examples popups; the
+  port renders the popups as the expander cards below each list, so only
+  the emphasis is missing.
+- **Learn Verbs / Introduction** — [[u]]Active[[/u]] means that the
+  subject does the action; the [[u]]Indicative[[/u]] mood makes a
+  statement.
+
+Two smaller arrangement losses that also need data, not code, because
+the port has nothing to key on — both are single-line paras:
+
+- **Learn Verbs / Introduction**: "Stem + Pronominal ending — λύ + ω" is
+  bold and indented in the original.
+- **Learn Verbs / Parsing Format**: the "E.g. λύω, present active
+  indicative / 1st person, singular from / λύω meaning ..." example is a
+  three-line indented block in the original but ships as one line with
+  no `\n`, so the example-block rule cannot see it. Emitting the breaks
+  would fix it for free.
+
+`npm run verify` green. Precache 23 entries / 554.09 KiB; **all three
+chapter chunk hashes unchanged** (`chapt-01-8ZoFoXk9.js`,
+`chapt-02-B6HjUK2Y.js`, `chapt-03-DCLxQLAM.js`) — no data was touched.
+
 ## Carried into VERIFY-5D
 
 1. The five `pist*` audio clips — listen-check (D16 conflict). Wiring
@@ -392,3 +510,6 @@ Both are fidelity nits, NOT the cause of the blank lists:
 7. D-19 — the two-column English-to-Greek grids on ch1 and ch2.
 8. The four numbered lists fixed in AMENDMENT 1 — re-check on device
    that Voice, Mood, Person and Translation now print their text.
+9. The formatting pass in AMENDMENT 2 — example-block indents and line
+   breaks, "1)" list markers, left-aligned citations (the last two also
+   reach ch1/ch2), and the 7-second Major Hint.

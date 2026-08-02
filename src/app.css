@@ -309,10 +309,24 @@ button { font: inherit; cursor: pointer; }
   color: var(--accent-ink); margin: 14px 0 2px; }
 .rc-subheading:first-child { margin-top: 0; }
 .rc-para { margin: 0 0 10px; }
+/* An EXAMPLE BLOCK is a para that carries its own line breaks. The original
+   sets these as an indented panel, one example per line, under the sentence
+   that introduces them ("Zachary drove the car." / "Elliott is a good kid.";
+   Present/Past/Future; "He hits the ball." / "They hit the ball."). pre-wrap
+   rather than pre-line so the original's intercolumn spacing survives —
+   "Present:  Annette swims." keeps its gap and the three tense lines read as a
+   column. Long lines still wrap normally at 320px. */
+.rc-para.example-block { white-space: pre-wrap; padding-left: 1.75em; margin-bottom: 12px; }
 .rc-preamble { margin: 0 0 6px; }
-.rc-list { margin: 0 0 10px; padding-left: 1.5em; }
-.rc-list.authored-labels { list-style: none; padding-left: 0.75em; }
-.rc-list > li { margin-bottom: 10px; }
+/* The original numbers these lists "1) 2) 3)", not "1. 2. 3." — a generated
+   counter rather than ::marker content, which Safari only learned recently.
+   Absolute positioning keeps the hanging indent: wrapped lines align under the
+   text, never under the number. */
+.rc-list { margin: 0 0 10px; padding-left: 1.9em; list-style: none; counter-reset: rc-item; }
+.rc-list > li { margin-bottom: 10px; position: relative; counter-increment: rc-item; }
+.rc-list:not(.authored-labels) > li::before { content: counter(rc-item) ")";
+  position: absolute; left: -1.9em; width: 1.5em; text-align: right; font-weight: 600; }
+.rc-list.authored-labels { padding-left: 0.75em; }
 .rc-lead { text-decoration: underline; font-weight: 600; }
 .rc-num { font-weight: 600; margin-right: 0.15em; }
 .rc-example { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 8px;
@@ -353,7 +367,10 @@ button { font: inherit; cursor: pointer; }
 .rc-starnote { font-size: 0.875rem; color: #6b6b63; margin-bottom: 8px; }
 .rc-biblist { display: flex; flex-direction: column; gap: 8px; }
 .rc-bibentry { padding-left: 1.4em; text-indent: -1.4em; font-size: 0.9375rem; line-height: 1.5; }
-.rc-refs { font-size: 0.875rem; color: #6b6b63; text-align: right; margin: 6px 0 2px; }
+/* The original sets its source citations flush left (or indented) at the foot
+   of the panel, never right. Right-aligning them also orphaned the tail of a
+   long citation on its own line ("... Summers, pp. / 11ff)"). */
+.rc-refs { font-size: 0.875rem; color: #6b6b63; text-align: left; margin: 8px 0 2px; }
 
 /* ---- Chapter 2 structured charts and popup content ---- */
 .rc-greekrows { display: flex; flex-direction: column; margin: 10px 0; min-width: 0; }

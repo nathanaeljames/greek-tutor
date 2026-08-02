@@ -55,6 +55,15 @@
   // Same lesson as biblist in chapter 2: normalize the shape at the renderer,
   // because the data is not ours to edit.
   const listItems = block => (block.items || []).map(it => (typeof it === 'string' ? { text: it } : (it || {})));
+  // AN EXAMPLE BLOCK is a para carrying its own line breaks. In the original
+  // these are always the indented, line-per-example panels sitting under a lead
+  // sentence — "Zachary drove the car. / Elliott is a good kid.", the
+  // Present/Past/Future tense table, "He hits the ball. / They hit the ball."
+  // Collapsing them into running prose lost both the breaks and the indent, and
+  // visual arrangement is pedagogy (standing directive 2).
+  // Audited before shipping this rule: chapters 1, 2 and the intro contain ZERO
+  // multi-line paras, so nothing already device-verified can shift under it.
+  const isExampleBlock = block => typeof block.text === 'string' && block.text.includes('\n');
   // The accent hints ship term-less entries ("Acute—last 3 syllables" on its
   // own line, 5B-SPEC2 C7). With no term there is no two-column rhythm to
   // keep, so those lists render as hanging-indent lines instead.
@@ -120,7 +129,7 @@
       <div class="rc-subheading"><Marked text={b.text} /></div>
 
     {:else if b.type === 'para'}
-      <p class="rc-para"><Marked text={b.text} /></p>
+      <p class="rc-para" class:example-block={isExampleBlock(b)}><Marked text={b.text} /></p>
       {#if b.example}
         <button class="rc-example" class:tappable={b.example.audio} on:click={() => playAudio(b.example.audio)}>
           <span class="greek">{b.example.greek}</span>

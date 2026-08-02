@@ -6,7 +6,9 @@
   //
   // Three logged departures from the original live here:
   //   D-11  Major Hint (verse + translation) is ALWAYS available; the original
-  //         hides the verse once typing begins.
+  //         hides the verse once typing begins. Tuned at the 5D device pass:
+  //         available at any time, but it clears itself after HINT_VISIBLE_MS
+  //         and has to be asked for again — a glance, not a crib sheet.
   //   D-12  "Repeat This Exercise" is labelled "Restart Exercise".
   //   D-13  wrong/missing-word feedback names the WORD. The original prints a
   //         bare index ("The word you missed was: 2"), which tells a learner
@@ -19,6 +21,7 @@
   import { play } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import { checkVerse } from '../lib/answer-check.js';
+  import { HINT_VISIBLE_MS } from '../lib/timing.js';
   import SpellerKeyboard, { KEYMAP, PUNCT_KEYS } from './SpellerKeyboard.svelte';
   export let chapter;
   export let activity;
@@ -83,11 +86,31 @@
     feedbackKind = '';
     detail = null;
     solved = false;
+    hideHint();
+  }
+
+  // Major Hint shows for HINT_VISIBLE_MS and then clears itself; tapping again
+  // buys another look. Tapping while it is up dismisses it early.
+  let hintTimer = null;
+  function hideHint() {
+    showHint = false;
+    if (hintTimer) { clearTimeout(hintTimer); hintTimer = null; }
+  }
+  function toggleHint() {
+    if (showHint) { hideHint(); return; }
+    hideHint();                       // cancel any timer left from a fast re-tap
+    showHint = true;
+    hintTimer = setTimeout(() => { showHint = false; hintTimer = null; }, HINT_VISIBLE_MS);
   }
 
   function onKey(e) {
-    if (showKeyboard || showHint) return;
+    if (showKeyboard) return;                     // the keyboard reference is a modal
     if (e.metaKey || e.ctrlKey || e.altKey) return;
+    // The hint no longer waits to be dismissed, so it must not swallow up to
+    // HINT_VISIBLE_MS of typing on a hardware keyboard: typing clears it and
+    // the keystroke still lands. (Tile taps come in through on:insert and never
+    // reach here, so tapping tiles leaves the hint up for its full 7 seconds.)
+    if (showHint) hideHint();
     if (e.key === 'Backspace') { e.preventDefault(); backspace(); return; }
     if (e.key === 'Enter') { e.preventDefault(); check(); return; }
     if (PUNCT_KEYS[e.key]) { e.preventDefault(); appendChar(PUNCT_KEYS[e.key]); return; }
@@ -95,7 +118,10 @@
     if (g) { e.preventDefault(); appendChar(g); }
   }
   onMount(() => window.addEventListener('keydown', onKey));
-  onDestroy(() => window.removeEventListener('keydown', onKey));
+  onDestroy(() => {
+    window.removeEventListener('keydown', onKey);
+    if (hintTimer) clearTimeout(hintTimer);
+  });
 </script>
 
 <div class="card speller spellverse">
@@ -112,7 +138,7 @@
   {/if}
 
   <div class="controls grouped">
-    <button class="btn secondary" on:click={() => (showHint = !showHint)}>Major Hint</button>
+    <button class="btn secondary" on:click={toggleHint}>Major Hint</button>
     <button class="btn" disabled={!activity.audio} on:click={() => activity.audio && play(activity.audio)}>Pronounce</button>
     <button class="btn" on:click={check}>Check Answer</button>
     <button class="btn secondary" on:click={() => (showKeyboard = true)}>Greek Keyboard</button>

@@ -238,11 +238,93 @@ introduced here, and both are data-side so they route to Fable:
   (chapters 1-2 preserve the original punctuation).
 
 - [ ] A8  PASS / FAIL
-- Do the underline and "1)" numbering matter enough to fix in data?
 - While you are on these pages: does any OTHER list, chart or panel
   anywhere in ch3 look short of text compared to your DOSBox
   screenshots? This is the one bug class the automated walks cannot
   see, so a human eye on it is worth a lot.
+- NOTES:
+
+### A9. [C] Formatting pass against DOSBox (AMENDMENT 2)
+
+Your second screenshot set showed the text present but the ARRANGEMENT
+flattened — the original's indents and line breaks had collapsed into
+running prose. Four changes, all renderer/CSS, no data edited.
+
+**Example blocks — line breaks and indent restored.** The original sets
+examples as an indented panel, one per line, under the sentence that
+introduces them. Confirm each now breaks and indents:
+
+- [ ] EC / **Introduction** — "Zachary drove the car." and "Elliott is a
+      good kid." on separate indented lines; likewise "Come here. —
+      command" / "Zach may play basketball this year. — wish"
+- [ ] EC / **Tense/Aspect** — Present / Past / Future on three lines,
+      reading as a column (the gap after each label is preserved)
+- [ ] EC / **Number and Agreement** — "He hits the ball." and "They hit
+      the ball. (not ...)" on separate lines
+- [ ] EC / **Voice** and **Person** — open the six Examples expanders;
+      each example on its own line
+- [ ] Nothing wraps badly or overflows at 320px
+
+**Numbered lists now print "1) 2) 3)"** like the original, with the
+hanging indent intact (wrapped lines align under the text, not under the
+number).
+
+- [ ] ch3 Voice / Mood / Person / Translation show "1)" style
+- [ ] **ch1** — its four lists also changed. Open Learn Letters (the
+      "Six Points" panel), Learn Capital Letters ("Capital letters are
+      used:"), Learn Vowels ("three types of iota") and Learn History
+      (the five stages). Does "1)" look right there, or should chapter 1
+      go back to "1."? Note the two labelled lists — Six Points and the
+      five stages — print "1) Final Sigma — ..." now; check the number
+      and the bold lead-in read well together.
+- [ ] ch2's lists are unaffected (they already ship authored "1)")
+
+**Source citations are now flush left**, not right — the original never
+right-aligns them, and right-aligning orphaned the tail of a long one
+("... Summers, pp. / 11ff)").
+
+- [ ] ch3 citations read better left-aligned
+- [ ] **ch1 and ch2** citations also moved. Still look right?
+
+- [ ] A9  PASS / FAIL
+- **DECISION:** keep "1)" and left citations across ch1/ch2, or scope
+  them to ch3 only?
+- NOTES:
+
+### A10. [D] Underlines — data patch list for Fable
+
+The original underlines specific words, and the emphasis is
+pedagogical: it points at the verb, or marks the term the popup
+explains. Chapter 3's data carries no underline markup at all (chapter 2
+uses it 22 times), and the renderer cannot infer which word was meant,
+so this needs a data patch — `Marked` already renders the markup
+wherever it appears, so no further code is involved.
+
+The set, read off your DOSBox screenshots:
+
+| Page | Underlined |
+| --- | --- |
+| EC / Introduction | Zachary **drove** the car; Elliott **is** a good kid; **Come** here; Zach **may play** basketball |
+| EC / Number and Agreement | He **hits** the ball; They **hit** the ball |
+| EC / Voice | **Active voice**, **Passive voice**, **Middle voice** |
+| EC / Mood | **Indicative mood**, **Imperative mood**, **Subjunctive mood** |
+| EC / Person | **First person**, **Second person**, **Third person** |
+| Learn Verbs / Introduction | **Active** means that...; the **Indicative** mood makes... |
+
+Two more arrangement losses that also need data rather than code, both
+single-line paras the renderer has nothing to key on:
+
+- Learn Verbs / Introduction — "Stem + Pronominal ending — λύ + ω" is
+  bold and indented in the original.
+- Learn Verbs / Parsing Format — the "E.g. λύω, present active
+  indicative / 1st person, singular from / λύω meaning ..." example is
+  three indented lines in the original, but ships as one line with no
+  breaks. Emitting the `\n` gets it for free, since the example-block
+  rule above would then pick it up.
+
+- [ ] A10 — confirm the list above matches DOSBox before it goes to
+      Fable; add anything missed
+- **DECISION:** worth a data patch this round, or defer?
 - NOTES:
 
 ---
@@ -368,6 +450,12 @@ Exercise → **Scripture Memory Spelling Exercise**.
 - [ ] **Major Hint** is available at any time, including after typing
       has begun (D-11; the original hides the verse once you start),
       and shows the verse AND the English translation
+- [ ] The hint **clears itself after about 7 seconds**, and tapping
+      Major Hint again brings it back for another 7
+- [ ] Tapping Major Hint while the hint is up dismisses it immediately
+- [ ] Restart Exercise while the hint is up also clears it
+- Is 7 seconds long enough to read the verse, or should it be longer?
+  (One number in `src/lib/timing.js`, easy to retune): ______ seconds
 - [ ] The button reads **"Restart Exercise"**, not "Repeat This
       Exercise" (D-12)
 - [ ] Restart Exercise clears the field and resets the exercise
@@ -550,6 +638,9 @@ the Verb Speller. The gloss has a doubled word.
 | A5 — D-14 incorrect advance | RATIFY 2500ms / retune | |
 | A6 — D-18 checking policy | KEEP / CHANGE | |
 | A7 — D-19 two-column grids | KEEP / REVERT | |
-| A8 — list underlines + "1)" | DATA FIX / LEAVE | |
+| A9 — "1)" markers on ch1 | KEEP / SCOPE TO ch3 | |
+| A9 — left-aligned citations on ch1/ch2 | KEEP / REVERT | |
+| A10 — underline data patch | PATCH NOW / DEFER | |
+| B6 — Major Hint visible time | RATIFY 7s / retune | |
 | F1 — "believess believes" | DATA FIX / LEAVE | |
 | F2 — "they believe pt" | DATA FIX / LEAVE | |
