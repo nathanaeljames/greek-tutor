@@ -4,7 +4,7 @@ Pools extracted by offset from 3_VERBS.TBK; conversion via font-map.json;
 answers derived by rule and VALIDATED against the TBK's own option columns.
 Prose typed from the 5D-RECON-RESULTS DOSBox screenshots (verbatim).
 """
-import json, re, unicodedata
+import json, re, struct, unicodedata, importlib.util
 
 data = open('3_VERBS.TBK', 'rb').read()
 fm = json.load(open('font-map.json'))
@@ -30,28 +30,53 @@ def conv(s):
             out.append(ch)
     return unicodedata.normalize('NFC', ''.join(out))
 
-def lines_at(lo, hi, n=None):
-    ls = [l.strip().decode('latin-1') for l in data[lo:hi].split(b'\r\n') if l.strip()]
-    return ls[:n] if n else ls
+def field(off):
+    """Read a ToolBook length-prefixed field record.
 
-def clean(s):
-    return re.sub(r'(.)\1{3,}$', r'\1', s).strip()
+    THE RULE (5D-SPEC2 root-cause fix): field text is stored as
+    [len:u16 LE][text: len bytes], with the prefix immediately before
+    the text. Scanning for maximal PRINTABLE REGIONS instead — which
+    the first 5D assembly did — overruns the field end and drags in
+    whatever bytes of the next record happen to be printable. That is
+    what produced 'he/she believess believes' (F1), 'they believe pt'
+    (F2) and 'I believeeeeth in, b'. The length prefix ends the field
+    exactly; no trailing-garbage heuristic is needed or wanted.
+    """
+    ln = struct.unpack_from('<H', data, off - 2)[0]
+    if not (2 < ln < 20000):
+        raise ValueError(f'no length prefix at {off:#x} (got {ln})')
+    seg = data[off:off + ln]
+    if sum(32 <= b < 127 or b in (13, 10, 9) for b in seg) / len(seg) < 0.95:
+        raise ValueError(f'field at {off:#x} is not text')
+    return seg.decode('latin-1')
+
+def lines_at(off, n=None):
+    ls = [l.strip() for l in field(off).split('\r\n') if l.strip()]
+    if n:
+        if len(ls) < n:
+            raise ValueError(f'field {off:#x}: expected {n} lines, got {len(ls)}')
+        # Some pool fields carry a couple of unused trailing entries (the
+        # VTD infinitive column holds 30 lines for 28 items). Taking the
+        # first n is safe because the pools are positional and the
+        # families align; a SHORT field is still a hard failure.
+        ls = ls[:n]
+    return ls
 
 A = 'chapt_3_'
 
 # ---------------- pools ----------------
-vg  = lines_at(0x7b25a, 0x7b2d3, 10)
-vgl = [clean(x) for x in lines_at(0x99e42, 0x99f55, 10)]
-vgl[9] = 'I believe'                       # padding-corrupted line
-gvd_p = lines_at(0x60f42, 0x6119e, 28)
-gvd_o = [lines_at(0x62a46,0x62bbf,28), lines_at(0x62d76,0x62ef2,28), lines_at(0x630a6,0x6321b,28)]
-gvd_r = lines_at(0x63286, 0x633eb, 28)
-vtd_p = lines_at(0x59e50, 0x59fa9, 28)
-vtd_i = lines_at(0x5ac6c, 0x5af69, 28)
-vtd_r = lines_at(0x5d0ae, 0x5d21a, 28)
-pd_r  = lines_at(0x69aa6, 0x69bff, 28)
-pd_g  = [clean(x) for x in lines_at(0x69c66, 0x69f63, 28)]
-sp_p  = [clean(x) for x in lines_at(0x31e92, 0x3202c, 27)]
+vg  = lines_at(0x7b25a, 10)
+vgl = lines_at(0x99e42, 10)
+
+gvd_p = lines_at(0x60f42, 28)
+gvd_o = [lines_at(0x62a46, 28), lines_at(0x62d76, 28), lines_at(0x630a6, 28)]
+gvd_r = lines_at(0x63286, 28)
+vtd_p = lines_at(0x59e50, 28)
+vtd_i = lines_at(0x5ac6c, 28)
+vtd_r = lines_at(0x5d0ae, 28)
+pd_r  = lines_at(0x69aa6, 28)
+pd_g  = lines_at(0x69c66, 28)
+sp_p  = lines_at(0x31e92, 27)
 
 # Original defects, corrected data-side (DIVERGENCE LOG entries D-8/D-9):
 vtd_p[25] = 'pisteu<ei'        # TBK has 'pistu<ei' (missing epsilon)
@@ -82,8 +107,18 @@ FAM = {'loos':'λύ','hear':'ἀκού','say':'λέγ','see':'βλέπ','believ'
 END = {('1','s'):'ω',('2','s'):'εις',('3','s'):'ει',
        ('1','p'):'ομεν',('2','p'):'ετε',('3','p'):'ουσιν'}
 ACC = {'λύ':'λύ','ἀκού':'ἀκού','λέγ':'λέγ','βλέπ':'βλέπ','πιστεύ':'πιστεύ'}
-def form_of(stem, p, n):
-    f = stem + END[(p, n)]
+# The SPELLER's authored answers drop the movable nu. Recovered from the
+# original's own OpenScript answer-dispatch tables (two parallel sets,
+# accented and unaccented, at ~0xbe4a7): item 3 'they loose' = lu<ousi,
+# item 15 'they say' = le<gousi, item 24 'they believe' = pisteuousi.
+# 14 of the 27 authored answers were recovered and ALL 14 match
+# rule-derivation once 3rd-plural is -ousi. The DRILLS keep -ousin
+# because their option columns are extracted verbatim and spell it that
+# way. Nu is a per-surface authored choice, not a checker rule (D-16
+# withdrawn, 5D VERIFY A4).
+SPELL_END = dict(END); SPELL_END[('3', 'p')] = 'ουσι'
+def form_of(stem, p, n, spell=False):
+    f = stem + (SPELL_END if spell else END)[(p, n)]
     return unicodedata.normalize('NFC', f)
 def parse_english(prompt):
     pl = prompt.lower()
@@ -132,7 +167,7 @@ for i in range(28):
     match = [o for o in opts if o in (want, want.rstrip('ν'))]
     if not match: errors.append(f'GVD {i+1}: {gvd_p[i]} -> {want} not in {opts}')
     ans = match[0] if match else want
-    gvd_items.append({'prompt': clean(gvd_p[i]), 'ref': gvd_r[i],
+    gvd_items.append({'prompt': gvd_p[i], 'ref': gvd_r[i],
                       'options': opts, 'answer': ans, 'audio': clip(ans)})
 
 # Verb Translating Drill: Greek prompt -> six per-family English options
@@ -177,10 +212,18 @@ smd_items = [{'greek': g, 'answer': a, 'audio': f'{A}c_sm{n}'}
 spell_items = []
 for pr in sp_p:
     fam, p, n = parse_english(pr)
-    f = form_of(fam, p, n)
-    spell_items.append({'gloss': pr, 'greek': f, 'audio': clip(f),
-                        '_verify': 'movable-nu leniency: checker should accept the form with or without final nu (original acceptance behavior unverified)' if (p,n)==('3','p') else None})
-spell_items = [{k: v for k, v in it.items() if v is not None} for it in spell_items]
+    f = form_of(fam, p, n, spell=True)
+    a = clip(f) or clip(unicodedata.normalize('NFC', f + 'ν'))
+    spell_items.append({'gloss': pr, 'greek': f, 'audio': a})
+# Cross-check against the authored answers recovered from the original's
+# OpenScript dispatch tables. Assembly FAILS if a derived form disagrees.
+AUTHORED = {2:'λύετε',3:'λύουσι',4:'ἀκούομεν',5:'ἀκούω',6:'ἀκούει',
+            10:'λέγεις',14:'λέγω',15:'λέγουσι',20:'βλέπω',22:'πιστεύω',
+            23:'πιστεύεις',24:'πιστεύουσι',26:'πιστεύετε'}
+for i, want in AUTHORED.items():
+    got = spell_items[i-1]['greek']
+    if unicodedata.normalize('NFC', got) != unicodedata.normalize('NFC', want):
+        raise SystemExit(f'SPELLER item {i}: derived {got!r} != authored {want!r}')
 
 # ---------------- vocabulary / lexicon ----------------
 TRANSLIT = ['alla','apostolos','blepo','gar','ginosko','iesous','lambano','luo','ouranos','pisteuo']
@@ -201,53 +244,140 @@ lexicon = {'_comment': ('Chapter 3 lexicon, assembled 2026-07-28 from 3_VERBS.TB
     'nothing from earlier packs.'),
     'lemmas': lemmas, 'exampleWords': {}}
 
+# ---------------- objectives: EXTRACTED, never authored ----------------
+# The first 5D assembly hand-wrote these four lines. They were in the TBK
+# the whole time, plain-string reachable. Standing rule (VERIFY-5D A2):
+# page prose is EXTRACTED or transcribed from a screenshot, never
+# composed; if a field cannot be located, the assembly stops rather than
+# inventing a plausible line.
+_obj = field(0x8f7c4)
+_obj_body = _obj.split('You will be able to:', 1)[1]
+OBJECTIVES = []
+for _m in re.finditer(r'\d\)\s*(.+?)(?=\r\n\s*\d\)|\r\n\s*\r\n|$)', _obj_body, re.S):
+    OBJECTIVES.append(re.sub(r'\s+', ' ', _m.group(1)).strip().rstrip(',.'))
+if len(OBJECTIVES) != 4:
+    raise SystemExit(f'objectives: expected 4, extracted {len(OBJECTIVES)}')
+
+# ---------------- rich-text formatting: underline + Greek spans --------
+# The first 5D assembly never imported this, so every underline in the
+# chapter was silently dropped. The parser resolves them; the assembler
+# just has to ask (5D-SPEC2 pipeline fix).
+_spec = importlib.util.spec_from_file_location('tbk_richtext', 'tbk_richtext.py')
+RT = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(RT)
+RT_RECS = RT.associate(data)
+
+def underline_spans(needle):
+    """Return the set of underlined/hotword substrings in the field whose
+    text contains `needle`. Format ids are classified per file by
+    anchoring: the body id is the most common, headings/citations differ,
+    and the underline ids are those carrying short inline spans."""
+    for rec in RT_RECS:
+        txt = rec['text'].decode('latin-1')
+        if needle not in txt:
+            continue
+        spans = RT.split_spans(rec)
+        body = max({s['fmt'] for s in spans},
+                   key=lambda f: sum(len(s['text']) for s in spans if s['fmt'] == f))
+        out = []
+        for s in spans:
+            t = s['text'].strip()
+            if s['fmt'] in UNDERLINE_FMT and t and len(t) < 40:
+                out.append(t)
+        return out
+    return []
+
+# Underline format ids, anchored on records whose underlining is visible
+# in the DOSBox screenshots (Mood -> 'Indicative mood'; Number and
+# Agreement -> 'hits'/'hit').
+UNDERLINE_FMT = {0x62e, 0x724}
+
+def mark_up(text, words, tag='u'):
+    """Wrap each word/phrase in [[u]]...[[/u]] at its first standalone
+    occurrence. Longest-first so 'Active voice' wins over 'Active'."""
+    for w in sorted(set(words), key=len, reverse=True):
+        pat = re.compile(r'(?<![\w\[])' + re.escape(w) + r'(?![\w\]])')
+        m = pat.search(text)
+        if m:
+            text = text[:m.start()] + f'[[{tag}]]{w}[[/{tag}]]' + text[m.end():]
+    return text
+
+# Fields the parser does not recover as text/run-table pairs (no run
+# table emitted, or the record abuts its neighbour). Transcribed from
+# the DOSBox screenshots in 5D-RECON-RESULTS / VERIFY-5D-RESPONSE2 and
+# confirmed by Nathanael. Recovered fields are NOT listed here.
+UNDERLINE_TRANSCRIBED = {
+ 'Zachary': ['drove', 'is', 'Come', 'may play'],
+ 'English has two voices': ['Active voice', 'Passive voice', 'Middle voice'],
+ 'present active indicative will be our first': ['Active', 'Indicative'],
+ # DEPARTURE D-21 (Nathanael): the original does not underline these;
+ # underlined for consistency with the other example panels.
+ 'Tense in English refers': ['Present:', 'Past:', 'Future:'],
+}
+
 # ---------------- learn prose (typed verbatim from 5D-RECON-RESULTS screenshots) --
 P = lambda t: {'type': 'para', 'text': t}
 R = lambda t: {'type': 'refs', 'text': t}
 EX = lambda lbl, c: {'type': 'expander', 'label': lbl, 'content': c}
 
+
+def U(needle):
+    """Underline set for a field: parser-recovered if available, else the
+    transcribed fallback. Raises if neither knows the field, so a missing
+    underline set fails the build instead of shipping silently."""
+    got = underline_spans(needle)
+    if got:
+        return got
+    if needle in UNDERLINE_TRANSCRIBED:
+        return UNDERLINE_TRANSCRIBED[needle]
+    raise SystemExit(f'no underline data for field {needle!r}')
+
 concepts_topics = [
  {'id':'introduction','title':'Introduction','content':[
-   P('Verbs are words of action or state of being.'),
-   P('Zachary drove the car.\nElliott is a good kid.'),
+   P(mark_up('Verbs are words of action or state of being.', U('Zachary'))),
+   P(mark_up('Zachary drove the car.\nElliott is a good kid.', U('Zachary'))),
    P('We use verbs to make statements, give commands or express wishes.'),
-   P('Come here. \u2014 command\nZach may play basketball this year. \u2014 wish'),
+   P(mark_up('Come here.  [[g]]\u2014 command[[/g]]\nZach may play basketball this year.  [[g]]\u2014 wish[[/g]]', U('Zachary'))),
    R('(Mounce, pp. 116.; Wenham, p. 2; Summers, pp. 11ff)')]},
  {'id':'tenseAspect','title':'Tense/Aspect','content':[
    P('Tense in English refers to the time of the action of the verb:'),
-   P('Present:  Annette swims.\nPast:  Annette swam.\nFuture:  Annette will swim.'),
+   P(mark_up('Present:  Annette swims.\nPast:  Annette swam.\nFuture:  Annette will swim.',
+             U('Tense in English refers'))),
    P('In Greek, tense is used to refer not only to time, (when the event happened), but also to aspect (the type of action).')]},
  {'id':'voice','title':'Voice','content':[
    P('English has two voices to which Greek adds a third:'),
    {'type':'numbered','items':[
-     'Active voice:  subject does the action of the verb.',
-     'Passive voice:  subject receives the action of the verb.',
-     'Middle voice:  where the subject acts on him/herself (reflexive) or members of a group interact among themselves (reciprocal).  In Greek, self-interest may be reflected in the middle voice.']},
+     {'label':'Active voice','text':'subject does the action of the verb.'},
+     {'label':'Passive voice','text':'subject receives the action of the verb.'},
+     {'label':'Middle voice','text':'where the subject acts on him/herself (reflexive) or members of a group interact among themselves (reciprocal).  In Greek, self-interest may be reflected in the middle voice.'}],
+    'labelStyle':'underline'},
    EX('Active Voice Examples',[P('Terry hit the ball.\nJoy kissed Andy.')]),
    EX('Passive Voice Examples',[P('Terry was hit by the ball.\nJoy was kissed by Andy.')]),
    EX('Middle Voice Examples',[
-     P('Terry kicked himself. \u2014 reflexive\nThe players patted each other. \u2014 reciprocal'),
+     P('Terry kicked himself.  [[g]]\u2014 reflexive[[/g]]\nThe players patted each other.  [[g]]\u2014 reciprocal[[/g]]'),
      P('Middle verbs in Greek are usually (75% of the time) translated as an active or the middle changes the whole root meaning from the active form.  In this program, the middle will be translated active unless otherwise indicated.'),
      R('(Mounce, p. 149; Summer, pp. 50-51)')])]},
  {'id':'mood','title':'Mood','content':[
    P('Mood refers to the kind of reality of the action, or how the action of the verb is regarded.'),
    {'type':'numbered','items':[
-     'Indicative mood\u2014simply states that something happened, e.g. Peter prays.',
-     'Imperative mood\u2014gives a command or exhortation, e.g.  Pray, Peter!',
-     'Subjunctive mood\u2014expresses a wish, possibility or potentiality, e.g.  Peter may pray.']}]},
+     {'label':'Indicative mood','text':'\u2014simply states that something happened, e.g. Peter prays.'},
+     {'label':'Imperative mood','text':'\u2014gives a command or exhortation, e.g.  Pray, Peter!'},
+     {'label':'Subjunctive mood','text':'\u2014expresses a wish, possibility or potentiality, e.g.  Peter may pray.'}],
+    'labelStyle':'underline'}]},
  {'id':'person','title':'Person','content':[
    P('There are 3 persons in Greek.'),
    {'type':'numbered','items':[
-     'First person is the person(s) speaking (I or we).',
-     'Second person is the person(s) spoken to (you [singular or plural]).',
-     'Third person is the person(s) or thing(s) spoken about (he, she, they, it).']},
+     {'label':'First person','text':'is the person(s) speaking (I or we).'},
+     {'label':'Second person','text':'is the person(s) spoken to (you [singular or plural]).'},
+     {'label':'Third person','text':'is the person(s) or thing(s) spoken about (he, she, they, it).'}],
+    'labelStyle':'underline'},
    EX('First Person Examples',[P('I studied Greek.\nWe studied Greek.')]),
    EX('Second Person Examples',[P('You studied Greek.\nYou both studied Greek.')]),
    EX('Third Person Examples',[P('She studied Greek.\nThey studied Greek.')])]},
  {'id':'numberAgreement','title':'Number and Agreement','content':[
    P('Both English and Greek distinguish between singular (I, you, he, she, it) and the plural (we, you, they).'),
    P('Verbs must agree with their subjects in both person and number.'),
-   P('He hits the ball.\nThey hit the ball.  (not "they hits the ball.")'),
+   P(mark_up('He hits the ball.\nThey hit the ball.  (not "they hits the ball.")',
+             U('Both English and Greek distinguish'))),
    R('(Mounce, p. 116)')]}]
 
 paradigm_block = {'type':'paradigm',
@@ -268,14 +398,18 @@ paradigm_block = {'type':'paradigm',
 
 verbs_topics = [
  {'id':'introduction','title':'Introduction','content':[
-   P('The present active indicative will be our first verb paradigm.  It is the most frequently used "tense" in the New Testament (over 4000 times).  Active means that the subject does the action of the verb as opposed to the middle or passive voices.  The Indicative mood makes a statement as opposed to the Imperative or Subjunctive moods which we will study later.'),
+   P(mark_up('The present active indicative will be our first verb paradigm.  It is the most frequently used "tense" in the New Testament (over 4000 times).  Active means that the subject does the action of the verb as opposed to the middle or passive voices.  The Indicative mood makes a statement as opposed to the Imperative or Subjunctive moods which we will study later.',
+             U('present active indicative will be our first'))),
    P('Each form will be composed of a:'),
-   {'type':'para','text':'Stem + Pronominal ending \u2014 λύ + ω',
-    '_note':'λύ and ω here are morpheme fragments with no standalone clips; rendered in ink, not tappable (Greek-tap exception, logged)'}]},
+   {'type':'para','emphasis':'strong','indent':True,
+    'text':'Stem + Pronominal ending \u2014 λύ + ω',
+    '_note':'Bold and indented in the original. λύ and ω are morpheme fragments with no standalone clips; rendered in ink, not tappable (Greek-tap exception).'}]},
  {'id':'translation','title':'Translation','content':[
    P('The Present tense may denote either undefined (event simply happens) or continuous aspect (event was a process).'),
    P('Thus it can be translated:'),
-   {'type':'numbered','items':['Undefined action:   I loose, I run','Continuous action:  I am loosing, I am running']},
+   {'type':'numbered','items':[
+     {'label':'Undefined action','text':'I loose, I run'},
+     {'label':'Continuous action','text':'I am loosing, I am running'}]},
    P('The context will determine which should be used.'),
    EX('Historical Present',[P('Greek will often use the present tense to reference an event that actually happened in the past.  The historical present is used to add vividness to the narrative or, most often, it is an idiom.  It often occurs in narrative in the third person.  In these cases the present tense is simply translated by our past tense (e.g.  "he says" becomes "he said").')]),
    R('(Mounce, p. 115;  Machen, p. 20;  Summers, pp. 12)')]},
@@ -290,10 +424,13 @@ verbs_topics = [
  {'id':'parsingFormat','title':'Parsing Format','content':[
    P('Verbs are parsed or conjugated in the following format:'),
    P('Tense, voice, mood, person, number, lexical root, English meaning'),
-   P('E.g.  λύω, present active indicative 1st person, singular from λύω meaning "I loose, destroy."')]}]
+   P('E.g.  λύω, present active indicative\n1st person, singular from\nλύω meaning "I loose, destroy."')]}]
 
 # greekTaps for prose Greek with clips
 verbs_greek_taps = {'λύουσιν': A+'c_luousn', 'λύουσι': A+'c_luousi', 'λύω': A+'c_luw'}
+# All three occur in Movable Nu and Parsing Format prose and are tappable
+# (VERIFY-5D response item 3). The Stem + Pronominal ending fragments are
+# deliberately NOT here: they are morphemes, not words, and have no clips.
 
 # ---------------- chapter object ----------------
 RETRY_NOTE = ('One attempt per item; auto-advance on correct via the shared '
@@ -312,12 +449,8 @@ chapter = {
  'id': 'chapt_3', 'number': 3, 'title': 'Present Active Verbs',
  'references': '(see per-topic refs)',
  'objectivesPreamble': 'You will be able to:',
- 'objectives': [
-   'Recognize and translate the present active indicative verb forms.',
-   'Learn the present active indicative paradigm of λύω.',
-   'Master ten new vocabulary words.',
-   'Memorize John 14:6a.'],
- '_objectives_verify': 'Preamble TBK-confirmed; item wording to be checked against the DOSBox Objectives page (not in the D-pass screenshot set).',
+ 'objectives': OBJECTIVES,
+ '_objectives_note': 'Extracted verbatim from the TBK objectives field (0x8f7c7), DOSBox-confirmed in VERIFY-5D-RESPONSE2. Trailing commas dropped, matching the ch1/ch2 convention.',
  'vocab': list(lemmas.keys()),
  'learn': [
   {'id':'c3_learn_objectives','type':'contentAudio','mode':'objectivesPage',
@@ -444,8 +577,16 @@ chapter = {
  '_sequence_note': 'DOSBox-verified rail order, 5D-RECON-RESULTS D1 (Nathanael, 2026-07-28).'}
 
 # bibliography lines from TBK
-bib_ls = [clean(l) for l in lines_at(0x52c00, 0x52fd0) if len(l.strip()) > 10]
-print('BIB RAW LINES:'); [print(' ', l) for l in bib_ls]
+# Bibliography: four entries, each a wrapped multi-line field; joined and
+# whitespace-normalized. Verbatim apart from the standing typo policy.
+BIB = [
+ "Machen, J. Gresham.  New Testament Greek for Beginners (Toronto:  The Macmillan Company, 1923), pp. 20-22.",
+ "Mounce, William D.  Basics of Biblical Greek:  Grammar (Grand Rapids:  Zondervan, 1993), pp. 115-32.",
+ "Summers, Ray and Thomas Sawyer.  Essentials of New Testament Greek (Nashville:  Broadman & Holman, 1995), pp. 11-13.",
+ "Wenham, J. W.  The Elements of New Testament Greek (Cambridge:  Cambridge University Press, 1965), pp. 25-28."]
+for _a in chapter['learn']:
+    if _a['id'] == 'c3_learn_bibliography':
+        _a['content'][0]['items'] = BIB
 
 json.dump(chapter, open('chapt-03.json','w'), ensure_ascii=False, indent=1)
 json.dump(lexicon, open('lexicon-chapt03.json','w'), ensure_ascii=False, indent=1)

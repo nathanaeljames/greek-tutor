@@ -60,7 +60,14 @@ piece. Nathanael goes by "Fable" when addressing Claude (chat).
   first); (5) Hebrew tell-tale model corrected — `Hebrew*` FIELD NAMES
   are shared-engine plumbing inside legitimate Greek drills, not
   contamination markers. Details: PIPELINE-INSIGHTS-v3 Stages 3/4/4b.
-- **5D OPEN (chapter 3, solo) — spec issued 2026-07-28.** Recon
+- **5D ROUND 1 BUILT AND DEVICE-PASSED WITH CORRECTIONS (2026-07-28).**
+  Chapter 3 rail 18/18, keyboard, timing constants, spellVerse all
+  device-verified; VERIFY-5D returned with decisions + a formatting
+  punch list. Data regenerated 2026-07-28 against three ROOT-CAUSE
+  pipeline fixes (length-prefixed field reads, rich-text underline
+  wiring, objectives extracted not authored). 5D-SPEC2.md issued for
+  the remaining code work. Superseded state below, kept for context:
+- **5D opened (chapter 3, solo) — spec issued 2026-07-28.** Recon
   returned (5D-RECON-RESULTS, D1-D16); chapt-03.json +
   lexicon-chapt03.json assembled and Stage-7-validated (all 28
   derived Greek Verb Drill answers matched the TBK's own option
@@ -111,10 +118,13 @@ Per-cohort loop with fixed document naming (# = round number):
 Fable provides data files and CHAT-HANDOFF updates wherever
 appropriate and checks project files against the repo every turn.
 
-Data-file process rule (unchanged, load-bearing): src/data/*.json is
-authored ONLY by the chat pipeline from committed copies; implementers
-commit delivered files as-is and never edit content; DOSBox/device
-answers route to Fable.
+Data-file process rule (amended 2026-07-28): src/data/*.json is
+authored by the chat pipeline from committed copies; implementers
+commit delivered files as-is and do not edit content — EXCEPT where
+visual verification against the DOSBox screenshots finds obviously
+missing formatting or text, which they are now authorized to fix and
+must report in RESULTS. DOSBox/device answers route to the chat
+pipeline.
 
 Recon-tasks rule (2026-07-28, from D1): RECON-TASKS documents
 pre-compile the expected rail/menu order from extraction and ask for
@@ -126,6 +136,40 @@ decision time, numbered D-n, never renumbered. Fidelity restorations
 are not logged. The advance-timing rule matrix (advanceClass x two
 shared constants) also lives there.
 
+## Visual verification (MANDATORY, established 2026-07-28)
+
+Standing requirement from Nathanael after 5D shipped four teaching
+pages with flattened formatting that a screenshot comparison would
+have caught immediately. This applies to EVERY implementer round.
+
+1. Nathanael attaches the cohort's RECON-RESULTS (DOSBox screenshots)
+   ALONGSIDE the spec for every coding round. The SPEC takes priority
+   where the two disagree; the screenshots are the fidelity reference.
+2. The implementer must LOAD EVERY PAGE IT BUILT IN A REAL BROWSER,
+   screenshot it, and compare it against the corresponding DOSBox
+   screenshot — not just assert that the data contains the text.
+   Checking that a string is present in JSON is NOT visual
+   verification; the 5D failures were all present-but-misrendered.
+3. What to compare, explicitly: line breaks and indentation inside
+   example panels; underlines and other emphasis; list markers and
+   hanging indents; citation alignment; which words are tappable;
+   chart column alignment; anything the original sets apart visually.
+4. IF VISUAL VERIFICATION FINDS OBVIOUS MISSING FORMATTING, THE
+   IMPLEMENTER IS AUTHORIZED TO EDIT src/data — this is a standing
+   exception to the "implementers never edit data" rule, added
+   2026-07-28. The edit must be listed in RESULTS with its
+   before/after so the pipeline can absorb it; the pipeline fix still
+   follows, because a hand edit is lost at the next regen.
+5. Automation: the repo drives the real UI with playwright-core
+   (installed from a scratchpad for three rounds now — it becomes a
+   devDependency this round). Page loads, clicks, typing and
+   screenshots are all scriptable, so the great majority of a VERIFY
+   document should be machine-checked before it ever reaches
+   Nathanael. Device-only items (real WebKit audio, airplane mode,
+   physical feel of timings, whether a layout reads well) stay human.
+   A VERIFY doc should ask Nathanael for JUDGEMENT, not for facts a
+   script can establish.
+
 ## Project-file methodology (established 2026-07-23)
 
 Three tiers. The repo buildout/ keeps EVERYTHING forever; project
@@ -134,7 +178,7 @@ files carry only what a new chat needs.
 1. CANONICAL LIVING SET — always in project files, updated at
    boundaries: CHAT-HANDOFF.md (this file), PLAN.md, PHASE5-PLAN.md
    (during phase 5), PIPELINE-INSIGHTS-v3.md, DIVERGENCE-LOG.md,
-   PROJECT.md,
+   DRILL-MATRIX.md, PROJECT.md,
    ONBOARD-SOL.md, font-map.json, toc.json, intro.json,
    transcode_audio.py.
 2. DATA SET — chapt-01.json + lexicon-chapt01.json stay as the schema
@@ -350,39 +394,30 @@ files carry only what a new chat needs.
   i_rm623b pre-ships in CHAPT_8). Full taxonomy:
   buildout/5C-RECON-FINDINGS.md §3.
 
-## Immediate queue (as of 2026-07-28 — 5D SPEC ISSUED)
+## Immediate queue (as of 2026-07-28 — VERIFY-5D returned)
 
-1. **Nathanael: commit the 5D deliverables** — src/data/chapt-03.json
-   + src/data/lexicon-chapt03.json (as-is, implementers never edit
-   content), buildout/5D-SPEC.md, DIVERGENCE-LOG.md (canonical, repo
-   root or buildout/), scripts/assemble_ch3.py (pipeline provenance)
-   — then upload chapt-03.json, lexicon-chapt03.json, 5D-SPEC.md,
-   DIVERGENCE-LOG.md and this CHAT-HANDOFF.md to project files
-   immediately (process rule).
-2. **Both implementers run 5D-SPEC.md.** Phase 0 (keyboard
-   checkpoint: required-key research, 2-3 wireframes, checking
-   policy) returns to Nathanael for selection BEFORE the spellVerse
-   build; all non-keyboard work proceeds meanwhile. Deliverables:
-   5D-SPEC-RESULTS-<MODEL>.md + 5D-SPEC-BUILD-<MODEL>.md; grading
-   per GRADER-PROMPT v2; winner authors VERIFY-5D.md.
-3. VERIFY-5D must carry: the pist* audio listen-check (five clips),
-   Objectives page wording, D-10 (c_ending restoration) and D-16
-   (movable-nu leniency) keep/drop, and the two timing constants
-   ratification (D-14).
+1. **Nathanael: commit the 5D round-2 deliverables** — regenerated
+   src/data/chapt-03.json + lexicon-chapt03.json, revised
+   scripts/assemble_ch3.py, buildout/5D-SPEC2.md, DRILL-MATRIX.md
+   (new canonical), updated DIVERGENCE-LOG.md /
+   PIPELINE-INSIGHTS-v3.md / CHAT-HANDOFF.md — then upload the
+   committed copies to project files immediately.
+2. **Implementer runs 5D-SPEC2.md** with the DOSBox screenshots
+   attached, per the visual verification process above.
+3. Retroactive sweep owed in SPEC2: timing constants 2000/4000 across
+   ch1/ch2/ch3; revisit-resets-item on every scored surface; four-up
+   Greek option grids at the iPad breakpoint.
 4. ONBOARD-SOL.md still owed to buildout/; AGENTS.md still needs
    repointing from the absolute local Mac path to repo-relative.
 5. Data debt at the next chapt-01/intro regen: residual "--" in
    chapt-01.json.learn[7].content[1].text, intro.json.learn[0]
    .content[1].text and .content[3].text, and lexicon-chapt01.json
-   exampleWords.anthropoi.gloss / .anthropois.gloss. Chapter 2 is
-   clean; these predate the em-dash policy.
-6. Carried nits: Escape/initial-focus on modals; playwright-core as a
-   devDependency (three rounds now have driven the real UI from a
-   scratchpad install).
-7. Quiet watch item for the next implementer round, not a blocker:
-   the mark-geometry table is generated from the REGULAR weight only.
-   Correct today — every red-overlay surface sets Greek at 400. A
-   bold red-mark surface would need a second table.
+   exampleWords.anthropoi.gloss / .anthropois.gloss.
+6. playwright-core becomes a devDependency in SPEC2 (it is now
+   load-bearing for the visual verification process, not a nicety).
+7. Quiet watch item: the mark-geometry table is generated from the
+   REGULAR weight only. Correct today — every red-overlay surface
+   sets Greek at 400.
 
 ## Known open questions
 
@@ -390,6 +425,9 @@ files carry only what a new chat needs.
 - DOSBox screenshot of the ch5 hōra paradigm chart (third evidence
   source for '$'/'!') rides along with 5E recon — not blocking; two
   independent word witnesses each already.
+- ch3 unreferenced audio c_pisou2 (heard as "pistuousi") has no
+  surface in the chapter; leave unwired unless a later chapter
+  claims it.
 - "Learn Vocabulary Builder": D2 answered — the chapter rail as
   verified (D1) does not include it; nothing visibly book-jumps. NOT
   ported in 5D; revisit only if a later chapter surfaces it in-rail.

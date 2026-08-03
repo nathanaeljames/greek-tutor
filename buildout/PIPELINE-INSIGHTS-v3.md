@@ -210,10 +210,39 @@ screenshot of the ch5 hōra chart rides along with 5E recon as the third.)
 ### Stage 4: TBK string extraction (content text)
 
 ```python
-import re
+import re, struct
 data = open('2_ACCENT.TBK', 'rb').read()
-runs = re.findall(rb'[\x20-\x7e]{8,}', data)
+runs = re.findall(rb'[\x20-\x7e]{8,}', data)   # DISCOVERY ONLY
 ```
+
+**READ FIELDS BY THEIR LENGTH PREFIX, NEVER BY PRINTABLE REGION.**
+This is the single most expensive lesson of 5D and it is not
+optional. Regex over printable runs is fine for FINDING a field; it is
+wrong for READING one. A ToolBook field is stored as
+`[len:u16 LE][text: len bytes]`, and the printable region containing
+it does not stop where the field stops — it runs on into whatever
+bytes of the next record happen to be printable. Chapter 3 shipped
+three visible defects from exactly this: a vocabulary gloss read as
+"I believeeeeth in, b", a speller prompt as "he/she believess
+believes", and a drill translation as "they believe pt". All three
+were the next record bleeding in, and all three vanished the moment
+the reader used the prefix:
+
+```python
+def field(off):
+    ln = struct.unpack_from('<H', data, off - 2)[0]   # prefix precedes text
+    seg = data[off:off + ln]
+    assert sum(32 <= b < 127 or b in (13, 10, 9) for b in seg) / len(seg) > 0.95
+    return seg.decode('latin-1')
+```
+
+Two corollaries. First, NEVER "clean" a field with a
+trailing-garbage heuristic (`re.sub(r'(.)\1{3,}$', ...)` and friends);
+if a field needs cleaning, the read is wrong. Second, a pool field may
+carry a few UNUSED trailing entries (chapter 3's infinitive column
+holds 30 lines for 28 items) — taking the first n is safe because the
+pools are positional, but a field SHORTER than expected is a hard
+failure, never padded.
 
 WHAT WORKS WELL: activity and page names; instruction and feedback strings;
 English text (proverb answers, name lists, bibliography); legacy-font Greek
@@ -306,6 +335,20 @@ table (and are plain-string-reachable anyway). Isolated single letters cannot
 anchor (the ch1 alphabet grid classifies as the default map) — harmless, since
 letter grids are known content.
 
+**THE ASSEMBLER MUST ACTUALLY CALL THIS.** 5C proved the parser
+recovers underline spans and Greek-font runs; 5D then assembled
+chapter 3 without importing it, and every underline in the chapter was
+silently dropped — the emphasis in the original is pedagogical (it
+points at the verb, or names the term a popup explains), so losing it
+loses teaching, and no renderer can infer it back. A chapter assembler
+that produces prose MUST import `tbk_richtext`, build the per-file
+format map, and emit `[[u]]` markup; where a field yields no run table,
+the underline set is transcribed from the DOSBox screenshots and
+recorded in an explicit fallback table. If neither source knows a
+field, the assembly STOPS. Chapter 3's underline format ids were
+0x62e (hotword/underline) and 0x724 (plain underline) against a 0x502
+body; ids are file-scoped, so re-anchor per chapter.
+
 USAGE: `python3 scripts/tbk_richtext.py <chapter>.TBK [limit]` prints each
 recovered record with classified spans. Import `associate`,
 `build_format_map`, `classify_spans` for pipeline use. The script lives in the
@@ -380,6 +423,21 @@ Validation before delivery (programmatic, every chapter):
 - All Greek is NFC-normalized.
 - Isolated marks are spacing codepoints (grep the data for combining marks
   preceded by a space or a paren).
+- **No page prose was AUTHORED.** Every objectives line, instruction,
+  teaching paragraph and gloss traces to an extracted field or to a
+  transcribed screenshot. 5D shipped four invented objective lines for
+  chapter 3 while the real ones sat in the TBK at 0x8f7c4,
+  plain-string reachable — a fidelity failure, not a formatting one.
+  If a field cannot be located, the assembly STOPS and asks; it never
+  composes a plausible line. (Chapters 1 and 2 were re-checked after
+  this and are verbatim.)
+- **Rule-derived answers are cross-checked against the original's own
+  answer data where it exists.** Chapter 3's speller answers are
+  recoverable from OpenScript dispatch tables (`= <n> ... "form"`
+  pairs, both accented and unaccented sets); 14 of 27 were recovered
+  and the assembler now FAILS if a derived form disagrees with one.
+  This is what caught the movable-nu error: the derivation produced
+  λύουσιν where the original authors λύουσι.
 
 ---
 

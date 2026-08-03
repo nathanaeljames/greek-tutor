@@ -59,60 +59,60 @@ D-15 | ch3+ | Speller keyboard extended app-wide (space +
      punctuation per the 5D Phase 0 checkpoint; layout chosen by
      Nathanael). Original on-screen keyboard has no space key. |
      Nathanael, 5D-RECON D8.
-     RESOLVED 2026-07-28 at the Phase 0 checkpoint — LAYOUT A: one
-     added bottom row, four punctuation keys (comma, raised dot,
-     period, Greek question mark) plus a space bar that takes the rest
-     of the row and drops to a full-width row of its own where there
-     is not room. Letter and mark rows untouched. Inventory is now
-     25 letters + 11 marks + 3 composites + 4 punctuation + space
-     (44 tiles). Ships in speller-tiles.json, the SHARED contract; the
-     component reads it in preference to any inline
-     activity.spellerTiles copy, so chapter 1's byte-identical inline
-     duplicate can no longer fork the keyboard.
-D-18 | app | SPELLING CHECK POLICY (5D Phase 0, Nathanael). "With
-     Accents" OFF: accent/breathing/subscript-insensitive, case-
-     insensitive, final sigma = sigma, punctuation optional, movable
-     nu optional, whitespace normalized. ON: every mark exact —
-     and nothing else changes (still case-insensitive, still
-     punctuation-optional per the data flag, still movable-nu
-     lenient). CASE IS NEVER REQUIRED under either setting: the
-     shared keyboard has no capitals and the decision was to keep it
-     that way rather than add a shift layer. This also RETROACTIVELY
-     fixes chapters 1-2, where Χριστός / Π- / Φ- items had been
-     unwinnable with "With Accents" ON since their cohorts shipped.
-     | Nathanael, 5D Phase 0.
-D-19 | app | English-to-Greek vocabulary drills drop from a four-
-     column to a two-column option grid. Ten polytonic Greek words
-     four-up need ~33px more than a 320px screen has, and overflow-x
-     is hidden app-wide, so the longest words were being clipped in
-     silence (measured on ch1, ch2 AND ch3; the expression is
-     identical in the shipped build, so it predates this cohort). The
-     24-letter grids keep four columns — single glyphs, no width
-     problem. | 5D, measured; confirm in VERIFY-5D.
-D-16 | ch3 | Movable-nu leniency: verb spelling checker accepts
-     3rd-plural forms with or without final nu (original acceptance
-     behavior unverified). | 5D assembly, _verify pending.
+D-16 | ch3 | **WITHDRAWN 2026-07-28 (VERIFY-5D A4).** Was: movable-nu
+     leniency in the spelling checker. It should never have been
+     entered. The leniency was invented to paper over a DERIVATION
+     ERROR: the assembler produced λύουσιν for the speller when the
+     original authors λύουσι, and rather than check, the first pass
+     made the checker accept both. The original's own OpenScript
+     answer-dispatch tables (two parallel sets, accented and
+     unaccented) give item 3 'they loose' = lu<ousi, item 15 'they
+     say' = le<gousi, item 24 'they believe' = pisteuousi — no final
+     nu, one authored answer per item, no leniency anywhere. The data
+     now carries the authored forms and the checker requires them
+     exactly. Movable nu is a real feature of Greek and the chapter
+     teaches it, but it is a per-word authored choice, not a checker
+     rule. | Nathanael, VERIFY-5D A4.
 D-17 | intro | "Getting Around" navigation copy is new-authored (the
      original's Win 3.1 navigation pages don't map to a PWA).
      | Nathanael, phase 4.
+D-18 | app | Spelling checker is CASE-INSENSITIVE. The on-screen
+     keyboard ships no capitals and no shift layer, so requiring case
+     would make Ἰησοῦς, Ἐγώ, Χριστός and the ch2 Π-/Φ- words
+     untypeable — ch1's Χριστός had been unwinnable with "With
+     Accents" ON since it shipped. Accents required only when "With
+     Accents" is ON; punctuation optional under both settings.
+     | 5D build; ratified VERIFY-5D A6 pending the typing fixes.
+D-19 | app | Greek option grids are TWO columns at phone width, FOUR
+     at the iPad breakpoint and above (VERIFY-5D A7 amends the 5D
+     build's two-up-everywhere). Ten polytonic words need ~33px more
+     than 320px allows and were being clipped silently. Applies to
+     every Greek-to-English and English-to-Greek vocabulary drill in
+     every chapter. Single-glyph letter grids stay four-up at all
+     widths. | Nathanael, VERIFY-5D A7.
+D-20 | app | House style adopted app-wide: numbered lists print
+     "1) 2) 3)" with a hanging indent, and source citations are flush
+     LEFT. Both match the original's own style and now apply to ch1
+     and ch2 as well. EXCEPTION: chapter OBJECTIVES lists keep
+     "1. 2. 3." in every chapter. | Nathanael, VERIFY-5D A9.
+D-21 | ch3 | Tense/Aspect example panel underlines "Present:",
+     "Past:" and "Future:". The original does not underline them;
+     added for consistency with the other example panels. | Nathanael,
+     VERIFY-5D-RESPONSE2.
+D-22 | app | GREEN DESCRIPTIVE TERMS: when a descriptive label shares
+     a line with the example it describes ("Come here. — command",
+     "Terry kicked himself. — reflexive"), the label renders in the
+     app's dark green. The original renders it in the body face.
+     Markup: [[g]]...[[/g]]. Standing rule for all future chapters.
+     | Nathanael, VERIFY-5D-RESPONSE2.
+D-23 | ch3 | Endings display: the original's Endings popup shows the
+     six endings; the port additionally makes it reachable and
+     audible per D-10. Confirmed KEEP at VERIFY-5D A3.
 
-## Auto-progress / advance rule matrix (ratified classes, D-14)
+## Auto-progress / advance rule matrix
 
-| advanceClass | attempts | on correct | on incorrect | surfaces |
-| --- | --- | --- | --- | --- |
-| retry | until correct | ADVANCE_CORRECT_MS auto | none (retry) | ch1 letter/vocab drills, ch2 syllable counting, ch2 accent rule |
-| manualOnIncorrect | 1 | ADVANCE_CORRECT_MS auto | feedback + manual Next, options lock | ch3 verb/translating/parsing + vocab drills; expected ch4-8 case/translation drills |
-| autoBoth | 1 | ADVANCE_CORRECT_MS auto | ADVANCE_INCORRECT_MS auto | ch3+ Scripture Memory Drill; ch2 one-attempt reveal surfaces (migrate at next touch) |
-| manual | n/a | manual | manual | all spell/spellVerse/divide/placeAccent (Check Answer flows) |
-
-Implemented 5D in src/lib/timing.js: the two constants plus
-resolveAdvance(answerPolicy), which maps BOTH the advanceClass field
-(ch3+) and chapter 2's older attemptsPerItem/autoAdvanceMs/
-autoAdvanceOnIncorrect triple onto the same three classes. An explicit
-autoAdvanceMs still wins, so chapter 2's shipped ~4s feel is unchanged
-until it is retuned. No component file contains a timing number.
-
-Original observed timings for the record: ch2 one-attempt reveal ~4s
-(J1); ch3 drills ~2s correct, manual incorrect; ch3 SM drill ~2s/~4s.
-Completion semantics (unchanged): retry completes on all-correct;
-one-attempt completes on all-attempted.
+MOVED. The full exercise-by-exercise, chapter-by-chapter matrix —
+original behavior, port behavior, timings and departures — now lives
+in **DRILL-MATRIX.md** (canonical living set). Ratified values as of
+VERIFY-5D: ADVANCE_CORRECT_MS = 2000, ADVANCE_INCORRECT_MS = 4000,
+HINT_VISIBLE_MS = 7000, applied retroactively to every chapter.
