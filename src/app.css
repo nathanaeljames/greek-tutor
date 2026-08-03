@@ -92,11 +92,31 @@ button { font: inherit; cursor: pointer; }
   color: var(--teal-dark); margin: 18px 0 8px; font-weight: 700; }
 .grid { display: grid; gap: 8px; }
 .grid.letters { grid-template-columns: repeat(6, 1fr); }
-.grid.options { grid-template-columns: repeat(2, 1fr); }
-.grid.options.wide { grid-template-columns: repeat(4, 1fr); }
-.grid.options.single { grid-template-columns: 1fr; }
+/* minmax(0, 1fr), never a bare 1fr: a bare `1fr` track has a min-content floor,
+   so a long option label ("Transliteration", "I know, learn") silently pushes
+   the whole grid past the card instead of wrapping inside its tile. With
+   overflow-x hidden app-wide that loses the right-hand column with nothing to
+   scroll and nothing to error -- the same silent clipping that produced D-19.
+   Found by the 5D-SPEC2 walk on ch1's Letter-to-Name and ch2's Greek-to-English
+   grids at 320px (281px and 263px of content in 260px of card). */
+.grid.options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid.options.wide { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grid.options.single { grid-template-columns: minmax(0, 1fr); }
+/* D-19, amended by 5D-SPEC2 §5. A GREEK option pool is two-up at phone width
+   and four-up from the iPad breakpoint. Ten polytonic words in four columns
+   need ~33px more than a 320px screen has, and overflow-x is hidden app-wide,
+   so the longest words were being clipped in silence rather than wrapping —
+   but an iPad has the room and four-up is the original's arrangement.
+   768px is the iPad's portrait CSS width and the wide half of this round's
+   320/768 screenshot pair; the app's other breakpoints (560px large phone,
+   900px sidebar) are the wrong shape for this. Single-glyph letter grids are
+   `wide` and stay four-up at every width. */
+@media (min-width: 768px) {
+  .grid.options.greek-pool { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
 .tile { background: var(--card); border: 2px solid transparent; border-radius: 10px;
-  padding: 10px 4px; font-size: 1.35rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  padding: 10px 4px; font-size: 1.35rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  min-width: 0; overflow-wrap: break-word; }
 .tile.small { font-size: 0.95rem; padding: 10px 6px; }
 .tile:active { border-color: var(--teal); }
 .tile.correct { border-color: var(--ok); background: #e6f2e6; }
@@ -107,6 +127,10 @@ button { font: inherit; cursor: pointer; }
 .tile.selected { border-color: var(--link); background: #e8f0fb; }
 .tile.selected.correct { border-color: var(--ok); background: #e6f2e6; }
 .prompt { font-size: 3rem; text-align: center; padding: 18px; }
+/* A multi-letter Greek prompt (SelectActivity longPrompt). 3rem is the size a
+   single LETTER wants; a ten-cluster verb at 3rem overruns a 320px card and
+   loses its tail silently. */
+.prompt.greek.long { font-size: 2.2rem; overflow-wrap: break-word; }
 .prompt.select-sentence { font-size: 1.25rem; line-height: 1.5; }
 /* Marking Recognition / Accent Rule ask about ONE mark, drawn red inside the
    word. The word itself stays a blue greek-say tap (directive 9).
@@ -219,6 +243,9 @@ button { font: inherit; cursor: pointer; }
   padding: 10px 16px; font-size: 0.9rem; opacity: 0.95; z-index: 50; max-width: 90vw; text-align: center; }
 .scorebox { text-align: center; font-weight: 700; color: var(--teal-dark); }
 .textpage { line-height: 1.55; font-size: 1rem; white-space: pre-wrap; }
+/* D-20 exception: chapter objectives keep "1. 2. 3." in every chapter, while
+   teaching lists print "1) 2) 3)" (.rc-list). */
+.objectives-list { list-style-type: decimal; }
 .flash-pane { background: white; border-radius: 10px; padding: 14px; margin-bottom: 10px; min-height: 74px; }
 .flash-pane .label { font-size: 0.75rem; color: var(--teal-dark); font-weight: 700; text-transform: uppercase; }
 .flash-pane .value { font-size: 2rem; }
@@ -328,7 +355,19 @@ button { font: inherit; cursor: pointer; }
   position: absolute; left: -1.9em; width: 1.5em; text-align: right; font-weight: 600; }
 .rc-list.authored-labels { padding-left: 0.75em; }
 .rc-lead { text-decoration: underline; font-weight: 600; }
+/* labelStyle "underline" / "plain" (5D-SPEC2 §6): the original's own list-item
+   terms. Ink, never --link: blue is reserved for tappable, and these labels
+   deliberately are not (their popups are the expander cards below the list). */
+.rc-lead-u { font-weight: 600; color: var(--ink); }
+.rc-lead-plain { font-weight: 700; color: var(--ink); text-decoration: none; }
 .rc-num { font-weight: 600; margin-right: 0.15em; }
+/* A para carrying the original's own body typography (5D-SPEC2 §6). "Stem +
+   Pronominal ending — λύ + ω" is bold and indented under its lead sentence. */
+.rc-para.rc-strong { font-weight: 700; }
+.rc-para.rc-indent { padding-left: 1.75em; }
+/* [[g]]…[[/g]] — a descriptive term sharing a line with its example
+   ("Come here. — command"). Dark green, the ink used for asides; never blue. */
+.term-green { color: var(--accent-ink); }
 .rc-example { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 8px;
   background: #fffdf3; border: 1px solid #e7dfbf; border-radius: 8px; padding: 6px 12px;
   margin: 8px 0 2px; font-size: 1rem; text-align: left; color: var(--ink); }
@@ -339,7 +378,12 @@ button { font: inherit; cursor: pointer; }
   padding: 8px 10px; font-size: 0.9375rem; margin-top: 8px; }
 .rc-deflist { display: flex; flex-direction: column; gap: 4px; margin: 8px 0 10px; }
 .rc-deflist.nested { margin-top: 8px; }
-.rc-defrow { display: grid; grid-template-columns: minmax(6em, auto) 1fr auto; gap: 10px;
+/* Two changes from the 5D-SPEC2 walk, which measured this row overflowing its
+   card by 17px at 320px inside chapter 2's Pronouns/Sentence Parts expanders:
+   the term track is CAPPED at 45% (an `auto` max let "Interrogative Pronouns:"
+   take the row and leave 4px for its definition), and the value track is
+   minmax(0, 1fr) (a bare 1fr floors at min-content and pushes the row wide). */
+.rc-defrow { display: grid; grid-template-columns: minmax(6em, 45%) minmax(0, 1fr) auto; gap: 10px;
   align-items: baseline; text-align: left; background: transparent; border: none;
   padding: 5px 6px; border-radius: 8px; font-size: 1rem;
   /* B4: a definition row is a <button> so a row WITH audio can be tapped, but
@@ -354,8 +398,8 @@ button { font: inherit; cursor: pointer; }
    the tab order and the accessibility tree; the colour rule above stays as
    belt and braces. */
 .rc-defrow.static { color: var(--ink); cursor: default; }
-.rc-term { font-weight: 600; color: var(--accent-ink); }
-.rc-val { color: var(--ink); }
+.rc-term { font-weight: 600; color: var(--accent-ink); min-width: 0; overflow-wrap: break-word; }
+.rc-val { color: var(--ink); min-width: 0; overflow-wrap: break-word; }
 /* C7: term-less entries (the accent hints' "Acute—last 3 syllables") are one
    hanging-indent line each, not a two-column table with an empty first column. */
 .rc-deflist.termless .rc-defrow { display: block; padding-left: 1.4em; text-indent: -1.4em; }
@@ -483,6 +527,9 @@ button { font: inherit; cursor: pointer; }
 .eq-eq { color: #9a9482; font-size: 1.1rem; }
 .eq-b { font-size: 1.5rem; }
 @media (max-width: 360px) { .equation-grid { grid-template-columns: repeat(3, 1fr); } }
+/* 320px has ~112px of Greek column in the Quick Review chart; the longest
+   lemmas need ~123px at 1.5rem. One step down fits them all without wrapping. */
+@media (max-width: 360px) { .rv-greek { font-size: 1.35rem; } }
 
 /* ---- Vowel stair ---- */
 .vowel-stair { display: flex; flex-direction: column; gap: 12px; }
@@ -507,13 +554,24 @@ button { font: inherit; cursor: pointer; }
 
 /* ---- Review Vocabulary Chart ---- */
 .review-vocab { display: flex; flex-direction: column; }
-.rv-row { display: grid; grid-template-columns: 42% 1fr; gap: 12px; align-items: baseline;
+/* The Greek column is a PERCENTAGE so every row's chart columns line up (each
+   row is its own grid; an `auto` track would size per row and the chart would
+   stagger). It has to be wide enough for the longest lemma the app ships,
+   because a Greek word that overruns its track does not clip here -- it
+   overprints the gloss beside it. Caught by the 5D-SPEC2 walk on all three
+   Quick Review charts at 320px ("ἀπόστολος" over "apostle,", "πιστεύω" over
+   "I believe"). min-width:0 + break-word is the belt-and-braces: a longer
+   lemma in a later chapter wraps instead of overprinting. */
+.rv-row { display: grid; grid-template-columns: 46% 1fr; gap: 12px; align-items: baseline;
   text-align: left; background: transparent; border: none; padding: 10px 8px;
   border-bottom: 1px solid rgba(0,0,0,0.06); }
 .rv-row:active { background: rgba(0,0,0,0.04); }
-.rv-greek { font-size: 1.5rem; }
-.rv-gloss { font-size: 1rem; }
-.rv-freq { color: #8a8472; font-size: 0.9rem; }
+.rv-greek { font-size: 1.5rem; min-width: 0; overflow-wrap: break-word; }
+.rv-gloss { font-size: 1rem; min-width: 0; }
+/* The gap between gloss and frequency is a margin, not a text space: the
+   template's leading space is inside an {#if} and Svelte trims it, which is
+   why the chart read "but, yet(638)". */
+.rv-freq { color: #8a8472; font-size: 0.9rem; margin-left: 0.35em; }
 .rv-footnote { font-size: 0.85rem; color: #5a5a52; line-height: 1.45; margin-top: 10px; }
 
 /* ---- Review Letters Quick Chart (4-col matrix, A18: Pronounce col dropped) ---- */
@@ -546,8 +604,24 @@ button { font: inherit; cursor: pointer; }
 
 /* ---- Speller ---- */
 .spell-panes { display: flex; flex-direction: column; gap: 10px; }
-.spell-target { min-height: 2.4rem; font-size: 2rem; display: flex; align-items: center; }
-.caret { display: inline-block; width: 2px; background: var(--teal); animation: blink 1s step-start infinite; margin-left: 1px; }
+/* The typed buffer (SpellerField). Laid out as normal inline flow rather than
+   a flex row: each grapheme cluster is its own tappable span now (tap-to-
+   position, VERIFY-5D A6), and flex items do not wrap mid-"word" — a ten
+   cluster form at 2rem would have run off a 320px screen with overflow-x
+   hidden app-wide, which is the silent clipping failure this codebase has
+   already paid for twice. pre-wrap keeps a typed trailing space visible. */
+.spell-target { min-height: 2.4rem; font-size: 2rem; display: block; line-height: 1.3;
+  white-space: pre-wrap; overflow-wrap: anywhere; cursor: text; }
+.sp-cluster { cursor: text; }
+/* A diacritic waiting for a letter to sit on (speller-input pendingMark),
+   drawn in its spacing form so it is visibly QUEUED rather than lost. */
+.sp-pending { color: var(--teal-dark); opacity: 0.75; }
+/* An EMPTY 2px bar with its own height. It used to contain a literal "|", which
+   overflowed the 2px box and painted a second, ink-coloured pipe beside the
+   teal one -- and it made the caret impossible to place between two clusters,
+   because the glyph took the space the caret now occupies. */
+.caret { display: inline-block; width: 2px; height: 1.05em; vertical-align: -0.15em;
+  background: var(--teal); animation: blink 1s step-start infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 .spell-checks { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 10px 0; font-size: 0.9375rem; }
 .spell-checks label { display: inline-flex; align-items: center; gap: 6px; }
@@ -654,12 +728,16 @@ button { font: inherit; cursor: pointer; }
    cannot share 320px in two columns, so the groups stack vertically on the
    phone (still visibly two blocks, divided) and sit side by side once there is
    room, which is the original's arrangement. */
+/* The rule between the singular and plural groups is DARK GREEN and 2px
+   (5D-SPEC2 §5): at the neutral grey it shipped with, it read as one more card
+   border in a stack of six bordered option tiles instead of as the divider
+   between the two halves of the parsing grid. */
 .option-groups { display: grid; grid-template-columns: 1fr; gap: 10px; }
 .option-group { gap: 8px; }
-.option-group + .option-group { border-top: 1px solid rgba(0,0,0,0.12); padding-top: 10px; }
+.option-group + .option-group { border-top: 2px solid var(--teal-dark); padding-top: 10px; }
 @media (min-width: 560px) {
   .option-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .option-group + .option-group { border-top: none; border-left: 1px solid rgba(0,0,0,0.12);
+  .option-group + .option-group { border-top: none; border-left: 2px solid var(--teal-dark);
     padding-top: 0; padding-left: 12px; }
 }
 
@@ -680,9 +758,12 @@ button { font: inherit; cursor: pointer; }
 /* ---- WHOLE-VERSE SPELLER ---- */
 .sv-ref { text-align: right; color: var(--teal-dark); font-size: 0.85rem; font-weight: 700;
   margin-bottom: 8px; }
-/* Free-typed multi-word Greek: wraps, and grows instead of scrolling sideways. */
-.spellverse .sv-target { font-size: 1.35rem; line-height: 1.5; min-height: 4.5rem;
-  display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+/* Free-typed multi-word Greek: wraps, and grows instead of scrolling sideways.
+   overflow-wrap is `break-word`, not `anywhere`: a tapped caret position is
+   read off the cluster's own box, so keeping whole words together makes the
+   fourteen-word verse land where the learner aimed. */
+.spellverse .sv-target { font-size: 1.35rem; line-height: 1.6; min-height: 4.5rem;
+  overflow-wrap: break-word; }
 .sv-detail { text-align: center; color: var(--teal-dark); font-size: 0.95rem; margin: -4px 0 8px; }
 .sv-word { font-size: 1.2rem; }
 .sv-hint { background: #fffdf3; border: 1px solid #e7dfbf; border-radius: 10px;

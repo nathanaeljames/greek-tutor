@@ -124,6 +124,15 @@ for (const file of files) {
         });
       }
     }
+    // TIMING IS NOT A DATA FIELD (5D-SPEC2 §3, D-14 at 2000/4000). Advance
+    // durations live in src/lib/timing.js and nowhere else, so ch1, ch2 and
+    // ch3 always read the same two numbers. A regenerated data file that
+    // re-introduces autoAdvanceMs would silently do nothing at runtime --
+    // resolveAdvance stopped reading it -- which is the kind of change that
+    // only shows up as "the feel drifted" three rounds later.
+    if (Object.prototype.hasOwnProperty.call(block, 'autoAdvanceMs')) {
+      problems.push(`${path}.autoAdvanceMs: advance durations live in src/lib/timing.js, not in the data (D-14).`);
+    }
     // greekRows rows carry a word, a positional-chart cell list, or an
     // alternating parts[] equation -- never nothing at all.
     if (block.type === 'greekRows') {

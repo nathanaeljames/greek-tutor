@@ -10,13 +10,16 @@
     "preview": "vite preview",
     "check:lazy-chunk": "node scripts/check-lazy-chunk.mjs",
     "check:shapes": "node scripts/check-content-shapes.mjs",
-    "verify": "npm run check:shapes && npm run build && npm run check:lazy-chunk"
+    "verify": "npm run check:shapes && npm run build && npm run check:lazy-chunk",
+    "ui:walk": "node scripts/ui-walk.mjs",
+    "ui:behavior": "node scripts/ui-behavior.mjs"
   },
   "dependencies": {
     "idb": "^7.1.1"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.1.2",
+    "playwright-core": "^1.62.1",
     "svelte": "^4.2.19",
     "vite": "^5.4.11",
     "vite-plugin-pwa": "^0.20.5"

@@ -42,7 +42,6 @@
   let pronounceEach = activity.ui?.defaults?.pronounceEach ?? false;
   let advanceTimer = null;
   const attemptedWords = new Set();
-  const results = new Map();
 
   $: word = words[wordIndex] || null;
   $: answer = analyzeAccent(word && word.answerForm);
@@ -64,19 +63,12 @@
   // Live score (C3): reactive so it tracks every answer instead of freezing.
   $: scoreLine = scoreText(attempts, correct);
 
-  // Under attemptsPerItem: 1 a finalized word stays finalized on revisit --
-  // reopening it would let a wrong answer be retried and re-count attempts.
+  // REVISITING A WORD RESETS IT (5D-SPEC2 §3, VERIFY-5D A5). Arriving at a
+  // word presents it fresh — mark type and position cleared, feedback cleared,
+  // the slots unlocked — even if it was answered on an earlier pass, which is
+  // the original's behavior. Attempts already scored stand.
   // showAnswer stays user-controlled; the reveal is derived from `revealed`.
   function restoreWord() {
-    const result = results.get(wordIndex);
-    if (result) {
-      accentType = result.accentType;
-      accentPosition = result.accentPosition;
-      feedback = result.feedback;
-      feedbackKind = result.feedbackKind;
-      answered = true;
-      return;
-    }
     accentType = null;
     accentPosition = null;
     feedback = '';
@@ -110,13 +102,6 @@
     if (ok || oneAttempt) {
       answered = true;
       if (attemptedWords.size === words.length) markCompleted(activity.id);
-      results.set(wordIndex, {
-        accentType,
-        accentPosition,
-        feedback,
-        feedbackKind,
-        correct: ok
-      });
       clearTimeout(advanceTimer);
       advanceTimer = setTimeout(() => move(1), autoAdvanceMs);
     }

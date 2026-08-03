@@ -5,10 +5,20 @@
 //
 //   With Accents OFF   accent/breathing/subscript-insensitive, case-
 //                      insensitive, final sigma = sigma, punctuation
-//                      optional, movable nu optional, whitespace normalized.
+//                      optional, whitespace normalized.
 //   With Accents ON    every mark must be exactly right — and nothing else
 //                      changes: still case-insensitive, still punctuation-
-//                      optional, still movable-nu lenient.
+//                      optional.
+//
+// THERE IS NO MOVABLE-NU LENIENCY (D-16 WITHDRAWN, 5D-SPEC2 §2). A final nu is
+// compared like any other letter. The leniency that used to live here existed
+// to cover a DERIVATION ERROR — the assembler produced λύουσιν where the
+// original authors λύουσι — not a linguistic subtlety. The original's own
+// OpenScript answer tables author one form per item (item 3 `lu<ousi`, item 15
+// `le<gousi`, item 24 `pisteuousi`), the delivered data now carries them, and
+// the assembler fails if a derived form disagrees with a recovered one.
+// Movable nu is real Greek and the chapter teaches it, but it is a per-word
+// authored choice, never a checker rule. Do not re-introduce it.
 //
 // CASE IS NEVER REQUIRED, under either toggle, because the shared keyboard
 // has no capitals and the Phase 0 decision was to keep it that way rather
@@ -27,28 +37,17 @@ export function stripPunctuation(text) {
   return (text || '').replace(PUNCTUATION, '');
 }
 
-// MOVABLE NU (divergence log D-16). Scoped deliberately to -σι(ν): that is the
-// 3rd-plural case D-16 authorizes and the only one the chapter-3 data flags.
-// The chapter text also mentions words ending in ε, but a blanket -ε(ν) fold
-// would swallow the real 1st-plural ending: λύομεν would collapse to λύομε and
-// the drill would accept a genuinely wrong form.
-function foldMovableNu(word) {
-  return word.replace(/σιν$/u, 'σι');
-}
-
 // One comparison key. Two spellings match iff their keys are equal.
 export function spellingKey(text, options) {
   const {
     withAccents = false,
-    punctuationOptional = true,
-    movableNu = true
+    punctuationOptional = true
   } = options || {};
   let out = (text || '').normalize('NFC');
   if (punctuationOptional) out = stripPunctuation(out);
   out = out.replace(/\s+/gu, ' ').trim().toLowerCase();
   if (!withAccents) out = out.normalize('NFD').replace(/\p{M}/gu, '');
   out = out.replace(/ς/gu, 'σ').normalize('NFC');
-  if (movableNu) out = out.split(' ').map(foldMovableNu).join(' ');
   return out;
 }
 

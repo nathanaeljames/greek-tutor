@@ -16,6 +16,12 @@
   import Paradigm from './Paradigm.svelte';
 
   export let blocks = [];
+  // greekTaps declared once for a whole topic/page, inherited by every block
+  // under it. Chapter 3's Learn Verbs page wires λύουσιν, λύουσι and λύω this
+  // way: the words sit in running prose across three different topics, and
+  // repeating the table on each block would be three chances to disagree.
+  // A block's own greekTaps still wins.
+  export let greekTaps = null;
   // The heading the HOST already printed above these blocks (topicPages prints
   // the topic title). A chart whose own title repeats it prints one heading,
   // not two — the chapter-3 Paradigm topic is titled "Paradigm" and so is its
@@ -55,6 +61,21 @@
   // Same lesson as biblist in chapter 2: normalize the shape at the renderer,
   // because the data is not ours to edit.
   const listItems = block => (block.items || []).map(it => (typeof it === 'string' ? { text: it } : (it || {})));
+  // LABEL STYLES on a numbered list (5D-SPEC2 §6). The original's chapter-3
+  // teaching lists lead each item with a term set apart from the sentence that
+  // follows — underlined (its blue hotwords: "Active voice", "Indicative mood",
+  // "First person") or merely bold ("Undefined action"). Those hotwords opened
+  // popups; the popups are the expander cards under the list, so the labels
+  // here are NOT tappable — blue means tappable and only tappable (directive 8),
+  // which is why an underline rather than a colour carries the emphasis.
+  //   'underline'  <u>label</u>, the original's hotword terms
+  //   'plain'      bold label, no underline
+  //   (absent)     the chapters-1/2/intro form: underlined lead + " — "
+  // The JOINER is the item text's own opening punctuation, not a renderer
+  // guess: "—simply states that…" joins tight, ":  subject does…" joins tight,
+  // "is the person(s)…" takes one space. A label style never invents a colon
+  // the data does not have.
+  const joiner = text => (!text || /^[\s—–:;,.!?-]/.test(text) ? '' : ' ');
   // AN EXAMPLE BLOCK is a para carrying its own line breaks. In the original
   // these are always the indented, line-per-example panels sitting under a lead
   // sentence — "Zachary drove the car. / Elliott is a good kid.", the
@@ -80,8 +101,8 @@
   // standalone occurrence per key) and render those substrings as tappable
   // spans. Greek NOT listed here stays plain (e.g. the red-highlighted π stays
   // untappable). Data contract (chat-side pipeline, chapters 2+): a greekTaps
-  // key marks the first occurrence of that exact string whose neighbors are
-  // not Greek letters — a single-letter key like "ζ" can never turn part of a
+  // key marks EVERY occurrence of that exact string whose neighbors are not
+  // Greek letters — a single-letter key like "ζ" can never turn part of a
   // longer Greek word in the same paragraph into a tap target. Matches render
   // as plain text nodes inside a <button> (never {@html}).
   const GREEK_LETTER = /[Ͱ-Ͽἀ-῿]/; // Greek + Greek Extended
@@ -103,12 +124,19 @@
     for (const [sub, audio] of Object.entries(taps)) {
       const next = [];
       for (const p of parts) {
-        const i = p.audio ? -1 : standaloneIndexOf(p.t, sub);   // only split plain segments
-        if (i === -1) { next.push(p); continue; }
-        if (i > 0) next.push({ t: p.t.slice(0, i) });
-        next.push({ t: sub, audio });
-        const rest = p.t.slice(i + sub.length);
-        if (rest) next.push({ t: rest });            // rest not re-scanned -> first occurrence only
+        if (p.audio) { next.push(p); continue; }     // already claimed by another key
+        // EVERY standalone occurrence, not just the first: two identical Greek
+        // words on one page must behave the same way. The Parsing Format topic
+        // prints λύω twice, and marking only the first left one blue-and-
+        // speaking and the other black-and-silent — which reads as "that one
+        // is not tappable" (directive 8) when it is the same word.
+        let rest = p.t;
+        for (let i = standaloneIndexOf(rest, sub); i !== -1; i = standaloneIndexOf(rest, sub)) {
+          if (i > 0) next.push({ t: rest.slice(0, i) });
+          next.push({ t: sub, audio });
+          rest = rest.slice(i + sub.length);
+        }
+        if (rest) next.push({ t: rest });
       }
       parts = next;
     }
@@ -129,7 +157,16 @@
       <div class="rc-subheading"><Marked text={b.text} /></div>
 
     {:else if b.type === 'para'}
-      <p class="rc-para" class:example-block={isExampleBlock(b)}><Marked text={b.text} /></p>
+      <!-- emphasis:"strong" / indent:true carry the original's own typography
+           on a body line ("Stem + Pronominal ending — λύ + ω" is bold and
+           indented under the sentence that introduces it). greekTaps makes the
+           named Greek words in the line tappable; anything not named stays
+           plain ink, which is how the λύ and ω MORPHEMES on that same line stay
+           untappable — they are fragments with no clip of their own. -->
+      {@const taps = b.greekTaps || greekTaps}
+      <p class="rc-para" class:example-block={isExampleBlock(b)}
+         class:rc-strong={b.emphasis === 'strong'} class:rc-indent={b.indent}
+      >{#if taps}{#each splitTaps(b.text, taps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={b.text} />{/if}</p>
       {#if b.example}
         <button class="rc-example" class:tappable={b.example.audio} on:click={() => playAudio(b.example.audio)}>
           <span class="greek">{b.example.greek}</span>
@@ -143,8 +180,9 @@
       {@const selfNum = (() => { const re = /^\(?\d+[.)]/; return items.length > 0 && items.every(it => it.label && re.test(it.label)); })()}
       <ol class="rc-list" class:authored-labels={selfNum}>
         {#each items as it}
+          {@const itemTaps = it.greekTaps || greekTaps}
           <li>
-            {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#if it.greekTaps}{#each splitTaps(it.text, it.greekTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}{:else}<Marked text={it.text || ''} />{/if}
+            {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else if b.labelStyle === 'underline'}<u class="rc-lead-u">{it.label}</u>{joiner(it.text)}{:else if b.labelStyle === 'plain'}<span class="rc-lead-plain">{it.label}</span>{joiner(it.text)}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#if itemTaps}{#each splitTaps(it.text, itemTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={it.text || ''} />{/if}
             {#if it.example}
               <button class="rc-example" class:tappable={it.example.audio} on:click={() => playAudio(it.example.audio)}>
                 <span class="greek">{it.example.greek}</span>
@@ -298,7 +336,7 @@
         <summary><Marked text={b.label} /></summary>
         <div class="rc-expander-body">
           {#if b.content && b.content.length}
-            <svelte:self blocks={b.content} />
+            <svelte:self blocks={b.content} greekTaps={b.greekTaps || greekTaps} />
           {:else}
             <div class="pending-verification compact">Content pending verification.</div>
           {/if}

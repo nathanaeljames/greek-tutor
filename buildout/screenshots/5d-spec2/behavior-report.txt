@@ -1,0 +1,38 @@
+PASS  A4/1 λύουσι, no accents, accents OFF  — "λυουσι" for "they loose"
+PASS  A4/2 λύουσι, accented, accents ON  — "λύουσι" for "they loose"
+PASS  A4/3 λυουσιν (movable nu) now REJECTED  — "λυουσιν" for "they loose"
+PASS  A4/4 πιστευομε for πιστεύομεν rejected  — "πιστευομε" for "we believe"
+PASS  A4/5 πιστευομεν accepted  — "πιστευομεν" for "we believe"
+PASS  §4/2 breathing after a space attaches to the NEXT letter  — "ὁ ἰ"
+PASS  §4/2 the space survives the breathing  — "ὁ ἰ"
+PASS  §4/1 tap-to-position inserts mid-string  — "λεγει"
+PASS  §4/1 backspace acts at the caret  — "λγει"
+PASS  A6/1 verse with no accents, accents OFF  — typed "λεγει αυτω ο ιησους, εγω ειμι η οδος και…"
+PASS  A6/2 verse fully accented, accents ON  — typed "λέγει αὐτῷ ὁ ἰησοῦς, ἐγώ εἰμι ἡ ὁδὸς καὶ…"
+PASS  A6/3 verse with no accents, accents ON  — typed "λεγει αυτω ο ιησους, εγω ειμι η οδος και…"
+PASS  A6/4 verse without its punctuation, accents ON  — typed "λέγει αὐτῷ ὁ ἰησοῦς ἐγώ εἰμι ἡ ὁδὸς καὶ …"
+PASS  A6/5 lowercase where the verse capitalizes, accents ON  — typed "λέγει αὐτῷ ὁ ἰησοῦς, ἐγώ εἰμι ἡ ὁδὸς καὶ…"
+PASS  §3 revisit resets the item — ch2 Accent Rule  — marked 1 -> 0, feedback "", was on "1 of 20"
+PASS  §3 revisit keeps the recorded score — ch2 Accent Rule  — 1 correct out of 1 attempts (100%)
+PASS  §3 revisit resets the item — ch3 Verb Translating  — marked 2 -> 0, feedback "", was on "1 of 28"
+PASS  §3 revisit keeps the recorded score — ch3 Verb Translating  — 0 correct out of 1 attempts (0%)
+PASS  §3 revisit resets the item — ch3 Vocabulary: Greek to English  — marked 2 -> 0, feedback "", was on "1 of 10"
+PASS  §3 revisit keeps the recorded score — ch3 Vocabulary: Greek to English  — 0 correct out of 1 attempts (0%)
+PASS  §3 ch1 has no scored select drill with a revisit path  — 6 select drills, 0 with a stepper
+PASS  §3 revisit resets the item — ch1 Vocabulary Spelling  — ""
+PASS  §3 ch2 Syllable Counting: correct advances on 2000ms  — item 1 of 20 -> 1 of 20 at 1100ms -> 2 of 20 at 2800ms
+PASS  §3 ch3 Scripture Memory Drill: incorrect advances on 4000ms  — item 1 of 10 -> 1 of 10 at 2200ms -> 2 of 10 at 5600ms
+PASS  §5 Greek option grid is 2-up at 320px — ch1 Vocabulary: English to Greek  — 2 columns
+PASS  §5 Greek option grid is 4-up at 768px — ch1 Vocabulary: English to Greek  — 4 columns
+PASS  §5 Greek option grid is 2-up at 320px — ch2 Vocabulary: English to Greek  — 2 columns
+PASS  §5 Greek option grid is 4-up at 768px — ch2 Vocabulary: English to Greek  — 4 columns
+PASS  §5 Greek option grid is 2-up at 320px — ch3 Vocabulary: English to Greek  — 2 columns
+PASS  §5 Greek option grid is 4-up at 768px — ch3 Vocabulary: English to Greek  — 4 columns
+PASS  §5 ch1 letter grid stays four-up at 320px  — 4 columns
+PASS  §5 ch1 letter grid stays four-up at 768px  — 4 columns
+PASS  §5 Parsing Drill divider is dark green  — {"top":"rgb(31, 95, 87)","left":"rgb(34, 37, 42)"}
+PASS  §5 chapt_1 objectives use "1. 2. 3."  — decimal
+PASS  §5 chapt_2 objectives use "1. 2. 3."  — decimal
+PASS  §5 chapt_3 objectives use "1. 2. 3."  — decimal
+
+36/36 behavior checks passed

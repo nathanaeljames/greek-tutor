@@ -134,16 +134,28 @@
 {#if mode === 'objectivesPage'}
   <!-- The chapter's objectives list (preamble + numbered objectives from the
        chapter record itself, not the activity). -->
+  <!-- D-20 EXCEPTION: objectives print "1. 2. 3.", not the "1) 2) 3)" house
+       style the teaching lists use. The class pins the marker so a later
+       global list rule cannot quietly convert this page too. The objective
+       strings themselves are extracted verbatim from the TBK -- round 1
+       authored chapter 3's four lines from scratch, which is what
+       VERIFY-5D-RESPONSE2 item 1 is about; they are never paraphrased. -->
   <div class="card textpage">
     <strong>{chapter.objectivesPreamble}</strong>
-    <ol>{#each chapter.objectives as o}<li>{o}</li>{/each}</ol>
+    <ol class="objectives-list">{#each chapter.objectives as o}<li>{o}</li>{/each}</ol>
   </div>
 
 {:else if mode === 'topicPages'}
   <div class="card topic-page">
     {#if currentTopic}
       <div class="topic-heading">{currentTopic.title}</div>
-      <RichContent blocks={currentTopic.content || []} suppressTitle={currentTopic.title} />
+      <!-- greekTaps is declared once for the whole activity (chapter 3's Learn
+           Verbs wires λύουσιν / λύουσι / λύω, which appear in prose across
+           three different topics) and a topic may still override it. -->
+      <RichContent
+        blocks={currentTopic.content || []}
+        suppressTitle={currentTopic.title}
+        greekTaps={currentTopic.greekTaps || activity.greekTaps} />
       {#if currentTopic._verify}<div class="pending-verification compact">Some topic details are pending verification.</div>{/if}
     {:else}
       <div class="pending-verification">Topic content pending verification.</div>
@@ -190,7 +202,7 @@
 {:else if mode === 'textPage'}
   {#if activity.content}
     <div class="card">
-      <RichContent blocks={activity.content} />
+      <RichContent blocks={activity.content} greekTaps={activity.greekTaps} />
       {#if activity.playButton}
         <div class="controls">
           <button class="btn" on:click={() => play(activity.playButton.audio)}>▶ {activity.playButton.label}</button>

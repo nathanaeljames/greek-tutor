@@ -13,8 +13,8 @@
   //                      (ch2 Accent Rule, ch3's five drills).
   //   autoBoth           one attempt; both outcomes auto-advance, incorrect on
   //                      the longer wait (ch3 Scripture Memory Drill).
-  // Chapter 2's older attemptsPerItem/autoAdvanceMs/autoAdvanceOnIncorrect
-  // fields map onto the same three classes, so its shipped feel is unchanged.
+  // Chapter 2's older attemptsPerItem/autoAdvanceOnIncorrect fields map onto
+  // the same three classes; its durations now come from the shared constants.
   // Completion: one-attempt drills complete on all-ATTEMPTED, retry drills on
   // all-correct.
   //
@@ -50,7 +50,6 @@
   let showScore = false;
   let advanceTimer = null;
   const attemptedItems = new Set();
-  const results = new Map();
 
   init();
   function init() {
@@ -63,7 +62,6 @@
     feedback = ''; picked = null; answered = false; finished = false;
     showGloss = false;
     attemptedItems.clear();
-    results.clear();
     pronounceEach = activity.ui?.defaults?.pronounceEach ?? true;
     // D1: the score line starts HIDDEN on every scored surface. ui.liveScore
     // says the line updates live once revealed, not that it opens by itself --
@@ -94,6 +92,17 @@
   // labels are 46 characters — two columns inside 320px would be unreadable).
   $: optionGroups = optionClass === 'grouped' ? sliceGroups(currentOptions, activity.optionGroups) : null;
   $: greekOptions = !!activity.optionsAreGreek || activity.options === 'greek' || activity.generator?.options === 'lower';
+  // The two-up Greek pool (D-19): the ch1/ch2/ch3 English-to-Greek vocabulary
+  // grids. Four-up from the iPad breakpoint, where the width exists — the CSS
+  // owns the breakpoint, this only says which grid it applies to. Excludes the
+  // single-column and grouped layouts, which are stacked for label length.
+  $: greekPool = greekOptions && !wideOptions && optionClass !== 'single';
+  // A LONG Greek prompt cannot have the 3rem type a single letter gets. At
+  // 320px, πιστεύουσι sets 268px of glyph into 260px of card and the tail is
+  // lost in silence (overflow-x is hidden app-wide). Declared here rather than
+  // guessed in CSS, which cannot see how long a string is; chapter 1's letter
+  // prompts and chapter 2's short words are below the threshold and unchanged.
+  $: longPrompt = promptIsGreek && [...String(current?.prompt || '')].length > 7;
   $: uiButtons = activity.ui?.buttons || [];
   $: showPronounce = !authoredOptions || uiButtons.includes('Pronounce');
   $: showStepper = uiButtons.includes('Previous') || uiButtons.includes('Next');
@@ -176,8 +185,9 @@
     if (right && pronounceEach && current.answerAudio) play(current.answerAudio);
     if (right || oneAttempt) {
       // One attempt: the item is done either way and the answer is revealed.
+      // "One attempt" is scoped to this VISIT — coming back to the item
+      // reopens it (see restore()).
       answered = true;
-      results.set(qIndex, { picked, feedback, feedbackKind });
       // Completion is defined by attempted items, so record the final item when
       // it is ANSWERED. Route exit cancels the timer, not progress.
       if (oneAttempt && attemptedItems.size === questions.length && activity.id) markCompleted(activity.id);
@@ -202,18 +212,18 @@
     }
   }
 
-  // Under attemptsPerItem: 1 a finalized item stays finalized on revisit --
-  // reopening it would let a wrong answer be retried and re-count attempts.
+  // REVISITING AN ITEM RESETS IT (5D-SPEC2 §3, VERIFY-5D A5). This is the
+  // original's behavior and it reverses what the port shipped: a one-attempt
+  // item used to stay finalized, so stepping back showed the previous
+  // selection, its correct/incorrect styling and the locked grid. Now every
+  // arrival at an item presents it fresh and the student may answer again.
+  //
+  // The SCORE is not rewound. attempts/correct count attempts, not the current
+  // state of the grid, and `attemptedItems` (which drives completion for
+  // one-attempt drills) is a set — answering an item twice neither
+  // double-counts completion nor un-completes it.
   function restore() {
-    const result = results.get(qIndex);
     showGloss = false;
-    if (result && oneAttempt) {
-      picked = result.picked;
-      feedback = result.feedback;
-      feedbackKind = result.feedbackKind;
-      answered = true;
-      return;
-    }
     picked = null; answered = false; feedback = ''; feedbackKind = '';
   }
 
@@ -261,7 +271,10 @@
            which metric the browser picks for the strut. -->
       <button class="prompt greek greek-say red-mark" aria-label={current.prompt} disabled={!current.promptAudio} on:click={() => current.promptAudio && play(current.promptAudio)}>{#each redParts as part}{#if part.marks}<span class="rm-cluster" class:legacy={part.layout} style={part.bx || part.aw ? `--bx:${part.bx || 0}em; --aw:${part.aw || 0}em` : null}><span class="rm-marks {part.layout || ''}" class:capital={part.capital} aria-hidden="true">{#each part.marks as mark}<span class="rm-mark {mark.slot || ''}" class:red={mark.red} style={mark.x != null ? `--mx:${mark.x}em; --my:${mark.y}em${mark.clip ? `; clip-path:polygon(${mark.clip[0]}em -3em, ${mark.clip[1]}em -3em, ${mark.clip[1]}em 3em, ${mark.clip[0]}em 3em)` : ''}` : null}>{mark.glyph}</span>{/each}</span><span class="rm-base">{part.base}</span></span>{:else if part.red}<span class="mark-red">{part.text}</span>{:else}{part.text}{/if}{/each}</button>
     {:else if promptIsGreek && current.promptAudio}
-      <button class="prompt greek greek-say" on:click={() => play(current.promptAudio)}>{current.prompt}</button>
+      <!-- The red-mark branch above deliberately does NOT take this class: its
+           mark offsets are em-relative and correct, and nothing about mark
+           geometry moves in this round. -->
+      <button class="prompt greek greek-say" class:long={longPrompt} on:click={() => play(current.promptAudio)}>{current.prompt}</button>
     {:else if current.underline && sentenceParts(current.prompt, current.underline)}
       {@const parts = sentenceParts(current.prompt, current.underline)}
       <div class="prompt select-sentence">{parts[0]}<u>{parts[1]}</u>{parts[2]}</div>
@@ -304,7 +317,7 @@
           {/each}
         </div>
       {:else}
-        <div class="grid options" class:wide={wideOptions} class:single={optionClass === 'single'}>
+        <div class="grid options" class:wide={wideOptions} class:single={optionClass === 'single'} class:greek-pool={greekPool}>
           {#each currentOptions as opt}
             <button
               class="tile small"

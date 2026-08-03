@@ -1963,8 +1963,7 @@
    },
    "scored": true,
    "answerPolicy": {
-    "attemptsPerItem": "retry",
-    "autoAdvanceMs": null
+    "attemptsPerItem": "retry"
    },
    "_verify_resolved": "Pool + counts DOSBox-confirmed 2026-07-24 (all 20 derived counts matched; kai uses the one-syllable bar). Original's score dialog can overcount on revisits (22/20 witnessed) — our scoring counts each item once.",
    "hint": {
@@ -2174,7 +2173,6 @@
    "answerPolicy": {
     "attemptsPerItem": 1,
     "revealCorrectForm": true,
-    "autoAdvanceMs": 4000,
     "autoAdvanceOnIncorrect": false
    },
    "hint": {
@@ -2458,8 +2456,7 @@
    },
    "scored": true,
    "answerPolicy": {
-    "attemptsPerItem": 1,
-    "autoAdvanceMs": 4000
+    "attemptsPerItem": 1
    },
    "_answers_note": "25-item pool, order, options, and instruction DOSBox-verified. Answers read from the red-rendered mark in the screenshots (redMarkCluster = 1-based grapheme cluster carrying the red mark; item 18's mark assignment is the one judgment call). Original's score dialog says 'Drills Available: 35' — an original bug (both passes yielded the same 25 items); we use 25."
   },
@@ -2632,8 +2629,7 @@
    ],
    "scored": true,
    "answerPolicy": {
-    "attemptsPerItem": 1,
-    "autoAdvanceMs": 4000
+    "attemptsPerItem": 1
    },
    "_answers_note": "29 items, option labels, underlines, and instruction DOSBox-verified (VERIFY D4 screenshots). Answers anchored by green-confirmed device results (Greek/Noun, amazing/Adjective, multimedia/Adjective, do/Verb, over/Preposition, good/Adjective) and standard grammar for the rest.",
    "ui": {
@@ -2946,8 +2942,7 @@
    "oneSyllableButton": "Click Here If There Is Only One Syllable",
    "answerPolicy": {
     "attemptsPerItem": 1,
-    "revealDividedForm": true,
-    "autoAdvanceMs": 4000
+    "revealDividedForm": true
    },
    "_answers_note": "Pool DOSBox-verified: the 20 vocabulary words (ch1+ch2), NOT the b_ex2 files (those belong to Accent Placement). Divisions sourced from the original's own syllable charts (One Vowel/2 Consonants/2 Vowels popups + Syllable Names), which cover all 20 words: kurios divides kur-i-os per the chart's explicit note, Petros = Pet-ros and Christos = Chris-tos per the 2-Consonants chart (Nathanael's 'false negative' on Christos matches the original's own Chris-tos division). division[] = 1-based gap indices between grapheme clusters (gap i sits between cluster i and i+1). Scoring is correctness-first per Nathanael (VERIFY E1)."
   },
@@ -3189,8 +3184,7 @@
    "scored": true,
    "answerPolicy": {
     "attemptsPerItem": 1,
-    "revealAnswerForm": true,
-    "autoAdvanceMs": 4000
+    "revealAnswerForm": true
    },
    "hint": {
     "content": [

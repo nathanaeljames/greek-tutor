@@ -22,14 +22,21 @@
   import { markCompleted } from '../lib/progress.js';
   import { checkVerse } from '../lib/answer-check.js';
   import { HINT_VISIBLE_MS } from '../lib/timing.js';
+  import * as input from '../lib/speller-input.js';
   import SpellerKeyboard, { KEYMAP, PUNCT_KEYS } from './SpellerKeyboard.svelte';
+  import SpellerField from './SpellerField.svelte';
   export let chapter;
   export let activity;
 
   $: answerWords = activity.answerWords || [];
   $: verseText = answerWords.join(' ');
 
-  let built = '';
+  // The typing buffer is the shared model (lib/speller-input.js): a string, a
+  // grapheme-cluster caret, and any diacritic still waiting for a letter. The
+  // two VERIFY-5D A6 typing defects both lived in the hand-rolled version this
+  // replaces — see that file for what each of them was.
+  let buffer = input.clear();
+  $: built = buffer.text;
   let feedback = '';
   let feedbackKind = '';
   let detail = null;          // { text, word? } — the word renders in the Greek face
@@ -42,27 +49,17 @@
     ? chapter.alphabet.letters.map(l => (l.lower === 'σ/ς' ? 'σ' : l.lower))
     : [];
 
-  function appendChar(ch) { if (!solved) built += ch; }
-  function appendMark(apply) {
-    if (solved || !built) return;                 // nothing to combine onto
-    built = (built + apply).normalize('NFC');
-  }
-  function backspace() {
-    if (solved || !built) return;
-    // Drop a whole grapheme: strip trailing combining marks then the base.
-    const nfd = built.normalize('NFD');
-    let end = nfd.length;
-    while (end > 0 && /\p{M}/u.test(nfd[end - 1])) end -= 1;
-    if (end > 0) end -= 1;
-    built = nfd.slice(0, end).normalize('NFC');
-  }
-  function clearInput() { if (!solved) built = ''; }
+  function appendChar(ch) { if (!solved) buffer = input.insertText(buffer, ch); }
+  function appendMark(apply) { if (!solved) buffer = input.applyMark(buffer, apply); }
+  function backspace() { if (!solved) buffer = input.backspace(buffer); }
+  function clearInput() { if (!solved) buffer = input.clear(); }
+  function moveCaret(index, after) { if (!solved) buffer = input.placeCaret(buffer, index, after); }
+  function caretToEnd() { if (!solved) buffer = input.caretToEnd(buffer); }
 
   function check() {
     const result = checkVerse(built, answerWords, {
       withAccents,
-      punctuationOptional: activity.punctuationOptional !== false,
-      movableNu: activity.movableNu !== false
+      punctuationOptional: activity.punctuationOptional !== false
     });
     if (result.ok) {
       solved = true;
@@ -81,7 +78,7 @@
   }
 
   function restart() {
-    built = '';
+    buffer = input.clear();
     feedback = '';
     feedbackKind = '';
     detail = null;
@@ -113,6 +110,10 @@
     if (showHint) hideHint();
     if (e.key === 'Backspace') { e.preventDefault(); backspace(); return; }
     if (e.key === 'Enter') { e.preventDefault(); check(); return; }
+    // Tap-to-position is the contract (A6 defect 1); the arrow keys are the
+    // desktop convenience layer, same as KEYMAP.
+    if (e.key === 'ArrowLeft') { e.preventDefault(); if (!solved) buffer = input.placeCaret(buffer, buffer.caret - 1, false); return; }
+    if (e.key === 'ArrowRight') { e.preventDefault(); if (!solved) buffer = input.placeCaret(buffer, buffer.caret + 1, false); return; }
     if (PUNCT_KEYS[e.key]) { e.preventDefault(); appendChar(PUNCT_KEYS[e.key]); return; }
     const g = KEYMAP[e.key.toLowerCase()];
     if (g) { e.preventDefault(); appendChar(g); }
@@ -127,10 +128,13 @@
 <div class="card speller spellverse">
   {#if activity.reference}<div class="sv-ref">{activity.reference}</div>{/if}
 
-  <div class="flash-pane">
-    <div class="label">{activity.ui?.fields?.[0] || 'Spell Greek'}</div>
-    <div class="value greek sv-target">{built}{#if !solved}<span class="caret">|</span>{/if}</div>
-  </div>
+  <SpellerField
+    state={buffer}
+    label={activity.ui?.fields?.[0] || 'Spell Greek'}
+    fieldClass="sv-target"
+    locked={solved}
+    on:caret={e => moveCaret(e.detail.index, e.detail.after)}
+    on:caretEnd={caretToEnd} />
 
   <div class="feedback {feedbackKind}">{feedback}</div>
   {#if detail}

@@ -1,7 +1,7 @@
 <script>
-  // Renders one authored string, honoring inline [[u]]...[[/u]] underline
-  // spans and the "( ´ )" isolated-mark groups (see lib/markup.js). Segments
-  // are plain text nodes -- never {@html}.
+  // Renders one authored string, honoring the inline [[u]]...[[/u]] underline
+  // and [[g]]...[[/g]] descriptive-term spans, plus the "( ´ )" isolated-mark
+  // groups (see lib/markup.js). Segments are plain text nodes -- never {@html}.
   //
   // An isolated mark is a base-less diacritic: it needs the SPACING codepoint,
   // a font whose perispomeni is the rounded mark rather than a tilde, and the
@@ -22,4 +22,4 @@
   }
 </script>
 
-{#each splitUnderline(text) as seg}{#if seg.u}<u>{seg.t}</u>{:else}{#each splitMarkGroups(seg.t) as part}{#if part.group != null}<span class="mark-group">(&thinsp;<span class="isolated-mark" class:as-mark={kindOf(part.group) === 'mark'} class:greek={kindOf(part.group) === 'greek'}>{spacingMarks(part.group)}</span>&thinsp;)</span>{:else}{part.t}{/if}{/each}{/if}{/each}
+{#each splitUnderline(text) as seg}{#if seg.u}<u>{seg.t}</u>{:else if seg.g}<span class="term-green">{seg.t}</span>{:else}{#each splitMarkGroups(seg.t) as part}{#if part.group != null}<span class="mark-group">(&thinsp;<span class="isolated-mark" class:as-mark={kindOf(part.group) === 'mark'} class:greek={kindOf(part.group) === 'greek'}>{spacingMarks(part.group)}</span>&thinsp;)</span>{:else}{part.t}{/if}{/each}{/if}{/each}

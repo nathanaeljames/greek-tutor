@@ -94,15 +94,15 @@
        "items": [
         {
          "label": "Active voice",
-         "text": "subject does the action of the verb."
+         "text": ":  subject does the action of the verb."
         },
         {
          "label": "Passive voice",
-         "text": "subject receives the action of the verb."
+         "text": ":  subject receives the action of the verb."
         },
         {
          "label": "Middle voice",
-         "text": "where the subject acts on him/herself (reflexive) or members of a group interact among themselves (reciprocal).  In Greek, self-interest may be reflected in the middle voice."
+         "text": ":  where the subject acts on him/herself (reflexive) or members of a group interact among themselves (reciprocal).  In Greek, self-interest may be reflected in the middle voice."
         }
        ],
        "labelStyle": "underline"
@@ -207,7 +207,7 @@
        "content": [
         {
          "type": "para",
-         "text": "I studied Greek.\nWe studied Greek."
+         "text": "[[u]]I[[/u]] studied Greek.\n[[u]]We[[/u]] studied Greek."
         }
        ]
       },
@@ -217,7 +217,7 @@
        "content": [
         {
          "type": "para",
-         "text": "You studied Greek.\nYou both studied Greek."
+         "text": "[[u]]You[[/u]] studied Greek.\n[[u]]You[[/u]] both studied Greek."
         }
        ]
       },
@@ -227,7 +227,7 @@
        "content": [
         {
          "type": "para",
-         "text": "She studied Greek.\nThey studied Greek."
+         "text": "[[u]]She[[/u]] studied Greek.\n[[u]]They[[/u]] studied Greek."
         }
        ]
       }
@@ -301,13 +301,14 @@
        "items": [
         {
          "label": "Undefined action",
-         "text": "I loose, I run"
+         "text": ":  I loose, I run"
         },
         {
          "label": "Continuous action",
-         "text": "I am loosing, I am running"
+         "text": ":  I am loosing, I am running"
         }
-       ]
+       ],
+       "labelStyle": "plain"
       },
       {
        "type": "para",
@@ -434,7 +435,8 @@
       },
       {
        "type": "para",
-       "text": "λύουσιν instead of λύουσι"
+       "text": "λύουσιν instead of λύουσι",
+       "indent": true
       },
       {
        "type": "refs",

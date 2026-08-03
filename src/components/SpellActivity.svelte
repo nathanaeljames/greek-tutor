@@ -2,16 +2,20 @@
   // Word Spelling Exercise (Vocabulary, and from chapter 3 the Present Active
   // Verb speller). English meaning is shown; the student spells the Greek word
   // using the shared tile keyboard or a physical keyboard (legacy roman->Greek
-  // layout). Diacritic tiles combine onto the previous character and
-  // NFC-normalize. Grading honors the "With Accents" toggle and otherwise
-  // follows the one shared policy in lib/answer-check.js.
+  // layout). Typing goes through the shared buffer in lib/speller-input.js
+  // (tap-to-position caret, diacritics that combine onto the cluster before the
+  // caret and wait for a letter when there is none). Grading honors the "With
+  // Accents" toggle and otherwise follows the one shared policy in
+  // lib/answer-check.js.
   import { onMount, onDestroy } from 'svelte';
   import { getLemma, randomFeedback } from '../lib/content.js';
   import { play } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import { spellingMatches } from '../lib/answer-check.js';
   import { ADVANCE_CORRECT_MS } from '../lib/timing.js';
+  import * as input from '../lib/speller-input.js';
   import SpellerKeyboard, { KEYMAP, PUNCT_KEYS } from './SpellerKeyboard.svelte';
+  import SpellerField from './SpellerField.svelte';
   export let chapter;
   export let activity;
 
@@ -32,7 +36,13 @@
     : [];
 
   let wordIndex = 0;
-  let built = '';
+  // One typing model for every spell surface (lib/speller-input.js): the same
+  // grapheme-cluster buffer, caret and held-diacritic rules the whole-verse
+  // speller uses. The keyboard has been shared since D-15; letting the two
+  // surfaces keep private copies of "what a keystroke does" is the same fork
+  // by another route, and it is where the VERIFY-5D A6 defects lived.
+  let buffer = input.clear();
+  $: built = buffer.text;
   let feedback = '';
   let feedbackKind = '';
   let showAnswer = false;
@@ -49,30 +59,19 @@
 
   $: word = words[wordIndex];
 
-  function appendChar(ch) { built += ch; }
-  function appendMark(apply) {
-    if (!built) return;                       // nothing to combine onto
-    built = (built + apply).normalize('NFC');
-  }
-  function backspace() {
-    if (!built) return;
-    // Drop a whole grapheme: strip trailing combining marks then the base.
-    const nfd = built.normalize('NFD');
-    let end = nfd.length;
-    while (end > 0 && /\p{M}/u.test(nfd[end - 1])) end -= 1;
-    if (end > 0) end -= 1;
-    built = nfd.slice(0, end).normalize('NFC');
-  }
-  function clearInput() { built = ''; }
+  function appendChar(ch) { buffer = input.insertText(buffer, ch); }
+  function appendMark(apply) { buffer = input.applyMark(buffer, apply); }
+  function backspace() { buffer = input.backspace(buffer); }
+  function clearInput() { buffer = input.clear(); }
 
   function check() {
     if (!word) return;
     // One shared policy (Phase 0): "With Accents" ON requires every mark to be
-    // right; case, punctuation and the movable nu stay lenient either way.
+    // right; case and punctuation stay lenient either way. A final nu is
+    // compared like any other letter (D-16 withdrawn, 5D-SPEC2 §2).
     const ok = spellingMatches(built, word.greek, {
       withAccents,
-      punctuationOptional: activity.punctuationOptional !== false,
-      movableNu: activity.movableNu !== false
+      punctuationOptional: activity.punctuationOptional !== false
     });
     totalAttempts += 1;
     if (ok) {
@@ -90,7 +89,7 @@
   }
 
   function resetWordState() {
-    built = '';
+    buffer = input.clear();
     feedback = '';
     feedbackKind = '';
     showAnswer = false;                       // Next resets Show Answer (critique 21)
@@ -117,6 +116,8 @@
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (e.key === 'Backspace') { e.preventDefault(); backspace(); return; }
     if (e.key === 'Enter') { e.preventDefault(); check(); return; }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); buffer = input.placeCaret(buffer, buffer.caret - 1, false); return; }
+    if (e.key === 'ArrowRight') { e.preventDefault(); buffer = input.placeCaret(buffer, buffer.caret + 1, false); return; }
     // Space would scroll the page, so it is claimed here as well as mapped.
     if (PUNCT_KEYS[e.key]) { e.preventDefault(); appendChar(PUNCT_KEYS[e.key]); return; }
     const g = KEYMAP[e.key.toLowerCase()];
@@ -130,8 +131,11 @@
   <div class="spell-panes">
     <div class="flash-pane"><div class="label">English Meaning</div>
       <div class="value" style="font-size:1.2rem">{word ? word.gloss : ''}</div></div>
-    <div class="flash-pane"><div class="label">Spell Greek Word</div>
-      <div class="value greek spell-target">{built}<span class="caret">|</span></div></div>
+    <SpellerField
+      state={buffer}
+      label="Spell Greek Word"
+      on:caret={e => (buffer = input.placeCaret(buffer, e.detail.index, e.detail.after))}
+      on:caretEnd={() => (buffer = input.caretToEnd(buffer))} />
   </div>
 
   <div class="feedback {feedbackKind}">{feedback}</div>

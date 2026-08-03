@@ -17,11 +17,12 @@
   //     a divider. It therefore renders in INK, not the tappable blue, and
   //     Pronounce / Pronounce Each are the audio path. This is a standing
   //     exception to directive 9, alongside Phonetic Reading and the speller.
-  //   * CLEAR ANSWER RE-OPENS A FINISHED ITEM, which attemptsPerItem: 1
-  //     otherwise forbids. VERIFY3 asks for it by name ("upon revisiting a
-  //     previously answered word, all cursors and answer texts should
-  //     disappear and let the user try that word again"). Score history
-  //     already spent is not rewound.
+  //   * A REVISIT RE-OPENS A FINISHED ITEM, which attemptsPerItem: 1 otherwise
+  //     forbids. VERIFY3 asked for it by name ("upon revisiting a previously
+  //     answered word, all cursors and answer texts should disappear and let
+  //     the user try that word again"); 5D-SPEC2 §3 makes it the app-wide rule.
+  //     Clear Answer does the same thing without leaving the item. Score
+  //     history already spent is not rewound.
   //
   // ANSWER POLICY (5B patch 2a): answerPolicy.attemptsPerItem === 1 means
   // Check Answer finalizes the item right or wrong, reveals the hyphen-joined
@@ -55,7 +56,6 @@
   let pronounceEach = activity.ui?.defaults?.pronounceEach ?? false;
   let advanceTimer = null;
   const attemptedItems = new Set();
-  const results = new Map();
 
   // ---- SIZING (C1): one size, set by the longest word in the pool ----
   // Measured, not guessed: a hidden probe renders every word at a reference
@@ -237,25 +237,16 @@
       answered = true;
       endDrag();
       if (attemptedItems.size === items.length) markCompleted(activity.id);
-      results.set(itemIndex, {
-        dividers: [...dividers],
-        oneSyllable,
-        feedback,
-        feedbackKind,
-        correct: right
-      });
       clearTimeout(advanceTimer);
       advanceTimer = setTimeout(() => move(1), autoAdvanceMs);
     }
   }
 
-  // C4. Wipes the dividers AND the finalized result, so a word already answered
-  // can be tried again on a revisit -- the one place attemptsPerItem: 1 gives
-  // way. Attempts already counted stay counted.
+  // C4. Wipes the dividers and re-opens the item without leaving it. Attempts
+  // already counted stay counted.
   function clearAnswer() {
     clearTimeout(advanceTimer);
     endDrag();
-    results.delete(itemIndex);
     dividers = new Set();
     oneSyllable = false;
     feedback = '';
@@ -263,16 +254,12 @@
     answered = false;
   }
 
+  // REVISITING AN ITEM RESETS IT (5D-SPEC2 §3, VERIFY-5D A5). Arriving at a
+  // word -- forwards or backwards, answered before or not -- presents it
+  // fresh. This is what Clear Answer used to be the manual workaround for
+  // (VERIFY3 asked for exactly this behavior on revisit); the button stays
+  // because it also re-opens an item without leaving it. Scores stand.
   function restoreItem() {
-    const result = results.get(itemIndex);
-    if (result) {
-      dividers = new Set(result.dividers);
-      oneSyllable = result.oneSyllable;
-      feedback = result.feedback;
-      feedbackKind = result.feedbackKind;
-      answered = true;
-      return;
-    }
     dividers = new Set();
     oneSyllable = false;
     feedback = '';
