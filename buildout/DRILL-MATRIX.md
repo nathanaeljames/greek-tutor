@@ -6,9 +6,10 @@ incorrect, and how long the app waits. Original behavior and port
 behavior are both recorded, and every deliberate departure is marked
 **[D-n]** against DIVERGENCE-LOG.md.
 
-Updated 2026-07-28 (VERIFY-5D decisions A4, A5, B5, D1). New chapters
-add rows here at spec time; the classes are fixed, so a new drill is
-assigned to a class rather than given its own rule.
+Updated 2026-08-03 at 5E-SPEC1 issue (chapters 4 and 5 added, §5a and
+§5b). Previously updated 2026-07-28 (VERIFY-5D decisions A4, A5, B5,
+D1). New chapters add rows here at spec time; the classes are fixed,
+so a new drill is assigned to a class rather than given its own rule.
 
 ## 1. The two constants (D-14, ratified with new values in VERIFY-5D)
 
@@ -105,6 +106,38 @@ cycling, the verb drills' wrong answer is worth sitting with.
 | Vocabulary Spelling | spell | Check Answer | same | `manual` | — |
 | Scripture Memory Spelling | spellVerse | one shot at the whole verse; hint hidden after typing starts | Major Hint always available **[D-11]**, "Restart Exercise" **[D-12]**, wrong word named not numbered **[D-13]** | `manual` | three departures, all usability |
 
+## 5a. Chapter 4 (issued with 5E-SPEC1; confirm on device)
+
+Class assignments read off the ch4 rail walk: the incorrect state
+prints "Try again" together with "Click on 'Next' to continue" on both
+noun drills, which is the `manualOnIncorrect` signature.
+
+| Activity | Type | Original | Port | Class | Departure |
+| --- | --- | --- | --- | --- | --- |
+| Greek Noun Drill | select (10 opts, 5x2 paradigm grid) | 1 attempt, ~2s correct, manual Next on incorrect | same, CORRECT_MS | `manualOnIncorrect` | grid stays 2-up at every width **[D-26]** |
+| Declining Noun Drill | select (10 grouped opts) + Translate reveal | as above | same | `manualOnIncorrect` | auto-reveal on answer is a VERIFY-5E question |
+| Vocabulary: Greek to English | select | as above | same | `manualOnIncorrect` | — |
+| Vocabulary: English to Greek | select | as above | same | `manualOnIncorrect` | — |
+| Scripture Memory Drill | select (10 opts) | 1 attempt, ~2s correct, ~4s incorrect | same | `autoBoth` | — |
+| Second Declension Noun Spelling | spell | Check Answer | same | `manual` | — |
+| Vocabulary Spelling | spell | Check Answer | same | `manual` | — |
+| Scripture Memory Spelling | spellVerse | one shot at the verse | same | `manual` | inherits **[D-11] [D-12] [D-13]** |
+
+## 5b. Chapter 5 (issued with 5E-SPEC1; confirm on device)
+
+| Activity | Type | Original | Port | Class | Departure |
+| --- | --- | --- | --- | --- | --- |
+| First Declension Noun Drill | select (4 opts, single column) | 1 attempt, ~2s correct, manual Next on incorrect | same | `manualOnIncorrect` | — |
+| Declining Noun Drill | select (10 grouped opts) + Translate reveal | as above | same | `manualOnIncorrect` | **[D-26]** |
+| Definite Article Drill | select (8 grouped opts) + Gender reveal | as above | same | `manualOnIncorrect` | **[D-26]**; article has no vocative |
+| Vocabulary: Greek to English | select | as above | same | `manualOnIncorrect` | — |
+| Vocabulary: English to Greek | select | as above | same | `manualOnIncorrect` | — |
+| Scripture Memory Drill | select (10 opts) | 1 attempt, ~2s / ~4s | same | `autoBoth` | — |
+| First Declension Noun Spelling | spell | Check Answer | same | `manual` | — |
+| Definite Article Spelling | spell (parsing-label prompt + ref) | Check Answer | same | `manual` | — |
+| Vocabulary Spelling | spell | Check Answer | same | `manual` | — |
+| Scripture Memory Spelling | spellVerse | one shot at the verse | same | `manual` | inherits **[D-11] [D-12] [D-13]** |
+
 ## 6. Cross-cutting rules
 
 **Revisiting an answered item resets it (NEW, VERIFY-5D A5).** In the
@@ -135,5 +168,8 @@ presentation, and all four were requested or ratified by Nathanael:
 3. **[D-6]** chapter 2's item count follows reality, not the dialog.
 4. **[D-16] WITHDRAWN** — movable-nu leniency is GONE. See
    DIVERGENCE-LOG for why it should never have been added.
+5. **[D-26]** paradigm-shaped option grids stay two-up at every width,
+   overriding the port's own D-19 reflow rule. Presentation, not
+   behavior, but it is a deliberate exception and belongs on the list.
 
 Everything else in this matrix is the original's own behavior.

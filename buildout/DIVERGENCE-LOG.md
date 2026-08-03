@@ -108,6 +108,32 @@ D-22 | app | GREEN DESCRIPTIVE TERMS: when a descriptive label shares
 D-23 | ch3 | Endings display: the original's Endings popup shows the
      six endings; the port additionally makes it reachable and
      audible per D-10. Confirmed KEEP at VERIFY-5D A3.
+D-24 | app | GREEK-TAP SCOPE: a `greekTaps` key marks EVERY standalone
+     occurrence of the word in an item's text, not just the first.
+     Marking only the first left the same word blue-and-speaking in
+     one place and black-and-silent in another, which reads as "that
+     one is not tappable". Shipped at 5D round 2; RATIFIED here and
+     assumed by all chapter-4/5 data. | 5D-SPEC2 build + Nathanael,
+     5E issue.
+D-25 | app | iPad BREAKPOINT for the four-up Greek option grids
+     (D-19) is 768px — the iPad's portrait CSS width — not the app's
+     existing 560/900 breakpoints. Shipped at 5D round 2 and ratified
+     here. | 5D-SPEC2 build + Nathanael, 5E issue.
+D-26 | ch4+ | PARADIGM-SHAPED OPTION GRIDS ARE EXEMPT FROM D-19 and
+     stay TWO COLUMNS at every width: in the Greek Noun Drill and the
+     Declining Noun Drills the two columns ARE singular and plural and
+     the five rows ARE the five cases, so reflowing to four columns
+     destroys the teaching. This is a fidelity carve-out from a
+     port-side rule, logged because it is a deliberate exception, not
+     because the original diverges. Flagged explicitly in the data;
+     never inferred from option count. | Fable, 5E-SPEC1 §4.4.
+D-27 | ch5 | The First Declension--Eta chart prints its first row
+     label as `Nom.\Voc.` with a BACKSLASH while the Alpha chart on
+     the same page uses `Nom./Voc.`. Shipped VERBATIM. Typo policy A1
+     covers scholar names and obvious English misspellings; it does
+     not cover the original's own chart-label inconsistencies, and
+     normalizing one of the two would be a silent content edit.
+     | Fable, 5E assembly, fidelity-first.
 
 ## Auto-progress / advance rule matrix
 

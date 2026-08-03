@@ -15,7 +15,7 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
 internet. Full license from the author. Secondary goal: portfolio
 piece. Nathanael goes by "Fable" when addressing Claude (chat).
 
-## Live state (2026-07-28)
+## Live state (2026-08-03)
 
 - Repo: github.com/nathanaeljames/greek-tutor (Netlify CD from main).
   Deploy: https://greektutorv1.netlify.app — installed as PWA on the
@@ -60,24 +60,38 @@ piece. Nathanael goes by "Fable" when addressing Claude (chat).
   first); (5) Hebrew tell-tale model corrected — `Hebrew*` FIELD NAMES
   are shared-engine plumbing inside legitimate Greek drills, not
   contamination markers. Details: PIPELINE-INSIGHTS-v3 Stages 3/4/4b.
-- **5D ROUND 1 BUILT AND DEVICE-PASSED WITH CORRECTIONS (2026-07-28).**
-  Chapter 3 rail 18/18, keyboard, timing constants, spellVerse all
-  device-verified; VERIFY-5D returned with decisions + a formatting
-  punch list. Data regenerated 2026-07-28 against three ROOT-CAUSE
-  pipeline fixes (length-prefixed field reads, rich-text underline
-  wiring, objectives extracted not authored). 5D-SPEC2.md issued for
-  the remaining code work. Superseded state below, kept for context:
-- **5D opened (chapter 3, solo) — spec issued 2026-07-28.** Recon
-  returned (5D-RECON-RESULTS, D1-D16); chapt-03.json +
-  lexicon-chapt03.json assembled and Stage-7-validated (all 28
-  derived Greek Verb Drill answers matched the TBK's own option
-  columns); 5D-SPEC.md issued to both implementers. Phase 0 of the
-  spec is a KEYBOARD CHECKPOINT (space + punctuation for the shared
-  speller) that pauses for Nathanael's layout/policy choice before
-  spellVerse builds. Two original ch3 defects corrected data-side
-  with _legacy provenance (pistu<ei, pisteuou<sin). Open _verify:
-  Objectives page wording; the five pist* audio clips (D16 heard
-  c_pistei on the pisteuete item, conflicting with name inference).
+- **5D (chapter 3, solo) CLOSED 2026-08-03.** Two implementer rounds,
+  both Opus in Claude Code. Round 1 built the chapter (rail 18/18,
+  keyboard, timing constants, spellVerse) and VERIFY-5D returned with
+  decisions plus a formatting punch list; the data was then
+  regenerated against three ROOT-CAUSE pipeline fixes (length-prefixed
+  field reads, rich-text underline wiring, objectives extracted not
+  authored). Round 2 (5D-SPEC2) delivered the corrections plus two
+  Playwright harnesses that drive the shipped UI — `npm run ui:walk`
+  and `npm run ui:behavior` — which between them found five silent
+  horizontal-clipping defects in chapters 1 and 2 that had already
+  passed device passes. Nathanael's visual pass on the round-2 tree
+  was a FULL PASS, so no VERIFY-5D2 document was raised (the 5B-SPEC4
+  precedent) and none is owed. Records, in the repo: 5D-SPEC{,2}.md,
+  5D-SPEC-RESULTS-OPUS.md, 5D-SPEC2-RESULTS.md, the matching BUILD
+  docs, VERIFY-5D{,-TASK}.md.
+  Round-2 things now standing infrastructure: `playwright-core` as a
+  real devDependency; the shared speller input model
+  (`lib/speller-input.js` + `SpellerField.svelte`) with caret
+  placement and held pending marks; `check:shapes` failing the build
+  on any re-introduced `autoAdvanceMs`.
+- **5E (chapters 4 + 5, batched) OPEN — 5E-SPEC1.md issued
+  2026-08-03.** Nathanael supplied full DOSBox rail walks of both
+  chapters (ch4railwalk.pdf, ch5railwalk.pdf), which serve as the
+  cohort's RECON-RESULTS, so no separate recon round ran. A fresh
+  extraction pass over 4_NOUNS2.TBK and 5_NOUNS1.TBK confirmed the 5C
+  prediction: chapter 5 is chapter 4 plus the definite-article family,
+  every teaching field / drill pool / option column / reference column
+  / paradigm chart is reachable, and the residual novelty is seven
+  renderer items (5E-SPEC1 §4). Audio: ch4 = 91 files (`d_*` plus
+  chapter 3's `c_sm*` shipped forward), ch5 = 135 (`e_*` plus `c_sm*`
+  and `d_sm*`), exactly the cumulative-review duplication Stage 6
+  documents.
 - Vocabulary registered across 5B: topicPages mode; greekRows,
   expander and subheading RichContent blocks; divide + placeAccent
   activity types; static option sets in select; speller-tiles.json
@@ -85,7 +99,10 @@ piece. Nathanael goes by "Fable" when addressing Claude (chat).
   font-derived mark-geometry table.
 - Font map after 5C: '#' smooth+circumflex, '[' rough (second slot),
   ';' question mark, ':' raised-dot colon, 'v' nu provisional,
-  '$' rough+circumflex, '!' rough+acute (all word-verified).
+  '$' rough+circumflex, '!' rough+acute. '$' and '!' now carry the
+  full three evidence sources — the ch5 rail walk shows the First
+  Declension--Alpha chart rendered in DOSBox, where `w!ra` prints ὥρα
+  and `w$rai` prints ὧραι. That question is CLOSED.
   Remaining unknowns: { } ~ | \ ` (junk-context only) and '='
   (OpenScript comparator) — likely none are font codes.
 
@@ -129,6 +146,18 @@ pipeline.
 Recon-tasks rule (2026-07-28, from D1): RECON-TASKS documents
 pre-compile the expected rail/menu order from extraction and ask for
 YES/NO verification — never ask for the order open-ended.
+
+RAIL-WALK RULE (2026-08-03, from 5E): a full DOSBox RAIL WALK — every
+page of a chapter, in order, as a PDF of screenshots — SUBSTITUTES for
+steps 1-2 of the loop. It answers sequence order, menu contents, screen
+layout and button sets in one artifact, which is most of what recon
+existed to collect. When a rail walk is supplied with the request,
+skip RECON-TASKS/RECON-RESULTS and go straight to the spec. Nathanael
+holds rail walks for chapters 4-8 and can supply the rest on request.
+In a rail walk, a HAND CURSOR marks a clickable element; the marking is
+deliberate but NOT exhaustive, so a hand is positive evidence and its
+absence is not evidence of absence. Every rail walk is a standing
+attachment to its cohort's coding rounds.
 
 Divergence rule (2026-07-28): every deliberate departure from the
 original is logged in DIVERGENCE-LOG.md (canonical living set) at
@@ -193,14 +222,14 @@ files carry only what a new chat needs.
    doc.
    BUILD docs never enter the project files. They exist for the
    grading chat and are 75-120 KB of diff; the repo archives them.
-   Applied at 5D spec issue (2026-07-28): 5B-SPEC4-RESULTS.md rotated
-   out (chapter 2 closed, lessons harvested here and in v3). Rolling
-   set now: 5D-SPEC.md + chapt-03.json + lexicon-chapt03.json
-   (5D-RECON-TASKS.md leaves once its D-answers are absorbed, which
-   they are — the spec and data carry them). chapt-02.json +
-   lexicon-chapt02.json may rotate out at Nathanael's discretion
-   (device-verified, lessons harvested) — chapt-01 stays as the
-   schema reference.
+   Applied at 5E spec issue (2026-08-03): 5D-SPEC2.md, chapt-03.json
+   and lexicon-chapt03.json rotate OUT (cohort 5D closed, lessons
+   harvested here, in PHASE5-PLAN and in the divergence log);
+   chapt-02.json and lexicon-chapt02.json also rotate out
+   (device-verified, lessons harvested). chapt-01.json,
+   lexicon-chapt01.json and intro.json STAY as the schema reference.
+   Rolling set becomes: 5E-SPEC1.md + chapt-04.json +
+   lexicon-chapt04.json + chapt-05.json + lexicon-chapt05.json.
 
 ## Harvested 5A/5B/5C lessons (settled — do not re-derive)
 
@@ -363,7 +392,9 @@ files carry only what a new chat needs.
 8. COLOR SEMANTICS: blue (--link #1663c7) exclusively means tappable;
    everything else uses ink/dark-green.
 9. GREEK-TAP RULE: all DISPLAYED Greek is tappable and plays its
-   audio; English is not; option buttons never carry audio.
+   audio; English is not; option buttons never carry audio. A
+   `greekTaps` key marks EVERY standalone occurrence in an item's
+   text, not just the first (D-24).
    Exceptions: Phonetic Reading Exercise, speller tiles, Review
    Letters Quick Chart (frozen), and the Syllable Division word — a
    tap on it places a divider, so it cannot also play, and it renders
@@ -394,27 +425,34 @@ files carry only what a new chat needs.
   i_rm623b pre-ships in CHAPT_8). Full taxonomy:
   buildout/5C-RECON-FINDINGS.md §3.
 
-## Immediate queue (as of 2026-07-28 — VERIFY-5D returned)
+## Immediate queue (as of 2026-08-03 — 5E-SPEC1 issued)
 
-1. **Nathanael: commit the 5D round-2 deliverables** — regenerated
-   src/data/chapt-03.json + lexicon-chapt03.json, revised
-   scripts/assemble_ch3.py, buildout/5D-SPEC2.md, DRILL-MATRIX.md
-   (new canonical), updated DIVERGENCE-LOG.md /
-   PIPELINE-INSIGHTS-v3.md / CHAT-HANDOFF.md — then upload the
-   committed copies to project files immediately.
-2. **Implementer runs 5D-SPEC2.md** with the DOSBox screenshots
-   attached, per the visual verification process above.
-3. Retroactive sweep owed in SPEC2: timing constants 2000/4000 across
-   ch1/ch2/ch3; revisit-resets-item on every scored surface; four-up
-   Greek option grids at the iPad breakpoint.
-4. ONBOARD-SOL.md still owed to buildout/; AGENTS.md still needs
-   repointing from the absolute local Mac path to repo-relative.
+1. **Fable: deliver the 5E data files** — `src/data/chapt-04.json`,
+   `lexicon-chapt04.json`, `chapt-05.json`, `lexicon-chapt05.json` and
+   `scripts/assemble_ch45.py`. The extraction pass is DONE and
+   validated against the rail walks; the assembly ships in the same
+   conversation as 5E-SPEC1. **5E-SPEC1 must not go to an implementer
+   until those five files are committed** — the spec says they are
+   delivered with it.
+   NOTE: `GreekTutor.iso` persists only inside one conversation. If
+   the 5E assembly moves to a new chat, re-upload it there.
+2. **Nathanael: commit the 5E round-1 documents** — buildout/5E-SPEC1.md
+   plus the updated CHAT-HANDOFF.md, PHASE5-PLAN.md, DIVERGENCE-LOG.md
+   and DRILL-MATRIX.md — then upload the committed copies to project
+   files immediately.
+3. **Implementer runs 5E-SPEC1.md** with ch4railwalk.pdf and
+   ch5railwalk.pdf attached, per the visual verification process.
+   Deliverables: 5E-SPEC1-RESULTS.md + 5E-SPEC1-BUILD.md (the BUILD
+   doc MUST carry the complete git diff), then VERIFY-5E.md.
+4. ONBOARD-SOL.md is now in buildout/ (done). **AGENTS.md still needs
+   repointing** from the absolute local Mac path to repo-relative.
 5. Data debt at the next chapt-01/intro regen: residual "--" in
    chapt-01.json.learn[7].content[1].text, intro.json.learn[0]
    .content[1].text and .content[3].text, and lexicon-chapt01.json
    exampleWords.anthropoi.gloss / .anthropois.gloss.
-6. playwright-core becomes a devDependency in SPEC2 (it is now
-   load-bearing for the visual verification process, not a nicety).
+6. Registry debt: unify paradigm row `person` onto `label` at the next
+   chapt-03 regeneration (5E ships `label`; the renderer reads
+   `row.label ?? row.person` so chapter 3's chunk hash stays put).
 7. Quiet watch item: the mark-geometry table is generated from the
    REGULAR weight only. Correct today — every red-overlay surface
    sets Greek at 400.
@@ -422,12 +460,18 @@ files carry only what a new chat needs.
 ## Known open questions
 
 - C3 multi-day retention on device: quiet watch item.
-- DOSBox screenshot of the ch5 hōra paradigm chart (third evidence
-  source for '$'/'!') rides along with 5E recon — not blocking; two
-  independent word witnesses each already.
 - ch3 unreferenced audio c_pisou2 (heard as "pistuousi") has no
   surface in the chapter; leave unwired unless a later chapter
   claims it.
+- ch4 unreferenced audio `d_adepar` (the ἀδελφός whole-paradigm clip)
+  has no chart on any chapter-4 Learn page — ἀδελφός appears only as
+  the Declining Noun Drill's third word family. Leave unwired unless
+  the build finds a surface; raise it in VERIFY-5E only if a rail-walk
+  page contradicts this.
+- Does the Declining Noun Drill reveal its translation automatically
+  once the item is answered, or only on the Translate button? The rail
+  walks show it present in both answered states, but the button may
+  have been pressed. Built button-only; VERIFY-5E item.
 - "Learn Vocabulary Builder": D2 answered — the chapter rail as
   verified (D1) does not include it; nothing visibly book-jumps. NOT
   ported in 5D; revisit only if a later chapter surfaces it in-rail.

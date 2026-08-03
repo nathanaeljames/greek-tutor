@@ -1,0 +1,2515 @@
+{
+ "_comment": "Chapter 4 (Second Declension Nouns), assembled from 4_NOUNS2.TBK + CHAPT_4 audio + ch4railwalk.pdf (DOSBox rail walk). Pools are read by offset (5E-EXTRACTION-MAP.md); every drill and speller answer is derived from the chapter's own paradigm charts and validated against the extracted option columns at assembly time. Page prose is verbatim from the extracted fields, cut where the rail-walk screenshots end the page -- ToolBook leaves a stale tail in most field buffers.",
+ "id": "chapt_4",
+ "number": 4,
+ "title": "Second Declension Nouns",
+ "references": "(see per-topic refs)",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "understand the English syntax of nouns in sentences (subject, object, number, gender, etc.)",
+  "understand the Greek noun system (gender, number, case)",
+  "write out the second declension paradigm for masculine and neuter nouns",
+  "master 10 more high frequency vocabulary words",
+  "memorize John 14:6b in Greek"
+ ],
+ "_objectives_note": "Extracted verbatim from 0x09415c. A near duplicate at 0x0b7706 drops \"the\" in line 1; that is a stale buffer, not the page.",
+ "vocab": [
+  "agapao",
+  "grapho",
+  "de",
+  "doulos",
+  "heurisko",
+  "hieron",
+  "laos",
+  "nomos",
+  "oikos",
+  "hos"
+ ],
+ "learn": [
+  {
+   "id": "c4_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives",
+   "instructions": ""
+  },
+  {
+   "id": "c4_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "greekTaps": true,
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "A noun is commonly defined as a word that stands for a person, place or thing."
+      },
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "Tanya",
+         "def": "= person"
+        },
+        {
+         "term": "store",
+         "def": "= place"
+        },
+        {
+         "term": "book",
+         "def": "= thing"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "gender",
+     "title": "Gender",
+     "content": [
+      {
+       "type": "para",
+       "text": "Gender in English is determined by the sex of the referent:  \"king...he\", \"queen...she\".  Objects which are neither male nor female are considered neuter:  \"table...it\".  In Greek some inanimate objects are given male or female designations.  Be careful not to confuse Greek grammatical gender with biological gender."
+      },
+      {
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "greek": "οἶκος",
+         "gloss": "\"house\" is masculine",
+         "audio": "chapt_4_d_oikos"
+        },
+        {
+         "greek": "ἱερόν",
+         "gloss": "\"temple\" is neuter",
+         "audio": "chapt_4_d_ieron"
+        },
+        {
+         "greek": "ἐκκλησία",
+         "gloss": "\"church\" is feminine",
+         "audio": "chapt_4_d_ekkles"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "number",
+     "title": "Number",
+     "content": [
+      {
+       "type": "para",
+       "text": "Both English and Greek inflect words for number.   Both languages have singular and plural nouns."
+      },
+      {
+       "type": "greekRows",
+       "layout": "englishPairs",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "parts": [
+          "book",
+          "books"
+         ]
+        },
+        {
+         "parts": [
+          "man",
+          "men"
+         ]
+        },
+        {
+         "parts": [
+          "quiz",
+          "quizzes"
+         ]
+        },
+        {
+         "parts": [
+          "deer",
+          "deer"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "case",
+     "title": "Case",
+     "content": [
+      {
+       "type": "para",
+       "text": "English uses three word inflections in order to indicate changes in case."
+      },
+      {
+       "type": "numbered",
+       "numbered": false,
+       "labelStyle": "underline",
+       "items": [
+        {
+         "label": "Subjective case",
+         "text": " (Gk:  nominative):\n[[u]]He[[/u]] hit the ball."
+        },
+        {
+         "label": "Objective case",
+         "text": " (Gk:  accusative):\nThe ball hit [[u]]him[[/u]]."
+        },
+        {
+         "label": "Possessive case",
+         "text": " (Gk:  genitive):\nHe hit [[u]]his[[/u]] ball."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Subjective Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "The subject of the sentence can usually be discovered by putting \"who\" or \"what\" before the verb."
+        },
+        {
+         "type": "para",
+         "text": "E.g.   [[u]]Zach[[/u]] ran to the store."
+        },
+        {
+         "type": "para",
+         "text": "Who ran to the store?    Zach (= subject)"
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Objective Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "The object of a sentence can usually be discovered by putting a \"who\" or \"what\" after the verb."
+        },
+        {
+         "type": "para",
+         "text": "E.g.   Zach hit [[u]]the ball[[/u]]."
+        },
+        {
+         "type": "para",
+         "text": "Zach hit what?    ball (= object)"
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Possessive Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "The possessive case often can be discovered by asking \"whose\"?"
+        },
+        {
+         "type": "para",
+         "text": "Charlie hid [[u]]his[[/u]] ball."
+        },
+        {
+         "type": "para",
+         "text": "whose ball?    his (possessive)"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c4_learn_nouns",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Greek Nouns:  Second Declension",
+   "greekTaps": true,
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "There are three noun [[u]]declensions[[/u]] in Greek.  We will learn the second declension first because it is more frequent.  Second declension nouns are largely masculine which is indicated by placing a \" ὁ  \" [[u]]definite article[[/u]] (\"the\") in front of the root.  Each noun should be learned with its definite article which indicates its gender.  Second declension neuter nouns are marked by the definite article \"τό .\"  The stem of second declension nouns end with an omicron."
+      },
+      {
+       "type": "expander",
+       "label": "Declensions:  First, Second, Third",
+       "content": [
+        {
+         "type": "para",
+         "text": "A declension is a grouping of nouns that are inflected with a shared set of endings.  The difference in endings does not affect the translation between first, second and third declensions.  The second declension nouns are characterized by an \"o\" as the final letter of the stem.  They are largely masculine or neuter.  First declension nouns are characterized by an \"η\" or \"α\" and are mostly feminine.  Third declension nouns have stems that end in a consonant."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Definite Article",
+       "content": [
+        {
+         "type": "para",
+         "text": "In contrast to English, which uses \"a\" as an indefinite article (e.g. \"a book\"),  Greek has no indefinite article.  Thus the Greek indefinite noun may be translated \"book\" or \"a book.\"  Greek nouns are assumed to be indefinite unless marked by the definite article (\"the\").  For now simply be aware of the nominative form of the definite article which will indicate the gender of the noun being learned:"
+        },
+        {
+         "type": "greekRows",
+         "layout": "glossOnly",
+         "rows": [
+          {
+           "greek": "ὁ",
+           "gloss": "= masculine (\"the\")",
+           "audio": "chapt_4_d_ho"
+          },
+          {
+           "greek": "ἡ",
+           "gloss": "= feminine (\"the\")",
+           "audio": "chapt_4_d_hn"
+          },
+          {
+           "greek": "τό",
+           "gloss": "= neuter (\"the\")",
+           "audio": "chapt_4_d_to"
+          }
+         ]
+        },
+        {
+         "type": "para",
+         "text": "When you learn nouns you should remember which article goes with it as an indication of the noun's gender."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "gender",
+     "title": "Gender",
+     "content": [
+      {
+       "type": "para",
+       "text": "Greek nouns are [[u]]masculine[[/u]], [[u]]feminine[[/u]], or [[u]]neuter[[/u]] in gender.  Often this gender is more a syntactic feature than a metaphysical statement as many inanimate objects are given grammatic gender.  Thus \"year\" ( ἔτος ) is neuter while \"day\" ( ἡμέρα ) is feminine but \"time\" ( χρόνος ) is masculine.   Gender is indicated by the definite article marker.  It should be learned with the noun."
+      },
+      {
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "greek": "ὁ",
+         "gloss": "= masculine (definite article = \"the\")",
+         "audio": "chapt_4_d_ho"
+        },
+        {
+         "greek": "ἡ",
+         "gloss": "= feminine",
+         "audio": "chapt_4_d_hn"
+        },
+        {
+         "greek": "τό",
+         "gloss": "= neuter",
+         "audio": "chapt_4_d_to"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "numberAgreement",
+     "title": "Number and Agreement",
+     "content": [
+      {
+       "type": "para",
+       "text": "As in English, Greek has both [[u]]singular[[/u]] and [[u]]plural[[/u]] nouns.  The verb must match the number of the subject noun the same way as in English:"
+      },
+      {
+       "type": "para",
+       "indent": true,
+       "text": "The students [[u]]love[[/u]] Greek.\nThe student [[u]]loves[[/u]] Greek."
+      }
+     ]
+    },
+    {
+     "id": "inflectionalForms",
+     "title": "Inflectional Forms",
+     "content": [
+      {
+       "type": "para",
+       "text": "There are 5 inflectional forms which mark the various cases or roles that nouns play in sentences."
+      },
+      {
+       "type": "numbered",
+       "numbered": false,
+       "labelStyle": "underline",
+       "items": [
+        {
+         "label": "Nominative form",
+         "text": ":      marks the subject of the sentence."
+        },
+        {
+         "label": "Genitive form",
+         "text": ":           expresses a possessive"
+        },
+        {
+         "label": "Dative form",
+         "text": ":              marks the indirect object"
+        },
+        {
+         "label": "Accusative form",
+         "text": ":       indicates the object of the sentence"
+        },
+        {
+         "label": "Vocative form",
+         "text": ":          is used for direct address"
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Nominative Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "[[u]]Music[[/u]] calms the heart."
+        },
+        {
+         "type": "para",
+         "text": "\"Music\" is the subject of the sentence.  In Greek it would be marked with a nominative inflectional ending."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Genitive Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "The Pharisee went to the house [[u]]of God[[/u]]."
+        },
+        {
+         "type": "para",
+         "text": "The Pharisee went to [[u]]God's[[/u]] house."
+        },
+        {
+         "type": "para",
+         "text": "\"Of God\" or \"God's\" would be marked in Greek with a genitive inflectional ending."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Dative Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "He spoke a word [[u]]to the apostle[[/u]]."
+        },
+        {
+         "type": "para",
+         "text": "\"To the apostle\" would be marked with a dative inflectional ending in Greek."
+        },
+        {
+         "type": "para",
+         "text": "The dative functions in many ways.  It may also be translated \"with\" or \"in\" in some contexts."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Accusative Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "Joy saw [[u]]the ball[[/u]]."
+        },
+        {
+         "type": "para",
+         "text": "\"The ball\" is the object of the sentence.  It would be marked by an accusative inflectional ending in Greek."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Vocative Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "[[u]]Brother[[/u]], you are the man!"
+        },
+        {
+         "type": "para",
+         "text": "\"Brother\" is a direct address and would be marked by a vocative inflectional ending in Greek."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "masculineDeclension",
+     "title": "Masculine Declension",
+     "content": [
+      {
+       "type": "paradigm",
+       "switch": "moreBack",
+       "charts": [
+        {
+         "title": "Masculine Declension",
+         "lemma": {
+          "greek": "λόγος",
+          "gloss": "word",
+          "audio": "chapt_4_d_logos"
+         },
+         "columns": [
+          "Singular",
+          "Plural"
+         ],
+         "rows": [
+          {
+           "label": "Nom.",
+           "cells": [
+            {
+             "greek": "λόγος",
+             "audio": "chapt_4_d_logos"
+            },
+            {
+             "greek": "λόγοι",
+             "audio": "chapt_4_d_logoi"
+            }
+           ]
+          },
+          {
+           "label": "Gen.",
+           "cells": [
+            {
+             "greek": "λόγου",
+             "audio": "chapt_4_d_logou"
+            },
+            {
+             "greek": "λόγων",
+             "audio": "chapt_4_d_logwn"
+            }
+           ]
+          },
+          {
+           "label": "Dat.",
+           "cells": [
+            {
+             "greek": "λόγῳ",
+             "audio": "chapt_4_d_logw"
+            },
+            {
+             "greek": "λόγοις",
+             "audio": "chapt_4_d_logois"
+            }
+           ]
+          },
+          {
+           "label": "Acc.",
+           "cells": [
+            {
+             "greek": "λόγον",
+             "audio": "chapt_4_d_logon"
+            },
+            {
+             "greek": "λόγους",
+             "audio": "chapt_4_d_logous"
+            }
+           ]
+          },
+          {
+           "label": "Voc.",
+           "cells": [
+            {
+             "greek": "λόγε",
+             "audio": "chapt_4_d_loge"
+            },
+            {
+             "greek": "λόγοι",
+             "audio": "chapt_4_d_logoi"
+            }
+           ]
+          }
+         ],
+         "showGlosses": false,
+         "sayWhole": {
+          "label": "Say Whole List",
+          "audio": "chapt_4_d_logpar"
+         },
+         "meanings": {
+          "label": "Meanings",
+          "title": "Translation of Inflectional Forms",
+          "columns": [
+           "Singular",
+           "Plural"
+          ],
+          "rows": [
+           {
+            "label": "Nom.",
+            "cells": [
+             {
+              "greek": "λόγος",
+              "gloss": "a word",
+              "audio": "chapt_4_d_logos"
+             },
+             {
+              "greek": "λόγοι",
+              "gloss": "words (subject of sentence)",
+              "audio": "chapt_4_d_logoi"
+             }
+            ]
+           },
+           {
+            "label": "Gen.",
+            "cells": [
+             {
+              "greek": "λόγου",
+              "gloss": "of a word",
+              "audio": "chapt_4_d_logou"
+             },
+             {
+              "greek": "λόγων",
+              "gloss": "of words (possessive)",
+              "audio": "chapt_4_d_logwn"
+             }
+            ]
+           },
+           {
+            "label": "Dat.",
+            "cells": [
+             {
+              "greek": "λόγῳ",
+              "gloss": "to a word",
+              "audio": "chapt_4_d_logw"
+             },
+             {
+              "greek": "λόγοις",
+              "gloss": "to words (indirect object)",
+              "audio": "chapt_4_d_logois"
+             }
+            ]
+           },
+           {
+            "label": "Acc.",
+            "cells": [
+             {
+              "greek": "λόγον",
+              "gloss": "a word",
+              "audio": "chapt_4_d_logon"
+             },
+             {
+              "greek": "λόγους",
+              "gloss": "words (direct object)",
+              "audio": "chapt_4_d_logous"
+             }
+            ]
+           },
+           {
+            "label": "Voc.",
+            "cells": [
+             {
+              "greek": "λόγε",
+              "gloss": "word",
+              "audio": "chapt_4_d_loge"
+             },
+             {
+              "greek": "λόγοι",
+              "gloss": "words (direct address)",
+              "audio": "chapt_4_d_logoi"
+             }
+            ]
+           }
+          ],
+          "legend": [
+           {
+            "label": "Nominative",
+            "text": "= subject of the sentence"
+           },
+           {
+            "label": "Genitive",
+            "text": "= possessive usually translated with \"of\""
+           },
+           {
+            "label": "Dative",
+            "text": "= indirect object usually translated with \"to\""
+           },
+           {
+            "label": "Accusative",
+            "text": "= direct object of a sentence"
+           },
+           {
+            "label": "Vocative",
+            "text": "= direct address (e.g. O words, tell us ...)"
+           }
+          ]
+         },
+         "name": "λόγος"
+        },
+        {
+         "title": "Masculine Declension",
+         "lemma": {
+          "greek": "ἄνθρωπος",
+          "gloss": "man",
+          "audio": "chapt_4_d_anthos"
+         },
+         "columns": [
+          "Singular",
+          "Plural"
+         ],
+         "rows": [
+          {
+           "label": "Nom.",
+           "cells": [
+            {
+             "greek": "ἄνθρωπος",
+             "audio": "chapt_4_d_anthos"
+            },
+            {
+             "greek": "ἄνθρωποι",
+             "audio": "chapt_4_d_anthoi"
+            }
+           ]
+          },
+          {
+           "label": "Gen.",
+           "cells": [
+            {
+             "greek": "ἀνθρώπου",
+             "audio": "chapt_4_d_anthou"
+            },
+            {
+             "greek": "ἀνθρώπων",
+             "audio": "chapt_4_d_anthwn"
+            }
+           ]
+          },
+          {
+           "label": "Dat.",
+           "cells": [
+            {
+             "greek": "ἀνθρώπῳ",
+             "audio": "chapt_4_d_anthw"
+            },
+            {
+             "greek": "ἀνθρώποις",
+             "audio": "chapt_4_d_antois"
+            }
+           ]
+          },
+          {
+           "label": "Acc.",
+           "cells": [
+            {
+             "greek": "ἄνθρωπον",
+             "audio": "chapt_4_d_anthon"
+            },
+            {
+             "greek": "ἀνθρώπους",
+             "audio": "chapt_4_d_antous"
+            }
+           ]
+          },
+          {
+           "label": "Voc.",
+           "cells": [
+            {
+             "greek": "ἄνθρωπε",
+             "audio": "chapt_4_d_anthe"
+            },
+            {
+             "greek": "ἄνθρωποι",
+             "audio": "chapt_4_d_anthoi"
+            }
+           ]
+          }
+         ],
+         "showGlosses": false,
+         "sayWhole": {
+          "label": "Say Whole List",
+          "audio": "chapt_4_d_antpar"
+         },
+         "meanings": {
+          "label": "Meanings",
+          "title": "Translation of Inflectional Forms",
+          "columns": [
+           "Singular",
+           "Plural"
+          ],
+          "rows": [
+           {
+            "label": "Nom.",
+            "cells": [
+             {
+              "greek": "ἄνθρωπος",
+              "gloss": "a man",
+              "audio": "chapt_4_d_anthos"
+             },
+             {
+              "greek": "ἄνθρωποι",
+              "gloss": "men (subject of sent.)",
+              "audio": "chapt_4_d_anthoi"
+             }
+            ]
+           },
+           {
+            "label": "Gen.",
+            "cells": [
+             {
+              "greek": "ἀνθρώπου",
+              "gloss": "of a man",
+              "audio": "chapt_4_d_anthou"
+             },
+             {
+              "greek": "ἀνθρώπων",
+              "gloss": "of men (possessive)",
+              "audio": "chapt_4_d_anthwn"
+             }
+            ]
+           },
+           {
+            "label": "Dat.",
+            "cells": [
+             {
+              "greek": "ἀνθρώπῳ",
+              "gloss": "to a man",
+              "audio": "chapt_4_d_anthw"
+             },
+             {
+              "greek": "ἀνθρώποις",
+              "gloss": "to words (indirect obj.)",
+              "audio": "chapt_4_d_antois"
+             }
+            ]
+           },
+           {
+            "label": "Acc.",
+            "cells": [
+             {
+              "greek": "ἄνθρωπον",
+              "gloss": "a man",
+              "audio": "chapt_4_d_anthon"
+             },
+             {
+              "greek": "ἀνθρώπους",
+              "gloss": "men (direct object)",
+              "audio": "chapt_4_d_antous"
+             }
+            ]
+           },
+           {
+            "label": "Voc.",
+            "cells": [
+             {
+              "greek": "ἄνθρωπε",
+              "gloss": "man",
+              "audio": "chapt_4_d_anthe"
+             },
+             {
+              "greek": "ἄνθρωποι",
+              "gloss": "men (direct address)",
+              "audio": "chapt_4_d_anthoi"
+             }
+            ]
+           }
+          ],
+          "legend": [
+           {
+            "label": "Nominative",
+            "text": "= subject of the sentence"
+           },
+           {
+            "label": "Genitive",
+            "text": "= possessive usually translated with \"of\""
+           },
+           {
+            "label": "Dative",
+            "text": "= indirect object usually translated with \"to\""
+           },
+           {
+            "label": "Accusative",
+            "text": "= direct object of a sentence"
+           },
+           {
+            "label": "Vocative",
+            "text": "= direct address (e.g. Listen, O man, ...)"
+           }
+          ],
+          "_legacy_note": "The dative plural gloss reads \"to words (indirect obj.)\" in the original chart (0x00fdf2) -- a leftover from the logos table above it. Shipped verbatim; fidelity-first, and it is visible in ch4railwalk.pdf."
+         },
+         "name": "ἄνθρωπος"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "neuterDeclension",
+     "title": "Neuter Declension",
+     "content": [
+      {
+       "type": "paradigm",
+       "title": "Neuter Declension",
+       "lemma": {
+        "greek": "ἱερόν",
+        "gloss": "temple",
+        "audio": "chapt_4_d_ieron"
+       },
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "Nom./Voc.",
+         "cells": [
+          {
+           "greek": "ἱερόν",
+           "audio": "chapt_4_d_ieron"
+          },
+          {
+           "greek": "ἱερά",
+           "audio": "chapt_4_d_iera"
+          }
+         ]
+        },
+        {
+         "label": "Gen.",
+         "cells": [
+          {
+           "greek": "ἱεροῦ",
+           "audio": "chapt_4_d_ierou"
+          },
+          {
+           "greek": "ἱερῶν",
+           "audio": "chapt_4_d_ierwn"
+          }
+         ]
+        },
+        {
+         "label": "Dat.",
+         "cells": [
+          {
+           "greek": "ἱερῷ",
+           "audio": "chapt_4_d_ierw"
+          },
+          {
+           "greek": "ἱεροῖς",
+           "audio": "chapt_4_d_ierois"
+          }
+         ]
+        },
+        {
+         "label": "Acc.",
+         "cells": [
+          {
+           "greek": "ἱερόν",
+           "audio": "chapt_4_d_ieron"
+          },
+          {
+           "greek": "ἱερά",
+           "audio": "chapt_4_d_iera"
+          }
+         ]
+        }
+       ],
+       "showGlosses": false,
+       "sayWhole": {
+        "label": "Say Whole List",
+        "audio": "chapt_4_d_ierpar"
+       },
+       "meanings": {
+        "label": "Meanings",
+        "title": "Translation of Inflectional Forms",
+        "columns": [
+         "Singular",
+         "Plural"
+        ],
+        "rows": [
+         {
+          "label": "Nom.",
+          "cells": [
+           {
+            "greek": "ἱερόν",
+            "gloss": "a temple",
+            "audio": "chapt_4_d_ieron"
+           },
+           {
+            "greek": "ἱερά",
+            "gloss": "temples (subject of sentence)",
+            "audio": "chapt_4_d_iera"
+           }
+          ]
+         },
+         {
+          "label": "Gen.",
+          "cells": [
+           {
+            "greek": "ἱεροῦ",
+            "gloss": "of a temple",
+            "audio": "chapt_4_d_ierou"
+           },
+           {
+            "greek": "ἱερῶν",
+            "gloss": "of temples (possessive)",
+            "audio": "chapt_4_d_ierwn"
+           }
+          ]
+         },
+         {
+          "label": "Dat.",
+          "cells": [
+           {
+            "greek": "ἱερῷ",
+            "gloss": "to a temple",
+            "audio": "chapt_4_d_ierw"
+           },
+           {
+            "greek": "ἱεροῖς",
+            "gloss": "to temples (indirect object)",
+            "audio": "chapt_4_d_ierois"
+           }
+          ]
+         },
+         {
+          "label": "Acc.",
+          "cells": [
+           {
+            "greek": "ἱερόν",
+            "gloss": "a temple",
+            "audio": "chapt_4_d_ieron"
+           },
+           {
+            "greek": "ἱερά",
+            "gloss": "temples (direct object)",
+            "audio": "chapt_4_d_iera"
+           }
+          ]
+         },
+         {
+          "label": "Voc.",
+          "cells": [
+           {
+            "greek": "ἱερόν",
+            "gloss": "temple",
+            "audio": "chapt_4_d_ieron"
+           },
+           {
+            "greek": "ἱερά",
+            "gloss": "temples (direct address)",
+            "audio": "chapt_4_d_iera"
+           }
+          ]
+         }
+        ],
+        "legend": [
+         {
+          "label": "Nominative",
+          "text": "= subject of the sentence"
+         },
+         {
+          "label": "Genitive",
+          "text": "= possessive usually translated with \"of\""
+         },
+         {
+          "label": "Dative",
+          "text": "= indirect object usually translated with \"to\""
+         },
+         {
+          "label": "Accusative",
+          "text": "= direct object of a sentence (e.g. He saw the temple.)"
+         },
+         {
+          "label": "Vocative",
+          "text": "= direct address (e.g. O temple, the place...)"
+         }
+        ],
+        "closing": "Note that in the neuter the Nominative, Accusative and Vocative form are always the same."
+       }
+      }
+     ]
+    },
+    {
+     "id": "wordOrder",
+     "title": "Word Order",
+     "content": [
+      {
+       "type": "para",
+       "text": "The order of words in a sentence in Greek is generally the same as in English (subject/verb/object).  Greek puts inflectional endings on nouns in order to mark their case.  This allows Greek to change the word order for various purposes.  For example, the subject may be placed after the verb and the object placed before the verb for emphasis while retaining the original meaning of the sentence."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c4_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "lemmas"
+  },
+  {
+   "id": "c4_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory",
+   "reference": "John 14:6b",
+   "words": [
+    {
+     "greek": "οὐδεὶς",
+     "gloss": "no one",
+     "audio": "chapt_4_d_sm1"
+    },
+    {
+     "greek": "ἔρχεται",
+     "gloss": "comes",
+     "audio": "chapt_4_d_sm2"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "to",
+     "audio": "chapt_4_d_sm3"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_4_d_sm4"
+    },
+    {
+     "greek": "πατέρα",
+     "gloss": "father",
+     "audio": "chapt_4_d_sm5"
+    },
+    {
+     "greek": "εἰ",
+     "gloss": "except",
+     "audio": "chapt_4_d_sm6"
+    },
+    {
+     "greek": "μὴ",
+     "gloss": null,
+     "audio": "chapt_4_d_sm7"
+    },
+    {
+     "greek": "δι ",
+     "gloss": "through",
+     "audio": "chapt_4_d_sm8"
+    },
+    {
+     "greek": "ἐμοῦ.",
+     "gloss": "me",
+     "audio": "chapt_4_d_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_4_d_jn146b"
+   },
+   "_audio_verify": "d_sm1..9 map 1:1 to the nine words; d_sm6b is unreferenced and is read as the combined \"ei] mh>\" clip, which the Scripture Memory Drill uses for its single \"except, but\" item. Listen-check d_sm6, d_sm6b and d_sm7 on device before this is treated as settled."
+  },
+  {
+   "id": "c4_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham.  New Testament Greek for Beginners (Toronto:  The Macmillan Company, 1923), pp. 23-28.",
+      "Mounce, William D.  Basics of Biblical Greek:  Grammar (Grand Rapids:  Zondervan, 1993), pp. 28-54.",
+      "Summers, Ray and Thomas Sawyer.  Essentials of New Testament Greek (Nashville:  Broadman & Holman, 1995), pp. 15-20.",
+      "Wenham, J. W.   The Elements of New Testament Greek (Cambridge:  Cambridge University Press, 1965), pp. 30-39."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c4_drill_greek_noun",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Greek Noun Drill",
+   "instructions": "Click on the correct Greek Noun form to replace the underlined English word",
+   "optionsAreGreek": true,
+   "optionsPerItem": 10,
+   "optionLayout": "paradigm2col",
+   "_layout_note": "D-26: the two columns ARE singular and plural and the five rows ARE the cases, so this grid stays two-up at every width and is exempt from D-19.",
+   "items": [
+    {
+     "sentence": "he saw two other brothers",
+     "underline": "brothers",
+     "ref": "Mat 4:21",
+     "options": [
+      "ἀδελφός",
+      "ἀδελφοί",
+      "ἀδελφοῦ",
+      "ἀδελφῶν",
+      "ἀδελφῷ",
+      "ἀδελφοῖς",
+      "ἀδελφόν",
+      "ἀδελφούς",
+      "ἀδελφέ",
+      "ἀδελφοί"
+     ],
+     "answer": "ἀδελφούς",
+     "audio": "chapt_4_d_adeous"
+    },
+    {
+     "sentence": "take the speck out of your\nneighbor's eye",
+     "underline": "neighbor's",
+     "ref": "Mat 7:5",
+     "options": [
+      "ἀδελφός",
+      "ἀδελφοί",
+      "ἀδελφοῦ",
+      "ἀδελφῶν",
+      "ἀδελφῷ",
+      "ἀδελφοῖς",
+      "ἀδελφόν",
+      "ἀδελφούς",
+      "ἀδελφέ",
+      "ἀδελφοί"
+     ],
+     "answer": "ἀδελφοῦ",
+     "audio": "chapt_4_d_adelou"
+    },
+    {
+     "sentence": "first be reconciled to your\nbrother",
+     "underline": "brother",
+     "ref": "Mat 5:24",
+     "options": [
+      "ἀδελφός",
+      "ἀδελφοί",
+      "ἀδελφοῦ",
+      "ἀδελφῶν",
+      "ἀδελφῷ",
+      "ἀδελφοῖς",
+      "ἀδελφόν",
+      "ἀδελφούς",
+      "ἀδελφέ",
+      "ἀδελφοί"
+     ],
+     "answer": "ἀδελφῷ",
+     "audio": "chapt_4_d_adelw",
+     "_verify": "The rich-text run table underlines \"to\" on line 1 of this item (format id 0x7aa). Mat 5:24 needs the dative, and the option grid offers no form that \"to\" could select, so the underline shipped here is \"brother\" on line 2 -- the field line 2 sits in has no run table, so the extraction could not confirm it. VERIFY against DOSBox."
+    },
+    {
+     "sentence": "his mother and his brothers\nwere standing outside",
+     "underline": "brothers",
+     "ref": "Mat 12:46",
+     "options": [
+      "ἀδελφός",
+      "ἀδελφοί",
+      "ἀδελφοῦ",
+      "ἀδελφῶν",
+      "ἀδελφῷ",
+      "ἀδελφοῖς",
+      "ἀδελφόν",
+      "ἀδελφούς",
+      "ἀδελφέ",
+      "ἀδελφοί"
+     ],
+     "answer": "ἀδελφοί",
+     "audio": "chapt_4_d_adeloi"
+    },
+    {
+     "sentence": "Friend,  let me take out the\nspeck in your eye",
+     "underline": "Friend",
+     "ref": "Luk 6:42",
+     "options": [
+      "ἀδελφός",
+      "ἀδελφοί",
+      "ἀδελφοῦ",
+      "ἀδελφῶν",
+      "ἀδελφῷ",
+      "ἀδελφοῖς",
+      "ἀδελφόν",
+      "ἀδελφούς",
+      "ἀδελφέ",
+      "ἀδελφοί"
+     ],
+     "answer": "ἀδελφέ",
+     "audio": "chapt_4_d_adele"
+    },
+    {
+     "sentence": "go and tell my brothers\nto go to Galilee",
+     "underline": "brothers",
+     "ref": "Mat 28:10",
+     "options": [
+      "ἀδελφός",
+      "ἀδελφοί",
+      "ἀδελφοῦ",
+      "ἀδελφῶν",
+      "ἀδελφῷ",
+      "ἀδελφοῖς",
+      "ἀδελφόν",
+      "ἀδελφούς",
+      "ἀδελφέ",
+      "ἀδελφοί"
+     ],
+     "answer": "ἀδελφοῖς",
+     "audio": "chapt_4_d_adeois"
+    },
+    {
+     "sentence": "Your brother will rise again",
+     "underline": "brother",
+     "ref": "Jn 11:23",
+     "options": [
+      "ἀδελφός",
+      "ἀδελφοί",
+      "ἀδελφοῦ",
+      "ἀδελφῶν",
+      "ἀδελφῷ",
+      "ἀδελφοῖς",
+      "ἀδελφόν",
+      "ἀδελφούς",
+      "ἀδελφέ",
+      "ἀδελφοί"
+     ],
+     "answer": "ἀδελφός",
+     "audio": "chapt_4_d_adelos"
+    },
+    {
+     "sentence": "as you did to one of the least\nof my brothers",
+     "underline": "brothers",
+     "ref": "Mat 25:40",
+     "options": [
+      "ἀδελφός",
+      "ἀδελφοί",
+      "ἀδελφοῦ",
+      "ἀδελφῶν",
+      "ἀδελφῷ",
+      "ἀδελφοῖς",
+      "ἀδελφόν",
+      "ἀδελφούς",
+      "ἀδελφέ",
+      "ἀδελφοί"
+     ],
+     "answer": "ἀδελφῶν",
+     "audio": "chapt_4_d_adelwn"
+    },
+    {
+     "sentence": "Friends, I know that you\nacted in ignorance",
+     "underline": "Friends",
+     "ref": "Acts 3:17",
+     "options": [
+      "ἀδελφός",
+      "ἀδελφοί",
+      "ἀδελφοῦ",
+      "ἀδελφῶν",
+      "ἀδελφῷ",
+      "ἀδελφοῖς",
+      "ἀδελφόν",
+      "ἀδελφούς",
+      "ἀδελφέ",
+      "ἀδελφοί"
+     ],
+     "answer": "ἀδελφοί",
+     "audio": "chapt_4_d_adeloi"
+    },
+    {
+     "sentence": "Brother will betray brother",
+     "underline": "brother",
+     "ref": "Mat 10:21",
+     "options": [
+      "ἀδελφός",
+      "ἀδελφοί",
+      "ἀδελφοῦ",
+      "ἀδελφῶν",
+      "ἀδελφῷ",
+      "ἀδελφοῖς",
+      "ἀδελφόν",
+      "ἀδελφούς",
+      "ἀδελφέ",
+      "ἀδελφοί"
+     ],
+     "answer": "ἀδελφόν",
+     "audio": "chapt_4_d_adelon"
+    },
+    {
+     "sentence": "Brother will betray brother",
+     "underline": "Brother",
+     "ref": "Mat 10:21",
+     "options": [
+      "ἀδελφός",
+      "ἀδελφοί",
+      "ἀδελφοῦ",
+      "ἀδελφῶν",
+      "ἀδελφῷ",
+      "ἀδελφοῖς",
+      "ἀδελφόν",
+      "ἀδελφούς",
+      "ἀδελφέ",
+      "ἀδελφοί"
+     ],
+     "answer": "ἀδελφός",
+     "audio": "chapt_4_d_adelos"
+    },
+    {
+     "sentence": "The word became flesh",
+     "underline": "word",
+     "ref": "Jn 1:14",
+     "options": [
+      "λόγος",
+      "λόγοι",
+      "λόγου",
+      "λόγων",
+      "λόγῳ",
+      "λόγοις",
+      "λόγον",
+      "λόγους",
+      "λόγε",
+      "λόγοι"
+     ],
+     "answer": "λόγος",
+     "audio": "chapt_4_d_logos"
+    },
+    {
+     "sentence": "whoever hears my word",
+     "underline": "word",
+     "ref": "Jn 5:24",
+     "options": [
+      "λόγος",
+      "λόγοι",
+      "λόγου",
+      "λόγων",
+      "λόγῳ",
+      "λόγοις",
+      "λόγον",
+      "λόγους",
+      "λόγε",
+      "λόγοι"
+     ],
+     "answer": "λόγον",
+     "audio": "chapt_4_d_logon"
+    },
+    {
+     "sentence": "everyone then who hears\nthese words of mine",
+     "underline": "words",
+     "ref": "Mat 7:24",
+     "options": [
+      "λόγος",
+      "λόγοι",
+      "λόγου",
+      "λόγων",
+      "λόγῳ",
+      "λόγοις",
+      "λόγον",
+      "λόγους",
+      "λόγε",
+      "λόγοι"
+     ],
+     "answer": "λόγους",
+     "audio": "chapt_4_d_logous"
+    },
+    {
+     "sentence": "but my words will not pass\naway",
+     "underline": "words",
+     "ref": "Mk 13:31",
+     "options": [
+      "λόγος",
+      "λόγοι",
+      "λόγου",
+      "λόγων",
+      "λόγῳ",
+      "λόγοις",
+      "λόγον",
+      "λόγους",
+      "λόγε",
+      "λόγοι"
+     ],
+     "answer": "λόγοι",
+     "audio": "chapt_4_d_logoi"
+    },
+    {
+     "sentence": "eyewitnesses and servants\nof the word",
+     "underline": "word",
+     "ref": "Luk 1:2",
+     "options": [
+      "λόγος",
+      "λόγοι",
+      "λόγου",
+      "λόγων",
+      "λόγῳ",
+      "λόγοις",
+      "λόγον",
+      "λόγους",
+      "λόγε",
+      "λόγοι"
+     ],
+     "answer": "λόγου",
+     "audio": "chapt_4_d_logou"
+    },
+    {
+     "sentence": "the sower sows the word",
+     "underline": "word",
+     "ref": "Mk 4:14",
+     "options": [
+      "λόγος",
+      "λόγοι",
+      "λόγου",
+      "λόγων",
+      "λόγῳ",
+      "λόγοις",
+      "λόγον",
+      "λόγους",
+      "λόγε",
+      "λόγοι"
+     ],
+     "answer": "λόγον",
+     "audio": "chapt_4_d_logon"
+    },
+    {
+     "sentence": "to trap him in what he said",
+     "underline": "what",
+     "ref": "Mk 12:13",
+     "options": [
+      "λόγος",
+      "λόγοι",
+      "λόγου",
+      "λόγων",
+      "λόγῳ",
+      "λόγοις",
+      "λόγον",
+      "λόγους",
+      "λόγε",
+      "λόγοι"
+     ],
+     "answer": "λόγῳ",
+     "audio": "chapt_4_d_logw"
+    },
+    {
+     "sentence": "as it is written in the book\nof the words of the prophet",
+     "underline": "words",
+     "ref": "Luk 3:4",
+     "options": [
+      "λόγος",
+      "λόγοι",
+      "λόγου",
+      "λόγων",
+      "λόγῳ",
+      "λόγοις",
+      "λόγον",
+      "λόγους",
+      "λόγε",
+      "λόγοι"
+     ],
+     "answer": "λόγων",
+     "audio": "chapt_4_d_logwn"
+    },
+    {
+     "sentence": "and you do not have his\nword abiding in you",
+     "underline": "word",
+     "ref": "Jn 5:38",
+     "options": [
+      "λόγος",
+      "λόγοι",
+      "λόγου",
+      "λόγων",
+      "λόγῳ",
+      "λόγοις",
+      "λόγον",
+      "λόγους",
+      "λόγε",
+      "λόγοι"
+     ],
+     "answer": "λόγον",
+     "audio": "chapt_4_d_logon"
+    },
+    {
+     "sentence": "he cast out the spirits\nwith a word",
+     "underline": "word",
+     "ref": "Mat 8:16",
+     "options": [
+      "λόγος",
+      "λόγοι",
+      "λόγου",
+      "λόγων",
+      "λόγῳ",
+      "λόγοις",
+      "λόγον",
+      "λόγους",
+      "λόγε",
+      "λόγοι"
+     ],
+     "answer": "λόγῳ",
+     "audio": "chapt_4_d_logw"
+    },
+    {
+     "sentence": "the disciples were perplexed\nat these words",
+     "underline": "words",
+     "ref": "Mk 10:24",
+     "options": [
+      "λόγος",
+      "λόγοι",
+      "λόγου",
+      "λόγων",
+      "λόγῳ",
+      "λόγοις",
+      "λόγον",
+      "λόγους",
+      "λόγε",
+      "λόγοι"
+     ],
+     "answer": "λόγοις",
+     "audio": "chapt_4_d_logois"
+    }
+   ],
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "masculineDeclension"
+   },
+   "scored": true,
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   },
+   "_policy_note": "One attempt; auto-advance on correct via ADVANCE_CORRECT_MS, manual Next on incorrect (ch4railwalk: \"Try again\" + \"Click on 'Next' to continue\")."
+  },
+  {
+   "id": "c4_drill_declining",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Declining Noun Drill",
+   "instructions": "Click on the matching case and number",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "Nominative Singular",
+    "Nominative Plural",
+    "Genitive Singular",
+    "Genitive Plural",
+    "Dative Singular",
+    "Dative Plural",
+    "Accusative Singular",
+    "Accusative Plural",
+    "Vocative Singular",
+    "Vocative Plural"
+   ],
+   "optionLayout": "paradigm2col",
+   "_layout_note": "D-26, as the Greek Noun Drill.",
+   "revealButtons": [
+    {
+     "label": "Translate",
+     "field": "translate"
+    }
+   ],
+   "items": [
+    {
+     "greek": "λόγος",
+     "ref": "Jn 1:1",
+     "translate": "word  or a word",
+     "answer": "Nominative Singular",
+     "audio": "chapt_4_d_logos"
+    },
+    {
+     "greek": "λόγῳ",
+     "ref": "Jn 2:22",
+     "translate": "to a word",
+     "answer": "Dative Singular",
+     "audio": "chapt_4_d_logw"
+    },
+    {
+     "greek": "λόγον",
+     "ref": "Jn 4:39",
+     "translate": "word or a word",
+     "answer": "Accusative Singular",
+     "audio": "chapt_4_d_logon"
+    },
+    {
+     "greek": "λόγων",
+     "ref": "Jn 7:40",
+     "translate": "of words",
+     "answer": "Genitive Plural",
+     "audio": "chapt_4_d_logwn"
+    },
+    {
+     "greek": "λόγους",
+     "ref": "Jn 10:19",
+     "translate": "words",
+     "answer": "Accusative Plural",
+     "audio": "chapt_4_d_logous"
+    },
+    {
+     "greek": "λόγου",
+     "ref": "Jn 15:20",
+     "translate": "of a word  or of word",
+     "answer": "Genitive Singular",
+     "audio": "chapt_4_d_logou"
+    },
+    {
+     "greek": "λόγοις",
+     "ref": "Acts 2:40",
+     "translate": "to words",
+     "answer": "Dative Plural",
+     "audio": "chapt_4_d_logois"
+    },
+    {
+     "greek": "λόγοι",
+     "ref": "Acts 15:15",
+     "translate": "words",
+     "answer": "Nominative Plural",
+     "audio": "chapt_4_d_logoi"
+    },
+    {
+     "greek": "ἄνθρωπε",
+     "ref": "Lk 12:14",
+     "translate": "man",
+     "answer": "Vocative Singular",
+     "audio": "chapt_4_d_anthe"
+    },
+    {
+     "greek": "ἀνθρώπων",
+     "ref": "Jn 1:4",
+     "translate": "of men",
+     "answer": "Genitive Plural",
+     "audio": "chapt_4_d_anthwn"
+    },
+    {
+     "greek": "ἄνθρωπος",
+     "ref": "Jn 1:6",
+     "translate": "a man  or man",
+     "answer": "Nominative Singular",
+     "audio": "chapt_4_d_anthos"
+    },
+    {
+     "greek": "ἄνθρωπον",
+     "ref": "Jn 1:4",
+     "translate": "a man or man",
+     "answer": "Accusative Singular",
+     "audio": "chapt_4_d_anthon",
+     "_legacy": "a]nqrw<pon",
+     "_note": "Original accents the penult (\"a]nqrw<pon\"); the chapter's own chart and the Meanings card both give \"a@nqrwpon\", accent on the antepenult."
+    },
+    {
+     "greek": "ἀνθρώπου",
+     "ref": "Jn 1:51",
+     "translate": "of a man or of man",
+     "answer": "Genitive Singular",
+     "audio": "chapt_4_d_anthou"
+    },
+    {
+     "greek": "ἀνθρώπῳ",
+     "ref": "Jn 2:25",
+     "translate": "to a man  or to man",
+     "answer": "Dative Singular",
+     "audio": "chapt_4_d_anthw"
+    },
+    {
+     "greek": "ἄνθρωποι",
+     "ref": "Jn 3:19",
+     "translate": "men",
+     "answer": "Nominative Plural",
+     "audio": "chapt_4_d_anthoi"
+    },
+    {
+     "greek": "ἀνθρώποις",
+     "ref": "Jn 4:28",
+     "translate": "to men",
+     "answer": "Dative Plural",
+     "audio": "chapt_4_d_antois"
+    },
+    {
+     "greek": "ἀνθρώπους",
+     "ref": "Jn 6:10",
+     "translate": "men",
+     "answer": "Accusative Plural",
+     "audio": "chapt_4_d_antous"
+    },
+    {
+     "greek": "ἄνθρωποι",
+     "ref": "Acts 4:13",
+     "translate": "men",
+     "answer": "Nominative Plural",
+     "audio": "chapt_4_d_anthoi",
+     "_legacy": "a@nqropoi",
+     "_note": "Original reads \"a@nqropoi\" -- omicron for omega -- against \"a@nqrwpoi\" everywhere else in the same column and in the Masculine Declension chart."
+    },
+    {
+     "greek": "ἀδελφούς",
+     "ref": "Matt 1:2",
+     "translate": "brothers",
+     "answer": "Accusative Plural",
+     "audio": "chapt_4_d_adeous"
+    },
+    {
+     "greek": "ἀδελφῷ",
+     "ref": "Matt 5:22",
+     "translate": "to a brother or to brother",
+     "answer": "Dative Singular",
+     "audio": "chapt_4_d_adelw"
+    },
+    {
+     "greek": "ἀδελφός",
+     "ref": "Matt 5:23",
+     "translate": "a brother or brother",
+     "answer": "Nominative Singular",
+     "audio": "chapt_4_d_adelos"
+    },
+    {
+     "greek": "ἀδελφοῦ",
+     "ref": "Matt 7:3",
+     "translate": "of a brother or of brother",
+     "answer": "Genitive Singular",
+     "audio": "chapt_4_d_adelou"
+    },
+    {
+     "greek": "ἀδελφέ",
+     "ref": "Lk 6:42",
+     "translate": "brother",
+     "answer": "Vocative Singular",
+     "audio": "chapt_4_d_adele"
+    },
+    {
+     "greek": "ἀδελφοὶ",
+     "ref": "Matt 12:46",
+     "translate": "brothers",
+     "answer": "Nominative Plural",
+     "audio": "chapt_4_d_adeloi"
+    },
+    {
+     "greek": "ἀδελφὸν",
+     "ref": "Matt 4:18",
+     "translate": "brother or a brother",
+     "answer": "Accusative Singular",
+     "audio": "chapt_4_d_adelon"
+    },
+    {
+     "greek": "ἀδελφῶν",
+     "ref": "Matt 20:24",
+     "translate": "of brothers",
+     "answer": "Genitive Plural",
+     "audio": "chapt_4_d_adelwn"
+    },
+    {
+     "greek": "ἀδελφοί",
+     "ref": "Acts 1:16",
+     "translate": "brothers",
+     "answer": "Nominative Plural",
+     "audio": "chapt_4_d_adeloi"
+    },
+    {
+     "greek": "ἀδελφοῖς",
+     "ref": "Matt 28:10",
+     "translate": "to brothers",
+     "answer": "Dative Plural",
+     "audio": "chapt_4_d_adeois"
+    }
+   ],
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Translate",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "masculineDeclension"
+   },
+   "scored": true,
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   }
+  },
+  {
+   "id": "c4_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptFrom": {
+    "lexicon": "lemmas",
+    "show": "greek",
+    "audio": "pronounceButton"
+   },
+   "options": "glossShortPool",
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   }
+  },
+  {
+   "id": "c4_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "promptFrom": {
+    "lexicon": "lemmas",
+    "show": "glossShort"
+   },
+   "options": "greekPool",
+   "optionsAreGreek": true,
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   }
+  },
+  {
+   "id": "c4_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "except, but",
+    "comes",
+    "father",
+    "the",
+    "me",
+    "through",
+    "no one",
+    "to"
+   ],
+   "items": [
+    {
+     "greek": "οὐδεὶς",
+     "answer": "no one",
+     "audio": "chapt_4_d_sm1"
+    },
+    {
+     "greek": "ἔρχεται",
+     "answer": "comes",
+     "audio": "chapt_4_d_sm2"
+    },
+    {
+     "greek": "πρὸς",
+     "answer": "to",
+     "audio": "chapt_4_d_sm3"
+    },
+    {
+     "greek": "τὸν",
+     "answer": "the",
+     "audio": "chapt_4_d_sm4"
+    },
+    {
+     "greek": "πατέρα",
+     "answer": "father",
+     "audio": "chapt_4_d_sm5"
+    },
+    {
+     "greek": "εἰ μὴ",
+     "answer": "except, but",
+     "audio": "chapt_4_d_sm6b"
+    },
+    {
+     "greek": "δι ",
+     "answer": "through",
+     "audio": "chapt_4_d_sm8"
+    },
+    {
+     "greek": "ἐμοῦ",
+     "answer": "me",
+     "audio": "chapt_4_d_sm9"
+    }
+   ],
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "scored": true,
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "autoBoth"
+   },
+   "_policy_note": "Auto-advances on BOTH outcomes, as chapter 3."
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c4_ex_noun_speller",
+   "type": "spell",
+   "title": "Second Declension Noun Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "gloss",
+   "promptLabel": "English Word",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "gloss": "to or by a word",
+     "greek": "λόγῳ",
+     "audio": "chapt_4_d_logw"
+    },
+    {
+     "gloss": "words (acc.)",
+     "greek": "λόγους",
+     "audio": "chapt_4_d_logous"
+    },
+    {
+     "gloss": "of a word",
+     "greek": "λόγου",
+     "audio": "chapt_4_d_logou"
+    },
+    {
+     "gloss": "words (nom.)",
+     "greek": "λόγοι",
+     "audio": "chapt_4_d_logoi"
+    },
+    {
+     "gloss": "of words",
+     "greek": "λόγων",
+     "audio": "chapt_4_d_logwn"
+    },
+    {
+     "gloss": "to or by words",
+     "greek": "λόγοις",
+     "audio": "chapt_4_d_logois"
+    },
+    {
+     "gloss": "a word (nom.)",
+     "greek": "λόγος",
+     "audio": "chapt_4_d_logos"
+    },
+    {
+     "gloss": "a word (acc.)",
+     "greek": "λόγον",
+     "audio": "chapt_4_d_logon"
+    },
+    {
+     "gloss": "o man!",
+     "greek": "ἄνθρωπε",
+     "audio": "chapt_4_d_anthe"
+    },
+    {
+     "gloss": "men (acc.)",
+     "greek": "ἀνθρώπους",
+     "audio": "chapt_4_d_antous"
+    },
+    {
+     "gloss": "to men",
+     "greek": "ἀνθρώποις",
+     "audio": "chapt_4_d_antois"
+    },
+    {
+     "gloss": "o men",
+     "greek": "ἄνθρωποι",
+     "audio": "chapt_4_d_anthoi"
+    },
+    {
+     "gloss": "of a man",
+     "greek": "ἀνθρώπου",
+     "audio": "chapt_4_d_anthou"
+    },
+    {
+     "gloss": "of men",
+     "greek": "ἀνθρώπων",
+     "audio": "chapt_4_d_anthwn"
+    },
+    {
+     "gloss": "man (acc.)",
+     "greek": "ἄνθρωπον",
+     "audio": "chapt_4_d_anthon"
+    },
+    {
+     "gloss": "to a man",
+     "greek": "ἀνθρώπῳ",
+     "audio": "chapt_4_d_anthw"
+    },
+    {
+     "gloss": "men (nom.)",
+     "greek": "ἄνθρωποι",
+     "audio": "chapt_4_d_anthoi"
+    },
+    {
+     "gloss": "of a temple",
+     "greek": "ἱεροῦ",
+     "audio": "chapt_4_d_ierou"
+    },
+    {
+     "gloss": "to a temple",
+     "greek": "ἱερῷ",
+     "audio": "chapt_4_d_ierw"
+    },
+    {
+     "gloss": "temple (acc.)",
+     "greek": "ἱερόν",
+     "audio": "chapt_4_d_ieron"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Word",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ]
+   }
+  },
+  {
+   "id": "c4_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "gloss",
+   "promptLabel": "English Meaning",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "ref": "agapao"
+    },
+    {
+     "ref": "grapho"
+    },
+    {
+     "ref": "de"
+    },
+    {
+     "ref": "doulos"
+    },
+    {
+     "ref": "heurisko"
+    },
+    {
+     "ref": "hieron"
+    },
+    {
+     "ref": "laos"
+    },
+    {
+     "ref": "nomos"
+    },
+    {
+     "ref": "oikos"
+    },
+    {
+     "ref": "hos"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ]
+   }
+  },
+  {
+   "id": "c4_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of John 14:6b then click \"Check Answer\"",
+   "reference": "John 14:6b",
+   "answerWords": [
+    "οὐδεὶς",
+    "ἔρχεται",
+    "πρὸς",
+    "τὸν",
+    "πατέρα",
+    "εἰ",
+    "μὴ",
+    "δι ",
+    "ἐμοῦ."
+   ],
+   "translation": "no one comes to the father but by me",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "majorHint": {
+    "alwaysAvailable": true,
+    "_note": "DEPARTURE D-11."
+   },
+   "audio": "chapt_4_d_jn146b",
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Major Hint",
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "With Accents"
+    ],
+    "_restart_note": "DEPARTURE D-12."
+   },
+   "spellerTilesRef": "chapt_1"
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c4_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "lemmas",
+   "showNtFreq": true,
+   "playAll": {
+    "audio": "chapt_4_d_vocl4",
+    "label": "Say Whole List"
+   }
+  },
+  {
+   "id": "c4_qr_nouns",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Nouns:  Second Declension",
+   "chartTitle": "Review Nouns:  Second Declension",
+   "paradigm": {
+    "title": "Review Nouns:  Second Declension",
+    "lemma": {
+     "greek": "λόγος",
+     "gloss": "word",
+     "audio": "chapt_4_d_logos"
+    },
+    "columns": [
+     "Singular",
+     "Plural"
+    ],
+    "rows": [
+     {
+      "label": "Nom.",
+      "cells": [
+       {
+        "greek": "λόγος",
+        "audio": "chapt_4_d_logos",
+        "gloss": "a word"
+       },
+       {
+        "greek": "λόγοι",
+        "audio": "chapt_4_d_logoi",
+        "gloss": "words (subject of sentence)"
+       }
+      ]
+     },
+     {
+      "label": "Gen.",
+      "cells": [
+       {
+        "greek": "λόγου",
+        "audio": "chapt_4_d_logou",
+        "gloss": "of a word"
+       },
+       {
+        "greek": "λόγων",
+        "audio": "chapt_4_d_logwn",
+        "gloss": "of words (possessive)"
+       }
+      ]
+     },
+     {
+      "label": "Dat.",
+      "cells": [
+       {
+        "greek": "λόγῳ",
+        "audio": "chapt_4_d_logw",
+        "gloss": "to a word"
+       },
+       {
+        "greek": "λόγοις",
+        "audio": "chapt_4_d_logois",
+        "gloss": "to words (indirect object)"
+       }
+      ]
+     },
+     {
+      "label": "Acc.",
+      "cells": [
+       {
+        "greek": "λόγον",
+        "audio": "chapt_4_d_logon",
+        "gloss": "a word"
+       },
+       {
+        "greek": "λόγους",
+        "audio": "chapt_4_d_logous",
+        "gloss": "words (direct object)"
+       }
+      ]
+     },
+     {
+      "label": "Voc.",
+      "cells": [
+       {
+        "greek": "λόγε",
+        "audio": "chapt_4_d_loge",
+        "gloss": "word"
+       },
+       {
+        "greek": "λόγοι",
+        "audio": "chapt_4_d_logoi",
+        "gloss": "words (direct address)"
+       }
+      ]
+     }
+    ],
+    "showGlosses": true,
+    "sayWhole": {
+     "label": "Say Whole Paradigm",
+     "audio": "chapt_4_d_logpar"
+    }
+   }
+  },
+  {
+   "id": "c4_qr_scripture_a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6a",
+   "reference": "John 14:6a",
+   "words": [
+    {
+     "greek": "λέγει",
+     "gloss": "he said",
+     "audio": "chapt_4_c_sm1"
+    },
+    {
+     "greek": "αὐτῷ",
+     "gloss": "to him",
+     "audio": "chapt_4_c_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": null,
+     "audio": "chapt_4_c_sm3"
+    },
+    {
+     "greek": "Ἰησοῦς,",
+     "gloss": "Jesus",
+     "audio": "chapt_4_c_sm4"
+    },
+    {
+     "greek": "Ἐγώ",
+     "gloss": "I",
+     "audio": "chapt_4_c_sm5"
+    },
+    {
+     "greek": "εἰμι",
+     "gloss": "I am",
+     "audio": "chapt_4_c_sm6"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_4_c_sm7"
+    },
+    {
+     "greek": "ὁδὸς",
+     "gloss": "way",
+     "audio": "chapt_4_c_sm8"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_4_c_sm9"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_4_c_sm10"
+    },
+    {
+     "greek": "ἀλήθεια",
+     "gloss": "truth",
+     "audio": "chapt_4_c_sm11"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_4_c_sm12"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_4_c_sm13"
+    },
+    {
+     "greek": "ζωή·",
+     "gloss": "life:",
+     "audio": "chapt_4_c_sm14"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_4_c_sm14_6"
+   }
+  },
+  {
+   "id": "c4_qr_scripture_b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6b",
+   "reference": "John 14:6b",
+   "words": [
+    {
+     "greek": "οὐδεὶς",
+     "gloss": "no one",
+     "audio": "chapt_4_d_sm1"
+    },
+    {
+     "greek": "ἔρχεται",
+     "gloss": "comes",
+     "audio": "chapt_4_d_sm2"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "to",
+     "audio": "chapt_4_d_sm3"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_4_d_sm4"
+    },
+    {
+     "greek": "πατέρα",
+     "gloss": "father",
+     "audio": "chapt_4_d_sm5"
+    },
+    {
+     "greek": "εἰ",
+     "gloss": "except",
+     "audio": "chapt_4_d_sm6"
+    },
+    {
+     "greek": "μὴ",
+     "gloss": null,
+     "audio": "chapt_4_d_sm7"
+    },
+    {
+     "greek": "δι ",
+     "gloss": "through",
+     "audio": "chapt_4_d_sm8"
+    },
+    {
+     "greek": "ἐμοῦ.",
+     "gloss": "me",
+     "audio": "chapt_4_d_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_4_d_jn146b"
+   }
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Perfect!",
+   "Right On!",
+   "Great!",
+   "Fantastic!",
+   "Yes",
+   "Congratulations"
+  ],
+  "incorrect": [
+   "Try again",
+   "Repetition will get it",
+   "Swing and a miss",
+   "Not quite!"
+  ]
+ },
+ "sequence": [
+  "c4_learn_objectives",
+  "c4_learn_english_concepts",
+  "c4_learn_nouns",
+  "c4_drill_greek_noun",
+  "c4_drill_declining",
+  "c4_ex_noun_speller",
+  "c4_learn_vocab",
+  "c4_drill_vocab_gk_en",
+  "c4_drill_vocab_en_gk",
+  "c4_ex_vocab_speller",
+  "c4_learn_scripture",
+  "c4_drill_scripture_memory",
+  "c4_ex_scripture_speller",
+  "c4_qr_vocab",
+  "c4_qr_nouns",
+  "c4_qr_scripture_a",
+  "c4_qr_scripture_b",
+  "c4_learn_bibliography"
+ ],
+ "_sequence_note": "Rail order from ch4railwalk.pdf (Nathanael, 2026-08-03)."
+}

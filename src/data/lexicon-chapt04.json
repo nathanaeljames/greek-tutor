@@ -1,0 +1,321 @@
+{
+ "_comment": "Chapter 4 lexicon, assembled from 4_NOUNS2.TBK (cohort 5E). Vocabulary order is the TBK list order (alphabetical), which matches d_voc1..10. ntFreq values are the Review Vocabulary Chart's own counts (0x0206c2). exampleWords carries the teaching-page words and every inflected paradigm form, so a chart cell and a drill option resolve to the same clip. No mirror bucket: CHAPT_4 ships d_* plus chapter 3's c_sm* for the cumulative Jn 14:6a review, and the data references those LOCAL copies.",
+ "lemmas": {
+  "agapao": {
+   "greek": "ἀγαπάω",
+   "translit": "agapao",
+   "gloss": "I love",
+   "glossShort": "I love",
+   "pos": "verb",
+   "audio": "chapt_4_d_voc1",
+   "_legacy": "a]gapa<w",
+   "ntFreq": 143
+  },
+  "grapho": {
+   "greek": "γράφω",
+   "translit": "grapho",
+   "gloss": "I write",
+   "glossShort": "I write",
+   "pos": "verb",
+   "audio": "chapt_4_d_voc2",
+   "_legacy": "gra<fw",
+   "ntFreq": 191
+  },
+  "de": {
+   "greek": "δέ",
+   "translit": "de",
+   "gloss": "but, and",
+   "glossShort": "but, and",
+   "pos": "conj",
+   "audio": "chapt_4_d_voc3",
+   "_legacy": "de<",
+   "ntFreq": 2792
+  },
+  "doulos": {
+   "greek": "δοῦλος",
+   "translit": "doulos",
+   "gloss": "servant, slave",
+   "glossShort": "servant",
+   "pos": "noun",
+   "audio": "chapt_4_d_voc4",
+   "_legacy": "dou?loj, -ou, o[",
+   "ntFreq": 124,
+   "lexicalForm": "δοῦλος, -ου, ὁ",
+   "_poolGloss": "slave, servant"
+  },
+  "heurisko": {
+   "greek": "εὑρίσκω",
+   "translit": "heurisko",
+   "gloss": "I find",
+   "glossShort": "I find",
+   "pos": "verb",
+   "audio": "chapt_4_d_voc5",
+   "_legacy": "eu[ri<skw",
+   "ntFreq": 176
+  },
+  "hieron": {
+   "greek": "ἱερόν",
+   "translit": "hieron",
+   "gloss": "temple",
+   "glossShort": "temple",
+   "pos": "noun",
+   "audio": "chapt_4_d_voc6",
+   "_legacy": "i[ero<n, -ou?, to<",
+   "ntFreq": 71,
+   "lexicalForm": "ἱερόν, -οῦ, τό"
+  },
+  "laos": {
+   "greek": "λαός",
+   "translit": "laos",
+   "gloss": "people",
+   "glossShort": "people",
+   "pos": "noun",
+   "audio": "chapt_4_d_voc7",
+   "_legacy": "lao<j, -ou?, o[",
+   "ntFreq": 142,
+   "lexicalForm": "λαός, -οῦ, ὁ"
+  },
+  "nomos": {
+   "greek": "νόμος",
+   "translit": "nomos",
+   "gloss": "law",
+   "glossShort": "law",
+   "pos": "noun",
+   "audio": "chapt_4_d_voc8",
+   "_legacy": "no<moj, -ou, o[",
+   "ntFreq": 194,
+   "lexicalForm": "νόμος, -ου, ὁ"
+  },
+  "oikos": {
+   "greek": "οἶκος",
+   "translit": "oikos",
+   "gloss": "house",
+   "glossShort": "house",
+   "pos": "noun",
+   "audio": "chapt_4_d_voc9",
+   "_legacy": "oi#koj, -ou, o[",
+   "ntFreq": 114,
+   "lexicalForm": "οἶκος, -ου, ὁ"
+  },
+  "hos": {
+   "greek": "ὡς",
+   "translit": "hos",
+   "gloss": "as, about, how",
+   "glossShort": "as, about",
+   "pos": "adv",
+   "audio": "chapt_4_d_voc10",
+   "_legacy": "w[j",
+   "ntFreq": 504,
+   "_poolGloss": "as, that, how, about"
+  }
+ },
+ "exampleWords": {
+  "ekklesia": {
+   "greek": "ἐκκλησία",
+   "gloss": "church",
+   "audio": "chapt_4_d_ekkles",
+   "_legacy": "e]kklhsi<a"
+  },
+  "etos": {
+   "greek": "ἔτος",
+   "gloss": "year",
+   "audio": "chapt_4_d_etos",
+   "_legacy": "e@toj"
+  },
+  "hemera": {
+   "greek": "ἡμέρα",
+   "gloss": "day",
+   "audio": "chapt_4_d_hnmera",
+   "_legacy": "h[me<ra"
+  },
+  "chronos": {
+   "greek": "χρόνος",
+   "gloss": "time",
+   "audio": "chapt_4_d_chrons",
+   "_legacy": "xro<noj"
+  },
+  "ho": {
+   "greek": "ὁ",
+   "gloss": "the (masculine)",
+   "audio": "chapt_4_d_ho",
+   "_legacy": "o["
+  },
+  "he": {
+   "greek": "ἡ",
+   "gloss": "the (feminine)",
+   "audio": "chapt_4_d_hn",
+   "_legacy": "h["
+  },
+  "to": {
+   "greek": "τό",
+   "gloss": "the (neuter)",
+   "audio": "chapt_4_d_to",
+   "_legacy": "to<"
+  },
+  "form_logos": {
+   "greek": "λόγος",
+   "gloss": null,
+   "audio": "chapt_4_d_logos"
+  },
+  "form_logou": {
+   "greek": "λόγου",
+   "gloss": null,
+   "audio": "chapt_4_d_logou"
+  },
+  "form_logw": {
+   "greek": "λόγῳ",
+   "gloss": null,
+   "audio": "chapt_4_d_logw"
+  },
+  "form_logon": {
+   "greek": "λόγον",
+   "gloss": null,
+   "audio": "chapt_4_d_logon"
+  },
+  "form_loge": {
+   "greek": "λόγε",
+   "gloss": null,
+   "audio": "chapt_4_d_loge"
+  },
+  "form_logoi": {
+   "greek": "λόγοι",
+   "gloss": null,
+   "audio": "chapt_4_d_logoi"
+  },
+  "form_logwn": {
+   "greek": "λόγων",
+   "gloss": null,
+   "audio": "chapt_4_d_logwn"
+  },
+  "form_logois": {
+   "greek": "λόγοις",
+   "gloss": null,
+   "audio": "chapt_4_d_logois"
+  },
+  "form_logous": {
+   "greek": "λόγους",
+   "gloss": null,
+   "audio": "chapt_4_d_logous"
+  },
+  "form_anthos": {
+   "greek": "ἄνθρωπος",
+   "gloss": null,
+   "audio": "chapt_4_d_anthos"
+  },
+  "form_anthou": {
+   "greek": "ἀνθρώπου",
+   "gloss": null,
+   "audio": "chapt_4_d_anthou"
+  },
+  "form_anthw": {
+   "greek": "ἀνθρώπῳ",
+   "gloss": null,
+   "audio": "chapt_4_d_anthw"
+  },
+  "form_anthon": {
+   "greek": "ἄνθρωπον",
+   "gloss": null,
+   "audio": "chapt_4_d_anthon"
+  },
+  "form_anthe": {
+   "greek": "ἄνθρωπε",
+   "gloss": null,
+   "audio": "chapt_4_d_anthe"
+  },
+  "form_anthoi": {
+   "greek": "ἄνθρωποι",
+   "gloss": null,
+   "audio": "chapt_4_d_anthoi"
+  },
+  "form_anthwn": {
+   "greek": "ἀνθρώπων",
+   "gloss": null,
+   "audio": "chapt_4_d_anthwn"
+  },
+  "form_antois": {
+   "greek": "ἀνθρώποις",
+   "gloss": null,
+   "audio": "chapt_4_d_antois"
+  },
+  "form_antous": {
+   "greek": "ἀνθρώπους",
+   "gloss": null,
+   "audio": "chapt_4_d_antous"
+  },
+  "form_ieron": {
+   "greek": "ἱερόν",
+   "gloss": null,
+   "audio": "chapt_4_d_ieron"
+  },
+  "form_ierou": {
+   "greek": "ἱεροῦ",
+   "gloss": null,
+   "audio": "chapt_4_d_ierou"
+  },
+  "form_ierw": {
+   "greek": "ἱερῷ",
+   "gloss": null,
+   "audio": "chapt_4_d_ierw"
+  },
+  "form_iera": {
+   "greek": "ἱερά",
+   "gloss": null,
+   "audio": "chapt_4_d_iera"
+  },
+  "form_ierwn": {
+   "greek": "ἱερῶν",
+   "gloss": null,
+   "audio": "chapt_4_d_ierwn"
+  },
+  "form_ierois": {
+   "greek": "ἱεροῖς",
+   "gloss": null,
+   "audio": "chapt_4_d_ierois"
+  },
+  "form_adelos": {
+   "greek": "ἀδελφός",
+   "gloss": null,
+   "audio": "chapt_4_d_adelos"
+  },
+  "form_adelou": {
+   "greek": "ἀδελφοῦ",
+   "gloss": null,
+   "audio": "chapt_4_d_adelou"
+  },
+  "form_adelw": {
+   "greek": "ἀδελφῷ",
+   "gloss": null,
+   "audio": "chapt_4_d_adelw"
+  },
+  "form_adelon": {
+   "greek": "ἀδελφόν",
+   "gloss": null,
+   "audio": "chapt_4_d_adelon"
+  },
+  "form_adele": {
+   "greek": "ἀδελφέ",
+   "gloss": null,
+   "audio": "chapt_4_d_adele"
+  },
+  "form_adeloi": {
+   "greek": "ἀδελφοί",
+   "gloss": null,
+   "audio": "chapt_4_d_adeloi"
+  },
+  "form_adelwn": {
+   "greek": "ἀδελφῶν",
+   "gloss": null,
+   "audio": "chapt_4_d_adelwn"
+  },
+  "form_adeois": {
+   "greek": "ἀδελφοῖς",
+   "gloss": null,
+   "audio": "chapt_4_d_adeois"
+  },
+  "form_adeous": {
+   "greek": "ἀδελφούς",
+   "gloss": null,
+   "audio": "chapt_4_d_adeous"
+  }
+ }
+}
