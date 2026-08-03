@@ -372,9 +372,16 @@ Both are fidelity nits, NOT the cause of the blank lists:
    `[[u]]` markup (ch2 uses it 22 times), so the emphasis is lost. The
    popups themselves DID port — they are the `expander` blocks under
    each list — so this is typography and the implicit list-to-expander
-   linkage, not missing content. Worth checking whether
-   `tbk_richtext.py` dropped the underline spans on these records or
-   whether the assembler discarded them.
+   linkage, not missing content.
+
+   **CAUSE CONFIRMED (2026-08-01):** `scripts/assemble_ch3.py` never
+   calls the rich-text extractor. Its entire import list is
+   `json, re, unicodedata` — no `tbk_richtext`, no subprocess, nothing.
+   Chapter 3 was assembled from PLAIN-STRING extraction only, so the
+   formatting runs were never read for these records. This is not a
+   defect in `tbk_richtext.py`: that script resolves formatId to
+   underline spans and was blind-tested on ch3 records at 5C. The
+   capability exists and the chapter-3 assembler simply does not use it.
 3. Minor, same family: the original numbers these lists "1) 2) 3)";
    bare strings get the browser's "1. 2. 3.". Chapters 1-2 preserve the
    original's punctuation through authored labels.
@@ -464,8 +471,16 @@ Chapter 3 carries no `[[u]]` markup at all (chapter 2 uses it 22 times),
 and the underlined words are pedagogically chosen — they point at the
 verb, or mark the term the popup explains — so the renderer cannot infer
 them. `Marked.svelte` already renders `[[u]]...[[/u]]` wherever it
-appears, so a data patch alone lights these up with no code change. The
-full set, read off the DOSBox screenshots:
+appears, so a data patch alone lights these up with no code change.
+
+**This is the one genuine PIPELINE item in the whole device pass, and
+its cause is now known:** `scripts/assemble_ch3.py` imports only
+`json, re, unicodedata` and never calls `scripts/tbk_richtext.py`.
+Chapter 3 was assembled from plain strings, so the underline runs the
+extractor can already resolve were never read. Wiring the assembler to
+the rich-text path fixes this for chapters 4-8 as well, which share the
+same skeleton (5C-RECON-FINDINGS §1). The full set for chapter 3, read
+off the DOSBox screenshots:
 
 - **EC / Introduction** — Zachary [[u]]drove[[/u]] the car; Elliott
   [[u]]is[[/u]] a good kid; [[u]]Come[[/u]] here; Zach [[u]]may
