@@ -110,8 +110,11 @@
   $: revealButtons = (activity.revealButtons && activity.revealButtons.length)
     ? activity.revealButtons
     : (uiButtons.includes('Translate') ? [{ label: 'Translate', field: 'translate' }] : []);
-  $: hintBeforeReveal = revealButtons.length > 0 && uiButtons.includes('Hint')
-    && uiButtons.indexOf('Hint') < Math.min(...revealButtons.map(button => uiButtons.indexOf(button.label)));
+  // The button ORDER is authored: ch3 lists Translate before Hint, ch4 and
+  // ch5 list Hint first, and both rail walks agree with their own chapter's
+  // data. Order from the data rather than from the template so no chapter is
+  // wrong on screen. Unlisted controls retain their template order at the end.
+  $: buttonOrder = Array.isArray(activity.ui?.buttons) ? activity.ui.buttons : null;
   $: showPronounceEach = !authoredOptions || !!activity.ui?.checkboxes?.includes('Pronounce Each Drill');
   // A hint either carries its own blocks (chapter 2's inline charts, rendered
   // below the card) or NAMES a chart the chapter already draws — chapter 3's
@@ -120,6 +123,10 @@
   $: hintBlocks = resolveHintBlocks(chapter, activity.hint);
   $: hintChart = activity.ui?.hintRef ? resolveHintRef(chapter, activity.ui.hintRef) : null;
   $: showHintButton = hintBlocks.length > 0 || !!hintChart;
+  $: orderedRevealControls = orderControls([
+    ...revealButtons.map(reveal => ({ kind: 'reveal', label: reveal.label, reveal })),
+    ...(showHintButton ? [{ kind: 'hint', label: 'Hint' }] : [])
+  ], buttonOrder);
   // Grouped button block (the original stacks them two-up) once there are more
   // than the chapter-1 pair.
   $: groupedControls = 1 + (showPronounce ? 1 : 0) + (showStepper ? 2 : 0)
@@ -138,6 +145,20 @@
     for (const size of sizes || []) { groups.push(list.slice(at, at + size)); at += size; }
     if (at < list.length) groups.push(list.slice(at));   // never drop an option
     return groups;
+  }
+
+  function orderControls(controls, order) {
+    if (!order) return controls;
+    return controls.map((control, index) => ({
+      control,
+      index,
+      authoredIndex: order.indexOf(control.label)
+    })).sort((a, b) => {
+      if (a.authoredIndex < 0 && b.authoredIndex < 0) return a.index - b.index;
+      if (a.authoredIndex < 0) return 1;
+      if (b.authoredIndex < 0) return -1;
+      return a.authoredIndex - b.authoredIndex || a.index - b.index;
+    }).map(entry => entry.control);
   }
   // 2c: the original's full-width "only one syllable" bar under the word. In
   // this drill it answers "1" -- the same value as the first number tile.
@@ -382,15 +403,13 @@
         {@const say = current.promptAudio || current.answerAudio}
         <button class="btn" disabled={!say} on:click={() => say && play(say)}>Pronounce</button>
       {/if}
-      {#if showHintButton && hintBeforeReveal}
-        <button class="btn secondary" on:click={() => (showHint = !showHint)}>Hint</button>
-      {/if}
-      {#each revealButtons as reveal}
-        <button class="btn secondary" disabled={!revealValue(reveal.field)} on:click={() => toggleReveal(reveal.field)}>{reveal.label}</button>
+      {#each orderedRevealControls as control}
+        {#if control.kind === 'hint'}
+          <button class="btn secondary" on:click={() => (showHint = !showHint)}>Hint</button>
+        {:else}
+          <button class="btn secondary" disabled={!revealValue(control.reveal.field)} on:click={() => toggleReveal(control.reveal.field)}>{control.reveal.label}</button>
+        {/if}
       {/each}
-      {#if showHintButton && !hintBeforeReveal}
-        <button class="btn secondary" on:click={() => (showHint = !showHint)}>Hint</button>
-      {/if}
       <button class="btn secondary" on:click={() => (showScore = !showScore)}>Score</button>
     </div>
     {#if showPronounceEach}

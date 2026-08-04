@@ -385,6 +385,21 @@ await checkReveal('ch4 Declining Noun', ch4, 'c4_drill_declining', 'Translate', 
 await checkReveal('ch5 Declining Noun', ch5, 'c5_drill_declining', 'Translate', 'translate');
 await checkReveal('ch5 Definite Article', ch5, 'c5_drill_article', 'Gender', 'gender');
 
+async function checkControlOrder(label, chapterId, activity) {
+  await go(`#/activity/${chapterId}/${activity.id}`);
+  const actual = (await page.locator('.card > .controls').first().getByRole('button').allInnerTexts())
+    .map(normalizeText);
+  const expected = activity.ui.buttons;
+  check(`XPATCH1 §2 ${label}: controls follow ui.buttons`,
+    JSON.stringify(actual) === JSON.stringify(expected),
+    `${JSON.stringify(actual)} expected ${JSON.stringify(expected)}`);
+}
+
+await checkControlOrder('ch3 Verb Translating', 'chapt_3', activityById(ch3, 'c3_drill_verb_translating'));
+await checkControlOrder('ch4 Declining Noun', 'chapt_4', activityById(ch4, 'c4_drill_declining'));
+await checkControlOrder('ch5 Declining Noun', 'chapt_5', activityById(ch5, 'c5_drill_declining'));
+await checkControlOrder('ch5 Definite Article', 'chapt_5', activityById(ch5, 'c5_drill_article'));
+
 // ---------------------------------------------------------------- §3 timing
 // The two constants, measured through the UI rather than read out of the
 // module: the item must still be on screen at ~55% of its deadline and gone by

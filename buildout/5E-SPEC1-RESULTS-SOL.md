@@ -216,3 +216,69 @@ The judgement list for that later pass is:
 | Model / tooling | Codex GPT-5.6 Sol; PowerShell, Node.js, Vite, Svelte, Playwright/Chrome; three parallel read-only implementation/PDF audits after bounded initial edits |
 | Approximate cost | Not exposed by the runtime |
 | Turns / sessions | One continuous implementation session |
+
+## 11. XPATCH1 (cross-patch from the parallel Opus run)
+
+1. **Sentence prompt resolved in code.** `buildSelectQuestions` now
+   infers `promptField = "sentence"` when an activity declares no
+   `promptFrom` and its items carry `sentence`. The two `promptFrom`
+   data keys added under §0 remain and still win when present; the
+   fallback means a regenerated Chapter 4/5 file cannot silently return
+   both noun drills to a pending placeholder. Acceptance used a temporary
+   Chapter 4 scratch state with the data key absent: **22/22 questions had
+   nonblank sentence prompts, 0/22 were pending**, the real drill rendered
+   its underlined sentence, and `check:shapes` passed both without and with
+   the restored key.
+2. **Reveal-button order read from `ui.buttons`.** Chapter 3 renders
+   Translate before Hint and Chapters 4/5 render Hint first, each following
+   its own authored order, which is what both rail walks show. The real-UI
+   assertions passed for all four reveal hosts: Chapter 3 Verb Translating,
+   Chapter 4 Declining Noun, Chapter 5 Declining Noun, and Chapter 5 Definite
+   Article. The complete behavior suite passed **100/100** checks.
+3. **`MeaningsCard.svelte` extracted.** The Translation of Inflectional
+   Forms table moved out of `Paradigm.svelte` into its own component. Learn
+   expanders and drill Hint paradigms both consume it through their existing
+   `Paradigm` host. This was a pure move: the required before/after PNGs were
+   byte-identical at both widths (Chapter 4 Neuter: SHA-256
+   `FDCC41CA…B8C3B47` at 320 and `41485225…CC9DB8` at 768; Chapter 5 Eta:
+   `2B1A96DA…E242D15` at 320 and `B8A0918E…94C65C` at 768). The full walker
+   remained green at **105 stops × 2 widths**, **124/124** required Chapter
+   4/5 captures, **41/41** new-chapter stops at 0px overflow, and zero rail,
+   interaction, or console errors.
+4. **Offline preview rail walk** was run for Chapters 4 and 5; the previous
+   pass was only a route smoke test. Under an installed and controlling
+   production service worker, a hard-refreshed Chapter 4 activity rendered
+   offline, the Chapter 4 walk completed **27 screens / 18 rail routes** and
+   reached its end dialog, and the Chapter 5 walk completed **35 screens / 23
+   rail routes** and reached its end dialog. Offline spot checks for Chapters
+   1, 2, and 3 also rendered under service-worker control. There were **9
+   expected missing-audio resource failures** (with 9 paired browser console
+   messages) and **0 unexpected exceptions or non-audio request failures**.
+
+Regression build evidence: `check:shapes`, production build, and
+`check:lazy-chunk` pass; the build has 27 precache entries / 684.33 KiB. The
+Chapter 1–3 chunks remain `chapt-01-8ZoFoXk9.js`,
+`chapt-02-CFgjCaAb.js`, `chapt-03-CPP2o90H.js`,
+`lexicon-chapt01-DWCL8L3K.js`, `lexicon-chapt02-DMecEUSp.js`, and
+`lexicon-chapt03-DU3wQSch.js`, exactly matching the accepted base hashes.
+
+Two patch premises differed from the accepted Sol source. First, Sol already
+had a limited `hintBeforeReveal` implementation, so the visible authored
+orders were correct before XPATCH1; the patch generalizes that special case
+to stable label ordering, including unlisted controls. Second, Sol had one
+direct recursive Meanings renderer with two runtime hosts, while its styles
+already lived globally in `app.css`. The extraction therefore replaces that
+single recursive call and deliberately leaves the global rules and the full
+Hint-paradigm host unchanged. Also, the XPATCH acceptance text names Chapter
+4 Greek Noun and Chapter 5 First Declension Noun for reveal ordering, but
+those activities author Hint only; the assertions use the actual Declining
+Noun reveal hosts. The first full-walk invocation reached an unrelated stale
+listener through `localhost`; its evidence was discarded and the complete
+walk was rerun successfully against the explicit `127.0.0.1` preview URL.
+
+Unchanged from the base and explicitly not touched: topic-id
+`resolveHintRef`, `getGreekTapMap`, `lexicalForm` display, `[[i]]` markup, the
+fourteen §0 data edits, `check-content-shapes` validators, and the `ui:walk`
+harness. `ui:behavior` received only the four order assertions required by
+XPATCH1 §2; this is the narrow exception to the preamble's otherwise
+conflicting instruction not to touch either harness.

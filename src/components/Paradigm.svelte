@@ -6,13 +6,15 @@
   //
   // A 5E block may wrap several full charts in `charts`. The switch is local
   // chart state, never rail navigation; replacing the block resets chart 1.
-  // A chart's `meanings` is itself paradigm-shaped and recursively uses this
-  // renderer inside its expander, so row/audio/gloss behavior cannot drift.
+  // A chart's `meanings` is itself paradigm-shaped. MeaningsCard owns that
+  // shared table in both Learn expanders and the Paradigm rendered by a drill
+  // Hint, so row/audio/gloss behavior cannot drift between the two hosts.
   //
   // Greek-tap rule: every Greek cell and lemma is tappable when it carries an
   // audio clip. Endings rows are bare morphemes with no clips of their own, so
   // they render in ink rather than tappable blue.
   import { play } from '../lib/audio.js';
+  import MeaningsCard from './MeaningsCard.svelte';
   export let paradigm;
   export let title = null;
 
@@ -142,7 +144,7 @@
       <details class="pg-meanings" data-paradigm-meanings>
         <summary class="pg-meanings-toggle">{chart.meanings.label || 'Meanings'}</summary>
         <div class="pg-meanings-card">
-          <svelte:self paradigm={chart.meanings} title={chart.meanings.title || null} />
+          <MeaningsCard meanings={chart.meanings} title={chart.meanings.title || null} />
         </div>
       </details>
     {/if}

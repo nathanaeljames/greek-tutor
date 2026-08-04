@@ -373,7 +373,17 @@ export function buildSelectQuestions(chapter, activity) {
   // drill may mix the two. Missing prompt/answer fields remain in the sequence
   // as visible pending-verification questions instead of becoming bad answers.
   if (activity.optionsPerItem || Array.isArray(activity.optionValues)) {
-    const promptField = activity.promptFrom && activity.promptFrom.show;
+    // Chapters 4 and 5 carry the prompt inline on the item with no
+    // promptFrom. Without this fallback every item resolves to
+    // pending:true and the whole drill renders as a pending placeholder --
+    // silently, which is how it would survive a "did the card render"
+    // check. An explicit promptFrom still wins; this only fires when the
+    // activity declares none and the items carry `sentence`.
+    const impliedSentence = !activity.promptFrom
+      && Array.isArray(activity.items)
+      && activity.items.some(it => it && it.sentence != null);
+    const promptField = (activity.promptFrom && activity.promptFrom.show)
+      || (impliedSentence ? 'sentence' : null);
     // 5D: an activity may DECLARE its prompt side rather than implying it via
     // promptFrom (the ch3 drills have no promptFrom — their prompts are inline
     // on the items). Same Greek-tap contract either way: declared, never
