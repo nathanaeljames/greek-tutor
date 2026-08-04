@@ -1,0 +1,455 @@
+{
+ "_comment": "Chapter 5 lexicon, assembled from 5_NOUNS1.TBK (cohort 5E). Vocabulary order is the TBK list order (alphabetical), which matches e_voc1..10. ntFreq values are the Review Vocabulary Chart's own counts (0x0dfe12). `greek` is the BARE lemma, because the drills and the Vocabulary Spelling Exercise answer against it; `lexicalForm` is the citation form the flashcard and the review chart print. exampleWords carries the teaching-page words plus every inflected paradigm and definite-article form. CHAPT_5 ships e_* plus chapter 3's c_sm* and chapter 4's d_sm* for the two cumulative Scripture review charts; the data references those LOCAL copies.",
+ "_audioVerify": "Three chapter-5 clips could not be assigned from their filenames alone and need a listen-check on device: e_graphn (wired to both γραφή and γραφῇ, which are homophones -- the same doubling ὥρα/ὥρᾳ gets with e_hwra), e_grapax (UNREFERENCED; most likely a second take of γραφάς), and e_aleia (UNREFERENCED; most likely a second take of ἀλήθεια, for which e_alntia is wired). Three whole-gender clips (e_artmas, e_artfem, e_artneu) and the whole-paradigm e_artpar have no surface in the rail walk -- the article charts offer Say Whole List (e_artsg / e_artpl) and per-column headers (e_artms/fs/ns, e_artmp/fp/np), which the data wires. Leave the four unwired unless the build finds a surface.",
+ "lemmas": {
+  "agape": {
+   "greek": "ἀγάπη",
+   "translit": "agape",
+   "gloss": "love",
+   "glossShort": "love",
+   "pos": "noun",
+   "audio": "chapt_5_e_voc1",
+   "_legacy": "a]ga<ph, -hj, h[",
+   "ntFreq": 116,
+   "lexicalForm": "ἀγάπη, -ης, ἡ"
+  },
+  "aletheia": {
+   "greek": "ἀλήθεια",
+   "translit": "aletheia",
+   "gloss": "truth",
+   "glossShort": "truth",
+   "pos": "noun",
+   "audio": "chapt_5_e_voc2",
+   "_legacy": "a]lh<qeia, -aj, h[",
+   "ntFreq": 109,
+   "lexicalForm": "ἀλήθεια, -ας, ἡ"
+  },
+  "hamartia": {
+   "greek": "ἁμαρτία",
+   "translit": "hamartia",
+   "gloss": "sin",
+   "glossShort": "sin",
+   "pos": "noun",
+   "audio": "chapt_5_e_voc3",
+   "_legacy": "a[marti<a, -aj, h[",
+   "ntFreq": 173,
+   "lexicalForm": "ἁμαρτία, -ας, ἡ"
+  },
+  "basileia": {
+   "greek": "βασιλεία",
+   "translit": "basileia",
+   "gloss": "kingdom",
+   "glossShort": "kingdom",
+   "pos": "noun",
+   "audio": "chapt_5_e_voc4",
+   "_legacy": "basilei<a, -aj, h[",
+   "ntFreq": 162,
+   "lexicalForm": "βασιλεία, -ας, ἡ"
+  },
+  "graphe": {
+   "greek": "γραφή",
+   "translit": "graphe",
+   "gloss": "writing",
+   "glossShort": "writing",
+   "pos": "noun",
+   "audio": "chapt_5_e_voc5",
+   "_legacy": "grafh<, -h?j, h[",
+   "ntFreq": 50,
+   "lexicalForm": "γραφή, -ῆς, ἡ",
+   "_poolGloss": "writing, Scripture"
+  },
+  "egeiro": {
+   "greek": "ἐγείρω",
+   "translit": "egeiro",
+   "gloss": "I raise up",
+   "glossShort": "I raise up",
+   "pos": "verb",
+   "audio": "chapt_5_e_voc6",
+   "_legacy": "e]gei<rw",
+   "ntFreq": 144
+  },
+  "ekklesia": {
+   "greek": "ἐκκλησία",
+   "translit": "ekklesia",
+   "gloss": "assembly",
+   "glossShort": "assembly",
+   "pos": "noun",
+   "audio": "chapt_5_e_voc7",
+   "_legacy": "e]kklhsi<a, -aj, h[",
+   "ntFreq": 114,
+   "lexicalForm": "ἐκκλησία, -ας, ἡ",
+   "_poolGloss": "assembly, church"
+  },
+  "ergon": {
+   "greek": "ἔργον",
+   "translit": "ergon",
+   "gloss": "work",
+   "glossShort": "work",
+   "pos": "noun",
+   "audio": "chapt_5_e_voc8",
+   "_legacy": "e@rgon, -ou, to<",
+   "ntFreq": 169,
+   "lexicalForm": "ἔργον, -ου, τό",
+   "_poolGloss": "work, deed"
+  },
+  "mathetes": {
+   "greek": "μαθητής",
+   "translit": "mathetes",
+   "gloss": "disciple",
+   "glossShort": "disciple",
+   "pos": "noun",
+   "audio": "chapt_5_e_voc9",
+   "_legacy": "maqhth<j, -ou?, o[",
+   "ntFreq": 261,
+   "lexicalForm": "μαθητής, -οῦ, ὁ"
+  },
+  "hora": {
+   "greek": "ὥρα",
+   "translit": "hora",
+   "gloss": "hour",
+   "glossShort": "hour",
+   "pos": "noun",
+   "audio": "chapt_5_e_voc10",
+   "_legacy": "w!ra, -aj, h[",
+   "ntFreq": 106,
+   "lexicalForm": "ὥρα, -ας, ἡ"
+  }
+ },
+ "exampleWords": {
+  "oikos": {
+   "greek": "οἶκος",
+   "gloss": "\"house\" is masculine",
+   "audio": "chapt_5_e_oikos"
+  },
+  "hieron": {
+   "greek": "ἱερόν",
+   "gloss": "\"temple\" is neuter",
+   "audio": "chapt_5_e_ieron"
+  },
+  "ekklesia": {
+   "greek": "ἐκκλησία",
+   "gloss": "\"church\" is feminine",
+   "audio": "chapt_5_e_ekklns"
+  },
+  "etos": {
+   "greek": "ἔτος",
+   "gloss": "year",
+   "audio": "chapt_5_e_etos"
+  },
+  "hemera": {
+   "greek": "ἡμέρα",
+   "gloss": "day",
+   "audio": "chapt_5_e_hnmera"
+  },
+  "chronos": {
+   "greek": "χρόνος",
+   "gloss": "time",
+   "audio": "chapt_5_e_chrons"
+  },
+  "logos": {
+   "greek": "λόγος",
+   "gloss": "word",
+   "audio": "chapt_5_e_logos"
+  },
+  "ho_logos": {
+   "greek": "ὁ λόγος",
+   "gloss": "the word",
+   "audio": "chapt_5_e_ologos"
+  },
+  "logon": {
+   "greek": "λόγον",
+   "gloss": "word",
+   "audio": "chapt_5_e_logon"
+  },
+  "ton_logon": {
+   "greek": "τὸν λόγον",
+   "gloss": "the word",
+   "audio": "chapt_5_e_tlogon"
+  },
+  "form_graphn_γραφή": {
+   "greek": "γραφή",
+   "gloss": null,
+   "audio": "chapt_5_e_graphn"
+  },
+  "form_grapai_γραφαί": {
+   "greek": "γραφαί",
+   "gloss": null,
+   "audio": "chapt_5_e_grapai"
+  },
+  "form_grapns_γραφῆς": {
+   "greek": "γραφῆς",
+   "gloss": null,
+   "audio": "chapt_5_e_grapns"
+  },
+  "form_grapwn_γραφῶν": {
+   "greek": "γραφῶν",
+   "gloss": null,
+   "audio": "chapt_5_e_grapwn"
+  },
+  "form_graphn_γραφῇ": {
+   "greek": "γραφῇ",
+   "gloss": null,
+   "audio": "chapt_5_e_graphn"
+  },
+  "form_graais_γραφαῖς": {
+   "greek": "γραφαῖς",
+   "gloss": null,
+   "audio": "chapt_5_e_graais"
+  },
+  "form_grapnn_γραφήν": {
+   "greek": "γραφήν",
+   "gloss": null,
+   "audio": "chapt_5_e_grapnn"
+  },
+  "form_grapas_γραφάς": {
+   "greek": "γραφάς",
+   "gloss": null,
+   "audio": "chapt_5_e_grapas"
+  },
+  "form_hwra_ὥρα": {
+   "greek": "ὥρα",
+   "gloss": null,
+   "audio": "chapt_5_e_hwra"
+  },
+  "form_hwrai_ὧραι": {
+   "greek": "ὧραι",
+   "gloss": null,
+   "audio": "chapt_5_e_hwrai"
+  },
+  "form_hwras_ὥρας": {
+   "greek": "ὥρας",
+   "gloss": null,
+   "audio": "chapt_5_e_hwras"
+  },
+  "form_hwrwn_ὡρῶν": {
+   "greek": "ὡρῶν",
+   "gloss": null,
+   "audio": "chapt_5_e_hwrwn"
+  },
+  "form_hwra_ὥρᾳ": {
+   "greek": "ὥρᾳ",
+   "gloss": null,
+   "audio": "chapt_5_e_hwra"
+  },
+  "form_hwrais_ὥραις": {
+   "greek": "ὥραις",
+   "gloss": null,
+   "audio": "chapt_5_e_hwrais"
+  },
+  "form_hwran_ὥραν": {
+   "greek": "ὥραν",
+   "gloss": null,
+   "audio": "chapt_5_e_hwran"
+  },
+  "form_doxa_δόξα": {
+   "greek": "δόξα",
+   "gloss": null,
+   "audio": "chapt_5_e_doxa"
+  },
+  "form_doxai_δόξαι": {
+   "greek": "δόξαι",
+   "gloss": null,
+   "audio": "chapt_5_e_doxai"
+  },
+  "form_doxns_δόξης": {
+   "greek": "δόξης",
+   "gloss": null,
+   "audio": "chapt_5_e_doxns"
+  },
+  "form_doxwn_δοξῶν": {
+   "greek": "δοξῶν",
+   "gloss": null,
+   "audio": "chapt_5_e_doxwn"
+  },
+  "form_doxn_δόξῃ": {
+   "greek": "δόξῃ",
+   "gloss": null,
+   "audio": "chapt_5_e_doxn"
+  },
+  "form_doxais_δόξαις": {
+   "greek": "δόξαις",
+   "gloss": null,
+   "audio": "chapt_5_e_doxais"
+  },
+  "form_doxan_δόξαν": {
+   "greek": "δόξαν",
+   "gloss": null,
+   "audio": "chapt_5_e_doxan"
+  },
+  "form_doxas_δόξας": {
+   "greek": "δόξας",
+   "gloss": null,
+   "audio": "chapt_5_e_doxas"
+  },
+  "form_propns_προφήτης": {
+   "greek": "προφήτης",
+   "gloss": null,
+   "audio": "chapt_5_e_propns"
+  },
+  "form_propai_προφῆται": {
+   "greek": "προφῆται",
+   "gloss": null,
+   "audio": "chapt_5_e_propai"
+  },
+  "form_propou_προφήτου": {
+   "greek": "προφήτου",
+   "gloss": null,
+   "audio": "chapt_5_e_propou"
+  },
+  "form_propwn_προφητῶν": {
+   "greek": "προφητῶν",
+   "gloss": null,
+   "audio": "chapt_5_e_propwn"
+  },
+  "form_propn_προφήτῃ": {
+   "greek": "προφήτῃ",
+   "gloss": null,
+   "audio": "chapt_5_e_propn"
+  },
+  "form_proais_προφήταις": {
+   "greek": "προφήταις",
+   "gloss": null,
+   "audio": "chapt_5_e_proais"
+  },
+  "form_propnn_προφήτην": {
+   "greek": "προφήτην",
+   "gloss": null,
+   "audio": "chapt_5_e_propnn"
+  },
+  "form_propas_προφήτας": {
+   "greek": "προφήτας",
+   "gloss": null,
+   "audio": "chapt_5_e_propas"
+  },
+  "form_propa_προφῆτα": {
+   "greek": "προφῆτα",
+   "gloss": null,
+   "audio": "chapt_5_e_propa"
+  },
+  "form_agapn_ἀγάπη": {
+   "greek": "ἀγάπη",
+   "gloss": null,
+   "audio": "chapt_5_e_agapn"
+  },
+  "form_agapns_ἀγάπης": {
+   "greek": "ἀγάπης",
+   "gloss": null,
+   "audio": "chapt_5_e_agapns"
+  },
+  "form_agapn_ἀγάπῃ": {
+   "greek": "ἀγάπῃ",
+   "gloss": null,
+   "audio": "chapt_5_e_agapn"
+  },
+  "form_agapnn_ἀγάπην": {
+   "greek": "ἀγάπην",
+   "gloss": null,
+   "audio": "chapt_5_e_agapnn"
+  },
+  "form_alntia_ἀλήθεια": {
+   "greek": "ἀλήθεια",
+   "gloss": null,
+   "audio": "chapt_5_e_alntia"
+  },
+  "form_alntas_ἀληθείας": {
+   "greek": "ἀληθείας",
+   "gloss": null,
+   "audio": "chapt_5_e_alntas"
+  },
+  "form_alntai_ἀληθείᾳ": {
+   "greek": "ἀληθείᾳ",
+   "gloss": null,
+   "audio": "chapt_5_e_alntai"
+  },
+  "form_alntan_ἀλήθειαν": {
+   "greek": "ἀλήθειαν",
+   "gloss": null,
+   "audio": "chapt_5_e_alntan"
+  },
+  "form_ho_ὁ": {
+   "greek": "ὁ",
+   "gloss": null,
+   "audio": "chapt_5_e_ho"
+  },
+  "form_hn_ἡ": {
+   "greek": "ἡ",
+   "gloss": null,
+   "audio": "chapt_5_e_hn"
+  },
+  "form_to_τό": {
+   "greek": "τό",
+   "gloss": null,
+   "audio": "chapt_5_e_to"
+  },
+  "form_hoi_οἱ": {
+   "greek": "οἱ",
+   "gloss": null,
+   "audio": "chapt_5_e_hoi"
+  },
+  "form_hai_αἱ": {
+   "greek": "αἱ",
+   "gloss": null,
+   "audio": "chapt_5_e_hai"
+  },
+  "form_ta_τά": {
+   "greek": "τά",
+   "gloss": null,
+   "audio": "chapt_5_e_ta"
+  },
+  "form_tou_τοῦ": {
+   "greek": "τοῦ",
+   "gloss": null,
+   "audio": "chapt_5_e_tou"
+  },
+  "form_tns_τῆς": {
+   "greek": "τῆς",
+   "gloss": null,
+   "audio": "chapt_5_e_tns"
+  },
+  "form_twn_τῶν": {
+   "greek": "τῶν",
+   "gloss": null,
+   "audio": "chapt_5_e_twn"
+  },
+  "form_tw_τῷ": {
+   "greek": "τῷ",
+   "gloss": null,
+   "audio": "chapt_5_e_tw"
+  },
+  "form_tn_τῇ": {
+   "greek": "τῇ",
+   "gloss": null,
+   "audio": "chapt_5_e_tn"
+  },
+  "form_tois_τοῖς": {
+   "greek": "τοῖς",
+   "gloss": null,
+   "audio": "chapt_5_e_tois"
+  },
+  "form_tais_ταῖς": {
+   "greek": "ταῖς",
+   "gloss": null,
+   "audio": "chapt_5_e_tais"
+  },
+  "form_ton_τόν": {
+   "greek": "τόν",
+   "gloss": null,
+   "audio": "chapt_5_e_ton"
+  },
+  "form_tnn_τήν": {
+   "greek": "τήν",
+   "gloss": null,
+   "audio": "chapt_5_e_tnn"
+  },
+  "form_tous_τούς": {
+   "greek": "τούς",
+   "gloss": null,
+   "audio": "chapt_5_e_tous"
+  },
+  "form_tas_τάς": {
+   "greek": "τάς",
+   "gloss": null,
+   "audio": "chapt_5_e_tas"
+  }
+ }
+}

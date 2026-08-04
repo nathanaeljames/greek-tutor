@@ -23,26 +23,84 @@ hand is positive evidence, and its absence is not evidence of absence.
 The delivered data is the authority on which items carry audio; when
 the data and a hand disagree, report it rather than silently choosing.
 
-Deliverables from this round:
+### THIS IS A DUAL-IMPLEMENTER ROUND
 
-1. **5E-SPEC1-RESULTS.md** — the handoff. What you built, what you
-   found, every data edit made under §0 with before/after, and the
-   open items for the device pass.
-2. **5E-SPEC1-BUILD.md** — the audit record. **It MUST contain the
+Sol (GPT Sol Ultra, in Codex) and Opus (in Claude Code) run this spec
+**independently and in parallel**, from the same starting tree, without
+seeing each other's work. Read §0.5 before you start — it governs
+output file names and the few rules the duplicated setup imposes.
+
+Deliverables from this round, where `{ME}` is `SOL` or `OPUS`:
+
+1. **5E-SPEC1-RESULTS-{ME}.md** — the handoff. What you built, what you
+   found, every data edit made under §0 with before/after, and the open
+   items for the device pass. **Follow 5E-RESULTS-TEMPLATE.md section
+   for section.** The two submissions are read side by side; a
+   freeform document cannot be compared and is graded down.
+2. **5E-SPEC1-BUILD-{ME}.md** — the audit record. **It MUST contain the
    exact `git diff` of the whole round**, plus the full thought/tool
-   log and wall-clock time. The grading chat reads the diff, not the
-   claims; a BUILD document without a complete diff cannot be graded
-   and the round does not count.
-3. **VERIFY-5E.md** — authored by you AFTER 1 and 2, listing the
-   device tests that a script cannot settle. See §10 for what belongs
-   in it and what does not.
+   log, cost, and wall-clock time. Follow **5E-BUILD-TEMPLATE.md**. The
+   grading chat reads the diff, not the claims; a BUILD document
+   without a complete embedded diff cannot be graded and the round does
+   not count. Sol has lost points for this in three separate rounds —
+   it is the single most common failure in this project.
+3. **5E-VISUAL-CHECKLIST-{ME}.md** — the filled-in copy of
+   **5E-VISUAL-CHECKLIST.md**, one row per page, each with a verdict
+   and a screenshot path. This is the evidence for §0; unfilled rows
+   count as "not verified", not as "passed".
+4. **VERIFY-5E.md** — authored by the WINNING implementer only, after
+   grading and after applying any XPATCH. Do not write it speculatively.
+   See §10 for what belongs in it and what does not.
 
-Data files are DELIVERED WITH THIS SPEC. Commit them as delivered:
+Data files are DELIVERED WITH THIS SPEC and are already committed:
 `src/data/chapt-04.json`, `src/data/lexicon-chapt04.json`,
 `src/data/chapt-05.json`, `src/data/lexicon-chapt05.json`, plus
-`scripts/assemble_ch45.py` (pipeline provenance, not a build input).
+`scripts/assemble_ch4.py`, `scripts/assemble_ch5.py` and
+`scripts/tbk_fields.py` (pipeline provenance, not build inputs).
 Do not re-derive their content; §4 describes the shapes so the
 renderer work is legible.
+
+---
+
+## 0.5 Parallel execution rules
+
+Each implementer works in **its own separate copy of the repository**,
+set up by Nathanael from the same starting commit. You will not
+encounter the other implementer's work, and you do not need to
+coordinate with it. Concretely:
+
+1. **Do not push to any remote, and do not commit unless Nathanael
+   asks.** This is already in AGENTS.md; it is restated here because
+   the round is duplicated and an accidental push is the one action
+   that could cross the two runs.
+2. **Name your output files with your own suffix.** `{ME}` is `SOL` or
+   `OPUS`, uppercase, matching the model you are. This is the ONLY
+   thing about the parallel setup you have to get right, and getting
+   it wrong makes the round ungradable, because the two submissions
+   arrive in one place and are told apart by filename alone.
+3. **Screenshots** go to `buildout/screenshots/5e-spec1-{me}/`, lower
+   case — `5e-spec1-sol` or `5e-spec1-opus`.
+4. **The delivered data files are IDENTICAL INPUTS for both runs.**
+   Commit them as delivered. If visual verification finds a data
+   defect, fix it under the §0 authorization, and report it in RESULTS
+   with before/after — the graders compare what each of you FOUND, and
+   an unreported data edit reads as a silent divergence.
+5. **Do not change shared harness semantics to suit your run.** If you
+   extend `ui:walk` or `ui:behavior`, extend them so the chapter-1/2/3
+   assertions still mean what they meant before. A harness that passes
+   only against your tree is not evidence, and the two runs' harness
+   output is compared directly.
+6. **Same scope, same stopping point.** Build exactly §1-§8. Work you
+   think is a good idea but that the spec does not ask for is
+   out-of-scope work and is graded as such, however good it is. If you
+   believe the spec is wrong, say so in RESULTS and build it as
+   specified anyway.
+7. **Report cost and wall-clock time** in BUILD. The ledger tracks
+   both; a round with no numbers cannot be entered.
+
+Prior rounds are not a guide to who wins this one. Grade-relevant
+behavior is: fidelity to the rail walks, completeness of the diff,
+honesty about what was not verified, and restraint.
 
 ---
 
@@ -70,6 +128,12 @@ verification. Compare specifically:
 and 5** rather than writing new one-off harnesses, and keep the
 chapter-1/2/3 coverage green. Everything a script can settle MUST be
 settled by a script before it reaches Nathanael.
+
+**5E-VISUAL-CHECKLIST.md enumerates every page in both chapters.** Copy
+it, walk it, and fill in every row. A row's verdict is one of MATCH,
+DIFFERS (with a description), or BLOCKED (with a reason). Blank is not
+an option, and "MATCH" on a page you did not open is the one failure
+this project treats as disqualifying rather than merely wrong.
 
 **You are authorized to edit `src/data/*.json`** when visual
 verification finds obviously missing formatting or text. This is the

@@ -1,0 +1,3392 @@
+{
+ "_comment": "Chapter 5 (First Declension Nouns), assembled from 5_NOUNS1.TBK + CHAPT_5 audio + ch5railwalk.pdf. Pools read by offset (5E-EXTRACTION-MAP.md sec 2); every drill and speller answer derived from the chapter's own paradigm charts and validated against the extracted option columns at assembly. Page prose verbatim from the extracted fields, cut where the rail-walk screenshots end the page.",
+ "id": "chapt_5",
+ "number": 5,
+ "title": "First Declension Nouns",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "understand English syntax of nouns in sentences (subject, object, number, gender, etc.)",
+  "understand the Greek noun system (gender, number, case)",
+  "write out the first declension paradigm for feminine nouns",
+  "master 10 more high frequency vocabulary words",
+  "memorize Rom 3:23 in Greek"
+ ],
+ "vocab": [
+  "agape",
+  "aletheia",
+  "hamartia",
+  "basileia",
+  "graphe",
+  "egeiro",
+  "ekklesia",
+  "ergon",
+  "mathetes",
+  "hora"
+ ],
+ "learn": [
+  {
+   "id": "c5_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives",
+   "instructions": ""
+  },
+  {
+   "id": "c5_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "greekTaps": true,
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "Nouns are commonly defined as words that stand for a person, place, or thing."
+      },
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "Tanya",
+         "def": "= person"
+        },
+        {
+         "term": "store",
+         "def": "= place"
+        },
+        {
+         "term": "book",
+         "def": "= thing"
+        }
+       ]
+      },
+      {
+       "type": "para",
+       "emphasis": true,
+       "text": "This page is largely a repetition of what was done in chapter 4 except for the section on the definite article.  If you understood it there, then proceed with haste."
+      }
+     ]
+    },
+    {
+     "id": "gender",
+     "title": "Gender",
+     "content": [
+      {
+       "type": "para",
+       "text": "Gender in English is determined by the sex of the referent:  \"king... he\", female \"queen... she\".  Objects which are neither male nor female are considered neuter:  \"boat...it\".  In Greek some inanimate objects are given male or female designations.  Be careful not to confuse Greek grammatical gender with biological gender."
+      },
+      {
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "greek": "οἶκος",
+         "gloss": "\"house\" is masculine",
+         "audio": "chapt_5_e_oikos"
+        },
+        {
+         "greek": "ἱερόν",
+         "gloss": "\"temple\" is neuter",
+         "audio": "chapt_5_e_ieron"
+        },
+        {
+         "greek": "ἐκκλησία",
+         "gloss": "\"church\" is feminine",
+         "audio": "chapt_5_e_ekklns"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "number",
+     "title": "Number",
+     "content": [
+      {
+       "type": "para",
+       "text": "Both English and Greek inflect words for number.   Both languages have singular and plural nouns."
+      },
+      {
+       "type": "greekRows",
+       "layout": "englishPairs",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "parts": [
+          "book",
+          "books"
+         ]
+        },
+        {
+         "parts": [
+          "man",
+          "men"
+         ]
+        },
+        {
+         "parts": [
+          "quiz",
+          "quizzes"
+         ]
+        },
+        {
+         "parts": [
+          "deer",
+          "deer"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "case",
+     "title": "Case",
+     "content": [
+      {
+       "type": "para",
+       "text": "English uses three word inflections in order to indicate changes in case."
+      },
+      {
+       "type": "numbered",
+       "numbered": false,
+       "labelStyle": "underline",
+       "items": [
+        {
+         "label": "Subjective case",
+         "text": " (Gk:  nominative):\n[[u]]He[[/u]] hit the ball."
+        },
+        {
+         "label": "Objective case",
+         "text": " (Gk:  accusative):\nThe ball hit [[u]]him[[/u]]."
+        },
+        {
+         "label": "Possessive case",
+         "text": " (Gk:  genitive):\nHe hit [[u]]his[[/u]] ball."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Subjective Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "The subject of the sentence can usually be discovered by putting \"who\" or \"what\" before the verb."
+        },
+        {
+         "type": "para",
+         "text": "E.g.   [[u]]Zach[[/u]] ran to the store."
+        },
+        {
+         "type": "para",
+         "text": "Who ran to the store?    Zach (= subject)"
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Objective Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "The object of a sentence can usually be discovered by putting a \"who\" or \"what\" after the verb."
+        },
+        {
+         "type": "para",
+         "text": "E.g.   Zach hit the ball."
+        },
+        {
+         "type": "para",
+         "text": "Zach hit what?    ball (= object)"
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Possessive Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "The possessive case often can be discovered by asking \"whose\"?"
+        },
+        {
+         "type": "para",
+         "text": "Charlie hid his ball."
+        },
+        {
+         "type": "para",
+         "text": "whose ball?    his (possessive)"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "definiteArticle",
+     "title": "Definite Article",
+     "content": [
+      {
+       "type": "para",
+       "text": "In English we have both an indefinite article \"a\" (a book) and a definite article \"the\" (the book)."
+      },
+      {
+       "type": "para",
+       "text": "In Greek there is no indefinite article.   Hence \"book\" and \"a  book\" look exactly the same."
+      },
+      {
+       "type": "para",
+       "text": "The definite article in Greek must match the noun it goes with in gender, number and case."
+      },
+      {
+       "type": "para",
+       "text": "The definite article is to be learned with each noun as it will indicate the gender of the noun."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c5_learn_nouns",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Greek Nouns:  1st Declension",
+   "greekTaps": true,
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "There are three noun [[u]]declensions[[/u]] in Greek.  We have learned the second declension with its masculine and neuter nouns.  Now we will focus on the first declension which is largely feminine.  First declension nouns are largely feminine which is indicated by placing a \" ἡ \" [[u]]definite article[[/u]] (\"the\") in front of the root.  Each noun should be learned with its definite article which indicates its gender.  The stem of first declension nouns end with an alpha or eta."
+      },
+      {
+       "type": "expander",
+       "label": "Declensions:  First, Second, Third",
+       "content": [
+        {
+         "type": "para",
+         "text": "A declension is a grouping of nouns that are inflected with a shared set of endings.  The difference in endings does not effect the translation between first, second and third declensions.  First declension nouns are characterized by an \"η\" or \"α\" and are mostly feminine.  The second declension is characterized by an \"o\" as the final letter of the stem.  They are largely masculine or neuter.   Third declension nouns have stems that end in a consonant."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Definite Article",
+       "content": [
+        {
+         "type": "para",
+         "text": "Greek has no indefinite article,  whereas in English we would say \"[[u]]a[[/u]] book.\"  Thus the Greek indefinite noun may be translated \"book\" or \"a book.\"  Greek nouns are assumed to be indefinite unless marked by the definite article (\"the\").  For now simply be aware of the nominative form of the definite article which will indicate the gender of the noun being learned:"
+        },
+        {
+         "type": "greekRows",
+         "layout": "glossOnly",
+         "rows": [
+          {
+           "greek": "ὁ",
+           "gloss": "= masculine (\"the\")",
+           "audio": "chapt_5_e_ho"
+          },
+          {
+           "greek": "ἡ",
+           "gloss": "= feminine (\"the\")",
+           "audio": "chapt_5_e_hn"
+          },
+          {
+           "greek": "τό",
+           "gloss": "= neuter (\"the\")",
+           "audio": "chapt_5_e_to"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "gender",
+     "title": "Gender",
+     "content": [
+      {
+       "type": "para",
+       "text": "Greek nouns are either [[u]]masculine[[/u]], [[u]]feminine[[/u]], or [[u]]neuter[[/u]] in gender.  Often this gender is more a syntactic feature than a metaphysical statement as many inanimate objects are given grammatic gender.  Thus \"year\" ( ἔτος ) is neuter while \"day\" ( ἡμέρα ) is feminine but \"time\" ( χρόνος ) is masculine.   Gender is indicated by the definite article marker which is to be learned with the noun."
+      },
+      {
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "greek": "ὁ",
+         "gloss": "= masculine (definite article = \"the\")",
+         "audio": "chapt_5_e_ho"
+        },
+        {
+         "greek": "ἡ",
+         "gloss": "= feminine",
+         "audio": "chapt_5_e_hn"
+        },
+        {
+         "greek": "τό",
+         "gloss": "= neuter",
+         "audio": "chapt_5_e_to"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "numberAgreement",
+     "title": "Number and Agreement",
+     "content": [
+      {
+       "type": "para",
+       "text": "As in English, Greek has both [[u]]singular[[/u]] and [[u]]plural[[/u]] nouns.  The verb must match the number of the subject noun the same way as in English:"
+      },
+      {
+       "type": "para",
+       "indent": true,
+       "text": "The students [[u]]love[[/u]] Greek.\nThe student [[u]]loves[[/u]] Greek."
+      }
+     ]
+    },
+    {
+     "id": "inflectionalForms",
+     "title": "Inflectional Forms",
+     "content": [
+      {
+       "type": "para",
+       "text": "There are 5 inflectional forms which mark the various cases or roles that nouns play in sentences."
+      },
+      {
+       "type": "numbered",
+       "numbered": false,
+       "labelStyle": "underline",
+       "items": [
+        {
+         "label": "Nominative form",
+         "text": ":  marks the subject of the sentence"
+        },
+        {
+         "label": "Genitive form",
+         "text": ":  expresses a possessive"
+        },
+        {
+         "label": "Dative form",
+         "text": ":  marks the indirect object"
+        },
+        {
+         "label": "Accusative form",
+         "text": ":  indicates the object of the sentence"
+        },
+        {
+         "label": "Vocative form",
+         "text": ":  is used for direct address"
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Nominative Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "[[u]]The music[[/u]] soothed our hearts."
+        },
+        {
+         "type": "para",
+         "text": "\"The music\" is the subject of the sentence.  In Greek it would be marked with a nominative inflectional ending."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Genitive Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "The Pharisee went to the house [[u]]of God[[/u]]."
+        },
+        {
+         "type": "para",
+         "text": "The Pharisee went to [[u]]God's[[/u]] house."
+        },
+        {
+         "type": "para",
+         "text": "\"Of God\" or \"God's\" would be marked in Greek with a genitive inflectional ending."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Dative Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "He spoke a word [[u]]to the apostle[[/u]]."
+        },
+        {
+         "type": "para",
+         "text": "\"To the apostle\" would be marked with a dative inflectional ending in Greek."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Accusative Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "Joy saw [[u]]the ball[[/u]]."
+        },
+        {
+         "type": "para",
+         "text": "\"The ball\" is the object of the sentence.  It would be marked by an accusative inflectional ending in Greek."
+        }
+       ]
+      },
+      {
+       "type": "expander",
+       "label": "Vocative Case:",
+       "content": [
+        {
+         "type": "para",
+         "text": "[[u]]Brother[[/u]], you are the man!"
+        },
+        {
+         "type": "para",
+         "text": "\"Brother\" is a direct address and would be marked by a vocative inflectional ending in Greek."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "firstDeclensionEta",
+     "title": "First Declension--Eta",
+     "content": [
+      {
+       "type": "paradigm",
+       "title": "First Declension--Eta",
+       "lemma": {
+        "greek": "γραφή",
+        "gloss": "writing, Scripture",
+        "audio": "chapt_5_e_graphn"
+       },
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "Nom.\\Voc.",
+         "cells": [
+          {
+           "greek": "γραφή",
+           "audio": "chapt_5_e_graphn"
+          },
+          {
+           "greek": "γραφαί",
+           "audio": "chapt_5_e_grapai"
+          }
+         ]
+        },
+        {
+         "label": "Gen.",
+         "cells": [
+          {
+           "greek": "γραφῆς",
+           "audio": "chapt_5_e_grapns"
+          },
+          {
+           "greek": "γραφῶν",
+           "audio": "chapt_5_e_grapwn"
+          }
+         ]
+        },
+        {
+         "label": "Dat.",
+         "cells": [
+          {
+           "greek": "γραφῇ",
+           "audio": "chapt_5_e_graphn"
+          },
+          {
+           "greek": "γραφαῖς",
+           "audio": "chapt_5_e_graais"
+          }
+         ]
+        },
+        {
+         "label": "Acc.",
+         "cells": [
+          {
+           "greek": "γραφήν",
+           "audio": "chapt_5_e_grapnn"
+          },
+          {
+           "greek": "γραφάς",
+           "audio": "chapt_5_e_grapas"
+          }
+         ]
+        }
+       ],
+       "showGlosses": false,
+       "sayWhole": {
+        "label": "Say Whole List",
+        "audio": "chapt_5_e_grapar"
+       },
+       "meanings": {
+        "label": "Meanings",
+        "title": "Meanings:  Translation of Inflectional Forms",
+        "columns": [
+         "Singular",
+         "Plural"
+        ],
+        "rows": [
+         {
+          "label": "Nom.",
+          "cells": [
+           {
+            "greek": "γραφή",
+            "gloss": "a writing",
+            "audio": "chapt_5_e_graphn"
+           },
+           {
+            "greek": "γραφαί",
+            "gloss": "writings (subject of sentence)",
+            "audio": "chapt_5_e_grapai"
+           }
+          ]
+         },
+         {
+          "label": "Gen.",
+          "cells": [
+           {
+            "greek": "γραφῆς",
+            "gloss": "of a writing",
+            "audio": "chapt_5_e_grapns"
+           },
+           {
+            "greek": "γραφῶν",
+            "gloss": "of writings (possessive)",
+            "audio": "chapt_5_e_grapwn"
+           }
+          ]
+         },
+         {
+          "label": "Dat.",
+          "cells": [
+           {
+            "greek": "γραφῇ",
+            "gloss": "to a writing",
+            "audio": "chapt_5_e_graphn"
+           },
+           {
+            "greek": "γραφαῖς",
+            "gloss": "to writings (indirect obj)",
+            "audio": "chapt_5_e_graais"
+           }
+          ]
+         },
+         {
+          "label": "Acc.",
+          "cells": [
+           {
+            "greek": "γραφήν",
+            "gloss": "a writing",
+            "audio": "chapt_5_e_grapnn"
+           },
+           {
+            "greek": "γραφάς",
+            "gloss": "writings (direct obj)",
+            "audio": "chapt_5_e_grapas"
+           }
+          ]
+         },
+         {
+          "label": "Voc.",
+          "cells": [
+           {
+            "greek": "γραφή",
+            "gloss": "writing",
+            "audio": "chapt_5_e_graphn"
+           },
+           {
+            "greek": "γραφαί",
+            "gloss": "writings (direct address)",
+            "audio": "chapt_5_e_grapai"
+           }
+          ]
+         }
+        ],
+        "legend": [
+         {
+          "label": "Nominative",
+          "text": "= subject of the sentence"
+         },
+         {
+          "label": "Genitive",
+          "text": "= possessive usually translated with \"of\""
+         },
+         {
+          "label": "Dative",
+          "text": "= indirect object usually translated with \"to\""
+         },
+         {
+          "label": "Accusative",
+          "text": "= direct object of a sentence"
+         },
+         {
+          "label": "Vocative",
+          "text": "= direct address (e.g. O writings show us...)"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "id": "firstDeclensionAlpha",
+     "title": "First Declension--Alpha",
+     "content": [
+      {
+       "type": "paradigm",
+       "switch": "moreBack",
+       "charts": [
+        {
+         "title": "First Declension--Alpha",
+         "lemma": {
+          "greek": "ὥρα",
+          "gloss": "hour",
+          "audio": "chapt_5_e_hwra"
+         },
+         "columns": [
+          "Singular",
+          "Plural"
+         ],
+         "rows": [
+          {
+           "label": "Nom./Voc.",
+           "cells": [
+            {
+             "greek": "ὥρα",
+             "audio": "chapt_5_e_hwra"
+            },
+            {
+             "greek": "ὧραι",
+             "audio": "chapt_5_e_hwrai"
+            }
+           ]
+          },
+          {
+           "label": "Gen.",
+           "cells": [
+            {
+             "greek": "ὥρας",
+             "audio": "chapt_5_e_hwras"
+            },
+            {
+             "greek": "ὡρῶν",
+             "audio": "chapt_5_e_hwrwn"
+            }
+           ]
+          },
+          {
+           "label": "Dat.",
+           "cells": [
+            {
+             "greek": "ὥρᾳ",
+             "audio": "chapt_5_e_hwra"
+            },
+            {
+             "greek": "ὥραις",
+             "audio": "chapt_5_e_hwrais"
+            }
+           ]
+          },
+          {
+           "label": "Acc.",
+           "cells": [
+            {
+             "greek": "ὥραν",
+             "audio": "chapt_5_e_hwran"
+            },
+            {
+             "greek": "ὥρας",
+             "audio": "chapt_5_e_hwras"
+            }
+           ]
+          }
+         ],
+         "showGlosses": false,
+         "sayWhole": {
+          "label": "Say Whole List",
+          "audio": "chapt_5_e_hwrpar"
+         },
+         "meanings": {
+          "label": "Meanings",
+          "title": "Meanings:  Translation of Inflectional Forms",
+          "columns": [
+           "Singular",
+           "Plural"
+          ],
+          "rows": [
+           {
+            "label": "Nom.",
+            "cells": [
+             {
+              "greek": "ὥρα",
+              "gloss": "hour",
+              "audio": "chapt_5_e_hwra"
+             },
+             {
+              "greek": "ὧραι",
+              "gloss": "hours (subject of sentence)",
+              "audio": "chapt_5_e_hwrai"
+             }
+            ]
+           },
+           {
+            "label": "Gen.",
+            "cells": [
+             {
+              "greek": "ὥρας",
+              "gloss": "of an hour",
+              "audio": "chapt_5_e_hwras"
+             },
+             {
+              "greek": "ὡρῶν",
+              "gloss": "of hours (possessive)",
+              "audio": "chapt_5_e_hwrwn"
+             }
+            ]
+           },
+           {
+            "label": "Dat.",
+            "cells": [
+             {
+              "greek": "ὥρᾳ",
+              "gloss": "for an hour",
+              "audio": "chapt_5_e_hwra"
+             },
+             {
+              "greek": "ὥραις",
+              "gloss": "for hours (indirect object)",
+              "audio": "chapt_5_e_hwrais"
+             }
+            ]
+           },
+           {
+            "label": "Acc.",
+            "cells": [
+             {
+              "greek": "ὥραν",
+              "gloss": "hour",
+              "audio": "chapt_5_e_hwran"
+             },
+             {
+              "greek": "ὥρας",
+              "gloss": "hours (direct object)",
+              "audio": "chapt_5_e_hwras"
+             }
+            ]
+           },
+           {
+            "label": "Voc.",
+            "cells": [
+             {
+              "greek": "ὥρα",
+              "gloss": "O hour",
+              "audio": "chapt_5_e_hwra"
+             },
+             {
+              "greek": "ὧραι",
+              "gloss": "O hours (direct address)",
+              "audio": "chapt_5_e_hwrai"
+             }
+            ]
+           }
+          ],
+          "legend": [
+           {
+            "label": "Nominative",
+            "text": "= subject of the sentence"
+           },
+           {
+            "label": "Genitive",
+            "text": "= possessive usually translated with \"of\""
+           },
+           {
+            "label": "Dative",
+            "text": "= indirect object usually translated with \"to\" or \"for\""
+           },
+           {
+            "label": "Accusative",
+            "text": "= direct object of a sentence"
+           },
+           {
+            "label": "Vocative",
+            "text": "= direct address (e.g. O glory, why have you... )"
+           }
+          ],
+          "closing": "Note that the Nominative and Vocative form is the same."
+         },
+         "name": "ὥρα"
+        },
+        {
+         "title": "First Declension--Alpha",
+         "lemma": {
+          "greek": "δόξα",
+          "gloss": "glory",
+          "audio": "chapt_5_e_doxa"
+         },
+         "columns": [
+          "Singular",
+          "Plural"
+         ],
+         "rows": [
+          {
+           "label": "Nom./Voc",
+           "cells": [
+            {
+             "greek": "δόξα",
+             "audio": "chapt_5_e_doxa"
+            },
+            {
+             "greek": "δόξαι",
+             "audio": "chapt_5_e_doxai"
+            }
+           ]
+          },
+          {
+           "label": "Gen.",
+           "cells": [
+            {
+             "greek": "δόξης",
+             "audio": "chapt_5_e_doxns"
+            },
+            {
+             "greek": "δοξῶν",
+             "audio": "chapt_5_e_doxwn"
+            }
+           ]
+          },
+          {
+           "label": "Dat.",
+           "cells": [
+            {
+             "greek": "δόξῃ",
+             "audio": "chapt_5_e_doxn"
+            },
+            {
+             "greek": "δόξαις",
+             "audio": "chapt_5_e_doxais"
+            }
+           ]
+          },
+          {
+           "label": "Acc.",
+           "cells": [
+            {
+             "greek": "δόξαν",
+             "audio": "chapt_5_e_doxan"
+            },
+            {
+             "greek": "δόξας",
+             "audio": "chapt_5_e_doxas"
+            }
+           ]
+          }
+         ],
+         "showGlosses": false,
+         "sayWhole": {
+          "label": "Say Whole List",
+          "audio": "chapt_5_e_doxpar"
+         },
+         "meanings": {
+          "label": "Meanings",
+          "title": "Meanings:  Translation of Inflectional Forms",
+          "columns": [
+           "Singular",
+           "Plural"
+          ],
+          "rows": [
+           {
+            "label": "Nom.",
+            "cells": [
+             {
+              "greek": "δόξα",
+              "gloss": "glory",
+              "audio": "chapt_5_e_doxa"
+             },
+             {
+              "greek": "δόξαι",
+              "gloss": "glories (subject of sentence)",
+              "audio": "chapt_5_e_doxai"
+             }
+            ]
+           },
+           {
+            "label": "Gen.",
+            "cells": [
+             {
+              "greek": "δόξης",
+              "gloss": "of glory",
+              "audio": "chapt_5_e_doxns"
+             },
+             {
+              "greek": "δοξῶν",
+              "gloss": "of glories (possessive)",
+              "audio": "chapt_5_e_doxwn"
+             }
+            ]
+           },
+           {
+            "label": "Dat.",
+            "cells": [
+             {
+              "greek": "δόξῃ",
+              "gloss": "to glory",
+              "audio": "chapt_5_e_doxn"
+             },
+             {
+              "greek": "δόξαις",
+              "gloss": "to glories (indirect object)",
+              "audio": "chapt_5_e_doxais"
+             }
+            ]
+           },
+           {
+            "label": "Acc.",
+            "cells": [
+             {
+              "greek": "δόξαν",
+              "gloss": "glory",
+              "audio": "chapt_5_e_doxan"
+             },
+             {
+              "greek": "δόξας",
+              "gloss": "glories (direct object)",
+              "audio": "chapt_5_e_doxas"
+             }
+            ]
+           },
+           {
+            "label": "Voc.",
+            "cells": [
+             {
+              "greek": "δόξα",
+              "gloss": "glory",
+              "audio": "chapt_5_e_doxa"
+             },
+             {
+              "greek": "δόξαι",
+              "gloss": "glories (direct address)",
+              "audio": "chapt_5_e_doxai"
+             }
+            ]
+           }
+          ],
+          "legend": [
+           {
+            "label": "Nominative",
+            "text": "= subject of the sentence"
+           },
+           {
+            "label": "Genitive",
+            "text": "= possessive usually translated with \"of\""
+           },
+           {
+            "label": "Dative",
+            "text": "= indirect object usually translated with \"to\""
+           },
+           {
+            "label": "Accusative",
+            "text": "= direct object of a sentence"
+           },
+           {
+            "label": "Vocative",
+            "text": "= direct address (e.g. O glory, why have you... )"
+           }
+          ],
+          "closing": "Note in the neuter the Nominative and Vocative form are always the same.",
+          "_legacy_note": "The closing line says \"in the neuter\" on a feminine noun's card; it is the original's own text (0x00f744) and is on screen in ch5railwalk.pdf. Shipped verbatim."
+         },
+         "name": "δόξα",
+         "note": "This form occurs with nouns ending in ζ, ξ, ψ, σ or λλ."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "firstDeclensionMasc",
+     "title": "First Declension--Masc",
+     "content": [
+      {
+       "type": "paradigm",
+       "title": "First Declension--Masculine",
+       "lemma": {
+        "greek": "προφήτης",
+        "gloss": "prophet",
+        "audio": "chapt_5_e_propns"
+       },
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "Nom.",
+         "cells": [
+          {
+           "greek": "προφήτης",
+           "audio": "chapt_5_e_propns"
+          },
+          {
+           "greek": "προφῆται",
+           "audio": "chapt_5_e_propai"
+          }
+         ]
+        },
+        {
+         "label": "Gen.",
+         "cells": [
+          {
+           "greek": "προφήτου",
+           "audio": "chapt_5_e_propou"
+          },
+          {
+           "greek": "προφητῶν",
+           "audio": "chapt_5_e_propwn"
+          }
+         ]
+        },
+        {
+         "label": "Dat.",
+         "cells": [
+          {
+           "greek": "προφήτῃ",
+           "audio": "chapt_5_e_propn"
+          },
+          {
+           "greek": "προφήταις",
+           "audio": "chapt_5_e_proais"
+          }
+         ]
+        },
+        {
+         "label": "Acc.",
+         "cells": [
+          {
+           "greek": "προφήτην",
+           "audio": "chapt_5_e_propnn"
+          },
+          {
+           "greek": "προφήτας",
+           "audio": "chapt_5_e_propas"
+          }
+         ]
+        },
+        {
+         "label": "Voc.",
+         "cells": [
+          {
+           "greek": "προφῆτα",
+           "audio": "chapt_5_e_propa"
+          },
+          {
+           "greek": "προφῆται",
+           "audio": "chapt_5_e_propai"
+          }
+         ]
+        }
+       ],
+       "showGlosses": false,
+       "sayWhole": {
+        "label": "Say Whole List",
+        "audio": "chapt_5_e_propar"
+       },
+       "meanings": {
+        "label": "Meanings",
+        "title": "Meanings:  Translation of Inflectional Forms",
+        "columns": [
+         "Singular",
+         "Plural"
+        ],
+        "rows": [
+         {
+          "label": "Nom.",
+          "cells": [
+           {
+            "greek": "προφήτης",
+            "gloss": "prophet",
+            "audio": "chapt_5_e_propns"
+           },
+           {
+            "greek": "προφῆται",
+            "gloss": "prophets (subject)",
+            "audio": "chapt_5_e_propai"
+           }
+          ]
+         },
+         {
+          "label": "Gen.",
+          "cells": [
+           {
+            "greek": "προφήτου",
+            "gloss": "of a prophet",
+            "audio": "chapt_5_e_propou"
+           },
+           {
+            "greek": "προφητῶν",
+            "gloss": "of prophets (possessive)",
+            "audio": "chapt_5_e_propwn"
+           }
+          ]
+         },
+         {
+          "label": "Dat.",
+          "cells": [
+           {
+            "greek": "προφήτῃ",
+            "gloss": "to a prophet",
+            "audio": "chapt_5_e_propn"
+           },
+           {
+            "greek": "προφήταις",
+            "gloss": "to prophets (indirect obj)",
+            "audio": "chapt_5_e_proais"
+           }
+          ]
+         },
+         {
+          "label": "Acc.",
+          "cells": [
+           {
+            "greek": "προφήτην",
+            "gloss": "prophet",
+            "audio": "chapt_5_e_propnn"
+           },
+           {
+            "greek": "προφήτας",
+            "gloss": "prophets (direct obj)",
+            "audio": "chapt_5_e_propas"
+           }
+          ]
+         },
+         {
+          "label": "Voc.",
+          "cells": [
+           {
+            "greek": "προφῆτα",
+            "gloss": "prophet",
+            "audio": "chapt_5_e_propa"
+           },
+           {
+            "greek": "προφῆται",
+            "gloss": "prophets (direct address)",
+            "audio": "chapt_5_e_propai"
+           }
+          ]
+         }
+        ],
+        "legend": [
+         {
+          "label": "Nominative",
+          "text": "= subject of the sentence"
+         },
+         {
+          "label": "Genitive",
+          "text": "= possessive usually translated with \"of\""
+         },
+         {
+          "label": "Dative",
+          "text": "= indirect object usually translated with \"to\""
+         },
+         {
+          "label": "Accusative",
+          "text": "= direct object of a sentence"
+         },
+         {
+          "label": "Vocative",
+          "text": "= direct address (e.g. O prophet, speak ... )"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "_label_note": "D-27: the Eta chart prints \"Nom.\\Voc.\" with a backslash, the first Alpha chart \"Nom./Voc.\" with a slash, and the second Alpha chart \"Nom./Voc\" with no trailing period. All three are the original's own labels and ship verbatim."
+  },
+  {
+   "id": "c5_learn_article",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Definite Article",
+   "greekTaps": true,
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "While Greek has no indefinite article like the English \"a\" (e.g. a book), the Greek definite article \"the\" occurs throughout the New Testament.   The definite article will be inflected for gender, number and case.   Indeed the definite article must match its noun in gender, number and case.  The definite article will mark the gender of a noun no matter if it is a first, second or third declension noun."
+      }
+     ]
+    },
+    {
+     "id": "examples",
+     "title": "Examples",
+     "content": [
+      {
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "greek": "λόγος",
+         "gloss": "\"word\" nom. sing. masc.  (Acts 13:15)",
+         "audio": "chapt_5_e_logos"
+        },
+        {
+         "greek": "ὁ λόγος",
+         "gloss": "\"the word\" nom. sing. masc. (Jn 1:1)",
+         "audio": "chapt_5_e_ologos"
+        },
+        {
+         "greek": "λόγον",
+         "gloss": "\"word\" acc. sing. masc. (Jn 8:51)",
+         "audio": "chapt_5_e_logon"
+        },
+        {
+         "greek": "τὸν λόγον",
+         "gloss": "\"the word\" acc. sing. masc. (Jn 4:39)",
+         "audio": "chapt_5_e_tlogon"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "articleParadigm",
+     "title": "Definite Article Paradigm",
+     "content": [
+      {
+       "type": "paradigm",
+       "switch": "named",
+       "charts": [
+        {
+         "name": "Singular",
+         "title": "Definite Article Paradigm",
+         "columns": [
+          "Masc.",
+          "Fem.",
+          "Neut."
+         ],
+         "columnAudio": [
+          "chapt_5_e_artms",
+          "chapt_5_e_artfs",
+          "chapt_5_e_artns"
+         ],
+         "rows": [
+          {
+           "label": "Nom.",
+           "cells": [
+            {
+             "greek": "ὁ",
+             "audio": "chapt_5_e_ho"
+            },
+            {
+             "greek": "ἡ",
+             "audio": "chapt_5_e_hn"
+            },
+            {
+             "greek": "τό",
+             "audio": "chapt_5_e_to"
+            }
+           ]
+          },
+          {
+           "label": "Gen.",
+           "cells": [
+            {
+             "greek": "τοῦ",
+             "audio": "chapt_5_e_tou"
+            },
+            {
+             "greek": "τῆς",
+             "audio": "chapt_5_e_tns"
+            },
+            {
+             "greek": "τοῦ",
+             "audio": "chapt_5_e_tou"
+            }
+           ]
+          },
+          {
+           "label": "Dat.",
+           "cells": [
+            {
+             "greek": "τῷ",
+             "audio": "chapt_5_e_tw"
+            },
+            {
+             "greek": "τῇ",
+             "audio": "chapt_5_e_tn"
+            },
+            {
+             "greek": "τῷ",
+             "audio": "chapt_5_e_tw"
+            }
+           ]
+          },
+          {
+           "label": "Acc.",
+           "cells": [
+            {
+             "greek": "τόν",
+             "audio": "chapt_5_e_ton"
+            },
+            {
+             "greek": "τήν",
+             "audio": "chapt_5_e_tnn"
+            },
+            {
+             "greek": "τό",
+             "audio": "chapt_5_e_to"
+            }
+           ]
+          }
+         ],
+         "showGlosses": false,
+         "sayWhole": {
+          "label": "Say Whole List",
+          "audio": "chapt_5_e_artsg"
+         },
+         "note": "Note ὁ and ἡ are enclitics with no accents."
+        },
+        {
+         "name": "Plural",
+         "title": "Definite Article Paradigm",
+         "columns": [
+          "Masc.",
+          "Fem.",
+          "Neut."
+         ],
+         "columnAudio": [
+          "chapt_5_e_artmp",
+          "chapt_5_e_artfp",
+          "chapt_5_e_artnp"
+         ],
+         "rows": [
+          {
+           "label": "Nom.",
+           "cells": [
+            {
+             "greek": "οἱ",
+             "audio": "chapt_5_e_hoi"
+            },
+            {
+             "greek": "αἱ",
+             "audio": "chapt_5_e_hai"
+            },
+            {
+             "greek": "τά",
+             "audio": "chapt_5_e_ta"
+            }
+           ]
+          },
+          {
+           "label": "Gen.",
+           "cells": [
+            {
+             "greek": "τῶν",
+             "audio": "chapt_5_e_twn"
+            },
+            {
+             "greek": "τῶν",
+             "audio": "chapt_5_e_twn"
+            },
+            {
+             "greek": "τῶν",
+             "audio": "chapt_5_e_twn"
+            }
+           ]
+          },
+          {
+           "label": "Dat.",
+           "cells": [
+            {
+             "greek": "τοῖς",
+             "audio": "chapt_5_e_tois"
+            },
+            {
+             "greek": "ταῖς",
+             "audio": "chapt_5_e_tais"
+            },
+            {
+             "greek": "τοῖς",
+             "audio": "chapt_5_e_tois"
+            }
+           ]
+          },
+          {
+           "label": "Acc.",
+           "cells": [
+            {
+             "greek": "τούς",
+             "audio": "chapt_5_e_tous"
+            },
+            {
+             "greek": "τάς",
+             "audio": "chapt_5_e_tas"
+            },
+            {
+             "greek": "τά",
+             "audio": "chapt_5_e_ta"
+            }
+           ]
+          }
+         ],
+         "showGlosses": false,
+         "sayWhole": {
+          "label": "Say Whole List",
+          "audio": "chapt_5_e_artpl"
+         },
+         "note": "Note οἱ and αἱ are enclitics with no accents."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c5_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "lemmas"
+  },
+  {
+   "id": "c5_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory",
+   "reference": "Rom 3:23",
+   "words": [
+    {
+     "greek": "πάντες",
+     "gloss": "all",
+     "audio": "chapt_5_e_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_5_e_sm2"
+    },
+    {
+     "greek": "ἥμαρτον",
+     "gloss": "have sinned",
+     "audio": "chapt_5_e_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_5_e_sm4"
+    },
+    {
+     "greek": "ὑστεροῦνται",
+     "gloss": "fall short",
+     "audio": "chapt_5_e_sm5"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "of the",
+     "audio": "chapt_5_e_sm6"
+    },
+    {
+     "greek": "δόξης",
+     "gloss": "glory",
+     "audio": "chapt_5_e_sm7"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of [the]",
+     "audio": "chapt_5_e_sm8"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_5_e_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_5_e_rom323"
+   }
+  },
+  {
+   "id": "c5_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham.  New Testament Greek for Beginners (Toronto:  The Macmillan Company, 1923), pp. 39-43.",
+      "Mounce, William D.  Basics of Biblical Greek:  Grammar (Grand Rapids:  Zondervan, 1993), pp. 28-54.",
+      "Summers, Ray and Thomas Sawyer.  Essentials of New Testament Greek (Nashville:  Broadman & Holman, 1995), pp. 21-23.",
+      "Wenham, J. W.   The Elements of New Testament Greek (Cambridge:  Cambridge University Press, 1965), pp. 39-42."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c5_drill_first_decl_noun",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "First Declension Noun Drill",
+   "instructions": "Click on the correct Greek Noun form to replace the underlined English word",
+   "optionsAreGreek": true,
+   "optionsPerItem": 4,
+   "optionLayout": "single",
+   "_layout_note": "Four options in ONE column at every width, matching the original. Not a paradigm grid, so D-26 does not apply and neither does the D-19 reflow.",
+   "items": [
+    {
+     "sentence": "and neglect justice and the\nlove of God",
+     "underline": "love",
+     "ref": "Luk 11:42",
+     "options": [
+      "ἀγάπη",
+      "ἀγάπης",
+      "ἀγάπῃ",
+      "ἀγάπην"
+     ],
+     "answer": "ἀγάπην",
+     "audio": "chapt_5_e_agapnn"
+    },
+    {
+     "sentence": "I am testing the genuineness\nof your love",
+     "underline": "love",
+     "ref": "2 Cor 8:8",
+     "options": [
+      "ἀγάπη",
+      "ἀγάπης",
+      "ἀγάπῃ",
+      "ἀγάπην"
+     ],
+     "answer": "ἀγάπης",
+     "audio": "chapt_5_e_agapns"
+    },
+    {
+     "sentence": "the love of many will grow\ncold",
+     "underline": "love",
+     "ref": "Mat 24:12",
+     "options": [
+      "ἀγάπη",
+      "ἀγάπης",
+      "ἀγάπῃ",
+      "ἀγάπην"
+     ],
+     "answer": "ἀγάπη",
+     "audio": "chapt_5_e_agapn"
+    },
+    {
+     "sentence": "you increase and abound\nin love",
+     "underline": "love",
+     "ref": "1 Thes 3:12",
+     "options": [
+      "ἀγάπη",
+      "ἀγάπης",
+      "ἀγάπῃ",
+      "ἀγάπην"
+     ],
+     "answer": "ἀγάπῃ",
+     "audio": "chapt_5_e_agapn"
+    },
+    {
+     "sentence": "I know that you do not have\nthe love of God in you",
+     "underline": "love",
+     "ref": "Jn 5:42",
+     "options": [
+      "ἀγάπη",
+      "ἀγάπης",
+      "ἀγάπῃ",
+      "ἀγάπην"
+     ],
+     "answer": "ἀγάπην",
+     "audio": "chapt_5_e_agapnn"
+    },
+    {
+     "sentence": "Love does no wrong",
+     "underline": "Love",
+     "ref": "Rom 13:10",
+     "options": [
+      "ἀγάπη",
+      "ἀγάπης",
+      "ἀγάπῃ",
+      "ἀγάπην"
+     ],
+     "answer": "ἀγάπη",
+     "audio": "chapt_5_e_agapn"
+    },
+    {
+     "sentence": "and the God of love",
+     "underline": "love",
+     "ref": "2 Cor 13:11",
+     "options": [
+      "ἀγάπη",
+      "ἀγάπης",
+      "ἀγάπῃ",
+      "ἀγάπην"
+     ],
+     "answer": "ἀγάπης",
+     "audio": "chapt_5_e_agapns"
+    },
+    {
+     "sentence": "grace and truth came\nthrough Jesus Christ",
+     "underline": "truth",
+     "ref": "Jn 1:17",
+     "options": [
+      "ἀλήθεια",
+      "ἀληθείας",
+      "ἀληθείᾳ",
+      "ἀλήθειαν"
+     ],
+     "answer": "ἀλήθεια",
+     "audio": "chapt_5_e_alntia"
+    },
+    {
+     "sentence": "full of grace and truth",
+     "underline": "truth",
+     "ref": "Jn 1:14",
+     "options": [
+      "ἀλήθεια",
+      "ἀληθείας",
+      "ἀληθείᾳ",
+      "ἀλήθειαν"
+     ],
+     "answer": "ἀληθείας",
+     "audio": "chapt_5_e_alntas"
+    },
+    {
+     "sentence": "and told him the whole\ntruth",
+     "underline": "truth",
+     "ref": "Mk 5:33",
+     "options": [
+      "ἀλήθεια",
+      "ἀληθείας",
+      "ἀληθείᾳ",
+      "ἀλήθειαν"
+     ],
+     "answer": "ἀλήθειαν",
+     "audio": "chapt_5_e_alntan"
+    },
+    {
+     "sentence": "and he testified to the truth",
+     "underline": "truth",
+     "ref": "Jn 5:33",
+     "options": [
+      "ἀλήθεια",
+      "ἀληθείας",
+      "ἀληθείᾳ",
+      "ἀλήθειαν"
+     ],
+     "answer": "ἀληθείᾳ",
+     "audio": "chapt_5_e_alntai"
+    },
+    {
+     "sentence": "and the truth will make\nyou free",
+     "underline": "truth",
+     "ref": "Jn 8:32",
+     "options": [
+      "ἀλήθεια",
+      "ἀληθείας",
+      "ἀληθείᾳ",
+      "ἀλήθειαν"
+     ],
+     "answer": "ἀλήθεια",
+     "audio": "chapt_5_e_alntia"
+    },
+    {
+     "sentence": "a man who has told you the\ntruth",
+     "underline": "truth",
+     "ref": "Jn 8:40",
+     "options": [
+      "ἀλήθεια",
+      "ἀληθείας",
+      "ἀληθείᾳ",
+      "ἀλήθειαν"
+     ],
+     "answer": "ἀλήθειαν",
+     "audio": "chapt_5_e_alntan"
+    },
+    {
+     "sentence": "the spirit of truth",
+     "underline": "truth",
+     "ref": "Jn 15:26",
+     "options": [
+      "ἀλήθεια",
+      "ἀληθείας",
+      "ἀληθείᾳ",
+      "ἀλήθειαν"
+     ],
+     "answer": "ἀληθείας",
+     "audio": "chapt_5_e_alntas"
+    },
+    {
+     "sentence": "and showed him all their\nsplendor",
+     "underline": "splendor",
+     "ref": "Mat 4:8",
+     "options": [
+      "δόξα",
+      "δόξης",
+      "δόξῃ",
+      "δόξαν"
+     ],
+     "answer": "δόξαν",
+     "audio": "chapt_5_e_doxan"
+    },
+    {
+     "sentence": "the throne of his glory",
+     "underline": "glory",
+     "ref": "Mat 19:28",
+     "options": [
+      "δόξα",
+      "δόξης",
+      "δόξῃ",
+      "δόξαν"
+     ],
+     "answer": "δόξης",
+     "audio": "chapt_5_e_doxns"
+    },
+    {
+     "sentence": "the glory of the Lord shone\naround",
+     "underline": "glory",
+     "ref": "Luk 2:9",
+     "options": [
+      "δόξα",
+      "δόξης",
+      "δόξῃ",
+      "δόξαν"
+     ],
+     "answer": "δόξα",
+     "audio": "chapt_5_e_doxa"
+    },
+    {
+     "sentence": "glorify me in your own\npresence with the glory",
+     "underline": "glory",
+     "ref": "Jn 17:5",
+     "options": [
+      "δόξα",
+      "δόξης",
+      "δόξῃ",
+      "δόξαν"
+     ],
+     "answer": "δόξῃ",
+     "audio": "chapt_5_e_doxn"
+    },
+    {
+     "sentence": "I will give their glory",
+     "underline": "glory",
+     "ref": "Luk 4:6",
+     "options": [
+      "δόξα",
+      "δόξης",
+      "δόξῃ",
+      "δόξαν"
+     ],
+     "answer": "δόξαν",
+     "audio": "chapt_5_e_doxan"
+    },
+    {
+     "sentence": "my glory is nothing",
+     "underline": "glory",
+     "ref": "Jn 8:54",
+     "options": [
+      "δόξα",
+      "δόξης",
+      "δόξῃ",
+      "δόξαν"
+     ],
+     "answer": "δόξα",
+     "audio": "chapt_5_e_doxa"
+    }
+   ],
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "firstDeclensionEta"
+   },
+   "scored": true,
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   }
+  },
+  {
+   "id": "c5_drill_declining",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Declining Noun Drill",
+   "instructions": "Click on the matching case and number",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "Nominative Singular",
+    "Nominative Plural",
+    "Genitive Singular",
+    "Genitive Plural",
+    "Dative Singular",
+    "Dative Plural",
+    "Accusative Singular",
+    "Accusative Plural",
+    "Vocative Singular",
+    "Vocative Plural"
+   ],
+   "optionLayout": "paradigm2col",
+   "_layout_note": "D-26.",
+   "revealButtons": [
+    {
+     "label": "Translate",
+     "field": "translate"
+    }
+   ],
+   "items": [
+    {
+     "greek": "ὥρας",
+     "ref": "Jn 12:27",
+     "translate": "of an hour",
+     "answer": "Genitive Singular",
+     "audio": "chapt_5_e_hwras"
+    },
+    {
+     "greek": "ὥραις",
+     "ref": "Jn 12:27",
+     "translate": "to hours",
+     "answer": "Dative Plural",
+     "audio": "chapt_5_e_hwrais"
+    },
+    {
+     "greek": "ὥρας",
+     "ref": "Not in NT",
+     "translate": "hours",
+     "answer": "Accusative Plural",
+     "audio": "chapt_5_e_hwras"
+    },
+    {
+     "greek": "ὥραν",
+     "ref": "Acts 19:34",
+     "translate": "hour or an hour",
+     "answer": "Accusative Singular",
+     "audio": "chapt_5_e_hwran"
+    },
+    {
+     "greek": "ὧραι",
+     "ref": "Jn 4:52",
+     "translate": "hours",
+     "answer": "Nominative Plural",
+     "audio": "chapt_5_e_hwrai"
+    },
+    {
+     "greek": "ὥρᾳ",
+     "ref": "Jn 11:9",
+     "translate": "to an hour",
+     "answer": "Dative Singular",
+     "audio": "chapt_5_e_hwra"
+    },
+    {
+     "greek": "ὥρα",
+     "ref": "Jn 4:53",
+     "translate": "hour or an hour",
+     "answer": "Nominative Singular",
+     "audio": "chapt_5_e_hwra"
+    },
+    {
+     "greek": "ὡρῶν",
+     "ref": "Jn 2:4",
+     "translate": "of hours",
+     "answer": "Genitive Plural",
+     "audio": "chapt_5_e_hwrwn"
+    },
+    {
+     "greek": "γραφαῖς",
+     "ref": "Acts 5:7",
+     "translate": "to writings",
+     "answer": "Dative Plural",
+     "audio": "chapt_5_e_graais"
+    },
+    {
+     "greek": "γραφαί",
+     "ref": "Mat 21:42",
+     "translate": "writings",
+     "answer": "Nominative Plural",
+     "audio": "chapt_5_e_grapai"
+    },
+    {
+     "greek": "γραφῇ",
+     "ref": "Mat 26:54",
+     "translate": "to a writing",
+     "answer": "Dative Singular",
+     "audio": "chapt_5_e_graphn"
+    },
+    {
+     "greek": "γραφάς",
+     "ref": "Jn 2:22",
+     "translate": "writings",
+     "answer": "Accusative Plural",
+     "audio": "chapt_5_e_grapas"
+    },
+    {
+     "greek": "γραφῆς",
+     "ref": "Jn 5:39",
+     "translate": "of a writing",
+     "answer": "Genitive Singular",
+     "audio": "chapt_5_e_grapns"
+    },
+    {
+     "greek": "γραφήν",
+     "ref": "Acts 8:32",
+     "translate": "writing or a writing",
+     "answer": "Accusative Singular",
+     "audio": "chapt_5_e_grapnn"
+    },
+    {
+     "greek": "γραφῶν",
+     "ref": "Jn 20:9",
+     "translate": "of writings",
+     "answer": "Genitive Plural",
+     "audio": "chapt_5_e_grapwn"
+    },
+    {
+     "greek": "γραφή",
+     "ref": "Acts 17:2",
+     "translate": "writing or a writing",
+     "answer": "Nominative Singular",
+     "audio": "chapt_5_e_graphn"
+    },
+    {
+     "greek": "προφῆται",
+     "ref": "Jn 7:38",
+     "translate": "O prophets  or prophets",
+     "answer": "Vocative Plural",
+     "audio": "chapt_5_e_propai"
+    },
+    {
+     "greek": "προφήτου",
+     "ref": "Rev 18:20",
+     "translate": "of prophets",
+     "answer": "Genitive Singular",
+     "audio": "chapt_5_e_propou"
+    },
+    {
+     "greek": "προφήτην",
+     "ref": "Jn 12:38",
+     "translate": "prophet or a prophet",
+     "answer": "Accusative Singular",
+     "audio": "chapt_5_e_propnn"
+    },
+    {
+     "greek": "προφητῶν",
+     "ref": "Mat 10:41",
+     "translate": "of prophets",
+     "answer": "Genitive Plural",
+     "audio": "chapt_5_e_propwn"
+    },
+    {
+     "greek": "προφῆται",
+     "ref": "Mat 2:23",
+     "translate": "prophets or O prophets",
+     "answer": "Nominative Plural",
+     "audio": "chapt_5_e_propai"
+    },
+    {
+     "greek": "προφήτῃ",
+     "ref": "Jn 1:45",
+     "translate": "to a prophet",
+     "answer": "Dative Singular",
+     "audio": "chapt_5_e_propn"
+    },
+    {
+     "greek": "προφήτας",
+     "ref": "Mr 1:2",
+     "translate": "prophets",
+     "answer": "Accusative Plural",
+     "audio": "chapt_5_e_propas"
+    },
+    {
+     "greek": "προφήτης",
+     "ref": "Mat 5:12",
+     "translate": "prophet or a prophet",
+     "answer": "Nominative Singular",
+     "audio": "chapt_5_e_propns"
+    },
+    {
+     "greek": "προφήταις",
+     "ref": "Jn 6:45",
+     "translate": "to prophets",
+     "answer": "Dative Plural",
+     "audio": "chapt_5_e_proais"
+    }
+   ],
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Translate",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "firstDeclensionEta"
+   },
+   "scored": true,
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   }
+  },
+  {
+   "id": "c5_drill_article",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Definite Article Drill",
+   "instructions": "Click on the matching case and number",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "Nominative Singular",
+    "Nominative Plural",
+    "Genitive Singular",
+    "Genitive Plural",
+    "Dative Singular",
+    "Dative Plural",
+    "Accusative Singular",
+    "Accusative Plural"
+   ],
+   "optionLayout": "paradigm2col",
+   "_layout_note": "D-26. Four rows, not five: the article has no vocative.",
+   "revealButtons": [
+    {
+     "label": "Gender",
+     "field": "gender"
+    }
+   ],
+   "items": [
+    {
+     "greek": "τούς",
+     "ref": "Jn 1:51",
+     "gender": "Masculine",
+     "answer": "Accusative Plural",
+     "audio": "chapt_5_e_tous"
+    },
+    {
+     "greek": "τῷ",
+     "ref": "Jn 1:10",
+     "gender": "Masculine",
+     "answer": "Dative Singular",
+     "audio": "chapt_5_e_tw"
+    },
+    {
+     "greek": "οἱ",
+     "ref": "Jn 1:11",
+     "gender": "Masculine",
+     "answer": "Nominative Plural",
+     "audio": "chapt_5_e_hoi"
+    },
+    {
+     "greek": "τοῦ",
+     "ref": "Jn 1:18",
+     "gender": "Masculine",
+     "answer": "Genitive Singular",
+     "audio": "chapt_5_e_tou"
+    },
+    {
+     "greek": "τῶν",
+     "ref": "Jn 1:4",
+     "gender": "Masculine",
+     "answer": "Genitive Plural",
+     "audio": "chapt_5_e_twn"
+    },
+    {
+     "greek": "ὁ",
+     "ref": "Jn 1:1",
+     "gender": "Masculine",
+     "answer": "Nominative Singular",
+     "audio": "chapt_5_e_ho"
+    },
+    {
+     "greek": "τοῖς",
+     "ref": "Jn 1:12",
+     "gender": "Masculine",
+     "answer": "Dative Plural",
+     "audio": "chapt_5_e_tois"
+    },
+    {
+     "greek": "τόν",
+     "ref": "Jn 1:1",
+     "gender": "Masculine",
+     "answer": "Accusative Singular",
+     "audio": "chapt_5_e_ton"
+    },
+    {
+     "greek": "αἱ",
+     "ref": "Jn 5:39",
+     "gender": "Feminine",
+     "answer": "Nominative Plural",
+     "audio": "chapt_5_e_hai"
+    },
+    {
+     "greek": "τήν",
+     "ref": "Jn 1:14",
+     "gender": "Feminine",
+     "answer": "Accusative Singular",
+     "audio": "chapt_5_e_tnn"
+    },
+    {
+     "greek": "ταῖς",
+     "ref": "Jn 8:24",
+     "gender": "Feminine",
+     "answer": "Dative Plural",
+     "audio": "chapt_5_e_tais"
+    },
+    {
+     "greek": "τῆς",
+     "ref": "Jn 1:44",
+     "gender": "Feminine",
+     "answer": "Genitive Singular",
+     "audio": "chapt_5_e_tns"
+    },
+    {
+     "greek": "ἡ",
+     "ref": "Jn 1:4",
+     "gender": "Feminine",
+     "answer": "Nominative Singular",
+     "audio": "chapt_5_e_hn"
+    },
+    {
+     "greek": "τάς",
+     "ref": "Jn 4:35",
+     "gender": "Feminine",
+     "answer": "Accusative Plural",
+     "audio": "chapt_5_e_tas"
+    },
+    {
+     "greek": "τῶν",
+     "ref": "Mat 1:21",
+     "gender": "Feminine",
+     "answer": "Genitive Plural",
+     "audio": "chapt_5_e_twn"
+    },
+    {
+     "greek": "τῇ",
+     "ref": "Jn 1:5",
+     "gender": "Feminine",
+     "answer": "Dative Singular",
+     "audio": "chapt_5_e_tn"
+    },
+    {
+     "greek": "τοῖς",
+     "ref": "Jn 2:23",
+     "gender": "Neuter",
+     "answer": "Dative Plural",
+     "audio": "chapt_5_e_tois"
+    },
+    {
+     "greek": "τό",
+     "ref": "Jn 1:4",
+     "gender": "Neuter",
+     "answer": "Nominative Singular",
+     "audio": "chapt_5_e_to"
+    },
+    {
+     "greek": "τῷ",
+     "ref": "Jn 2:14",
+     "gender": "Neuter",
+     "answer": "Dative Singular",
+     "audio": "chapt_5_e_tw"
+    },
+    {
+     "greek": "τά",
+     "ref": "Jn 1:11",
+     "gender": "Neuter",
+     "answer": "Accusative Plural",
+     "audio": "chapt_5_e_ta"
+    },
+    {
+     "greek": "τῶν",
+     "ref": "Jn 2:11",
+     "gender": "Neuter",
+     "answer": "Genitive Plural",
+     "audio": "chapt_5_e_twn"
+    },
+    {
+     "greek": "τοῦ",
+     "ref": "Jn 1:7",
+     "gender": "Neuter",
+     "answer": "Genitive Singular",
+     "audio": "chapt_5_e_tou"
+    },
+    {
+     "greek": "τό",
+     "ref": "Jn 1:12",
+     "gender": "Neuter",
+     "answer": "Accusative Singular",
+     "audio": "chapt_5_e_to"
+    },
+    {
+     "greek": "τά",
+     "ref": "Jn 3:19",
+     "gender": "Neuter",
+     "answer": "Nominative Plural",
+     "audio": "chapt_5_e_ta"
+    }
+   ],
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Gender",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "articleParadigm"
+   },
+   "scored": true,
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   }
+  },
+  {
+   "id": "c5_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptFrom": {
+    "lexicon": "lemmas",
+    "show": "greek",
+    "audio": "pronounceButton"
+   },
+   "options": "glossShortPool",
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   }
+  },
+  {
+   "id": "c5_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "promptFrom": {
+    "lexicon": "lemmas",
+    "show": "glossShort"
+   },
+   "options": "greekPool",
+   "optionsAreGreek": true,
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
+   }
+  },
+  {
+   "id": "c5_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "all",
+    "of God",
+    "and",
+    "sinned",
+    "fall short",
+    "the (fem)",
+    "for",
+    "the (masc)",
+    "of glory"
+   ],
+   "items": [
+    {
+     "greek": "πάντες",
+     "answer": "all",
+     "audio": "chapt_5_e_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "answer": "for",
+     "audio": "chapt_5_e_sm2"
+    },
+    {
+     "greek": "ἥμαρτον",
+     "answer": "sinned",
+     "audio": "chapt_5_e_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "answer": "and",
+     "audio": "chapt_5_e_sm4"
+    },
+    {
+     "greek": "ὑστεροῦνται",
+     "answer": "fall short",
+     "audio": "chapt_5_e_sm5"
+    },
+    {
+     "greek": "τῆς",
+     "answer": "the (fem)",
+     "audio": "chapt_5_e_sm6"
+    },
+    {
+     "greek": "δόξης",
+     "answer": "of glory",
+     "audio": "chapt_5_e_sm7"
+    },
+    {
+     "greek": "τοῦ",
+     "answer": "the (masc)",
+     "audio": "chapt_5_e_sm8"
+    },
+    {
+     "greek": "θεοῦ",
+     "answer": "of God",
+     "audio": "chapt_5_e_sm9"
+    }
+   ],
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "scored": true,
+   "answerPolicy": {
+    "attemptsPerItem": 1,
+    "advanceClass": "autoBoth"
+   }
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c5_ex_noun_speller",
+   "type": "spell",
+   "title": "First Declension Noun Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "gloss",
+   "promptLabel": "English Word",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "gloss": "to an hour",
+     "greek": "ὥρᾳ",
+     "audio": "chapt_5_e_hwra"
+    },
+    {
+     "gloss": "hours (nom.)",
+     "greek": "ὧραι",
+     "audio": "chapt_5_e_hwrai"
+    },
+    {
+     "gloss": "hours (acc.)",
+     "greek": "ὥρας",
+     "audio": "chapt_5_e_hwras"
+    },
+    {
+     "gloss": "of hours",
+     "greek": "ὡρῶν",
+     "audio": "chapt_5_e_hwrwn"
+    },
+    {
+     "gloss": "hour (nom.)",
+     "greek": "ὥρα",
+     "audio": "chapt_5_e_hwra"
+    },
+    {
+     "gloss": "hour (acc.)",
+     "greek": "ὥραν",
+     "audio": "chapt_5_e_hwran"
+    },
+    {
+     "gloss": "to hours",
+     "greek": "ὥραις",
+     "audio": "chapt_5_e_hwrais"
+    },
+    {
+     "gloss": "of an hour",
+     "greek": "ὥρας",
+     "audio": "chapt_5_e_hwras"
+    },
+    {
+     "gloss": "to a writing",
+     "greek": "γραφῇ",
+     "audio": "chapt_5_e_graphn"
+    },
+    {
+     "gloss": "writings (nom.)",
+     "greek": "γραφαί",
+     "audio": "chapt_5_e_grapai"
+    },
+    {
+     "gloss": "writings (acc.)",
+     "greek": "γραφάς",
+     "audio": "chapt_5_e_grapas"
+    },
+    {
+     "gloss": "a writing (nom.)",
+     "greek": "γραφή",
+     "audio": "chapt_5_e_graphn"
+    },
+    {
+     "gloss": "of a writing",
+     "greek": "γραφῆς",
+     "audio": "chapt_5_e_grapns"
+    },
+    {
+     "gloss": "to writings",
+     "greek": "γραφαῖς",
+     "audio": "chapt_5_e_graais"
+    },
+    {
+     "gloss": "writing (nom.)",
+     "greek": "γραφή",
+     "audio": "chapt_5_e_graphn"
+    },
+    {
+     "gloss": "of writings",
+     "greek": "γραφῶν",
+     "audio": "chapt_5_e_grapwn"
+    },
+    {
+     "gloss": "prophets (nom.)",
+     "greek": "προφῆται",
+     "audio": "chapt_5_e_propai"
+    },
+    {
+     "gloss": "prophet (acc.)",
+     "greek": "προφήτην",
+     "audio": "chapt_5_e_propnn"
+    },
+    {
+     "gloss": "of prophets",
+     "greek": "προφητῶν",
+     "audio": "chapt_5_e_propwn"
+    },
+    {
+     "gloss": "prophet (nom.)",
+     "greek": "προφήτης",
+     "audio": "chapt_5_e_propns"
+    },
+    {
+     "gloss": "prophets (acc.)",
+     "greek": "προφήτας",
+     "audio": "chapt_5_e_propas"
+    },
+    {
+     "gloss": "of a prophet",
+     "greek": "προφήτου",
+     "audio": "chapt_5_e_propou"
+    },
+    {
+     "gloss": "to a prophet",
+     "greek": "προφήτῃ",
+     "audio": "chapt_5_e_propn"
+    },
+    {
+     "gloss": "to prophets",
+     "greek": "προφήταις",
+     "audio": "chapt_5_e_proais"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Word",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ]
+   }
+  },
+  {
+   "id": "c5_ex_article_speller",
+   "type": "spell",
+   "title": "Definite Article Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "gloss",
+   "promptLabel": "Definite Article Inflection",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "gloss": "acc. sing. masc.",
+     "greek": "τόν",
+     "ref": "Jn 1:1",
+     "audio": "chapt_5_e_ton"
+    },
+    {
+     "gloss": "gen. pl. masc.",
+     "greek": "τῶν",
+     "ref": "Jn 1:4",
+     "audio": "chapt_5_e_twn"
+    },
+    {
+     "gloss": "nom. sing. masc.",
+     "greek": "ὁ",
+     "ref": "Jn 1:1",
+     "audio": "chapt_5_e_ho"
+    },
+    {
+     "gloss": "acc. pl. masc.",
+     "greek": "τούς",
+     "ref": "Jn 1:51",
+     "audio": "chapt_5_e_tous"
+    },
+    {
+     "gloss": "nom. pl. masc.",
+     "greek": "οἱ",
+     "ref": "Jn 1:11",
+     "audio": "chapt_5_e_hoi"
+    },
+    {
+     "gloss": "dat. sing. masc.",
+     "greek": "τῷ",
+     "ref": "Jn 1:10",
+     "audio": "chapt_5_e_tw"
+    },
+    {
+     "gloss": "dat. pl. masc.",
+     "greek": "τοῖς",
+     "ref": "Jn 1:12",
+     "audio": "chapt_5_e_tois"
+    },
+    {
+     "gloss": "gen. sing. masc.",
+     "greek": "τοῦ",
+     "ref": "Jn 1:18",
+     "audio": "chapt_5_e_tou"
+    },
+    {
+     "gloss": "acc. sing. fem.",
+     "greek": "τήν",
+     "ref": "Jn 1:14",
+     "audio": "chapt_5_e_tnn"
+    },
+    {
+     "gloss": "nom. pl. fem.",
+     "greek": "αἱ",
+     "ref": "Jn 5:39",
+     "audio": "chapt_5_e_hai"
+    },
+    {
+     "gloss": "dat. pl. fem.",
+     "greek": "ταῖς",
+     "ref": "Jn 8:24",
+     "audio": "chapt_5_e_tais"
+    },
+    {
+     "gloss": "nom. sing. fem.",
+     "greek": "ἡ",
+     "ref": "Jn 1:4",
+     "audio": "chapt_5_e_hn"
+    },
+    {
+     "gloss": "acc. pl. fem.",
+     "greek": "τάς",
+     "ref": "Jn 4:35",
+     "audio": "chapt_5_e_tas"
+    },
+    {
+     "gloss": "dat. sing. fem.",
+     "greek": "τῇ",
+     "ref": "Jn 1:5",
+     "audio": "chapt_5_e_tn"
+    },
+    {
+     "gloss": "gen. sing. fem.",
+     "greek": "τῆς",
+     "ref": "Jn 1:44",
+     "audio": "chapt_5_e_tns"
+    },
+    {
+     "gloss": "gen. pl. fem.",
+     "greek": "τῶν",
+     "ref": "Mat 1:21",
+     "audio": "chapt_5_e_twn"
+    },
+    {
+     "gloss": "acc. sing. neut.",
+     "greek": "τό",
+     "ref": "Jn 1:4",
+     "audio": "chapt_5_e_to"
+    },
+    {
+     "gloss": "dat. pl. neut.",
+     "greek": "τοῖς",
+     "ref": "Jn 2:23",
+     "audio": "chapt_5_e_tois"
+    },
+    {
+     "gloss": "gen. pl. neut.",
+     "greek": "τῶν",
+     "ref": "Jn 2:11",
+     "audio": "chapt_5_e_twn"
+    },
+    {
+     "gloss": "acc. pl. neut.",
+     "greek": "τά",
+     "ref": "Jn 1:11",
+     "audio": "chapt_5_e_ta"
+    },
+    {
+     "gloss": "dat. sing. neut.",
+     "greek": "τῷ",
+     "ref": "Jn 2:14",
+     "audio": "chapt_5_e_tw"
+    },
+    {
+     "gloss": "gen. sing. neut.",
+     "greek": "τοῦ",
+     "ref": "Jn 1:7",
+     "audio": "chapt_5_e_tou"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "Definite Article Inflection",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ]
+   }
+  },
+  {
+   "id": "c5_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "gloss",
+   "promptLabel": "English Meaning",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "ref": "agape"
+    },
+    {
+     "ref": "aletheia"
+    },
+    {
+     "ref": "hamartia"
+    },
+    {
+     "ref": "basileia"
+    },
+    {
+     "ref": "graphe"
+    },
+    {
+     "ref": "egeiro"
+    },
+    {
+     "ref": "ekklesia"
+    },
+    {
+     "ref": "ergon"
+    },
+    {
+     "ref": "mathetes"
+    },
+    {
+     "ref": "hora"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ]
+   }
+  },
+  {
+   "id": "c5_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of Rom 3:23 then click \"Check Answer\"",
+   "reference": "Rom 3:23",
+   "answerWords": [
+    "πάντες",
+    "γὰρ",
+    "ἥμαρτον",
+    "καὶ",
+    "ὑστεροῦνται",
+    "τῆς",
+    "δόξης",
+    "τοῦ",
+    "θεοῦ"
+   ],
+   "translation": "All have sinned and fall short of the glory of God",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "majorHint": {
+    "alwaysAvailable": true,
+    "_note": "DEPARTURE D-11."
+   },
+   "audio": "chapt_5_e_rom323",
+   "spellerTilesRef": "chapt_1",
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Major Hint",
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "With Accents"
+    ],
+    "_restart_note": "DEPARTURE D-12."
+   }
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c5_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "lemmas",
+   "showNtFreq": true,
+   "playAll": {
+    "audio": "chapt_5_e_vocl5",
+    "label": "Say Whole List"
+   }
+  },
+  {
+   "id": "c5_qr_nouns",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Nouns:  First Declension",
+   "chartTitle": "Review Nouns:  First Declension",
+   "paradigm": {
+    "title": "Review Nouns:  First Declension",
+    "lemma": {
+     "greek": "γραφή",
+     "gloss": "writing, Scripture",
+     "audio": "chapt_5_e_graphn"
+    },
+    "columns": [
+     "Singular",
+     "Plural"
+    ],
+    "rows": [
+     {
+      "label": "Nom.",
+      "cells": [
+       {
+        "greek": "γραφή",
+        "gloss": "a writing",
+        "audio": "chapt_5_e_graphn"
+       },
+       {
+        "greek": "γραφαί",
+        "gloss": "writings (subject)",
+        "audio": "chapt_5_e_grapai"
+       }
+      ]
+     },
+     {
+      "label": "Gen.",
+      "cells": [
+       {
+        "greek": "γραφῆς",
+        "gloss": "of a writing",
+        "audio": "chapt_5_e_grapns"
+       },
+       {
+        "greek": "γραφῶν",
+        "gloss": "of writings (possessive)",
+        "audio": "chapt_5_e_grapwn"
+       }
+      ]
+     },
+     {
+      "label": "Dat.",
+      "cells": [
+       {
+        "greek": "γραφῇ",
+        "gloss": "to a writing",
+        "audio": "chapt_5_e_graphn"
+       },
+       {
+        "greek": "γραφαῖς",
+        "gloss": "to writings (indirect obj)",
+        "audio": "chapt_5_e_graais"
+       }
+      ]
+     },
+     {
+      "label": "Acc.",
+      "cells": [
+       {
+        "greek": "γραφήν",
+        "gloss": "a writing",
+        "audio": "chapt_5_e_grapnn"
+       },
+       {
+        "greek": "γραφάς",
+        "gloss": "writings (direct obj)",
+        "audio": "chapt_5_e_grapas"
+       }
+      ]
+     },
+     {
+      "label": "Voc.",
+      "cells": [
+       {
+        "greek": "γραφή",
+        "gloss": "writing",
+        "audio": "chapt_5_e_graphn"
+       },
+       {
+        "greek": "γραφαί",
+        "gloss": "writings (direct address)",
+        "audio": "chapt_5_e_grapai"
+       }
+      ]
+     }
+    ],
+    "showGlosses": true,
+    "sayWhole": {
+     "label": "Say Whole Paradigm",
+     "audio": "chapt_5_e_grapar"
+    }
+   }
+  },
+  {
+   "id": "c5_qr_article",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Definite Article",
+   "chartTitle": "Review Definite Article",
+   "paradigm": {
+    "title": "Review Definite Article",
+    "columns": [
+     "Masc.",
+     "Fem.",
+     "Neut.",
+     "Masc.",
+     "Fem.",
+     "Neut."
+    ],
+    "columnAudio": [
+     "chapt_5_e_artms",
+     "chapt_5_e_artfs",
+     "chapt_5_e_artns",
+     "chapt_5_e_artmp",
+     "chapt_5_e_artfp",
+     "chapt_5_e_artnp"
+    ],
+    "columnGroups": [
+     {
+      "label": "Singular",
+      "span": 3
+     },
+     {
+      "label": "Plural",
+      "span": 3
+     }
+    ],
+    "rows": [
+     {
+      "label": "Nom.",
+      "cells": [
+       {
+        "greek": "ὁ",
+        "audio": "chapt_5_e_ho"
+       },
+       {
+        "greek": "ἡ",
+        "audio": "chapt_5_e_hn"
+       },
+       {
+        "greek": "τό",
+        "audio": "chapt_5_e_to"
+       },
+       {
+        "greek": "οἱ",
+        "audio": "chapt_5_e_hoi"
+       },
+       {
+        "greek": "αἱ",
+        "audio": "chapt_5_e_hai"
+       },
+       {
+        "greek": "τά",
+        "audio": "chapt_5_e_ta"
+       }
+      ]
+     },
+     {
+      "label": "Gen.",
+      "cells": [
+       {
+        "greek": "τοῦ",
+        "audio": "chapt_5_e_tou"
+       },
+       {
+        "greek": "τῆς",
+        "audio": "chapt_5_e_tns"
+       },
+       {
+        "greek": "τοῦ",
+        "audio": "chapt_5_e_tou"
+       },
+       {
+        "greek": "τῶν",
+        "audio": "chapt_5_e_twn"
+       },
+       {
+        "greek": "τῶν",
+        "audio": "chapt_5_e_twn"
+       },
+       {
+        "greek": "τῶν",
+        "audio": "chapt_5_e_twn"
+       }
+      ]
+     },
+     {
+      "label": "Dat.",
+      "cells": [
+       {
+        "greek": "τῷ",
+        "audio": "chapt_5_e_tw"
+       },
+       {
+        "greek": "τῇ",
+        "audio": "chapt_5_e_tn"
+       },
+       {
+        "greek": "τῷ",
+        "audio": "chapt_5_e_tw"
+       },
+       {
+        "greek": "τοῖς",
+        "audio": "chapt_5_e_tois"
+       },
+       {
+        "greek": "ταῖς",
+        "audio": "chapt_5_e_tais"
+       },
+       {
+        "greek": "τοῖς",
+        "audio": "chapt_5_e_tois"
+       }
+      ]
+     },
+     {
+      "label": "Acc.",
+      "cells": [
+       {
+        "greek": "τόν",
+        "audio": "chapt_5_e_ton"
+       },
+       {
+        "greek": "τήν",
+        "audio": "chapt_5_e_tnn"
+       },
+       {
+        "greek": "τό",
+        "audio": "chapt_5_e_to"
+       },
+       {
+        "greek": "τούς",
+        "audio": "chapt_5_e_tous"
+       },
+       {
+        "greek": "τάς",
+        "audio": "chapt_5_e_tas"
+       },
+       {
+        "greek": "τά",
+        "audio": "chapt_5_e_ta"
+       }
+      ]
+     }
+    ],
+    "showGlosses": false,
+    "sayWholeEach": [
+     {
+      "label": "Say Whole Paradigm",
+      "audio": "chapt_5_e_artsg"
+     },
+     {
+      "label": "Say Whole Paradigm",
+      "audio": "chapt_5_e_artpl"
+     }
+    ],
+    "_layout_note": "The Quick Review chart shows Singular AND Plural side by side in one six-column table with a Say Whole Paradigm button under each half -- NOT the Singular/Plural toggle used on the Learn page."
+   }
+  },
+  {
+   "id": "c5_qr_scripture_146a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6a",
+   "reference": "John 14:6a",
+   "words": [
+    {
+     "greek": "λέγει",
+     "gloss": "he said",
+     "audio": "chapt_5_c_sm1"
+    },
+    {
+     "greek": "αὐτῷ",
+     "gloss": "to him",
+     "audio": "chapt_5_c_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": null,
+     "audio": "chapt_5_c_sm3"
+    },
+    {
+     "greek": "Ἰησοῦς,",
+     "gloss": "Jesus",
+     "audio": "chapt_5_c_sm4"
+    },
+    {
+     "greek": "Ἐγώ",
+     "gloss": "I",
+     "audio": "chapt_5_c_sm5"
+    },
+    {
+     "greek": "εἰμι",
+     "gloss": "I am",
+     "audio": "chapt_5_c_sm6"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_5_c_sm7"
+    },
+    {
+     "greek": "ὁδὸς",
+     "gloss": "way",
+     "audio": "chapt_5_c_sm8"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_5_c_sm9"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_5_c_sm10"
+    },
+    {
+     "greek": "ἀλήθεια",
+     "gloss": "truth",
+     "audio": "chapt_5_c_sm11"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_5_c_sm12"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_5_c_sm13"
+    },
+    {
+     "greek": "ζωή·",
+     "gloss": "life:",
+     "audio": "chapt_5_c_sm14"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_5_c_sm14_6"
+   }
+  },
+  {
+   "id": "c5_qr_scripture_146b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6b",
+   "reference": "John 14:6b",
+   "words": [
+    {
+     "greek": "οὐδεὶς",
+     "gloss": "no one",
+     "audio": "chapt_5_d_sm1"
+    },
+    {
+     "greek": "ἔρχεται",
+     "gloss": "comes",
+     "audio": "chapt_5_d_sm2"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "to",
+     "audio": "chapt_5_d_sm3"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_5_d_sm4"
+    },
+    {
+     "greek": "πατέρα",
+     "gloss": "father",
+     "audio": "chapt_5_d_sm5"
+    },
+    {
+     "greek": "εἰ",
+     "gloss": "except",
+     "audio": "chapt_5_d_sm6"
+    },
+    {
+     "greek": "μὴ",
+     "gloss": null,
+     "audio": "chapt_5_d_sm7"
+    },
+    {
+     "greek": "δι᾽",
+     "gloss": "through",
+     "audio": "chapt_5_d_sm8"
+    },
+    {
+     "greek": "ἐμοῦ.",
+     "gloss": "me",
+     "audio": "chapt_5_d_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_5_d_jn146b"
+   }
+  },
+  {
+   "id": "c5_qr_scripture_rom",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 3:23",
+   "reference": "Rom 3:23",
+   "words": [
+    {
+     "greek": "πάντες",
+     "gloss": "all",
+     "audio": "chapt_5_e_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_5_e_sm2"
+    },
+    {
+     "greek": "ἥμαρτον",
+     "gloss": "have sinned",
+     "audio": "chapt_5_e_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_5_e_sm4"
+    },
+    {
+     "greek": "ὑστεροῦνται",
+     "gloss": "fall short",
+     "audio": "chapt_5_e_sm5"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "of the",
+     "audio": "chapt_5_e_sm6"
+    },
+    {
+     "greek": "δόξης",
+     "gloss": "glory",
+     "audio": "chapt_5_e_sm7"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of [the]",
+     "audio": "chapt_5_e_sm8"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_5_e_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_5_e_rom323"
+   }
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Great!",
+   "Congratulations",
+   "Perfect!",
+   "Right On!",
+   "Fantastic!",
+   "Yes"
+  ],
+  "incorrect": [
+   "Try again",
+   "Swing and a miss",
+   "Repetition will get it",
+   "Not quite!"
+  ]
+ },
+ "sequence": [
+  "c5_learn_objectives",
+  "c5_learn_english_concepts",
+  "c5_learn_nouns",
+  "c5_drill_first_decl_noun",
+  "c5_drill_declining",
+  "c5_ex_noun_speller",
+  "c5_learn_article",
+  "c5_drill_article",
+  "c5_ex_article_speller",
+  "c5_learn_vocab",
+  "c5_drill_vocab_gk_en",
+  "c5_drill_vocab_en_gk",
+  "c5_ex_vocab_speller",
+  "c5_learn_scripture",
+  "c5_drill_scripture_memory",
+  "c5_ex_scripture_speller",
+  "c5_qr_vocab",
+  "c5_qr_nouns",
+  "c5_qr_article",
+  "c5_qr_scripture_146a",
+  "c5_qr_scripture_146b",
+  "c5_qr_scripture_rom",
+  "c5_learn_bibliography"
+ ],
+ "_sequence_note": "Rail order from ch5railwalk.pdf (Nathanael, 2026-08-03).",
+ "_audioVerify": "Three chapter-5 clips could not be assigned from their filenames alone and need a listen-check on device: e_graphn (wired to both γραφή and γραφῇ, which are homophones -- the same doubling ὥρα/ὥρᾳ gets with e_hwra), e_grapax (UNREFERENCED; most likely a second take of γραφάς), and e_aleia (UNREFERENCED; most likely a second take of ἀλήθεια, for which e_alntia is wired). Three whole-gender clips (e_artmas, e_artfem, e_artneu) and the whole-paradigm e_artpar have no surface in the rail walk -- the article charts offer Say Whole List (e_artsg / e_artpl) and per-column headers (e_artms/fs/ns, e_artmp/fp/np), which the data wires. Leave the four unwired unless the build finds a surface."
+}

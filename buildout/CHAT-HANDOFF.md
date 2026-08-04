@@ -230,6 +230,11 @@ files carry only what a new chat needs.
    lexicon-chapt01.json and intro.json STAY as the schema reference.
    Rolling set becomes: 5E-SPEC1.md + chapt-04.json +
    lexicon-chapt04.json + chapt-05.json + lexicon-chapt05.json.
+   Standing note: every data file is fetchable from
+   raw.githubusercontent.com, so a chat that needs a rotated-out file
+   can pull it on demand. Project files are a WORKING SET, not an
+   archive, and should stay small enough that the whole set is worth
+   reading at the start of a session.
 
 ## Harvested 5A/5B/5C lessons (settled — do not re-derive)
 
@@ -427,25 +432,29 @@ files carry only what a new chat needs.
 
 ## Immediate queue (as of 2026-08-03 — 5E-SPEC1 issued)
 
-1. **Fable: deliver the 5E data files** — `src/data/chapt-04.json`,
-   `lexicon-chapt04.json`, `chapt-05.json`, `lexicon-chapt05.json` and
-   `scripts/assemble_ch45.py`. The extraction pass is DONE and
-   validated against the rail walks; the assembly ships in the same
-   conversation as 5E-SPEC1. **5E-SPEC1 must not go to an implementer
-   until those five files are committed** — the spec says they are
-   delivered with it.
-   NOTE: `GreekTutor.iso` persists only inside one conversation. If
-   the 5E assembly moves to a new chat, re-upload it there.
-2. **Nathanael: commit the 5E round-1 documents** — buildout/5E-SPEC1.md
-   plus the updated CHAT-HANDOFF.md, PHASE5-PLAN.md, DIVERGENCE-LOG.md
-   and DRILL-MATRIX.md — then upload the committed copies to project
-   files immediately.
-3. **Implementer runs 5E-SPEC1.md** with ch4railwalk.pdf and
-   ch5railwalk.pdf attached, per the visual verification process.
-   Deliverables: 5E-SPEC1-RESULTS.md + 5E-SPEC1-BUILD.md (the BUILD
-   doc MUST carry the complete git diff), then VERIFY-5E.md.
-4. ONBOARD-SOL.md is now in buildout/ (done). **AGENTS.md still needs
-   repointing** from the absolute local Mac path to repo-relative.
+1. **Nathanael: commit the complete 5E round-1 package**, then upload
+   the changed copies to project files immediately. The package:
+   buildout/5E-SPEC1.md, 5E-RESULTS-TEMPLATE.md, 5E-BUILD-TEMPLATE.md,
+   5E-VISUAL-CHECKLIST.md, 5E-EXTRACTION-MAP.md; src/data/chapt-04.json,
+   lexicon-chapt04.json, chapt-05.json, lexicon-chapt05.json;
+   scripts/assemble_ch4.py, assemble_ch5.py, tbk_fields.py; and the
+   updated CHAT-HANDOFF.md, PHASE5-PLAN.md, DIVERGENCE-LOG.md,
+   DRILL-MATRIX.md.
+2. **Run 5E-SPEC1 as a DUAL round** — Sol in Codex and Opus in Claude
+   Code, in parallel, each in its own separate copy of the repo from
+   the same starting commit (Nathanael's existing isolation setup; no
+   branches, no pushes). Both get ch4railwalk.pdf and ch5railwalk.pdf
+   attached. Each returns
+   5E-SPEC1-RESULTS-{ME}.md, 5E-SPEC1-BUILD-{ME}.md (complete git diff
+   embedded, non-negotiable) and 5E-VISUAL-CHECKLIST-{ME}.md.
+3. **Grading chat** reads both BUILD diffs against GRADER-PROMPT.md,
+   scores, and may emit an XPATCH. The WINNER then applies the XPATCH
+   and authors VERIFY-5E.md.
+4. AGENTS.md is DONE — it already points at `buildout/ONBOARD-SOL.md`
+   and carries no absolute paths. Item closed 2026-08-03.
+   NOTE for any future chapter assembly: `GreekTutor.iso` persists only
+   inside one conversation, so re-upload it in whichever chat does the
+   extraction.
 5. Data debt at the next chapt-01/intro regen: residual "--" in
    chapt-01.json.learn[7].content[1].text, intro.json.learn[0]
    .content[1].text and .content[3].text, and lexicon-chapt01.json

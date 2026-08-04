@@ -1,10 +1,18 @@
 # Greek Tutor PWA — Implementation Plan v3
 
-Post-phase-4 revision (2026-07-19). Supersedes PLAN.md v2. PROJECT.md
-remains the decisions log for source-material facts, naming contracts,
-and the data model; CHAT-HANDOFF.md carries live state and the ten
-standing directives; PIPELINE-INSIGHTS-v2.md (project knowledge) is the
-extraction-pipeline reference. This document is the phase roadmap.
+Post-phase-4 revision (2026-07-19); status snapshot refreshed
+2026-08-03. Supersedes PLAN.md v2. PROJECT.md remains the decisions log
+for source-material facts, naming contracts, and the data model;
+CHAT-HANDOFF.md carries live state and the ten standing directives;
+PIPELINE-INSIGHTS-v3.md is the extraction-pipeline reference. This
+document is the PHASE ROADMAP and is the only place phases 6 and 7 are
+described.
+
+SCOPE NOTE (2026-08-03): phase 5 is now planned at cohort granularity
+in PHASE5-PLAN.md, which supersedes the phase-5 section below for
+sequencing, cohort membership and the mode registry. Read the section
+here for the shape of phase 5; read PHASE5-PLAN.md for its state.
+Everything outside phase 5 in this document is still current.
 
 ## Status snapshot
 
@@ -37,11 +45,16 @@ to WebKit Cache Storage bring-up scaling with entry count — a platform
 floor, not app code). Full record: buildout/HANDOFF-4.md sections 1-9.5.
 Code state: commit ba5d0d4.
 
-CURRENT — Phase 4.5 (below).
+DONE — Phase 4.5 (audio storage migration to IndexedDB).
+
+CURRENT — Phase 5 (content scale-out). Chapters 1, 2 and 3 shipped and
+device-verified; cohort 5E (chapters 4 and 5) is open with its data
+assembled and 5E-SPEC1 issued as a dual-implementer round. Live state
+lives in CHAT-HANDOFF.md, cohort detail in PHASE5-PLAN.md.
 
 ## Phase plan
 
-### Phase 4.5 — Audio storage migration to IndexedDB  [CURRENT]
+### Phase 4.5 — Audio storage migration to IndexedDB  [DONE]
 Decision (2026-07-19): audio bytes move from Cache Storage to IndexedDB
 Blobs; Cache Storage returns to app-shell-only. Rationale: device
 measurement proved the cold-start hang (~4s) occurs entirely before app
@@ -55,7 +68,7 @@ drains existing installs' legacy cache. Work order: buildout/4.5-SPEC.md
 -> HANDOFF-4.5.md. Gate: cold-start metric with the full library well
 under 1s after migration; airplane-mode pass; exact stable file counts.
 
-### Phase 5 — Content scale-out (chapters 2-28 + VOCAB/JOHN/REV books)
+### Phase 5 — Content scale-out (chapters 2-28 + VOCAB/JOHN/REV books)  [CURRENT — see PHASE5-PLAN.md]
   - Per-chapter protocol per PIPELINE-INSIGHTS-v2.md §VIII: extract TBK
     -> dump strings -> inventory audio -> convert via font-map (flagging
     unknown codes) -> assemble JSON against the Chapter 1 schema with
