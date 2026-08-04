@@ -23,9 +23,11 @@
   // vocabulary spellers); {gloss, greek, audio} carries it inline (chapter 3's
   // verb speller, whose 27 inflected forms are not lexicon lemmas).
   const words = (activity.items || []).map(it => {
-    if (it.greek) return { ref: null, greek: it.greek, gloss: it.gloss || '', audio: it.audio || null };
+    if (it.greek) return {
+      ref: it.ref || null, greek: it.greek, gloss: it.gloss || '', audio: it.audio || null
+    };
     const l = getLemma(it.ref, chapter.id, it.pool) || {};
-    return { ref: it.ref, greek: l.greek || '', gloss: l.gloss || '', audio: l.audio || null };
+    return { ref: null, greek: l.greek || '', gloss: l.gloss || '', audio: l.audio || null };
   });
 
   // The tile keyboard is a shared component reading the shared
@@ -129,8 +131,10 @@
 
 <div class="card speller">
   <div class="spell-panes">
-    <div class="flash-pane"><div class="label">English Meaning</div>
-      <div class="value" style="font-size:1.2rem">{word ? word.gloss : ''}</div></div>
+    <div class="flash-pane"><div class="label">{activity.promptLabel || 'English Meaning'}</div>
+      <div class="value" style="font-size:1.2rem">{word ? word.gloss : ''}</div>
+      {#if word && word.ref}<div class="spell-prompt-ref">{word.ref}</div>{/if}
+    </div>
     <SpellerField
       state={buffer}
       label="Spell Greek Word"

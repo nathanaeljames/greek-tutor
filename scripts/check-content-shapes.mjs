@@ -43,6 +43,166 @@ function walk(node, path, visit) {
   for (const [key, value] of Object.entries(node)) walk(value, `${path}.${key}`, visit);
 }
 
+// Paradigms may be a single chart (chapter 3 and the simple chapter 4/5
+// charts) or a wrapper carrying charts[] (chapter 4/5 switches). Validate the
+// same table contract in both forms, including the Meanings table nested under
+// a noun chart. Keeping this normalization here prevents a charts[] wrapper
+// from being mistaken for a columnless chart while still checking every
+// concrete chart it contains.
+function validateParadigmTable(table, path, { allowExtras = true } = {}) {
+  if (!table || typeof table !== 'object' || Array.isArray(table)) {
+    problems.push(`${path}: paradigm table is not an object.`);
+    return;
+  }
+
+  const columns = Array.isArray(table.columns) ? table.columns : [];
+  if (!columns.length) problems.push(`${path}: paradigm has no columns.`);
+
+  const rows = Array.isArray(table.rows) ? table.rows : [];
+  if (!rows.length) problems.push(`${path}: paradigm has no rows.`);
+  rows.forEach((row, index) => {
+    if (!row || typeof row !== 'object' || Array.isArray(row)) {
+      problems.push(`${path}.rows[${index}]: paradigm row is not an object.`);
+      return;
+    }
+    if (!String(row.label ?? row.person ?? '').trim()) {
+      problems.push(`${path}.rows[${index}]: paradigm row has no label or person.`);
+    }
+    if (!Array.isArray(row.cells) || row.cells.length !== columns.length) {
+      problems.push(`${path}.rows[${index}]: paradigm row has ${(row.cells || []).length} cells, expected ${columns.length}.`);
+    }
+  });
+
+  if (table.columnAudio != null) {
+    if (!Array.isArray(table.columnAudio) || table.columnAudio.length !== columns.length) {
+      problems.push(`${path}.columnAudio: expected ${columns.length} entries, got ${Array.isArray(table.columnAudio) ? table.columnAudio.length : 'a non-array'}.`);
+    } else {
+      table.columnAudio.forEach((audio, index) => {
+        if (typeof audio !== 'string' || !audio.trim()) {
+          problems.push(`${path}.columnAudio[${index}]: expected a non-empty audio id.`);
+        }
+      });
+    }
+  }
+
+  if (table.columnGroups != null) {
+    if (!Array.isArray(table.columnGroups) || !table.columnGroups.length) {
+      problems.push(`${path}.columnGroups: expected a non-empty array.`);
+    } else {
+      let spanTotal = 0;
+      table.columnGroups.forEach((group, index) => {
+        if (!group || typeof group !== 'object' || Array.isArray(group)) {
+          problems.push(`${path}.columnGroups[${index}]: expected an object.`);
+          return;
+        }
+        if (typeof group.label !== 'string' || !group.label.trim()) {
+          problems.push(`${path}.columnGroups[${index}].label: expected a non-empty string.`);
+        }
+        if (!Number.isInteger(group.span) || group.span < 1) {
+          problems.push(`${path}.columnGroups[${index}].span: expected a positive integer.`);
+        } else {
+          spanTotal += group.span;
+        }
+      });
+      if (spanTotal !== columns.length) {
+        problems.push(`${path}.columnGroups: spans total ${spanTotal}, expected ${columns.length} columns.`);
+      }
+    }
+  }
+
+  if (table.sayWholeEach != null) {
+    if (!Array.isArray(table.sayWholeEach) || !table.sayWholeEach.length) {
+      problems.push(`${path}.sayWholeEach: expected a non-empty array.`);
+    } else {
+      table.sayWholeEach.forEach((action, index) => {
+        if (!action || typeof action !== 'object' || Array.isArray(action)
+            || typeof action.audio !== 'string' || !action.audio.trim()) {
+          problems.push(`${path}.sayWholeEach[${index}]: expected an action with a non-empty audio id.`);
+        }
+      });
+      if (!Array.isArray(table.columnGroups)) {
+        problems.push(`${path}.sayWholeEach: columnGroups are required to align the actions.`);
+      } else if (table.sayWholeEach.length !== table.columnGroups.length) {
+        problems.push(`${path}.sayWholeEach: has ${table.sayWholeEach.length} actions, expected ${table.columnGroups.length} to match columnGroups.`);
+      }
+    }
+  }
+
+  if (table.note != null && (typeof table.note !== 'string' || !table.note.trim())) {
+    problems.push(`${path}.note: expected a non-empty string.`);
+  }
+
+  if (allowExtras && table.endings) {
+    (table.endings.rows || []).forEach((row, index) => {
+      if (!Array.isArray(row) || row.length !== columns.length * 2) {
+        problems.push(`${path}.endings.rows[${index}]: expected ${columns.length * 2} entries (ending + gloss per column).`);
+      }
+    });
+  }
+}
+
+function validateMeanings(meanings, path) {
+  validateParadigmTable(meanings, path, { allowExtras: false });
+  if (!meanings || typeof meanings !== 'object' || Array.isArray(meanings)) return;
+  if (meanings.legend != null) {
+    if (!Array.isArray(meanings.legend) || !meanings.legend.length) {
+      problems.push(`${path}.legend: expected a non-empty array.`);
+    } else {
+      meanings.legend.forEach((entry, index) => {
+        if (!entry || typeof entry !== 'object' || Array.isArray(entry)
+            || typeof entry.label !== 'string' || !entry.label.trim()
+            || typeof entry.text !== 'string' || !entry.text.trim()) {
+          problems.push(`${path}.legend[${index}]: expected non-empty label and text strings.`);
+        }
+      });
+    }
+  }
+  if (meanings.closing != null && (typeof meanings.closing !== 'string' || !meanings.closing.trim())) {
+    problems.push(`${path}.closing: expected a non-empty string.`);
+  }
+}
+
+function validateParadigm(paradigm, path) {
+  if (!paradigm || typeof paradigm !== 'object' || Array.isArray(paradigm)) {
+    problems.push(`${path}: paradigm is not an object.`);
+    return;
+  }
+
+  if (paradigm.charts != null) {
+    if (!Array.isArray(paradigm.charts) || paradigm.charts.length < 2) {
+      problems.push(`${path}.charts: expected at least two charts.`);
+      return;
+    }
+    if (!['moreBack', 'named'].includes(paradigm.switch)) {
+      problems.push(`${path}.switch: expected "moreBack" or "named" for charts[].`);
+    }
+    const names = new Set();
+    paradigm.charts.forEach((chart, index) => {
+      const chartPath = `${path}.charts[${index}]`;
+      if (!chart || typeof chart !== 'object' || Array.isArray(chart)) {
+        problems.push(`${chartPath}: expected a chart object.`);
+        return;
+      }
+      if (typeof chart.name !== 'string' || !chart.name.trim()) {
+        problems.push(`${chartPath}.name: expected a non-empty chart name.`);
+      } else if (names.has(chart.name)) {
+        problems.push(`${chartPath}.name: duplicate chart name "${chart.name}".`);
+      } else {
+        names.add(chart.name);
+      }
+      validateParadigmTable(chart, chartPath);
+      if (chart.meanings != null) validateMeanings(chart.meanings, `${chartPath}.meanings`);
+    });
+    return;
+  }
+
+  if (paradigm.switch != null) {
+    problems.push(`${path}.switch: only valid with charts[].`);
+  }
+  validateParadigmTable(paradigm, path);
+  if (paradigm.meanings != null) validateMeanings(paradigm.meanings, `${path}.meanings`);
+}
+
 const files = readdirSync(DATA).filter(name => /^chapt-\d+\.json$/.test(name));
 if (!files.length) {
   console.error('FAIL: no chapter data files found under src/data.');
@@ -92,23 +252,11 @@ for (const file of files) {
       problems.push(`${path}: contentAudio mode "${block.mode}" has no ContentAudio branch.`);
     }
     // A paradigm chart's rows must line up with its declared columns, or cells
-    // land under the wrong number heading.
+    // land under the wrong number heading. Chapter 4/5 may wrap multiple full
+    // charts in charts[]; validate each chart and each nested Meanings table.
     if (block.type === 'paradigm' || (block.paradigm && block.mode === 'paradigmChart')) {
       const chart = block.type === 'paradigm' ? block : block.paradigm;
-      const columns = (chart.columns || []).length;
-      if (!columns) problems.push(`${path}: paradigm has no columns.`);
-      (chart.rows || []).forEach((row, index) => {
-        if (!Array.isArray(row.cells) || row.cells.length !== columns) {
-          problems.push(`${path}.rows[${index}]: paradigm row has ${(row.cells || []).length} cells, expected ${columns}.`);
-        }
-      });
-      if (chart.endings) {
-        (chart.endings.rows || []).forEach((row, index) => {
-          if (!Array.isArray(row) || row.length !== columns * 2) {
-            problems.push(`${path}.endings.rows[${index}]: expected ${columns * 2} entries (ending + gloss per column).`);
-          }
-        });
-      }
+      validateParadigm(chart, block.type === 'paradigm' ? path : `${path}.paradigm`);
     }
     // spellVerse grades word by word, so the answer must actually be words.
     if (block.type === 'spellVerse') {

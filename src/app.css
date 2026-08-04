@@ -102,17 +102,20 @@ button { font: inherit; cursor: pointer; }
 .grid.options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .grid.options.wide { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .grid.options.single { grid-template-columns: minmax(0, 1fr); }
-/* D-19, amended by 5D-SPEC2 §5. A GREEK option pool is two-up at phone width
-   and four-up from the iPad breakpoint. Ten polytonic words in four columns
-   need ~33px more than a 320px screen has, and overflow-x is hidden app-wide,
-   so the longest words were being clipped in silence rather than wrapping —
+/* D-26: these two columns are Singular/Plural paradigm columns, not a
+   responsive option pool. Keep the explicit data-authored exception visible
+   in computed styles at every breakpoint. */
+.grid.options.paradigm2col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* D-19, amended by 5D-SPEC2 §5. A vocabulary option pool in either direction
+   is two-up at phone width and four-up from the iPad breakpoint. Ten Greek
+   forms or long English glosses in four columns become illegible at 320px,
    but an iPad has the room and four-up is the original's arrangement.
    768px is the iPad's portrait CSS width and the wide half of this round's
    320/768 screenshot pair; the app's other breakpoints (560px large phone,
    900px sidebar) are the wrong shape for this. Single-glyph letter grids are
    `wide` and stay four-up at every width. */
 @media (min-width: 768px) {
-  .grid.options.greek-pool { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .grid.options.vocab-pool { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 .tile { background: var(--card); border: 2px solid transparent; border-radius: 10px;
   padding: 10px 4px; font-size: 1.35rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
@@ -354,6 +357,9 @@ button { font: inherit; cursor: pointer; }
 .rc-list:not(.authored-labels) > li::before { content: counter(rc-item) ")";
   position: absolute; left: -1.9em; width: 1.5em; text-align: right; font-weight: 600; }
 .rc-list.authored-labels { padding-left: 0.75em; }
+.rc-list.unnumbered { padding-left: 0; }
+.rc-list.unnumbered > li { counter-increment: none; }
+.rc-list.unnumbered > li::before { content: none; }
 .rc-lead { text-decoration: underline; font-weight: 600; }
 /* labelStyle "underline" / "plain" (5D-SPEC2 §6): the original's own list-item
    terms. Ink, never --link: blue is reserved for tappable, and these labels
@@ -485,6 +491,9 @@ button { font: inherit; cursor: pointer; }
 .rc-parttext { color: var(--ink); }
 .rc-greekrow { display: grid; grid-template-columns: repeat(var(--greek-cols), minmax(0, 1fr)); gap: 10px;
   align-items: baseline; border-bottom: 1px solid rgba(0,0,0,0.06); padding: 9px 6px; min-width: 0; }
+.rc-greekrows.gloss-only .rc-greekrow { grid-template-columns: minmax(4.5em, 35%) minmax(0, 1fr); }
+.rc-greekrows.english-pairs .rc-greekrow { text-align: center; }
+.rc-english-cell { min-width: 0; overflow-wrap: break-word; }
 .rc-greeklabel { font-weight: 600; overflow-wrap: anywhere; }
 /* Accent Possibilities chart: each row is legended in a trailing unheaded
    column ("Short Ultima" / "Long Ultima") -- English, so it opts out of the
@@ -573,6 +582,14 @@ button { font: inherit; cursor: pointer; }
    why the chart read "but, yet(638)". */
 .rv-freq { color: #8a8472; font-size: 0.9rem; margin-left: 0.35em; }
 .rv-footnote { font-size: 0.85rem; color: #5a5a52; line-height: 1.45; margin-top: 10px; }
+/* The chapter-4/5 original charts split ten lemmas into two five-row columns.
+   Keep the phone readable as one column, then restore that authored column-
+   major order when the 768px evidence width has room. */
+@media (min-width: 768px) {
+  .review-vocab.two-columns { display: grid; grid-auto-flow: column;
+    grid-template-rows: repeat(var(--rv-rows), auto); grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 18px; }
+}
 
 /* ---- Review Letters Quick Chart (4-col matrix, A18: Pronounce col dropped) ---- */
 .letters-matrix { display: flex; flex-direction: column; }
@@ -637,6 +654,9 @@ button { font: inherit; cursor: pointer; }
 .tk-edit { display: flex; gap: 8px; justify-content: center; margin-top: 8px; }
 .spell-answer { text-align: center; margin-top: 12px; font-size: 1.3rem; }
 .spell-answer .label { font-size: 0.75rem; color: var(--teal-dark); font-weight: 700; text-transform: uppercase; margin-right: 8px; }
+.spell-prompt-ref { display: inline-block; margin-top: 8px; border: 1px solid #d8d0b8;
+  border-radius: 999px; padding: 3px 9px; color: var(--teal-dark); font-size: 0.78rem;
+  font-weight: 700; }
 .score-dialog { background: white; border-radius: 10px; padding: 14px 16px; margin-top: 14px;
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06); }
 .score-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.95rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
@@ -665,23 +685,67 @@ button { font: inherit; cursor: pointer; }
 .pg-lemma-greek { font-size: 1.7rem; color: var(--link); }
 .pg-lemma-gloss { color: var(--teal-dark); font-size: 0.95rem; }
 .pg-grid { display: flex; flex-direction: column; }
-.pg-head, .pg-row { display: grid; grid-template-columns: 1.6em repeat(var(--pg-cols, 2), minmax(0, 1fr));
-  gap: 6px; align-items: stretch; }
+.paradigm { --pg-label-col: 1.6em; --pg-gap: 6px; }
+.paradigm.pg-case-labels { --pg-label-col: 3.25em; }
+.paradigm.pg-long-case-labels { --pg-label-col: 4.65em; }
+.paradigm.pg-many-columns { --pg-label-col: 2.8em; --pg-gap: 2px; }
+.pg-head, .pg-row { display: grid; grid-template-columns: var(--pg-label-col) repeat(var(--pg-cols, 2), minmax(0, 1fr));
+  gap: var(--pg-gap); align-items: stretch; }
 .pg-head { padding: 6px 2px; border-bottom: 2px solid rgba(0,0,0,0.1); color: var(--teal-dark);
   font-size: 0.75rem; font-weight: 700; text-transform: uppercase; text-align: center; }
 .pg-head > span { min-width: 0; overflow-wrap: break-word; }
+.pg-group-head { border-bottom-width: 1px; padding-bottom: 3px; }
+.pg-column-group { color: var(--accent-ink); }
+.pg-column { display: flex; align-items: center; justify-content: center; min-width: 0;
+  overflow-wrap: break-word; line-height: 1.2; }
+.pg-column-audio { background: transparent; border: none; padding: 0 2px; color: var(--link);
+  font: inherit; font-weight: inherit; text-transform: inherit; text-align: center; }
 .pg-row { border-bottom: 1px solid rgba(0,0,0,0.06); }
 .pg-person { display: flex; align-items: center; justify-content: flex-start;
   color: var(--teal-dark); font-weight: 700; font-size: 0.9rem; }
+.pg-row-label { overflow-wrap: break-word; line-height: 1.2; }
 .pg-cell { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0;
   background: transparent; border: none; padding: 9px 2px; text-align: center; }
 .pg-cell:active { background: rgba(0,0,0,0.04); border-radius: 8px; }
 .pg-cell:disabled { cursor: default; }
 .pg-greek { font-size: 1.35rem; color: var(--link); overflow-wrap: anywhere; }
+.pg-long-forms { --pg-gap: 4px; }
+.pg-long-forms .pg-greek { font-size: 1.08rem; white-space: nowrap; overflow-wrap: normal; }
 .pg-cell:disabled .pg-greek { color: var(--ink); }
 .pg-gloss { font-size: 0.78rem; line-height: 1.3; color: var(--teal-dark); overflow-wrap: break-word; }
+.pg-many-columns .pg-head { font-size: 0.66rem; }
+.pg-many-columns .pg-person { font-size: 0.78rem; }
+.pg-many-columns .pg-cell { padding: 8px 0; }
+.pg-many-columns .pg-greek { font-size: 0.92rem; white-space: nowrap; overflow-wrap: normal; }
+@media (min-width: 560px) {
+  .pg-long-forms:not(.pg-many-columns) { --pg-gap: 6px; }
+  .pg-long-forms:not(.pg-many-columns) .pg-greek { font-size: 1.35rem; }
+  .pg-many-columns .pg-greek { font-size: 1.25rem; }
+}
+/* A chart's Meanings hotword stays immediately under the grid. Its expanded
+   body is the original's green teaching card, while the blue summary alone is
+   the tap target. */
+.pg-meanings { margin-top: 7px; }
+.pg-meanings-toggle { display: inline-block; color: var(--link); font-weight: 700;
+  text-decoration: underline; cursor: pointer; }
+.pg-meanings-toggle::marker { color: var(--link); }
+.pg-meanings-card { margin-top: 8px; padding: 10px; border-radius: 10px;
+  background: #dff6df; border: 1px solid #b8dfb9; }
+.pg-meanings-card .paradigm { margin: 0; }
+.pg-legend { display: flex; flex-direction: column; gap: 3px; margin-top: 10px;
+  font-size: 0.82rem; line-height: 1.35; }
+.pg-legend-row { display: grid; grid-template-columns: minmax(5.8em, 34%) minmax(0, 1fr);
+  gap: 8px; }
+.pg-legend-label { color: var(--accent-ink); font-weight: 700; }
+.pg-legend-text { min-width: 0; overflow-wrap: break-word; }
+.pg-closing { margin-top: 10px; font-size: 0.85rem; line-height: 1.4; }
+.pg-note { margin-top: 8px; color: var(--ink); font-size: 0.88rem; line-height: 1.4; }
 /* The original keeps Say Whole Paradigm / Endings INSIDE the chart frame. */
 .pg-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
+.pg-actions.pg-actions-each { display: grid;
+  grid-template-columns: repeat(var(--pg-action-count), minmax(0, 1fr));
+  margin-left: var(--pg-label-col); }
+.pg-actions-each .btn { min-width: 0; padding-left: 6px; padding-right: 6px; }
 
 /* Endings popup: the same two number columns, ending over its English. The
    endings are bare morphemes with no clips, so they stay INK — the tappable

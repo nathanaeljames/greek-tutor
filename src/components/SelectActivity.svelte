@@ -46,7 +46,7 @@
   let pronounceEach = true;
   let finished = false;
   let showHint = false;
-  let showGloss = false;
+  let shownReveals = [];
   let showScore = false;
   let advanceTimer = null;
   const attemptedItems = new Set();
@@ -60,7 +60,7 @@
     optionClass = built.optionClass || '';
     qIndex = 0; attempts = 0; correct = 0;
     feedback = ''; picked = null; answered = false; finished = false;
-    showGloss = false;
+    shownReveals = [];
     attemptedItems.clear();
     pronounceEach = activity.ui?.defaults?.pronounceEach ?? true;
     // D1: the score line starts HIDDEN on every scored surface. ui.liveScore
@@ -77,26 +77,23 @@
   // as the fallback.
   $: currentOptions = (current && current.options) || options;
   $: authoredOptions = !!activity.optionsPerItem || Array.isArray(activity.optionValues);
-  // Four-up unless the labels are GREEK WORDS. The English-to-Greek vocabulary
-  // drills put ten polytonic words in a four-column grid, which needs ~33px
-  // more than a 320px screen has; overflow-x is hidden app-wide, so the ends
-  // of the longest words were being cut off in silence rather than wrapping
-  // (measured on ch1, ch2 and ch3 — it predates this cohort and the same
-  // expression is in the shipped build). The 24-letter grids keep their four
-  // columns because their generator declares optionClass 'wide' explicitly:
-  // single glyphs, no width problem.
-  $: wideOptions = optionClass === 'wide' || (!authoredOptions && !greekOptions);
+  // Only explicitly wide grids stay four-up at phone width. Vocabulary pools
+  // in BOTH directions follow D-19 (two-up below 768px, four-up from 768px):
+  // long English glosses can split just as badly as long Greek forms. The
+  // 24-letter generators declare `wide`, so their single glyphs stay four-up.
+  $: wideOptions = optionClass === 'wide';
   // optionGroups ([3,3]) splits the option list into visually separated
   // stacks, as the original's Parsing drill does. Groups stack vertically at
   // phone width and sit side by side once there is room (the six full parsing
   // labels are 46 characters — two columns inside 320px would be unreadable).
   $: optionGroups = optionClass === 'grouped' ? sliceGroups(currentOptions, activity.optionGroups) : null;
   $: greekOptions = !!activity.optionsAreGreek || activity.options === 'greek' || activity.generator?.options === 'lower';
-  // The two-up Greek pool (D-19): the ch1/ch2/ch3 English-to-Greek vocabulary
-  // grids. Four-up from the iPad breakpoint, where the width exists — the CSS
-  // owns the breakpoint, this only says which grid it applies to. Excludes the
-  // single-column and grouped layouts, which are stacked for label length.
-  $: greekPool = greekOptions && !wideOptions && optionClass !== 'single';
+  // The responsive vocabulary pool (D-19), in either direction. A vocabulary
+  // select is the non-generator, non-authored branch in buildSelectQuestions.
+  // Explicit pedagogical layouts remain outside this responsive class.
+  $: vocabularyPool = !activity.generator && !authoredOptions && !wideOptions
+    && optionClass !== 'single'
+    && optionClass !== 'paradigm2col';
   // A LONG Greek prompt cannot have the 3rem type a single letter gets. At
   // 320px, πιστεύουσι sets 268px of glyph into 260px of card and the tail is
   // lost in silence (overflow-x is hidden app-wide). Declared here rather than
@@ -106,7 +103,15 @@
   $: uiButtons = activity.ui?.buttons || [];
   $: showPronounce = !authoredOptions || uiButtons.includes('Pronounce');
   $: showStepper = uiButtons.includes('Previous') || uiButtons.includes('Next');
-  $: showTranslate = uiButtons.includes('Translate');
+  // Generic button-driven prompt reveals. Older chapter-3 data predates the
+  // revealButtons contract, so its authored Translate control normalizes to
+  // the same shape; chapter 4+ declares the field explicitly (Translate or
+  // Gender), and later chapters can add another without a component branch.
+  $: revealButtons = (activity.revealButtons && activity.revealButtons.length)
+    ? activity.revealButtons
+    : (uiButtons.includes('Translate') ? [{ label: 'Translate', field: 'translate' }] : []);
+  $: hintBeforeReveal = revealButtons.length > 0 && uiButtons.includes('Hint')
+    && uiButtons.indexOf('Hint') < Math.min(...revealButtons.map(button => uiButtons.indexOf(button.label)));
   $: showPronounceEach = !authoredOptions || !!activity.ui?.checkboxes?.includes('Pronounce Each Drill');
   // A hint either carries its own blocks (chapter 2's inline charts, rendered
   // below the card) or NAMES a chart the chapter already draws — chapter 3's
@@ -118,7 +123,7 @@
   // Grouped button block (the original stacks them two-up) once there are more
   // than the chapter-1 pair.
   $: groupedControls = 1 + (showPronounce ? 1 : 0) + (showStepper ? 2 : 0)
-    + (showTranslate ? 1 : 0) + (showHintButton ? 1 : 0) > 3;
+    + revealButtons.length + (showHintButton ? 1 : 0) > 3;
   // Timing and advance semantics: declared by the data, resolved centrally.
   $: advancePolicy = resolveAdvance(activity.answerPolicy);
   $: oneAttempt = advancePolicy.oneAttempt;
@@ -223,9 +228,24 @@
   // one-attempt drills) is a set — answering an item twice neither
   // double-counts completion nor un-completes it.
   function restore() {
-    showGloss = false;
+    shownReveals = [];
     picked = null; answered = false; feedback = ''; feedbackKind = '';
   }
+
+  function revealValue(field) {
+    if (!current || !field) return null;
+    return (current.reveals && current.reveals[field])
+      || current[field]
+      || (field === 'translate' ? current.gloss : null);
+  }
+
+  function toggleReveal(field) {
+    shownReveals = shownReveals.includes(field)
+      ? shownReveals.filter(value => value !== field)
+      : [...shownReveals, field];
+  }
+
+  $: glossRevealed = !!current && shownReveals.some(field => revealValue(field) === current.gloss);
 
   function move(delta) {
     clearTimeout(advanceTimer);
@@ -286,13 +306,17 @@
     {#if current.pending}
       <div class="pending-verification" role="status">This activity item is pending content verification.</div>
     {:else}
-      <!-- Translate: the original's gloss line under the word, on demand. -->
-      {#if showGloss && (current.translate || current.gloss)}<div class="gloss-line">{current.translate || current.gloss}</div>{/if}
+      <!-- Button-driven reveal output is ink, never tappable blue. -->
+      {#each revealButtons as reveal}
+        {#if shownReveals.includes(reveal.field) && revealValue(reveal.field)}
+          <div class="gloss-line" data-reveal={reveal.field}>{revealValue(reveal.field)}</div>
+        {/if}
+      {/each}
       <!-- Reveal on a finalized item: the gloss, and the properly accented
            form the Accent Rule drill's misaccented prompt should have had. -->
       {#if answered && (current.gloss || current.correctForm)}
         <div class="reveal-row">
-          {#if current.gloss && !showGloss}<span class="reveal-gloss">{current.gloss}</span>{/if}
+          {#if current.gloss && !glossRevealed}<span class="reveal-gloss">{current.gloss}</span>{/if}
           {#if current.correctForm}<span class="reveal-form greek">{current.correctForm}</span>{/if}
         </div>
       {/if}
@@ -317,7 +341,8 @@
           {/each}
         </div>
       {:else}
-        <div class="grid options" class:wide={wideOptions} class:single={optionClass === 'single'} class:greek-pool={greekPool}>
+        <div class="grid options" class:wide={wideOptions} class:single={optionClass === 'single'}
+             class:paradigm2col={optionClass === 'paradigm2col'} class:vocab-pool={vocabularyPool}>
           {#each currentOptions as opt}
             <button
               class="tile small"
@@ -357,10 +382,13 @@
         {@const say = current.promptAudio || current.answerAudio}
         <button class="btn" disabled={!say} on:click={() => say && play(say)}>Pronounce</button>
       {/if}
-      {#if showTranslate}
-        <button class="btn secondary" disabled={!(current.translate || current.gloss)} on:click={() => (showGloss = !showGloss)}>Translate</button>
+      {#if showHintButton && hintBeforeReveal}
+        <button class="btn secondary" on:click={() => (showHint = !showHint)}>Hint</button>
       {/if}
-      {#if showHintButton}
+      {#each revealButtons as reveal}
+        <button class="btn secondary" disabled={!revealValue(reveal.field)} on:click={() => toggleReveal(reveal.field)}>{reveal.label}</button>
+      {/each}
+      {#if showHintButton && !hintBeforeReveal}
         <button class="btn secondary" on:click={() => (showHint = !showHint)}>Hint</button>
       {/if}
       <button class="btn secondary" on:click={() => (showScore = !showScore)}>Score</button>
@@ -381,7 +409,7 @@
   <!-- The original's Hint POPUP: the chapter's paradigm chart over the drill. -->
   <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
     <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
-      <Paradigm paradigm={hintChart} title={hintChart.title} />
+      <Paradigm paradigm={hintChart} title={hintChart.title || hintChart.charts?.[0]?.title || null} />
       <div class="modal-actions">
         <!-- svelte-ignore a11y-autofocus -->
         <button class="btn" autofocus on:click={() => (showHint = false)}>Close</button>

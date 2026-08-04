@@ -7,7 +7,7 @@
 // spans; every other surface strips the markers so a marker can never reach
 // the screen as literal text.
 //
-// TWO INLINE SPANS, one syntax:
+// THREE INLINE SPANS, one syntax:
 //   [[u]]…[[/u]]  underline — the original's own emphasis
 //   [[g]]…[[/g]]  dark green — a DESCRIPTIVE TERM sharing a line with the
 //                 example it describes ("Come here. — command", "Terry kicked
@@ -16,27 +16,28 @@
 //                 apart; green is the port's way of doing that, and the colour
 //                 is the ink/dark-green already used for asides — NEVER blue,
 //                 which means tappable and only tappable (directive 8).
-// The two never nest in shipped data, and the splitter is written so a nested
+//   [[i]]…[[/i]]  italic — bibliographic titles emphasized by the original.
+// The spans never nest in shipped data, and the splitter is written so a nested
 // pair would still emit both runs' text rather than swallowing one.
 
-const INLINE = /\[\[([ug])\]\]([\s\S]*?)\[\[\/\1\]\]/g;
-const ANY_MARKER = /\[\[\/?[ug]\]\]/g;
+const INLINE = /\[\[([ugi])\]\]([\s\S]*?)\[\[\/\1\]\]/g;
+const ANY_MARKER = /\[\[\/?[ugi]\]\]/g;
 
-// [{ t, u, g }] segments in source order; u/g mark an underlined/green run.
+// [{ t, u, g, i }] segments in source order; flags mark authored inline runs.
 export function splitUnderline(text) {
   const src = text == null ? '' : String(text);
-  if (!src.includes('[[')) return [{ t: src, u: false, g: false }];
+  if (!src.includes('[[')) return [{ t: src, u: false, g: false, i: false }];
   const parts = [];
   let at = 0;
   INLINE.lastIndex = 0;
   for (let m = INLINE.exec(src); m; m = INLINE.exec(src)) {
-    if (m.index > at) parts.push({ t: src.slice(at, m.index), u: false, g: false });
-    if (m[2]) parts.push({ t: m[2], u: m[1] === 'u', g: m[1] === 'g' });
+    if (m.index > at) parts.push({ t: src.slice(at, m.index), u: false, g: false, i: false });
+    if (m[2]) parts.push({ t: m[2], u: m[1] === 'u', g: m[1] === 'g', i: m[1] === 'i' });
     at = m.index + m[0].length;
   }
-  if (at < src.length) parts.push({ t: src.slice(at), u: false, g: false });
+  if (at < src.length) parts.push({ t: src.slice(at), u: false, g: false, i: false });
   // An unbalanced marker leaves stray text; strip it rather than print it.
-  return parts.map(p => (p.u || p.g ? p : { ...p, t: p.t.replace(ANY_MARKER, '') }));
+  return parts.map(p => (p.u || p.g || p.i ? p : { ...p, t: p.t.replace(ANY_MARKER, '') }));
 }
 
 // ---- Isolated marks in parentheses (5B-SPEC2 B1) ----

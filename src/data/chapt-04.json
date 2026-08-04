@@ -1095,7 +1095,7 @@
      "audio": "chapt_4_d_sm7"
     },
     {
-     "greek": "δι ",
+     "greek": "δι᾽",
      "gloss": "through",
      "audio": "chapt_4_d_sm8"
     },
@@ -1120,10 +1120,10 @@
     {
      "type": "biblist",
      "items": [
-      "Machen, J. Gresham.  New Testament Greek for Beginners (Toronto:  The Macmillan Company, 1923), pp. 23-28.",
-      "Mounce, William D.  Basics of Biblical Greek:  Grammar (Grand Rapids:  Zondervan, 1993), pp. 28-54.",
-      "Summers, Ray and Thomas Sawyer.  Essentials of New Testament Greek (Nashville:  Broadman & Holman, 1995), pp. 15-20.",
-      "Wenham, J. W.   The Elements of New Testament Greek (Cambridge:  Cambridge University Press, 1965), pp. 30-39."
+        "Machen, J. Gresham.  [[i]]New Testament Greek for Beginners[[/i]] (Toronto:  The Macmillan Company, 1923), pp. 23-28.",
+        "Mounce, William D.  [[i]]Basics of Biblical Greek:  Grammar[[/i]] (Grand Rapids:  Zondervan, 1993), pp. 28-54.",
+        "Summers, Ray and Thomas Sawyer.  [[i]]Essentials of New Testament Greek[[/i]] (Nashville:  Broadman & Holman, 1995), pp. 15-20.",
+        "Wenham, J. W.   [[i]]The Elements of New Testament Greek[[/i]] (Cambridge:  Cambridge University Press, 1965), pp. 30-39."
      ]
     }
    ]
@@ -1136,6 +1136,9 @@
    "mode": "fullOptionGrid",
    "title": "Greek Noun Drill",
    "instructions": "Click on the correct Greek Noun form to replace the underlined English word",
+   "promptFrom": {
+    "show": "sentence"
+   },
    "optionsAreGreek": true,
    "optionsPerItem": 10,
    "optionLayout": "paradigm2col",
@@ -1951,7 +1954,7 @@
      "audio": "chapt_4_d_sm6b"
     },
     {
-     "greek": "δι ",
+     "greek": "δι᾽",
      "answer": "through",
      "audio": "chapt_4_d_sm8"
     },
@@ -2120,7 +2123,7 @@
    "title": "Vocabulary Spelling Exercise",
    "instructions": "Click letters below or use your keyboard to spell it out.",
    "prompt": "gloss",
-   "promptLabel": "English Meaning",
+   "promptLabel": "English Word",
    "accentsOptional": true,
    "spellerTilesRef": "chapt_1",
    "items": [
@@ -2189,7 +2192,7 @@
     "πατέρα",
     "εἰ",
     "μὴ",
-    "δι ",
+    "δι᾽",
     "ἐμοῦ."
    ],
    "translation": "no one comes to the father but by me",
@@ -2226,7 +2229,9 @@
    "mode": "reviewVocab",
    "title": "Review Vocabulary Chart",
    "pool": "lemmas",
+   "columns": 2,
    "showNtFreq": true,
+   "footnote": "The number after the translation is the number of times the word occurs in the New Testament.",
    "playAll": {
     "audio": "chapt_4_d_vocl4",
     "label": "Say Whole List"
@@ -2459,7 +2464,7 @@
      "audio": "chapt_4_d_sm7"
     },
     {
-     "greek": "δι ",
+     "greek": "δι᾽",
      "gloss": "through",
      "audio": "chapt_4_d_sm8"
     },

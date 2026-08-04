@@ -7,7 +7,7 @@
   // modes are pedagogical layouts reconstructed from the original's yellow
   // panels; their per-mode data contracts are documented in HANDOFF-4 §5 (B1).
   import { slide } from 'svelte/transition';
-  import { resolveItems, shuffle } from '../lib/content.js';
+  import { getGreekTapMap, resolveItems, shuffle } from '../lib/content.js';
   import { play } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import RichContent from './RichContent.svelte';
@@ -62,6 +62,9 @@
   let topicIndex = 0;
   $: topics = activity.topics || [];
   $: currentTopic = topics[topicIndex] || null;
+  $: activityGreekTaps = activity.greekTaps === true
+    ? getGreekTapMap(chapter.id)
+    : activity.greekTaps;
 
   // Learn Vocabulary flashcard visibility (A15). Segmented radio: Show Both /
   // Hide Greek / Hide English. A hidden pane blanks until tapped (per-card
@@ -155,7 +158,9 @@
       <RichContent
         blocks={currentTopic.content || []}
         suppressTitle={currentTopic.title}
-        greekTaps={currentTopic.greekTaps || activity.greekTaps} />
+        greekTaps={currentTopic.greekTaps === true
+          ? getGreekTapMap(chapter.id)
+          : (currentTopic.greekTaps || activityGreekTaps)} />
       {#if currentTopic._verify}<div class="pending-verification compact">Some topic details are pending verification.</div>{/if}
     {:else}
       <div class="pending-verification">Topic content pending verification.</div>
@@ -202,7 +207,7 @@
 {:else if mode === 'textPage'}
   {#if activity.content}
     <div class="card">
-      <RichContent blocks={activity.content} greekTaps={activity.greekTaps} />
+      <RichContent blocks={activity.content} greekTaps={activityGreekTaps} />
       {#if activity.playButton}
         <div class="controls">
           <button class="btn" on:click={() => play(activity.playButton.audio)}>▶ {activity.playButton.label}</button>
@@ -385,7 +390,8 @@
   <!-- Review Vocabulary Chart: Greek (tap = lemma audio, blue) + STATIC gloss
        (dark green) + ntFreq. A17/A6: only the Greek word is tappable. -->
   <div class="card">
-    <div class="review-vocab">
+    <div class="review-vocab" class:two-columns={activity.columns === 2}
+         style={`--rv-rows:${Math.ceil(items.length / (activity.columns || 1))}`}>
       {#each items as r}
         <div class="rv-row">
           <button class="rv-greek greek" on:click={() => r.audio && play(r.audio)}>{r.display}</button>

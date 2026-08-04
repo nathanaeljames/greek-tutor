@@ -28,7 +28,11 @@
   // chart. Same principle as dedupeExpanders below: the data is not ours to
   // edit, so the renderer declines to say it twice.
   export let suppressTitle = null;
-  const sameTitle = t => !!t && !!suppressTitle && t.trim() === suppressTitle.trim();
+  // One delivered topic abbreviates Masculine to Masc while its chart spells
+  // the word out. They are the same heading in the original, not two stacked
+  // headings; normalize the authored abbreviation for deduplication only.
+  const titleKey = t => String(t || '').trim().replace(/--Masc$/i, '--Masculine');
+  const sameTitle = t => !!t && !!suppressTitle && titleKey(t) === titleKey(suppressTitle);
 
   // The 6 Accent Rules topic ships the "Chart: Accent Possibilities" expander
   // TWICE, byte-identical (feedback 5: it renders twice on both devices). Data
@@ -178,7 +182,7 @@
       {#if b.preamble}<p class="rc-preamble"><Marked text={b.preamble} /></p>{/if}
       {@const items = listItems(b)}
       {@const selfNum = (() => { const re = /^\(?\d+[.)]/; return items.length > 0 && items.every(it => it.label && re.test(it.label)); })()}
-      <ol class="rc-list" class:authored-labels={selfNum}>
+      <ol class="rc-list" class:authored-labels={selfNum} class:unnumbered={b.numbered === false}>
         {#each items as it}
           {@const itemTaps = it.greekTaps || greekTaps}
           <li>
@@ -251,7 +255,9 @@
       {@const rowLabels = syllableMatrix && hasRowLabels(b)}
       {@const matrixCols = syllableMatrix ? b.columns.length + (rowLabels ? 1 : 0) : 0}
       {@const gridVars = `--greek-cols:${syllableMatrix ? matrixCols : (b.columns || []).length};--greek-datacols:${(b.columns || []).length}`}
-      <div class="rc-greekrows" class:syllable-matrix={syllableMatrix} class:row-labels={rowLabels} class:titled={b.title}>
+      <div class="rc-greekrows" class:syllable-matrix={syllableMatrix} class:row-labels={rowLabels}
+           class:gloss-only={b.layout === 'glossOnly'} class:english-pairs={b.layout === 'englishPairs'}
+           class:titled={b.title}>
         <!-- B5: Review Marks groups its rows under a title ("Breathing:",
              "Punctuation:", "Apostrophe:  ( ᾽ )  elided letters"). The title
              owns its line in the heading green; the rows hang beneath it. -->
@@ -279,6 +285,14 @@
                 {#if rowLabels}<span class="rc-cell rc-rowlabel">{row.label || '\u00a0'}</span>{/if}
               </div>
             {/if}
+          {:else if b.layout === 'englishPairs' && row.parts}
+            <!-- English singular/plural examples share greekRows' ruled table
+                 shell, but their cells are plain strings and never Greek tap
+                 targets. The explicit layout flag keeps this distinct from
+                 the object-form equation rows below. -->
+            <div class="rc-greekrow rc-english-pair" style={`--greek-cols:${row.parts.length}`}>
+              {#each row.parts as part}<span class="rc-english-cell">{part}</span>{/each}
+            </div>
           {:else if row.parts}
             <!-- C6: an equation row (\u03b4\u03b9\u03ac + \u03b1\u1f50\u03c4\u03bf\u1fe6 becomes \u03b4\u03b9\u1fbd \u03b1\u1f50\u03c4\u03bf\u1fe6). Each Greek
                  part is its OWN tap target with its own clip; the connecting

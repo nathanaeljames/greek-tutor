@@ -23,10 +23,28 @@ const check = (name, ok, detail = '') => {
 };
 
 const ch3 = JSON.parse(readFileSync('src/data/chapt-03.json', 'utf8'));
+const ch4 = JSON.parse(readFileSync('src/data/chapt-04.json', 'utf8'));
+const ch5 = JSON.parse(readFileSync('src/data/chapt-05.json', 'utf8'));
 const verse = (ch3.exercise.find(a => a.type === 'spellVerse').answerWords || []).join(' ');
 const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '').normalize('NFC');
+const normalizeText = value => String(value ?? '').replace(/\s+/g, ' ').trim().normalize('NFC');
 
-const browser = await chromium.launch();
+// playwright-core does not install a browser. Prefer its configured binary,
+// then use an installed stable browser without hard-coding a machine path.
+async function launchBrowser() {
+  const explicit = process.env.PLAYWRIGHT_EXECUTABLE_PATH;
+  if (explicit) return chromium.launch({ executablePath: explicit });
+  try {
+    return await chromium.launch();
+  } catch (original) {
+    for (const channel of ['chrome', 'msedge']) {
+      try { return await chromium.launch({ channel }); } catch { /* keep looking */ }
+    }
+    throw original;
+  }
+}
+
+const browser = await launchBrowser();
 const context = await browser.newContext({ viewport: { width: 390, height: 900 } });
 const page = await context.newPage();
 
@@ -196,7 +214,9 @@ for (const [label, input, accents, expect] of cases) {
 for (const [label, hash] of [
   ['ch2 Accent Rule', '#/activity/chapt_2/c2_drill_accent_rule'],
   ['ch3 Verb Translating', '#/activity/chapt_3/c3_drill_verb_translating'],
-  ['ch3 Vocabulary: Greek to English', '#/activity/chapt_3/c3_drill_vocab_gk_en']
+  ['ch3 Vocabulary: Greek to English', '#/activity/chapt_3/c3_drill_vocab_gk_en'],
+  ['ch4 Greek Noun', '#/activity/chapt_4/c4_drill_greek_noun'],
+  ['ch5 First Declension Noun', '#/activity/chapt_5/c5_drill_first_decl_noun']
 ]) {
   await go(hash);
   await page.locator('.grid.options .tile, .option-group .tile').first().click();
@@ -237,6 +257,134 @@ for (const [label, hash] of [
   check('§3 revisit resets the item — ch1 Vocabulary Spelling', (await typed()) === '', JSON.stringify(await typed()));
 }
 
+// ---------------------------------------------------------------- 5E §4.2 chart switches
+const activitiesOf = chapter => Object.values(chapter).filter(Array.isArray).flat();
+const activityById = (chapter, id) => activitiesOf(chapter).find(activity => activity && activity.id === id);
+const textHas = (text, value) => text.normalize('NFC').includes(value.normalize('NFC'));
+const gotoTopic = async index => {
+  for (let i = 0; i < index; i++) {
+    await page.getByRole('button', { name: 'Next Topic', exact: true }).click();
+    await page.waitForTimeout(50);
+  }
+};
+
+// Authored select questions are shuffled, so UI assertions identify the
+// visible item by its rendered prompt and citation before consulting fields
+// such as answer, translate, or gender.
+async function authoredItemOnScreen(activity) {
+  const visiblePrompt = normalizeText(await page.locator('.card .prompt').first().innerText());
+  const citation = page.locator('.card .prompt-citation');
+  const visibleCitation = await citation.count() ? normalizeText(await citation.innerText()) : '';
+  const promptField = activity.promptFrom && activity.promptFrom.show;
+  const promptFor = item => normalizeText(promptField === 'sentence'
+    ? item.sentence
+    : (activity.promptIsGreek || promptField === 'greek')
+      ? item.greek
+      : (item.prompt != null ? item.prompt : (promptField ? item[promptField] : '')));
+  return activity.items.find(item => promptFor(item) === visiblePrompt
+    && (!visibleCitation || normalizeText(item.ref) === visibleCitation)) || null;
+}
+
+async function checkMoreBack(label, hash, topicIndex, firstLemma, secondLemma) {
+  await go(hash);
+  await gotoTopic(topicIndex);
+  const chart = page.locator('.card .paradigm').first();
+  const initial = await chart.innerText();
+  const more = chart.getByRole('button', { name: 'More', exact: true });
+  check(`5E §4.2 ${label}: first chart offers More`,
+    textHas(initial, firstLemma) && await more.count() === 1,
+    JSON.stringify(initial.replace(/\s+/g, ' ').trim()));
+  check(`5E §4.2 ${label}: sequential Next stays live on chart 1`,
+    !await page.locator('.rail-next').isDisabled());
+
+  await more.click();
+  await page.waitForTimeout(60);
+  const second = await chart.innerText();
+  const back = chart.getByRole('button', { name: 'Back', exact: true });
+  check(`5E §4.2 ${label}: More opens chart 2 and offers Back`,
+    textHas(second, secondLemma) && await back.count() === 1,
+    JSON.stringify(second.replace(/\s+/g, ' ').trim()));
+  check(`5E §4.2 ${label}: sequential Next stays live on chart 2`,
+    !await page.locator('.rail-next').isDisabled());
+
+  await back.click();
+  await page.waitForTimeout(60);
+  check(`5E §4.2 ${label}: Back restores chart 1`, textHas(await chart.innerText(), firstLemma));
+}
+
+await checkMoreBack('ch4 Masculine Declension', '#/activity/chapt_4/c4_learn_nouns', 4, 'λόγος', 'ἄνθρωπος');
+await checkMoreBack('ch5 First Declension--Alpha', '#/activity/chapt_5/c5_learn_nouns', 5, 'ὥρα', 'δόξα');
+
+// The third charts[] surface uses the same mechanism but deliberately names
+// the OTHER chart instead of saying More/Back.
+await go('#/activity/chapt_5/c5_learn_article');
+await gotoTopic(2);
+{
+  const chart = page.locator('.card .paradigm').first();
+  const plural = chart.getByRole('button', { name: 'Plural', exact: true });
+  check('5E §4.2 ch5 article: Singular chart offers Plural', await plural.count() === 1,
+    (await chart.innerText()).replace(/\s+/g, ' ').trim());
+  await plural.click();
+  await page.waitForTimeout(60);
+  const singular = chart.getByRole('button', { name: 'Singular', exact: true });
+  check('5E §4.2 ch5 article: Plural chart offers Singular', await singular.count() === 1,
+    (await chart.innerText()).replace(/\s+/g, ' ').trim());
+  check('5E §4.2 ch5 article: sequential Next stays live through the named toggle',
+    !await page.locator('.rail-next').isDisabled());
+  await singular.click();
+  await page.waitForTimeout(60);
+  check('5E §4.2 ch5 article: Singular restores the first chart',
+    await chart.getByRole('button', { name: 'Plural', exact: true }).count() === 1);
+}
+
+async function checkChartRouteReset(label, hash, topicIndex, switchName, restoredName) {
+  await go(hash);
+  await gotoTopic(topicIndex);
+  const chart = page.locator('.card .paradigm').first();
+  await chart.getByRole('button', { name: switchName, exact: true }).click();
+  await page.waitForTimeout(50);
+  await page.locator('.rail-next').click();
+  await page.waitForTimeout(100);
+  await page.locator('.rail-prev').click();
+  await page.waitForTimeout(100);
+  await gotoTopic(topicIndex);
+  const restored = page.locator('.card .paradigm').first();
+  check(`5E §4.2 ${label}: leave and return resets chart 1`,
+    await restored.getByRole('button', { name: restoredName, exact: true }).count() === 1,
+    (await restored.innerText()).replace(/\s+/g, ' ').trim());
+}
+
+await checkChartRouteReset('ch4 Masculine Declension', '#/activity/chapt_4/c4_learn_nouns', 4, 'More', 'More');
+await checkChartRouteReset('ch5 First Declension--Alpha', '#/activity/chapt_5/c5_learn_nouns', 5, 'More', 'More');
+await checkChartRouteReset('ch5 Definite Article', '#/activity/chapt_5/c5_learn_article', 2, 'Plural', 'Plural');
+
+// ---------------------------------------------------------------- 5E §4.5 button-driven reveals
+async function checkReveal(label, chapter, activityId, buttonName, field) {
+  const activity = activityById(chapter, activityId);
+  await go(`#/activity/${chapter === ch4 ? 'chapt_4' : 'chapt_5'}/${activityId}`);
+  const currentItem = await authoredItemOnScreen(activity);
+  const expected = currentItem ? normalizeText(currentItem[field]) : null;
+  const output = page.locator(`.card [data-reveal="${field}"]`);
+  check(`5E §4.5 ${label}: reveal starts hidden`, await output.count() === 0);
+  await page.locator('.card').getByRole('button', { name: buttonName, exact: true }).click();
+  await output.waitFor({ state: 'visible', timeout: 1000 }).catch(() => {});
+  const rendered = await output.count() === 1;
+  const actual = rendered ? (await output.innerText()).replace(/\s+/g, ' ').trim() : '';
+  const citationBox = await page.locator('.card .prompt-citation').boundingBox();
+  const outputBox = rendered ? await output.boundingBox() : null;
+  check(`5E §4.5 ${label}: ${buttonName} prints the authored ${field} under the reference`,
+    rendered && expected !== null && normalizeText(actual) === expected
+      && !!citationBox && !!outputBox && outputBox.y >= citationBox.y + citationBox.height - 1,
+    `${JSON.stringify(actual)} after ${JSON.stringify(currentItem?.ref || 'unmatched item')}`);
+  await stepper('Next').click();
+  await page.waitForTimeout(50);
+  check(`5E §4.5 ${label}: reveal clears on item change`, await output.count() === 0);
+}
+
+await checkReveal('ch4 Declining Noun', ch4, 'c4_drill_declining', 'Translate', 'translate');
+await checkReveal('ch5 Declining Noun', ch5, 'c5_drill_declining', 'Translate', 'translate');
+await checkReveal('ch5 Definite Article', ch5, 'c5_drill_article', 'Gender', 'gender');
+
 // ---------------------------------------------------------------- §3 timing
 // The two constants, measured through the UI rather than read out of the
 // module: the item must still be on screen at ~55% of its deadline and gone by
@@ -274,23 +422,105 @@ async function measureAdvance(label, hash, wantCorrect) {
 // deterministic CORRECT measurement, and it is a chapter-2 surface, which is
 // where the 4000ms data literals used to live.
 await measureAdvance('ch2 Syllable Counting', '#/activity/chapt_2/c2_drill_syllable_counting', true);
-// Scripture Memory is the app's only `autoBoth` surface — the only place
-// ADVANCE_INCORRECT_MS is ever used.
+// Keep chapter 3's original `autoBoth` timing assertion as a regression; 5E's
+// new autoBoth surfaces are measured deterministically below.
 await measureAdvance('ch3 Scripture Memory Drill', '#/activity/chapt_3/c3_drill_scripture_memory', false);
+
+// Cohort 5E's one-attempt drills cannot be probed by guessing repeatedly: a
+// wrong first tap locks the grid. Select the authored first-item answer (or a
+// known non-answer) from the delivered data, but still measure the transition
+// solely through the rendered UI. Report the observed milliseconds.
+async function measureAuthoredAdvance(label, chapter, chapterId, activityId, wantCorrect, expectedMs) {
+  const activity = activityById(chapter, activityId);
+  await go(`#/activity/${chapterId}/${activityId}`);
+  const before = await itemNumber();
+  const tiles = page.locator('.grid.options .tile, .option-group .tile');
+  const labels = (await tiles.allInnerTexts()).map(normalizeText);
+  const currentItem = await authoredItemOnScreen(activity);
+  if (!currentItem) {
+    check(`5E timing ${label}`, false,
+      'could not match the rendered prompt/reference to authored data');
+    return;
+  }
+  const answer = normalizeText(currentItem.answer);
+  const index = wantCorrect ? labels.findIndex(text => text === answer) : labels.findIndex(text => text !== answer);
+  if (index < 0) {
+    check(`5E §8 timing ${label}`, false, `could not find a ${wantCorrect ? 'correct' : 'wrong'} rendered option for ${JSON.stringify(answer)}`);
+    return;
+  }
+
+  const answeredAt = Date.now();
+  await tiles.nth(index).click();
+  await page.waitForTimeout(70);
+  const kind = await feedbackKind();
+  const earlyAt = Math.round(expectedMs * 0.55);
+  await page.waitForTimeout(Math.max(0, earlyAt - (Date.now() - answeredAt)));
+  const early = await itemNumber();
+  let late = early;
+  while (late === before && Date.now() - answeredAt < expectedMs * 1.5) {
+    await page.waitForTimeout(40);
+    late = await itemNumber();
+  }
+  const elapsed = Date.now() - answeredAt;
+  const expectedKind = wantCorrect ? 'ok' : 'bad';
+  check(`5E §8 timing ${label}: ${wantCorrect ? 'correct' : 'incorrect'} advances on ${expectedMs}ms`,
+    kind === expectedKind && early === before && late !== before
+      && elapsed >= expectedMs * 0.8 && elapsed <= expectedMs * 1.5,
+    `item ${before} -> ${early} at ${earlyAt}ms -> ${late} at ${elapsed}ms; feedback ${kind}`);
+}
+
+await measureAuthoredAdvance('ch4 Greek Noun (manualOnIncorrect)', ch4, 'chapt_4', 'c4_drill_greek_noun', true, CORRECT_MS);
+await measureAuthoredAdvance('ch4 Scripture Memory (autoBoth)', ch4, 'chapt_4', 'c4_drill_scripture_memory', false, INCORRECT_MS);
+await measureAuthoredAdvance('ch5 First Declension Noun (manualOnIncorrect)', ch5, 'chapt_5', 'c5_drill_first_decl_noun', true, CORRECT_MS);
+await measureAuthoredAdvance('ch5 Scripture Memory (autoBoth)', ch5, 'chapt_5', 'c5_drill_scripture_memory', false, INCORRECT_MS);
 
 // ---------------------------------------------------------------- §5 grids
 for (const [label, hash] of [
+  ['ch1 Vocabulary: Greek to English', '#/activity/chapt_1/c1_drill_vocab_gk_en'],
   ['ch1 Vocabulary: English to Greek', '#/activity/chapt_1/c1_drill_vocab_en_gk'],
+  ['ch2 Vocabulary: Greek to English', '#/activity/chapt_2/c2_drill_vocab_gk_en'],
   ['ch2 Vocabulary: English to Greek', '#/activity/chapt_2/c2_drill_vocab_en_gk'],
-  ['ch3 Vocabulary: English to Greek', '#/activity/chapt_3/c3_drill_vocab_en_gk']
+  ['ch3 Vocabulary: Greek to English', '#/activity/chapt_3/c3_drill_vocab_gk_en'],
+  ['ch3 Vocabulary: English to Greek', '#/activity/chapt_3/c3_drill_vocab_en_gk'],
+  ['ch4 Vocabulary: Greek to English', '#/activity/chapt_4/c4_drill_vocab_gk_en'],
+  ['ch4 Vocabulary: English to Greek', '#/activity/chapt_4/c4_drill_vocab_en_gk'],
+  ['ch5 Vocabulary: Greek to English', '#/activity/chapt_5/c5_drill_vocab_gk_en'],
+  ['ch5 Vocabulary: English to Greek', '#/activity/chapt_5/c5_drill_vocab_en_gk']
 ]) {
   for (const [width, want] of [[320, 2], [768, 4]]) {
     await page.setViewportSize({ width, height: 900 });
     await go(hash);
     const cols = await page.locator('.grid.options').first()
       .evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length);
-    check(`§5 Greek option grid is ${want}-up at ${width}px — ${label}`, cols === want, `${cols} columns`);
+    check(`§5 vocabulary option grid is ${want}-up at ${width}px — ${label}`, cols === want, `${cols} columns`);
   }
+}
+
+// D-26: these option grids ARE paradigms, so singular/plural stay paired in
+// two columns even at the iPad breakpoint. This is intentionally the opposite
+// of the vocabulary rule above.
+for (const [label, hash] of [
+  ['ch4 Greek Noun', '#/activity/chapt_4/c4_drill_greek_noun'],
+  ['ch4 Declining Noun', '#/activity/chapt_4/c4_drill_declining'],
+  ['ch5 Declining Noun', '#/activity/chapt_5/c5_drill_declining'],
+  ['ch5 Definite Article', '#/activity/chapt_5/c5_drill_article']
+]) {
+  for (const width of [320, 768]) {
+    await page.setViewportSize({ width, height: 900 });
+    await go(hash);
+    const cols = await page.locator('.grid.options').first()
+      .evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length);
+    check(`5E D-26 paradigm option grid stays two-up at ${width}px — ${label}`,
+      cols === 2, `${cols} columns`);
+  }
+}
+
+for (const width of [320, 768]) {
+  await page.setViewportSize({ width, height: 900 });
+  await go('#/activity/chapt_5/c5_drill_first_decl_noun');
+  const cols = await page.locator('.grid.options').first()
+    .evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length);
+  check(`5E ch5 First Declension Noun grid stays single-column at ${width}px`, cols === 1, `${cols} columns`);
 }
 await page.setViewportSize({ width: 390, height: 900 });
 
@@ -313,7 +543,7 @@ check('§5 Parsing Drill divider is dark green',
   divider.top === GREEN || divider.left === GREEN, JSON.stringify(divider));
 
 // ---------------------------------------------------------------- §5 objectives
-for (const chapterId of ['chapt_1', 'chapt_2', 'chapt_3']) {
+for (const chapterId of ['chapt_1', 'chapt_2', 'chapt_3', 'chapt_4', 'chapt_5']) {
   const data = JSON.parse(readFileSync(`src/data/chapt-0${chapterId.split('_')[1]}.json`, 'utf8'));
   const objectives = (data.learn || []).find(a => a.mode === 'objectivesPage');
   if (!objectives) { check(`§5 ${chapterId} objectives use "1. 2. 3."`, false, 'no objectivesPage'); continue; }

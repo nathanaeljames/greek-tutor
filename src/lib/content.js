@@ -134,6 +134,24 @@ export function getLemma(ref, chapterId, pool) {
   return null;
 }
 
+// A teaching page may opt into every audio-backed Greek form in its chapter
+// with greekTaps:true. Build that map from the already-loaded chapter lexicon;
+// this is a synchronous in-memory lookup, never an app-load store scan. Longer
+// forms come first so a phrase (for example "ὁ λόγος") claims its full
+// standalone match before either word can claim only part of it.
+export function getGreekTapMap(chapterId) {
+  const lex = registry[chapterId] && registry[chapterId].lexicon;
+  if (!lex) return {};
+  const entries = [];
+  for (const bucket of LEMMA_BUCKETS) {
+    for (const lemma of Object.values(lex[bucket] || {})) {
+      if (lemma && lemma.greek && lemma.audio) entries.push([lemma.greek, lemma.audio]);
+    }
+  }
+  entries.sort((a, b) => b[0].length - a[0].length);
+  return Object.fromEntries(entries);
+}
+
 // Reading People, Places and Letters pools (personalNames/placeNames/letterNames)
 // from a chapter's lexicon. Pass the chapter id so multi-chapter loads resolve
 // the RIGHT lexicon (reading-list keys repeat across chapters); falls back to
@@ -224,6 +242,8 @@ export function getNextChapter(chapterId) {
 
 // Resolve an activity's items into a uniform [{display, secondary, audio, meta}]
 export function resolveItems(chapter, activity) {
+  const vocabDisplay = lemma => ((activity.mode === 'flashcard' || activity.mode === 'reviewVocab')
+    && lemma.lexicalForm) || lemma.greek;
   const src = activity.itemsFrom;
   if (src && src.startsWith('alphabet.letters')) {
     return chapter.alphabet.letters.map(l => ({
@@ -262,7 +282,7 @@ export function resolveItems(chapter, activity) {
       if (item.ref) {
         const lemma = getLemma(item.ref, chapter.id, item.pool);
         return lemma ? {
-          display: lemma.greek, secondary: stripMarkup(lemma.gloss), audio: lemma.audio,
+          display: vocabDisplay(lemma), secondary: stripMarkup(lemma.gloss), audio: lemma.audio,
           meta: { ...lemma, ref: item.ref }
         } : { display: item.ref, secondary: '(missing lemma)', audio: null, meta: {} };
       }
@@ -276,7 +296,7 @@ export function resolveItems(chapter, activity) {
   // untouched.
   if (activity.pool || (activity.promptFrom && activity.promptFrom.lexicon)) {
     return lemmaPool(chapter, activity).map(lemma => ({
-      display: lemma.greek, secondary: stripMarkup(lemma.gloss), audio: lemma.audio, meta: lemma
+      display: vocabDisplay(lemma), secondary: stripMarkup(lemma.gloss), audio: lemma.audio, meta: lemma
     }));
   }
   return [];
@@ -370,6 +390,12 @@ export function buildSelectQuestions(chapter, activity) {
           : (item.prompt != null ? item.prompt : (promptField ? item[promptField] : undefined));
       const needsUnderline = promptField === 'sentence' && !item.underline;
       const itemOptions = item.optionValues || item.options;
+      const reveals = {};
+      for (const button of activity.revealButtons || []) {
+        if (button && button.field && item[button.field] != null) {
+          reveals[button.field] = stripMarkup(item[button.field]);
+        }
+      }
       return {
         prompt: stripMarkup(prompt) || '',
         promptAudio: promptIsGreek ? (item.promptAudio || item.audio || (lemma && lemma.audio) || null) : null,
@@ -393,6 +419,7 @@ export function buildSelectQuestions(chapter, activity) {
         // from `gloss`, which chapter 2's one-attempt drills reveal on their
         // own once an item is answered — a translation is shown on request.
         translate: stripMarkup(item.translate) || null,
+        reveals,
         correctForm: item.correctForm || null,
         redMarkCluster: item.redMarkCluster || null,
         pending: !prompt || item.answer == null || needsUnderline
@@ -434,6 +461,8 @@ export function buildSelectQuestions(chapter, activity) {
 //   ''       the two-column default: ch2's mark and part-of-speech grids,
 //            ch3's 2x3 verb translations and 2x5 Scripture Memory grid.
 function optionClassFor(activity, activityOptions, questions) {
+  if (activity.optionLayout === 'single') return 'single';
+  if (activity.optionLayout === 'paradigm2col') return 'paradigm2col';
   if (Array.isArray(activity.optionGroups) && activity.optionGroups.length) return 'grouped';
   if (activity.optionsPerItem && activity.optionsAreGreek) return 'single';
   const all = activityOptions.length
@@ -452,11 +481,30 @@ function optionClassFor(activity, activityOptions, questions) {
 export function resolveHintRef(chapter, ref) {
   if (!chapter || !ref) return null;
   let found = null;
+  const nestedParadigm = node => {
+    let chart = null;
+    const scan = value => {
+      if (chart || !value) return;
+      if (Array.isArray(value)) { value.forEach(scan); return; }
+      if (typeof value !== 'object') return;
+      if (value.type === 'paradigm') { chart = value; return; }
+      for (const child of Object.values(value)) scan(child);
+    };
+    scan(node);
+    return chart;
+  };
   const walk = node => {
     if (found || !node) return;
     if (Array.isArray(node)) { node.forEach(walk); return; }
     if (typeof node !== 'object') return;
     if (node.type === ref) { found = node; return; }
+    // Chapter 4+ drills point at the authored TOPIC which owns their paradigm,
+    // not at a globally unique block type. Resolve the topic generically and
+    // return its nested paradigm; no activity id enters the renderer contract.
+    if (node.id === ref) {
+      found = nestedParadigm(node);
+      if (found) return;
+    }
     for (const key of Object.keys(node)) walk(node[key]);
   };
   for (const section of SECTIONS) walk(chapter[section]);
