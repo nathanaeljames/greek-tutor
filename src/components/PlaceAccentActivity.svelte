@@ -6,11 +6,13 @@
   // the form sits by the checkbox row, as in the original.
   //
   // ANSWER POLICY. Check Answer finalizes the item either way and reveals
-  // answerForm. The class is `manualCorrectAutoIncorrect` (5E-SPEC2 §1, from
-  // the DOSBox pass): a correct placement WAITS for Next, a wrong one
-  // auto-advances on the longer wait. AUDIO is `afterGuess` (§2.2) — the word
-  // is spoken after the answer and the next word waits for the clip to end.
-  // Completion = all items ATTEMPTED.
+  // answerForm. The class is `autoBoth` (5E-SPEC3 §1): a correct placement
+  // auto-advances on 2000ms like every correct answer in the app (rule B1a), a
+  // wrong one auto-advances on the longer wait. AUDIO is `afterGuess` (§2.2) —
+  // the word is spoken after the answer and the next word waits for the clip
+  // to end. Completion = all items ATTEMPTED. 5E-SPEC2 shipped this as
+  // `manualCorrectAutoIncorrect`, waiting for Next on a correct placement;
+  // that class is withdrawn (D-28).
   import { onDestroy } from 'svelte';
   import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
   import { randomFeedback } from '../lib/content.js';
@@ -56,7 +58,9 @@
   $: oneAttempt = advancePolicy.oneAttempt;
   $: audioTiming = activity.audioTiming || 'afterGuess';
   $: revealed = answered && oneAttempt;
-  // §5.5: manualCorrectAutoIncorrect waits on a CORRECT answer, so say so.
+  // §B4: say so on the outcomes that WAIT. `autoBoth` has none — both paths
+  // move by themselves — so this renders nothing today and would start
+  // rendering by itself if the class were ever reassigned.
   $: awaitingNext = answered && waitsForNext(advancePolicy, answeredCorrect);
   // ROOT DISPLAY (5B-SPEC4 D2). Every item shows a Greek word in the header --
   // VERIFY3 item 3 found six that showed only a gloss. Those six are the ones
@@ -194,7 +198,8 @@
     {#if showAnswer || revealed}
       <div class="exercise-answer"><span>Answer</span><span class="greek">{word.answerForm}</span></div>
     {/if}
-    <!-- §5.5: a correct placement waits for Next; say so. -->
+    <!-- §B4: the message appears on exactly the outcomes that WAIT. `autoBoth`
+         has none, so this renders nothing today. -->
     {#if awaitingNext}<div class="await-next" role="status">Click Next to continue</div>{/if}
   {/if}
 

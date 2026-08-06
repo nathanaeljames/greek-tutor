@@ -7,15 +7,32 @@
 // right, does the layout read well, does the clip say the right word).
 //
 //   npm run preview            # in another shell
-//   node scripts/ui-behavior.mjs
+//   node scripts/ui-behavior.mjs [--shots=DIR]
 //
 // Everything here drives the SHIPPED UI — tiles, keys, buttons — never a
 // component internal. If it passes here it passes because the app does it.
+//
+// --shots=DIR captures the ANSWERED state of every surface this file exercises
+// on the correct and incorrect paths. ui-walk.mjs screenshots a rail stop as it
+// ARRIVES, so no image in that corpus has ever shown a drill after an answer —
+// which is exactly where every behavior change of cohort 5E lives. These are
+// the states under test, photographed at the moment they are asserted.
 
 import { chromium } from 'playwright-core';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdirSync } from 'node:fs';
 
 const BASE = process.env.BASE || 'http://localhost:4173';
+const SHOTS = (process.argv.find(a => a.startsWith('--shots=')) || '').split('=')[1] || null;
+if (SHOTS) mkdirSync(SHOTS, { recursive: true });
+let shotIndex = 0;
+// Named by the assertion they belong to, numbered so the directory reads in
+// the order the run made them.
+const shot = async name => {
+  if (!SHOTS) return;
+  const file = `${String(++shotIndex).padStart(2, '0')}-${name.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}.png`;
+  await page.screenshot({ path: `${SHOTS}/${file}`, fullPage: true });
+};
+
 const results = [];
 const check = (name, ok, detail = '') => {
   results.push({ name, ok: !!ok, detail });
@@ -36,6 +53,10 @@ const verse = (ch3.exercise.find(a => a.type === 'spellVerse').answerWords || []
 // test below that asserts exactly that.
 const stripAccents = s => s.normalize('NFD').replace(/[̀́͂]/gu, '').normalize('NFC');
 const stripAllMarks = s => s.normalize('NFD').replace(/\p{M}/gu, '').normalize('NFC');
+// The elision marks the shared keyboard cannot type. answer-check.js treats
+// all of them as punctuation, and punctuation is optional (D-18), so a verse
+// typed without one is still a correct answer.
+const stripElision = s => s.replace(/[᾽’ʼ‘]/gu, '');
 const normalizeText = value => String(value ?? '').replace(/\s+/g, ' ').trim().normalize('NFC');
 
 // playwright-core does not install a browser. Prefer its configured binary,
@@ -673,9 +694,10 @@ for (const chapterId of ['chapt_1', 'chapt_2', 'chapt_3', 'chapt_4', 'chapt_5'])
 }
 
 // ================================================================ 5E-SPEC2 §6
-// Everything below is this round's contract: the six advance classes, the
-// afterGuess audio wait, the audio lifecycle, the two withdrawn spelling
-// leniencies, Show Answer, modal reachability and the option-grid census.
+// Everything below is 5E-SPEC2's contract, amended by 5E-SPEC3 §1: the FOUR
+// advance classes, the afterGuess audio wait, the audio lifecycle, the two
+// withdrawn spelling leniencies, Show Answer, modal reachability and the
+// option-grid census.
 await page.setViewportSize({ width: 390, height: 900 });
 
 const CHAPTERS = { chapt_1: ch1, chapt_2: ch2, chapt_3: ch3, chapt_4: ch4, chapt_5: ch5 };
@@ -717,6 +739,7 @@ await measureAuthoredAdvance('ch4 Scripture Memory (autoBoth, correct)', ch4, 'c
   // answer both light up. Assert what is revealed, not how many tiles it took.
   const revealed = (await page.locator('.grid.options .tile.correct').allInnerTexts()).map(normalizeText);
   const said = await awaitNextShown();
+  await shot('manualOnIncorrect INCORRECT (the app\'s only waiting outcome)');
   await page.waitForTimeout(INCORRECT_MS * 1.5);
   check('5E §6.1 manualOnIncorrect: incorrect reveals, waits, and says so',
     await feedbackKind() === 'bad' && revealed.length >= 1
@@ -749,6 +772,7 @@ await measureAuthoredAdvance('ch4 Scripture Memory (autoBoth, correct)', ch4, 'c
   const kind = await feedbackKind();
   const revealed = await page.locator('.grid.options .tile.correct').count();
   const said = await awaitNextShown();
+  await shot('retryUntilRight INCORRECT (open, nothing revealed)');
   await page.waitForTimeout(INCORRECT_MS * 1.4);
   check('5E §6.1 retryUntilRight: incorrect reveals nothing and stays open',
     wrongAt >= 0 && kind === 'bad' && revealed === 0 && !said && await itemNumber() === before,
@@ -764,8 +788,9 @@ await measureAuthoredAdvance('ch4 Scripture Memory (autoBoth, correct)', ch4, 'c
     `${attemptsBefore.trim()} -> ${attemptsAfter.trim()}`);
 }
 
-// `manualCorrectAutoIncorrect` — the ch2 exercises, and the class whose
-// direction is the opposite of the obvious one: CORRECT waits, wrong advances.
+// The two chapter-2 exercises, which 5E-SPEC2 shipped as
+// `manualCorrectAutoIncorrect` (wait for Next on a CORRECT answer) and
+// 5E-SPEC3 §1 restamps as `autoBoth`. Both outcomes now move by themselves.
 const ACCENT_OF = { '́': 'Acute', '̀': 'Grave', '͂': 'Circumflex' };
 function accentAnswer(form) {
   const clusters = [...new Intl.Segmenter('el', { granularity: 'grapheme' }).segment(form)].map(p => p.segment);
@@ -785,13 +810,26 @@ function accentAnswer(form) {
   const before = await exerciseCount();
   await page.locator('.accent-types .chip', { hasText: answer.type }).first().click();
   await page.locator('.accent-slot').nth(answer.index).click();
+  const rightAt = Date.now();
   await stepper('Check Answer').click();
   await page.waitForTimeout(200);
+  // Read the outcome BEFORE the advance clears it: this class moves on by
+  // itself on BOTH paths now, so anything asserted afterwards reads an empty
+  // banner and a different word.
+  const rightKind = await feedbackKind();
   const said = await awaitNextShown();
-  await page.waitForTimeout(CORRECT_MS * 1.6);
-  check('5E §6.1 manualCorrectAutoIncorrect: CORRECT waits for Next and says so',
-    await feedbackKind() === 'ok' && said && await exerciseCount() === before,
-    `message ${said}, item ${before.trim()} -> ${(await exerciseCount()).trim()}`);
+  await shot('ch2 accent placement CORRECT');
+  const earlyRight = await exerciseCount();
+  let lateRight = earlyRight;
+  while (lateRight === before && Date.now() - rightAt < CORRECT_MS * 2.2) {
+    await page.waitForTimeout(50);
+    lateRight = await exerciseCount();
+  }
+  const rightElapsed = Date.now() - rightAt;
+  check('5E §6.1 autoBoth (ch2 Accent Placement): CORRECT auto-advances on 2000ms and never waits',
+    rightKind === 'ok' && !said && earlyRight === before
+      && lateRight !== before && rightElapsed >= CORRECT_MS * 0.8,
+    `feedback ${rightKind}, wait message ${said}, item ${before.trim()} -> ${lateRight.trim()} at ${rightElapsed}ms`);
 
   await go('#/activity/chapt_2/c2_ex_accent_placement');
   const beforeWrong = await exerciseCount();
@@ -800,10 +838,9 @@ function accentAnswer(form) {
   const answeredAt = Date.now();
   await stepper('Check Answer').click();
   await page.waitForTimeout(200);
-  // Read the outcome BEFORE the advance clears it — this class moves on by
-  // itself, so an assertion made after the move would read an empty banner.
   const wrongKind = await feedbackKind();
   const revealedForm = await page.locator('.exercise-answer').count();
+  await shot('ch2 accent placement INCORRECT');
   const early = await exerciseCount();
   let late = early;
   while (late === beforeWrong && Date.now() - answeredAt < INCORRECT_MS * 1.6) {
@@ -811,14 +848,53 @@ function accentAnswer(form) {
     late = await exerciseCount();
   }
   const elapsed = Date.now() - answeredAt;
-  check('5E §6.1 manualCorrectAutoIncorrect: INCORRECT reveals and auto-advances on 4000ms',
+  check('5E §6.1 autoBoth (ch2 Accent Placement): INCORRECT reveals and auto-advances on 4000ms',
     wrongKind === 'bad' && revealedForm === 1 && early === beforeWrong
       && late !== beforeWrong && elapsed >= INCORRECT_MS * 0.8,
     `feedback ${wrongKind}, revealed ${revealedForm}, item ${beforeWrong.trim()} -> ${late.trim()} at ${elapsed}ms`);
 }
 
-// `spellUntilRight` — correct waits for Next; wrong keeps what was typed and
-// never reveals the spelling.
+// Syllable Division, the other restamped chapter-2 exercise. Its answer is the
+// authored `division` gap list, placed by tapping the word at each gap centre.
+{
+  const activity = activityById(ch2, 'c2_ex_syllable_division');
+  // The first item with at least one divider, so the "one syllable" bar is not
+  // the whole answer and real gap taps are exercised.
+  const index = (activity.items || []).findIndex(item => (item.division || []).length > 0);
+  const item = activity.items[index];
+  await go('#/activity/chapt_2/c2_ex_syllable_division');
+  for (let i = 0; i < index; i++) await stepper('Next').click();
+  await page.waitForTimeout(120);
+  const before = await exerciseCount();
+  // Tap between cluster g-1 and cluster g, using the LAID-OUT letter boxes, so
+  // this places dividers the same way a finger does rather than by internal id.
+  for (const gap of item.division) {
+    const box = await page.locator('.divide-word .divide-letter').nth(gap - 1).boundingBox();
+    const after = await page.locator('.divide-word .divide-letter').nth(gap).boundingBox();
+    await page.mouse.click((box.x + box.width + after.x) / 2, box.y + box.height / 2);
+    await page.waitForTimeout(60);
+  }
+  const answeredAt = Date.now();
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(200);
+  const kind = await feedbackKind();
+  const said = await awaitNextShown();
+  await shot('ch2 syllable division CORRECT');
+  let late = before;
+  while (late === before && Date.now() - answeredAt < CORRECT_MS * 2.5) {
+    await page.waitForTimeout(50);
+    late = await exerciseCount();
+  }
+  const elapsed = Date.now() - answeredAt;
+  check('5E §6.1 autoBoth (ch2 Syllable Division): CORRECT auto-advances on 2000ms and never waits',
+    kind === 'ok' && !said && late !== before && elapsed >= CORRECT_MS * 0.8,
+    `feedback ${kind} on ${JSON.stringify(item.greek)}, wait message ${said}, item ${before.trim()} -> ${late.trim()} at ${elapsed}ms`);
+}
+
+// `retryUntilRight` on a SPELLER — 5E-SPEC2 shipped these as `spellUntilRight`,
+// waiting for Next on a correct spelling. A correct spelling now moves to the
+// next word by itself; a wrong one still keeps what was typed and reveals
+// nothing (§5 / rule C0a).
 {
   const activity = activityById(ch3, 'c3_ex_verb_speller');
   const word = activity.items[0].greek;
@@ -826,13 +902,23 @@ function accentAnswer(form) {
   const before = await promptGloss();
   await setAccents(false);
   await typeAccented(stripAccents(word));
+  const answeredAt = Date.now();
   await stepper('Check Answer').click();
   await page.waitForTimeout(200);
+  const kind = await feedbackKind();
   const said = await awaitNextShown();
-  await page.waitForTimeout(CORRECT_MS * 1.6);
-  check('5E §6.1 spellUntilRight: a correct spelling waits for Next and says so',
-    await feedbackKind() === 'ok' && said && await promptGloss() === before,
-    `message ${said}, prompt ${JSON.stringify(before)} -> ${JSON.stringify(await promptGloss())}`);
+  await shot('speller CORRECT (auto-advancing)');
+  const early = await promptGloss();
+  let late = early;
+  while (late === before && Date.now() - answeredAt < CORRECT_MS * 3) {
+    await page.waitForTimeout(50);
+    late = await promptGloss();
+  }
+  const elapsed = Date.now() - answeredAt;
+  check('5E §6.1 retryUntilRight (speller): a correct spelling AUTO-ADVANCES and never waits',
+    kind === 'ok' && !said && early === before && late !== before
+      && elapsed >= CORRECT_MS * 0.8,
+    `feedback ${kind}, wait message ${said}, prompt ${JSON.stringify(before)} -> ${JSON.stringify(late)} at ${elapsed}ms`);
 
   await go('#/activity/chapt_3/c3_ex_verb_speller');
   await setAccents(false);
@@ -840,11 +926,252 @@ function accentAnswer(form) {
   const typedBefore = await typed();
   await stepper('Check Answer').click();
   await page.waitForTimeout(250);
-  check('5E §6.1 spellUntilRight: a wrong spelling keeps the slate and reveals nothing',
+  await shot('speller INCORRECT (slate kept, nothing revealed)');
+  check('5E §6.1 retryUntilRight (speller): a wrong spelling keeps the slate and reveals nothing',
     await feedbackKind() === 'bad' && await typed() === typedBefore
       && await page.locator('.spell-answer').count() === 0
       && !await awaitNextShown(),
     `typed ${JSON.stringify(await typed())}, answer shown ${await page.locator('.spell-answer').count()}`);
+}
+
+// ------------------------------------------- §1 acceptance: one per chapter
+// Rule B1a is the whole point of this round: EVERY correct answer auto-
+// advances, in every class, in every chapter. One assertion per class per
+// chapter, driven through the UI.
+//
+// The option-grid drills shuffle and most of them answer by lexicon ref, so
+// rather than reading an answer key this LEARNS the answer from the app: a
+// wrong tap on a one-attempt class reveals it (.tile.correct), and reloading
+// until the same prompt comes back around gives a deterministic correct tap on
+// the next pass. Nothing here encodes what the right answer is.
+const OPTION_TILES = '.grid.options .tile, .option-group .tile';
+const promptOnScreen = async () => normalizeText(await page.locator('.card .prompt').first().innerText());
+
+// Learns INCREMENTALLY rather than fixing on one prompt and waiting for the
+// shuffle to bring it back: a 25-item pool would need luck to do that inside a
+// bounded number of reloads. Each pass either recognizes a prompt it has
+// already solved (and hands it back unanswered, ready to measure) or spends
+// one wrong tap learning that prompt's answer from the reveal.
+//
+// TWO AMBIGUITIES, both real in the delivered data, both settled by evidence
+// rather than by an answer key:
+//   * two OPTIONS with the same label (nominative and vocative plural are
+//     homographs in every paradigm) light up more than one tile, so there is
+//     no single answer to learn — that reveal is discarded;
+//   * two ITEMS with the same prompt and different answers (ch4's Greek Noun
+//     drill ships "Brother will betray brother" twice) make a learned answer
+//     wrong on the second one. That shows up as `bad` feedback on the
+//     measurement pass, so the prompt is struck off and the walk continues
+//     rather than reporting a broken advance.
+async function checkCorrectAutoAdvances(label, hash, tries = 45) {
+  const NAME = `5E §1 ${label}: correct auto-advances on max(2000ms, clip) and never waits for Next`;
+  const known = new Map();
+  const ambiguous = new Set();
+  let why = 'never reached a prompt whose answer could be learned';
+  for (let i = 0; i < tries; i++) {
+    await go(hash);
+    const prompt = await promptOnScreen();
+    const tiles = page.locator(OPTION_TILES);
+    const labels = (await tiles.allInnerTexts()).map(normalizeText);
+
+    if (known.has(prompt)) {
+      const at = labels.indexOf(known.get(prompt));
+      if (at < 0) { known.delete(prompt); continue; }
+      const before = await itemNumber();
+      const answeredAt = Date.now();
+      await tiles.nth(at).click();
+      await page.waitForTimeout(180);
+      const kind = await feedbackKind();
+      if (kind !== 'ok') {
+        known.delete(prompt);
+        ambiguous.add(prompt);
+        why = `prompt ${JSON.stringify(prompt)} is shared by two items with different answers`;
+        continue;
+      }
+      const said = await awaitNextShown();
+      await shot(`B1a ${label} CORRECT`);
+      const early = await itemNumber();
+      let late = early;
+      while (late === before && Date.now() - answeredAt < CORRECT_MS * 3) {
+        await page.waitForTimeout(50);
+        late = await itemNumber();
+      }
+      const elapsed = Date.now() - answeredAt;
+      check(NAME,
+        !said && early === before && late !== before && elapsed >= CORRECT_MS * 0.8,
+        `wait message ${said}, item ${before} -> ${late} at ${elapsed}ms on ${JSON.stringify(prompt)}`);
+      return;
+    }
+
+    if (ambiguous.has(prompt)) continue;
+    await tiles.first().click();
+    await page.waitForTimeout(180);
+    if (await feedbackKind() === 'ok') { known.set(prompt, labels[0]); continue; }
+    const revealed = (await page.locator('.grid.options .tile.correct, .option-group .tile.correct')
+      .allInnerTexts()).map(normalizeText);
+    if (revealed.length === 1) known.set(prompt, revealed[0]);
+  }
+  check(NAME, false, `gave up after ${tries} passes — ${why}`);
+}
+
+// `retryUntilRight` reveals NOTHING on a wrong answer, so there is nothing for
+// learnCorrectOption to read — but it also leaves the item open, so the answer
+// can simply be found by trying tiles on the item in front of us. The advance
+// is measured from the tap that finally landed.
+async function checkRetryCorrectAutoAdvances(label, hash) {
+  await go(hash);
+  const before = await itemNumber();
+  const tiles = page.locator(OPTION_TILES);
+  const count = await tiles.count();
+  let answeredAt = 0, kind = 'none';
+  for (let i = 0; i < count; i++) {
+    answeredAt = Date.now();
+    await tiles.nth(i).click();
+    await page.waitForTimeout(160);
+    kind = await feedbackKind();
+    if (kind === 'ok') break;
+    if (await itemNumber() !== before) break;      // it moved: not a retry class
+  }
+  const said = await awaitNextShown();
+  await shot(`B1a ${label} CORRECT`);
+  const early = await itemNumber();
+  let late = early;
+  while (late === before && Date.now() - answeredAt < CORRECT_MS * 3) {
+    await page.waitForTimeout(50);
+    late = await itemNumber();
+  }
+  const elapsed = Date.now() - answeredAt;
+  check(`5E §1 ${label}: correct auto-advances on max(2000ms, clip) and never waits for Next`,
+    kind === 'ok' && !said && early === before && late !== before && elapsed >= CORRECT_MS * 0.8,
+    `feedback ${kind}, wait message ${said}, item ${before} -> ${late} at ${elapsed}ms`);
+}
+
+// Every chapter's option-grid classes. `autoBoth` and `manualOnIncorrect` both
+// reveal on a wrong answer, which is what makes learnCorrectOption work.
+for (const [label, hash] of [
+  ['ch1 Vocabulary: English to Greek (autoBoth)', '#/activity/chapt_1/c1_drill_vocab_en_gk'],
+  ['ch2 Vocabulary: Greek to English (autoBoth)', '#/activity/chapt_2/c2_drill_vocab_gk_en'],
+  ['ch2 Marking Recognition (manualOnIncorrect)', '#/activity/chapt_2/c2_drill_marking_recognition'],
+  ['ch3 Scripture Memory (autoBoth)', '#/activity/chapt_3/c3_drill_scripture_memory'],
+  ['ch3 Verb Translating (manualOnIncorrect)', '#/activity/chapt_3/c3_drill_verb_translating'],
+  ['ch4 Scripture Memory (autoBoth)', '#/activity/chapt_4/c4_drill_scripture_memory'],
+  ['ch4 Greek Noun (manualOnIncorrect)', '#/activity/chapt_4/c4_drill_greek_noun'],
+  ['ch5 Vocabulary: English to Greek (autoBoth)', '#/activity/chapt_5/c5_drill_vocab_en_gk'],
+  ['ch5 Definite Article (manualOnIncorrect)', '#/activity/chapt_5/c5_drill_article']
+]) await checkCorrectAutoAdvances(label, hash);
+// The one non-speller `retryUntilRight` surface in chapters 1-5.
+await checkRetryCorrectAutoAdvances('ch2 Syllable Counting (retryUntilRight)', '#/activity/chapt_2/c2_drill_syllable_counting');
+
+// `retryUntilRight` on the WORD SPELLER, once per chapter. The item order is
+// authored, not shuffled, so the first word's spelling comes straight from the
+// delivered data and the measurement is deterministic.
+for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+  const activity = activitiesOf(chapter).find(a => a && a.type === 'spell');
+  if (!activity) continue;
+  const answers = spellerAnswers(chapterId, activity);
+  const word = answers[0];
+  if (!word) { check(`5E §1 ${chapterId} ${activity.id}: correct auto-advances`, false, 'no first answer in the data'); continue; }
+  await go(`#/activity/${chapterId}/${activity.id}`);
+  const before = await promptGloss();
+  await setAccents(false);
+  await typeAccented(stripAccents(word));
+  const answeredAt = Date.now();
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(180);
+  const kind = await feedbackKind();
+  const said = await awaitNextShown();
+  await shot(`B1a ${chapterId} ${activity.id} CORRECT`);
+  const early = await promptGloss();
+  let late = early;
+  while (late === before && Date.now() - answeredAt < CORRECT_MS * 3) {
+    await page.waitForTimeout(50);
+    late = await promptGloss();
+  }
+  const elapsed = Date.now() - answeredAt;
+  check(`5E §1 ${chapterId} ${activity.id} (retryUntilRight): correct auto-advances on max(2000ms, clip)`,
+    kind === 'ok' && !said && early === before && late !== before && elapsed >= CORRECT_MS * 0.8,
+    `feedback ${kind} for ${JSON.stringify(word)}, wait message ${said}, prompt ${JSON.stringify(before)} -> ${JSON.stringify(late)} at ${elapsed}ms`);
+}
+
+// Rule B1b, the one place a correct answer does NOT move: a whole-verse
+// speller holds ONE item, so it marks correct, plays the verse and stops. It
+// must not auto-drive the sequential rail, and it must not claim to be waiting
+// for a Next it does not own.
+for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+  const activity = activitiesOf(chapter).find(a => a && a.type === 'spellVerse');
+  if (!activity) continue;
+  const hash = `#/activity/${chapterId}/${activity.id}`;
+  await go(hash);
+  await setAccents(false);
+  // Chapter 4's verse carries an ELISION MARK (δι᾽ ἐμοῦ, U+1FBD), and the
+  // shared keyboard has no tile for one — its punctuation row is comma, raised
+  // dot, period, question mark. Typing the verse without it is what a learner
+  // on this keyboard can actually do, and D-18 (punctuation optional) is what
+  // makes that a correct answer. So this types the typeable form, and the
+  // exercise accepting it IS the assertion.
+  await typeAccented(stripElision(stripAccents((activity.answerWords || []).join(' '))));
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(200);
+  const kind = await feedbackKind();
+  const said = await awaitNextShown();
+  await shot(`B1b ${chapterId} solved verse stands still`);
+  await page.waitForTimeout(CORRECT_MS * 1.6);
+  check(`5E §1/B1b ${chapterId} ${activity.id}: a solved verse stops, drives no rail, claims no wait`,
+    kind === 'ok' && !said && page.url().includes(activity.id),
+    `feedback ${kind}, wait message ${said}, url ${page.url().split('#')[1] || ''}`);
+}
+
+// §5 / rule C0a, on ALL twelve spellers rather than the one sampled above: a
+// wrong answer never reveals the correct spelling. `Show Answer` stays the
+// opt-in route and is asserted separately in §6.6.
+//
+// The three whole-verse spellers are checked with the SAME rule but a
+// different assertion, because D-13 is a ratified divergence on top of it:
+// they name the one word that was missed ("The word you missed was: λόγος")
+// where the original prints a bare index. That is one word out of the verse,
+// deliberately, and it is asserted as such rather than waved past — what must
+// never appear is the verse itself.
+for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+  for (const activity of activitiesOf(chapter).filter(a => a && (a.type === 'spell' || a.type === 'spellVerse'))) {
+    const isVerse = activity.type === 'spellVerse';
+    await go(`#/activity/${chapterId}/${activity.id}`);
+    await setAccents(false);
+    await typeGreek('ζζζ');                       // wrong in every exercise in the app
+    const typedBefore = await typed();
+    await stepper('Check Answer').click();
+    await page.waitForTimeout(200);
+    const revealed = await page.locator('.spell-answer, .exercise-answer').count();
+    await shot(`no-reveal ${chapterId} ${activity.id}`);
+    const base = await feedbackKind() === 'bad' && revealed === 0
+      && await typed() === typedBefore && !await awaitNextShown();
+    if (!isVerse) {
+      check(`5E §5 ${chapterId} ${activity.id}: a wrong answer reveals nothing and keeps what was typed`,
+        base, `revealed ${revealed}, typed ${JSON.stringify(typedBefore)} -> ${JSON.stringify(await typed())}`);
+      continue;
+    }
+    // D-13: exactly ONE word is named, and it is a word of the verse.
+    const named = (await page.locator('.sv-detail .sv-word').allInnerTexts()).map(normalizeText);
+    const words = (activity.answerWords || []).map(normalizeText);
+    check(`5E §5 ${chapterId} ${activity.id}: a wrong answer names one missed word (D-13) and reveals no more`,
+      base && named.length <= 1 && named.every(w => words.includes(w)),
+      `named ${JSON.stringify(named)} of ${words.length} verse words, other reveals ${revealed}`);
+  }
+}
+
+// The four classes are a CLOSED set (§1). Neither withdrawn name may survive
+// anywhere in the delivered data — timing.js still normalizes them at runtime,
+// so nothing but an assertion would notice one.
+{
+  const withdrawn = ['spellUntilRight', 'manualCorrectAutoIncorrect'];
+  const found = [];
+  for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+    for (const activity of activitiesOf(chapter)) {
+      const declared = activity && activity.answerPolicy && activity.answerPolicy.advanceClass;
+      if (withdrawn.includes(declared)) found.push(`${chapterId} ${activity.id} ${declared}`);
+    }
+  }
+  check('5E §1 neither withdrawn class name survives in chapters 1-5',
+    found.length === 0, found.join(', '));
 }
 
 // ------------------------------------------------- §6.2/§6.3 afterGuess audio
@@ -878,6 +1205,51 @@ const LONG_CLIP_S = 3;
     now !== before && !!clip && !!clip.endedAt && advancedAt >= clip.endedAt
       && advancedAt - answeredAt >= LONG_CLIP_S * 1000 * 0.9,
     `advanced ${advancedAt - answeredAt}ms after the guess; clip ran ${clip && clip.endedAt ? clip.endedAt - clip.startedAt : 'n/a'}ms`);
+
+  // The same wait on the SPELLER, which is where 5E-SPEC3 §1 put a scheduled
+  // advance that had never existed before: a correct spelling must hold the
+  // next word until the word it just spelled has finished being spoken.
+  {
+    const speller = activityById(ch4, 'c4_ex_noun_speller');
+    const answers = spellerAnswers('chapt_4', speller);
+    const spellerPaths = (speller.items || [])
+      .map(entry => audioPath(entry.audio)).filter(Boolean);
+    await go('#/activity/chapt_4/c4_ex_noun_speller');
+    await seedLongClip(spellerPaths, LONG_CLIP_S);
+    await go('#/activity/chapt_4/c4_ex_noun_speller');
+    const beforeWord = await promptGloss();
+    await setAccents(false);
+    await typeAccented(stripAccents(answers[0]));
+    const spelledAt = Date.now();
+    await stepper('Check Answer').click();
+    let nowWord = beforeWord;
+    while (nowWord === beforeWord && Date.now() - spelledAt < LONG_CLIP_S * 1000 * 2.5) {
+      await page.waitForTimeout(50);
+      nowWord = await promptGloss();
+    }
+    const movedAt = Date.now();
+    const spokenClip = await lastClip();
+    check('5E §6.2 afterGuess (speller): the next word waits for a clip longer than 2000ms',
+      nowWord !== beforeWord && !!spokenClip && !!spokenClip.endedAt
+        && movedAt >= spokenClip.endedAt
+        && movedAt - spelledAt >= LONG_CLIP_S * 1000 * 0.9,
+      `advanced ${movedAt - spelledAt}ms after the spelling; clip ran ${spokenClip && spokenClip.endedAt ? spokenClip.endedAt - spokenClip.startedAt : 'n/a'}ms`);
+
+    // §2.3 on the speller: Next during that wait stops the clip and moves now.
+    await go('#/activity/chapt_4/c4_ex_noun_speller');
+    await setAccents(false);
+    await typeAccented(stripAccents(answers[0]));
+    await stepper('Check Answer').click();
+    await page.waitForTimeout(300);
+    const playingNow = await clipsPlaying();
+    const pressed = Date.now();
+    await stepper('Next').click();
+    await page.waitForTimeout(150);
+    check('5E §6.3 Next during a speller\'s afterGuess clip stops it and advances at once',
+      playingNow === 1 && await clipsPlaying() === 0
+        && await promptGloss() !== beforeWord && Date.now() - pressed < 600,
+      `playing ${playingNow} -> ${await clipsPlaying()} in ${Date.now() - pressed}ms`);
+  }
 
   // §6.3 / §2.3: Next during playback stops the clip and moves AT ONCE.
   const item2 = await freshKnownItem('#/activity/chapt_4/c4_drill_greek_noun', activity);
@@ -1044,20 +1416,47 @@ for (const [label, chapterId, activityId, button] of [
 }
 await page.setViewportSize({ width: 390, height: 900 });
 
-// §5.3: the two rules that NAME what they teach are underlined, in the hint
-// that shows them — and in the Accent Mark Placement exercise's copy of the
-// same hint, because the same sentence must not look different in two places.
-for (const [label, chapterId, activityId, button] of [
+// §5.3 (kept by 5E-SPEC3 §3): the two rules that NAME what they teach are
+// underlined. The stamper shipped with 5E-SPEC3 underlines the PHRASE and
+// leaves the full stop outside it, and it applies the rule wherever the phrase
+// is displayed — the Learn topic's rule list and the two expander labels as
+// well as the hints — so this asserts all five surfaces rather than the two
+// hints 5E-SPEC2 checked. The same sentence must not look different in two
+// places, and there are five of them.
+for (const [label, chapterId, activityId, open] of [
   ['ch2 Accent Rule Drill hint', 'chapt_2', 'c2_drill_accent_rule', 'Hint'],
-  ['ch2 Accent Mark Placement hint', 'chapt_2', 'c2_ex_accent_placement', 'Hint']
+  ['ch2 Accent Mark Placement hint', 'chapt_2', 'c2_ex_accent_placement', 'Hint'],
+  ['ch2 Quick Review accent rules', 'chapt_2', null, null]
 ]) {
-  await go(`#/activity/${chapterId}/${activityId}`);
-  await page.locator('.card').getByRole('button', { name: button, exact: true }).click();
-  await page.waitForTimeout(120);
+  if (activityId) {
+    await go(`#/activity/${chapterId}/${activityId}`);
+    await page.locator('.card').getByRole('button', { name: open, exact: true }).click();
+  } else {
+    await go(`#/activity/${chapterId}/c2_qr_accents`);
+  }
+  await page.waitForTimeout(150);
   const underlined = (await page.locator('.rc-list u').allInnerTexts()).map(normalizeText);
   check(`5E §5.3 ${label}: "Nouns are retentive" and "Verbs are recessive" are underlined`,
-    underlined.includes('Nouns are retentive.') && underlined.includes('Verbs are recessive.'),
+    underlined.includes('Nouns are retentive') && underlined.includes('Verbs are recessive'),
     JSON.stringify(underlined));
+}
+// The Learn topic that teaches the six rules, and the two expander labels
+// under it — the surfaces 5E-SPEC2 deliberately left plain and 5E-SPEC3's
+// stamper marks up. The label is the one that would fail LOUDLY if the
+// renderer did not honour [[u]] there: it would print the tag characters.
+{
+  await go('#/activity/chapt_2/c2_learn_accents');
+  await gotoTopic(3);
+  const listUnderlines = (await page.locator('.rc-list u').allInnerTexts()).map(normalizeText);
+  const summaries = (await page.locator('.rc-expander summary').allInnerTexts()).map(normalizeText);
+  const summaryUnderlines = (await page.locator('.rc-expander summary u').allInnerTexts()).map(normalizeText);
+  check('5E §5.3 ch2 Learn Accent Rules: the rule list underlines both named rules',
+    listUnderlines.includes('Nouns are retentive') && listUnderlines.includes('Verbs are recessive'),
+    JSON.stringify(listUnderlines));
+  check('5E §5.3 ch2 Learn Accent Rules: the expander labels underline the rule name and print no markup',
+    summaryUnderlines.includes('Nouns are retentive') && summaryUnderlines.includes('Verbs are recessive')
+      && summaries.every(text => !text.includes('[[')),
+    JSON.stringify(summaries));
 }
 
 // ------------------------------------------------- §6.7 modals reach Close

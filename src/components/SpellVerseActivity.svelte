@@ -17,17 +17,24 @@
   // word spellers mount, with the space bar and punctuation row Nathanael
   // selected at the Phase 0 checkpoint.
   // 5E-SPEC2 §2.5 / rule C7: the verse clip plays after a SUCCESSFUL spelling.
-  // The whole-verse spellers played nothing at all before this round — the one
+  // The whole-verse spellers played nothing at all before that round — the one
   // surface in the app where the learner had just reconstructed a verse from
-  // memory and never got to hear it. The class is `spellUntilRight`: a wrong
-  // answer keeps what was typed and reveals nothing, a right one waits for the
-  // sequential rail's Next (§5.5 says so on screen).
+  // memory and never got to hear it.
+  //
+  // The class is `retryUntilRight`, like every other speller: a wrong answer
+  // keeps what was typed and reveals nothing. Rule B1b covers the correct
+  // path here. This activity holds ONE item, so there is nothing to
+  // auto-advance TO: it marks correct, plays the verse, and stops. Auto-driving
+  // the sequential rail to the next activity would be a navigation surprise,
+  // so the rail's Next stays the student's. Nothing waits and nothing says it
+  // is waiting — 5E-SPEC2 shipped a "Click Next to continue" line here for the
+  // withdrawn `spellUntilRight` class, and it is gone with the class (D-28).
   import { onMount, onDestroy } from 'svelte';
   import { randomFeedback } from '../lib/content.js';
   import { play, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import { checkVerse } from '../lib/answer-check.js';
-  import { HINT_VISIBLE_MS, resolveAdvance, waitsForNext } from '../lib/timing.js';
+  import { HINT_VISIBLE_MS } from '../lib/timing.js';
   import * as input from '../lib/speller-input.js';
   import SpellerKeyboard, { KEYMAP, PUNCT_KEYS } from './SpellerKeyboard.svelte';
   import SpellerField from './SpellerField.svelte';
@@ -51,9 +58,7 @@
   let withAccents = false;
   let solved = false;
 
-  $: advancePolicy = resolveAdvance(activity.answerPolicy);
   $: audioTiming = activity.audioTiming || 'afterGuess';
-  $: awaitingNext = solved && waitsForNext(advancePolicy, true);
 
   const fallbackLetters = chapter.alphabet && chapter.alphabet.letters
     ? chapter.alphabet.letters.map(l => (l.lower === 'σ/ς' ? 'σ' : l.lower))
@@ -78,8 +83,8 @@
       detail = null;
       markCompleted(activity.id);
       // §2.5 / C7: hear the verse you just spelled. Nothing is waiting on the
-      // clip here — this class waits for Next, so there is no next item for it
-      // to talk over.
+      // clip here — rule B1b: one item, so there is no next item for it to
+      // talk over and nothing for the auto-advance to advance to.
       if (audioTiming !== 'none' && activity.audio) play(activity.audio);
       return;
     }
@@ -156,9 +161,6 @@
   {#if detail}
     <div class="sv-detail" role="status">{detail.text}{#if detail.word}&nbsp;<span class="greek sv-word">{detail.word}</span>{/if}</div>
   {/if}
-  <!-- §5.5: spellUntilRight waits on a correct answer. This surface has no
-       stepper of its own, so the Next that continues is the sequential rail's. -->
-  {#if awaitingNext}<div class="await-next" role="status">Click Next to continue</div>{/if}
 
   <div class="controls grouped">
     <button class="btn secondary" on:click={toggleHint}>Major Hint</button>

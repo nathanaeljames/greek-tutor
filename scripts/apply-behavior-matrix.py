@@ -14,9 +14,15 @@ silently revert to whatever the assembler happened to hard-code:
     python3 scripts/apply-behavior-matrix.py \
         buildout/DRILL-BEHAVIOR-LEDGER.csv src/data
 
-The script also applies the two typographic rules that are data-side:
-D2 (no displayed double hyphen) and the removal of any lingering
+The script also applies the typographic rules that are data-side:
+D2 (no displayed double hyphen), the two underlined accent rules
+(5E-SPEC2 §5.3, kept by 5E-SPEC3 §3), and the removal of any lingering
 `autoAdvanceMs`.
+
+D2 is an APP-WIDE rule, so the typographic pass covers every rendered
+data file, not only chapt-NN.json: the last displayed double hyphens in
+the tree were in intro.json ("WELCOME --", "-- ENJOY") and in two
+chapter-1 lexicon glosses, which a chapter-only loop never opens.
 
 Only rows whose Status is CONFIRMED are applied. TO FILL rows are for
 chapters whose DOSBox pass has not happened yet; they are skipped, and
@@ -27,14 +33,37 @@ Idempotent: running it twice changes nothing the second time.
 """
 import csv
 import json
+import os
 import re
 import sys
 import unicodedata
 
+# The report echoes the strings it changed, and some of them are Greek. On
+# Windows the console defaults to cp1252, which raises rather than mangling \u2014
+# the script did its work and then died printing what it had done. Say UTF-8
+# out loud, and fall back to replacement characters rather than an exception.
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+
 VALID_TIMING = {'beforeGuess', 'afterGuess', 'afterTap', 'afterCheck', 'none'}
+# 5E-SPEC3 \u00a71: four classes. `spellUntilRight` and
+# `manualCorrectAutoIncorrect` are withdrawn \u2014 they existed only to wait
+# for Next on a CORRECT answer, which rule B1a forbids \u2014 and a ledger
+# still naming one is a STOP, not a silent migration, so that the ledger
+# gets corrected rather than the stamp papering over it.
 VALID_CLASS = {'none', 'autoBoth', 'manualOnIncorrect', 'retryUntilRight'}
+WITHDRAWN_CLASS = {'spellUntilRight': 'retryUntilRight',
+                   'manualCorrectAutoIncorrect': 'autoBoth'}
 PRONOUNCE_CHECKBOXES = ('Pronounce Each Drill', 'Pronounce Each Exercise')
 EM = '\u2014'
+
+# Non-underscore keys whose values are provenance rather than copy.
+PROVENANCE_KEYS = ('audioInventory',)
+
+# Data files nothing renders. font-map.json is the extraction pipeline's
+# own reference table (no runtime import anywhere in src/), so its prose
+# is documentation and its double hyphens are not "displayed".
+NON_RENDERED = {'font-map.json'}
 
 
 def load_ledger(path):
@@ -52,6 +81,11 @@ def load_ledger(path):
             t, c = row['TARGET audioTiming'], row['TARGET advanceClass']
             if t not in VALID_TIMING:
                 raise SystemExit(f'STOP: {aid} audioTiming {t!r}')
+            if c in WITHDRAWN_CLASS:
+                raise SystemExit(
+                    f'STOP: {aid} advanceClass {c!r} was WITHDRAWN in '
+                    f'5E-SPEC3 §1. Correct the ledger row to '
+                    f'{WITHDRAWN_CLASS[c]!r}.')
             if c not in VALID_CLASS:
                 raise SystemExit(f'STOP: {aid} advanceClass {c!r}')
             rows[aid] = {
@@ -67,12 +101,22 @@ def dehyphen(obj, log, path='$'):
     """D2: a displayed double hyphen becomes an em dash.
 
     Only touches STRING VALUES, and only where the hyphens sit between
-    word characters or after a word - never inside a key, a markup tag,
-    an id, or a legacy field, since `_legacy` records the TBK's own
-    bytes and must stay byte-exact.
+    word characters, after a word, or SPACED between two words - never
+    inside a key, a markup tag or an id.
+
+    PROVENANCE IS SKIPPED ENTIRELY: every underscore-prefixed key, plus
+    `audioInventory`, whose values are role notes keyed by audio id.
+    `_legacy` records the TBK's own bytes and must stay byte-exact, and
+    `_comment`/`_note`/`_verify` are pipeline provenance that no screen
+    ever shows; the rule is about what is DISPLAYED, so rewriting them
+    would only churn the diff and blur where a mark came from.
+
+    The spaced form was added in 5E-SPEC2 §5.4: it is the form the
+    Introduction uses ("WELCOME -- Greek Tutor...", "... -- ENJOY"), and
+    it was invisible to the two tight patterns.
     """
     if isinstance(obj, dict):
-        return {k: (v if k.startswith('_legacy') else
+        return {k: (v if k.startswith('_') or k in PROVENANCE_KEYS else
                     dehyphen(v, log, f'{path}.{k}'))
                 for k, v in obj.items()}
     if isinstance(obj, list):
@@ -80,15 +124,21 @@ def dehyphen(obj, log, path='$'):
     if isinstance(obj, str) and '--' in obj:
         new = re.sub(r'(?<=\w)--(?=\w)', EM, obj)
         new = re.sub(r'(?<=\w)--(?=\s|$)', EM, new)
+        new = re.sub(r'(?<=\s)--(?=\s)', EM, new)
         if new != obj:
             log.append((path, obj, new))
         return new
     return obj
 
 
-# 5E-SPEC2 §5.3, kept data-side. The two accent rules carry no
-# structural signal a renderer could key on, so the underline is
+# 5E-SPEC2 §5.3, kept data-side by 5E-SPEC3 §3. The two accent rules
+# carry no structural signal a renderer could key on, so the underline is
 # authored here beside D2 rather than inferred at render time.
+#
+# Applied wherever the phrase is DISPLAYED, which in chapter 2 is ten
+# strings: the Learn topic's rule list, the two expander labels, both
+# drill/exercise hint copies, and the Quick Review copy. The phrase, not
+# the sentence: the full stop stays outside the underline.
 UNDERLINE = [
     ('Nouns are retentive', '[[u]]Nouns are retentive[[/u]]'),
     ('Verbs are recessive', '[[u]]Verbs are recessive[[/u]]'),
@@ -97,7 +147,7 @@ UNDERLINE = [
 
 def underline(obj, log, path='$'):
     if isinstance(obj, dict):
-        return {k: (v if k.startswith('_legacy') else
+        return {k: (v if k.startswith('_') or k in PROVENANCE_KEYS else
                     underline(v, log, f'{path}.{k}'))
                 for k, v in obj.items()}
     if isinstance(obj, list):
@@ -164,8 +214,46 @@ def apply_chapter(path, ledger, report):
     blob = json.dumps(data, ensure_ascii=False, indent=1) + '\n'
     if unicodedata.normalize('NFC', blob) != blob:
         raise SystemExit(f'STOP: {path} is not NFC after stamping')
-    open(path, 'w', encoding='utf-8').write(blob)
+    # newline='' so the LF the data files are stored with survives on
+    # Windows, where text mode would translate every one to CRLF and rewrite
+    # all five chapters on a run that changed nothing.
+    open(path, 'w', encoding='utf-8', newline='').write(blob)
     return touched
+
+
+def indent_of(text, default=1):
+    """The file's own indent width, so rewriting one string does not
+    reformat the whole file. The chapter files are written at indent 1
+    and intro.json at indent 2; a two-character typographic fix that
+    reflows 120 lines is a diff nobody can review."""
+    for line in text.split('\n')[1:]:
+        stripped = line.lstrip(' ')
+        if stripped and stripped != '}':
+            return len(line) - len(stripped) or default
+    return default
+
+
+def apply_plain(path, report):
+    """The typographic pass only, for the rendered data files that carry
+    no drills or exercises (intro.json, toc.json, the lexicons). The file
+    is left byte-identical when there is nothing to fix."""
+    try:
+        text = open(path, encoding='utf-8').read()
+    except OSError:
+        return
+    data = json.loads(text)
+    hyphens = []
+    data = dehyphen(data, hyphens)
+    if not hyphens:
+        return
+    report['hyphens'] += [(path, p, a, b) for p, a, b in hyphens]
+    blob = json.dumps(data, ensure_ascii=False, indent=indent_of(text)) + '\n'
+    if unicodedata.normalize('NFC', blob) != blob:
+        raise SystemExit(f'STOP: {path} is not NFC after stamping')
+    # newline='' so the LF the data files are stored with survives on
+    # Windows, where text mode would translate every one to CRLF and rewrite
+    # all five chapters on a run that changed nothing.
+    open(path, 'w', encoding='utf-8', newline='').write(blob)
 
 
 def main():
@@ -181,6 +269,13 @@ def main():
         except OSError:
             continue
         total += apply_chapter(path, ledger, report)
+    # D2 is an APP-WIDE rule, not a chapter one. Every rendered data file
+    # gets the typographic pass, not just chapt-NN.json.
+    for name in sorted(os.listdir(datadir)):
+        if (name.endswith('.json')
+                and not re.fullmatch(r'chapt-\d\d\.json', name)
+                and name not in NON_RENDERED):
+            apply_plain(f'{datadir}/{name}', report)
     print(f'stamped {total} activities from {len(ledger)} confirmed rows')
     if skipped:
         chs = sorted({c for c, _ in skipped})

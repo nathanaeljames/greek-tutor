@@ -26,11 +26,12 @@
   //
   // ANSWER POLICY. Check Answer finalizes the item right or wrong and reveals
   // the hyphen-joined divided form. The CLASS decides what happens next, and
-  // this exercise's class is `manualCorrectAutoIncorrect` (5E-SPEC2 §1, from
-  // the DOSBox pass): a correct division WAITS for Next, a wrong one
-  // auto-advances on the longer wait. That is the opposite of the obvious
-  // arrangement and it is what the original does. The advance is cancelled by
-  // manual Previous/Next, by Clear Answer and on unmount.
+  // this exercise's class is `autoBoth` (5E-SPEC3 §1): a correct division
+  // auto-advances on 2000ms like every correct answer in the app (rule B1a), a
+  // wrong one reveals the answer and auto-advances on the longer wait. The
+  // advance is cancelled by manual Previous/Next, by Clear Answer and on
+  // unmount. 5E-SPEC2 shipped this as `manualCorrectAutoIncorrect`, waiting
+  // for Next on a correct division; that class is withdrawn (D-28).
   //
   // AUDIO (§2.2) is `afterGuess`: the word is spoken once the answer is in,
   // and the next word does not appear until the clip has finished.
@@ -216,7 +217,9 @@
   $: oneAttempt = advancePolicy.oneAttempt;
   $: audioTiming = activity.audioTiming || 'afterGuess';
   $: revealed = answered && oneAttempt;
-  // §5.5: manualCorrectAutoIncorrect waits on a CORRECT answer, so say so.
+  // §B4: say so on the outcomes that WAIT. `autoBoth` has none — both paths
+  // move by themselves — so this renders nothing today and would start
+  // rendering by itself if the class were ever reassigned.
   $: awaitingNext = answered && waitsForNext(advancePolicy, answeredCorrect);
   $: answerGaps = new Set((!pending && item.division) || []);
   // Live score (C3): reactive, so the line follows every answer instead of
@@ -406,7 +409,8 @@
     {#if showAnswer || revealed}
       <div class="exercise-answer"><span>Answer</span><span class="greek">{dividedForm(item.greek, item.division)}</span></div>
     {/if}
-    <!-- §5.5: a correct division waits for Next; say so. -->
+    <!-- §B4: the message appears on exactly the outcomes that WAIT. `autoBoth`
+         has none, so this renders nothing today. -->
     {#if awaitingNext}<div class="await-next" role="status">Click Next to continue</div>{/if}
   {/if}
 

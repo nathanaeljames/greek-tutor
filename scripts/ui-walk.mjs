@@ -7,28 +7,56 @@
 // rendered text/emphasis structure of every teaching page so a diff against
 // the DOSBox originals is mechanical rather than a squint.
 //
-//   node scripts/ui-walk.mjs [--chapters=chapt_1,...,chapt_5] [--out=DIR]
+//   node scripts/ui-walk.mjs [--chapters=chapt_1,...,chapt_5] [--out=DIR] [--force]
 //
 // It expects a preview server on PORT (default 4173): `npm run preview`.
 // Everything a machine can settle must be settled here before a VERIFY
 // document reaches Nathanael; his time is for judgement calls.
+//
+// OUTPUT SAFETY (5E-SPEC3 §4). --out used to DEFAULT to a named round's
+// directory, so running this script with no arguments quietly overwrote 475
+// committed captures from a parallel run. It now defaults to a timestamped
+// directory that cannot collide with anything, and it REFUSES to write into a
+// directory that already has files in it unless --force says to. A tool that
+// silently destroys evidence is worse than a tool that stops.
 
 import { chromium } from 'playwright-core';
-import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const args = Object.fromEntries(process.argv.slice(2)
   .filter(a => a.startsWith('--'))
   .map(a => { const i = a.indexOf('='); return i === -1 ? [a.slice(2), true] : [a.slice(2, i), a.slice(i + 1)]; }));
 
+// 2026-08-06T12:26:08 -> 20260806-122608, local time, so two runs a second
+// apart cannot land in the same directory.
+const stamp = new Date();
+const pad = n => String(n).padStart(2, '0');
+const RUN_ID = `${stamp.getFullYear()}${pad(stamp.getMonth() + 1)}${pad(stamp.getDate())}`
+  + `-${pad(stamp.getHours())}${pad(stamp.getMinutes())}${pad(stamp.getSeconds())}`;
+
 const BASE = args.base || `http://localhost:${args.port || 4173}`;
-const OUT = args.out || 'buildout/screenshots/5e-spec1-sol';
+const OUT = args.out || `buildout/screenshots/walk-${RUN_ID}`;
 const WIDTHS = [{ name: '320', width: 320, height: 900 }, { name: '768', width: 768, height: 1100 }];
 const CHAPTERS = String(args.chapters || 'chapt_1,chapt_2,chapt_3,chapt_4,chapt_5').split(',');
 
 const dataFor = id => JSON.parse(readFileSync(`src/data/chapt-0${id.split('_')[1]}.json`, 'utf8'));
 
+// Stop BEFORE the browser launches, so a refusal costs nothing and cannot half-
+// write a corpus. An empty (or absent) directory is fine; anything else needs
+// --force, and the message says exactly what to do instead.
+let existing = [];
+try { existing = readdirSync(OUT); } catch { /* absent is fine — we create it */ }
+if (existing.length && !args.force) {
+  console.error(`REFUSING to write into ${OUT}: it already contains ${existing.length} entr${existing.length === 1 ? 'y' : 'ies'}.`);
+  console.error('  Those may be another run\'s committed evidence. Pass a fresh --out=DIR,');
+  console.error(`  omit --out to use the timestamped default (buildout/screenshots/walk-${RUN_ID}),`);
+  console.error('  or pass --force if overwriting this directory is genuinely what you want.');
+  process.exit(2);
+}
+
 mkdirSync(OUT, { recursive: true });
+console.log(`writing to ${OUT}${args.force && existing.length ? ' (--force: overwriting existing captures)' : ''}`);
 
 // playwright-core does not download a browser. Prefer its configured binary,
 // then fall back to an installed Chrome/Edge channel. This keeps CI's pinned

@@ -5,7 +5,7 @@
 // gets a loud check here instead. Run from `npm run verify`.
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { ADVANCE_CLASSES as TIMING_CLASSES } from '../src/lib/timing.js';
+import { ADVANCE_CLASSES as TIMING_CLASSES, WITHDRAWN_CLASSES as TIMING_WITHDRAWN } from '../src/lib/timing.js';
 
 const DATA = 'src/data';
 const problems = [];
@@ -25,12 +25,18 @@ const ACTIVITY_TYPES = new Set(['contentAudio', 'select', 'spell', 'divide', 'pl
 // contentAudio dispatches on `mode`; a mode with no branch in
 // ContentAudio.svelte falls through to the generic chart and renders a grid of
 // nothing, which is exactly the kind of failure that only shows up on device.
-// The six advance classes come from the RENDERER's own list (src/lib/timing.js
+// The four advance classes come from the RENDERER's own list (src/lib/timing.js
 // has no imports, so this script stays dependency-free by importing it). A
 // second hand-written copy here is exactly how the data and the renderer would
 // drift apart while both looked right. The ledger stamper keeps a third copy
 // only because it is Python and cannot read this one.
 const ADVANCE_CLASSES = new Set(TIMING_CLASSES);
+// 5E-SPEC3 §1: the two classes that existed only to wait for Next on a CORRECT
+// answer are withdrawn. timing.js still normalizes them at runtime so a stale
+// cached data file behaves correctly, which is exactly why the BUILD has to
+// refuse them — otherwise a withdrawn name could sit in shipped data forever,
+// silently working, and nobody would learn it was wrong.
+const WITHDRAWN = new Map(Object.entries(TIMING_WITHDRAWN));
 // The five audio timings (rules A1/A8). The renderer branches on these by name
 // rather than exporting a list, so this is the one place they are enumerated.
 const AUDIO_TIMINGS = new Set(['beforeGuess', 'afterGuess', 'afterTap', 'afterCheck', 'none']);
@@ -291,16 +297,18 @@ for (const file of files) {
     if (Object.prototype.hasOwnProperty.call(block, 'autoAdvanceMs')) {
       problems.push(`${path}.autoAdvanceMs: advance durations live in src/lib/timing.js, not in the data (D-14).`);
     }
-    // BEHAVIOR IS A CLOSED VOCABULARY (5E-SPEC2 §1, DRILL-BEHAVIOR-RULES B1).
-    // There are six advance classes and five audio timings, and a value
+    // BEHAVIOR IS A CLOSED VOCABULARY (5E-SPEC3 §1, DRILL-BEHAVIOR-RULES B1).
+    // There are four advance classes and five audio timings, and a value
     // outside them fails SILENTLY at runtime: resolveAdvance falls through to
-    // its legacy branch and the surface auto-advances when the ledger says it
-    // should wait. The renderer cannot report it because it never sees a
+    // its legacy branch and the surface behaves however that branch happens to
+    // say. The renderer cannot report it because it never sees a
     // wrong-but-plausible string as wrong, so the build does.
     if (Object.prototype.hasOwnProperty.call(block, 'answerPolicy')
         && block.answerPolicy && typeof block.answerPolicy === 'object') {
       const advanceClass = block.answerPolicy.advanceClass;
-      if (advanceClass != null && !ADVANCE_CLASSES.has(advanceClass)) {
+      if (advanceClass != null && WITHDRAWN.has(advanceClass)) {
+        problems.push(`${path}.answerPolicy.advanceClass: "${advanceClass}" was WITHDRAWN in 5E-SPEC3 §1 — it existed only to wait for Next on a correct answer, which rule B1a forbids. Restamp this activity as "${WITHDRAWN.get(advanceClass)}".`);
+      } else if (advanceClass != null && !ADVANCE_CLASSES.has(advanceClass)) {
         problems.push(`${path}.answerPolicy.advanceClass: "${advanceClass}" is not one of ${[...ADVANCE_CLASSES].join(', ')}.`);
       }
     }
@@ -453,4 +461,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the six and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard).`);

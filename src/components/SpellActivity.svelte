@@ -8,15 +8,21 @@
   // Accents" toggle and otherwise follows the one shared policy in
   // lib/answer-check.js.
   //
-  // 5E-SPEC2 §1/§4: every speller in the app is `spellUntilRight`. A correct
-  // spelling WAITS for Next (so the learner can look at what they got right);
-  // a wrong one reveals nothing, keeps what was typed, and leaves the item
-  // open. §2.2: the word's clip is spoken after a correct spelling —
-  // `afterGuess`, because the prompt is an English gloss and pronouncing the
-  // Greek before the answer would hand it over.
+  // 5E-SPEC3 §1/§5: every speller in the app is `retryUntilRight`. A correct
+  // spelling AUTO-ADVANCES like every other correct answer in the app (rule
+  // B1a — there are no exceptions and this class does not get one); a wrong
+  // one reveals nothing, keeps what was typed, and leaves the item open for
+  // another attempt or a manual Next. §2.2: the word's clip is spoken after a
+  // correct spelling — `afterGuess`, because the prompt is an English gloss
+  // and pronouncing the Greek before the answer would hand it over — and the
+  // next word does not appear until that clip has FINISHED, so the wait is
+  // max(ADVANCE_CORRECT_MS, clip) rather than a flat 2000ms.
+  //
+  // 5E-SPEC2 shipped this surface as `spellUntilRight`, waiting for Next on a
+  // correct spelling. That class is withdrawn; see DIVERGENCE-LOG D-28.
   import { onMount, onDestroy } from 'svelte';
   import { getLemma, randomFeedback } from '../lib/content.js';
-  import { play, stop as stopAudio } from '../lib/audio.js';
+  import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import { spellingMatches } from '../lib/answer-check.js';
   import { resolveAdvance, waitsForNext } from '../lib/timing.js';
@@ -62,11 +68,25 @@
   let pronounceEach = activity.ui?.defaults?.pronounceEach ?? true;
   let showScore = false;
   let showKeyboard = false;
-  let solved = false;              // this word is spelled right and waiting for Next
+  // This word is spelled right and the surface is moving on by itself. The
+  // input is locked for the length of the wait so a stray keystroke cannot
+  // edit a won answer out from under the clip that is speaking it.
+  let solved = false;
+  let advanceTimer = null;
+  // Bumped by every scheduled advance and by everything that cancels one
+  // (manual Previous/Next, unmount). An advance that waits for a clip resolves
+  // asynchronously, so the token — not the timer handle alone — is what keeps
+  // a superseded advance from firing. §2.3: Next stops the audio and moves at
+  // once, which is this token plus stopAudio().
+  let advanceToken = 0;
 
   $: advancePolicy = resolveAdvance(activity.answerPolicy);
   $: audioTiming = activity.audioTiming || 'afterGuess';
-  // §5.5: spellUntilRight waits for Next on a correct answer, so it says so.
+  // §B4/§5.5: this surface has no waiting outcome left. A correct spelling
+  // moves by itself (B1a) and a wrong one leaves the item open, where the next
+  // thing to do is try again rather than press Next. Kept as a live predicate
+  // rather than deleted so the surface would start SAYING so if the class it
+  // is assigned to ever acquires a waiting outcome.
   $: awaitingNext = solved && waitsForNext(advancePolicy, true);
 
   // Scoring
@@ -100,12 +120,15 @@
       completedWords.add(wordIndex);
       feedback = randomFeedback(chapter, 'correct');
       feedbackKind = 'ok';
-      // spellUntilRight: the item is won and waits for Next. Nothing is
-      // scheduled, so there is no clip racing the next word onto the screen —
-      // the defect the ledger records against all nine spellers.
       solved = true;
       if (completedWords.size === words.length) markCompleted(activity.id);
-      if (pronounceEach && audioTiming === 'afterGuess' && word.audio) play(word.audio);
+      // §B1a: move on by ourselves. The clip is handed to scheduleAdvance
+      // rather than played beside it, so the next word cannot arrive while the
+      // previous word is still being spoken — the defect VERIFY-5E item 11
+      // reports against every afterGuess surface.
+      const clip = pronounceEach && audioTiming === 'afterGuess' && word.audio ? word.audio : null;
+      if (advancePolicy.autoOnCorrect) scheduleAdvance(advancePolicy.correctMs, clip);
+      else if (clip) play(clip);
     } else {
       // §4.4/C1/C2: what was typed STAYS (the port's standing divergence — the
       // manual Clear button is how the slate gets wiped) and the correct
@@ -113,6 +136,24 @@
       feedback = randomFeedback(chapter, 'incorrect');
       feedbackKind = 'bad';
     }
+  }
+
+  function cancelAdvance() {
+    advanceToken += 1;
+    clearTimeout(advanceTimer);
+    advanceTimer = null;
+  }
+
+  // Schedule the move to the next word: no sooner than the class minimum, and
+  // no sooner than the end of the afterGuess clip (§2.2 — the wait is
+  // max(class minimum, audio duration), never shorter than 2000ms). Both
+  // halves are cancelled by cancelAdvance(), so Next always wins (§2.3).
+  function scheduleAdvance(ms, clip) {
+    cancelAdvance();
+    const token = advanceToken;
+    const minimum = new Promise(resolve => { advanceTimer = setTimeout(resolve, ms); });
+    const spoken = clip ? playThrough(clip) : Promise.resolve();
+    Promise.all([minimum, spoken]).then(() => { if (token === advanceToken) goNext(); });
   }
 
   function resetWordState() {
@@ -123,12 +164,17 @@
     showAnswer = false;                       // Next resets Show Answer (critique 21)
   }
   // §2.3: moving stops whatever is being spoken and shows the word at once.
+  // This is also where the scheduled advance lands, so it cancels its own
+  // token on the way through — an advance that fires must not leave a live
+  // timer behind it.
   function goNext() {
+    cancelAdvance();
     stopAudio();
     wordIndex = (wordIndex + 1) % words.length;
     resetWordState();
   }
   function goPrev() {
+    cancelAdvance();
     stopAudio();
     wordIndex = (wordIndex - 1 + words.length) % words.length;
     resetWordState();
@@ -153,8 +199,9 @@
     if (g) { e.preventDefault(); appendChar(g); }
   }
   onMount(() => window.addEventListener('keydown', onKey));
-  // §3.1: audio stops when the learner leaves the exercise.
-  onDestroy(() => { window.removeEventListener('keydown', onKey); stopAudio(); });
+  // §3.1: audio stops when the learner leaves the exercise, and a pending
+  // advance does not fire into a destroyed component.
+  onDestroy(() => { window.removeEventListener('keydown', onKey); cancelAdvance(); stopAudio(); });
 </script>
 
 <div class="card speller">
@@ -172,8 +219,10 @@
   </div>
 
   <div class="feedback {feedbackKind}">{feedback}</div>
-  <!-- §5.5: spellUntilRight waits on a correct answer, so it says so rather
-       than sitting on a won word with nothing happening. -->
+  <!-- §B4: the message appears on exactly the outcomes that WAIT. Since §B1a
+       this speller has none — a correct spelling is already on its way to the
+       next word — so this renders nothing today and would start rendering by
+       itself if the class ever acquired a waiting outcome. -->
   {#if awaitingNext}<div class="await-next" role="status">Click Next to continue</div>{/if}
 
   <div class="controls">

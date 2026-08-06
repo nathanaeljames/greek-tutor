@@ -134,6 +134,24 @@ D-27 | ch5 | The First Declension--Eta chart prints its first row
      not cover the original's own chart-label inconsistencies, and
      normalizing one of the two would be a silent content edit.
      | Fable, 5E assembly, fidelity-first.
+D-28 | app | EVERY CORRECT ANSWER AUTO-ADVANCES, overriding the
+     original. Nathanael's second DOSBox pass records "no autoprogress
+     on correct" for 13 of the 14 spelling exercises, and the port
+     copied that observation into two advance classes —
+     `spellUntilRight` and `manualCorrectAutoIncorrect` — whose only
+     distinguishing feature was waiting for Next on a CORRECT answer.
+     Both classes are WITHDRAWN and the six-class table is now four:
+     every `spellUntilRight` is `retryUntilRight` and every
+     `manualCorrectAutoIncorrect` is `autoBoth`. The wait is still
+     max(2000ms, clip), so the afterGuess audio finishes first.
+     This is a deliberate departure from observed behavior, not a
+     fidelity claim: a learner who has just answered correctly should
+     not have to ask for the next item. ONE case is a no-op rather
+     than an exception (rule B1b): the three whole-verse spellers hold
+     a single item, so there is nothing to advance to and they mark
+     correct and stop rather than driving the sequential rail.
+     | Nathanael, 2026-08-06; DRILL-BEHAVIOR-RULES B1a/B1b;
+     5E-SPEC3 §1.
 
 ## Auto-progress / advance rule matrix
 

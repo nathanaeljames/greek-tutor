@@ -6,9 +6,10 @@
   // ANSWER POLICY. activity.answerPolicy declares WHAT a tap on an option
   // means; src/lib/timing.js decides how long anything waits (D-14 — no
   // timing number lives in this file) and which outcomes move by themselves.
-  // The six classes and their behavior live in that module's header; this
+  // The four classes and their behavior live in that module's header; this
   // component reads the resolved FLAGS (autoOnCorrect / autoOnIncorrect /
-  // revealOnIncorrect / oneAttempt) and never compares a class name.
+  // revealOnIncorrect / oneAttempt) and never compares a class name — which is
+  // why 5E-SPEC3's six-to-four collapse needed no edit here at all.
   // Completion: one-attempt drills complete on all-ATTEMPTED, "until right"
   // drills on all-correct.
   //
@@ -268,8 +269,10 @@
       if (right && advancePolicy.autoOnCorrect) scheduleAdvance(advancePolicy.correctMs, clip);
       else if (!right && advancePolicy.autoOnIncorrect) scheduleAdvance(advancePolicy.incorrectMs, clip);
       else {
-        // A waiting outcome: nothing is scheduled, the surface says so
-        // (waitingForNext), and the clip still gets spoken.
+        // The one waiting outcome left (manualOnIncorrect, wrong): nothing is
+        // scheduled, the surface says so (waitingForNext), and the clip still
+        // gets spoken. A CORRECT answer can never reach this branch — B1a
+        // makes autoOnCorrect a constant.
         cancelAdvance();
         if (clip) play(clip);
       }
@@ -440,8 +443,9 @@
         </div>
       {/if}
       <!-- One attempt, wrong, nothing auto-advancing: say so rather than
-           leaving a locked grid with no explanation (advanceClass
-           manualOnIncorrect). The sequential rail's Next works too. -->
+           leaving a locked grid with no explanation. Since rule B1a this is
+           the app's ONLY waiting outcome — `manualOnIncorrect` on a wrong
+           answer. The sequential rail's Next works too. -->
       {#if waitingForNext}<div class="await-next" role="status">Click Next to continue</div>{/if}
       {#if oneSyllableOption}
         <button
