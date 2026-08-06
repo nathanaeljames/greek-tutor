@@ -2126,7 +2126,7 @@
    },
    "audioTiming": "afterGuess",
    "answerPolicy": {
-    "advanceClass": "spellUntilRight",
+    "advanceClass": "retryUntilRight",
     "attemptsPerItem": "retry"
    }
   },
@@ -2195,7 +2195,7 @@
    },
    "audioTiming": "afterGuess",
    "answerPolicy": {
-    "advanceClass": "spellUntilRight",
+    "advanceClass": "retryUntilRight",
     "attemptsPerItem": "retry"
    }
   },
@@ -2243,7 +2243,7 @@
    "spellerTilesRef": "chapt_1",
    "audioTiming": "afterGuess",
    "answerPolicy": {
-    "advanceClass": "spellUntilRight",
+    "advanceClass": "retryUntilRight",
     "attemptsPerItem": "retry"
    }
   }

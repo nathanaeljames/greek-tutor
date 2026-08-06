@@ -1652,7 +1652,7 @@
    },
    "audioTiming": "afterGuess",
    "answerPolicy": {
-    "advanceClass": "spellUntilRight",
+    "advanceClass": "retryUntilRight",
     "attemptsPerItem": "retry"
    }
   }

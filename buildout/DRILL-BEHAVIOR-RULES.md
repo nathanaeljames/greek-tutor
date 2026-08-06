@@ -1,7 +1,11 @@
 # DRILL-BEHAVIOR-RULES.md
 
 Derived 2026-08-06 from Nathanael's DOSBox pass over every drill and
-exercise in chapters 1-5 (`drill_behavior_unify.xlsx`). **This document
+exercise in chapters 1-5, second revision
+(`drill_behavior_unify_2.xlsx`), which corrected the
+`Behavior on correct?` column. Re-deriving the ledger from that revision
+changed nothing in any chapter file, so the four classes below are
+confirmed against two independent passes. **This document
 and `DRILL-BEHAVIOR-LEDGER.csv` together replace DRILL-MATRIX.md**,
 which was built from screenshots and inference and was wrong on 23 of
 50 rows.
@@ -62,18 +66,34 @@ Neither has a guess, so before/after does not apply to them.
 
 ## B. Advance behavior
 
-**B1. There are six classes and no per-activity exceptions.** A new
-activity is ASSIGNED to a class. If it needs a seventh, that is a
-finding to report, not a special case to write.
+**B1. There are FOUR classes and no per-activity exceptions.** A new
+activity is ASSIGNED to a class. If it needs a fifth, that is a finding
+to report, not a special case to write.
 
 | Class | On correct | On incorrect |
 | --- | --- | --- |
 | `none` | not scored | not scored |
 | `autoBoth` | auto-advance | reveal the answer, auto-advance |
 | `manualOnIncorrect` | auto-advance | reveal the answer, wait for Next |
-| `retryUntilRight` | auto-advance | do NOT reveal, item stays open |
-| `manualCorrectAutoIncorrect` | wait for Next | reveal the answer, auto-advance |
-| `spellUntilRight` | wait for Next | do NOT reveal, keep what was typed, retry or Next |
+| `retryUntilRight` | auto-advance | do NOT reveal, item stays open for another attempt |
+
+**B1a. EVERY correct answer auto-advances. There are no exceptions and
+no class may introduce one.** Nathanael, 2026-08-06, overriding both the
+original and the port: 13 of 14 spelling exercises observe "no
+autoprogress" on correct in DOSBox, and the port copied that. It is
+wrong for the port regardless. Auto-advance is subject to A2, so the
+`afterGuess` clip still finishes first.
+
+An earlier six-class table had `spellUntilRight` and
+`manualCorrectAutoIncorrect` waiting on correct. Both were errors of
+mine, never observed and never requested; each collapsed into a class
+above once B1a was stated. See DIVERGENCE-LOG D-28.
+
+**B1b. A single-item activity has nothing to advance to.** The three
+whole-verse spellers hold one verse each. They take `retryUntilRight`
+like every other speller, and the auto-advance is a no-op there: mark
+correct, stop, leave the sequential rail to the student. Auto-driving
+the rail would be a navigation surprise.
 
 **B2. Minimum delays are `ADVANCE_CORRECT_MS` = 2000 and
 `ADVANCE_INCORRECT_MS` = 4000**, shared by every surface, and subject to
@@ -97,7 +117,7 @@ surface waits and says nothing, add the message.
 
 **B5. Multi-guess is not spelling-only.** Nathanael's rule 4 as stated
 is nearly right but has one exception: the **Syllable Counting Drill**
-(ch2) is `retryUntilRight`. The accurate rule: **an activity allows
+(ch2) is `retryUntilRight` alongside the spellers. The accurate rule: **an activity allows
 repeated guesses only when revealing the answer would destroy the
 exercise.** For a speller the answer IS the exercise; for syllable
 counting the answer is a number the student must arrive at. Everything
@@ -112,6 +132,15 @@ infer behavior from a feedback string.**
 ---
 
 ## C. Spelling exercises
+
+**C0. A correct answer auto-advances**, exactly as everywhere else
+(B1a). Spelling exercises are not special on the correct path; they are
+special only on the wrong path.
+
+**C0a. A wrong answer NEVER reveals the correct spelling.** All twelve
+spellers are `retryUntilRight`. The original does not reveal, and
+revealing would end the exercise. `Show Answer` is the opt-in route and
+stays that way (C2).
 
 **C1. A wrong answer keeps what the student typed.** The original clears
 the slate; the port deliberately does not — there is a manual Clear
@@ -176,6 +205,13 @@ carried into shipped data, corrected a round later.
 
 **E3. When a rule and an observation disagree, the observation wins and
 the rule gets amended here**, with the row that broke it named.
+
+**E4a. A rule may not be derived from a value nobody wrote down.**
+The six-class table invented "wait for Next on correct" for fourteen
+activities from a column that was never marked for change. Once it was
+in a table it propagated without re-checking. Every cell of a rule
+table must trace to an observation or to an explicit instruction, and
+the ones that do not must be marked.
 
 **E4. Never infer behavior from:** a feedback string (B6), the presence
 of a button, the name of an activity, or how the same-named activity

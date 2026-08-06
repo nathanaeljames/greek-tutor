@@ -14,9 +14,8 @@ silently revert to whatever the assembler happened to hard-code:
     python3 scripts/apply-behavior-matrix.py \
         buildout/DRILL-BEHAVIOR-LEDGER.csv src/data
 
-The script also applies the typographic rules that are data-side:
-D2 (no displayed double hyphen), the two underlined accent rules in a
-HINT (5E-SPEC2 §5.3), and the removal of any lingering
+The script also applies the two typographic rules that are data-side:
+D2 (no displayed double hyphen) and the removal of any lingering
 `autoAdvanceMs`.
 
 Only rows whose Status is CONFIRMED are applied. TO FILL rows are for
@@ -28,45 +27,14 @@ Idempotent: running it twice changes nothing the second time.
 """
 import csv
 import json
-import os
 import re
 import sys
 import unicodedata
 
-# The report echoes the strings it changed, and some of them are Greek. On
-# Windows the console defaults to cp1252, which raises rather than mangling —
-# the script did its work and then died printing what it had done. Say UTF-8
-# out loud, and fall back to replacement characters rather than an exception.
-if hasattr(sys.stdout, 'reconfigure'):
-    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
-
 VALID_TIMING = {'beforeGuess', 'afterGuess', 'afterTap', 'afterCheck', 'none'}
-VALID_CLASS = {'none', 'autoBoth', 'manualOnIncorrect', 'retryUntilRight',
-               'manualCorrectAutoIncorrect', 'spellUntilRight'}
+VALID_CLASS = {'none', 'autoBoth', 'manualOnIncorrect', 'retryUntilRight'}
 PRONOUNCE_CHECKBOXES = ('Pronounce Each Drill', 'Pronounce Each Exercise')
 EM = '\u2014'
-
-# 5E-SPEC2 section 5.3. The first two of the six accent rules NAME the behavior
-# they teach, and the original underlines those names. The renderer has no
-# way to know which sentence is a rule name, and it must not be taught to
-# guess (a "first sentence of a multi-sentence item" heuristic would
-# underline half of chapter 3), so this is a data-side typographic rule
-# alongside D2 - and it lives here rather than in a hand edit so a
-# regenerated chapter 2 cannot lose it.
-#
-# Scoped to HINT content on purpose. The same two sentences also appear in
-# the Learn topic list, in an expander LABEL ("Rule 1: Nouns are
-# retentive") and in the Quick Review chart; underlining a summary hotword
-# or a device-verified teaching page is not what the rule asks for.
-HINT_UNDERLINES = ('Nouns are retentive.', 'Verbs are recessive.')
-
-# Non-underscore keys whose values are provenance rather than copy.
-PROVENANCE_KEYS = ('audioInventory',)
-
-# Data files nothing renders. font-map.json is the extraction pipeline's own
-# reference table (no runtime import anywhere in src/), so its prose is
-# documentation and its double hyphens are not "displayed".
-NON_RENDERED = {'font-map.json'}
 
 
 def load_ledger(path):
@@ -99,22 +67,12 @@ def dehyphen(obj, log, path='$'):
     """D2: a displayed double hyphen becomes an em dash.
 
     Only touches STRING VALUES, and only where the hyphens sit between
-    word characters, after a word, or SPACED between two words - never
-    inside a key, a markup tag or an id.
-
-    PROVENANCE IS SKIPPED ENTIRELY: every underscore-prefixed key, plus
-    `audioInventory`, whose values are role notes keyed by audio id.
-    `_legacy` records the TBK's own bytes and must stay byte-exact, and
-    `_comment`/`_note`/`_verify` are pipeline provenance that no screen
-    ever shows; the rule is about what is DISPLAYED, so rewriting them
-    would only churn the diff and blur where a mark came from.
-
-    The spaced form was added in 5E-SPEC2 section 5.4: it is the form
-    the Introduction uses ("WELCOME -- Greek Tutor...", "... -- ENJOY"),
-    and it was invisible to the two tight patterns.
+    word characters or after a word - never inside a key, a markup tag,
+    an id, or a legacy field, since `_legacy` records the TBK's own
+    bytes and must stay byte-exact.
     """
     if isinstance(obj, dict):
-        return {k: (v if k.startswith('_') or k in PROVENANCE_KEYS else
+        return {k: (v if k.startswith('_legacy') else
                     dehyphen(v, log, f'{path}.{k}'))
                 for k, v in obj.items()}
     if isinstance(obj, list):
@@ -122,31 +80,35 @@ def dehyphen(obj, log, path='$'):
     if isinstance(obj, str) and '--' in obj:
         new = re.sub(r'(?<=\w)--(?=\w)', EM, obj)
         new = re.sub(r'(?<=\w)--(?=\s|$)', EM, new)
-        new = re.sub(r'(?<=\s)--(?=\s)', EM, new)
         if new != obj:
             log.append((path, obj, new))
         return new
     return obj
 
 
-def underline_hint(obj, log, path='$'):
-    """Wrap the named accent rules in the [[u]]...[[/u]] the renderer draws.
+# 5E-SPEC2 §5.3, kept data-side. The two accent rules carry no
+# structural signal a renderer could key on, so the underline is
+# authored here beside D2 rather than inferred at render time.
+UNDERLINE = [
+    ('Nouns are retentive', '[[u]]Nouns are retentive[[/u]]'),
+    ('Verbs are recessive', '[[u]]Verbs are recessive[[/u]]'),
+]
 
-    Idempotent: a phrase already inside an underline span is skipped,
-    because the tag characters break the plain-text match.
-    """
+
+def underline(obj, log, path='$'):
     if isinstance(obj, dict):
-        return {k: underline_hint(v, log, f'{path}.{k}') for k, v in obj.items()}
+        return {k: (v if k.startswith('_legacy') else
+                    underline(v, log, f'{path}.{k}'))
+                for k, v in obj.items()}
     if isinstance(obj, list):
-        return [underline_hint(v, log, f'{path}[{i}]')
-                for i, v in enumerate(obj)]
+        return [underline(v, log, f'{path}[{i}]') for i, v in enumerate(obj)]
     if isinstance(obj, str):
         new = obj
-        for phrase in HINT_UNDERLINES:
-            if phrase in new and f'[[u]]{phrase}' not in new:
-                new = new.replace(phrase, f'[[u]]{phrase}[[/u]]')
+        for needle, marked in UNDERLINE:
+            if needle in new and '[[u]]' + needle not in new:
+                new = new.replace(needle, marked)
         if new != obj:
-            log.append((path, obj, new))
+            log.append((path, obj[:60], new[:60]))
         return new
     return obj
 
@@ -170,7 +132,7 @@ def apply_chapter(path, ledger, report):
             else:
                 policy['advanceClass'] = spec['advanceClass']
                 policy.setdefault('attemptsPerItem', 1)
-                if spec['advanceClass'] in ('retryUntilRight', 'spellUntilRight'):
+                if spec['advanceClass'] == 'retryUntilRight':
                     policy['attemptsPerItem'] = 'retry'
 
             ui = act.setdefault('ui', {})
@@ -191,51 +153,19 @@ def apply_chapter(path, ledger, report):
                         report['pronounce'].append(act['id'])
                     defaults['pronounceEach'] = True
 
-            if isinstance(act.get('hint'), dict):
-                act['hint'] = underline_hint(act['hint'], report['underlines'],
-                                             f'{act["id"]}.hint')
-
     hyphens = []
     data = dehyphen(data, hyphens)
     report['hyphens'] += [(path, p, a, b) for p, a, b in hyphens]
+
+    marks = []
+    data = underline(data, marks)
+    report['underlines'] += [(path, p) for p, _a, _b in marks]
 
     blob = json.dumps(data, ensure_ascii=False, indent=1) + '\n'
     if unicodedata.normalize('NFC', blob) != blob:
         raise SystemExit(f'STOP: {path} is not NFC after stamping')
     open(path, 'w', encoding='utf-8').write(blob)
     return touched
-
-
-def indent_of(text, default=1):
-    """The file's own indent width, so rewriting one string does not
-    reformat the whole file. The chapter files are written at indent 1
-    and intro.json at indent 2; a two-character typographic fix that
-    reflows 120 lines is a diff nobody can review."""
-    for line in text.split('\n')[1:]:
-        stripped = line.lstrip(' ')
-        if stripped and stripped != '}':
-            return len(line) - len(stripped) or default
-    return default
-
-
-def apply_plain(path, report):
-    """The typographic pass only, for the rendered data files that carry
-    no drills or exercises (intro.json, toc.json, the lexicons). The file
-    is left byte-identical when there is nothing to fix."""
-    try:
-        text = open(path, encoding='utf-8').read()
-    except OSError:
-        return
-    data = json.loads(text)
-    hyphens = []
-    data = dehyphen(data, hyphens)
-    if not hyphens:
-        return
-    report['hyphens'] += [(path, p, a, b) for p, a, b in hyphens]
-    blob = json.dumps(data, ensure_ascii=False, indent=indent_of(text)) + '\n'
-    if unicodedata.normalize('NFC', blob) != blob:
-        raise SystemExit(f'STOP: {path} is not NFC after stamping')
-    open(path, 'w', encoding='utf-8').write(blob)
 
 
 def main():
@@ -251,14 +181,6 @@ def main():
         except OSError:
             continue
         total += apply_chapter(path, ledger, report)
-    # D2 is an APP-WIDE rule, not a chapter one. Every rendered data file
-    # gets the typographic pass, not just chapt-NN.json: the last displayed
-    # double hyphens were in intro.json ("WELCOME --", "-- ENJOY") and in
-    # two chapter-1 lexicon glosses, none of which this loop had ever opened.
-    for name in sorted(os.listdir(datadir)):
-        if (name.endswith('.json') and not re.fullmatch(r'chapt-\d\d\.json', name)
-                and name not in NON_RENDERED):
-            apply_plain(f'{datadir}/{name}', report)
     print(f'stamped {total} activities from {len(ledger)} confirmed rows')
     if skipped:
         chs = sorted({c for c, _ in skipped})
@@ -270,9 +192,7 @@ def main():
         if report[key]:
             print(f'  {label}: {", ".join(report[key])}')
     if report['underlines']:
-        print(f'  hint underlines applied: {len(report["underlines"])}')
-        for p, a, b in report['underlines']:
-            print(f'    {p}: {a[:40]!r} -> {b[:52]!r}')
+        print(f'  accent-rule underlines applied: {len(report["underlines"])}')
     if report['hyphens']:
         print(f'  em dashes applied: {len(report["hyphens"])}')
         for path, p, a, b in report['hyphens']:

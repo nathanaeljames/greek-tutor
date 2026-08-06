@@ -606,11 +606,11 @@
        "items": [
         {
          "label": "1)",
-         "text": "Nouns are retentive. They attempt to keep their accents on the same syllable."
+         "text": "[[u]]Nouns are retentive[[/u]]. They attempt to keep their accents on the same syllable."
         },
         {
          "label": "2)",
-         "text": "Verbs are recessive. Their accent recedes towards the first syllable as far as is possible."
+         "text": "[[u]]Verbs are recessive[[/u]]. Their accent recedes towards the first syllable as far as is possible."
         },
         {
          "label": "3)",
@@ -636,7 +636,7 @@
       },
       {
        "type": "expander",
-       "label": "Rule 1: Nouns are retentive",
+       "label": "Rule 1: [[u]]Nouns are retentive[[/u]]",
        "content": [
         {
          "type": "greekRows",
@@ -678,7 +678,7 @@
       },
       {
        "type": "expander",
-       "label": "Rule 2: Verbs are recessive",
+       "label": "Rule 2: [[u]]Verbs are recessive[[/u]]",
        "content": [
         {
          "type": "greekRows",
@@ -2210,11 +2210,11 @@
       "items": [
        {
         "label": "1)",
-        "text": "[[u]]Nouns are retentive.[[/u]]  They attempt to keep their accents on the same syllable."
+        "text": "[[u]]Nouns are retentive[[/u]].  They attempt to keep their accents on the same syllable."
        },
        {
         "label": "2)",
-        "text": "[[u]]Verbs are recessive.[[/u]]  Their accent recedes towards the first syllable as far as is possible."
+        "text": "[[u]]Verbs are recessive[[/u]].  Their accent recedes towards the first syllable as far as is possible."
        },
        {
         "label": "3)",
@@ -2967,7 +2967,7 @@
    "answerPolicy": {
     "attemptsPerItem": 1,
     "revealDividedForm": true,
-    "advanceClass": "manualCorrectAutoIncorrect"
+    "advanceClass": "autoBoth"
    },
    "_answers_note": "Pool DOSBox-verified: the 20 vocabulary words (ch1+ch2), NOT the b_ex2 files (those belong to Accent Placement). Divisions sourced from the original's own syllable charts (One Vowel/2 Consonants/2 Vowels popups + Syllable Names), which cover all 20 words: kurios divides kur-i-os per the chart's explicit note, Petros = Pet-ros and Christos = Chris-tos per the 2-Consonants chart (Nathanael's 'false negative' on Christos matches the original's own Chris-tos division). division[] = 1-based gap indices between grapheme clusters (gap i sits between cluster i and i+1). Scoring is correctness-first per Nathanael (VERIFY E1).",
    "audioTiming": "afterGuess"
@@ -3211,7 +3211,7 @@
    "answerPolicy": {
     "attemptsPerItem": 1,
     "revealAnswerForm": true,
-    "advanceClass": "manualCorrectAutoIncorrect"
+    "advanceClass": "autoBoth"
    },
    "hint": {
     "content": [
@@ -3245,11 +3245,11 @@
       "items": [
        {
         "label": "1)",
-        "text": "[[u]]Nouns are retentive.[[/u]]  They attempt to keep their accents on the same syllable."
+        "text": "[[u]]Nouns are retentive[[/u]].  They attempt to keep their accents on the same syllable."
        },
        {
         "label": "2)",
-        "text": "[[u]]Verbs are recessive.[[/u]]  Their accent recedes towards the first syllable as far as is possible."
+        "text": "[[u]]Verbs are recessive[[/u]].  Their accent recedes towards the first syllable as far as is possible."
        },
        {
         "label": "3)",
@@ -3340,7 +3340,7 @@
    "_verify_resolved": "Tile inventory DOSBox-confirmed identical to chapter 1's 39 tiles (VERIFY E4).",
    "audioTiming": "afterGuess",
    "answerPolicy": {
-    "advanceClass": "spellUntilRight",
+    "advanceClass": "retryUntilRight",
     "attemptsPerItem": "retry"
    }
   }
@@ -3392,11 +3392,11 @@
      "items": [
       {
        "label": "1)",
-       "text": "Nouns are retentive.  They attempt to keep their accents on the same syllable."
+       "text": "[[u]]Nouns are retentive[[/u]].  They attempt to keep their accents on the same syllable."
       },
       {
        "label": "2)",
-       "text": "Verbs are recessive.  Their accent recedes towards the first syllable as far as is possible."
+       "text": "[[u]]Verbs are recessive[[/u]].  Their accent recedes towards the first syllable as far as is possible."
       },
       {
        "label": "3)",

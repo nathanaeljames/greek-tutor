@@ -1978,7 +1978,7 @@
    },
    "audioTiming": "afterGuess",
    "answerPolicy": {
-    "advanceClass": "spellUntilRight",
+    "advanceClass": "retryUntilRight",
     "attemptsPerItem": "retry"
    }
   },
@@ -2046,7 +2046,7 @@
    },
    "audioTiming": "afterGuess",
    "answerPolicy": {
-    "advanceClass": "spellUntilRight",
+    "advanceClass": "retryUntilRight",
     "attemptsPerItem": "retry"
    }
   },
@@ -2099,7 +2099,7 @@
    "_keyboard_note": "Requires the extended speller keyboard (space + punctuation) delivered by the 5D spec Phase 0 checkpoint.",
    "audioTiming": "afterGuess",
    "answerPolicy": {
-    "advanceClass": "spellUntilRight",
+    "advanceClass": "retryUntilRight",
     "attemptsPerItem": "retry"
    }
   }
