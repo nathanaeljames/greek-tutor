@@ -25,20 +25,33 @@ const check = (name, ok, detail = '') => {
 const ch3 = JSON.parse(readFileSync('src/data/chapt-03.json', 'utf8'));
 const ch4 = JSON.parse(readFileSync('src/data/chapt-04.json', 'utf8'));
 const ch5 = JSON.parse(readFileSync('src/data/chapt-05.json', 'utf8'));
+const ch1 = JSON.parse(readFileSync('src/data/chapt-01.json', 'utf8'));
+const ch2 = JSON.parse(readFileSync('src/data/chapt-02.json', 'utf8'));
 const verse = (ch3.exercise.find(a => a.type === 'spellVerse').answerWords || []).join(' ');
-const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '').normalize('NFC');
+// UNACCENTED, not unmarked (5E-SPEC2 §4.2). "With Accents" OFF forgives the
+// acute, the grave and the circumflex and NOTHING else, so a fixture that
+// stands in for "the learner typed it without accents" must keep every
+// breathing, diaeresis and iota subscript. Stripping \p{M} here — which is
+// what this helper used to do — is now itself a misspelling, and there is a
+// test below that asserts exactly that.
+const stripAccents = s => s.normalize('NFD').replace(/[̀́͂]/gu, '').normalize('NFC');
+const stripAllMarks = s => s.normalize('NFD').replace(/\p{M}/gu, '').normalize('NFC');
 const normalizeText = value => String(value ?? '').replace(/\s+/g, ' ').trim().normalize('NFC');
 
 // playwright-core does not install a browser. Prefer its configured binary,
 // then use an installed stable browser without hard-coding a machine path.
+// The audio assertions play REAL clips, so the autoplay policy has to be out
+// of the way: a beforeGuess prompt is spoken on arrival with no gesture behind
+// it, and a blocked play() would look exactly like a broken one.
+const LAUNCH = { args: ['--autoplay-policy=no-user-gesture-required'] };
 async function launchBrowser() {
   const explicit = process.env.PLAYWRIGHT_EXECUTABLE_PATH;
-  if (explicit) return chromium.launch({ executablePath: explicit });
+  if (explicit) return chromium.launch({ ...LAUNCH, executablePath: explicit });
   try {
-    return await chromium.launch();
+    return await chromium.launch(LAUNCH);
   } catch (original) {
     for (const channel of ['chrome', 'msedge']) {
-      try { return await chromium.launch({ channel }); } catch { /* keep looking */ }
+      try { return await chromium.launch({ ...LAUNCH, channel }); } catch { /* keep looking */ }
     }
     throw original;
   }
@@ -46,7 +59,75 @@ async function launchBrowser() {
 
 const browser = await launchBrowser();
 const context = await browser.newContext({ viewport: { width: 390, height: 900 } });
+
+// AUDIO OBSERVABILITY (5E-SPEC2 §6.2-§6.4). src/lib/audio.js is the app's sole
+// audio choke point and it plays through `new Audio(objectURL)`, so wrapping
+// the constructor records every clip the app starts, when it started, and when
+// it ended or was cut off — WITHOUT changing what plays. Nothing here reaches
+// into a component: the tests still only ever click what the learner clicks.
+await context.addInitScript(() => {
+  const Native = window.Audio;
+  window.__clips = [];
+  function Wrapped(src) {
+    const el = new Native(src);
+    const rec = { src, createdAt: Date.now(), startedAt: null, endedAt: null, stoppedAt: null };
+    window.__clips.push(rec);
+    const play = el.play.bind(el);
+    el.play = () => { rec.startedAt = Date.now(); return play(); };
+    el.addEventListener('ended', () => { rec.endedAt = Date.now(); });
+    el.addEventListener('pause', () => { rec.stoppedAt = Date.now(); });
+    return el;
+  }
+  Wrapped.prototype = Native.prototype;
+  window.Audio = Wrapped;
+});
 const page = await context.newPage();
+
+const clips = () => page.evaluate(() => window.__clips.map(c => ({ ...c })));
+const lastClip = async () => (await clips()).slice(-1)[0] || null;
+const clipsPlaying = () => page.evaluate(() =>
+  window.__clips.filter(c => c.startedAt && !c.endedAt && !c.stoppedAt).length);
+
+// A DELIBERATELY LONG CLIP. §6.2 asks for a case where the audio outlasts the
+// 2000ms class minimum, and no shipped chapter-1-5 vocabulary clip does. The
+// bytes are seeded straight into the audio store the app already reads
+// (IndexedDB 'greek-tutor'/'audio', keyed by the same absolute path), so the
+// app's own IDB-hit path serves them and no test code touches playback.
+// A silent 16-bit mono WAV is used rather than a truncated m4a because it
+// decodes on any engine and its duration is exactly what we asked for.
+async function seedLongClip(paths, seconds) {
+  return page.evaluate(async ({ paths, seconds }) => {
+    const rate = 8000;
+    const samples = Math.round(rate * seconds);
+    const buffer = new ArrayBuffer(44 + samples * 2);
+    const view = new DataView(buffer);
+    const ascii = (offset, text) => { for (let i = 0; i < text.length; i++) view.setUint8(offset + i, text.charCodeAt(i)); };
+    ascii(0, 'RIFF'); view.setUint32(4, 36 + samples * 2, true); ascii(8, 'WAVE');
+    ascii(12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true); view.setUint32(24, rate, true);
+    view.setUint32(28, rate * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true);
+    ascii(36, 'data'); view.setUint32(40, samples * 2, true);
+    const blob = new Blob([buffer], { type: 'audio/wav' });
+    await new Promise((resolve, reject) => {
+      const open = indexedDB.open('greek-tutor', 1);
+      open.onupgradeneeded = () => {
+        if (!open.result.objectStoreNames.contains('audio')) open.result.createObjectStore('audio');
+      };
+      open.onerror = () => reject(open.error);
+      open.onsuccess = () => {
+        const tx = open.result.transaction('audio', 'readwrite');
+        for (const path of paths) tx.objectStore('audio').put(blob, path);
+        tx.oncomplete = () => { open.result.close(); resolve(); };
+        tx.onerror = () => reject(tx.error);
+      };
+    });
+  }, { paths, seconds });
+}
+// id -> path, the naming contract from src/lib/audio.js (never re-derived).
+const audioPath = id => {
+  const m = String(id || '').match(/^(chapt_\d+|vocab\d*|john\d*|rev_par|rev_voc|intro)_(.+)$/);
+  return m ? `/audio/${m[1]}/${m[2]}.m4a` : null;
+};
 
 // The activity's OWN stepper, never the sequential rail's Previous/Next at the
 // bottom of the screen (both are labelled "Next"; only the in-card pair moves
@@ -192,11 +273,13 @@ check('§4/1 backspace acts at the caret', text === 'λγει', JSON.stringify(t
 
 // ---------------------------------------------------------------- A6 policy
 const cases = [
-  ['A6/1 verse with no accents, accents OFF', strip(verse), false, 'ok'],
+  ['A6/1 verse with no accents, accents OFF', stripAccents(verse), false, 'ok'],
   ['A6/2 verse fully accented, accents ON', verse, true, 'ok'],
-  ['A6/3 verse with no accents, accents ON', strip(verse), true, 'bad'],
+  ['A6/3 verse with no accents, accents ON', stripAccents(verse), true, 'bad'],
   ['A6/4 verse without its punctuation, accents ON', verse.replace(/[,·]/g, ''), true, 'ok'],
-  ['A6/5 lowercase where the verse capitalizes, accents ON', verse.toLowerCase(), true, 'ok']
+  ['A6/5 lowercase where the verse capitalizes, accents ON', verse.toLowerCase(), true, 'ok'],
+  // 5E-SPEC2 §4.2: the breathings are part of the spelling at BOTH settings.
+  ['5E §4.2 verse with breathings stripped, accents OFF', stripAllMarks(verse), false, 'bad']
 ];
 for (const [label, input, accents, expect] of cases) {
   await go('#/activity/chapt_3/c3_ex_scripture_speller');
@@ -211,10 +294,15 @@ for (const [label, input, accents, expect] of cases) {
 // ---------------------------------------------------------------- §3 revisit
 // Answer item 1, step forward, step back: the item must come up FRESH (no
 // selection, no feedback, options unlocked) while the score stands.
+// The chapter-3 vocabulary drills used to be in this list. The ledger struck
+// their Previous/Next pair (5E-SPEC2 §0: the original has none), so they have
+// no revisit path any more — the same reason chapter 1's six select drills are
+// asserted rather than walked below.
 for (const [label, hash] of [
   ['ch2 Accent Rule', '#/activity/chapt_2/c2_drill_accent_rule'],
+  ['ch2 Marking Recognition', '#/activity/chapt_2/c2_drill_marking_recognition'],
   ['ch3 Verb Translating', '#/activity/chapt_3/c3_drill_verb_translating'],
-  ['ch3 Vocabulary: Greek to English', '#/activity/chapt_3/c3_drill_vocab_gk_en'],
+  ['ch3 Parsing', '#/activity/chapt_3/c3_drill_parsing'],
   ['ch4 Greek Noun', '#/activity/chapt_4/c4_drill_greek_noun'],
   ['ch5 First Declension Noun', '#/activity/chapt_5/c5_drill_first_decl_noun']
 ]) {
@@ -242,7 +330,6 @@ for (const [label, hash] of [
 // a Previous/Next stepper, and all six are `retry` class (an item stays open
 // until it is answered correctly). Asserted rather than assumed.
 {
-  const ch1 = JSON.parse(readFileSync('src/data/chapt-01.json', 'utf8'));
   const selects = [...(ch1.drill || []), ...(ch1.exercise || [])].filter(a => a.type === 'select');
   const withStepper = selects.filter(a => (a.ui?.buttons || []).includes('Next'));
   check('§3 ch1 has no scored select drill with a revisit path',
@@ -271,6 +358,13 @@ const gotoTopic = async index => {
 // Authored select questions are shuffled, so UI assertions identify the
 // visible item by its rendered prompt and citation before consulting fields
 // such as answer, translate, or gender.
+//
+// AMBIGUITY IS null, NOT A GUESS. chapter 4's Greek Noun drill ships two items
+// on the same sentence and the same reference ("Brother will betray brother",
+// Mat 10:21) with different answers, so prompt+reference does not always
+// identify one item. Returning the first match made a test click a wrong
+// option roughly one run in twenty and then report the advance as broken. The
+// caller reloads for a different shuffle instead (freshKnownItem below).
 async function authoredItemOnScreen(activity) {
   const visiblePrompt = normalizeText(await page.locator('.card .prompt').first().innerText());
   const citation = page.locator('.card .prompt-citation');
@@ -281,8 +375,21 @@ async function authoredItemOnScreen(activity) {
     : (activity.promptIsGreek || promptField === 'greek')
       ? item.greek
       : (item.prompt != null ? item.prompt : (promptField ? item[promptField] : '')));
-  return activity.items.find(item => promptFor(item) === visiblePrompt
-    && (!visibleCitation || normalizeText(item.ref) === visibleCitation)) || null;
+  const matches = activity.items.filter(item => promptFor(item) === visiblePrompt
+    && (!visibleCitation || normalizeText(item.ref) === visibleCitation));
+  return matches.length === 1 ? matches[0] : null;
+}
+
+// Reload until the shuffle puts an item on screen that prompt+reference
+// identifies uniquely. Returns null if it never does, so the caller can fail
+// the check with a reason instead of clicking something arbitrary.
+async function freshKnownItem(hash, activity, tries = 10) {
+  for (let attempt = 0; attempt < tries; attempt++) {
+    await go(hash);
+    const item = await authoredItemOnScreen(activity);
+    if (item) return item;
+  }
+  return null;
 }
 
 async function checkMoreBack(label, hash, topicIndex, firstLemma, secondLemma) {
@@ -361,8 +468,7 @@ await checkChartRouteReset('ch5 Definite Article', '#/activity/chapt_5/c5_learn_
 // ---------------------------------------------------------------- 5E §4.5 button-driven reveals
 async function checkReveal(label, chapter, activityId, buttonName, field) {
   const activity = activityById(chapter, activityId);
-  await go(`#/activity/${chapter === ch4 ? 'chapt_4' : 'chapt_5'}/${activityId}`);
-  const currentItem = await authoredItemOnScreen(activity);
+  const currentItem = await freshKnownItem(`#/activity/${chapter === ch4 ? 'chapt_4' : 'chapt_5'}/${activityId}`, activity);
   const expected = currentItem ? normalizeText(currentItem[field]) : null;
   const output = page.locator(`.card [data-reveal="${field}"]`);
   check(`5E §4.5 ${label}: reveal starts hidden`, await output.count() === 0);
@@ -447,11 +553,10 @@ await measureAdvance('ch3 Scripture Memory Drill', '#/activity/chapt_3/c3_drill_
 // solely through the rendered UI. Report the observed milliseconds.
 async function measureAuthoredAdvance(label, chapter, chapterId, activityId, wantCorrect, expectedMs) {
   const activity = activityById(chapter, activityId);
-  await go(`#/activity/${chapterId}/${activityId}`);
+  const currentItem = await freshKnownItem(`#/activity/${chapterId}/${activityId}`, activity);
   const before = await itemNumber();
   const tiles = page.locator('.grid.options .tile, .option-group .tile');
   const labels = (await tiles.allInnerTexts()).map(normalizeText);
-  const currentItem = await authoredItemOnScreen(activity);
   if (!currentItem) {
     check(`5E timing ${label}`, false,
       'could not match the rendered prompt/reference to authored data');
@@ -565,6 +670,582 @@ for (const chapterId of ['chapt_1', 'chapt_2', 'chapt_3', 'chapt_4', 'chapt_5'])
   await go(`#/activity/${chapterId}/${objectives.id}`);
   const marker = await page.locator('.card ol').first().evaluate(el => getComputedStyle(el).listStyleType);
   check(`§5 ${chapterId} objectives use "1. 2. 3."`, marker === 'decimal', marker);
+}
+
+// ================================================================ 5E-SPEC2 §6
+// Everything below is this round's contract: the six advance classes, the
+// afterGuess audio wait, the audio lifecycle, the two withdrawn spelling
+// leniencies, Show Answer, modal reachability and the option-grid census.
+await page.setViewportSize({ width: 390, height: 900 });
+
+const CHAPTERS = { chapt_1: ch1, chapt_2: ch2, chapt_3: ch3, chapt_4: ch4, chapt_5: ch5 };
+const LEXICON = id => JSON.parse(readFileSync(`src/data/lexicon-chapt0${id.split('_')[1]}.json`, 'utf8'));
+const promptGloss = () => page.locator('.card.speller .flash-pane .value').first().innerText();
+const exerciseCount = () => page.locator('.card .exercise-count').innerText();
+const awaitNextShown = async () => await page.locator('.await-next').count() > 0;
+
+// ---------------------------------------------------------------- §6.1 classes
+// `none` — an explore grid is not scored at all: no feedback line, no policy.
+await go('#/activity/chapt_1/c1_drill_letter_names');
+await page.locator('.grid.letters .tile').first().click();
+await page.waitForTimeout(150);
+{
+  const activity = activityById(ch1, 'c1_drill_letter_names');
+  check('5E §6.1 none: explore grid is not scored',
+    !activity.answerPolicy && await page.locator('.feedback').count() === 0
+      && await page.locator('.await-next').count() === 0,
+    `answerPolicy ${JSON.stringify(activity.answerPolicy)}`);
+}
+
+// `autoBoth` — BOTH outcomes move by themselves. The incorrect path is already
+// measured above; this is the correct one, on a different chapter.
+await measureAuthoredAdvance('ch4 Scripture Memory (autoBoth, correct)', ch4, 'chapt_4', 'c4_drill_scripture_memory', true, CORRECT_MS);
+
+// `manualOnIncorrect` — a wrong answer reveals the answer, locks the grid and
+// STAYS. The correct path is measured above; this asserts the standing still.
+{
+  const activity = activityById(ch4, 'c4_drill_greek_noun');
+  const item = await freshKnownItem('#/activity/chapt_4/c4_drill_greek_noun', activity);
+  const before = await itemNumber();
+  const tiles = page.locator('.grid.options .tile');
+  const labels = (await tiles.allInnerTexts()).map(normalizeText);
+  const wrong = labels.findIndex(text => text !== normalizeText(item.answer));
+  await tiles.nth(wrong).click();
+  await page.waitForTimeout(200);
+  // The paradigm grids legitimately repeat a form -- nominative and vocative
+  // plural are homographs, so "ἀδελφοί" is two tiles -- and when THAT is the
+  // answer both light up. Assert what is revealed, not how many tiles it took.
+  const revealed = (await page.locator('.grid.options .tile.correct').allInnerTexts()).map(normalizeText);
+  const said = await awaitNextShown();
+  await page.waitForTimeout(INCORRECT_MS * 1.5);
+  check('5E §6.1 manualOnIncorrect: incorrect reveals, waits, and says so',
+    await feedbackKind() === 'bad' && revealed.length >= 1
+      && revealed.every(text => text === normalizeText(item.answer))
+      && said && await itemNumber() === before,
+    `revealed ${JSON.stringify(revealed)} for answer ${JSON.stringify(item.answer)}, message ${said}, item ${before} -> ${await itemNumber()}`);
+}
+
+// `retryUntilRight` — a wrong answer reveals NOTHING, does not advance, and
+// leaves the item open for another attempt.
+{
+  // The pool is shuffled and the items name their word by lexicon ref, so the
+  // wrong option is resolved the same way the app resolves the prompt: match
+  // the rendered Greek to a lemma, then pick any option that is not its answer.
+  const activity = activityById(ch2, 'c2_drill_syllable_counting');
+  const lexicon = LEXICON('chapt_2');
+  const greekOf = item => {
+    const bucket = lexicon[item.pool] || lexicon.lemmas || {};
+    return normalizeText((bucket[item.ref] || {}).greek);
+  };
+  await go('#/activity/chapt_2/c2_drill_syllable_counting');
+  const before = await itemNumber();
+  const shown = normalizeText(await page.locator('.card .prompt').first().innerText());
+  const item = activity.items.find(i => greekOf(i) === shown);
+  const tiles = page.locator('.grid.options .tile');
+  const labels = (await tiles.allInnerTexts()).map(normalizeText);
+  const wrongAt = item ? labels.findIndex(text => text !== String(item.answer)) : -1;
+  await tiles.nth(Math.max(wrongAt, 0)).click();
+  await page.waitForTimeout(150);
+  const kind = await feedbackKind();
+  const revealed = await page.locator('.grid.options .tile.correct').count();
+  const said = await awaitNextShown();
+  await page.waitForTimeout(INCORRECT_MS * 1.4);
+  check('5E §6.1 retryUntilRight: incorrect reveals nothing and stays open',
+    wrongAt >= 0 && kind === 'bad' && revealed === 0 && !said && await itemNumber() === before,
+    `wrong tile ${wrongAt} (${JSON.stringify(shown)}), feedback ${kind}, revealed ${revealed}, message ${said}, item ${before} -> ${await itemNumber()}`);
+  // Still open: a second tap on the SAME item is accepted, not swallowed.
+  await page.locator('.card').getByRole('button', { name: 'Score', exact: true }).click();
+  const attemptsBefore = await page.locator('.live-score').innerText();
+  await tiles.nth(labels.findIndex(text => text === String(item && item.answer))).click();
+  await page.waitForTimeout(150);
+  const attemptsAfter = await page.locator('.live-score').innerText();
+  check('5E §6.1 retryUntilRight: the item stays open for another attempt',
+    /out of 2 attempts/.test(attemptsAfter) && await feedbackKind() === 'ok',
+    `${attemptsBefore.trim()} -> ${attemptsAfter.trim()}`);
+}
+
+// `manualCorrectAutoIncorrect` — the ch2 exercises, and the class whose
+// direction is the opposite of the obvious one: CORRECT waits, wrong advances.
+const ACCENT_OF = { '́': 'Acute', '̀': 'Grave', '͂': 'Circumflex' };
+function accentAnswer(form) {
+  const clusters = [...new Intl.Segmenter('el', { granularity: 'grapheme' }).segment(form)].map(p => p.segment);
+  for (let i = 0; i < clusters.length; i++) {
+    for (const ch of clusters[i].normalize('NFD')) if (ACCENT_OF[ch]) return { index: i, type: ACCENT_OF[ch] };
+  }
+  return null;
+}
+{
+  // The accent-placement pool is authored order, not shuffled, so item 1 is
+  // deterministic and its answer is read out of the delivered data.
+  const activity = activityById(ch2, 'c2_ex_accent_placement');
+  const answer = accentAnswer(activity.items[0].answerForm);
+  const other = (activity.accentTypes || []).find(t => t !== answer.type);
+
+  await go('#/activity/chapt_2/c2_ex_accent_placement');
+  const before = await exerciseCount();
+  await page.locator('.accent-types .chip', { hasText: answer.type }).first().click();
+  await page.locator('.accent-slot').nth(answer.index).click();
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(200);
+  const said = await awaitNextShown();
+  await page.waitForTimeout(CORRECT_MS * 1.6);
+  check('5E §6.1 manualCorrectAutoIncorrect: CORRECT waits for Next and says so',
+    await feedbackKind() === 'ok' && said && await exerciseCount() === before,
+    `message ${said}, item ${before.trim()} -> ${(await exerciseCount()).trim()}`);
+
+  await go('#/activity/chapt_2/c2_ex_accent_placement');
+  const beforeWrong = await exerciseCount();
+  await page.locator('.accent-types .chip', { hasText: other }).first().click();
+  await page.locator('.accent-slot').nth(answer.index).click();
+  const answeredAt = Date.now();
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(200);
+  // Read the outcome BEFORE the advance clears it — this class moves on by
+  // itself, so an assertion made after the move would read an empty banner.
+  const wrongKind = await feedbackKind();
+  const revealedForm = await page.locator('.exercise-answer').count();
+  const early = await exerciseCount();
+  let late = early;
+  while (late === beforeWrong && Date.now() - answeredAt < INCORRECT_MS * 1.6) {
+    await page.waitForTimeout(60);
+    late = await exerciseCount();
+  }
+  const elapsed = Date.now() - answeredAt;
+  check('5E §6.1 manualCorrectAutoIncorrect: INCORRECT reveals and auto-advances on 4000ms',
+    wrongKind === 'bad' && revealedForm === 1 && early === beforeWrong
+      && late !== beforeWrong && elapsed >= INCORRECT_MS * 0.8,
+    `feedback ${wrongKind}, revealed ${revealedForm}, item ${beforeWrong.trim()} -> ${late.trim()} at ${elapsed}ms`);
+}
+
+// `spellUntilRight` — correct waits for Next; wrong keeps what was typed and
+// never reveals the spelling.
+{
+  const activity = activityById(ch3, 'c3_ex_verb_speller');
+  const word = activity.items[0].greek;
+  await go('#/activity/chapt_3/c3_ex_verb_speller');
+  const before = await promptGloss();
+  await setAccents(false);
+  await typeAccented(stripAccents(word));
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(200);
+  const said = await awaitNextShown();
+  await page.waitForTimeout(CORRECT_MS * 1.6);
+  check('5E §6.1 spellUntilRight: a correct spelling waits for Next and says so',
+    await feedbackKind() === 'ok' && said && await promptGloss() === before,
+    `message ${said}, prompt ${JSON.stringify(before)} -> ${JSON.stringify(await promptGloss())}`);
+
+  await go('#/activity/chapt_3/c3_ex_verb_speller');
+  await setAccents(false);
+  await typeGreek('λυειζ');                                  // λύει with a stray ζ on the end
+  const typedBefore = await typed();
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(250);
+  check('5E §6.1 spellUntilRight: a wrong spelling keeps the slate and reveals nothing',
+    await feedbackKind() === 'bad' && await typed() === typedBefore
+      && await page.locator('.spell-answer').count() === 0
+      && !await awaitNextShown(),
+    `typed ${JSON.stringify(await typed())}, answer shown ${await page.locator('.spell-answer').count()}`);
+}
+
+// ------------------------------------------------- §6.2/§6.3 afterGuess audio
+// A clip LONGER than the 2000ms class minimum is seeded into the app's own
+// audio store, so the advance has to be max(2000, clip) and not 2000.
+const LONG_CLIP_S = 3;
+{
+  const activity = activityById(ch4, 'c4_drill_greek_noun');
+  const paths = activity.items.map(item => audioPath(item.audio)).filter(Boolean);
+  await go('#/activity/chapt_4/c4_drill_greek_noun');
+  await seedLongClip(paths, LONG_CLIP_S);
+  const item = await freshKnownItem('#/activity/chapt_4/c4_drill_greek_noun', activity);
+
+  const before = await itemNumber();
+  const tiles = page.locator('.grid.options .tile');
+  const labels = (await tiles.allInnerTexts()).map(normalizeText);
+  const rightAt = labels.findIndex(text => text === normalizeText(item.answer));
+  const answeredAt = Date.now();
+  await tiles.nth(rightAt).click();
+
+  let now = before;
+  while (now === before && Date.now() - answeredAt < LONG_CLIP_S * 1000 * 2.5) {
+    await page.waitForTimeout(50);
+    now = await itemNumber();
+  }
+  const advancedAt = Date.now();
+  const clip = await lastClip();
+  check('5E §6.2 afterGuess: the clip is played after the guess',
+    !!clip && !!clip.startedAt && clip.src.startsWith('blob:'), JSON.stringify(clip));
+  check('5E §6.2 afterGuess: the next item waits for a clip longer than 2000ms',
+    now !== before && !!clip && !!clip.endedAt && advancedAt >= clip.endedAt
+      && advancedAt - answeredAt >= LONG_CLIP_S * 1000 * 0.9,
+    `advanced ${advancedAt - answeredAt}ms after the guess; clip ran ${clip && clip.endedAt ? clip.endedAt - clip.startedAt : 'n/a'}ms`);
+
+  // §6.3 / §2.3: Next during playback stops the clip and moves AT ONCE.
+  const item2 = await freshKnownItem('#/activity/chapt_4/c4_drill_greek_noun', activity);
+  const beforeNext = await itemNumber();
+  const tiles2 = page.locator('.grid.options .tile');
+  const labels2 = (await tiles2.allInnerTexts()).map(normalizeText);
+  await tiles2.nth(labels2.findIndex(text => text === normalizeText(item2.answer))).click();
+  await page.waitForTimeout(250);
+  const playingBefore = await clipsPlaying();
+  const pressedAt = Date.now();
+  await stepper('Next').click();
+  await page.waitForTimeout(150);
+  const movedAt = Date.now();
+  check('5E §6.3 Next during afterGuess playback stops the audio and advances at once',
+    playingBefore === 1 && await clipsPlaying() === 0 && await itemNumber() !== beforeNext
+      && movedAt - pressedAt < 600,
+    `playing ${playingBefore} -> ${await clipsPlaying()}, item ${beforeNext} -> ${await itemNumber()} in ${movedAt - pressedAt}ms`);
+}
+
+// ---------------------------------------------------------------- §6.4 exits
+// The reported defect: Say Whole Paradigm on chapter 4's Masculine Declension
+// kept reading over the next topic and the next page. All three exits.
+async function startParadigmClip() {
+  await gotoTopic(4);
+  const say = page.locator('.card .pg-actions .btn', { hasText: 'Say Whole' }).first();
+  await say.click();
+  await page.waitForTimeout(250);
+  return clipsPlaying();
+}
+{
+  await go('#/activity/chapt_4/c4_learn_nouns');
+  const chartClip = await page.evaluate(() => null);   // keep the page settled
+  void chartClip;
+  await seedLongClip([], LONG_CLIP_S);                 // ensure the store exists
+  await go('#/activity/chapt_4/c4_learn_nouns');
+
+  let playing = await startParadigmClip();
+  await page.getByRole('button', { name: 'Next Topic', exact: true }).click();
+  await page.waitForTimeout(200);
+  check('5E §6.4 audio stops on a TOPIC SWITCH inside a topicPages activity',
+    playing === 1 && await clipsPlaying() === 0, `playing ${playing} -> ${await clipsPlaying()}`);
+
+  await go('#/activity/chapt_4/c4_learn_nouns');
+  playing = await startParadigmClip();
+  await page.locator('.rail-next').click();
+  await page.waitForTimeout(250);
+  check('5E §6.4 audio stops on RAIL navigation',
+    playing === 1 && await clipsPlaying() === 0, `playing ${playing} -> ${await clipsPlaying()}`);
+
+  await go('#/activity/chapt_4/c4_learn_nouns');
+  playing = await startParadigmClip();
+  await page.evaluate(() => { location.hash = '#/chapter/chapt_4'; });
+  await page.waitForTimeout(250);
+  check('5E §6.4 audio stops on a ROUTE CHANGE',
+    playing === 1 && await clipsPlaying() === 0, `playing ${playing} -> ${await clipsPlaying()}`);
+}
+
+// ------------------------------------------------------------ §6.5 spellers
+// The two withdrawn leniencies, on EVERY word speller in chapters 1-5, using
+// each speller's own first offending word rather than a hand-picked pair.
+const BREATHINGS = new Set(['̓', '̔']);
+function spellerAnswers(chapterId, activity) {
+  const lexicon = LEXICON(chapterId);
+  const lookup = ref => {
+    for (const bucket of ['lemmas', 'exampleWords', 'ch1_lemma_mirror']) {
+      if (lexicon[bucket] && lexicon[bucket][ref]) return lexicon[bucket][ref].greek;
+    }
+    return null;
+  };
+  return (activity.items || []).map(item => item.greek || (item.ref ? lookup(item.ref) : null));
+}
+for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+  for (const activity of activitiesOf(chapter).filter(a => a && a.type === 'spell')) {
+    const answers = spellerAnswers(chapterId, activity);
+    const finalIndex = answers.findIndex(w => w && w.normalize('NFC').endsWith('ς'));
+    const breathIndex = answers.findIndex(w => w && [...w.normalize('NFD')].some(c => BREATHINGS.has(c)));
+
+    if (finalIndex >= 0) {
+      const word = answers[finalIndex];
+      await go(`#/activity/${chapterId}/${activity.id}`);
+      await gotoItem(finalIndex);
+      await setAccents(false);
+      // Everything right except the final form: a medial sigma in final place.
+      await typeAccented(stripAccents(word).replace(/ς$/u, 'σ'));
+      await stepper('Check Answer').click();
+      await page.waitForTimeout(120);
+      check(`5E §6.5 ${chapterId} ${activity.id}: a missing final form is rejected`,
+        await feedbackKind() === 'bad', `"${await typed()}" for "${word}"`);
+    }
+    if (breathIndex >= 0) {
+      const word = answers[breathIndex];
+      await go(`#/activity/${chapterId}/${activity.id}`);
+      await gotoItem(breathIndex);
+      await setAccents(false);
+      // Everything right except the breathing, with "With Accents" OFF.
+      await typeAccented(stripAllMarks(word));
+      await stepper('Check Answer').click();
+      await page.waitForTimeout(120);
+      check(`5E §6.5 ${chapterId} ${activity.id}: a missing breathing is rejected with accents OFF`,
+        await feedbackKind() === 'bad', `"${await typed()}" for "${word}"`);
+      // ...and the same word WITH its breathing and no accents is accepted, so
+      // the rule above is not simply "everything fails".
+      await go(`#/activity/${chapterId}/${activity.id}`);
+      await gotoItem(breathIndex);
+      await setAccents(false);
+      await typeAccented(stripAccents(word));
+      await stepper('Check Answer').click();
+      await page.waitForTimeout(120);
+      check(`5E §6.5 ${chapterId} ${activity.id}: breathing kept, accents dropped, accepted`,
+        await feedbackKind() === 'ok', `"${await typed()}" for "${word}"`);
+    }
+  }
+}
+
+// ------------------------------------------------------- §6.6 Show Answer
+for (const [chapterId, activityId] of [
+  ['chapt_1', 'c1_ex_speller'], ['chapt_3', 'c3_ex_vocab_speller'], ['chapt_5', 'c5_ex_vocab_speller']
+]) {
+  await go(`#/activity/${chapterId}/${activityId}`);
+  const box = page.locator('.spell-checks label', { hasText: 'Show Answer' }).locator('input');
+  await box.setChecked(true);
+  const shown = await page.locator('.spell-answer').count();
+  await page.keyboard.press('a');
+  await page.waitForTimeout(80);
+  check(`5E §6.6 ${chapterId} Show Answer clears as soon as typing resumes`,
+    shown === 1 && await page.locator('.spell-answer').count() === 0 && !await box.isChecked(),
+    `shown ${shown} -> ${await page.locator('.spell-answer').count()}, checkbox ${await box.isChecked()}`);
+}
+
+// -------------------------------------------- §5.2/§5.3 lists and underlines
+// D1: EVERY list hangs. The offenders were the lists whose numbers are
+// authored into the data ("1) 2) 3)"), which printed their marker as an inline
+// span, so a wrapped rule ran back underneath its own number. Measured, not
+// asserted from CSS: the marker box has to sit entirely to the LEFT of the
+// text column, which is what a hanging indent is.
+for (const [label, chapterId, activityId, button] of [
+  ['ch2 Accent Rule Drill hint (six accent rules)', 'chapt_2', 'c2_drill_accent_rule', 'Hint'],
+  ['ch2 Syllable Counting hint (three syllable rules)', 'chapt_2', 'c2_drill_syllable_counting', 'Hint'],
+  // The Division exercise's control renders from activity.hint.label ("Hint"),
+  // not from the "Hint: Rules" entry in ui.buttons — noted in the results.
+  ['ch2 Syllable Division hint (three syllable rules)', 'chapt_2', 'c2_ex_syllable_division', 'Hint']
+]) {
+  await page.setViewportSize({ width: 320, height: 900 });
+  await go(`#/activity/${chapterId}/${activityId}`);
+  await page.locator('.card').getByRole('button', { name: button, exact: true }).click();
+  await page.waitForTimeout(120);
+  const item = page.locator('.rc-list.authored-labels > li').first();
+  const marker = item.locator('.rc-num').first();
+  const present = await marker.count() > 0;
+  let hangs = false;
+  let boxes = null;
+  if (present) {
+    const itemBox = await item.boundingBox();
+    const markerBox = await marker.boundingBox();
+    boxes = { item: itemBox, marker: markerBox };
+    // The marker ends at or before the text column starts, and it is inside
+    // the card (a hanging indent that hangs off the screen is not one).
+    hangs = !!itemBox && !!markerBox
+      && markerBox.x + markerBox.width <= itemBox.x + 1
+      && markerBox.x >= 0;
+  }
+  check(`5E §5.2 ${label}: the list hangs its authored numbers`, present && hangs,
+    JSON.stringify(boxes));
+}
+await page.setViewportSize({ width: 390, height: 900 });
+
+// §5.3: the two rules that NAME what they teach are underlined, in the hint
+// that shows them — and in the Accent Mark Placement exercise's copy of the
+// same hint, because the same sentence must not look different in two places.
+for (const [label, chapterId, activityId, button] of [
+  ['ch2 Accent Rule Drill hint', 'chapt_2', 'c2_drill_accent_rule', 'Hint'],
+  ['ch2 Accent Mark Placement hint', 'chapt_2', 'c2_ex_accent_placement', 'Hint']
+]) {
+  await go(`#/activity/${chapterId}/${activityId}`);
+  await page.locator('.card').getByRole('button', { name: button, exact: true }).click();
+  await page.waitForTimeout(120);
+  const underlined = (await page.locator('.rc-list u').allInnerTexts()).map(normalizeText);
+  check(`5E §5.3 ${label}: "Nouns are retentive" and "Verbs are recessive" are underlined`,
+    underlined.includes('Nouns are retentive.') && underlined.includes('Verbs are recessive.'),
+    JSON.stringify(underlined));
+}
+
+// ------------------------------------------------- §6.7 modals reach Close
+// A close control counts as reachable only if it can be brought FULLY inside
+// the viewport. Checked at 320px wide and at two heights: 480 (a phone) and
+// 360 (short enough that a Hint with its Meanings table expanded overflows the
+// cap and the scroll path has to work).
+//
+// HONEST LIMIT, recorded here rather than in a handoff nobody reads next to
+// the test: the reported failure is a WebKit one. It needs a VISUAL viewport
+// shorter than 100vh -- iOS Safari with its toolbar showing -- and Chrome has
+// no such split, so this loop would have passed before the fix as well. What
+// it guards is the regression; the structural assertion below is what encodes
+// the actual fix, and the device pass is what confirms it (VERIFY-5E2).
+const MODAL_HEIGHTS = [480, 360];
+async function checkCloseReachable(label, open) {
+  for (const height of MODAL_HEIGHTS) {
+    await page.setViewportSize({ width: 320, height });
+    await open();
+    const close = page.locator('.modal .modal-actions .btn', { hasText: 'Close' }).first();
+    const present = await close.count() === 1;
+    let inside = false;
+    let box = null;
+    if (present) {
+      await close.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(80);
+      box = await close.boundingBox();
+      inside = !!box && box.y >= 0 && box.y + box.height <= height && box.x >= 0 && box.x + box.width <= 320;
+    }
+    check(`5E §6.7 ${label}: the close control is reachable at 320x${height}`, present && inside,
+      box ? `close box ${JSON.stringify(box)}` : 'no close button found');
+  }
+  await page.setViewportSize({ width: 390, height: 900 });
+}
+
+for (const [label, chapterId, activityId] of [
+  ['ch3 Verb Translating Hint', 'chapt_3', 'c3_drill_verb_translating'],
+  ['ch4 Greek Noun Hint', 'chapt_4', 'c4_drill_greek_noun'],
+  ['ch4 Declining Noun Hint', 'chapt_4', 'c4_drill_declining'],
+  ['ch5 First Declension Noun Hint', 'chapt_5', 'c5_drill_first_decl_noun'],
+  ['ch5 Declining Noun Hint', 'chapt_5', 'c5_drill_declining'],
+  ['ch5 Definite Article Hint', 'chapt_5', 'c5_drill_article']
+]) {
+  await checkCloseReachable(label, async () => {
+    await go(`#/activity/${chapterId}/${activityId}`);
+    await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
+    await page.waitForTimeout(80);
+  });
+  // ...and the reported case: the SAME modal with Meanings expanded, which is
+  // what made it tall enough to strand its own Close button.
+  const meanings = page.locator('.modal [data-paradigm-meanings] summary');
+  await checkCloseReachable(`${label} + Meanings`, async () => {
+    await go(`#/activity/${chapterId}/${activityId}`);
+    await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
+    await page.waitForTimeout(80);
+    if (await meanings.count()) { await meanings.first().click(); await page.waitForTimeout(120); }
+  });
+}
+
+await checkCloseReachable('ch3 Learn Verbs Endings popup', async () => {
+  await go('#/activity/chapt_3/c3_learn_verbs');
+  await gotoTopic(2);
+  await page.locator('.card .pg-endings-open').first().click();
+  await page.waitForTimeout(100);
+});
+await checkCloseReachable('ch1 speller Greek Keyboard reference', async () => {
+  await go('#/activity/chapt_1/c1_ex_speller');
+  await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();
+  await page.waitForTimeout(100);
+});
+await checkCloseReachable('ch5 whole-verse speller Greek Keyboard reference', async () => {
+  await go('#/activity/chapt_5/c5_ex_scripture_speller');
+  await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();
+  await page.waitForTimeout(100);
+});
+// THE STRUCTURAL HALF OF D3, which is what actually fixes WebKit and what a
+// future edit is most likely to undo by accident:
+//   * the OVERLAY scrolls. A flex-centred item that overflows its container
+//     overflows equally at BOTH ends and cannot be scrolled to; auto margins
+//     centre the same way and leave the overflow scrollable.
+//   * the modal's height cap is expressed against the VISIBLE viewport (dvh),
+//     not the largest-possible one (vh), so an iOS toolbar cannot push the
+//     bottom of the dialog past the bottom of the screen.
+{
+  await page.setViewportSize({ width: 320, height: 480 });
+  await go('#/activity/chapt_4/c4_drill_greek_noun');
+  await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
+  await page.waitForTimeout(100);
+  const shape = await page.locator('.modal-overlay').evaluate(el => {
+    const overlay = getComputedStyle(el);
+    const modal = getComputedStyle(el.querySelector('.modal'));
+    return {
+      overlayOverflowY: overlay.overflowY,
+      overlayAlignItems: overlay.alignItems,
+      modalOverflowY: modal.overflowY,
+      modalMaxHeight: modal.maxHeight,
+      viewport: el.clientHeight
+    };
+  });
+  const capped = Math.abs(parseFloat(shape.modalMaxHeight) - (480 - 40)) < 1.5;
+  check('5E §6.7 the modal overlay scrolls and the modal is capped to the visible viewport',
+    /auto|scroll/.test(shape.overlayOverflowY) && shape.overlayAlignItems !== 'center'
+      && /auto|scroll/.test(shape.modalOverflowY) && capped,
+    JSON.stringify(shape));
+  await page.setViewportSize({ width: 390, height: 900 });
+}
+
+// The end-of-chapter dialog has no "Close" button by name; its escape actions
+// are the ones that must be reachable.
+{
+  await page.setViewportSize({ width: 320, height: 480 });
+  const last = ch1.sequence[ch1.sequence.length - 1];
+  await go(`#/activity/chapt_1/${last}`);
+  await page.locator('.rail-next').click();
+  await page.waitForTimeout(150);
+  const stay = page.locator('.modal .modal-actions .btn', { hasText: 'Stay' }).first();
+  await stay.scrollIntoViewIfNeeded();
+  const box = await stay.boundingBox();
+  check('5E §6.7 end-of-chapter dialog: its last action is reachable at 320x480',
+    !!box && box.y >= 0 && box.y + box.height <= 480, JSON.stringify(box));
+  await page.setViewportSize({ width: 390, height: 900 });
+}
+
+// ------------------------------------------------------ §6.8 option grids
+// A CENSUS, not a list: every select activity in chapters 1-5, measured at both
+// widths. The responsive pool must be 2-up at 320 and 4-up at 768 whatever
+// language its labels are in; the paradigm-shaped grids stay 2-up at both
+// (D-26); and the only other grids allowed to differ are the ones whose data
+// DECLARES a layout (optionLayout single/paradigm2col, optionGroups) or whose
+// options are single glyphs. Anything else stuck at four-up would be the D-19
+// defect returning, and this is what would catch it.
+{
+  const declaredLayout = a => a.optionLayout
+    || (Array.isArray(a.optionGroups) && a.optionGroups.length ? 'grouped' : null);
+  const census = [];
+  for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+    for (const activity of activitiesOf(chapter).filter(a => a && a.type === 'select')) {
+      const cols = {};
+      for (const width of [320, 768]) {
+        await page.setViewportSize({ width, height: 900 });
+        await go(`#/activity/${chapterId}/${activity.id}`);
+        cols[width] = await page.locator('.grid.options').first()
+          .evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length);
+      }
+      census.push({ chapterId, id: activity.id, layout: declaredLayout(activity), cols });
+    }
+  }
+  await page.setViewportSize({ width: 390, height: 900 });
+
+  // The lexicon-derived vocabulary pools, in BOTH directions, are the grids
+  // D-19 is about: 2-up on a phone, 4-up once the iPad has room.
+  const vocabulary = census.filter(row => /_vocab_(gk_en|en_gk)$/.test(row.id));
+  const paradigm = census.filter(row => row.layout === 'paradigm2col');
+  const declared = census.filter(row => row.layout === 'single' || row.layout === 'grouped');
+
+  for (const row of vocabulary) {
+    check(`5E §6.8 ${row.chapterId} ${row.id}: option grid is 2-up at 320px and 4-up at 768px`,
+      row.cols[320] === 2 && row.cols[768] === 4, `${row.cols[320]} / ${row.cols[768]} columns`);
+  }
+  for (const row of paradigm) {
+    check(`5E §6.8 ${row.chapterId} ${row.id}: paradigm grid stays 2-up at both widths (D-26)`,
+      row.cols[320] === 2 && row.cols[768] === 2, `${row.cols[320]} / ${row.cols[768]} columns`);
+  }
+  for (const row of declared) {
+    check(`5E §6.8 ${row.chapterId} ${row.id}: declared "${row.layout}" layout is single-column at both widths`,
+      row.cols[320] === 1 && row.cols[768] === 1, `${row.cols[320]} / ${row.cols[768]} columns`);
+  }
+
+  // THE PHONE-WIDTH GUARD, which is the half of D-19 that protects reading.
+  // Four columns inside 320px is only ever legible for one-glyph tiles, digits
+  // and the chapter-1 letter-name generators, which the device pass ratified at
+  // four-up. That set is NAMED: a new grid arriving four-up on a phone fails
+  // here instead of shipping and being found on device.
+  const FOUR_UP_AT_320 = new Set([
+    'c1_ex_letter_to_name', 'c1_ex_name_to_letter', 'c1_ex_translit', 'c1_ex_transcribe',
+    'c2_drill_syllable_counting'
+  ]);
+  const wide = census.filter(row => row.cols[320] === 4).map(row => row.id);
+  const unexpected = wide.filter(id => !FOUR_UP_AT_320.has(id));
+  const missing = [...FOUR_UP_AT_320].filter(id => !wide.includes(id));
+  check('5E §6.8 four-up at 320px is confined to the named single-glyph/number grids',
+    unexpected.length === 0 && missing.length === 0,
+    `four-up at 320: ${wide.join(', ') || 'none'}${unexpected.length ? `; UNEXPECTED ${unexpected.join(', ')}` : ''}${missing.length ? `; no longer four-up ${missing.join(', ')}` : ''}`);
+  // Nothing may be wider on a phone than it is on an iPad, in any chapter.
+  const shrinking = census.filter(row => row.cols[320] > row.cols[768]);
+  check('5E §6.8 no option grid is denser at 320px than at 768px',
+    shrinking.length === 0, shrinking.map(r => `${r.id}=${r.cols[320]}/${r.cols[768]}`).join(', ') || 'none');
+  console.log(`      option-grid census (320/768): ${census.map(r => `${r.id}=${r.cols[320]}/${r.cols[768]}`).join('  ')}`);
 }
 
 await browser.close();

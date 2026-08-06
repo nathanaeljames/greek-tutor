@@ -24,16 +24,22 @@
   //     Clear Answer does the same thing without leaving the item. Score
   //     history already spent is not rewound.
   //
-  // ANSWER POLICY (5B patch 2a): answerPolicy.attemptsPerItem === 1 means
-  // Check Answer finalizes the item right or wrong, reveals the hyphen-joined
-  // divided form, and auto-advances after autoAdvanceMs. The timer is cancelled
-  // on manual Previous/Next, on Clear Answer and on unmount.
+  // ANSWER POLICY. Check Answer finalizes the item right or wrong and reveals
+  // the hyphen-joined divided form. The CLASS decides what happens next, and
+  // this exercise's class is `manualCorrectAutoIncorrect` (5E-SPEC2 §1, from
+  // the DOSBox pass): a correct division WAITS for Next, a wrong one
+  // auto-advances on the longer wait. That is the opposite of the obvious
+  // arrangement and it is what the original does. The advance is cancelled by
+  // manual Previous/Next, by Clear Answer and on unmount.
+  //
+  // AUDIO (§2.2) is `afterGuess`: the word is spoken once the answer is in,
+  // and the next word does not appear until the clip has finished.
   import { afterUpdate, onDestroy, onMount, tick } from 'svelte';
-  import { play } from '../lib/audio.js';
+  import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
   import { randomFeedback, resolveHintBlocks } from '../lib/content.js';
   import { dividedForm, splitGraphemes } from '../lib/greek.js';
   import { markCompleted } from '../lib/progress.js';
-  import { resolveAdvance } from '../lib/timing.js';
+  import { resolveAdvance, waitsForNext } from '../lib/timing.js';
   import RichContent from './RichContent.svelte';
 
   export let chapter;
@@ -53,8 +59,11 @@
   // D1 (SPEC3): hidden until the first Score press; ui.liveScore governs whether
   // the revealed line keeps updating, not whether it starts open.
   let showScore = false;
-  let pronounceEach = activity.ui?.defaults?.pronounceEach ?? false;
+  // A7: Pronounce Each defaults ON wherever the checkbox exists.
+  let pronounceEach = activity.ui?.defaults?.pronounceEach ?? true;
   let advanceTimer = null;
+  let advanceToken = 0;
+  let answeredCorrect = false;
   const attemptedItems = new Set();
 
   // ---- SIZING (C1): one size, set by the longest word in the pool ----
@@ -203,9 +212,12 @@
   $: item = items[itemIndex] || null;
   $: pending = !item || !item.greek || !Array.isArray(item.division);
   $: hintBlocks = resolveHintBlocks(chapter, activity.hint);
-  $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
-  $: autoAdvanceMs = resolveAdvance(activity.answerPolicy).correctMs;
+  $: advancePolicy = resolveAdvance(activity.answerPolicy);
+  $: oneAttempt = advancePolicy.oneAttempt;
+  $: audioTiming = activity.audioTiming || 'afterGuess';
   $: revealed = answered && oneAttempt;
+  // §5.5: manualCorrectAutoIncorrect waits on a CORRECT answer, so say so.
+  $: awaitingNext = answered && waitsForNext(advancePolicy, answeredCorrect);
   $: answerGaps = new Set((!pending && item.division) || []);
   // Live score (C3): reactive, so the line follows every answer instead of
   // freezing at whatever it said when the box was opened.
@@ -225,6 +237,23 @@
     return answer.every(gap => dividers.has(gap));
   }
 
+  function cancelAdvance() {
+    advanceToken += 1;
+    clearTimeout(advanceTimer);
+    advanceTimer = null;
+  }
+
+  // max(class minimum, clip duration) — §2.2. The minimum is a timer, the clip
+  // is a promise, and the advance happens when both are done unless the token
+  // says a manual move got there first.
+  function scheduleAdvance(ms, clip) {
+    cancelAdvance();
+    const token = advanceToken;
+    const minimum = new Promise(resolve => { advanceTimer = setTimeout(resolve, ms); });
+    const spoken = clip ? playThrough(clip) : Promise.resolve();
+    Promise.all([minimum, spoken]).then(() => { if (token === advanceToken) move(1); });
+  }
+
   function check() {
     if (pending || answered) return;
     attempts += 1;
@@ -233,25 +262,32 @@
     if (right) correct += 1;
     feedback = randomFeedback(chapter, right ? 'correct' : 'incorrect');
     feedbackKind = right ? 'ok' : 'bad';
+    const clip = (audioTiming === 'afterGuess' && pronounceEach && item.audio) ? item.audio : null;
     if (right || oneAttempt) {
       answered = true;
+      answeredCorrect = right;
       endDrag();
       if (attemptedItems.size === items.length) markCompleted(activity.id);
-      clearTimeout(advanceTimer);
-      advanceTimer = setTimeout(() => move(1), autoAdvanceMs);
+      if (right && advancePolicy.autoOnCorrect) scheduleAdvance(advancePolicy.correctMs, clip);
+      else if (!right && advancePolicy.autoOnIncorrect) scheduleAdvance(advancePolicy.incorrectMs, clip);
+      else { cancelAdvance(); if (clip) play(clip); }
+    } else if (clip) {
+      play(clip);
     }
   }
 
   // C4. Wipes the dividers and re-opens the item without leaving it. Attempts
   // already counted stay counted.
   function clearAnswer() {
-    clearTimeout(advanceTimer);
+    cancelAdvance();
+    stopAudio();
     endDrag();
     dividers = new Set();
     oneSyllable = false;
     feedback = '';
     feedbackKind = '';
     answered = false;
+    answeredCorrect = false;
   }
 
   // REVISITING AN ITEM RESETS IT (5D-SPEC2 §3, VERIFY-5D A5). Arriving at a
@@ -265,11 +301,16 @@
     feedback = '';
     feedbackKind = '';
     answered = false;
+    answeredCorrect = false;
     showAnswer = false;
   }
 
+  // §2.3: Previous/Next stops the clip and shows the word at once. The word is
+  // NOT spoken on arrival any more — this exercise is `afterGuess`, so its
+  // clip belongs after Check Answer (and Pronounce is always there).
   function move(delta) {
-    clearTimeout(advanceTimer);
+    cancelAdvance();
+    stopAudio();
     endDrag();
     const nextIndex = Math.max(0, Math.min(items.length - 1, itemIndex + delta));
     if (nextIndex === itemIndex) return;
@@ -277,8 +318,6 @@
     focusGap = 1;
     gapCentres = [];
     restoreItem();
-    const nextItem = items[itemIndex];
-    if (pronounceEach && nextItem && nextItem.audio) play(nextItem.audio);
   }
 
   function scoreText(a, c) {
@@ -304,7 +343,8 @@
   });
 
   onDestroy(() => {
-    clearTimeout(advanceTimer);
+    cancelAdvance();
+    stopAudio();                                   // §3.1
     if (observer) observer.disconnect();
   });
 </script>
@@ -366,6 +406,8 @@
     {#if showAnswer || revealed}
       <div class="exercise-answer"><span>Answer</span><span class="greek">{dividedForm(item.greek, item.division)}</span></div>
     {/if}
+    <!-- §5.5: a correct division waits for Next; say so. -->
+    {#if awaitingNext}<div class="await-next" role="status">Click Next to continue</div>{/if}
   {/if}
 
   <div class="controls grouped">

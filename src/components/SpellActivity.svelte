@@ -7,12 +7,19 @@
   // caret and wait for a letter when there is none). Grading honors the "With
   // Accents" toggle and otherwise follows the one shared policy in
   // lib/answer-check.js.
+  //
+  // 5E-SPEC2 §1/§4: every speller in the app is `spellUntilRight`. A correct
+  // spelling WAITS for Next (so the learner can look at what they got right);
+  // a wrong one reveals nothing, keeps what was typed, and leaves the item
+  // open. §2.2: the word's clip is spoken after a correct spelling —
+  // `afterGuess`, because the prompt is an English gloss and pronouncing the
+  // Greek before the answer would hand it over.
   import { onMount, onDestroy } from 'svelte';
   import { getLemma, randomFeedback } from '../lib/content.js';
-  import { play } from '../lib/audio.js';
+  import { play, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import { spellingMatches } from '../lib/answer-check.js';
-  import { ADVANCE_CORRECT_MS } from '../lib/timing.js';
+  import { resolveAdvance, waitsForNext } from '../lib/timing.js';
   import * as input from '../lib/speller-input.js';
   import SpellerKeyboard, { KEYMAP, PUNCT_KEYS } from './SpellerKeyboard.svelte';
   import SpellerField from './SpellerField.svelte';
@@ -49,10 +56,18 @@
   let feedbackKind = '';
   let showAnswer = false;
   let withAccents = false;
-  let pronounceEach = false;
+  // A7: Pronounce Each defaults to ON wherever the checkbox exists. The
+  // default is the DATA's (ui.defaults.pronounceEach), which the ledger stamps;
+  // thirteen activities shipped with it off before 5E-SPEC2.
+  let pronounceEach = activity.ui?.defaults?.pronounceEach ?? true;
   let showScore = false;
   let showKeyboard = false;
-  let advanceTimer = null;
+  let solved = false;              // this word is spelled right and waiting for Next
+
+  $: advancePolicy = resolveAdvance(activity.answerPolicy);
+  $: audioTiming = activity.audioTiming || 'afterGuess';
+  // §5.5: spellUntilRight waits for Next on a correct answer, so it says so.
+  $: awaitingNext = solved && waitsForNext(advancePolicy, true);
 
   // Scoring
   let totalAttempts = 0;
@@ -61,16 +76,20 @@
 
   $: word = words[wordIndex];
 
-  function appendChar(ch) { buffer = input.insertText(buffer, ch); }
-  function appendMark(apply) { buffer = input.applyMark(buffer, apply); }
-  function backspace() { buffer = input.backspace(buffer); }
-  function clearInput() { buffer = input.clear(); }
+  // §4.3: Show Answer clears the moment typing resumes. Every edit path goes
+  // through these four, so there is one place to enforce it.
+  function typingResumed() { showAnswer = false; }
+  function appendChar(ch) { if (solved) return; typingResumed(); buffer = input.insertText(buffer, ch); }
+  function appendMark(apply) { if (solved) return; typingResumed(); buffer = input.applyMark(buffer, apply); }
+  function backspace() { if (solved) return; typingResumed(); buffer = input.backspace(buffer); }
+  function clearInput() { if (solved) return; typingResumed(); buffer = input.clear(); }
 
   function check() {
-    if (!word) return;
-    // One shared policy (Phase 0): "With Accents" ON requires every mark to be
-    // right; case and punctuation stay lenient either way. A final nu is
-    // compared like any other letter (D-16 withdrawn, 5D-SPEC2 §2).
+    if (!word || solved) return;
+    // One shared policy (Phase 0, amended by 5E-SPEC2 §4): "With Accents" ON
+    // requires every accent to be right; final forms and breathings are
+    // required at BOTH settings; case and punctuation stay lenient either way.
+    // A final nu is compared like any other letter (D-16 withdrawn).
     const ok = spellingMatches(built, word.greek, {
       withAccents,
       punctuationOptional: activity.punctuationOptional !== false
@@ -81,10 +100,16 @@
       completedWords.add(wordIndex);
       feedback = randomFeedback(chapter, 'correct');
       feedbackKind = 'ok';
+      // spellUntilRight: the item is won and waits for Next. Nothing is
+      // scheduled, so there is no clip racing the next word onto the screen —
+      // the defect the ledger records against all nine spellers.
+      solved = true;
       if (completedWords.size === words.length) markCompleted(activity.id);
-      clearTimeout(advanceTimer);
-      advanceTimer = setTimeout(() => goNext(), ADVANCE_CORRECT_MS);
+      if (pronounceEach && audioTiming === 'afterGuess' && word.audio) play(word.audio);
     } else {
+      // §4.4/C1/C2: what was typed STAYS (the port's standing divergence — the
+      // manual Clear button is how the slate gets wiped) and the correct
+      // spelling is never revealed.
       feedback = randomFeedback(chapter, 'incorrect');
       feedbackKind = 'bad';
     }
@@ -94,16 +119,17 @@
     buffer = input.clear();
     feedback = '';
     feedbackKind = '';
+    solved = false;
     showAnswer = false;                       // Next resets Show Answer (critique 21)
   }
+  // §2.3: moving stops whatever is being spoken and shows the word at once.
   function goNext() {
-    clearTimeout(advanceTimer);
+    stopAudio();
     wordIndex = (wordIndex + 1) % words.length;
     resetWordState();
-    if (pronounceEach && word && word.audio) play(word.audio);
   }
   function goPrev() {
-    clearTimeout(advanceTimer);
+    stopAudio();
     wordIndex = (wordIndex - 1 + words.length) % words.length;
     resetWordState();
   }
@@ -118,6 +144,7 @@
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (e.key === 'Backspace') { e.preventDefault(); backspace(); return; }
     if (e.key === 'Enter') { e.preventDefault(); check(); return; }
+    if (solved) return;
     if (e.key === 'ArrowLeft') { e.preventDefault(); buffer = input.placeCaret(buffer, buffer.caret - 1, false); return; }
     if (e.key === 'ArrowRight') { e.preventDefault(); buffer = input.placeCaret(buffer, buffer.caret + 1, false); return; }
     // Space would scroll the page, so it is claimed here as well as mapped.
@@ -126,7 +153,8 @@
     if (g) { e.preventDefault(); appendChar(g); }
   }
   onMount(() => window.addEventListener('keydown', onKey));
-  onDestroy(() => { window.removeEventListener('keydown', onKey); clearTimeout(advanceTimer); });
+  // §3.1: audio stops when the learner leaves the exercise.
+  onDestroy(() => { window.removeEventListener('keydown', onKey); stopAudio(); });
 </script>
 
 <div class="card speller">
@@ -138,17 +166,21 @@
     <SpellerField
       state={buffer}
       label="Spell Greek Word"
-      on:caret={e => (buffer = input.placeCaret(buffer, e.detail.index, e.detail.after))}
-      on:caretEnd={() => (buffer = input.caretToEnd(buffer))} />
+      locked={solved}
+      on:caret={e => { if (!solved) buffer = input.placeCaret(buffer, e.detail.index, e.detail.after); }}
+      on:caretEnd={() => { if (!solved) buffer = input.caretToEnd(buffer); }} />
   </div>
 
   <div class="feedback {feedbackKind}">{feedback}</div>
+  <!-- §5.5: spellUntilRight waits on a correct answer, so it says so rather
+       than sitting on a won word with nothing happening. -->
+  {#if awaitingNext}<div class="await-next" role="status">Click Next to continue</div>{/if}
 
   <div class="controls">
     <button class="btn" on:click={pronounce}>Pronounce</button>
     <button class="btn secondary" on:click={goPrev}>Previous</button>
     <button class="btn secondary" on:click={goNext}>Next</button>
-    <button class="btn" on:click={check}>Check Answer</button>
+    <button class="btn" disabled={solved} on:click={check}>Check Answer</button>
     <button class="btn secondary" on:click={() => (showScore = true)}>Score</button>
     <button class="btn secondary" on:click={() => (showKeyboard = true)}>Greek Keyboard</button>
   </div>

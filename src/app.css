@@ -311,11 +311,41 @@ button { font: inherit; cursor: pointer; }
 .rail-count { font-weight: 700; color: var(--teal-dark); font-size: 0.95rem; }
 .rail-next-placeholder { min-width: 96px; }
 
-/* ---- End-of-chapter modal ---- */
+/* ---- MODAL SURFACES (5E-SPEC2 §5.1, rule D3) ----
+   EVERY modal, popup and expander must scroll to its close control at every
+   supported width down to 320px. A close button the user cannot reach is a
+   trap, and this one was reachable in theory and not in practice:
+
+   the overlay is `position: fixed` and did not scroll, the modal was capped at
+   86vh and CENTERED in it. On any engine where the visual viewport is shorter
+   than 100vh -- iOS Safari with its toolbar showing, which is the target
+   device -- 86vh plus 20px of padding at each end is taller than what the user
+   can see, and a centered flex item that overflows its container overflows
+   EQUALLY at both ends with no way to scroll to either. Opening Meanings
+   inside a chapter 4/5 drill Hint is what made the modal tall enough to prove
+   it.
+
+   Two changes fix it for every modal at once, which is why they live on the
+   shared classes and not on .hint-modal:
+     * the OVERLAY scrolls (overflow-y: auto) and `margin: auto` on the modal
+       does the centering. Flexbox centering cannot be scrolled past; auto
+       margins centre the same way and still let the scroll container reach
+       both ends.
+     * the cap is dvh-based, so it is the height the device is actually
+       showing rather than the height it would show with the toolbar hidden.
+       The vh line stays first as the fallback for engines without dvh. */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45);
-  display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 100; }
+  display: flex; justify-content: center; z-index: 100;
+  padding: 20px; padding-top: calc(20px + env(safe-area-inset-top));
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
 .modal { background: var(--card); border-radius: var(--radius); padding: 22px 20px;
-  max-width: 360px; width: 100%; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); }
+  max-width: 360px; width: 100%; margin: auto; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  /* The cap and the inner scroll are on the SHARED class, so a new modal
+     inherits D3 instead of having to remember it. */
+  max-height: calc(100vh - 40px);
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto; }
 .modal-title { margin: 0 0 8px; font-size: 1.2rem; }
 .modal-body { margin: 0 0 6px; color: var(--ink); }
 .modal-note { margin: 0; font-size: 0.9rem; color: var(--teal-dark); font-weight: 600; }
@@ -356,7 +386,19 @@ button { font: inherit; cursor: pointer; }
 .rc-list > li { margin-bottom: 10px; position: relative; counter-increment: rc-item; }
 .rc-list:not(.authored-labels) > li::before { content: counter(rc-item) ")";
   position: absolute; left: -1.9em; width: 1.5em; text-align: right; font-weight: 600; }
-.rc-list.authored-labels { padding-left: 0.75em; }
+/* D1/5E-SPEC2 §5.2: EVERY list hangs, including the ones whose numbers are
+   authored into the data rather than generated. Chapter 2 is the whole of this
+   class -- its fourteen "1) 2) 3)" lists include the Accent Rule Drill's six
+   rules and the Three Syllable Rules the Syllable Counting drill and the
+   Syllable Division exercise both open as their Hint. Those lists print their
+   marker as an inline .rc-num span, so a wrapped rule ran back under its own
+   number and the six points read as one block of prose. The list keeps the
+   same 1.9em text column the generated-counter lists use; the marker is pulled
+   out of it, which is what makes the wrap align under the text. */
+.rc-list.authored-labels { padding-left: 1.9em; }
+.rc-list.authored-labels > li { counter-increment: none; }
+.rc-list.authored-labels > li > .rc-num { position: absolute; left: -1.9em;
+  width: 1.5em; margin-right: 0; text-align: right; }
 .rc-list.unnumbered { padding-left: 0; }
 .rc-list.unnumbered > li { counter-increment: none; }
 .rc-list.unnumbered > li::before { content: none; }
@@ -761,8 +803,10 @@ button { font: inherit; cursor: pointer; }
 .pg-ending { font-size: 1.3rem; color: var(--ink); }
 .pg-endgloss { font-size: 0.78rem; color: var(--teal-dark); overflow-wrap: break-word; text-align: center; }
 
-/* Hint popup: the paradigm over the drill (the original's Hint window). */
-.hint-modal { max-width: 400px; max-height: 86vh; overflow-y: auto; }
+/* Hint popup: the paradigm over the drill (the original's Hint window). The
+   height cap and the inner scroll come from .modal (D3); only the width is
+   this popup's own -- a paradigm needs more than the 360px a text dialog does. */
+.hint-modal { max-width: 400px; }
 
 /* ---- INTERLINEAR VERSE (Scripture Memory) ----
    Greek row over gloss row, wrapping as whole words so a word never parts

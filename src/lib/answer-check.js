@@ -1,14 +1,30 @@
 // SPELLING COMPARISON — shared by the word speller (SpellActivity) and the
 // whole-verse speller (SpellVerseActivity), so the two can never drift.
 //
-// The policy is the one Nathanael selected at the 5D Phase 0 checkpoint:
+// The policy is Nathanael's Phase 0 selection as AMENDED by the DOSBox pass
+// (5E-SPEC2 §4.1/§4.2, DRILL-BEHAVIOR-RULES C4/C5):
 //
-//   With Accents OFF   accent/breathing/subscript-insensitive, case-
-//                      insensitive, final sigma = sigma, punctuation
-//                      optional, whitespace normalized.
+//   With Accents OFF   ACCENT-insensitive (acute, grave, circumflex, and
+//                      nothing else), case-insensitive, punctuation optional,
+//                      whitespace normalized. Breathings, the diaeresis, the
+//                      iota subscript and FINAL FORMS are all still required.
 //   With Accents ON    every mark must be exactly right — and nothing else
 //                      changes: still case-insensitive, still punctuation-
 //                      optional.
+//
+// TWO LENIENCIES WERE WITHDRAWN THIS ROUND, both because the original enforces
+// what the port was forgiving:
+//
+//   C4  FINAL FORMS ARE REQUIRED. ἄγγελος must not validate with a medial
+//       sigma in final position, so ς and σ are no longer folded together.
+//       The keyboard has always had both tiles (ς is the `j` key), so this
+//       asks for nothing the learner cannot type.
+//   C5  BREATHINGS ARE REQUIRED AT BOTH SETTINGS. "With Accents" governs
+//       ACCENTS — that is what the checkbox says and what the original does.
+//       ἀδελφός without its smooth breathing is a misspelling, not an
+//       unaccented spelling. Stripping "\p{M}" swept breathings, diaereses and
+//       subscripts away with the accents; the accent set is now named
+//       explicitly so the checkbox can only ever govern those three.
 //
 // THERE IS NO MOVABLE-NU LENIENCY (D-16 WITHDRAWN, 5D-SPEC2 §2). A final nu is
 // compared like any other letter. The leniency that used to live here existed
@@ -37,6 +53,14 @@ export function stripPunctuation(text) {
   return (text || '').replace(PUNCTUATION, '');
 }
 
+// THE THREE ACCENTS the "With Accents" checkbox governs, and only those:
+// combining acute, grave and perispomeni. U+0340/U+0341 (the deprecated
+// combining tonos pair) fold onto U+0300/U+0301 under NFD and so never reach
+// this set. Everything else a Greek cluster can carry — psili, dasia,
+// dialytika, ypogegrammeni — is part of the SPELLING and is required at both
+// settings (C5).
+const ACCENTS = /[̀́͂]/gu;   // varia, oxia, perispomeni
+
 // One comparison key. Two spellings match iff their keys are equal.
 export function spellingKey(text, options) {
   const {
@@ -46,9 +70,12 @@ export function spellingKey(text, options) {
   let out = (text || '').normalize('NFC');
   if (punctuationOptional) out = stripPunctuation(out);
   out = out.replace(/\s+/gu, ' ').trim().toLowerCase();
-  if (!withAccents) out = out.normalize('NFD').replace(/\p{M}/gu, '');
-  out = out.replace(/ς/gu, 'σ').normalize('NFC');
-  return out;
+  // Decompose either way: NFD is what makes the accent set above addressable
+  // inside a precomposed cluster, and NFC at the end puts the survivors back
+  // together so two spellings that differ only in normalization still match.
+  out = out.normalize('NFD');
+  if (!withAccents) out = out.replace(ACCENTS, '');
+  return out.normalize('NFC');
 }
 
 export function spellingMatches(typed, answer, options) {

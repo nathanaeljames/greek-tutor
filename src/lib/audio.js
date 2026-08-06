@@ -118,3 +118,54 @@ export function stop() {
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
   revokeCurrentUrl();
 }
+
+// PLAY AND WAIT FOR THE CLIP TO FINISH (5E-SPEC2 §2.2, rule A2).
+//
+// An `afterGuess` surface must not put the next question on screen while the
+// previous item is still being spoken — the single most confusing thing in the
+// app before this round. The advance delay therefore becomes
+// max(class minimum, audio duration), which the caller expresses as
+//
+//     Promise.all([playThrough(id), afterMinimumDelay])
+//
+// Duration is never measured or guessed: this resolves on the element's own
+// `ended`. It also resolves on `pause` and `error`, so stop() (a route change,
+// a screen-off, a new tap, or the learner pressing Next) releases the wait
+// immediately instead of parking the caller for the length of a clip that is
+// no longer playing. It NEVER rejects — a caller's advance must not be lost to
+// a missing file.
+export async function playThrough(id) {
+  const ok = await play(id);
+  const audio = currentAudio;
+  if (!ok || !audio || audio.ended || audio.paused) return !!ok;
+  await new Promise(resolve => {
+    const done = () => {
+      audio.removeEventListener('ended', done);
+      audio.removeEventListener('pause', done);
+      audio.removeEventListener('error', done);
+      resolve();
+    };
+    audio.addEventListener('ended', done);
+    audio.addEventListener('pause', done);      // stop(), screen-off, new tap
+    audio.addEventListener('error', done);
+  });
+  return true;
+}
+
+// AUDIO STOPS WHEN THE SCREEN GOES OFF (5E-SPEC2 §3.2, rule A6) and does not
+// resume by itself. `visibilitychange` covers backgrounding and lock on every
+// engine that fires it; iOS Safari is unreliable there, so `pagehide` is
+// listened for as well — it is the event WebKit does fire when the page is
+// put into the back/forward cache on lock or app switch.
+//
+// stop() rather than pause(): tearing the element and its object URL down is
+// what guarantees "does not resume by itself", and the next tap builds a fresh
+// element anyway (at most one live object URL is an invariant of this module).
+// Registered once, at module scope, because this module is the sole audio
+// choke point — no component may hold a second copy of this rule.
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
+}
+if (typeof window !== 'undefined') {
+  window.addEventListener('pagehide', () => stop());
+}

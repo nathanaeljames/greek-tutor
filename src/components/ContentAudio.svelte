@@ -6,9 +6,10 @@
   // paradigmChart / interlinearVerse. The bespoke
   // modes are pedagogical layouts reconstructed from the original's yellow
   // panels; their per-mode data contracts are documented in HANDOFF-4 §5 (B1).
+  import { onDestroy } from 'svelte';
   import { slide } from 'svelte/transition';
   import { getGreekTapMap, resolveItems, shuffle } from '../lib/content.js';
-  import { play } from '../lib/audio.js';
+  import { play, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import RichContent from './RichContent.svelte';
   import ArrowCue from './ArrowCue.svelte';
@@ -75,6 +76,23 @@
   $: showGreek = vocabMode !== 'hideGreek' || revealG;
   $: showEnglish = vocabMode !== 'hideEnglish' || revealE;
   function setVocabMode(m) { vocabMode = m; revealG = false; revealE = false; }
+
+  // AUDIO STOPS ON EVERY EXIT (5E-SPEC2 §3.1, rule A4). A TOPIC SWITCH is the
+  // exit that was missed: it does not remount the activity and it does not
+  // change the route, so neither {#key activityId} nor App.svelte's
+  // hashchange handler sees it — and a Say Whole Paradigm clip started on
+  // chapter 4's Masculine Declension kept reading over Neuter Declension and
+  // over Word Order after it. Every way OUT of a topic goes through here.
+  function goToTopic(index) {
+    const next = Math.max(0, Math.min(topics.length - 1, index));
+    if (next === topicIndex) return;
+    stopAudio();
+    topicIndex = next;
+  }
+  // The unmount exit: the rail and the route both destroy this component, and
+  // App.svelte stops audio on hashchange as well. Belt and braces, locally
+  // owned, so the rule does not depend on the shell remembering it.
+  onDestroy(() => stopAudio());
 
   function clickTile(item) {
     lastClicked = item;
@@ -166,9 +184,9 @@
       <div class="pending-verification">Topic content pending verification.</div>
     {/if}
     <div class="controls topic-controls">
-      <button class="btn secondary" on:click={() => (topicIndex = Math.max(0, topicIndex - 1))} disabled={topicIndex <= 0}>Previous Topic</button>
+      <button class="btn secondary" on:click={() => goToTopic(topicIndex - 1)} disabled={topicIndex <= 0}>Previous Topic</button>
       <span class="topic-count">{topics.length ? topicIndex + 1 : 0} of {topics.length}</span>
-      <button class="btn" on:click={() => (topicIndex = Math.min(topics.length - 1, topicIndex + 1))} disabled={!topics.length || topicIndex >= topics.length - 1}>Next Topic</button>
+      <button class="btn" on:click={() => goToTopic(topicIndex + 1)} disabled={!topics.length || topicIndex >= topics.length - 1}>Next Topic</button>
     </div>
     {#if activity._topic_verify}<div class="pending-verification compact">Topic order pending verification.</div>{/if}
   </div>

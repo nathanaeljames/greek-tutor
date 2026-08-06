@@ -5,16 +5,18 @@
   // it belongs on, then Check Answer. The chapter's own Scripture reference for
   // the form sits by the checkbox row, as in the original.
   //
-  // ANSWER POLICY (5B patch 2a): attemptsPerItem === 1 finalizes on Check
-  // Answer either way, reveals answerForm, and auto-advances after
-  // autoAdvanceMs; the timer is cancelled on manual Previous/Next and unmount.
+  // ANSWER POLICY. Check Answer finalizes the item either way and reveals
+  // answerForm. The class is `manualCorrectAutoIncorrect` (5E-SPEC2 §1, from
+  // the DOSBox pass): a correct placement WAITS for Next, a wrong one
+  // auto-advances on the longer wait. AUDIO is `afterGuess` (§2.2) — the word
+  // is spoken after the answer and the next word waits for the clip to end.
   // Completion = all items ATTEMPTED.
   import { onDestroy } from 'svelte';
-  import { play } from '../lib/audio.js';
+  import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
   import { randomFeedback } from '../lib/content.js';
   import { analyzeAccent, splitGraphemes } from '../lib/greek.js';
   import { markCompleted } from '../lib/progress.js';
-  import { resolveAdvance } from '../lib/timing.js';
+  import { resolveAdvance, waitsForNext } from '../lib/timing.js';
   import RichContent from './RichContent.svelte';
 
   export let chapter;
@@ -39,17 +41,23 @@
   // D1: hidden until the first Score press; ui.liveScore governs whether the
   // revealed line keeps updating, not whether it starts open.
   let showScore = false;
-  let pronounceEach = activity.ui?.defaults?.pronounceEach ?? false;
+  // A7: Pronounce Each defaults ON wherever the checkbox exists.
+  let pronounceEach = activity.ui?.defaults?.pronounceEach ?? true;
   let advanceTimer = null;
+  let advanceToken = 0;
+  let answeredCorrect = false;
   const attemptedWords = new Set();
 
   $: word = words[wordIndex] || null;
   $: answer = analyzeAccent(word && word.answerForm);
   $: pending = !word || !word.answerForm || !answer.type || answer.position < 0;
   $: hintBlocks = (activity.hint && activity.hint.content) || [];
-  $: oneAttempt = activity.answerPolicy?.attemptsPerItem === 1;
-  $: autoAdvanceMs = resolveAdvance(activity.answerPolicy).correctMs;
+  $: advancePolicy = resolveAdvance(activity.answerPolicy);
+  $: oneAttempt = advancePolicy.oneAttempt;
+  $: audioTiming = activity.audioTiming || 'afterGuess';
   $: revealed = answered && oneAttempt;
+  // §5.5: manualCorrectAutoIncorrect waits on a CORRECT answer, so say so.
+  $: awaitingNext = answered && waitsForNext(advancePolicy, answeredCorrect);
   // ROOT DISPLAY (5B-SPEC4 D2). Every item shows a Greek word in the header --
   // VERIFY3 item 3 found six that showed only a gloss. Those six are the ones
   // whose root IS their answer form (the original's ἄνθρωπος item and the five
@@ -74,17 +82,35 @@
     feedback = '';
     feedbackKind = '';
     answered = false;
+    answeredCorrect = false;
     showAnswer = false;
   }
 
+  // \u00a72.3: Previous/Next stops the clip and shows the word at once. The word is
+  // no longer spoken on ARRIVAL \u2014 this exercise is `afterGuess`, so its clip
+  // belongs after Check Answer (Pronounce Word remains the on-demand path).
   function move(delta) {
-    clearTimeout(advanceTimer);
+    cancelAdvance();
+    stopAudio();
     const nextIndex = Math.max(0, Math.min(words.length - 1, wordIndex + delta));
     if (nextIndex === wordIndex) return;
     wordIndex = nextIndex;
     restoreWord();
-    const nextWord = words[wordIndex];
-    if (pronounceEach && nextWord && nextWord.audio) play(nextWord.audio);
+  }
+
+  function cancelAdvance() {
+    advanceToken += 1;
+    clearTimeout(advanceTimer);
+    advanceTimer = null;
+  }
+
+  // max(class minimum, clip duration) \u2014 \u00a72.2.
+  function scheduleAdvance(ms, clip) {
+    cancelAdvance();
+    const token = advanceToken;
+    const minimum = new Promise(resolve => { advanceTimer = setTimeout(resolve, ms); });
+    const spoken = clip ? playThrough(clip) : Promise.resolve();
+    Promise.all([minimum, spoken]).then(() => { if (token === advanceToken) move(1); });
   }
 
   function check() {
@@ -99,11 +125,16 @@
     if (ok) correct += 1;
     feedback = randomFeedback(chapter, ok ? 'correct' : 'incorrect');
     feedbackKind = ok ? 'ok' : 'bad';
+    const clip = (audioTiming === 'afterGuess' && pronounceEach && word.audio) ? word.audio : null;
     if (ok || oneAttempt) {
       answered = true;
+      answeredCorrect = ok;
       if (attemptedWords.size === words.length) markCompleted(activity.id);
-      clearTimeout(advanceTimer);
-      advanceTimer = setTimeout(() => move(1), autoAdvanceMs);
+      if (ok && advancePolicy.autoOnCorrect) scheduleAdvance(advancePolicy.correctMs, clip);
+      else if (!ok && advancePolicy.autoOnIncorrect) scheduleAdvance(advancePolicy.incorrectMs, clip);
+      else { cancelAdvance(); if (clip) play(clip); }
+    } else if (clip) {
+      play(clip);
     }
   }
 
@@ -112,7 +143,7 @@
     return `${c} correct out of ${a} attempts (${Math.round((c / a) * 100)}%)`;
   }
 
-  onDestroy(() => clearTimeout(advanceTimer));
+  onDestroy(() => { cancelAdvance(); stopAudio(); });     // §3.1
 </script>
 
 <div class="card accent-activity">
@@ -163,6 +194,8 @@
     {#if showAnswer || revealed}
       <div class="exercise-answer"><span>Answer</span><span class="greek">{word.answerForm}</span></div>
     {/if}
+    <!-- §5.5: a correct placement waits for Next; say so. -->
+    {#if awaitingNext}<div class="await-next" role="status">Click Next to continue</div>{/if}
   {/if}
 
   <div class="controls grouped">

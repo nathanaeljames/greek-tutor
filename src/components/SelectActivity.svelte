@@ -5,18 +5,20 @@
   //
   // ANSWER POLICY. activity.answerPolicy declares WHAT a tap on an option
   // means; src/lib/timing.js decides how long anything waits (D-14 — no
-  // timing number lives in this file). The three classes:
-  //   retry              a wrong tap leaves the item open; only a correct tap
-  //                      advances (chapter 1, Syllable Counting).
-  //   manualOnIncorrect  one attempt; correct auto-advances, incorrect reveals
-  //                      the answer, LOCKS the options and waits for Next
-  //                      (ch2 Accent Rule, ch3's five drills).
-  //   autoBoth           one attempt; both outcomes auto-advance, incorrect on
-  //                      the longer wait (ch3 Scripture Memory Drill).
-  // Chapter 2's older attemptsPerItem/autoAdvanceOnIncorrect fields map onto
-  // the same three classes; its durations now come from the shared constants.
-  // Completion: one-attempt drills complete on all-ATTEMPTED, retry drills on
-  // all-correct.
+  // timing number lives in this file) and which outcomes move by themselves.
+  // The six classes and their behavior live in that module's header; this
+  // component reads the resolved FLAGS (autoOnCorrect / autoOnIncorrect /
+  // revealOnIncorrect / oneAttempt) and never compares a class name.
+  // Completion: one-attempt drills complete on all-ATTEMPTED, "until right"
+  // drills on all-correct.
+  //
+  // AUDIO TIMING (5E-SPEC2 §2) is likewise declared by the data, in
+  // activity.audioTiming, and never inferred from the prompt language here:
+  //   beforeGuess  the prompt clip plays when the item appears (Greek prompt)
+  //   afterGuess   the clip plays once the answer is in, and the next item
+  //                does not appear until it has FINISHED (English prompt —
+  //                speaking the Greek any earlier hands over the answer)
+  //   none         this drill has no clip of its own
   //
   // CONTROLS come from activity.ui.buttons, so each drill shows exactly the
   // original's button block (Previous / Next / Pronounce / Translate / Hint /
@@ -24,9 +26,9 @@
   import { onDestroy } from 'svelte';
   import { buildSelectQuestions, randomFeedback, resolveHintBlocks, resolveHintRef } from '../lib/content.js';
   import { combiningForMarkName, firstAccentCluster, markOverlayParts } from '../lib/greek.js';
-  import { play } from '../lib/audio.js';
+  import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
-  import { resolveAdvance } from '../lib/timing.js';
+  import { resolveAdvance, waitsForNext } from '../lib/timing.js';
   import RichContent from './RichContent.svelte';
   import Paradigm from './Paradigm.svelte';
   export let chapter;
@@ -49,6 +51,13 @@
   let shownReveals = [];
   let showScore = false;
   let advanceTimer = null;
+  // Bumped by every scheduled advance and by everything that cancels one
+  // (manual Previous/Next, a new answer, unmount). An advance that has to wait
+  // for a clip to finish resolves asynchronously, so the token — not the timer
+  // handle alone — is what keeps a superseded advance from firing. §2.3: Next
+  // stops the audio and moves at once, which is this token plus stopAudio().
+  let advanceToken = 0;
+  let answeredCorrect = false;
   const attemptedItems = new Set();
 
   init();
@@ -67,7 +76,8 @@
     // says the line updates live once revealed, not that it opens by itself --
     // Score is what reveals it, as in the original, and toggles it after.
     showScore = false;
-    clearTimeout(advanceTimer);
+    answeredCorrect = false;
+    cancelAdvance();
     maybePronounce();
   }
 
@@ -134,10 +144,18 @@
   // Timing and advance semantics: declared by the data, resolved centrally.
   $: advancePolicy = resolveAdvance(activity.answerPolicy);
   $: oneAttempt = advancePolicy.oneAttempt;
-  // The "Click Next to continue" state: the item is final, wrong, and nothing
-  // is going to move on its own.
-  $: waitingForNext = answered && oneAttempt && !advancePolicy.autoOnIncorrect
-    && picked !== null && picked !== current?.answerId;
+  // §2: the moment this drill's clip is spoken, straight from the data. A
+  // drill with no stamped timing keeps the pre-5E behavior (speak the prompt
+  // on arrival) rather than falling silent; check:shapes rejects any value
+  // outside the five, and apply-behavior-matrix.py stamps every shipped drill.
+  $: audioTiming = activity.audioTiming || 'beforeGuess';
+  // §5.5: the item is final and nothing is going to move it. Which outcomes
+  // those are is the class's business, not this component's.
+  $: waitingForNext = answered && waitsForNext(advancePolicy, answeredCorrect);
+  // §1: whether the ANSWER is shown. A correct item always shows what it got
+  // right; a wrong one shows the answer only where the class says to, because
+  // revealing it would destroy an "until right" exercise (rule B5).
+  $: showAnswerReveal = answered && (answeredCorrect || advancePolicy.revealOnIncorrect);
 
   function sliceGroups(list, sizes) {
     const groups = [];
@@ -193,9 +211,39 @@
 
   function maybePronounce() {
     const q = questions[qIndex];
-    // Prompt audio only. A drill whose ANSWER is the Greek (Greek Verb Drill)
-    // has no prompt clip, and speaking the answer here would hand it over.
+    // §2.1: the prompt clip on arrival, and only where the data says so. A
+    // drill whose ANSWER is the Greek (Greek Verb Drill) is `afterGuess`, and
+    // speaking anything here would hand the answer over.
+    if (audioTiming !== 'beforeGuess') return;
     if (pronounceEach && q && !q.pending && q.promptAudio) play(q.promptAudio);
+  }
+
+  // §2.2: the clip that follows a guess on an `afterGuess` drill. It is the
+  // ANSWER's clip where the answer is the Greek (English-prompt drills) and
+  // the prompt's own clip where the prompt was the Greek all along (chapter
+  // 1's letter exercises, which the DOSBox pass records as speaking after the
+  // guess). Either way the item is finalized before it is spoken.
+  function afterGuessAudio() {
+    if (audioTiming !== 'afterGuess' || !pronounceEach || !current) return null;
+    return current.answerAudio || current.promptAudio || null;
+  }
+
+  function cancelAdvance() {
+    advanceToken += 1;
+    clearTimeout(advanceTimer);
+    advanceTimer = null;
+  }
+
+  // Schedule the move to the next item: no sooner than the class minimum, and
+  // no sooner than the end of the afterGuess clip (§2.2 — the wait is
+  // max(class minimum, audio duration), never shorter than 2000/4000). Both
+  // halves are cancelled by cancelAdvance(), so Next always wins (§2.3).
+  function scheduleAdvance(ms, clip) {
+    cancelAdvance();
+    const token = advanceToken;
+    const minimum = new Promise(resolve => { advanceTimer = setTimeout(resolve, ms); });
+    const spoken = clip ? playThrough(clip) : Promise.resolve();
+    Promise.all([minimum, spoken]).then(() => { if (token === advanceToken) advance(); });
   }
 
   function choose(opt) {
@@ -207,26 +255,33 @@
     if (right) correct += 1;
     feedback = randomFeedback(chapter, right ? 'correct' : 'incorrect');
     feedbackKind = right ? 'ok' : 'bad';
-    // English-prompt / Greek-answer drills speak the answer once it is won.
-    if (right && pronounceEach && current.answerAudio) play(current.answerAudio);
+    const clip = afterGuessAudio();
     if (right || oneAttempt) {
       // One attempt: the item is done either way and the answer is revealed.
       // "One attempt" is scoped to this VISIT — coming back to the item
       // reopens it (see restore()).
       answered = true;
+      answeredCorrect = right;
       // Completion is defined by attempted items, so record the final item when
       // it is ANSWERED. Route exit cancels the timer, not progress.
       if (oneAttempt && attemptedItems.size === questions.length && activity.id) markCompleted(activity.id);
-      clearTimeout(advanceTimer);
-      if (right) advanceTimer = setTimeout(advance, advancePolicy.correctMs);
-      else if (advancePolicy.autoOnIncorrect) advanceTimer = setTimeout(advance, advancePolicy.incorrectMs);
-      // manualOnIncorrect: nothing is scheduled — the options are locked and
-      // the learner reads the revealed answer until they press Next.
+      if (right && advancePolicy.autoOnCorrect) scheduleAdvance(advancePolicy.correctMs, clip);
+      else if (!right && advancePolicy.autoOnIncorrect) scheduleAdvance(advancePolicy.incorrectMs, clip);
+      else {
+        // A waiting outcome: nothing is scheduled, the surface says so
+        // (waitingForNext), and the clip still gets spoken.
+        cancelAdvance();
+        if (clip) play(clip);
+      }
+    } else if (clip) {
+      // retryUntilRight, wrong: the item stays open and nothing is revealed,
+      // but the guess has been made, so the clip is still due.
+      play(clip);
     }
   }
 
   function advance() {
-    clearTimeout(advanceTimer);
+    cancelAdvance();
     if (qIndex < questions.length - 1) {
       qIndex += 1;
       restore();
@@ -250,7 +305,8 @@
   // double-counts completion nor un-completes it.
   function restore() {
     shownReveals = [];
-    picked = null; answered = false; feedback = ''; feedbackKind = '';
+    picked = null; answered = false; answeredCorrect = false;
+    feedback = ''; feedbackKind = '';
   }
 
   function revealValue(field) {
@@ -268,8 +324,11 @@
 
   $: glossRevealed = !!current && shownReveals.some(field => revealValue(field) === current.gloss);
 
+  // §2.3: pressing Previous/Next stops the clip and shows the item AT ONCE.
+  // The afterGuess wait is a courtesy, not a lock.
   function move(delta) {
-    clearTimeout(advanceTimer);
+    cancelAdvance();
+    stopAudio();
     const nextIndex = Math.max(0, Math.min(questions.length - 1, qIndex + delta));
     if (nextIndex === qIndex) return;
     qIndex = nextIndex;
@@ -284,7 +343,10 @@
     return [text.slice(0, at), text.slice(at, at + underline.length), text.slice(at + underline.length)];
   }
 
-  onDestroy(() => clearTimeout(advanceTimer));
+  // §3.1: leaving the activity stops whatever it started. The route change
+  // stops audio in App.svelte too; this covers the rail's same-route remounts
+  // and keeps the rule local to the surface that owns the clip.
+  onDestroy(() => { cancelAdvance(); stopAudio(); });
 </script>
 
 <svelte:window on:keydown={showHint ? (e) => { if (e.key === 'Escape') showHint = false; } : null} />
@@ -335,7 +397,7 @@
       {/each}
       <!-- Reveal on a finalized item: the gloss, and the properly accented
            form the Accent Rule drill's misaccented prompt should have had. -->
-      {#if answered && (current.gloss || current.correctForm)}
+      {#if showAnswerReveal && (current.gloss || current.correctForm)}
         <div class="reveal-row">
           {#if current.gloss && !glossRevealed}<span class="reveal-gloss">{current.gloss}</span>{/if}
           {#if current.correctForm}<span class="reveal-form greek">{current.correctForm}</span>{/if}
@@ -352,7 +414,7 @@
                   class="tile small"
                   class:greek={greekOptions}
                   class:selected={authoredOptions && picked === opt.id}
-                  class:correct={answered && opt.id === current.answerId}
+                  class:correct={showAnswerReveal && opt.id === current.answerId}
                   class:incorrect={!authoredOptions && picked === opt.id && opt.id !== current.answerId}
                   on:click={() => choose(opt)}>
                   {opt.label}
@@ -369,7 +431,7 @@
               class="tile small"
               class:greek={greekOptions}
               class:selected={authoredOptions && picked === opt.id}
-              class:correct={answered && opt.id === current.answerId}
+              class:correct={showAnswerReveal && opt.id === current.answerId}
               class:incorrect={!authoredOptions && picked === opt.id && opt.id !== current.answerId}
               on:click={() => choose(opt)}>
               {opt.label}

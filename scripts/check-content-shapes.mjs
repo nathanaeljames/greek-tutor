@@ -5,6 +5,7 @@
 // gets a loud check here instead. Run from `npm run verify`.
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { ADVANCE_CLASSES as TIMING_CLASSES } from '../src/lib/timing.js';
 
 const DATA = 'src/data';
 const problems = [];
@@ -24,6 +25,15 @@ const ACTIVITY_TYPES = new Set(['contentAudio', 'select', 'spell', 'divide', 'pl
 // contentAudio dispatches on `mode`; a mode with no branch in
 // ContentAudio.svelte falls through to the generic chart and renders a grid of
 // nothing, which is exactly the kind of failure that only shows up on device.
+// The six advance classes come from the RENDERER's own list (src/lib/timing.js
+// has no imports, so this script stays dependency-free by importing it). A
+// second hand-written copy here is exactly how the data and the renderer would
+// drift apart while both looked right. The ledger stamper keeps a third copy
+// only because it is Python and cannot read this one.
+const ADVANCE_CLASSES = new Set(TIMING_CLASSES);
+// The five audio timings (rules A1/A8). The renderer branches on these by name
+// rather than exporting a list, so this is the one place they are enumerated.
+const AUDIO_TIMINGS = new Set(['beforeGuess', 'afterGuess', 'afterTap', 'afterCheck', 'none']);
 const CONTENT_MODES = new Set([
   'chart', 'exploreGrid', 'stepper', 'textPage', 'objectivesPage', 'flashcard',
   'selfCheckStepper', 'selfCheckSequence', 'equationChart', 'vowelStair',
@@ -281,6 +291,22 @@ for (const file of files) {
     if (Object.prototype.hasOwnProperty.call(block, 'autoAdvanceMs')) {
       problems.push(`${path}.autoAdvanceMs: advance durations live in src/lib/timing.js, not in the data (D-14).`);
     }
+    // BEHAVIOR IS A CLOSED VOCABULARY (5E-SPEC2 §1, DRILL-BEHAVIOR-RULES B1).
+    // There are six advance classes and five audio timings, and a value
+    // outside them fails SILENTLY at runtime: resolveAdvance falls through to
+    // its legacy branch and the surface auto-advances when the ledger says it
+    // should wait. The renderer cannot report it because it never sees a
+    // wrong-but-plausible string as wrong, so the build does.
+    if (Object.prototype.hasOwnProperty.call(block, 'answerPolicy')
+        && block.answerPolicy && typeof block.answerPolicy === 'object') {
+      const advanceClass = block.answerPolicy.advanceClass;
+      if (advanceClass != null && !ADVANCE_CLASSES.has(advanceClass)) {
+        problems.push(`${path}.answerPolicy.advanceClass: "${advanceClass}" is not one of ${[...ADVANCE_CLASSES].join(', ')}.`);
+      }
+    }
+    if (block.audioTiming != null && !AUDIO_TIMINGS.has(block.audioTiming)) {
+      problems.push(`${path}.audioTiming: "${block.audioTiming}" is not one of ${[...AUDIO_TIMINGS].join(', ')}.`);
+    }
     // greekRows rows carry a word, a positional-chart cell list, or an
     // alternating parts[] equation -- never nothing at all.
     if (block.type === 'greekRows') {
@@ -288,6 +314,40 @@ for (const file of files) {
         const hasContent = row.greek || Array.isArray(row.syllables) || Array.isArray(row.parts);
         if (!hasContent) problems.push(`${path}.rows[${index}]: greekRows row has no greek, syllables or parts.`);
       });
+    }
+  });
+}
+
+// ---- NO DISPLAYED DOUBLE HYPHEN (D2, 5E-SPEC2 §5.4) ----
+// `--` is an em dash everywhere the learner can see it. The rule is applied by
+// scripts/apply-behavior-matrix.py, which must run after every assemble; this
+// is what notices when it did not. Provenance fields are exempt for the same
+// reason the stamper skips them: `_legacy` holds the TBK's own bytes, and the
+// `_comment`/`_note`/`_verify`/audioInventory notes are never rendered.
+// Every data file is swept, not only the chapters — the last two offenders
+// were in intro.json, which the chapter loop had never opened.
+const PROVENANCE = new Set(['audioInventory']);
+// font-map.json is the extraction pipeline's own reference table — no runtime
+// import anywhere in src/ — so its prose is documentation, not copy.
+const NON_RENDERED = new Set(['font-map.json']);
+function walkStrings(node, path, visit, exempt = false) {
+  if (Array.isArray(node)) {
+    node.forEach((child, index) => walkStrings(child, `${path}[${index}]`, visit, exempt));
+    return;
+  }
+  if (node && typeof node === 'object') {
+    for (const [key, value] of Object.entries(node)) {
+      walkStrings(value, `${path}.${key}`, visit, exempt || key.startsWith('_') || PROVENANCE.has(key));
+    }
+    return;
+  }
+  if (typeof node === 'string' && !exempt) visit(node, path);
+}
+for (const file of readdirSync(DATA).filter(name => name.endsWith('.json') && !NON_RENDERED.has(name))) {
+  const data = JSON.parse(readFileSync(join(DATA, file), 'utf8'));
+  walkStrings(data, file, (text, path) => {
+    if (text.includes('--')) {
+      problems.push(`${path}: displayed copy contains "--" (D2 — run scripts/apply-behavior-matrix.py): ${JSON.stringify(text.slice(0, 60))}`);
     }
   });
 }
@@ -393,4 +453,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the six and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard).`);

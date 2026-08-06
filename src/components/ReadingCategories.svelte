@@ -4,8 +4,9 @@
   // and place names play their recorded clip on Answer; letter names play the
   // letter's name-only clip. Completing the last item of ANY category marks
   // the activity done.
+  import { onDestroy } from 'svelte';
   import { getReadingLists } from '../lib/content.js';
-  import { play } from '../lib/audio.js';
+  import { play, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   export let chapter;
   export let activity;
@@ -41,11 +42,17 @@
   $: category = categories[catIndex];
   $: item = category ? category.items[itemIndex] : null;
 
+  // A4/5E-SPEC2 §3.1: a category is this activity's "topic", and switching
+  // away from one stops what it started. Same rule as topicPages, and the same
+  // reason: neither switch remounts the component or changes the route.
   function selectCategory(i) {
+    if (i === catIndex) return;
+    stopAudio();
     catIndex = i;
     itemIndex = 0;
     answered = false;
   }
+  onDestroy(() => stopAudio());
   function answer() {
     answered = true;
     if (item && item.audio) play(item.audio);
