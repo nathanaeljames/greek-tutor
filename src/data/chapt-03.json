@@ -1053,7 +1053,8 @@
     "attemptsPerItem": 1,
     "advanceClass": "manualOnIncorrect"
    },
-   "_policy_note": "One attempt per item; auto-advance on correct via the shared correctAdvanceMs constant; incorrect shows feedback and waits for Next (original ch3 behavior, D9-D11)."
+   "_policy_note": "One attempt per item; auto-advance on correct via the shared correctAdvanceMs constant; incorrect shows feedback and waits for Next (original ch3 behavior, D9-D11).",
+   "audioTiming": "beforeGuess"
   },
   {
    "id": "c3_drill_greek_verb",
@@ -1396,7 +1397,8 @@
     "attemptsPerItem": 1,
     "advanceClass": "manualOnIncorrect"
    },
-   "_policy_note": "One attempt per item; auto-advance on correct via the shared correctAdvanceMs constant; incorrect shows feedback and waits for Next (original ch3 behavior, D9-D11)."
+   "_policy_note": "One attempt per item; auto-advance on correct via the shared correctAdvanceMs constant; incorrect shows feedback and waits for Next (original ch3 behavior, D9-D11).",
+   "audioTiming": "afterGuess"
   },
   {
    "id": "c3_drill_parsing",
@@ -1645,7 +1647,8 @@
     "attemptsPerItem": 1,
     "advanceClass": "manualOnIncorrect"
    },
-   "_policy_note": "One attempt per item; auto-advance on correct via the shared correctAdvanceMs constant; incorrect shows feedback and waits for Next (original ch3 behavior, D9-D11)."
+   "_policy_note": "One attempt per item; auto-advance on correct via the shared correctAdvanceMs constant; incorrect shows feedback and waits for Next (original ch3 behavior, D9-D11).",
+   "audioTiming": "beforeGuess"
   },
   {
    "id": "c3_drill_vocab_gk_en",
@@ -1662,8 +1665,6 @@
    "scored": true,
    "ui": {
     "buttons": [
-     "Previous",
-     "Next",
      "Pronounce",
      "Score"
     ],
@@ -1677,8 +1678,9 @@
    },
    "answerPolicy": {
     "attemptsPerItem": 1,
-    "advanceClass": "manualOnIncorrect"
-   }
+    "advanceClass": "autoBoth"
+   },
+   "audioTiming": "beforeGuess"
   },
   {
    "id": "c3_drill_vocab_en_gk",
@@ -1695,8 +1697,6 @@
    "scored": true,
    "ui": {
     "buttons": [
-     "Previous",
-     "Next",
      "Pronounce",
      "Score"
     ],
@@ -1710,8 +1710,9 @@
    },
    "answerPolicy": {
     "attemptsPerItem": 1,
-    "advanceClass": "manualOnIncorrect"
-   }
+    "advanceClass": "autoBoth"
+   },
+   "audioTiming": "afterGuess"
   },
   {
    "id": "c3_drill_scripture_memory",
@@ -1803,7 +1804,8 @@
     "attemptsPerItem": 1,
     "advanceClass": "autoBoth"
    },
-   "_policy_note": "Auto-advances on BOTH outcomes (original: ~2s correct / ~4s incorrect, D7); uses the shared correct/incorrect advance constants."
+   "_policy_note": "Auto-advances on BOTH outcomes (original: ~2s correct / ~4s incorrect, D7); uses the shared correct/incorrect advance constants.",
+   "audioTiming": "beforeGuess"
   }
  ],
  "exercise": [
@@ -1969,7 +1971,15 @@
      "Show Answer",
      "With Accents",
      "Pronounce Each Exercise"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "spellUntilRight",
+    "attemptsPerItem": "retry"
    }
   },
   {
@@ -2029,7 +2039,15 @@
      "Show Answer",
      "With Accents",
      "Pronounce Each Exercise"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "spellUntilRight",
+    "attemptsPerItem": "retry"
    }
   },
   {
@@ -2078,7 +2096,12 @@
     "_restart_note": "DEPARTURE (D-12): \"Repeat This Exercise\" renamed \"Restart Exercise\" (Nathanael D8)."
    },
    "audio": "chapt_3_c_sm14_6",
-   "_keyboard_note": "Requires the extended speller keyboard (space + punctuation) delivered by the 5D spec Phase 0 checkpoint."
+   "_keyboard_note": "Requires the extended speller keyboard (space + punctuation) delivered by the 5D spec Phase 0 checkpoint.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "spellUntilRight",
+    "attemptsPerItem": "retry"
+   }
   }
  ],
  "quickReview": [

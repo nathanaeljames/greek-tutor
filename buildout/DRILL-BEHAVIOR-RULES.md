@@ -1,0 +1,183 @@
+# DRILL-BEHAVIOR-RULES.md
+
+Derived 2026-08-06 from Nathanael's DOSBox pass over every drill and
+exercise in chapters 1-5 (`drill_behavior_unify.xlsx`). **This document
+and `DRILL-BEHAVIOR-LEDGER.csv` together replace DRILL-MATRIX.md**,
+which was built from screenshots and inference and was wrong on 23 of
+50 rows.
+
+The ledger is the per-activity record. This document is the ruleset:
+when a future chapter's behavior has not been observed in DOSBox, these
+rules are the default, and a spec may only depart from them by naming
+the rule and saying why.
+
+---
+
+## A. Audio timing
+
+**A1. Audio timing follows the PROMPT LANGUAGE, not the activity type.**
+This is the single rule that explains most of the table.
+
+- **Greek prompt → audio plays BEFORE the guess** (`beforeGuess`). The
+  student sees the Greek, hears it, then answers. Hearing it is part of
+  learning it.
+- **English prompt → audio plays AFTER the guess** (`afterGuess`).
+  Pronouncing the Greek before the answer would hand over the answer.
+
+Applies uniformly: Vocabulary Greek-to-English is `beforeGuess`,
+Vocabulary English-to-Greek is `afterGuess`, and every spelling exercise
+whose prompt is an English gloss is `afterGuess`. It also covers the
+drills whose prompt is an English sentence with an underlined word (the
+Greek Verb, Greek Noun and First Declension Noun drills): `afterGuess`.
+
+**A2. `afterGuess` audio must FINISH before the next item appears.** The
+advance delay is `max(class minimum, audio duration)` — never shorter
+than the class minimum, longer whenever the clip needs it. Audio playing
+over the top of the next question is the defect this rule exists to
+prevent.
+
+**A3. Pressing Next stops the audio and shows the next item at once.**
+The wait in A2 is a courtesy, not a lock.
+
+**A4. Audio stops the moment the user navigates away** from the page or
+topic that started it — including rail navigation, topic switches inside
+a `topicPages` activity, and route exits. A whole-paradigm clip that
+keeps reading over the next page is a bug, not a feature.
+
+**A5. A new tap interrupts the currently playing clip.** Two clips never
+overlap. (Already true; stated so it stays true.)
+
+**A6. Audio pauses when the device screen turns off** and does not
+continue in the background.
+
+**A7. `Pronounce Each Drill` / `Pronounce Each Exercise` defaults to ON**
+wherever the checkbox exists. Spelling exercises are the ones that were
+wrong; the rule is general.
+
+**A8. Non-scored explore surfaces play on tap** (`afterTap`), and
+self-check surfaces play when the answer is revealed (`afterCheck`).
+Neither has a guess, so before/after does not apply to them.
+
+---
+
+## B. Advance behavior
+
+**B1. There are six classes and no per-activity exceptions.** A new
+activity is ASSIGNED to a class. If it needs a seventh, that is a
+finding to report, not a special case to write.
+
+| Class | On correct | On incorrect |
+| --- | --- | --- |
+| `none` | not scored | not scored |
+| `autoBoth` | auto-advance | reveal the answer, auto-advance |
+| `manualOnIncorrect` | auto-advance | reveal the answer, wait for Next |
+| `retryUntilRight` | auto-advance | do NOT reveal, item stays open |
+| `manualCorrectAutoIncorrect` | wait for Next | reveal the answer, auto-advance |
+| `spellUntilRight` | wait for Next | do NOT reveal, keep what was typed, retry or Next |
+
+**B2. Minimum delays are `ADVANCE_CORRECT_MS` = 2000 and
+`ADVANCE_INCORRECT_MS` = 4000**, shared by every surface, and subject to
+A2. No per-activity override, ever.
+
+**B3. Previous/Next presence predicts advance behavior, and the
+direction is the opposite of the obvious one.** An activity with NO
+Previous/Next pair auto-advances on both outcomes, because the student
+has no way to move themselves. An activity WITH the pair may wait.
+
+Nathanael's rule 3 as stated — "any drill without Previous/Next uses
+autoprogress" — holds in every observed row. The converse does not:
+having the buttons does not force manual advance (the Marking
+Recognition and Part of Speech drills have them and still wait, but the
+Syllable Division and Accent Mark exercises have them and auto-advance
+on incorrect).
+
+**B4. If an activity waits for Next, it must SAY so.** A dialog or
+banner appears after the answer telling the student to click Next. If a
+surface waits and says nothing, add the message.
+
+**B5. Multi-guess is not spelling-only.** Nathanael's rule 4 as stated
+is nearly right but has one exception: the **Syllable Counting Drill**
+(ch2) is `retryUntilRight`. The accurate rule: **an activity allows
+repeated guesses only when revealing the answer would destroy the
+exercise.** For a speller the answer IS the exercise; for syllable
+counting the answer is a number the student must arrive at. Everything
+else reveals and moves on.
+
+**B6. "Try again" in the feedback pool means nothing.** Feedback strings
+are drawn from a shared chapter-level pool and carry no information
+about attempts, advance, or class. Nathanael's rule 6, and the specific
+error that produced most of the wrong rows in DRILL-MATRIX.md. **Never
+infer behavior from a feedback string.**
+
+---
+
+## C. Spelling exercises
+
+**C1. A wrong answer keeps what the student typed.** The original clears
+the slate; the port deliberately does not — there is a manual Clear
+button for that. Standing divergence.
+
+**C2. A wrong answer never reveals the correct spelling.** `Show Answer`
+is opt-in and stays that way.
+
+**C3. `Show Answer` clears as soon as typing resumes.** Does not apply
+to Major Hint on the whole-verse spellers.
+
+**C4. Final forms are REQUIRED.** Final sigma is not optional: ἄγγελος
+must not be accepted as ἄγγελοϲ or with a medial sigma in final
+position. The original enforces this and the port does not.
+
+**C5. Breathing marks are REQUIRED even with "With Accents" OFF.**
+"With Accents" governs ACCENTS — acute, grave, circumflex — and nothing
+else. ἀδελφός must not be accepted without its smooth breathing. The
+original enforces this at both settings.
+
+**C6. Punctuation stays optional** on the whole-verse spellers (D-18,
+unchanged).
+
+**C7. Whole-verse spellers play the verse audio after a successful
+spelling.** They currently play nothing.
+
+---
+
+## D. Layout and typography
+
+**D1. Every list uses hanging indents** — teaching pages, popups, hint
+dialogs, bibliographies, everywhere — unless a rule explicitly says
+otherwise.
+
+**D2. Two hyphens are never displayed.** `--` becomes an em dash
+throughout the app, in data and in UI copy.
+
+**D3. Every modal, popup and expander must be fully scrollable to its
+close control** at every supported width. A close button the user cannot
+reach is a trap. Check every modal surface, not only the one that was
+reported.
+
+**D4. Greek option grids are two-up at phone width and four-up at the
+768px iPad breakpoint** (D-19), and this applies to ALL chapters, past
+and future, including the English-gloss grids on the Greek-to-English
+vocabulary drills.
+
+**D5. Paradigm-shaped option grids are exempt from D4** and stay two
+columns at every width, because their columns are singular and plural
+(D-26).
+
+---
+
+## E. Using these rules
+
+**E1. Order of authority:** DOSBox observation > this document > the
+spec > inference. Inference is last and is marked as such.
+
+**E2. A chapter's ledger rows are filled from DOSBox BEFORE its spec is
+written.** The 5E round proved the alternative: 23 of 50 rows wrong,
+carried into shipped data, corrected a round later.
+
+**E3. When a rule and an observation disagree, the observation wins and
+the rule gets amended here**, with the row that broke it named.
+
+**E4. Never infer behavior from:** a feedback string (B6), the presence
+of a button, the name of an activity, or how the same-named activity
+behaves in another chapter. The Vocabulary drills changed class between
+chapters in DRILL-MATRIX.md purely because of that last error.

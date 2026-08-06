@@ -1963,13 +1963,15 @@
    },
    "scored": true,
    "answerPolicy": {
-    "attemptsPerItem": "retry"
+    "attemptsPerItem": "retry",
+    "advanceClass": "retryUntilRight"
    },
    "_verify_resolved": "Pool + counts DOSBox-confirmed 2026-07-24 (all 20 derived counts matched; kai uses the one-syllable bar). Original's score dialog can overcount on revisits (22/20 witnessed) — our scoring counts each item once.",
    "hint": {
     "contentRef": "threeSyllableRules"
    },
-   "_v2_note": "One-syllable bar removed per VERIFY V2 (the original counting drill has only buttons 1-4; kai answers '1'). Translate toggles the gloss line, per the original."
+   "_v2_note": "One-syllable bar removed per VERIFY V2 (the original counting drill has only buttons 1-4; kai answers '1'). Translate toggles the gloss line, per the original.",
+   "audioTiming": "beforeGuess"
   },
   {
    "id": "c2_drill_accent_rule",
@@ -2173,7 +2175,8 @@
    "answerPolicy": {
     "attemptsPerItem": 1,
     "revealCorrectForm": true,
-    "autoAdvanceOnIncorrect": false
+    "autoAdvanceOnIncorrect": false,
+    "advanceClass": "manualOnIncorrect"
    },
    "hint": {
     "content": [
@@ -2235,7 +2238,8 @@
    },
    "_answers_note": "Option labels + item pool DOSBox-verified. Per-item answers are RULE-DERIVED from the chapter's own grammar (the collection pass's low score made screenshot-derived answers unreliable); two anchors confirmed green on device (apostolos, kardia -> Potential Placement). Nathanael authorized correctness-first scoring (VERIFY E1).",
    "redFirstAccent": true,
-   "_policy_note": "Per device feedback item 6: no auto-advance on an incorrect answer (learner studies the revealed correct form and clicks Next); 4s auto-advance on correct stands. Audio per item wired (b_ex2 clips carry the inflected anthropos forms — the same clips the original's rule charts play)."
+   "_policy_note": "Per device feedback item 6: no auto-advance on an incorrect answer (learner studies the revealed correct form and clicks Next); 4s auto-advance on correct stands. Audio per item wired (b_ex2 clips carry the inflected anthropos forms — the same clips the original's rule charts play).",
+   "audioTiming": "beforeGuess"
   },
   {
    "id": "c2_drill_marking_recognition",
@@ -2456,9 +2460,11 @@
    },
    "scored": true,
    "answerPolicy": {
-    "attemptsPerItem": 1
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
    },
-   "_answers_note": "25-item pool, order, options, and instruction DOSBox-verified. Answers read from the red-rendered mark in the screenshots (redMarkCluster = 1-based grapheme cluster carrying the red mark; item 18's mark assignment is the one judgment call). Original's score dialog says 'Drills Available: 35' — an original bug (both passes yielded the same 25 items); we use 25."
+   "_answers_note": "25-item pool, order, options, and instruction DOSBox-verified. Answers read from the red-rendered mark in the screenshots (redMarkCluster = 1-based grapheme cluster carrying the red mark; item 18's mark assignment is the one judgment call). Original's score dialog says 'Drills Available: 35' — an original bug (both passes yielded the same 25 items); we use 25.",
+   "audioTiming": "beforeGuess"
   },
   {
    "id": "c2_drill_part_of_speech",
@@ -2629,7 +2635,8 @@
    ],
    "scored": true,
    "answerPolicy": {
-    "attemptsPerItem": 1
+    "attemptsPerItem": 1,
+    "advanceClass": "manualOnIncorrect"
    },
    "_answers_note": "29 items, option labels, underlines, and instruction DOSBox-verified (VERIFY D4 screenshots). Answers anchored by green-confirmed device results (Greek/Noun, amazing/Adjective, multimedia/Adjective, do/Verb, over/Preposition, good/Adjective) and standard grammar for the rest.",
    "ui": {
@@ -2639,7 +2646,8 @@
      "Score"
     ],
     "liveScore": true
-   }
+   },
+   "audioTiming": "none"
   },
   {
    "id": "c2_drill_vocab_gk_en",
@@ -2673,11 +2681,19 @@
     ],
     "checkboxes": [
      "Pronounce Each Drill"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
    },
    "scored": true,
    "prompt": "greek",
-   "optionCount": 10
+   "optionCount": 10,
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
   },
   {
    "id": "c2_drill_vocab_en_gk",
@@ -2711,11 +2727,19 @@
     ],
     "checkboxes": [
      "Pronounce Each Drill"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
    },
    "scored": true,
    "prompt": "gloss",
-   "optionCount": 10
+   "optionCount": 10,
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
   }
  ],
  "exercise": [
@@ -2942,9 +2966,11 @@
    "oneSyllableButton": "Click Here If There Is Only One Syllable",
    "answerPolicy": {
     "attemptsPerItem": 1,
-    "revealDividedForm": true
+    "revealDividedForm": true,
+    "advanceClass": "manualCorrectAutoIncorrect"
    },
-   "_answers_note": "Pool DOSBox-verified: the 20 vocabulary words (ch1+ch2), NOT the b_ex2 files (those belong to Accent Placement). Divisions sourced from the original's own syllable charts (One Vowel/2 Consonants/2 Vowels popups + Syllable Names), which cover all 20 words: kurios divides kur-i-os per the chart's explicit note, Petros = Pet-ros and Christos = Chris-tos per the 2-Consonants chart (Nathanael's 'false negative' on Christos matches the original's own Chris-tos division). division[] = 1-based gap indices between grapheme clusters (gap i sits between cluster i and i+1). Scoring is correctness-first per Nathanael (VERIFY E1)."
+   "_answers_note": "Pool DOSBox-verified: the 20 vocabulary words (ch1+ch2), NOT the b_ex2 files (those belong to Accent Placement). Divisions sourced from the original's own syllable charts (One Vowel/2 Consonants/2 Vowels popups + Syllable Names), which cover all 20 words: kurios divides kur-i-os per the chart's explicit note, Petros = Pet-ros and Christos = Chris-tos per the 2-Consonants chart (Nathanael's 'false negative' on Christos matches the original's own Chris-tos division). division[] = 1-based gap indices between grapheme clusters (gap i sits between cluster i and i+1). Scoring is correctness-first per Nathanael (VERIFY E1).",
+   "audioTiming": "afterGuess"
   },
   {
    "id": "c2_ex_accent_placement",
@@ -3184,7 +3210,8 @@
    "scored": true,
    "answerPolicy": {
     "attemptsPerItem": 1,
-    "revealAnswerForm": true
+    "revealAnswerForm": true,
+    "advanceClass": "manualCorrectAutoIncorrect"
    },
    "hint": {
     "content": [
@@ -3245,7 +3272,8 @@
     ]
    },
    "_answers_note": "COMPLETE REPLACEMENT per VERIFY E2/E3: the pool is NOT the vocabulary list. Two root words (Baptizo x10, anthropos x10); each item shows the root + gloss in the header and an UNACCENTED inflected form (breathing retained) with its Scripture reference; the learner picks Acute or Circumflex (the only two accent buttons in the original) and a letter position. answerForm is the accented form displayed after checking. b_ex2_1..21 audio = these forms in order (the 21st file is unreferenced by the 20 items — likely the root recitation; wired nowhere pending a listen check). Grave is NOT offered as an option in the original.",
-   "_pool_note": "25-item pool: the original's 20 acute items plus 5 circumflex extension items MERGED AND INTERLEAVED at fixed positions (VERIFY2 item 7: extension approved, banner removed, shuffled so the circumflex items are not deducible). Each item keeps its own audio regardless of position. Completion = all 25 attempted. 'extended: true' retained for provenance only — never rendered."
+   "_pool_note": "25-item pool: the original's 20 acute items plus 5 circumflex extension items MERGED AND INTERLEAVED at fixed positions (VERIFY2 item 7: extension approved, banner removed, shuffled so the circumflex items are not deducible). Each item keeps its own audio regardless of position. Completion = all 25 attempted. 'extended: true' retained for provenance only — never rendered.",
+   "audioTiming": "afterGuess"
   },
   {
    "id": "c2_ex_speller",
@@ -3303,10 +3331,18 @@
      "Show Answer",
      "With Accents",
      "Pronounce Each Exercise"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
    },
    "spellerTilesRef": "chapt_1",
-   "_verify_resolved": "Tile inventory DOSBox-confirmed identical to chapter 1's 39 tiles (VERIFY E4)."
+   "_verify_resolved": "Tile inventory DOSBox-confirmed identical to chapter 1's 39 tiles (VERIFY E4).",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "spellUntilRight",
+    "attemptsPerItem": "retry"
+   }
   }
  ],
  "quickReview": [

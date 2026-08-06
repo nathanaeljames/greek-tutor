@@ -1120,10 +1120,10 @@
     {
      "type": "biblist",
      "items": [
-        "Machen, J. Gresham.  [[i]]New Testament Greek for Beginners[[/i]] (Toronto:  The Macmillan Company, 1923), pp. 23-28.",
-        "Mounce, William D.  [[i]]Basics of Biblical Greek:  Grammar[[/i]] (Grand Rapids:  Zondervan, 1993), pp. 28-54.",
-        "Summers, Ray and Thomas Sawyer.  [[i]]Essentials of New Testament Greek[[/i]] (Nashville:  Broadman & Holman, 1995), pp. 15-20.",
-        "Wenham, J. W.   [[i]]The Elements of New Testament Greek[[/i]] (Cambridge:  Cambridge University Press, 1965), pp. 30-39."
+      "Machen, J. Gresham.  [[i]]New Testament Greek for Beginners[[/i]] (Toronto:  The Macmillan Company, 1923), pp. 23-28.",
+      "Mounce, William D.  [[i]]Basics of Biblical Greek:  Grammar[[/i]] (Grand Rapids:  Zondervan, 1993), pp. 28-54.",
+      "Summers, Ray and Thomas Sawyer.  [[i]]Essentials of New Testament Greek[[/i]] (Nashville:  Broadman & Holman, 1995), pp. 15-20.",
+      "Wenham, J. W.   [[i]]The Elements of New Testament Greek[[/i]] (Cambridge:  Cambridge University Press, 1965), pp. 30-39."
      ]
     }
    ]
@@ -1586,7 +1586,8 @@
     "attemptsPerItem": 1,
     "advanceClass": "manualOnIncorrect"
    },
-   "_policy_note": "One attempt; auto-advance on correct via ADVANCE_CORRECT_MS, manual Next on incorrect (ch4railwalk: \"Try again\" + \"Click on 'Next' to continue\")."
+   "_policy_note": "One attempt; auto-advance on correct via ADVANCE_CORRECT_MS, manual Next on incorrect (ch4railwalk: \"Try again\" + \"Click on 'Next' to continue\").",
+   "audioTiming": "afterGuess"
   },
   {
    "id": "c4_drill_declining",
@@ -1840,7 +1841,8 @@
    "answerPolicy": {
     "attemptsPerItem": 1,
     "advanceClass": "manualOnIncorrect"
-   }
+   },
+   "audioTiming": "beforeGuess"
   },
   {
    "id": "c4_drill_vocab_gk_en",
@@ -1870,8 +1872,9 @@
    },
    "answerPolicy": {
     "attemptsPerItem": 1,
-    "advanceClass": "manualOnIncorrect"
-   }
+    "advanceClass": "autoBoth"
+   },
+   "audioTiming": "beforeGuess"
   },
   {
    "id": "c4_drill_vocab_en_gk",
@@ -1901,8 +1904,9 @@
    },
    "answerPolicy": {
     "attemptsPerItem": 1,
-    "advanceClass": "manualOnIncorrect"
-   }
+    "advanceClass": "autoBoth"
+   },
+   "audioTiming": "afterGuess"
   },
   {
    "id": "c4_drill_scripture_memory",
@@ -1982,7 +1986,8 @@
     "attemptsPerItem": 1,
     "advanceClass": "autoBoth"
    },
-   "_policy_note": "Auto-advances on BOTH outcomes, as chapter 3."
+   "_policy_note": "Auto-advances on BOTH outcomes, as chapter 3.",
+   "audioTiming": "beforeGuess"
   }
  ],
  "exercise": [
@@ -2114,7 +2119,15 @@
      "Show Answer",
      "With Accents",
      "Pronounce Each Exercise"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "spellUntilRight",
+    "attemptsPerItem": "retry"
    }
   },
   {
@@ -2175,7 +2188,15 @@
      "Show Answer",
      "With Accents",
      "Pronounce Each Exercise"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "spellUntilRight",
+    "attemptsPerItem": "retry"
    }
   },
   {
@@ -2219,7 +2240,12 @@
     ],
     "_restart_note": "DEPARTURE D-12."
    },
-   "spellerTilesRef": "chapt_1"
+   "spellerTilesRef": "chapt_1",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "spellUntilRight",
+    "attemptsPerItem": "retry"
+   }
   }
  ],
  "quickReview": [

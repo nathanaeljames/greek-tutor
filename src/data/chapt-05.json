@@ -469,11 +469,11 @@
     },
     {
      "id": "firstDeclensionEta",
-     "title": "First Declension--Eta",
+     "title": "First Declension—Eta",
      "content": [
       {
        "type": "paradigm",
-       "title": "First Declension--Eta",
+       "title": "First Declension—Eta",
        "lemma": {
         "greek": "γραφή",
         "gloss": "writing, Scripture",
@@ -654,14 +654,14 @@
     },
     {
      "id": "firstDeclensionAlpha",
-     "title": "First Declension--Alpha",
+     "title": "First Declension—Alpha",
      "content": [
       {
        "type": "paradigm",
        "switch": "moreBack",
        "charts": [
         {
-         "title": "First Declension--Alpha",
+         "title": "First Declension—Alpha",
          "lemma": {
           "greek": "ὥρα",
           "gloss": "hour",
@@ -841,7 +841,7 @@
          "name": "ὥρα"
         },
         {
-         "title": "First Declension--Alpha",
+         "title": "First Declension—Alpha",
          "lemma": {
           "greek": "δόξα",
           "gloss": "glory",
@@ -1028,11 +1028,11 @@
     },
     {
      "id": "firstDeclensionMasc",
-     "title": "First Declension--Masc",
+     "title": "First Declension—Masc",
      "content": [
       {
        "type": "paradigm",
-       "title": "First Declension--Masculine",
+       "title": "First Declension—Masculine",
        "lemma": {
         "greek": "προφήτης",
         "gloss": "prophet",
@@ -1544,10 +1544,10 @@
     {
      "type": "biblist",
      "items": [
-        "Machen, J. Gresham.  [[i]]New Testament Greek for Beginners[[/i]] (Toronto:  The Macmillan Company, 1923), pp. 39-43.",
-        "Mounce, William D.  [[i]]Basics of Biblical Greek:  Grammar[[/i]] (Grand Rapids:  Zondervan, 1993), pp. 28-54.",
-        "Summers, Ray and Thomas Sawyer.  [[i]]Essentials of New Testament Greek[[/i]] (Nashville:  Broadman & Holman, 1995), pp. 21-23.",
-        "Wenham, J. W.   [[i]]The Elements of New Testament Greek[[/i]] (Cambridge:  Cambridge University Press, 1965), pp. 39-42."
+      "Machen, J. Gresham.  [[i]]New Testament Greek for Beginners[[/i]] (Toronto:  The Macmillan Company, 1923), pp. 39-43.",
+      "Mounce, William D.  [[i]]Basics of Biblical Greek:  Grammar[[/i]] (Grand Rapids:  Zondervan, 1993), pp. 28-54.",
+      "Summers, Ray and Thomas Sawyer.  [[i]]Essentials of New Testament Greek[[/i]] (Nashville:  Broadman & Holman, 1995), pp. 21-23.",
+      "Wenham, J. W.   [[i]]The Elements of New Testament Greek[[/i]] (Cambridge:  Cambridge University Press, 1965), pp. 39-42."
      ]
     }
    ]
@@ -1850,7 +1850,8 @@
    "answerPolicy": {
     "attemptsPerItem": 1,
     "advanceClass": "manualOnIncorrect"
-   }
+   },
+   "audioTiming": "afterGuess"
   },
   {
    "id": "c5_drill_declining",
@@ -2079,7 +2080,8 @@
    "answerPolicy": {
     "attemptsPerItem": 1,
     "advanceClass": "manualOnIncorrect"
-   }
+   },
+   "audioTiming": "beforeGuess"
   },
   {
    "id": "c5_drill_article",
@@ -2299,7 +2301,8 @@
    "answerPolicy": {
     "attemptsPerItem": 1,
     "advanceClass": "manualOnIncorrect"
-   }
+   },
+   "audioTiming": "beforeGuess"
   },
   {
    "id": "c5_drill_vocab_gk_en",
@@ -2329,8 +2332,9 @@
    },
    "answerPolicy": {
     "attemptsPerItem": 1,
-    "advanceClass": "manualOnIncorrect"
-   }
+    "advanceClass": "autoBoth"
+   },
+   "audioTiming": "beforeGuess"
   },
   {
    "id": "c5_drill_vocab_en_gk",
@@ -2360,8 +2364,9 @@
    },
    "answerPolicy": {
     "attemptsPerItem": 1,
-    "advanceClass": "manualOnIncorrect"
-   }
+    "advanceClass": "autoBoth"
+   },
+   "audioTiming": "afterGuess"
   },
   {
    "id": "c5_drill_scripture_memory",
@@ -2446,7 +2451,8 @@
    "answerPolicy": {
     "attemptsPerItem": 1,
     "advanceClass": "autoBoth"
-   }
+   },
+   "audioTiming": "beforeGuess"
   }
  ],
  "exercise": [
@@ -2598,7 +2604,15 @@
      "Show Answer",
      "With Accents",
      "Pronounce Each Exercise"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "spellUntilRight",
+    "attemptsPerItem": "retry"
    }
   },
   {
@@ -2761,7 +2775,15 @@
      "Show Answer",
      "With Accents",
      "Pronounce Each Exercise"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "spellUntilRight",
+    "attemptsPerItem": "retry"
    }
   },
   {
@@ -2822,7 +2844,15 @@
      "Show Answer",
      "With Accents",
      "Pronounce Each Exercise"
-    ]
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "spellUntilRight",
+    "attemptsPerItem": "retry"
    }
   },
   {
@@ -2866,6 +2896,11 @@
      "With Accents"
     ],
     "_restart_note": "DEPARTURE D-12."
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "spellUntilRight",
+    "attemptsPerItem": "retry"
    }
   }
  ],
