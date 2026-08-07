@@ -71,70 +71,33 @@ const ACCENTS = /[̀́͂]/gu;   // varia, oxia, perispomeni
 // apostrophe stands in its place. It is a SPACING character, not a diacritic,
 // and it is part of the spelling: a learner who omits it has not written the
 // word. The app stores it as U+0027, the straight vertical apostrophe the
-// printed Greek New Testaments use.
+// printed Greek New Testaments use, and stores it that way EVERYWHERE -- in
+// the chapter-2 teaching pages and drills as well as in the verses.
 //
-// WHY A SMOOTH BREATHING IS ALSO ACCEPTED. The original program had no
-// apostrophe key and wrote the mark as a smooth breathing ON the preceding
-// vowel -- it drew it that way, accepted that, and rejected a real apostrophe.
-// That is objectively wrong for Greek (Nathanael, 2026-08-07) and the app no
-// longer imitates it, but a learner trained on the original must not be
-// punished for the habit, so the breathing form still grades as correct. What
-// no longer grades as correct is leaving the mark out entirely.
+// A SMOOTH BREATHING IS NOT AN ELISION MARK AND THE TWO ARE NOT
+// INTERCHANGEABLE (Nathanael, 2026-08-07). An earlier pass here accepted
+// either for either, on the grounds that the ORIGINAL program had no
+// apostrophe key and wrote elision as a breathing on the preceding vowel. That
+// leniency is withdrawn: it taught the learner that a diacritic and a spacing
+// character are the same thing, which is exactly the confusion the original
+// created and the app exists to correct. The app now has an apostrophe key
+// (D-29), so there is nothing the learner cannot type.
 //
-// TELLING AN ELISION MARK FROM A CORONIS, which is the whole difficulty here.
-// Both are written with the smooth-breathing glyph. The coronis marks CRASIS,
-// two words fused: κἀγώ (καὶ + ἐγώ) and τοὔνομα (τὸ + ὄνομα), both of
-// which chapter 2 ships and scores in the Marking Recognition Drill under
-// "Coronis" -- an answer it lists separately from "Apostrophe". A coronis is
-// legitimate Greek and must survive untouched. The two separate by POSITION:
+//   answer has an apostrophe  -> only an apostrophe is accepted
+//   answer has a breathing    -> only that breathing is accepted
 //
-//   elision  ENDS the word    δἰ            nothing follows the marked vowel
-//   coronis  sits INSIDE it   κἀγώ, τοὔνομα   letters follow it
+// What remains is pure ENCODING normalization, not leniency: U+1FBD GREEK
+// KORONIS and the two curled quotes are alternate spellings of the same
+// spacing apostrophe, so they fold to U+0027 before comparison. A combining
+// breathing never folds to anything.
 //
-// So a breathing becomes an apostrophe only where it is on the FINAL cluster
-// of a word that cannot legitimately carry one there. A word-initial vowel or
-// diphthong (οὐ, εἰ) and an initial rho (ῥ) keep theirs, and so does every
-// coronis. Swept over all 148 delivered spelling answers: none is touched.
-const BREATHINGS = /[̓̔]/u;      // psili, dasia
-const COMBINING = /\p{M}/u;
-const GREEK_VOWEL = /[αεηιουω]/u;   // lowercased and decomposed by this point
-// Every spelling of the mark folds to U+0027 before comparison: the koronis
-// the data used to carry, the two curled quotes, and the straight form itself.
-const ELISION_MARKS = /[᾽’ʼ‘']/gu;
+// This also removes the need to distinguish an elision mark from a CORONIS in
+// the checker, which was the delicate part of the withdrawn rule: κἀγώ and
+// τοὔνομα (crasis, chapter 2, scored as "Coronis" in the Marking Recognition
+// Drill) simply carry the breathing they are authored with, and are compared
+// against it exactly, like every other mark in the app.
+const ELISION_MARKS = /[᾽’ʼ‘]/gu;
 const ELISION = "'";
-
-function elisionKey(word) {
-  const out = word.replace(ELISION_MARKS, ELISION);
-  if (!BREATHINGS.test(out)) return out;
-  const chars = [...out];
-  const bases = chars.filter(ch => !COMBINING.test(ch));
-  // The last base index a breathing may legitimately sit on, or -1 for a word
-  // that cannot carry one at all.
-  let lastLegal = -1;
-  if (bases.length) {
-    if (GREEK_VOWEL.test(bases[0])) {
-      let i = 0;
-      while (i < bases.length && GREEK_VOWEL.test(bases[i])) i += 1;
-      lastLegal = i - 1;                 // the whole initial vowel run
-    } else if (bases[0] === 'ρ') {
-      lastLegal = 0;                     // ῥ-
-    }
-  }
-  const lastBase = bases.length - 1;
-  let baseIndex = -1;
-  let elided = false;
-  const kept = [];
-  for (const ch of chars) {
-    if (!COMBINING.test(ch)) { baseIndex += 1; kept.push(ch); continue; }
-    if (BREATHINGS.test(ch) && baseIndex > lastLegal && baseIndex === lastBase) {
-      elided = true;                     // the original's way of writing elision
-      continue;
-    }
-    kept.push(ch);                       // a coronis, or a real breathing
-  }
-  const key = kept.join('');
-  return elided && !key.endsWith(ELISION) ? key + ELISION : key;
-}
 
 // One comparison key. Two spellings match iff their keys are equal.
 export function spellingKey(text, options) {
@@ -150,9 +113,9 @@ export function spellingKey(text, options) {
   // together so two spellings that differ only in normalization still match.
   out = out.normalize('NFD');
   if (!withAccents) out = out.replace(ACCENTS, '');
-  // Word by word, because "final cluster" is a property of a WORD. Always, not
+  // Alternate encodings of the spacing apostrophe fold to U+0027. Always, not
   // just when punctuation is optional: the elision mark is not punctuation.
-  out = out.split(' ').map(elisionKey).join(' ');
+  out = out.replace(ELISION_MARKS, ELISION);
   return out.normalize('NFC');
 }
 

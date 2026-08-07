@@ -182,8 +182,9 @@ button for that. Standing divergence.
 **C2. A wrong answer never reveals the correct spelling.** `Show Answer`
 is opt-in and stays that way.
 
-**C3. `Show Answer` clears as soon as typing resumes.** Does not apply
-to Major Hint on the whole-verse spellers.
+**C3. `Show Answer` clears as soon as typing resumes.** On every
+spelling surface without exception, including the whole-verse spellers
+(see C8). A caret move is not typing and does not clear it.
 
 **C4. Final forms are REQUIRED.** Final sigma is not optional: ἄγγελος
 must not be accepted as ἄγγελοϲ or with a medial sigma in final
@@ -199,6 +200,49 @@ unchanged).
 
 **C7. Whole-verse spellers play the verse audio after a successful
 spelling.** They currently play nothing.
+
+**C8. `Show Answer` IS THE ONE REVEAL CONTROL. There is no
+`Major Hint`, on any surface, ever again.** Standing contract,
+Nathanael 2026-08-07 (divergence log D-30). Every spelling exercise and
+drill reveals its answer the same way:
+
+  * a **checkbox** labelled `Show Answer`, beside `With Accents` where
+    that exists — never a button;
+  * the panel draws **BELOW the keyboard**, where every other answer in
+    the app appears;
+  * it clears **when typing resumes** (C3) — never on a timer.
+
+The whole-verse spellers were the one exception: a `Major Hint` button
+opening a panel above the keyboard that withdrew itself after 7
+seconds. That was the app's only self-hiding reveal and its only
+timed one, and it is gone. `HINT_VISIBLE_MS` is deleted from
+`timing.js`; do not reintroduce it. Nothing in this app makes a learner
+race a clock.
+
+A new chapter's data may not declare a `Major Hint` button. What it
+declares must match what the surface renders.
+
+**C9. AN ELISION MARK AND A SMOOTH BREATHING ARE DIFFERENT MARKS AND
+ARE NEVER INTERCHANGEABLE.** Nathanael, 2026-08-07.
+
+  * The elision mark is **U+0027**, everywhere: in the verses, in the
+    chapter-2 pages that teach it, and in the drills that score it.
+    `check:shapes` fails on any other spelling of it in rendered data.
+  * A smooth breathing is a **diacritic on a vowel**; an apostrophe is
+    a **spacing character** standing for a dropped letter.
+  * The checker accepts neither for the other. Answer has an
+    apostrophe, only an apostrophe passes; answer has a breathing, only
+    that breathing passes. U+1FBD and the curled quotes still fold to
+    U+0027, because those are alternate ENCODINGS of the same spacing
+    mark — that is normalization, not leniency.
+  * **The mark is REQUIRED where a verse elides.** Omitting it is a
+    misspelling, unlike sentence punctuation (C6/D-18), because it
+    stands for a letter that was dropped.
+
+The ORIGINAL had no apostrophe key and drew elision as a breathing on
+the preceding vowel. The port has the key (D-29) and does not imitate
+the workaround. The coronis (crasis: κἀγώ, τοὔνομα) is a real
+combining breathing and is compared exactly, like every other mark.
 
 ---
 

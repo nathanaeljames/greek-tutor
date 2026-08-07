@@ -1776,18 +1776,20 @@ await page.setViewportSize({ width: 390, height: 900 });
     verbatim === 'ok' && verbatimTyped.includes("'"),
     `feedback ${verbatim} for ${JSON.stringify(verbatimTyped)}`);
 
-  // (b) with the elision mark typed as a smooth breathing — the way the
-  // ORIGINAL represents it, and the way Nathanael typed it. Still accepted, so
-  // nobody is punished for the habit the original taught them.
+  // (b) with the elision mark typed as a SMOOTH BREATHING, the way the
+  // original wrote it. REJECTED as of 2026-08-07 (rule C9): a diacritic on a
+  // vowel and a spacing character standing for a dropped letter are different
+  // marks, and an earlier pass here accepted either for either. The app has an
+  // apostrophe key, so there is nothing the learner cannot type.
   await go('#/activity/chapt_4/c4_ex_scripture_speller');
   await setAccents(false);
   await typeAccented(words.map(w => (/δι/.test(w) ? 'δἰ'.normalize('NFC') : w)).join(' '));
   await stepper('Check Answer').click();
   await page.waitForTimeout(250);
   const withBreathing = await feedbackKind();
-  await shot('R4 elision typed as a smooth breathing');
-  check("5E-R4 δι + smooth breathing is still accepted for δι᾽ (the original's own form)",
-    withBreathing === 'ok', `feedback ${withBreathing} for ${JSON.stringify(await typed())}`);
+  await shot('R4 elision typed as a smooth breathing (rejected)');
+  check('5E-R4 a smooth breathing is REJECTED where the verse elides (C9, not interchangeable)',
+    withBreathing === 'bad', `feedback ${withBreathing} for ${JSON.stringify(await typed())}`);
 
   // (c) with no mark at all. This used to pass under D-18; it must not. An
   // elision mark is not sentence punctuation, it stands for a dropped letter,
@@ -1985,6 +1987,21 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
   check(`5E-R12 ${chapterId} ${activity.id}: it clears as soon as typing resumes`,
     await page.locator('.sv-answer').count() === 0 && !await box.isChecked(),
     `panels ${await page.locator('.sv-answer').count()}, checked ${await box.isChecked()}`);
+}
+
+// ---- rule C9: the two marks are never interchangeable, either way -------
+// Asserted at the module level as well as through the UI, because "either way"
+// needs the CORONIS direction too and no exercise types κἀγώ.
+{
+  const alternates = [];
+  for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+    const seen = JSON.stringify(chapter);
+    for (const ch of ['᾽', '’', 'ʼ', '‘']) {
+      if (seen.includes(ch)) alternates.push(`${chapterId} contains U+${ch.codePointAt(0).toString(16).toUpperCase()}`);
+    }
+  }
+  check('5E-C9 no chapter spells an elision mark as anything but U+0027',
+    alternates.length === 0, alternates.join('; '));
 }
 
 // ------------------------------------------------------ §6.8 option grids

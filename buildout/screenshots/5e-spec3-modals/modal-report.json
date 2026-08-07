@@ -229,11 +229,11 @@
   "height": 844,
   "surface": "ch1-speller-greek-keyboard",
   "atRest": {
-   "top": 101,
-   "bottom": 745,
+   "top": 91,
+   "bottom": 755,
    "action": {
-    "top": 679,
-    "bottom": 723
+    "top": 689,
+    "bottom": 733
    },
    "ceiling": 56,
    "floor": 790,
@@ -242,11 +242,11 @@
    "vh": 844
   },
   "afterContentScroll": {
-   "top": 101,
-   "bottom": 745,
+   "top": 91,
+   "bottom": 755,
    "action": {
-    "top": 679,
-    "bottom": 723
+    "top": 689,
+    "bottom": 733
    }
   },
   "ok": true
@@ -257,11 +257,11 @@
   "height": 844,
   "surface": "ch5-verse-speller-greek-keyboard",
   "atRest": {
-   "top": 101,
-   "bottom": 745,
+   "top": 91,
+   "bottom": 755,
    "action": {
-    "top": 679,
-    "bottom": 723
+    "top": 689,
+    "bottom": 733
    },
    "ceiling": 56,
    "floor": 790,
@@ -270,11 +270,11 @@
    "vh": 844
   },
   "afterContentScroll": {
-   "top": 101,
-   "bottom": 745,
+   "top": 91,
+   "bottom": 755,
    "action": {
-    "top": 679,
-    "bottom": 723
+    "top": 689,
+    "bottom": 733
    }
   },
   "ok": true
@@ -546,7 +546,7 @@
    "ceiling": 56,
    "floor": 680,
    "overlayRange": 0,
-   "contentRange": 44,
+   "contentRange": 64,
    "vh": 734
   },
   "afterContentScroll": {
@@ -574,7 +574,7 @@
    "ceiling": 56,
    "floor": 680,
    "overlayRange": 0,
-   "contentRange": 44,
+   "contentRange": 64,
    "vh": 734
   },
   "afterContentScroll": {
@@ -854,7 +854,7 @@
    "ceiling": 56,
    "floor": 610,
    "overlayRange": 0,
-   "contentRange": 114,
+   "contentRange": 134,
    "vh": 664
   },
   "afterContentScroll": {
@@ -882,7 +882,7 @@
    "ceiling": 56,
    "floor": 610,
    "overlayRange": 0,
-   "contentRange": 114,
+   "contentRange": 134,
    "vh": 664
   },
   "afterContentScroll": {
@@ -1162,7 +1162,7 @@
    "ceiling": 56,
    "floor": 306,
    "overlayRange": 0,
-   "contentRange": 486,
+   "contentRange": 506,
    "vh": 360
   },
   "afterContentScroll": {
@@ -1190,7 +1190,7 @@
    "ceiling": 56,
    "floor": 306,
    "overlayRange": 0,
-   "contentRange": 486,
+   "contentRange": 506,
    "vh": 360
   },
   "afterContentScroll": {
@@ -1461,11 +1461,11 @@
   "height": 1024,
   "surface": "ch1-speller-greek-keyboard",
   "atRest": {
-   "top": 201,
-   "bottom": 825,
+   "top": 191,
+   "bottom": 835,
    "action": {
-    "top": 759,
-    "bottom": 803
+    "top": 769,
+    "bottom": 813
    },
    "ceiling": 56,
    "floor": 970,
@@ -1474,11 +1474,11 @@
    "vh": 1024
   },
   "afterContentScroll": {
-   "top": 201,
-   "bottom": 825,
+   "top": 191,
+   "bottom": 835,
    "action": {
-    "top": 759,
-    "bottom": 803
+    "top": 769,
+    "bottom": 813
    }
   },
   "ok": true
@@ -1489,11 +1489,11 @@
   "height": 1024,
   "surface": "ch5-verse-speller-greek-keyboard",
   "atRest": {
-   "top": 201,
-   "bottom": 825,
+   "top": 191,
+   "bottom": 835,
    "action": {
-    "top": 759,
-    "bottom": 803
+    "top": 769,
+    "bottom": 813
    },
    "ceiling": 56,
    "floor": 970,
@@ -1502,11 +1502,11 @@
    "vh": 1024
   },
   "afterContentScroll": {
-   "top": 201,
-   "bottom": 825,
+   "top": 191,
+   "bottom": 835,
    "action": {
-    "top": 759,
-    "bottom": 803
+    "top": 769,
+    "bottom": 813
    }
   },
   "ok": true

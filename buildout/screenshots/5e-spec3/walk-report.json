@@ -324,15 +324,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_ex_letter_to_name.png",
       "heading": "",
-      "text": "θ\nalpha\nbeta\ngamma\ndelta\nepsilon\nzeta\neta\ntheta\niota\nkappa\nlambda\nmu\nnu\nxi\nomicron\npi\nrho\nsigma\ntau\nupsilon\nphi\nchi\npsi\nomega\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "μ\nalpha\nbeta\ngamma\ndelta\nepsilon\nzeta\neta\ntheta\niota\nkappa\nlambda\nmu\nnu\nxi\nomicron\npi\nrho\nsigma\ntau\nupsilon\nphi\nchi\npsi\nomega\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [
-       "θ"
+       "μ"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "θ",
+       "μ",
        "alpha",
        "beta",
        "gamma",
@@ -379,15 +379,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_ex_letter_to_name.png",
       "heading": "",
-      "text": "ζ\nalpha\nbeta\ngamma\ndelta\nepsilon\nzeta\neta\ntheta\niota\nkappa\nlambda\nmu\nnu\nxi\nomicron\npi\nrho\nsigma\ntau\nupsilon\nphi\nchi\npsi\nomega\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "ι\nalpha\nbeta\ngamma\ndelta\nepsilon\nzeta\neta\ntheta\niota\nkappa\nlambda\nmu\nnu\nxi\nomicron\npi\nrho\nsigma\ntau\nupsilon\nphi\nchi\npsi\nomega\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [
-       "ζ"
+       "ι"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ζ",
+       "ι",
        "alpha",
        "beta",
        "gamma",
@@ -436,7 +436,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_ex_name_to_letter.png",
       "heading": "",
-      "text": "beta\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "omicron\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -488,7 +488,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_ex_name_to_letter.png",
       "heading": "",
-      "text": "epsilon\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "nu\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -748,15 +748,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_ex_translit.png",
       "heading": "",
-      "text": "ι\na\nb\ng\nd\ne\nz\nē\nth\ni\nk\nl\nm\nn\nx\no\np\nr\ns\nt\nu\nph\nch\nps\nō\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "τ\na\nb\ng\nd\ne\nz\nē\nth\ni\nk\nl\nm\nn\nx\no\np\nr\ns\nt\nu\nph\nch\nps\nō\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [
-       "ι"
+       "τ"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ι",
+       "τ",
        "a",
        "b",
        "g",
@@ -803,15 +803,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_ex_translit.png",
       "heading": "",
-      "text": "ε\na\nb\ng\nd\ne\nz\nē\nth\ni\nk\nl\nm\nn\nx\no\np\nr\ns\nt\nu\nph\nch\nps\nō\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "ζ\na\nb\ng\nd\ne\nz\nē\nth\ni\nk\nl\nm\nn\nx\no\np\nr\ns\nt\nu\nph\nch\nps\nō\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [
-       "ε"
+       "ζ"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ε",
+       "ζ",
        "a",
        "b",
        "g",
@@ -860,7 +860,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_ex_transcribe.png",
       "heading": "",
-      "text": "ph\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "a\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -912,7 +912,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_ex_transcribe.png",
       "heading": "",
-      "text": "ch\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "r\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -1866,15 +1866,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "Χριστός\nangel\ntruly, verily\nman\nI\nGod\nand, even\nheart\nI say\nprophet\nChrist\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "προφήτης\nangel\ntruly, verily\nman\nI\nGod\nand, even\nheart\nI say\nprophet\nChrist\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "Χριστός"
+       "προφήτης"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "Χριστός",
+       "προφήτης",
        "angel",
        "truly, verily",
        "man",
@@ -1907,15 +1907,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "ἀμήν\nangel\ntruly, verily\nman\nI\nGod\nand, even\nheart\nI say\nprophet\nChrist\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "θεός\nangel\ntruly, verily\nman\nI\nGod\nand, even\nheart\nI say\nprophet\nChrist\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "ἀμήν"
+       "θεός"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἀμήν",
+       "θεός",
        "angel",
        "truly, verily",
        "man",
@@ -1950,7 +1950,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "heart\nἄγγελος\nἀμήν\nἄνθρωπος\nἐγώ\nθεός\nκαί\nκαρδία\nλέγω\nπροφήτης\nΧριστός\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "truly, verily\nἄγγελος\nἀμήν\nἄνθρωπος\nἐγώ\nθεός\nκαί\nκαρδία\nλέγω\nπροφήτης\nΧριστός\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -1988,7 +1988,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "Christ\nἄγγελος\nἀμήν\nἄνθρωπος\nἐγώ\nθεός\nκαί\nκαρδία\nλέγω\nπροφήτης\nΧριστός\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "angel\nἄγγελος\nἀμήν\nἄνθρωπος\nἐγώ\nθεός\nκαί\nκαρδία\nλέγω\nπροφήτης\nΧριστός\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -3812,15 +3812,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_syllable_counting.png",
       "heading": "",
-      "text": "ἀδελφός\n1\n2\n3\n4\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "υἱός\n1\n2\n3\n4\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [],
       "taps": [
-       "ἀδελφός"
+       "υἱός"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἀδελφός",
+       "υἱός",
        "1",
        "2",
        "3",
@@ -3851,15 +3851,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_2/c2_drill_syllable_counting.png",
       "heading": "",
-      "text": "λέγω\n1\n2\n3\n4\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "ἀδελφός\n1\n2\n3\n4\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [],
       "taps": [
-       "λέγω"
+       "ἀδελφός"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "λέγω",
+       "ἀδελφός",
        "1",
        "2",
        "3",
@@ -8052,15 +8052,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_accent_rule.png",
       "heading": "",
-      "text": "᾿΄αδελφος\nPotential Placement\nNouns Retentive\nVerbs Recessive\nIf long ultima then antepenult cannot be accented\nIf long ultima then if penult accented must be acute\nIf short ultima then accented long penult takes circumflex\nIf ultima acute followed by a word it becomes grave\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "ἐχ΄ω\nPotential Placement\nNouns Retentive\nVerbs Recessive\nIf long ultima then antepenult cannot be accented\nIf long ultima then if penult accented must be acute\nIf short ultima then accented long penult takes circumflex\nIf ultima acute followed by a word it becomes grave\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [],
       "taps": [
-       "᾿΄αδελφος"
+       "ἐχ΄ω"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "᾿΄αδελφος",
+       "ἐχ΄ω",
        "Potential Placement",
        "Nouns Retentive",
        "Verbs Recessive",
@@ -8094,15 +8094,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_2/c2_drill_accent_rule.png",
       "heading": "",
-      "text": "᾿΄ανθρωπου\nPotential Placement\nNouns Retentive\nVerbs Recessive\nIf long ultima then antepenult cannot be accented\nIf long ultima then if penult accented must be acute\nIf short ultima then accented long penult takes circumflex\nIf ultima acute followed by a word it becomes grave\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "ῥ῀ημα\nPotential Placement\nNouns Retentive\nVerbs Recessive\nIf long ultima then antepenult cannot be accented\nIf long ultima then if penult accented must be acute\nIf short ultima then accented long penult takes circumflex\nIf ultima acute followed by a word it becomes grave\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [],
       "taps": [
-       "᾿΄ανθρωπου"
+       "ῥ῀ημα"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "᾿΄ανθρωπου",
+       "ῥ῀ημα",
        "Potential Placement",
        "Nouns Retentive",
        "Verbs Recessive",
@@ -9490,15 +9490,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_marking_recognition.png",
       "heading": "",
-      "text": "᾿αμήν\nAcute\nGrave\nCircumflex\nApostrophe\nCoronis\nDiaeresis\nSmooth Breathing\nRough Breathing\nColon\nQuestion\nPrevious\nNext\nPronounce\nTranslate\nScore\nPronounce each\n1 of 25",
+      "text": "Μω¨υσῆς\nAcute\nGrave\nCircumflex\nApostrophe\nCoronis\nDiaeresis\nSmooth Breathing\nRough Breathing\nColon\nQuestion\nPrevious\nNext\nPronounce\nTranslate\nScore\nPronounce each\n1 of 25",
       "marked": [],
       "taps": [
-       "᾿αμήν"
+       "Μω¨υσῆς"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "᾿αμήν",
+       "Μω¨υσῆς",
        "Acute",
        "Grave",
        "Circumflex",
@@ -9534,15 +9534,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_2/c2_drill_marking_recognition.png",
       "heading": "",
-      "text": "αὐτο῀υ\nAcute\nGrave\nCircumflex\nApostrophe\nCoronis\nDiaeresis\nSmooth Breathing\nRough Breathing\nColon\nQuestion\nPrevious\nNext\nPronounce\nTranslate\nScore\nPronounce each\n1 of 25",
+      "text": "᾿απόστολος\nAcute\nGrave\nCircumflex\nApostrophe\nCoronis\nDiaeresis\nSmooth Breathing\nRough Breathing\nColon\nQuestion\nPrevious\nNext\nPronounce\nTranslate\nScore\nPronounce each\n1 of 25",
       "marked": [],
       "taps": [
-       "αὐτο῀υ"
+       "᾿απόστολος"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "αὐτο῀υ",
+       "᾿απόστολος",
        "Acute",
        "Grave",
        "Circumflex",
@@ -12956,11 +12956,11 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_part_of_speech.png",
       "heading": "",
-      "text": "Learning it takes time and effort.\nAdjective\nNoun\nAdverb\nPreposition\nConjunction\nPronoun\nDefinite Article\nVerb\nPrevious\nNext\nScore\n1 of 29",
+      "text": "But the rewards are great.\nAdjective\nNoun\nAdverb\nPreposition\nConjunction\nPronoun\nDefinite Article\nVerb\nPrevious\nNext\nScore\n1 of 29",
       "marked": [
        {
         "role": "underline",
-        "text": "and"
+        "text": "are"
        }
       ],
       "taps": [],
@@ -12998,7 +12998,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_2/c2_drill_part_of_speech.png",
       "heading": "",
-      "text": "But the rewards are great.\nAdjective\nNoun\nAdverb\nPreposition\nConjunction\nPronoun\nDefinite Article\nVerb\nPrevious\nNext\nScore\n1 of 29",
+      "text": "But you must do the work.\nAdjective\nNoun\nAdverb\nPreposition\nConjunction\nPronoun\nDefinite Article\nVerb\nPrevious\nNext\nScore\n1 of 29",
       "marked": [
        {
         "role": "underline",
@@ -13176,15 +13176,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "ἀκούω\nbrother\nI hear\nglory\nI have\nworld\nlord\nword\nPeter\nson\nPharisee\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "κύριος\nbrother\nI hear\nglory\nI have\nworld\nlord\nword\nPeter\nson\nPharisee\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "ἀκούω"
+       "κύριος"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἀκούω",
+       "κύριος",
        "brother",
        "I hear",
        "glory",
@@ -13260,7 +13260,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "glory\nἀδελφός\nἀκούω\nδόξα\nἔχω\nκόσμος\nκύριος\nλόγος\nΠέτρος\nυἱός\nΦαρισαῖος\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "lord\nἀδελφός\nἀκούω\nδόξα\nἔχω\nκόσμος\nκύριος\nλόγος\nΠέτρος\nυἱός\nΦαρισαῖος\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -13298,7 +13298,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_2/c2_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "Pharisee\nἀδελφός\nἀκούω\nδόξα\nἔχω\nκόσμος\nκύριος\nλόγος\nΠέτρος\nυἱός\nΦαρισαῖος\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "world\nἀδελφός\nἀκούω\nδόξα\nἔχω\nκόσμος\nκύριος\nλόγος\nΠέτρος\nυἱός\nΦαρισαῖος\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -18666,21 +18666,21 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_drill_verb_translating.png",
       "heading": "",
-      "text": "λέγεις\nMat 26:70\nI say\nwe say\nyou say (sg)\nyou say (pl)\nhe/she/it says\nthey say\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
+      "text": "ἀκούω\nLuk 9:9\nI hear\nwe hear\nyou hear (sg)\nyou hear (pl)\nhe/she/it hears\nthey hear\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [
-       "λέγεις"
+       "ἀκούω"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "λέγεις",
-       "I say",
-       "we say",
-       "you say (sg)",
-       "you say (pl)",
-       "he/she/it says",
-       "they say",
+       "ἀκούω",
+       "I hear",
+       "we hear",
+       "you hear (sg)",
+       "you hear (pl)",
+       "he/she/it hears",
+       "they hear",
        "Previous",
        "Next",
        "Pronounce",
@@ -18750,21 +18750,21 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_verb_translating.png",
       "heading": "",
-      "text": "ἀκούω\nLuk 9:9\nI hear\nwe hear\nyou hear (sg)\nyou hear (pl)\nhe/she/it hears\nthey hear\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
+      "text": "λύει\nLuk 13:15\nI loose\nwe loose\nyou loose (sg)\nyou loose (pl)\nhe/she/it looses\nthey loose\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [
-       "ἀκούω"
+       "λύει"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἀκούω",
-       "I hear",
-       "we hear",
-       "you hear (sg)",
-       "you hear (pl)",
-       "he/she/it hears",
-       "they hear",
+       "λύει",
+       "I loose",
+       "we loose",
+       "you loose (sg)",
+       "you loose (pl)",
+       "he/she/it looses",
+       "they loose",
        "Previous",
        "Next",
        "Pronounce",
@@ -18836,15 +18836,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_drill_greek_verb.png",
       "heading": "",
-      "text": "you are hearing (pl)\nMat 10:27\nἀκούομεν\nἀκούετε\nἀκούει\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 28",
+      "text": "they are saying\nMat 9:28\nλέγει\nλέγετε\nλέγουσιν\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἀκούομεν",
-       "ἀκούετε",
-       "ἀκούει",
+       "λέγει",
+       "λέγετε",
+       "λέγουσιν",
        "Previous",
        "Next",
        "Pronounce",
@@ -18913,15 +18913,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_greek_verb.png",
       "heading": "",
-      "text": "they are seeing\nMat 13:16\nβλέπουσιν\nβλέπω\nβλέπεις\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 28",
+      "text": "we are saying\nJn 8:48\nλέγομεν\nλέγεις\nλέγουσιν\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [],
       "lists": [],
       "paras": [],
       "buttons": [
-       "βλέπουσιν",
-       "βλέπω",
-       "βλέπεις",
+       "λέγομεν",
+       "λέγεις",
+       "λέγουσιν",
        "Previous",
        "Next",
        "Pronounce",
@@ -18992,15 +18992,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_drill_parsing.png",
       "heading": "",
-      "text": "βλέπομεν\nJn 9:41\nFirst Person Singular Present Active Indicative\nSecond Person Singular Present Active Indicative\nThird Person Singular Present Active Indicative\nFirst Person Plural Present Active Indicative\nSecond Person Plural Present Active Indicative\nThird Person Plural Present Active Indicative\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
+      "text": "πιστεύω\nMk 9:24\nFirst Person Singular Present Active Indicative\nSecond Person Singular Present Active Indicative\nThird Person Singular Present Active Indicative\nFirst Person Plural Present Active Indicative\nSecond Person Plural Present Active Indicative\nThird Person Plural Present Active Indicative\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [
-       "βλέπομεν"
+       "πιστεύω"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "βλέπομεν",
+       "πιστεύω",
        "First Person Singular Present Active Indicative",
        "Second Person Singular Present Active Indicative",
        "Third Person Singular Present Active Indicative",
@@ -19076,15 +19076,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_parsing.png",
       "heading": "",
-      "text": "λύουσιν\nMk 11:4\nFirst Person Singular Present Active Indicative\nSecond Person Singular Present Active Indicative\nThird Person Singular Present Active Indicative\nFirst Person Plural Present Active Indicative\nSecond Person Plural Present Active Indicative\nThird Person Plural Present Active Indicative\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
+      "text": "βλέπεις\nMt 7:3\nFirst Person Singular Present Active Indicative\nSecond Person Singular Present Active Indicative\nThird Person Singular Present Active Indicative\nFirst Person Plural Present Active Indicative\nSecond Person Plural Present Active Indicative\nThird Person Plural Present Active Indicative\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [
-       "λύουσιν"
+       "βλέπεις"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "λύουσιν",
+       "βλέπεις",
        "First Person Singular Present Active Indicative",
        "Second Person Singular Present Active Indicative",
        "Third Person Singular Present Active Indicative",
@@ -19497,15 +19497,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "λύω\nbut\napostle\nI see\nfor\nI know\nJesus\nI take\nI loose\nheaven\nI believe\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "ἀπόστολος\nbut\napostle\nI see\nfor\nI know\nJesus\nI take\nI loose\nheaven\nI believe\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "λύω"
+       "ἀπόστολος"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "λύω",
+       "ἀπόστολος",
        "but",
        "apostle",
        "I see",
@@ -19540,7 +19540,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "I take\nἀλλά\nἀπόστολος\nβλέπω\nγάρ\nγινώσκω\nἸησοῦς\nλαμβάνω\nλύω\nοὐρανός\nπιστεύω\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "for\nἀλλά\nἀπόστολος\nβλέπω\nγάρ\nγινώσκω\nἸησοῦς\nλαμβάνω\nλύω\nοὐρανός\nπιστεύω\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -19578,7 +19578,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "Jesus\nἀλλά\nἀπόστολος\nβλέπω\nγάρ\nγινώσκω\nἸησοῦς\nλαμβάνω\nλύω\nοὐρανός\nπιστεύω\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "I loose\nἀλλά\nἀπόστολος\nβλέπω\nγάρ\nγινώσκω\nἸησοῦς\nλαμβάνω\nλύω\nοὐρανός\nπιστεύω\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -19892,15 +19892,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_drill_scripture_memory.png",
       "heading": "",
-      "text": "εἰμι\nand\nlife\nhe says\nthe\nI\nto him\nI am\ntruth\nJesus\nway\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "ἀλήθεια\nand\nlife\nhe says\nthe\nI\nto him\nI am\ntruth\nJesus\nway\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "εἰμι"
+       "ἀλήθεια"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "εἰμι",
+       "ἀλήθεια",
        "and",
        "life",
        "he says",
@@ -19933,15 +19933,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_scripture_memory.png",
       "heading": "",
-      "text": "ὁδὸς\nand\nlife\nhe says\nthe\nI\nto him\nI am\ntruth\nJesus\nway\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "Ἰησοῦς\nand\nlife\nhe says\nthe\nI\nto him\nI am\ntruth\nJesus\nway\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "ὁδὸς"
+       "Ἰησοῦς"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ὁδὸς",
+       "Ἰησοῦς",
        "and",
        "life",
        "he says",
@@ -27656,7 +27656,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_4/c4_drill_greek_noun.png",
       "heading": "",
-      "text": "The word became flesh\nJn 1:14\nλόγος\nλόγοι\nλόγου\nλόγων\nλόγῳ\nλόγοις\nλόγον\nλόγους\nλόγε\nλόγοι\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 22",
+      "text": "whoever hears my word\nJn 5:24\nλόγος\nλόγοι\nλόγου\nλόγων\nλόγῳ\nλόγοις\nλόγον\nλόγους\nλόγε\nλόγοι\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 22",
       "marked": [
        {
         "role": "underline",
@@ -27778,11 +27778,11 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_drill_greek_noun.png",
       "heading": "",
-      "text": "first be reconciled to your brother\nMat 5:24\nἀδελφός\nἀδελφοί\nἀδελφοῦ\nἀδελφῶν\nἀδελφῷ\nἀδελφοῖς\nἀδελφόν\nἀδελφούς\nἀδελφέ\nἀδελφοί\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 22",
+      "text": "Brother will betray brother\nMat 10:21\nἀδελφός\nἀδελφοί\nἀδελφοῦ\nἀδελφῶν\nἀδελφῷ\nἀδελφοῖς\nἀδελφόν\nἀδελφούς\nἀδελφέ\nἀδελφοί\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 22",
       "marked": [
        {
         "role": "underline",
-        "text": "brother"
+        "text": "Brother"
        }
       ],
       "taps": [],
@@ -27902,15 +27902,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_4/c4_drill_declining.png",
       "heading": "",
-      "text": "ἄνθρωπε\nLk 12:14\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 28",
+      "text": "ἀνθρώπου\nJn 1:51\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [
-       "ἄνθρωπε"
+       "ἀνθρώπου"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἄνθρωπε",
+       "ἀνθρώπου",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -28023,15 +28023,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_drill_declining.png",
       "heading": "",
-      "text": "ἀδελφῶν\nMatt 20:24\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 28",
+      "text": "ἀνθρώπων\nJn 1:4\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [
-       "ἀδελφῶν"
+       "ἀνθρώπων"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἀδελφῶν",
+       "ἀνθρώπων",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -28440,15 +28440,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_4/c4_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "ἀγαπάω\nI love\nI write\nbut, and\nservant\nI find\ntemple\npeople\nlaw\nhouse\nas, about\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "εὑρίσκω\nI love\nI write\nbut, and\nservant\nI find\ntemple\npeople\nlaw\nhouse\nas, about\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "ἀγαπάω"
+       "εὑρίσκω"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἀγαπάω",
+       "εὑρίσκω",
        "I love",
        "I write",
        "but, and",
@@ -28481,15 +28481,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "δέ\nI love\nI write\nbut, and\nservant\nI find\ntemple\npeople\nlaw\nhouse\nas, about\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "νόμος\nI love\nI write\nbut, and\nservant\nI find\ntemple\npeople\nlaw\nhouse\nas, about\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "δέ"
+       "νόμος"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "δέ",
+       "νόμος",
        "I love",
        "I write",
        "but, and",
@@ -28524,7 +28524,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_4/c4_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "house\nἀγαπάω\nγράφω\nδέ\nδοῦλος\nεὑρίσκω\nἱερόν\nλαός\nνόμος\nοἶκος\nὡς\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "temple\nἀγαπάω\nγράφω\nδέ\nδοῦλος\nεὑρίσκω\nἱερόν\nλαός\nνόμος\nοἶκος\nὡς\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -28562,7 +28562,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "servant\nἀγαπάω\nγράφω\nδέ\nδοῦλος\nεὑρίσκω\nἱερόν\nλαός\nνόμος\nοἶκος\nὡς\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "temple\nἀγαπάω\nγράφω\nδέ\nδοῦλος\nεὑρίσκω\nἱερόν\nλαός\nνόμος\nοἶκος\nὡς\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -28895,15 +28895,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_drill_scripture_memory.png",
       "heading": "",
-      "text": "οὐδεὶς\nexcept, but\ncomes\nfather\nthe\nme\nthrough\nno one\nto\nPronounce\nScore\nPronounce each\n1 of 8",
+      "text": "πρὸς\nexcept, but\ncomes\nfather\nthe\nme\nthrough\nno one\nto\nPronounce\nScore\nPronounce each\n1 of 8",
       "marked": [],
       "taps": [
-       "οὐδεὶς"
+       "πρὸς"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "οὐδεὶς",
+       "πρὸς",
        "except, but",
        "comes",
        "father",
@@ -37040,21 +37040,21 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_drill_first_decl_noun.png",
       "heading": "",
-      "text": "a man who has told you the truth\nJn 8:40\nἀλήθεια\nἀληθείας\nἀληθείᾳ\nἀλήθειαν\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "the love of many will grow cold\nMat 24:12\nἀγάπη\nἀγάπης\nἀγάπῃ\nἀγάπην\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [
        {
         "role": "underline",
-        "text": "truth"
+        "text": "love"
        }
       ],
       "taps": [],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἀλήθεια",
-       "ἀληθείας",
-       "ἀληθείᾳ",
-       "ἀλήθειαν",
+       "ἀγάπη",
+       "ἀγάπης",
+       "ἀγάπῃ",
+       "ἀγάπην",
        "Previous",
        "Next",
        "Pronounce",
@@ -37151,7 +37151,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_drill_first_decl_noun.png",
       "heading": "",
-      "text": "I know that you do not have the love of God in you\nJn 5:42\nἀγάπη\nἀγάπης\nἀγάπῃ\nἀγάπην\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "the love of many will grow cold\nMat 24:12\nἀγάπη\nἀγάπης\nἀγάπῃ\nἀγάπην\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [
        {
         "role": "underline",
@@ -37264,15 +37264,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_drill_declining.png",
       "heading": "",
-      "text": "προφῆται\nJn 7:38\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 25",
+      "text": "ὧραι\nJn 4:52\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 25",
       "marked": [],
       "taps": [
-       "προφῆται"
+       "ὧραι"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "προφῆται",
+       "ὧραι",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -37380,15 +37380,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_drill_declining.png",
       "heading": "",
-      "text": "προφήτου\nRev 18:20\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 25",
+      "text": "ὥρας\nJn 12:27\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 25",
       "marked": [],
       "taps": [
-       "προφήτου"
+       "ὥρας"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "προφήτου",
+       "ὥρας",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -38342,15 +38342,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_drill_article.png",
       "heading": "",
-      "text": "τό\nJn 1:4\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nPrevious\nNext\nPronounce\nHint\nGender\nScore\nPronounce each\n1 of 24",
+      "text": "τάς\nJn 4:35\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nPrevious\nNext\nPronounce\nHint\nGender\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [
-       "τό"
+       "τάς"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "τό",
+       "τάς",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -38441,15 +38441,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_drill_article.png",
       "heading": "",
-      "text": "ὁ\nJn 1:1\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nPrevious\nNext\nPronounce\nHint\nGender\nScore\nPronounce each\n1 of 24",
+      "text": "τάς\nJn 4:35\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nPrevious\nNext\nPronounce\nHint\nGender\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [
-       "ὁ"
+       "τάς"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ὁ",
+       "τάς",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -38836,15 +38836,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "ἔργον\nlove\ntruth\nsin\nkingdom\nwriting\nI raise up\nassembly\nwork\ndisciple\nhour\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "μαθητής\nlove\ntruth\nsin\nkingdom\nwriting\nI raise up\nassembly\nwork\ndisciple\nhour\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "ἔργον"
+       "μαθητής"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἔργον",
+       "μαθητής",
        "love",
        "truth",
        "sin",
@@ -38920,7 +38920,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "disciple\nἀγάπη\nἀλήθεια\nἁμαρτία\nβασιλεία\nγραφή\nἐγείρω\nἐκκλησία\nἔργον\nμαθητής\nὥρα\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "I raise up\nἀγάπη\nἀλήθεια\nἁμαρτία\nβασιλεία\nγραφή\nἐγείρω\nἐκκλησία\nἔργον\nμαθητής\nὥρα\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -38958,7 +38958,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "love\nἀγάπη\nἀλήθεια\nἁμαρτία\nβασιλεία\nγραφή\nἐγείρω\nἐκκλησία\nἔργον\nμαθητής\nὥρα\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "kingdom\nἀγάπη\nἀλήθεια\nἁμαρτία\nβασιλεία\nγραφή\nἐγείρω\nἐκκλησία\nἔργον\nμαθητής\nὥρα\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -39252,15 +39252,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_drill_scripture_memory.png",
       "heading": "",
-      "text": "τῆς\nall\nof God\nand\nsinned\nfall short\nthe (fem)\nfor\nthe (masc)\nof glory\nPronounce\nScore\nPronounce each\n1 of 9",
+      "text": "ἥμαρτον\nall\nof God\nand\nsinned\nfall short\nthe (fem)\nfor\nthe (masc)\nof glory\nPronounce\nScore\nPronounce each\n1 of 9",
       "marked": [],
       "taps": [
-       "τῆς"
+       "ἥμαρτον"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "τῆς",
+       "ἥμαρτον",
        "all",
        "of God",
        "and",
@@ -39292,15 +39292,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_drill_scripture_memory.png",
       "heading": "",
-      "text": "τῆς\nall\nof God\nand\nsinned\nfall short\nthe (fem)\nfor\nthe (masc)\nof glory\nPronounce\nScore\nPronounce each\n1 of 9",
+      "text": "θεοῦ\nall\nof God\nand\nsinned\nfall short\nthe (fem)\nfor\nthe (masc)\nof glory\nPronounce\nScore\nPronounce each\n1 of 9",
       "marked": [],
       "taps": [
-       "τῆς"
+       "θεοῦ"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "τῆς",
+       "θεοῦ",
        "all",
        "of God",
        "and",

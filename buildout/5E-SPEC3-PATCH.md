@@ -9,6 +9,8 @@ twelve items is at the END of this document; read that first for handoff.
   items 6-8  addendum 2   caret drag, modal at rest, straight glyph
   items 9-10 addendum 3   elision required as U+0027, modal vs the app bars
   items 11-12 addendum 4  caret visible while dragging, Show Answer (D-30)
+  items 13-14 addendum 5  breathing/apostrophe NOT interchangeable; the
+                          Show Answer contract written into RULES C8/C9
 
 | File | What |
 | --- | --- |
@@ -871,9 +873,135 @@ Everything in this conversation, in the order it was reported and fixed:
 | 10 | Modal sized to the gap between the app's bars; flex footer | addendum 3 |
 | 11 | Caret visible while dragging | addendum 4 |
 | 12 | `Show Answer` replaces `Major Hint` on the verse spellers (D-30) | addendum 4 |
+| 13 | Breathing and apostrophe are NOT interchangeable; elision is U+0027 app-wide (RULES C9) | addendum 5 |
+| 14 | `Show Answer` written into DRILL-BEHAVIOR-RULES as the standing contract (C8) | addendum 5 |
 
-Behavior suite over the round: **240 → 321 checks**. Two divergences logged
-(D-29, D-30). Three harness defects found and fixed along the way — an
-assertion that passed via `scrollIntoViewIfNeeded`, one that measured the
-viewport instead of the usable gap, and a same-hash navigation that silently
-skipped captures. No commits, no pushes.
+Behavior suite over the round: **240 → 322 checks**. Two divergences logged
+(D-29, D-30) and two standing rules written into DRILL-BEHAVIOR-RULES (C8, C9)
+so chapters 6-8 inherit them. Three harness defects found and fixed along the
+way — an assertion that passed via `scrollIntoViewIfNeeded`, one that measured
+the viewport instead of the usable gap between the app's bars, and a same-hash
+navigation that silently skipped captures. No commits, no pushes.
+
+Two decisions were reversed mid-round on Nathanael's instruction, and both
+reversals are recorded rather than quietly overwritten: the modal scroll model
+(reachable-by-scrolling → fits at rest) and the elision leniency (breathing and
+apostrophe interchangeable → strictly distinct). Where an earlier addendum
+describes the superseded behavior, the later one says so.
+
+---
+
+# Addendum 5 — items 13 and 14 (2026-08-07)
+
+| File | What |
+| --- | --- |
+| `src/lib/answer-check.js` | Item 13. The breathing↔apostrophe leniency is **withdrawn**. |
+| `scripts/check-content-shapes.mjs` | Item 13. The build fails on any elision mark that is not U+0027. |
+| `src/data/speller-tiles.json`, `SpellerKeyboard.svelte` | Item 13. Documentation and the on-screen note corrected. |
+| `buildout/DRILL-BEHAVIOR-RULES.md` | Items 13 + 14. **New standing rules C8 and C9.** |
+| `scripts/ui-behavior.mjs` | Both. **322 checks.** |
+
+---
+
+## Item 13 — the two marks are not interchangeable
+
+Withdrawn, in both directions. I had accepted either mark for either, reasoning
+that a learner trained on the original shouldn't be punished for its habit. You
+are right that this is the wrong trade: the app teaches that a diacritic on a
+vowel and a spacing character standing for a dropped letter are the same thing
+— which is precisely the confusion the original created and this port exists to
+correct. And since D-29 gave the keyboard an apostrophe key, there is nothing
+the learner cannot type.
+
+| Answer has | Typed | Verdict |
+| --- | --- | --- |
+| apostrophe `δι'` | `δι'` | accepted |
+| apostrophe `δι'` | `δι᾽` / `δι’` (U+1FBD, U+2019) | accepted — same character, other encoding |
+| apostrophe `δι'` | `δἰ` (breathing) | **rejected** |
+| apostrophe `δι'` | `δι` (nothing) | **rejected** |
+| breathing `δἰ` | `δι'` | **rejected** |
+| coronis `κἀγώ` | `κἀγώ` | accepted, compared exactly |
+| coronis `κἀγώ` | `καγώ'` | **rejected** |
+
+The fold of U+1FBD and the curled quotes to U+0027 stays, and it is worth being
+precise about why that is *not* a leniency: those are alternate **encodings of
+the same spacing mark**, not a different mark. A combining breathing never
+folds to anything.
+
+**This also made the checker simpler.** The withdrawn rule needed a delicate
+positional test to tell an elision mark from a **coronis** (crasis: `κἀγώ`,
+`τοὔνομα`, which chapter 2 ships and scores under "Coronis"). With the leniency
+gone that whole problem disappears — a coronis is just a breathing, authored
+and compared like every other mark in the app. About 40 lines removed.
+
+### Not interchangeable *anywhere*, not just in the checker
+
+Swept the whole app. Every rendered elision mark is U+0027 — verses, the
+chapter-2 teaching page that introduces it, the Quick Review marks chart, and
+the drill that scores it:
+
+```
+Learn Marks / Apostrophe topic   "διά + αὐτοῦ becomes δι' αὐτοῦ"
+Quick Review marks chart         "Apostrophe:  ( ' )  elided letters"   δι' αὐτοῦ
+Marking Recognition Drill        δι' αὐτοῦ  → Apostrophe
+                                 παρ' αὐτῷ  → Apostrophe
+                                 κἀγώ       → Coronis
+                                 τοὔνομα    → Coronis
+```
+
+Also corrected: the tile file's own documentation and the Greek Keyboard
+reference note, both of which still described the two forms as accepted for
+each other.
+
+**A build guard, so this is enforced rather than merely true today.**
+`check:shapes` now fails on any non-U+0027 elision spelling in rendered data
+(underscore-prefixed provenance keys and `font-map.json` exempt — that file is
+the extraction pipeline's reference table and its notes about the legacy font
+are history, not display). **Negative control**: injecting U+1FBD into chapter
+4 produces
+
+```
+FAIL: chapt-04.json.learn[4].words[7].greek: "δι᾽" spells an elision mark as
+U+1FBD. Every displayed elision mark is U+0027; a smooth breathing and an
+apostrophe are different marks and are never interchangeable.
+```
+
+---
+
+## Item 14 — `Show Answer` is now the contract
+
+Written into `DRILL-BEHAVIOR-RULES.md` as **C8**, so it governs chapters 6-8
+and anything after them rather than living only in this round's notes:
+
+> **C8. `Show Answer` IS THE ONE REVEAL CONTROL. There is no `Major Hint`, on
+> any surface, ever again.**
+> * a **checkbox** labelled `Show Answer`, beside `With Accents` where that
+>   exists — never a button;
+> * the panel draws **BELOW the keyboard**, where every other answer appears;
+> * it clears **when typing resumes** — never on a timer.
+> `HINT_VISIBLE_MS` is deleted; do not reintroduce it. Nothing in this app
+> makes a learner race a clock. A new chapter's data may not declare a
+> `Major Hint` button, and what it declares must match what the surface
+> renders.
+
+**C3** is amended with it — it used to say "does not apply to Major Hint on the
+whole-verse spellers", the exception that is now gone — and it now states that
+a caret move is not typing and does not clear the reveal.
+
+Item 13 is written up as **C9** in the same document, with the same intent:
+the next chapter's implementer reads the rule, not the archaeology.
+
+---
+
+## Verification
+
+| | |
+| --- | --- |
+| `ui-behavior.mjs` | **322/322** |
+| `npm run verify` | green, including the new elision-encoding guard |
+| `ui-modals.mjs` | 55/55 at rest, clearing the app bars |
+| `ui-walk.mjs` | 105 stops × 2 widths, 0px overflow, no console errors |
+| offline | 7/7 |
+
+Two negative controls: the build guard fires on an injected U+1FBD, and the
+checker rejects `δἰ` where it previously accepted it.

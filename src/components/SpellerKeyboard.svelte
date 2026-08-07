@@ -13,10 +13,9 @@
   // needs word boundaries; the punctuation follows the tiles.
   //
   // The apostrophe key types U+0027, the straight apostrophe, which is what
-  // the delivered verses now store (D-29, revised 2026-08-07). It used to type
-  // U+1FBD GREEK KORONIS -- a smooth breathing drawn over nothing, which is
-  // how the ORIGINAL wrote elision because it had no apostrophe key, and which
-  // is wrong for Greek.
+  // every rendered elision in the data is stored as (D-29). A smooth breathing
+  // is a different mark on a different row and the two are NOT interchangeable
+  // anywhere in the app, including in the checker.
   export const PUNCT_KEYS = { ' ': ' ', ',': ',', '.': '.', ';': ';', "'": "'" };
 </script>
 
@@ -97,7 +96,7 @@
           <div class="kb-cell"><span class="kb-roman">{k}</span><span class="kb-greek greek">{g}</span></div>
         {/each}
       </div>
-      <p class="modal-note">Diacritics: use the mark tiles (they combine onto the previous letter). Space, comma, period, ; and ' type themselves — ' is the apostrophe that marks an elided letter (δι' ἐμοῦ) and is REQUIRED where a verse elides. Enter = Check, Backspace = delete.</p>
+      <p class="modal-note">Diacritics: use the mark tiles (they combine onto the previous letter). Space, comma, period, ; and ' type themselves — ' is the apostrophe that marks an elided letter (δι' ἐμοῦ); it is REQUIRED where a verse elides, and it is not the same mark as a smooth breathing. Enter = Check, Backspace = delete.</p>
       </div>
       <div class="modal-actions">
         <!-- svelte-ignore a11y-autofocus -->

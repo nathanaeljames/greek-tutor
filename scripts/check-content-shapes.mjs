@@ -472,6 +472,37 @@ for (const file of files) {
     }
   });
 }
+// ONE SPELLING FOR THE ELISION MARK, EVERYWHERE (Nathanael, 2026-08-07).
+// It is U+0027 in the verses, in the chapter-2 teaching pages that introduce
+// it, and in the drills that score it. The alternates all render as some kind
+// of curled comma and were what made the mark indistinguishable from a smooth
+// breathing in the first place, so they are refused rather than normalized on
+// the way in -- the pipeline rule in apply-behavior-matrix.py converts them
+// and this is what proves the conversion ran.
+//
+// Provenance is exempt: underscore-prefixed keys record where a string came
+// from, and font-map.json is the extraction pipeline's own reference table
+// with no runtime import anywhere in src/.
+const ELISION_ALTERNATES = /[᾽’ʼ‘]/u;
+for (const file of readdirSync(DATA)) {
+  if (!file.endsWith('.json') || file === 'font-map.json') continue;
+  const data = JSON.parse(readFileSync(join(DATA, file), 'utf8'));
+  (function scan(node, path) {
+    if (Array.isArray(node)) return node.forEach((child, i) => scan(child, `${path}[${i}]`));
+    if (node && typeof node === 'object') {
+      for (const [key, value] of Object.entries(node)) {
+        if (!key.startsWith('_')) scan(value, `${path}.${key}`);
+      }
+      return;
+    }
+    if (typeof node === 'string' && ELISION_ALTERNATES.test(node)) {
+      const found = [...node].filter(ch => ELISION_ALTERNATES.test(ch))
+        .map(ch => `U+${ch.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`);
+      problems.push(`${file}${path}: ${JSON.stringify(node.slice(0, 60))} spells an elision mark as ${[...new Set(found)].join(', ')}. Every displayed elision mark is U+0027; a smooth breathing and an apostrophe are different marks and are never interchangeable.`);
+    }
+  })(data, '');
+}
+
 function segment_(text) { return new Intl.Segmenter('el', { granularity: 'grapheme' }).segment(text); }
 
 if (problems.length) {
@@ -479,4 +510,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027).`);
