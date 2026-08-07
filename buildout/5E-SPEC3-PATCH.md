@@ -1,8 +1,9 @@
 # 5E-SPEC3-PATCH.md — the four device reports from 5E-SPEC3-RESPONSE
 
-Base commit `de9a536` ("phase 5E spec 3 results"). Nothing committed, nothing
-pushed. Items 1-4 are the device report; the addendum at the end is item 5,
-the apostrophe key, added after the 2026-08-07 DOSBox follow-up.
+Nothing committed, nothing pushed. Three rounds of device reports, in order:
+items 1-4 (`de9a536`), item 5 the apostrophe key (addendum 1), and items 6-8
+the caret drag, the modal at rest and the straight apostrophe glyph
+(addendum 2, base `f0a75d0`).
 
 | File | What |
 | --- | --- |
@@ -403,3 +404,183 @@ Chapter 1 ships an inline `spellerTiles` fallback that predates the 5D
 punctuation row entirely (it has no punctuation or space keys at all), so it
 was left alone: the shared contract always wins, and adding one key to a
 fallback that is already three keys behind would only look like it was current.
+
+---
+
+# Addendum 2 — items 6, 7, 8 (2026-08-07, iPhone 14 / iOS 26.5.2)
+
+Base commit `f0a75d0` ("finalizing phase 5e"). Six files changed, one added.
+
+| File | What |
+| --- | --- |
+| `src/components/SpellerField.svelte` | Item 6. Hold-and-drag sweeps the caret; native selection and the iOS callout are suppressed. |
+| `src/lib/viewport.js` | **New.** Item 7. Publishes `--modal-vh`, the height the user can actually see. |
+| `src/App.svelte` | Item 7. Starts that tracking on mount. |
+| `src/app.css` | Items 6 + 7. The field claims the gesture; the modal fits the screen and pins its actions. |
+| `src/data/speller-tiles.json` | Item 8. The apostrophe key is printed straight. |
+| `scripts/ui-behavior.mjs` | New assertions for all three; the modal contract rewritten again. **307 checks.** |
+| `scripts/ui-modals.mjs` | Captures the at-rest state instead of the two scroll extremes. |
+
+---
+
+## Item 7 — the modal, third time. What kept going wrong.
+
+You asked: *"What is going on that we keep failing at this simple
+requirement?"* It is a fair question and it has a specific answer, in two
+parts.
+
+### Part one: I solved the wrong problem last round
+
+Your words were *"you should be able to scroll until you can see the top border
+and bottom border."* I read that as **reachable by scrolling** and built
+exactly that — and it passed, and it was still unusable, because *"I cannot
+pull and click at the same time."* Reachable-while-scrolling was never the
+requirement; **at rest** was. That one is on me, not on the code: the tests I
+wrote encoded my reading rather than your need.
+
+### Part two: no CSS unit describes an iPhone
+
+This is what defeated the *first two* attempts, and it is worth stating plainly
+because it will bite anything else that sizes itself to the screen:
+
+- `100vh` is the **largest** viewport — browser chrome hidden. It overstates
+  the visible height by the height of the toolbars.
+- `100dvh` tracks the current state, but a `position: fixed` element is laid
+  out against the **layout** viewport, which is not the rectangle you are
+  looking at.
+
+So a modal capped at `100dvh - 40px` measures as fitting in every desktop
+browser and is still taller than an iPhone's screen. That is precisely what
+5E-SPEC2 shipped, and why "capped to the viewport" produced a dialog with both
+ends off screen. **Chrome cannot reproduce it, which is why three rounds of
+green tests meant nothing.**
+
+### The fix — three things, all of them needed
+
+1. **The box fits.** `--modal-vh` is now measured from `window.visualViewport`
+   — the one API that reports the actual on-screen rectangle — published by the
+   new `src/lib/viewport.js` and updated on rotation, toolbar changes and
+   keyboard show/hide. The CSS fallback beneath it is **`100svh`**, the *small*
+   viewport, which can only ever be too short, never too tall. Erring short
+   costs a little air around the dialog; erring tall is what put your close
+   button under the toolbar.
+
+2. **The content scrolls, not the modal.** The modal is the only scroll
+   container, and both of its edges are on screen, so you are scrolling
+   something whose boundaries you can see.
+
+3. **The actions are pinned.** `.modal-actions` is sticky to the bottom of the
+   modal, so **Close is on screen the instant the dialog opens and never has to
+   be scrolled to at all.** This is the part that makes your complaint
+   structurally impossible to hit again: even if the height measurement were
+   still off by some margin, the buttons are inside the box rather than at the
+   end of its content. There is no longer any state in which you must pull and
+   click at once.
+
+### Measured at rest — nothing scrolled, hands off
+
+Your surface, chapter 5 First Declension Hint with Meanings open:
+
+| Viewport | modal top | modal bottom | Close | overlay range |
+| --- | --- | --- | --- | --- |
+| 390×844 iPhone 14 | 20 | 824 / 844 | 758–802 | **0** |
+| 390×734 toolbars | 20 | 714 / 734 | 648–692 | **0** |
+| 390×664 URL bar | 20 | 644 / 664 | 578–622 | **0** |
+| 320×360 | 20 | 340 / 360 | 274–318 | **0** |
+| 768×1024 iPad | 20 | 1004 / 1024 | 938–982 | **0** |
+
+An overlay scroll range of zero *is* the "it fits" assertion — range there
+would mean the box was taller than the screen.
+
+### The test now asserts at rest, and scrolls nothing
+
+`checkCloseReachable` no longer touches any scroll position. It measures the
+state the dialog opened in: both borders on screen, Close fully on screen,
+overlay range zero, and the modal the only scroller. **Negative control**:
+restoring last round's model gives **28 failures**, e.g. `320×360: modal
+-233..340 of 360, overlay range 253` — the top border 233px above the screen.
+
+`ui-modals.mjs` was rewritten to match: it photographs each surface **at rest**,
+then a second time with the content scrolled to its end, to show the action
+block staying put while the content moves under it. 110 images, 55/55 clean.
+The pair for your exact modal is
+`iphone14-844--ch5-first-decl-hint-meanings--1-at-rest.png` and
+`--2-content-scrolled.png`.
+
+---
+
+## Item 6 — hold and drag to move the cursor
+
+The field is deliberately **not** an `<input>` (a real one summons the system
+keyboard over the tile keyboard, which the shared speller must never do), so
+the caret is a drawn `<span>`. That left a press-and-drag doing the worst
+available thing: starting a native text selection and raising the Copy / Look
+Up / Translate callout over the exercise — a selection nothing in the app could
+act on, which is what your first screenshot caught.
+
+It now works like the Syllable Division exercise. `pointerdown` captures the
+pointer and every `pointermove` re-places the caret at the nearest position,
+computed from the **laid-out clusters**, so wrapping, kerning and the Greek
+font are the browser's business rather than arithmetic. On a wrapped verse the
+nearest position on the nearest **line** wins, so dragging past the end of a
+line lands at the end of that line instead of jumping to whatever is
+horizontally closest two lines down.
+
+Four CSS declarations make it stick, all load-bearing on iOS: `touch-action:
+none` (or the browser takes the drag as a page scroll), `user-select: none`
+(or it is a selection), `-webkit-touch-callout: none` (or the long press raises
+the Copy/Look Up bar), and the existing text cursor.
+
+Tapping still works exactly as before — same code path, zero-length drag — so
+VERIFY-5D A6 defect 1 stays fixed.
+
+**Asserted**: the caret sweeps `4 → 3 → 0` across a drag and stays at 0 after
+release; no selection exists afterwards; a plain tap still lands where tapped;
+and typing at a dragged caret inserts in place (`λυει` → `λχυει`) rather than
+appending. **Negative control**: without the CSS the first check reports
+`touchAction: manipulation, userSelect: auto`.
+
+---
+
+## Item 8 — a straight apostrophe
+
+Yes, and you named the right character. **U+0027 APOSTROPHE** is the straight
+vertical form with no curl — distinct from the smooth breathing, and from the
+acute and the grave, which both slant.
+
+The key is now **printed** with U+0027 and still **inserts** U+1FBD. That split
+is deliberate: the label is what you need to tell two keys apart, while the
+inserted character has to stay the one the delivered verses and the chapter-2
+marks chart actually use, so what you type matches what the exercise shows you.
+Grading accepts every form regardless, so nothing rides on it.
+
+Worth noting this is the same confusion that made the original conflate the two
+marks in the first place — U+1FBD really is a smooth breathing drawn over
+nothing. Printing it straight is the app declining to repeat that.
+
+Capture:
+`buildout/screenshots/5e-spec3-answered/40-r8-straight-apostrophe-key.png` —
+the punctuation row now reads `, · . ; '` with the tick unmistakably different
+from the curled breathing two rows above.
+
+---
+
+## Verification
+
+| | |
+| --- | --- |
+| `ui-behavior.mjs` | **307/307** (was 283), two consecutive runs |
+| `npm run verify` | green |
+| `ui-modals.mjs` | 55/55 at rest, across five viewports |
+| `ui-walk.mjs` | 105 stops × 2 widths, 0px overflow, no console errors |
+| offline | 7/7 |
+
+Three negative controls, one per item, each confirming its assertion catches
+its defect rather than merely passing alongside the fix.
+
+**What still needs your device**, honestly: `visualViewport` and `svh` cannot
+be exercised meaningfully in Chrome at a fixed viewport size — the whole class
+of bug lives in the gap between what desktop CSS reports and what iOS shows.
+The at-rest geometry above is real, and the pinned Close button does not depend
+on the measurement at all, but the measurement itself is the one thing only
+your iPhone can confirm.

@@ -311,58 +311,74 @@ button { font: inherit; cursor: pointer; }
 .rail-count { font-weight: 700; color: var(--teal-dark); font-size: 0.95rem; }
 .rail-next-placeholder { min-width: 96px; }
 
-/* ---- MODAL SURFACES (rule D3, rewritten for 5E-SPEC3-RESPONSE item 2) ----
-   THE MODAL DOES NOT SCROLL. THE OVERLAY SCROLLS THE MODAL.
+/* ---- MODAL SURFACES (rule D3, third rewrite) ----
+   THE MODAL FITS ON SCREEN. ITS CONTENT SCROLLS. ITS ACTIONS NEVER MOVE.
 
-   Nathanael, on an iPhone 14: "You should be able to scroll until you can see
-   the top border and bottom border of the modal popup on any popup in the
-   app." That sentence is the whole specification, and it rules out the two
-   arrangements this file has already tried:
+   Nathanael, iPhone 14, iOS 26.5.2, after the second attempt: "Yes, I can
+   technically pull up and see the bottom of the modal window or pull down and
+   see the top, but I cannot pull and click at the same time. Can't we make it
+   so the top and bottom of the modal is visible AT REST?"
 
-     * 86vh + flex centering (pre-5E-SPEC2). A centered flex item taller than
-       its container overflows EQUALLY at both ends with no way to scroll to
-       either.
-     * a dvh cap + `overflow-y: auto` ON THE MODAL (5E-SPEC2 §5.1). This is
-       what shipped and what he reported as WORSE. The modal sizes itself to
-       the viewport, so the overlay has nothing left to scroll
-       (scrollHeight === clientHeight) and every bit of travel lives in a
-       NESTED scroll region inside a position:fixed overlay -- the one thing
-       iOS touch scrolling is worst at grabbing. Measured on the chapter-5
-       First Declension Hint with Meanings open at 390x734: modal 694px tall
-       over 1175px of content, Close 435px below the fold, outer scroll range
-       zero. "I can't click on it at all" is the correct description of that.
+   That is the requirement, and it is not the one the previous two arrangements
+   were built for. Both of them are now on the record as wrong:
 
-   So the modal gets NO height cap and NO inner scroll. It is as tall as its
-   content, the overlay is the single scroll container, and scrolling that
-   container from end to end necessarily passes both of the modal's borders --
-   at any viewport height, on any engine, with no dvh support required.
+     * 86vh + flex centering (pre-5E-SPEC2): a centered flex item taller than
+       its container overflows EQUALLY at both ends, unscrollably.
+     * dvh cap + inner scroll (5E-SPEC2): the right SHAPE, but sized from a CSS
+       unit that overstates an iPhone's visible height, so the box it made was
+       still taller than the screen.
+     * no cap, overlay scrolls the whole modal (5E-SPEC3-PATCH, first pass):
+       both borders reachable, neither at rest, and the close button only
+       reachable while a finger was holding the scroll.
 
-   Why the flex + `margin: auto` centering is still safe: when the modal is
-   SHORTER than the overlay it is centred; when it is taller the free space is
-   negative, auto margins resolve to zero (CSS Flexbox 8.1), and the item
-   falls back to cross-start. Top-aligned and scrollable beats centred and
-   trapped, and the browser picks between them by itself.
+   Three things together, and all three are needed:
 
-   The overlay's height is pinned to dvh rather than left to `inset: 0` so that
-   on iOS its bottom edge is the bottom the user can SEE rather than the one
-   hiding behind the toolbar; `.app` above pins its height the same way. */
-.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  height: 100vh; height: 100dvh;
+     1. THE BOX FITS. `--modal-vh` is the height the user can actually see --
+        measured from window.visualViewport by lib/viewport.js, because no CSS
+        unit describes it (see that file). The fallbacks below it are `100svh`,
+        the SMALL viewport, which can only ever be too short, and `100vh` last.
+        Erring short costs a little air around the dialog; erring tall puts the
+        close button under the toolbar, which is what happened twice.
+     2. THE CONTENT SCROLLS, inside a box whose edges are both on screen. The
+        modal is the only scroll container; the overlay keeps `overflow-y:auto`
+        purely as a safety valve and normally has zero range.
+     3. THE ACTIONS ARE PINNED. `.modal-actions` is sticky to the bottom of the
+        modal, so Close is on screen from the moment the dialog opens and never
+        has to be scrolled to at all. This is the part that makes "I cannot
+        pull and click at the same time" impossible to hit again, and it holds
+        even if the height measurement is off: the buttons are inside the box,
+        not at the end of its content.
+
+   The cap subtracts the overlay's own padding so the box fits BETWEEN the safe
+   areas rather than merely inside the viewport. */
+:root { --modal-vh: 100vh; }
+@supports (height: 100svh) { :root { --modal-vh: 100svh; } }
+
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0;
+  height: var(--modal-vh);
   background: rgba(0, 0, 0, 0.45);
-  display: flex; justify-content: center; z-index: 100;
+  display: flex; justify-content: center; align-items: center; z-index: 100;
   padding: 20px; padding-top: calc(20px + env(safe-area-inset-top));
   padding-bottom: calc(20px + env(safe-area-inset-bottom));
   overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
-.modal { background: var(--card); border-radius: var(--radius); padding: 22px 20px;
-  max-width: 360px; width: 100%; margin: auto; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-  /* No max-height and no overflow here, deliberately. A modal that scrolls
-     itself takes its travel away from the overlay; see the note above before
-     adding either back. */
+.modal { background: var(--card); border-radius: var(--radius);
+  max-width: 360px; width: 100%; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  /* Bottom padding belongs to the sticky action block, not to the box, or it
+     would scroll away above the buttons. */
+  padding: 22px 20px 0;
+  max-height: calc(var(--modal-vh) - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
   flex-shrink: 0; }
 .modal-title { margin: 0 0 8px; font-size: 1.2rem; }
 .modal-body { margin: 0 0 6px; color: var(--ink); }
 .modal-note { margin: 0; font-size: 0.9rem; color: var(--teal-dark); font-weight: 600; }
-.modal-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+/* Sticky, so the escape from a dialog is never below the fold. The card
+   background and the soft top edge keep scrolling content from appearing to
+   run through the buttons. */
+.modal-actions { position: sticky; bottom: 0; z-index: 1;
+  display: flex; flex-direction: column; gap: 8px;
+  margin-top: 16px; padding: 12px 0 22px; background: var(--card);
+  box-shadow: 0 -10px 12px -12px rgba(0, 0, 0, 0.35); }
 .modal-actions .btn { width: 100%; min-height: 44px; }
 
 /* ================= Phase 4b ================= */
@@ -682,8 +698,24 @@ button { font: inherit; cursor: pointer; }
    cluster form at 2rem would have run off a 320px screen with overflow-x
    hidden app-wide, which is the silent clipping failure this codebase has
    already paid for twice. pre-wrap keeps a typed trailing space visible. */
+/* HOLD AND DRAG MOVES THE CARET (5E-SPEC3-PATCH item 6), so this field must
+   claim the gesture outright. All four declarations are load-bearing on iOS:
+     touch-action: none        - without it the browser takes a drag that starts
+                                 here as a page scroll and the caret never moves
+                                 (the same line .divide-word needs, for the same
+                                 reason)
+     user-select: none         - a drag on text is otherwise a SELECTION, which
+                                 is what Nathanael saw: a blue range with drag
+                                 handles over the exercise
+     -webkit-touch-callout     - suppresses the Copy / Look Up / Translate bar
+                                 that a long press raises over the same text
+     caret-color / cursor      - the caret here is a drawn <span>, not a native
+                                 one; this field is not an <input> (see the
+                                 component header for why it must not be). */
 .spell-target { min-height: 2.4rem; font-size: 2rem; display: block; line-height: 1.3;
-  white-space: pre-wrap; overflow-wrap: anywhere; cursor: text; }
+  white-space: pre-wrap; overflow-wrap: anywhere; cursor: text;
+  touch-action: none; -webkit-user-select: none; user-select: none;
+  -webkit-touch-callout: none; }
 .sp-cluster { cursor: text; }
 /* A diacritic waiting for a letter to sit on (speller-input pendingMark),
    drawn in its spacing form so it is visibly QUEUED rather than lost. */

@@ -1459,35 +1459,31 @@ for (const [label, chapterId, activityId, open] of [
     JSON.stringify(summaries));
 }
 
-// ------------------------------------------------- §6.7 modals reach Close
-// REWRITTEN after 5E-SPEC3-RESPONSE item 2, because the previous version of
-// this loop PASSED on a modal Nathanael could not close on an iPhone 14.
+// ------------------------------------------------- §6.7 modals AT REST
+// THIRD REWRITE, and the reason is worth keeping. Version one used
+// `scrollIntoViewIfNeeded()`, which drives whatever container the button sits
+// in — so it passed on a dialog whose Close was 435px inside a nested scroller
+// no thumb could grab. Version two dropped that and drove the overlay's own
+// scrollTop, asserting each border was REACHABLE. It passed, and Nathanael
+// still could not use it: "I can technically pull up and see the bottom or
+// pull down and see the top, but I cannot pull and click at the same time."
 //
-// It called `close.scrollIntoViewIfNeeded()` and then measured. That helper
-// drives whatever scroll container the element happens to sit in, including
-// the modal's own inner one — so it proved the button existed somewhere
-// scrollable, which was never in doubt, and said nothing about whether a
-// finger could get there. The modal capped itself to the viewport, the overlay
-// therefore had nothing left to scroll, and every pixel of travel lived in a
-// nested scroll region inside a position:fixed overlay. Playwright reached it;
-// a thumb on iOS did not.
-//
-// What is asserted now is his own sentence: "You should be able to scroll
-// until you can see the top border and bottom border of the modal popup on any
-// popup in the app." So, driving ONLY the overlay's scrollTop — the one
-// container a user can actually grab:
-//   * the modal's TOP border is on screen at the top of the scroll range,
-//   * its BOTTOM border is on screen at the end of it,
-//   * Close is fully inside the viewport there,
-//   * and the modal has NO inner scroll of its own to hide travel in.
+// Reachable-while-scrolling was never the requirement. AT REST is. So nothing
+// below scrolls anything: the page is left exactly as the dialog opened it,
+// and what is measured is what a user sees with their hands off the screen.
+//   * the modal's TOP border is on screen,
+//   * its BOTTOM border is on screen,
+//   * Close is fully on screen,
+//   * the modal is the ONLY scroll container under the overlay (the overlay
+//     itself must have nothing left to scroll, or the box did not fit).
 //
 // Heights are real ones. iPhone 14 is 390x844 CSS; Safari showing its toolbars
 // leaves about 390x734, and with the URL bar expanded about 390x664. 320x360
-// stays as the cruel case. Nothing here needs a WebKit-only visual viewport
-// any more: the failure is now reproducible in Chrome at any of them.
+// stays as the cruel case.
 const MODAL_VIEWPORTS = [
   { width: 390, height: 844, name: 'iPhone 14' },
-  { width: 390, height: 664, name: 'iPhone 14, toolbars' },
+  { width: 390, height: 734, name: 'iPhone 14, toolbars' },
+  { width: 390, height: 664, name: 'iPhone 14, URL bar' },
   { width: 320, height: 360, name: 'short 320' }
 ];
 async function checkCloseReachable(label, open) {
@@ -1496,7 +1492,7 @@ async function checkCloseReachable(label, open) {
     await open();
     const close = page.locator('.modal .modal-actions .btn', { hasText: 'Close' }).first();
     if (await close.count() !== 1) {
-      check(`5E §6.7 ${label}: both modal borders and Close are reachable at ${width}x${height} (${name})`,
+      check(`5E §6.7 ${label}: both borders and Close are on screen AT REST at ${width}x${height} (${name})`,
         false, 'no close button found');
       continue;
     }
@@ -1505,32 +1501,29 @@ async function checkCloseReachable(label, open) {
       const modal = overlay.querySelector('.modal');
       const closeBtn = [...modal.querySelectorAll('.modal-actions .btn')]
         .find(b => /close/i.test(b.textContent));
-      const box = el => { const r = el.getBoundingClientRect(); return { top: r.top, bottom: r.bottom }; };
-      overlay.scrollTop = 0;
-      const atTop = box(modal);
-      overlay.scrollTop = overlay.scrollHeight;
-      const atEnd = { modal: box(modal), close: box(closeBtn) };
-      // NOTHING under the overlay may scroll except the overlay. A nested
-      // scroll region anywhere inside is the defect, whether it is on .modal
-      // itself or on a grid three levels down (.kb-ref .kb-grid was).
-      const nested = [...overlay.querySelectorAll('*')].filter(el => {
+      const box = el => { const r = el.getBoundingClientRect(); return { top: Math.round(r.top), bottom: Math.round(r.bottom) }; };
+      // NOTHING IS SCROLLED. This is the state the dialog opened in.
+      const scrollers = [...overlay.querySelectorAll('*')].filter(el => {
         const s = getComputedStyle(el);
         return /auto|scroll/.test(s.overflowY) && el.scrollHeight > el.clientHeight + 1;
       }).map(el => el.className || el.tagName);
       return {
         vh: window.innerHeight,
-        topBorder: Math.round(atTop.top),
-        bottomBorder: Math.round(atEnd.modal.bottom),
-        close: { top: Math.round(atEnd.close.top), bottom: Math.round(atEnd.close.bottom) },
-        nested
+        modal: box(modal),
+        close: box(closeBtn),
+        overlayRange: overlay.scrollHeight - overlay.clientHeight,
+        scrollers
       };
     });
-    const topReachable = seen.topBorder >= 0 && seen.topBorder < seen.vh;
-    const bottomReachable = seen.bottomBorder > 0 && seen.bottomBorder <= seen.vh;
-    const closeReachable = seen.close.top >= 0 && seen.close.bottom <= seen.vh;
-    check(`5E §6.7 ${label}: both modal borders and Close are reachable at ${width}x${height} (${name})`,
-      topReachable && bottomReachable && closeReachable && seen.nested.length === 0,
-      `top border ${seen.topBorder}, bottom border ${seen.bottomBorder}, close ${seen.close.top}..${seen.close.bottom}, viewport ${seen.vh}, nested scrollers ${JSON.stringify(seen.nested)}`);
+    const topVisible = seen.modal.top >= 0 && seen.modal.top < seen.vh;
+    const bottomVisible = seen.modal.bottom > 0 && seen.modal.bottom <= seen.vh;
+    const closeVisible = seen.close.top >= 0 && seen.close.bottom <= seen.vh;
+    // The modal may scroll its own content; nothing else may, and the overlay
+    // must have no range left — range there means the box did not fit.
+    const onlyModalScrolls = seen.scrollers.every(c => String(c).split(' ').includes('modal'));
+    check(`5E §6.7 ${label}: both borders and Close are on screen AT REST at ${width}x${height} (${name})`,
+      topVisible && bottomVisible && closeVisible && seen.overlayRange === 0 && onlyModalScrolls,
+      `modal ${seen.modal.top}..${seen.modal.bottom} of ${seen.vh}, close ${seen.close.top}..${seen.close.bottom}, overlay range ${seen.overlayRange}, scrollers ${JSON.stringify(seen.scrollers)}`);
   }
   await page.setViewportSize({ width: 390, height: 900 });
 }
@@ -1595,23 +1588,25 @@ await checkCloseReachable('ch5 whole-verse speller Greek Keyboard reference', as
       overlayScrollRange: el.scrollHeight - el.clientHeight,
       modalOverflowY: modal.overflowY,
       modalMaxHeight: modal.maxHeight,
+      modalVh: getComputedStyle(document.documentElement).getPropertyValue('--modal-vh').trim(),
+      stickyActions: getComputedStyle(modalEl.querySelector('.modal-actions')).position,
       nested: [...el.querySelectorAll('*')].filter(node => {
         const s = getComputedStyle(node);
         return /auto|scroll/.test(s.overflowY) && node.scrollHeight > node.clientHeight + 1;
       }).map(node => node.className || node.tagName)
     };
   });
-  check('5E §6.7 the overlay is the ONLY scroll container: the modal has no cap and nothing under it scrolls',
-    /auto|scroll/.test(shape.overlayOverflowY) && shape.overlayScrollRange > 0
-      && shape.modalMaxHeight === 'none' && !/auto|scroll/.test(shape.modalOverflowY)
-      && shape.nested.length === 0,
+  check('5E §6.7 the modal is capped to the VISIBLE height and is the only scroller; the overlay has no range left',
+    /auto|scroll/.test(shape.overlayOverflowY) && shape.overlayScrollRange === 0
+      && shape.modalMaxHeight !== 'none' && /auto|scroll/.test(shape.modalOverflowY)
+      && shape.stickyActions === 'sticky'
+      && shape.nested.every(c => String(c).split(' ').includes('modal')),
     JSON.stringify(shape));
   await page.setViewportSize({ width: 390, height: 900 });
 }
 
 // The end-of-chapter dialog has no "Close" button by name; its escape actions
-// are the ones that must be reachable. Driven through the OVERLAY's scroll for
-// the same reason as above.
+// are the ones that must be on screen — AT REST, like every other dialog.
 for (const { width, height, name } of MODAL_VIEWPORTS) {
   await page.setViewportSize({ width, height });
   const last = ch1.sequence[ch1.sequence.length - 1];
@@ -1621,11 +1616,10 @@ for (const { width, height, name } of MODAL_VIEWPORTS) {
   const seen = await page.evaluate(() => {
     const overlay = document.querySelector('.modal-overlay');
     const stay = [...overlay.querySelectorAll('.modal-actions .btn')].find(b => /stay/i.test(b.textContent));
-    overlay.scrollTop = overlay.scrollHeight;
     const r = stay.getBoundingClientRect();
     return { top: Math.round(r.top), bottom: Math.round(r.bottom), vh: window.innerHeight };
   });
-  check(`5E §6.7 end-of-chapter dialog: its last action is reachable at ${width}x${height} (${name})`,
+  check(`5E §6.7 end-of-chapter dialog: its last action is on screen AT REST at ${width}x${height} (${name})`,
     seen.top >= 0 && seen.bottom <= seen.vh, JSON.stringify(seen));
 }
 await page.setViewportSize({ width: 390, height: 900 });
@@ -1787,6 +1781,94 @@ await page.setViewportSize({ width: 390, height: 900 });
   await page.waitForTimeout(250);
   check('5E-R4 a verse stripped of its real breathings is still REJECTED',
     await feedbackKind() === 'bad', `feedback ${await feedbackKind()}`);
+}
+
+// ---- item 6: hold and drag moves the caret ------------------------------
+// "You should be able to hold and drag to move the cursor in the spelling
+// exercise, similar to the syllable placement exercise - currently this just
+// selects the text." It did: the field is not an <input>, so a press-and-drag
+// on it started an iOS text SELECTION and raised the Copy / Look Up /
+// Translate callout over the exercise, and none of that could do anything.
+const caretIndex = () => page.evaluate(() => {
+  const field = document.querySelector('.spell-target');
+  let n = 0;
+  for (const child of field.children) {
+    if (child.classList.contains('caret')) return n;
+    if (child.classList.contains('sp-cluster')) n += 1;
+  }
+  return n;
+});
+{
+  await go('#/activity/chapt_3/c3_ex_verb_speller');
+  await setAccents(false);
+  await typeGreek('λυει');                                   // four clusters, caret at the end
+  const atEnd = await caretIndex();
+
+  // The suppressors, read off the shipped element rather than the stylesheet.
+  const style = await page.locator('.spell-target').evaluate(el => {
+    const s = getComputedStyle(el);
+    return { touchAction: s.touchAction, userSelect: s.userSelect || s.webkitUserSelect, callout: s.webkitTouchCallout };
+  });
+  check('5E-R6 the speller field claims the gesture (no page scroll, no selection, no callout)',
+    style.touchAction === 'none' && /none/.test(String(style.userSelect)),
+    JSON.stringify(style));
+
+  // Drag from the right-hand end of the text to its left-hand end.
+  const box = await page.locator('.spell-target .sp-cluster').first().boundingBox();
+  const last = await page.locator('.spell-target .sp-cluster').last().boundingBox();
+  const y = box.y + box.height / 2;
+  await page.mouse.move(last.x + last.width - 1, y);
+  await page.mouse.down();
+  await page.mouse.move(last.x, y, { steps: 3 });
+  const midway = await caretIndex();
+  await page.mouse.move(box.x + 1, y, { steps: 6 });
+  const dragged = await caretIndex();
+  await page.mouse.up();
+  const afterRelease = await caretIndex();
+
+  check('5E-R6 dragging across the field sweeps the caret and it STAYS where the drag ended',
+    atEnd === 4 && dragged === 0 && afterRelease === 0 && midway < atEnd,
+    `caret ${atEnd} -> ${midway} midway -> ${dragged} at the left edge -> ${afterRelease} after release`);
+
+  // A drag must not leave a text selection behind it.
+  check('5E-R6 no text selection is created by the drag',
+    await page.evaluate(() => String(window.getSelection())) === '',
+    JSON.stringify(await page.evaluate(() => String(window.getSelection()))));
+
+  // A plain tap still positions the caret — the behavior the drag is built on
+  // top of, and the whole of VERIFY-5D A6 defect 1.
+  await page.locator('.spell-target .sp-cluster').nth(1).click({ position: { x: 1, y: 5 } });
+  await page.waitForTimeout(80);
+  check('5E-R6 a plain tap still places the caret where it was tapped',
+    await caretIndex() === 1, `caret ${await caretIndex()}`);
+
+  // ...and typing at the moved caret INSERTS there rather than appending.
+  await typeGreek('χ');
+  check('5E-R6 typing at a dragged caret inserts in place',
+    (await typed()).normalize('NFC') === 'λχυει', JSON.stringify(await typed()));
+}
+
+// ---- item 8: the apostrophe key is visually distinct --------------------
+// U+1FBD is the same comma-above shape as the smooth-breathing key one row
+// above it, so the two tiles were indistinguishable on device. The key is now
+// PRINTED with U+0027, the straight vertical apostrophe — no curl, and not the
+// acute or the grave either — while still INSERTING U+1FBD.
+{
+  const tile = (TILES.punctuation || []).find(t => t.name === 'apostrophe');
+  const smooth = (TILES.diacritics || []).find(d => d.name === 'smooth breathing');
+  check('5E-R8 the apostrophe key is printed straight (U+0027) and inserts the koronis (U+1FBD)',
+    tile.label === "'" && tile.insert === '᾽', JSON.stringify(tile));
+  check('5E-R8 its label differs from the smooth breathing, the acute and the grave',
+    ![smooth.label, '´', '`'].includes(tile.label),
+    `apostrophe ${JSON.stringify(tile.label)} vs smooth ${JSON.stringify(smooth.label)}`);
+
+  await go('#/activity/chapt_4/c4_ex_scripture_speller');
+  const printed = await page.locator('.tk-key.punct[title="apostrophe"]').innerText();
+  await page.locator('.tk-key.punct[title="apostrophe"]').click();
+  await page.waitForTimeout(120);
+  check('5E-R8 the key on screen shows the straight form and still types the koronis',
+    printed.trim() === "'" && (await typed()).normalize('NFC') === '᾽',
+    `printed ${JSON.stringify(printed.trim())}, typed ${JSON.stringify(await typed())}`);
 }
 
 // ------------------------------------------------------ §6.8 option grids

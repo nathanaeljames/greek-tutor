@@ -19,6 +19,7 @@
   import { onAudioProblem, stop as stopAudio } from './lib/audio.js';
   import { getChapter, getActivity, sectionOfActivity, SECTIONS, loadChapter, isChapterLoaded, isChapterAvailable } from './lib/content.js';
   import { getCurrentActivity, getChapterProgress, progressRev } from './lib/progress.js';
+  import { trackVisualViewport } from './lib/viewport.js';
   import * as nav from './lib/nav.js';
 
   let route = { view: 'toc' };
@@ -139,6 +140,11 @@
   }
 
   onMount(() => {
+    // Publishes --modal-vh, the height the user can actually SEE. Every modal
+    // in the app is capped to it; see lib/viewport.js for why CSS units alone
+    // were not enough.
+    const untrackViewport = trackVisualViewport();
+
     const mq = window.matchMedia('(min-width: 900px)');
     wide = mq.matches;
     const onMq = e => (wide = e.matches);
@@ -157,6 +163,7 @@
       if (mq.removeEventListener) mq.removeEventListener('change', onMq);
       else mq.removeListener(onMq);
       window.removeEventListener('hashchange', handleHashChange);
+      if (untrackViewport) untrackViewport();
     };
   });
 

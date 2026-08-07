@@ -2,19 +2,23 @@
 //
 // ui-walk.mjs photographs a rail stop as it arrives, and ui-behavior.mjs
 // photographs an answered drill. Neither has ever photographed a MODAL, which
-// is how a dialog whose close button sat 326px below the fold on an iPhone 14
+// is how a dialog whose close button sat 435px below the fold on an iPhone 14
 // shipped twice. This walks every modal surface in chapters 1-5 at real device
-// heights and captures each one TWICE: at the top of the overlay's scroll and
-// at the end of it. The pair is the evidence for Nathanael's rule — "you should
-// be able to scroll until you can see the top border and bottom border of the
-// modal popup on any popup in the app" — because the first image has to show
-// the top border and the second the bottom border and the close control.
+// heights and captures each one AT REST — nothing scrolled, exactly the state
+// the dialog opens in, which is the state Nathanael judges it in:
+//
+//   "Can't we make it so the top and bottom of the modal is visible at rest,
+//    e.g. after your finger is removed from the screen?"
+//
+// So each image must show BOTH of the modal's borders and its close control
+// with no scrolling at all. A second capture per surface scrolls the modal's
+// CONTENT to its end, to prove the pinned action block stays put while the
+// content moves under it.
 //
 //   node scripts/ui-modals.mjs [--out=DIR] [--force]
 //
-// It also reports, per surface and per viewport, whether anything under the
-// overlay has its own scroll region. That number must be zero: a nested
-// scroller inside a position:fixed overlay is the defect, not a mitigation.
+// It also reports whether the OVERLAY has any scroll range left. That must be
+// zero: range there means the modal did not fit the screen.
 
 import { chromium } from 'playwright-core';
 import { mkdirSync, writeFileSync, readdirSync } from 'node:fs';
@@ -126,41 +130,50 @@ for (const { name, width, height } of VIEWPORTS) {
     try { await open(); } catch (e) { console.log(`SKIP  ${label} @ ${name}: ${e.message.split('\n')[0]}`); continue; }
     if (await page.locator('.modal-overlay').count() === 0) { console.log(`SKIP  ${label} @ ${name}: no modal opened`); continue; }
 
-    const atTop = await page.evaluate(() => {
+    // AT REST. Nothing is scrolled before this measurement or this capture.
+    const rest = await page.evaluate(() => {
       const ov = document.querySelector('.modal-overlay');
-      ov.scrollTop = 0;
-      const m = ov.querySelector('.modal').getBoundingClientRect();
-      return { top: Math.round(m.top), range: ov.scrollHeight - ov.clientHeight };
-    });
-    await page.screenshot({ path: `${OUT}/${name}--${label}--1-top.png` });
-
-    const atEnd = await page.evaluate(() => {
-      const ov = document.querySelector('.modal-overlay');
-      ov.scrollTop = ov.scrollHeight;
       const modal = ov.querySelector('.modal');
       const m = modal.getBoundingClientRect();
       const action = [...modal.querySelectorAll('.modal-actions .btn')].pop();
       const a = action ? action.getBoundingClientRect() : null;
-      const nested = [...ov.querySelectorAll('*')].filter(el => {
-        const s = getComputedStyle(el);
-        return /auto|scroll/.test(s.overflowY) && el.scrollHeight > el.clientHeight + 1;
-      }).map(el => el.className || el.tagName);
       return {
-        bottom: Math.round(m.bottom),
+        top: Math.round(m.top), bottom: Math.round(m.bottom),
         action: a ? { top: Math.round(a.top), bottom: Math.round(a.bottom) } : null,
-        nested, vh: window.innerHeight
+        overlayRange: ov.scrollHeight - ov.clientHeight,
+        contentRange: modal.scrollHeight - modal.clientHeight,
+        vh: window.innerHeight
       };
     });
-    await page.screenshot({ path: `${OUT}/${name}--${label}--2-bottom.png` });
+    await page.screenshot({ path: `${OUT}/${name}--${label}--1-at-rest.png` });
 
-    const topOk = atTop.top >= 0 && atTop.top < height;
-    const bottomOk = atEnd.bottom > 0 && atEnd.bottom <= height;
-    const actionOk = !atEnd.action || (atEnd.action.top >= 0 && atEnd.action.bottom <= height);
-    const cleanOk = atEnd.nested.length === 0;
-    const ok = topOk && bottomOk && actionOk && cleanOk;
+    // Then scroll the modal's CONTENT to its end, to show the action block
+    // staying pinned while the content moves under it.
+    const scrolled = await page.evaluate(() => {
+      const ov = document.querySelector('.modal-overlay');
+      const modal = ov.querySelector('.modal');
+      modal.scrollTop = modal.scrollHeight;
+      const m = modal.getBoundingClientRect();
+      const action = [...modal.querySelectorAll('.modal-actions .btn')].pop();
+      const a = action ? action.getBoundingClientRect() : null;
+      return {
+        top: Math.round(m.top), bottom: Math.round(m.bottom),
+        action: a ? { top: Math.round(a.top), bottom: Math.round(a.bottom) } : null
+      };
+    });
+    await page.screenshot({ path: `${OUT}/${name}--${label}--2-content-scrolled.png` });
+
+    const topOk = rest.top >= 0 && rest.top < height;
+    const bottomOk = rest.bottom > 0 && rest.bottom <= height;
+    const actionOk = !rest.action || (rest.action.top >= 0 && rest.action.bottom <= height);
+    const fitsOk = rest.overlayRange === 0;
+    // The pinned block must not have moved when the content did.
+    const pinnedOk = !rest.action || !scrolled.action
+      || Math.abs(rest.action.bottom - scrolled.action.bottom) <= 1;
+    const ok = topOk && bottomOk && actionOk && fitsOk && pinnedOk;
     if (!ok) bad += 1;
-    console.log(`${ok ? 'OK  ' : 'BAD '} ${name.padEnd(24)} ${label.padEnd(34)} top ${String(atTop.top).padStart(4)}  bottom ${String(atEnd.bottom).padStart(4)}/${height}  scroll ${String(atTop.range).padStart(4)}  nested ${atEnd.nested.length}`);
-    report.push({ viewport: name, width, height, surface: label, topBorder: atTop.top, bottomBorder: atEnd.bottom, overlayScrollRange: atTop.range, lastAction: atEnd.action, nestedScrollers: atEnd.nested, ok });
+    console.log(`${ok ? 'OK  ' : 'BAD '} ${name.padEnd(24)} ${label.padEnd(34)} modal ${String(rest.top).padStart(4)}..${String(rest.bottom).padStart(4)}/${height}  overlay ${String(rest.overlayRange).padStart(4)}  content ${String(rest.contentRange).padStart(5)}  pinned ${pinnedOk}`);
+    report.push({ viewport: name, width, height, surface: label, atRest: rest, afterContentScroll: scrolled, ok });
   }
 }
 
