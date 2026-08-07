@@ -42,11 +42,13 @@
 
 <div class="modal-overlay" on:click|self={close} role="presentation">
   <div class="modal" role="dialog" aria-modal="true" aria-label="End of chapter">
+    <div class="modal-scroll">
     <h2 class="modal-title">End of chapter</h2>
     <p class="modal-body">This is the last page of {chapter ? chapter.title : 'this chapter'}.</p>
     {#if next && !next.available}
       <p class="modal-note">Chapter {next.number} is coming soon.</p>
     {/if}
+    </div>
     <div class="modal-actions">
       {#if canAdvance}
         <button class="btn" bind:this={firstAction} on:click={toNextChapter}>Next chapter</button>

@@ -5,7 +5,14 @@ exercise in chapters 1-5, second revision
 (`drill_behavior_unify_2.xlsx`), which corrected the
 `Behavior on correct?` column. Re-deriving the ledger from that revision
 changed nothing in any chapter file, so the four classes below are
-confirmed against two independent passes. **This document
+confirmed against two independent passes.
+
+Extended 2026-08-07 with Nathanael's verified pass over chapters 6-8.
+**All 78 rows across all eight chapters are now CONFIRMED — this is the
+first point at which the ledger has no open rows.** One new sub-rule,
+A1a below, came out of that pass: five predictions built from the rest
+of this document were wrong, all in the same direction, and the
+explanation turned out to be architectural rather than linguistic. **This document
 and `DRILL-BEHAVIOR-LEDGER.csv` together replace DRILL-MATRIX.md**,
 which was built from screenshots and inference and was wrong on 23 of
 50 rows.
@@ -33,6 +40,32 @@ Vocabulary English-to-Greek is `afterGuess`, and every spelling exercise
 whose prompt is an English gloss is `afterGuess`. It also covers the
 drills whose prompt is an English sentence with an underlined word (the
 Greek Verb, Greek Noun and First Declension Noun drills): `afterGuess`.
+
+**A1a. A long multi-word Greek phrase defers its audio to
+`afterGuess` even when Greek is the prompt — because the ORIGINAL
+cannot accept a guess while its own audio is playing.** A1's
+before/after split was derived from single-word and short-phrase
+prompts (vocabulary lemmas, individual paradigm forms) where the delay
+before the student can act is negligible. The five "Translation Drill"
+activities in chapters 6-8 (Preposition, Adjective, "Eimi", Personal
+Pronoun, Autos) prompt with a multi-word Greek phrase, and in DOSBox the
+student is locked out of clicking until that clip finishes. Making the
+student wait several seconds before they can even attempt an answer is
+the actual defect A1a describes; the original's fix was to defer the
+clip until after the guess, which sidesteps the wait rather than
+shortening it.
+
+**The port does not share the input-lockout constraint the original
+has**, so this rule has no functional necessity for the port — a
+multi-word `beforeGuess` clip could play in the port while the option
+grid stays fully interactive underneath it, and nothing would break.
+**Rule anyway: match the original's audioTiming value for uniformity.**
+Do not re-derive this case from "Greek is the prompt, so play before" —
+check length/word-count first. A drill whose Greek prompt is a single
+word or short paradigm form stays `beforeGuess` (every Case Drill and
+every Vocabulary Greek-to-English drill in chapters 1-8 confirms this);
+a drill whose Greek prompt is a multi-word phrase is `afterGuess`
+regardless of which language is textually first.
 
 **A2. `afterGuess` audio must FINISH before the next item appears.** The
 advance delay is `max(class minimum, audio duration)` — never shorter
@@ -205,6 +238,17 @@ carried into shipped data, corrected a round later.
 
 **E3. When a rule and an observation disagree, the observation wins and
 the rule gets amended here**, with the row that broke it named.
+
+**E4b. A same-chapter precedent is not enough when more than one shape
+exists in that chapter.** Chapter 3 has two verb drills with opposite
+audioTiming — Verb Translating Drill (`beforeGuess`, bare Greek form)
+and Greek Verb Drill (`afterGuess`, English sentence with an underlined
+word). A chapter-6 prediction matched the first by name resemblance
+("Translation" / "Translating") without confirming which SHAPE the
+new drill actually had, and picked wrong. When a chapter offers more
+than one candidate precedent, name similarity is not a tiebreaker;
+locate the actual prompt pool and read it, or mark the prediction
+low-confidence and say why.
 
 **E4a. A rule may not be derived from a value nobody wrote down.**
 The six-class table invented "wait for Next on correct" for fourteen

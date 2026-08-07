@@ -131,6 +131,42 @@ def dehyphen(obj, log, path='$'):
     return obj
 
 
+# THE ELISION MARK IS AN APOSTROPHE (U+0027), not a koronis.
+#
+# Chapter 2 teaches elision by name and the delivered data carried the
+# mark as U+1FBD GREEK KORONIS -- which is a smooth breathing drawn over
+# nothing, the same glyph the original used because its keyboard had no
+# apostrophe key. Nathanael, 2026-08-07: "the smooth breathing is
+# objectively wrong for an elision mark. Other versions of the Greek new
+# testament use U+0027." So every DISPLAYED elision mark is normalized to
+# the straight apostrophe, here beside D2, so a regenerated chapter
+# cannot quietly bring the koronis back.
+#
+# Scoped to the spacing forms only. A CORONIS -- the crasis mark in
+# kago and tounoma -- is a COMBINING breathing on a vowel and is
+# untouched by this: it is legitimate Greek and chapter 2 scores it as
+# its own answer in the Marking Recognition Drill.
+ELISION_FORMS = ('᾽', '’', 'ʼ')
+APOSTROPHE = "'"
+
+
+def deelide(obj, log, path='$'):
+    if isinstance(obj, dict):
+        return {k: (v if k.startswith('_') or k in PROVENANCE_KEYS else
+                    deelide(v, log, f'{path}.{k}'))
+                for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [deelide(v, log, f'{path}[{i}]') for i, v in enumerate(obj)]
+    if isinstance(obj, str) and any(f in obj for f in ELISION_FORMS):
+        new = obj
+        for form in ELISION_FORMS:
+            new = new.replace(form, APOSTROPHE)
+        if new != obj:
+            log.append((path, obj[:60], new[:60]))
+        return new
+    return obj
+
+
 # 5E-SPEC2 §5.3, kept data-side by 5E-SPEC3 §3. The two accent rules
 # carry no structural signal a renderer could key on, so the underline is
 # authored here beside D2 rather than inferred at render time.
@@ -211,6 +247,10 @@ def apply_chapter(path, ledger, report):
     data = underline(data, marks)
     report['underlines'] += [(path, p) for p, _a, _b in marks]
 
+    elisions = []
+    data = deelide(data, elisions)
+    report['elisions'] += [(path, p) for p, _a, _b in elisions]
+
     blob = json.dumps(data, ensure_ascii=False, indent=1) + '\n'
     if unicodedata.normalize('NFC', blob) != blob:
         raise SystemExit(f'STOP: {path} is not NFC after stamping')
@@ -244,9 +284,12 @@ def apply_plain(path, report):
     data = json.loads(text)
     hyphens = []
     data = dehyphen(data, hyphens)
-    if not hyphens:
+    elisions = []
+    data = deelide(data, elisions)
+    if not hyphens and not elisions:
         return
     report['hyphens'] += [(path, p, a, b) for p, a, b in hyphens]
+    report['elisions'] += [(path, p) for p, _a, _b in elisions]
     blob = json.dumps(data, ensure_ascii=False, indent=indent_of(text)) + '\n'
     if unicodedata.normalize('NFC', blob) != blob:
         raise SystemExit(f'STOP: {path} is not NFC after stamping')
@@ -260,7 +303,7 @@ def main():
     ledger_path, datadir = sys.argv[1], sys.argv[2]
     ledger, skipped = load_ledger(ledger_path)
     report = {'unstamped': [], 'buttons': [], 'missing_buttons': [],
-              'pronounce': [], 'hyphens': [], 'underlines': []}
+              'pronounce': [], 'hyphens': [], 'underlines': [], 'elisions': []}
     total = 0
     for n in range(1, 29):
         path = f'{datadir}/chapt-{n:02d}.json'
@@ -288,6 +331,8 @@ def main():
             print(f'  {label}: {", ".join(report[key])}')
     if report['underlines']:
         print(f'  accent-rule underlines applied: {len(report["underlines"])}')
+    if report['elisions']:
+        print(f'  elision marks normalized to U+0027: {len(report["elisions"])}')
     if report['hyphens']:
         print(f'  em dashes applied: {len(report["hyphens"])}')
         for path, p, a, b in report['hyphens']:

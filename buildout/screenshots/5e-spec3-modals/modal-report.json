@@ -6,21 +6,23 @@
   "surface": "ch3-verb-translating-hint",
   "atRest": {
    "top": 170,
-   "bottom": 674,
+   "bottom": 676,
    "action": {
-    "top": 608,
-    "bottom": 652
+    "top": 610,
+    "bottom": 654
    },
+   "ceiling": 56,
+   "floor": 790,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 844
   },
   "afterContentScroll": {
    "top": 170,
-   "bottom": 674,
+   "bottom": 676,
    "action": {
-    "top": 608,
-    "bottom": 652
+    "top": 610,
+    "bottom": 654
    }
   },
   "ok": true
@@ -32,21 +34,23 @@
   "surface": "ch4-greek-noun-hint",
   "atRest": {
    "top": 144,
-   "bottom": 701,
+   "bottom": 703,
    "action": {
-    "top": 635,
-    "bottom": 679
+    "top": 637,
+    "bottom": 681
    },
+   "ceiling": 56,
+   "floor": 790,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 844
   },
   "afterContentScroll": {
    "top": 144,
-   "bottom": 701,
+   "bottom": 703,
    "action": {
-    "top": 635,
-    "bottom": 679
+    "top": 637,
+    "bottom": 681
    }
   },
   "ok": true
@@ -57,22 +61,24 @@
   "height": 844,
   "surface": "ch4-greek-noun-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 824,
+   "top": 68,
+   "bottom": 778,
    "action": {
-    "top": 758,
-    "bottom": 802
+    "top": 712,
+    "bottom": 756
    },
+   "ceiling": 56,
+   "floor": 790,
    "overlayRange": 0,
-   "contentRange": 424,
+   "contentRange": 520,
    "vh": 844
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 824,
+   "top": 68,
+   "bottom": 778,
    "action": {
-    "top": 758,
-    "bottom": 802
+    "top": 712,
+    "bottom": 756
    }
   },
   "ok": true
@@ -83,22 +89,24 @@
   "height": 844,
   "surface": "ch4-declining-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 824,
+   "top": 68,
+   "bottom": 778,
    "action": {
-    "top": 758,
-    "bottom": 802
+    "top": 712,
+    "bottom": 756
    },
+   "ceiling": 56,
+   "floor": 790,
    "overlayRange": 0,
-   "contentRange": 424,
+   "contentRange": 520,
    "vh": 844
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 824,
+   "top": 68,
+   "bottom": 778,
    "action": {
-    "top": 758,
-    "bottom": 802
+    "top": 712,
+    "bottom": 756
    }
   },
   "ok": true
@@ -109,22 +117,24 @@
   "height": 844,
   "surface": "ch5-first-decl-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 824,
+   "top": 68,
+   "bottom": 778,
    "action": {
-    "top": 758,
-    "bottom": 802
+    "top": 712,
+    "bottom": 756
    },
+   "ceiling": 56,
+   "floor": 790,
    "overlayRange": 0,
-   "contentRange": 383,
+   "contentRange": 479,
    "vh": 844
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 824,
+   "top": 68,
+   "bottom": 778,
    "action": {
-    "top": 758,
-    "bottom": 802
+    "top": 712,
+    "bottom": 756
    }
   },
   "ok": true
@@ -135,22 +145,24 @@
   "height": 844,
   "surface": "ch5-declining-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 824,
+   "top": 68,
+   "bottom": 778,
    "action": {
-    "top": 758,
-    "bottom": 802
+    "top": 712,
+    "bottom": 756
    },
+   "ceiling": 56,
+   "floor": 790,
    "overlayRange": 0,
-   "contentRange": 383,
+   "contentRange": 479,
    "vh": 844
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 824,
+   "top": 68,
+   "bottom": 778,
    "action": {
-    "top": 758,
-    "bottom": 802
+    "top": 712,
+    "bottom": 756
    }
   },
   "ok": true
@@ -162,21 +174,23 @@
   "surface": "ch5-article-hint-meanings",
   "atRest": {
    "top": 192,
-   "bottom": 652,
+   "bottom": 654,
    "action": {
-    "top": 586,
-    "bottom": 630
+    "top": 588,
+    "bottom": 632
    },
+   "ceiling": 56,
+   "floor": 790,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 844
   },
   "afterContentScroll": {
    "top": 192,
-   "bottom": 652,
+   "bottom": 654,
    "action": {
-    "top": 586,
-    "bottom": 630
+    "top": 588,
+    "bottom": 632
    }
   },
   "ok": true
@@ -188,21 +202,23 @@
   "surface": "ch3-learn-verbs-endings",
   "atRest": {
    "top": 224,
-   "bottom": 620,
+   "bottom": 622,
    "action": {
-    "top": 553,
-    "bottom": 598
+    "top": 555,
+    "bottom": 600
    },
+   "ceiling": 56,
+   "floor": 790,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 844
   },
   "afterContentScroll": {
    "top": 224,
-   "bottom": 620,
+   "bottom": 622,
    "action": {
-    "top": 553,
-    "bottom": 598
+    "top": 555,
+    "bottom": 600
    }
   },
   "ok": true
@@ -213,22 +229,24 @@
   "height": 844,
   "surface": "ch1-speller-greek-keyboard",
   "atRest": {
-   "top": 110,
-   "bottom": 734,
+   "top": 101,
+   "bottom": 745,
    "action": {
-    "top": 668,
-    "bottom": 712
+    "top": 679,
+    "bottom": 723
    },
+   "ceiling": 56,
+   "floor": 790,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 844
   },
   "afterContentScroll": {
-   "top": 110,
-   "bottom": 734,
+   "top": 101,
+   "bottom": 745,
    "action": {
-    "top": 668,
-    "bottom": 712
+    "top": 679,
+    "bottom": 723
    }
   },
   "ok": true
@@ -239,22 +257,24 @@
   "height": 844,
   "surface": "ch5-verse-speller-greek-keyboard",
   "atRest": {
-   "top": 110,
-   "bottom": 734,
+   "top": 101,
+   "bottom": 745,
    "action": {
-    "top": 668,
-    "bottom": 712
+    "top": 679,
+    "bottom": 723
    },
+   "ceiling": 56,
+   "floor": 790,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 844
   },
   "afterContentScroll": {
-   "top": 110,
-   "bottom": 734,
+   "top": 101,
+   "bottom": 745,
    "action": {
-    "top": 668,
-    "bottom": 712
+    "top": 679,
+    "bottom": 723
    }
   },
   "ok": true
@@ -265,22 +285,24 @@
   "height": 844,
   "surface": "ch1-end-of-chapter",
   "atRest": {
-   "top": 259,
-   "bottom": 586,
+   "top": 257,
+   "bottom": 590,
    "action": {
-    "top": 520,
-    "bottom": 564
+    "top": 524,
+    "bottom": 568
    },
+   "ceiling": 56,
+   "floor": 790,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 844
   },
   "afterContentScroll": {
-   "top": 259,
-   "bottom": 586,
+   "top": 257,
+   "bottom": 590,
    "action": {
-    "top": 520,
-    "bottom": 564
+    "top": 524,
+    "bottom": 568
    }
   },
   "ok": true
@@ -292,21 +314,23 @@
   "surface": "ch3-verb-translating-hint",
   "atRest": {
    "top": 115,
-   "bottom": 619,
+   "bottom": 621,
    "action": {
-    "top": 553,
-    "bottom": 597
+    "top": 555,
+    "bottom": 599
    },
+   "ceiling": 56,
+   "floor": 680,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 734
   },
   "afterContentScroll": {
    "top": 115,
-   "bottom": 619,
+   "bottom": 621,
    "action": {
-    "top": 553,
-    "bottom": 597
+    "top": 555,
+    "bottom": 599
    }
   },
   "ok": true
@@ -318,21 +342,23 @@
   "surface": "ch4-greek-noun-hint",
   "atRest": {
    "top": 89,
-   "bottom": 646,
+   "bottom": 648,
    "action": {
-    "top": 580,
-    "bottom": 624
+    "top": 582,
+    "bottom": 626
    },
+   "ceiling": 56,
+   "floor": 680,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 734
   },
   "afterContentScroll": {
    "top": 89,
-   "bottom": 646,
+   "bottom": 648,
    "action": {
-    "top": 580,
-    "bottom": 624
+    "top": 582,
+    "bottom": 626
    }
   },
   "ok": true
@@ -343,22 +369,24 @@
   "height": 734,
   "surface": "ch4-greek-noun-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 714,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 648,
-    "bottom": 692
+    "top": 602,
+    "bottom": 646
    },
+   "ceiling": 56,
+   "floor": 680,
    "overlayRange": 0,
-   "contentRange": 534,
+   "contentRange": 630,
    "vh": 734
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 714,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 648,
-    "bottom": 692
+    "top": 602,
+    "bottom": 646
    }
   },
   "ok": true
@@ -369,22 +397,24 @@
   "height": 734,
   "surface": "ch4-declining-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 714,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 648,
-    "bottom": 692
+    "top": 602,
+    "bottom": 646
    },
+   "ceiling": 56,
+   "floor": 680,
    "overlayRange": 0,
-   "contentRange": 534,
+   "contentRange": 630,
    "vh": 734
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 714,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 648,
-    "bottom": 692
+    "top": 602,
+    "bottom": 646
    }
   },
   "ok": true
@@ -395,22 +425,24 @@
   "height": 734,
   "surface": "ch5-first-decl-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 714,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 648,
-    "bottom": 692
+    "top": 602,
+    "bottom": 646
    },
+   "ceiling": 56,
+   "floor": 680,
    "overlayRange": 0,
-   "contentRange": 493,
+   "contentRange": 589,
    "vh": 734
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 714,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 648,
-    "bottom": 692
+    "top": 602,
+    "bottom": 646
    }
   },
   "ok": true
@@ -421,22 +453,24 @@
   "height": 734,
   "surface": "ch5-declining-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 714,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 648,
-    "bottom": 692
+    "top": 602,
+    "bottom": 646
    },
+   "ceiling": 56,
+   "floor": 680,
    "overlayRange": 0,
-   "contentRange": 493,
+   "contentRange": 589,
    "vh": 734
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 714,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 648,
-    "bottom": 692
+    "top": 602,
+    "bottom": 646
    }
   },
   "ok": true
@@ -448,21 +482,23 @@
   "surface": "ch5-article-hint-meanings",
   "atRest": {
    "top": 137,
-   "bottom": 597,
+   "bottom": 599,
    "action": {
-    "top": 531,
-    "bottom": 575
+    "top": 533,
+    "bottom": 577
    },
+   "ceiling": 56,
+   "floor": 680,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 734
   },
   "afterContentScroll": {
    "top": 137,
-   "bottom": 597,
+   "bottom": 599,
    "action": {
-    "top": 531,
-    "bottom": 575
+    "top": 533,
+    "bottom": 577
    }
   },
   "ok": true
@@ -474,21 +510,23 @@
   "surface": "ch3-learn-verbs-endings",
   "atRest": {
    "top": 169,
-   "bottom": 565,
+   "bottom": 567,
    "action": {
-    "top": 498,
-    "bottom": 543
+    "top": 500,
+    "bottom": 545
    },
+   "ceiling": 56,
+   "floor": 680,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 734
   },
   "afterContentScroll": {
    "top": 169,
-   "bottom": 565,
+   "bottom": 567,
    "action": {
-    "top": 498,
-    "bottom": 543
+    "top": 500,
+    "bottom": 545
    }
   },
   "ok": true
@@ -499,22 +537,24 @@
   "height": 734,
   "surface": "ch1-speller-greek-keyboard",
   "atRest": {
-   "top": 55,
-   "bottom": 679,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 613,
-    "bottom": 657
+    "top": 602,
+    "bottom": 646
    },
+   "ceiling": 56,
+   "floor": 680,
    "overlayRange": 0,
-   "contentRange": 0,
+   "contentRange": 44,
    "vh": 734
   },
   "afterContentScroll": {
-   "top": 55,
-   "bottom": 679,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 613,
-    "bottom": 657
+    "top": 602,
+    "bottom": 646
    }
   },
   "ok": true
@@ -525,22 +565,24 @@
   "height": 734,
   "surface": "ch5-verse-speller-greek-keyboard",
   "atRest": {
-   "top": 55,
-   "bottom": 679,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 613,
-    "bottom": 657
+    "top": 602,
+    "bottom": 646
    },
+   "ceiling": 56,
+   "floor": 680,
    "overlayRange": 0,
-   "contentRange": 0,
+   "contentRange": 44,
    "vh": 734
   },
   "afterContentScroll": {
-   "top": 55,
-   "bottom": 679,
+   "top": 68,
+   "bottom": 668,
    "action": {
-    "top": 613,
-    "bottom": 657
+    "top": 602,
+    "bottom": 646
    }
   },
   "ok": true
@@ -551,22 +593,24 @@
   "height": 734,
   "surface": "ch1-end-of-chapter",
   "atRest": {
-   "top": 204,
-   "bottom": 531,
+   "top": 202,
+   "bottom": 535,
    "action": {
-    "top": 465,
-    "bottom": 509
+    "top": 469,
+    "bottom": 513
    },
+   "ceiling": 56,
+   "floor": 680,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 734
   },
   "afterContentScroll": {
-   "top": 204,
-   "bottom": 531,
+   "top": 202,
+   "bottom": 535,
    "action": {
-    "top": 465,
-    "bottom": 509
+    "top": 469,
+    "bottom": 513
    }
   },
   "ok": true
@@ -578,21 +622,23 @@
   "surface": "ch3-verb-translating-hint",
   "atRest": {
    "top": 80,
-   "bottom": 584,
+   "bottom": 586,
    "action": {
-    "top": 518,
-    "bottom": 562
+    "top": 520,
+    "bottom": 564
    },
+   "ceiling": 56,
+   "floor": 610,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 664
   },
   "afterContentScroll": {
    "top": 80,
-   "bottom": 584,
+   "bottom": 586,
    "action": {
-    "top": 518,
-    "bottom": 562
+    "top": 520,
+    "bottom": 564
    }
   },
   "ok": true
@@ -603,22 +649,24 @@
   "height": 664,
   "surface": "ch4-greek-noun-hint",
   "atRest": {
-   "top": 54,
-   "bottom": 611,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 545,
-    "bottom": 589
+    "top": 532,
+    "bottom": 576
    },
+   "ceiling": 56,
+   "floor": 610,
    "overlayRange": 0,
-   "contentRange": 0,
+   "contentRange": 29,
    "vh": 664
   },
   "afterContentScroll": {
-   "top": 54,
-   "bottom": 611,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 545,
-    "bottom": 589
+    "top": 532,
+    "bottom": 576
    }
   },
   "ok": true
@@ -629,22 +677,24 @@
   "height": 664,
   "surface": "ch4-greek-noun-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    },
+   "ceiling": 56,
+   "floor": 610,
    "overlayRange": 0,
-   "contentRange": 604,
+   "contentRange": 700,
    "vh": 664
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    }
   },
   "ok": true
@@ -655,22 +705,24 @@
   "height": 664,
   "surface": "ch4-declining-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    },
+   "ceiling": 56,
+   "floor": 610,
    "overlayRange": 0,
-   "contentRange": 604,
+   "contentRange": 700,
    "vh": 664
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    }
   },
   "ok": true
@@ -681,22 +733,24 @@
   "height": 664,
   "surface": "ch5-first-decl-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    },
+   "ceiling": 56,
+   "floor": 610,
    "overlayRange": 0,
-   "contentRange": 563,
+   "contentRange": 659,
    "vh": 664
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    }
   },
   "ok": true
@@ -707,22 +761,24 @@
   "height": 664,
   "surface": "ch5-declining-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    },
+   "ceiling": 56,
+   "floor": 610,
    "overlayRange": 0,
-   "contentRange": 563,
+   "contentRange": 659,
    "vh": 664
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    }
   },
   "ok": true
@@ -734,21 +790,23 @@
   "surface": "ch5-article-hint-meanings",
   "atRest": {
    "top": 102,
-   "bottom": 562,
+   "bottom": 564,
    "action": {
-    "top": 496,
-    "bottom": 540
+    "top": 498,
+    "bottom": 542
    },
+   "ceiling": 56,
+   "floor": 610,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 664
   },
   "afterContentScroll": {
    "top": 102,
-   "bottom": 562,
+   "bottom": 564,
    "action": {
-    "top": 496,
-    "bottom": 540
+    "top": 498,
+    "bottom": 542
    }
   },
   "ok": true
@@ -760,21 +818,23 @@
   "surface": "ch3-learn-verbs-endings",
   "atRest": {
    "top": 134,
-   "bottom": 530,
+   "bottom": 532,
    "action": {
-    "top": 463,
-    "bottom": 508
+    "top": 465,
+    "bottom": 510
    },
+   "ceiling": 56,
+   "floor": 610,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 664
   },
   "afterContentScroll": {
    "top": 134,
-   "bottom": 530,
+   "bottom": 532,
    "action": {
-    "top": 463,
-    "bottom": 508
+    "top": 465,
+    "bottom": 510
    }
   },
   "ok": true
@@ -785,22 +845,24 @@
   "height": 664,
   "surface": "ch1-speller-greek-keyboard",
   "atRest": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    },
+   "ceiling": 56,
+   "floor": 610,
    "overlayRange": 0,
-   "contentRange": 0,
+   "contentRange": 114,
    "vh": 664
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    }
   },
   "ok": true
@@ -811,22 +873,24 @@
   "height": 664,
   "surface": "ch5-verse-speller-greek-keyboard",
   "atRest": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    },
+   "ceiling": 56,
+   "floor": 610,
    "overlayRange": 0,
-   "contentRange": 0,
+   "contentRange": 114,
    "vh": 664
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 644,
+   "top": 68,
+   "bottom": 598,
    "action": {
-    "top": 578,
-    "bottom": 622
+    "top": 532,
+    "bottom": 576
    }
   },
   "ok": true
@@ -837,22 +901,24 @@
   "height": 664,
   "surface": "ch1-end-of-chapter",
   "atRest": {
-   "top": 169,
-   "bottom": 496,
+   "top": 167,
+   "bottom": 500,
    "action": {
-    "top": 430,
-    "bottom": 474
+    "top": 434,
+    "bottom": 478
    },
+   "ceiling": 56,
+   "floor": 610,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 664
   },
   "afterContentScroll": {
-   "top": 169,
-   "bottom": 496,
+   "top": 167,
+   "bottom": 500,
    "action": {
-    "top": 430,
-    "bottom": 474
+    "top": 434,
+    "bottom": 478
    }
   },
   "ok": true
@@ -863,22 +929,24 @@
   "height": 360,
   "surface": "ch3-verb-translating-hint",
   "atRest": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    },
+   "ceiling": 56,
+   "floor": 306,
    "overlayRange": 0,
-   "contentRange": 265,
+   "contentRange": 368,
    "vh": 360
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    }
   },
   "ok": true
@@ -889,22 +957,24 @@
   "height": 360,
   "surface": "ch4-greek-noun-hint",
   "atRest": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    },
+   "ceiling": 56,
+   "floor": 306,
    "overlayRange": 0,
-   "contentRange": 237,
+   "contentRange": 340,
    "vh": 360
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    }
   },
   "ok": true
@@ -915,22 +985,24 @@
   "height": 360,
   "surface": "ch4-greek-noun-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    },
+   "ceiling": 56,
+   "floor": 306,
    "overlayRange": 0,
-   "contentRange": 1017,
+   "contentRange": 1120,
    "vh": 360
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    }
   },
   "ok": true
@@ -941,22 +1013,24 @@
   "height": 360,
   "surface": "ch4-declining-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    },
+   "ceiling": 56,
+   "floor": 306,
    "overlayRange": 0,
-   "contentRange": 1017,
+   "contentRange": 1120,
    "vh": 360
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    }
   },
   "ok": true
@@ -967,22 +1041,24 @@
   "height": 360,
   "surface": "ch5-first-decl-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    },
+   "ceiling": 56,
+   "floor": 306,
    "overlayRange": 0,
-   "contentRange": 1143,
+   "contentRange": 1246,
    "vh": 360
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    }
   },
   "ok": true
@@ -993,22 +1069,24 @@
   "height": 360,
   "surface": "ch5-declining-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    },
+   "ceiling": 56,
+   "floor": 306,
    "overlayRange": 0,
-   "contentRange": 1143,
+   "contentRange": 1246,
    "vh": 360
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    }
   },
   "ok": true
@@ -1019,22 +1097,24 @@
   "height": 360,
   "surface": "ch5-article-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    },
+   "ceiling": 56,
+   "floor": 306,
    "overlayRange": 0,
-   "contentRange": 159,
+   "contentRange": 262,
    "vh": 360
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    }
   },
   "ok": true
@@ -1045,22 +1125,24 @@
   "height": 360,
   "surface": "ch3-learn-verbs-endings",
   "atRest": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 273,
-    "bottom": 318
+    "top": 213,
+    "bottom": 258
    },
+   "ceiling": 56,
+   "floor": 306,
    "overlayRange": 0,
-   "contentRange": 76,
+   "contentRange": 182,
    "vh": 360
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 273,
-    "bottom": 318
+    "top": 213,
+    "bottom": 258
    }
   },
   "ok": true
@@ -1071,22 +1153,24 @@
   "height": 360,
   "surface": "ch1-speller-greek-keyboard",
   "atRest": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    },
+   "ceiling": 56,
+   "floor": 306,
    "overlayRange": 0,
-   "contentRange": 365,
+   "contentRange": 486,
    "vh": 360
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    }
   },
   "ok": true
@@ -1097,22 +1181,24 @@
   "height": 360,
   "surface": "ch5-verse-speller-greek-keyboard",
   "atRest": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    },
+   "ceiling": 56,
+   "floor": 306,
    "overlayRange": 0,
-   "contentRange": 365,
+   "contentRange": 486,
    "vh": 360
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 217,
+    "bottom": 258
    }
   },
   "ok": true
@@ -1123,22 +1209,24 @@
   "height": 360,
   "surface": "ch1-end-of-chapter",
   "atRest": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 255,
+    "bottom": 296
    },
+   "ceiling": 56,
+   "floor": 306,
    "overlayRange": 0,
-   "contentRange": 28,
+   "contentRange": 82,
    "vh": 360
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 340,
+   "top": 68,
+   "bottom": 294,
    "action": {
-    "top": 274,
-    "bottom": 318
+    "top": 255,
+    "bottom": 296
    }
   },
   "ok": true
@@ -1150,21 +1238,23 @@
   "surface": "ch3-verb-translating-hint",
   "atRest": {
    "top": 268,
-   "bottom": 756,
+   "bottom": 758,
    "action": {
-    "top": 690,
-    "bottom": 734
+    "top": 692,
+    "bottom": 736
    },
+   "ceiling": 56,
+   "floor": 970,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 1024
   },
   "afterContentScroll": {
    "top": 268,
-   "bottom": 756,
+   "bottom": 758,
    "action": {
-    "top": 690,
-    "bottom": 734
+    "top": 692,
+    "bottom": 736
    }
   },
   "ok": true
@@ -1176,21 +1266,23 @@
   "surface": "ch4-greek-noun-hint",
   "atRest": {
    "top": 234,
-   "bottom": 791,
+   "bottom": 793,
    "action": {
-    "top": 725,
-    "bottom": 769
+    "top": 727,
+    "bottom": 771
    },
+   "ceiling": 56,
+   "floor": 970,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 1024
   },
   "afterContentScroll": {
    "top": 234,
-   "bottom": 791,
+   "bottom": 793,
    "action": {
-    "top": 725,
-    "bottom": 769
+    "top": 727,
+    "bottom": 771
    }
   },
   "ok": true
@@ -1201,22 +1293,24 @@
   "height": 1024,
   "surface": "ch4-greek-noun-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 1004,
+   "top": 68,
+   "bottom": 958,
    "action": {
-    "top": 938,
-    "bottom": 982
+    "top": 892,
+    "bottom": 936
    },
+   "ceiling": 56,
+   "floor": 970,
    "overlayRange": 0,
-   "contentRange": 195,
+   "contentRange": 291,
    "vh": 1024
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 1004,
+   "top": 68,
+   "bottom": 958,
    "action": {
-    "top": 938,
-    "bottom": 982
+    "top": 892,
+    "bottom": 936
    }
   },
   "ok": true
@@ -1227,22 +1321,24 @@
   "height": 1024,
   "surface": "ch4-declining-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 1004,
+   "top": 68,
+   "bottom": 958,
    "action": {
-    "top": 938,
-    "bottom": 982
+    "top": 892,
+    "bottom": 936
    },
+   "ceiling": 56,
+   "floor": 970,
    "overlayRange": 0,
-   "contentRange": 195,
+   "contentRange": 291,
    "vh": 1024
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 1004,
+   "top": 68,
+   "bottom": 958,
    "action": {
-    "top": 938,
-    "bottom": 982
+    "top": 892,
+    "bottom": 936
    }
   },
   "ok": true
@@ -1253,22 +1349,24 @@
   "height": 1024,
   "surface": "ch5-first-decl-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 1004,
+   "top": 68,
+   "bottom": 958,
    "action": {
-    "top": 938,
-    "bottom": 982
+    "top": 892,
+    "bottom": 936
    },
+   "ceiling": 56,
+   "floor": 970,
    "overlayRange": 0,
-   "contentRange": 154,
+   "contentRange": 250,
    "vh": 1024
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 1004,
+   "top": 68,
+   "bottom": 958,
    "action": {
-    "top": 938,
-    "bottom": 982
+    "top": 892,
+    "bottom": 936
    }
   },
   "ok": true
@@ -1279,22 +1377,24 @@
   "height": 1024,
   "surface": "ch5-declining-hint-meanings",
   "atRest": {
-   "top": 20,
-   "bottom": 1004,
+   "top": 68,
+   "bottom": 958,
    "action": {
-    "top": 938,
-    "bottom": 982
+    "top": 892,
+    "bottom": 936
    },
+   "ceiling": 56,
+   "floor": 970,
    "overlayRange": 0,
-   "contentRange": 154,
+   "contentRange": 250,
    "vh": 1024
   },
   "afterContentScroll": {
-   "top": 20,
-   "bottom": 1004,
+   "top": 68,
+   "bottom": 958,
    "action": {
-    "top": 938,
-    "bottom": 982
+    "top": 892,
+    "bottom": 936
    }
   },
   "ok": true
@@ -1306,21 +1406,23 @@
   "surface": "ch5-article-hint-meanings",
   "atRest": {
    "top": 282,
-   "bottom": 742,
+   "bottom": 744,
    "action": {
-    "top": 676,
-    "bottom": 720
+    "top": 678,
+    "bottom": 722
    },
+   "ceiling": 56,
+   "floor": 970,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 1024
   },
   "afterContentScroll": {
    "top": 282,
-   "bottom": 742,
+   "bottom": 744,
    "action": {
-    "top": 676,
-    "bottom": 720
+    "top": 678,
+    "bottom": 722
    }
   },
   "ok": true
@@ -1332,21 +1434,23 @@
   "surface": "ch3-learn-verbs-endings",
   "atRest": {
    "top": 314,
-   "bottom": 710,
+   "bottom": 712,
    "action": {
-    "top": 643,
-    "bottom": 688
+    "top": 645,
+    "bottom": 690
    },
+   "ceiling": 56,
+   "floor": 970,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 1024
   },
   "afterContentScroll": {
    "top": 314,
-   "bottom": 710,
+   "bottom": 712,
    "action": {
-    "top": 643,
-    "bottom": 688
+    "top": 645,
+    "bottom": 690
    }
   },
   "ok": true
@@ -1357,22 +1461,24 @@
   "height": 1024,
   "surface": "ch1-speller-greek-keyboard",
   "atRest": {
-   "top": 210,
-   "bottom": 814,
+   "top": 201,
+   "bottom": 825,
    "action": {
-    "top": 748,
-    "bottom": 792
+    "top": 759,
+    "bottom": 803
    },
+   "ceiling": 56,
+   "floor": 970,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 1024
   },
   "afterContentScroll": {
-   "top": 210,
-   "bottom": 814,
+   "top": 201,
+   "bottom": 825,
    "action": {
-    "top": 748,
-    "bottom": 792
+    "top": 759,
+    "bottom": 803
    }
   },
   "ok": true
@@ -1383,22 +1489,24 @@
   "height": 1024,
   "surface": "ch5-verse-speller-greek-keyboard",
   "atRest": {
-   "top": 210,
-   "bottom": 814,
+   "top": 201,
+   "bottom": 825,
    "action": {
-    "top": 748,
-    "bottom": 792
+    "top": 759,
+    "bottom": 803
    },
+   "ceiling": 56,
+   "floor": 970,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 1024
   },
   "afterContentScroll": {
-   "top": 210,
-   "bottom": 814,
+   "top": 201,
+   "bottom": 825,
    "action": {
-    "top": 748,
-    "bottom": 792
+    "top": 759,
+    "bottom": 803
    }
   },
   "ok": true
@@ -1409,22 +1517,24 @@
   "height": 1024,
   "surface": "ch1-end-of-chapter",
   "atRest": {
-   "top": 349,
-   "bottom": 676,
+   "top": 347,
+   "bottom": 680,
    "action": {
-    "top": 610,
-    "bottom": 654
+    "top": 614,
+    "bottom": 658
    },
+   "ceiling": 56,
+   "floor": 970,
    "overlayRange": 0,
    "contentRange": 0,
    "vh": 1024
   },
   "afterContentScroll": {
-   "top": 349,
-   "bottom": 676,
+   "top": 347,
+   "bottom": 680,
    "action": {
-    "top": 610,
-    "bottom": 654
+    "top": 614,
+    "bottom": 658
    }
   },
   "ok": true

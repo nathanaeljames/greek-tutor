@@ -56,7 +56,10 @@ const stripAllMarks = s => s.normalize('NFD').replace(/\p{M}/gu, '').normalize('
 // The elision marks the shared keyboard cannot type. answer-check.js treats
 // all of them as punctuation, and punctuation is optional (D-18), so a verse
 // typed without one is still a correct answer.
-const stripElision = s => s.replace(/[᾽’ʼ‘]/gu, '');
+// Removes the elision mark ENTIRELY, in any spelling. Used only to build the
+// negative case: since 2026-08-07 an omitted elision mark is a misspelling, so
+// this produces input that must be REJECTED, never a verse expected to pass.
+const stripElision = s => s.replace(/[᾽’ʼ‘']/gu, '');
 const normalizeText = value => String(value ?? '').replace(/\s+/g, ' ').trim().normalize('NFC');
 
 // playwright-core does not install a browser. Prefer its configured binary,
@@ -1103,13 +1106,10 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
   const hash = `#/activity/${chapterId}/${activity.id}`;
   await go(hash);
   await setAccents(false);
-  // Chapter 4's verse carries an ELISION MARK (δι᾽ ἐμοῦ, U+1FBD), and the
-  // shared keyboard has no tile for one — its punctuation row is comma, raised
-  // dot, period, question mark. Typing the verse without it is what a learner
-  // on this keyboard can actually do, and D-18 (punctuation optional) is what
-  // makes that a correct answer. So this types the typeable form, and the
-  // exercise accepting it IS the assertion.
-  await typeAccented(stripElision(stripAccents((activity.answerWords || []).join(' '))));
+  // Chapter 4's verse carries an ELISION MARK (δι' ἐμοῦ). The keyboard has a
+  // key for it (D-29) and the mark is REQUIRED, so the verse is typed verbatim
+  // — no workaround left in this line at all.
+  await typeAccented(stripAccents((activity.answerWords || []).join(' ')));
   await stepper('Check Answer').click();
   await page.waitForTimeout(200);
   const kind = await feedbackKind();
@@ -1460,22 +1460,29 @@ for (const [label, chapterId, activityId, open] of [
 }
 
 // ------------------------------------------------- §6.7 modals AT REST
-// THIRD REWRITE, and the reason is worth keeping. Version one used
-// `scrollIntoViewIfNeeded()`, which drives whatever container the button sits
-// in — so it passed on a dialog whose Close was 435px inside a nested scroller
-// no thumb could grab. Version two dropped that and drove the overlay's own
-// scrollTop, asserting each border was REACHABLE. It passed, and Nathanael
-// still could not use it: "I can technically pull up and see the bottom or
-// pull down and see the top, but I cannot pull and click at the same time."
+// FOURTH REWRITE. Each previous one asserted something true that was not the
+// thing that mattered:
+//   1. `scrollIntoViewIfNeeded()` — proved the button existed somewhere
+//      scrollable, which was never in doubt.
+//   2. borders REACHABLE by driving the overlay's scroll — passed, and
+//      "I cannot pull and click at the same time".
+//   3. borders on screen AT REST, measured against the VIEWPORT — passed, and
+//      the title was still behind the top bar and Close behind the tab bar.
 //
-// Reachable-while-scrolling was never the requirement. AT REST is. So nothing
-// below scrolls anything: the page is left exactly as the dialog opened it,
-// and what is measured is what a user sees with their hands off the screen.
-//   * the modal's TOP border is on screen,
-//   * its BOTTOM border is on screen,
-//   * Close is fully on screen,
-//   * the modal is the ONLY scroll container under the overlay (the overlay
-//     itself must have nothing left to scroll, or the box did not fit).
+// The third one is the instructive failure: the app draws a fixed top bar and
+// a fixed bottom tab bar, so "inside the viewport" was never the constraint.
+// The constraint is the GAP BETWEEN THE BARS. Measured at 390x844 before this
+// change: bars at 0-56 and 790-844, modal at 20-824 — inside the viewport by
+// 20px at each end and underneath a bar at both.
+//
+// So every assertion below is against the bars' own rects, which are in the
+// same client-coordinate space the fixed overlay uses. Nothing is scrolled:
+// this is the state the dialog opens in, hands off the screen.
+//   * the modal's top border is at or below the top bar's bottom edge,
+//   * its bottom border is at or above the tab bar's top edge,
+//   * Close is entirely inside that same gap,
+//   * the overlay has no scroll range left (range means the box did not fit),
+//   * and the modal is the only scroll container under it.
 //
 // Heights are real ones. iPhone 14 is 390x844 CSS; Safari showing its toolbars
 // leaves about 390x734, and with the URL bar expanded about 390x664. 320x360
@@ -1492,7 +1499,7 @@ async function checkCloseReachable(label, open) {
     await open();
     const close = page.locator('.modal .modal-actions .btn', { hasText: 'Close' }).first();
     if (await close.count() !== 1) {
-      check(`5E §6.7 ${label}: both borders and Close are on screen AT REST at ${width}x${height} (${name})`,
+      check(`5E §6.7 ${label}: both borders and Close clear the app bars AT REST at ${width}x${height} (${name})`,
         false, 'no close button found');
       continue;
     }
@@ -1502,6 +1509,7 @@ async function checkCloseReachable(label, open) {
       const closeBtn = [...modal.querySelectorAll('.modal-actions .btn')]
         .find(b => /close/i.test(b.textContent));
       const box = el => { const r = el.getBoundingClientRect(); return { top: Math.round(r.top), bottom: Math.round(r.bottom) }; };
+      const bar = sel => { const el = document.querySelector(sel); return el ? box(el) : null; };
       // NOTHING IS SCROLLED. This is the state the dialog opened in.
       const scrollers = [...overlay.querySelectorAll('*')].filter(el => {
         const s = getComputedStyle(el);
@@ -1511,19 +1519,25 @@ async function checkCloseReachable(label, open) {
         vh: window.innerHeight,
         modal: box(modal),
         close: box(closeBtn),
+        topBar: bar('.topbar'),
+        tabBar: bar('.bottom-bar'),
         overlayRange: overlay.scrollHeight - overlay.clientHeight,
         scrollers
       };
     });
-    const topVisible = seen.modal.top >= 0 && seen.modal.top < seen.vh;
-    const bottomVisible = seen.modal.bottom > 0 && seen.modal.bottom <= seen.vh;
-    const closeVisible = seen.close.top >= 0 && seen.close.bottom <= seen.vh;
-    // The modal may scroll its own content; nothing else may, and the overlay
-    // must have no range left — range there means the box did not fit.
-    const onlyModalScrolls = seen.scrollers.every(c => String(c).split(' ').includes('modal'));
-    check(`5E §6.7 ${label}: both borders and Close are on screen AT REST at ${width}x${height} (${name})`,
+    // The usable gap: below the top bar, above the tab bar. A missing bar
+    // falls back to the viewport edge.
+    const ceiling = seen.topBar ? seen.topBar.bottom : 0;
+    const floor = seen.tabBar ? seen.tabBar.top : seen.vh;
+    const topVisible = seen.modal.top >= ceiling - 1;
+    const bottomVisible = seen.modal.bottom <= floor + 1;
+    const closeVisible = seen.close.top >= ceiling - 1 && seen.close.bottom <= floor + 1;
+    // Only .modal-scroll may scroll, and the overlay must have no range left —
+    // range there means the box did not fit between the bars.
+    const onlyModalScrolls = seen.scrollers.every(c => String(c).split(' ').includes('modal-scroll'));
+    check(`5E §6.7 ${label}: both borders and Close clear the app bars AT REST at ${width}x${height} (${name})`,
       topVisible && bottomVisible && closeVisible && seen.overlayRange === 0 && onlyModalScrolls,
-      `modal ${seen.modal.top}..${seen.modal.bottom} of ${seen.vh}, close ${seen.close.top}..${seen.close.bottom}, overlay range ${seen.overlayRange}, scrollers ${JSON.stringify(seen.scrollers)}`);
+      `modal ${seen.modal.top}..${seen.modal.bottom} inside gap ${ceiling}..${floor}, close ${seen.close.top}..${seen.close.bottom}, overlay range ${seen.overlayRange}, scrollers ${JSON.stringify(seen.scrollers)}`);
   }
   await page.setViewportSize({ width: 390, height: 900 });
 }
@@ -1588,19 +1602,25 @@ await checkCloseReachable('ch5 whole-verse speller Greek Keyboard reference', as
       overlayScrollRange: el.scrollHeight - el.clientHeight,
       modalOverflowY: modal.overflowY,
       modalMaxHeight: modal.maxHeight,
+      modalDisplay: modal.display,
+      scrollRegionOverflowY: getComputedStyle(modalEl.querySelector('.modal-scroll')).overflowY,
+      actionsFlex: getComputedStyle(modalEl.querySelector('.modal-actions')).flexGrow,
       modalVh: getComputedStyle(document.documentElement).getPropertyValue('--modal-vh').trim(),
-      stickyActions: getComputedStyle(modalEl.querySelector('.modal-actions')).position,
+      chromeTop: getComputedStyle(document.documentElement).getPropertyValue('--chrome-top').trim(),
+      chromeBottom: getComputedStyle(document.documentElement).getPropertyValue('--chrome-bottom').trim(),
       nested: [...el.querySelectorAll('*')].filter(node => {
         const s = getComputedStyle(node);
         return /auto|scroll/.test(s.overflowY) && node.scrollHeight > node.clientHeight + 1;
       }).map(node => node.className || node.tagName)
     };
   });
-  check('5E §6.7 the modal is capped to the VISIBLE height and is the only scroller; the overlay has no range left',
+  check('5E §6.7 the modal is a capped flex column: content scrolls, actions are a fixed footer',
     /auto|scroll/.test(shape.overlayOverflowY) && shape.overlayScrollRange === 0
-      && shape.modalMaxHeight !== 'none' && /auto|scroll/.test(shape.modalOverflowY)
-      && shape.stickyActions === 'sticky'
-      && shape.nested.every(c => String(c).split(' ').includes('modal')),
+      && shape.modalMaxHeight !== 'none' && shape.modalDisplay === 'flex'
+      && shape.modalOverflowY === 'hidden'
+      && /auto|scroll/.test(shape.scrollRegionOverflowY) && shape.actionsFlex === '0'
+      && parseFloat(shape.chromeTop) > 0 && parseFloat(shape.chromeBottom) > 0
+      && shape.nested.every(c => String(c).split(' ').includes('modal-scroll')),
     JSON.stringify(shape));
   await page.setViewportSize({ width: 390, height: 900 });
 }
@@ -1617,10 +1637,16 @@ for (const { width, height, name } of MODAL_VIEWPORTS) {
     const overlay = document.querySelector('.modal-overlay');
     const stay = [...overlay.querySelectorAll('.modal-actions .btn')].find(b => /stay/i.test(b.textContent));
     const r = stay.getBoundingClientRect();
-    return { top: Math.round(r.top), bottom: Math.round(r.bottom), vh: window.innerHeight };
+    const bar = sel => { const el = document.querySelector(sel); return el ? el.getBoundingClientRect() : null; };
+    const top = bar('.topbar'), tab = bar('.bottom-bar');
+    return {
+      top: Math.round(r.top), bottom: Math.round(r.bottom),
+      ceiling: top ? Math.round(top.bottom) : 0,
+      floor: tab ? Math.round(tab.top) : window.innerHeight
+    };
   });
-  check(`5E §6.7 end-of-chapter dialog: its last action is on screen AT REST at ${width}x${height} (${name})`,
-    seen.top >= 0 && seen.bottom <= seen.vh, JSON.stringify(seen));
+  check(`5E §6.7 end-of-chapter dialog: its last action clears the app bars AT REST at ${width}x${height} (${name})`,
+    seen.top >= seen.ceiling - 1 && seen.bottom <= seen.floor + 1, JSON.stringify(seen));
 }
 await page.setViewportSize({ width: 390, height: 900 });
 
@@ -1723,14 +1749,14 @@ await page.setViewportSize({ width: 390, height: 900 });
   // a drill; until this round no tile could produce it.
   {
     const tile = (TILES.punctuation || []).find(t => t.name === 'apostrophe');
-    check('5E-R4 the shared keyboard has an apostrophe tile that inserts U+1FBD',
-      !!tile && tile.insert === '᾽', JSON.stringify(tile));
+    check('5E-R4 the shared keyboard has an apostrophe tile that inserts U+0027',
+      !!tile && tile.insert === "'", JSON.stringify(tile));
     await go('#/activity/chapt_4/c4_ex_scripture_speller');
     const onScreen = await page.locator('.tk-key.punct[title="apostrophe"]').count();
     await page.locator('.tk-key.punct[title="apostrophe"]').first().click();
     await page.waitForTimeout(150);
     check('5E-R4 tapping it puts the elision mark in the field as its own character',
-      onScreen === 1 && (await typed()).normalize('NFC') === '᾽',
+      onScreen === 1 && (await typed()).normalize('NFC') === "'",
       `tile count ${onScreen}, field ${JSON.stringify(await typed())}`);
   }
 
@@ -1747,7 +1773,7 @@ await page.setViewportSize({ width: 390, height: 900 });
   const verbatim = await feedbackKind();
   await shot('R4 elision typed with the new apostrophe tile');
   check('5E-R4 the verse typed VERBATIM with the apostrophe tile is accepted',
-    verbatim === 'ok' && verbatimTyped.includes('᾽'),
+    verbatim === 'ok' && verbatimTyped.includes("'"),
     `feedback ${verbatim} for ${JSON.stringify(verbatimTyped)}`);
 
   // (b) with the elision mark typed as a smooth breathing — the way the
@@ -1763,14 +1789,16 @@ await page.setViewportSize({ width: 390, height: 900 });
   check("5E-R4 δι + smooth breathing is still accepted for δι᾽ (the original's own form)",
     withBreathing === 'ok', `feedback ${withBreathing} for ${JSON.stringify(await typed())}`);
 
-  // (c) with no mark at all — punctuation is optional (D-18).
+  // (c) with no mark at all. This used to pass under D-18; it must not. An
+  // elision mark is not sentence punctuation, it stands for a dropped letter,
+  // and omitting it is a misspelling (Nathanael, 2026-08-07).
   await go('#/activity/chapt_4/c4_ex_scripture_speller');
   await setAccents(false);
   await typeAccented(stripElision(words.join(' ')));
   await stepper('Check Answer').click();
   await page.waitForTimeout(250);
-  check('5E-R4 δι with no elision mark is also accepted (D-18)',
-    await feedbackKind() === 'ok', `feedback ${await feedbackKind()}`);
+  check('5E-R4 δι with NO elision mark is now REJECTED (the mark carries meaning)',
+    await feedbackKind() === 'bad', `feedback ${await feedbackKind()}`);
 
   // (c) and the leniency is SCOPED: a breathing is still required where Greek
   // actually puts one, so this cannot be "the checker stopped caring".
@@ -1856,8 +1884,8 @@ const caretIndex = () => page.evaluate(() => {
 {
   const tile = (TILES.punctuation || []).find(t => t.name === 'apostrophe');
   const smooth = (TILES.diacritics || []).find(d => d.name === 'smooth breathing');
-  check('5E-R8 the apostrophe key is printed straight (U+0027) and inserts the koronis (U+1FBD)',
-    tile.label === "'" && tile.insert === '᾽', JSON.stringify(tile));
+  check('5E-R8 the apostrophe key is printed AND inserts the straight U+0027',
+    tile.label === "'" && tile.insert === "'", JSON.stringify(tile));
   check('5E-R8 its label differs from the smooth breathing, the acute and the grave',
     ![smooth.label, '´', '`'].includes(tile.label),
     `apostrophe ${JSON.stringify(tile.label)} vs smooth ${JSON.stringify(smooth.label)}`);
@@ -1866,8 +1894,8 @@ const caretIndex = () => page.evaluate(() => {
   const printed = await page.locator('.tk-key.punct[title="apostrophe"]').innerText();
   await page.locator('.tk-key.punct[title="apostrophe"]').click();
   await page.waitForTimeout(120);
-  check('5E-R8 the key on screen shows the straight form and still types the koronis',
-    printed.trim() === "'" && (await typed()).normalize('NFC') === '᾽',
+  check('5E-R8 the key on screen shows the straight form and types it',
+    printed.trim() === "'" && (await typed()).normalize('NFC') === "'",
     `printed ${JSON.stringify(printed.trim())}, typed ${JSON.stringify(await typed())}`);
 }
 

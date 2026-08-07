@@ -422,7 +422,7 @@ for (const p of TILES.punctuation || []) PRODUCIBLE.add(p.insert);
 if (TILES.space) PRODUCIBLE.add(TILES.space.insert);
 // The same class answer-check.js may drop. Kept as a non-global regex so
 // `.test()` has no lastIndex to carry between calls.
-const PUNCTUATION = /[.,;:!?'"()\[\]··;᾽’ʼ‘“”«»—–-]/u;
+const PUNCTUATION = /[.,;:!?"()\[\]··;“”«»—–-]/u;
 
 for (const file of files) {
   const data = JSON.parse(readFileSync(join(DATA, file), 'utf8'));
@@ -447,7 +447,9 @@ for (const file of files) {
       // The checker lowercases under both toggle settings (no shift layer),
       // and drops punctuation unless the surface requires it.
       let folded = answer.toLowerCase();
-      if (punctuationOptional) folded = folded.replace(PUNCTUATION, '');
+      // NOT the elision mark: answer-check no longer treats it as droppable,
+      // so a verse that elides has to be typeable WITH it.
+      if (punctuationOptional) folded = folded.replace(new RegExp(PUNCTUATION.source, 'gu'), '');
       for (const { segment } of segment_(folded)) {
         const cluster = segment.normalize('NFC');
         if (!PRODUCIBLE.has(cluster)) {

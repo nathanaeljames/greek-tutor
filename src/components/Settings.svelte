@@ -262,8 +262,10 @@
 {#if confirmClear}
   <div class="modal-overlay" on:click|self={() => !clearing && (confirmClear = false)} role="presentation">
     <div class="modal" role="dialog" aria-modal="true" aria-label="Clear downloaded audio">
+      <div class="modal-scroll">
       <h2 class="modal-title">Clear downloaded audio?</h2>
       <p class="modal-body">This deletes all cached audio. You'll need to download packs again to use them offline.</p>
+      </div>
       <div class="modal-actions">
         <button class="btn" on:click={doClear} disabled={clearing}>{clearing ? 'Clearing…' : 'Clear audio'}</button>
         <button class="btn secondary" on:click={() => (confirmClear = false)} disabled={clearing}>Cancel</button>

@@ -12,11 +12,12 @@
   // Keys that type themselves. Space is here because the whole-verse speller
   // needs word boundaries; the punctuation follows the tiles.
   //
-  // The apostrophe key types U+1FBD GREEK KORONIS, the elision mark, NOT the
-  // ASCII apostrophe it is printed with (D-29). Both are accepted by the
-  // checker, but what lands in the field should be the character the chapter-2
-  // marks chart and the delivered verses actually use.
-  export const PUNCT_KEYS = { ' ': ' ', ',': ',', '.': '.', ';': ';', "'": '᾽' };
+  // The apostrophe key types U+0027, the straight apostrophe, which is what
+  // the delivered verses now store (D-29, revised 2026-08-07). It used to type
+  // U+1FBD GREEK KORONIS -- a smooth breathing drawn over nothing, which is
+  // how the ORIGINAL wrote elision because it had no apostrophe key, and which
+  // is wrong for Greek.
+  export const PUNCT_KEYS = { ' ': ' ', ',': ',', '.': '.', ';': ';', "'": "'" };
 </script>
 
 <script>
@@ -88,6 +89,7 @@
 {#if showHelp}
   <div class="modal-overlay" on:click|self={() => (showHelp = false)} role="presentation">
     <div class="modal kb-ref" role="dialog" aria-modal="true" aria-label="Greek keyboard reference">
+      <div class="modal-scroll">
       <h2 class="modal-title">Greek Keyboard</h2>
       <p class="modal-body">Type these keys to enter Greek letters:</p>
       <div class="kb-grid">
@@ -95,7 +97,8 @@
           <div class="kb-cell"><span class="kb-roman">{k}</span><span class="kb-greek greek">{g}</span></div>
         {/each}
       </div>
-      <p class="modal-note">Diacritics: use the mark tiles (they combine onto the previous letter). Space, comma, period, ; and ' type themselves — ' is the apostrophe that marks an elided letter (δι᾽ ἐμοῦ). Enter = Check, Backspace = delete.</p>
+      <p class="modal-note">Diacritics: use the mark tiles (they combine onto the previous letter). Space, comma, period, ; and ' type themselves — ' is the apostrophe that marks an elided letter (δι' ἐμοῦ) and is REQUIRED where a verse elides. Enter = Check, Backspace = delete.</p>
+      </div>
       <div class="modal-actions">
         <!-- svelte-ignore a11y-autofocus -->
         <button class="btn" autofocus on:click={() => (showHelp = false)}>Close</button>

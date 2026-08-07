@@ -1184,7 +1184,7 @@
            "text": " becomes "
           },
           {
-           "greek": "δι᾽ αὐτοῦ",
+           "greek": "δι' αὐτοῦ",
            "audio": "chapt_2_b_xauto"
           }
          ]
@@ -2301,7 +2301,7 @@
      "redMarkCluster": 2
     },
     {
-     "greek": "δι᾽ αὐτοῦ",
+     "greek": "δι' αὐτοῦ",
      "gloss": "through him",
      "answer": "Apostrophe",
      "audio": "chapt_2_b_diauto",
@@ -2414,7 +2414,7 @@
      "redMarkCluster": 4
     },
     {
-     "greek": "παρ᾽ αὐτῷ",
+     "greek": "παρ' αὐτῷ",
      "gloss": "beside him",
      "answer": "Apostrophe",
      "audio": "chapt_2_b_paraut",
@@ -3477,10 +3477,10 @@
     },
     {
      "type": "greekRows",
-     "title": "Apostrophe:  ( ᾽ )  elided letters",
+     "title": "Apostrophe:  ( ' )  elided letters",
      "rows": [
       {
-       "greek": "δι᾽ αὐτοῦ",
+       "greek": "δι' αὐτοῦ",
        "audio": "chapt_2_b_diauto"
       }
      ]

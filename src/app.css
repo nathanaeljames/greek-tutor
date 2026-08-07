@@ -351,35 +351,60 @@ button { font: inherit; cursor: pointer; }
 
    The cap subtracts the overlay's own padding so the box fits BETWEEN the safe
    areas rather than merely inside the viewport. */
-:root { --modal-vh: 100vh; }
+:root { --modal-vh: 100vh; --chrome-top: 0px; --chrome-bottom: 0px; }
 @supports (height: 100svh) { :root { --modal-vh: 100svh; } }
 
 .modal-overlay { position: fixed; top: 0; left: 0; right: 0;
   height: var(--modal-vh);
   background: rgba(0, 0, 0, 0.45);
   display: flex; justify-content: center; align-items: center; z-index: 100;
-  padding: 20px; padding-top: calc(20px + env(safe-area-inset-top));
-  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  /* The gap BETWEEN the app's bars, not the whole screen. --chrome-top and
+     --chrome-bottom are the measured extents of the fixed top bar and tab bar
+     (lib/viewport.js); env() is the floor for a route that has no bar there.
+     Declared as custom properties so .modal can subtract exactly the same
+     numbers and the two can never disagree. */
+  --modal-pad-top: calc(max(var(--chrome-top), env(safe-area-inset-top)) + 12px);
+  --modal-pad-bottom: calc(max(var(--chrome-bottom), env(safe-area-inset-bottom)) + 12px);
+  padding: 20px; padding-top: var(--modal-pad-top);
+  padding-bottom: var(--modal-pad-bottom);
   overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
 .modal { background: var(--card); border-radius: var(--radius);
   max-width: 360px; width: 100%; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-  /* Bottom padding belongs to the sticky action block, not to the box, or it
-     would scroll away above the buttons. */
-  padding: 22px 20px 0;
-  max-height: calc(var(--modal-vh) - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-  overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  padding: 22px 20px;
+  max-height: calc(var(--modal-vh) - var(--modal-pad-top) - var(--modal-pad-bottom));
+  /* A COLUMN, not a scroller. The content scrolls inside .modal-scroll and the
+     action block is a flex footer that cannot move. This replaces a sticky
+     footer, which Chrome left hanging 16px below the modal's own bottom edge
+     until something scrolled -- correct once moved, wrong at rest, and "at
+     rest" is the whole requirement. A flex footer has no such state. */
+  display: flex; flex-direction: column; overflow: hidden;
   flex-shrink: 0; }
+.modal-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto;
+  -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
 .modal-title { margin: 0 0 8px; font-size: 1.2rem; }
 .modal-body { margin: 0 0 6px; color: var(--ink); }
 .modal-note { margin: 0; font-size: 0.9rem; color: var(--teal-dark); font-weight: 600; }
-/* Sticky, so the escape from a dialog is never below the fold. The card
-   background and the soft top edge keep scrolling content from appearing to
-   run through the buttons. */
-.modal-actions { position: sticky; bottom: 0; z-index: 1;
+/* The pinned footer. flex: 0 0 auto keeps it out of the scroll entirely, so
+   the escape from a dialog is on screen from the moment it opens and stays
+   there while the content moves behind it. The soft top edge separates it
+   from content scrolling underneath. */
+.modal-actions { flex: 0 0 auto;
   display: flex; flex-direction: column; gap: 8px;
-  margin-top: 16px; padding: 12px 0 22px; background: var(--card);
+  margin-top: 16px; padding-top: 12px; background: var(--card);
   box-shadow: 0 -10px 12px -12px rgba(0, 0, 0, 0.35); }
 .modal-actions .btn { width: 100%; min-height: 44px; }
+/* A SHORT SCREEN CANNOT PIN A TALL BUTTON STACK. The end-of-chapter dialog
+   offers four full-width actions: at 44px each plus gaps that is 234px, and in
+   a 320x360 window the gap between the app's bars is only 226px. A sticky
+   block taller than its scrollport cannot stay inside it, so the last button
+   fell out of the modal entirely -- correct cap, impossible contents.
+   Compacting below 420px of viewport height brings the stack to 200px and it
+   pins again. 40px is still a comfortable target, and no phone is this short
+   in portrait; an iPhone SE in LANDSCAPE (375px) is the real case this covers. */
+@media (max-height: 420px) {
+  .modal-actions { gap: 6px; padding: 8px 0 14px; }
+  .modal-actions .btn { min-height: 40px; }
+}
 
 /* ================= Phase 4b ================= */
 

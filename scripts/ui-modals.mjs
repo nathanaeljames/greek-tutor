@@ -137,11 +137,15 @@ for (const { name, width, height } of VIEWPORTS) {
       const m = modal.getBoundingClientRect();
       const action = [...modal.querySelectorAll('.modal-actions .btn')].pop();
       const a = action ? action.getBoundingClientRect() : null;
+      const bar = sel => { const el = document.querySelector(sel); return el ? el.getBoundingClientRect() : null; };
+      const tb = bar('.topbar'), bb = bar('.bottom-bar');
       return {
         top: Math.round(m.top), bottom: Math.round(m.bottom),
         action: a ? { top: Math.round(a.top), bottom: Math.round(a.bottom) } : null,
+        ceiling: tb ? Math.round(tb.bottom) : 0,
+        floor: bb ? Math.round(bb.top) : window.innerHeight,
         overlayRange: ov.scrollHeight - ov.clientHeight,
-        contentRange: modal.scrollHeight - modal.clientHeight,
+        contentRange: (() => { const sc = modal.querySelector('.modal-scroll'); return sc ? sc.scrollHeight - sc.clientHeight : 0; })(),
         vh: window.innerHeight
       };
     });
@@ -152,7 +156,8 @@ for (const { name, width, height } of VIEWPORTS) {
     const scrolled = await page.evaluate(() => {
       const ov = document.querySelector('.modal-overlay');
       const modal = ov.querySelector('.modal');
-      modal.scrollTop = modal.scrollHeight;
+      const scroller = modal.querySelector('.modal-scroll');
+      if (scroller) scroller.scrollTop = scroller.scrollHeight;
       const m = modal.getBoundingClientRect();
       const action = [...modal.querySelectorAll('.modal-actions .btn')].pop();
       const a = action ? action.getBoundingClientRect() : null;
@@ -163,16 +168,16 @@ for (const { name, width, height } of VIEWPORTS) {
     });
     await page.screenshot({ path: `${OUT}/${name}--${label}--2-content-scrolled.png` });
 
-    const topOk = rest.top >= 0 && rest.top < height;
-    const bottomOk = rest.bottom > 0 && rest.bottom <= height;
-    const actionOk = !rest.action || (rest.action.top >= 0 && rest.action.bottom <= height);
+    const topOk = rest.top >= rest.ceiling - 1;
+    const bottomOk = rest.bottom <= rest.floor + 1;
+    const actionOk = !rest.action || (rest.action.top >= rest.ceiling - 1 && rest.action.bottom <= rest.floor + 1);
     const fitsOk = rest.overlayRange === 0;
     // The pinned block must not have moved when the content did.
     const pinnedOk = !rest.action || !scrolled.action
       || Math.abs(rest.action.bottom - scrolled.action.bottom) <= 1;
     const ok = topOk && bottomOk && actionOk && fitsOk && pinnedOk;
     if (!ok) bad += 1;
-    console.log(`${ok ? 'OK  ' : 'BAD '} ${name.padEnd(24)} ${label.padEnd(34)} modal ${String(rest.top).padStart(4)}..${String(rest.bottom).padStart(4)}/${height}  overlay ${String(rest.overlayRange).padStart(4)}  content ${String(rest.contentRange).padStart(5)}  pinned ${pinnedOk}`);
+    console.log(`${ok ? 'OK  ' : 'BAD '} ${name.padEnd(24)} ${label.padEnd(34)} modal ${String(rest.top).padStart(4)}..${String(rest.bottom).padStart(4)} in ${String(rest.ceiling).padStart(3)}..${String(rest.floor).padStart(4)}  overlay ${String(rest.overlayRange).padStart(4)}  content ${String(rest.contentRange).padStart(5)}  pinned ${pinnedOk}`);
     report.push({ viewport: name, width, height, surface: label, atRest: rest, afterContentScroll: scrolled, ok });
   }
 }

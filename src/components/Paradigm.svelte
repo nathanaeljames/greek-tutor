@@ -210,6 +210,7 @@
 {#if endingsOpen && chart.endings}
   <div class="modal-overlay" on:click|self={() => (endingsOpen = false)} role="presentation">
     <div class="modal pg-endings" role="dialog" aria-modal="true" aria-label={chart.endings.label || 'Endings'}>
+      <div class="modal-scroll">
       <h2 class="modal-title">{chart.endings.label || 'Endings'}</h2>
       <div class="pg-endgrid">
         {#if columns.length === 2}
@@ -221,6 +222,7 @@
             <span class="pg-endpair"><span class="greek pg-ending">{row[2]}</span><span class="pg-endgloss">{row[3]}</span></span>
           </div>
         {/each}
+      </div>
       </div>
       <div class="modal-actions">
         <!-- svelte-ignore a11y-autofocus -->

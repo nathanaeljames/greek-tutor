@@ -1,9 +1,10 @@
 # 5E-SPEC3-PATCH.md — the four device reports from 5E-SPEC3-RESPONSE
 
-Nothing committed, nothing pushed. Three rounds of device reports, in order:
-items 1-4 (`de9a536`), item 5 the apostrophe key (addendum 1), and items 6-8
-the caret drag, the modal at rest and the straight apostrophe glyph
-(addendum 2, base `f0a75d0`).
+Nothing committed, nothing pushed. Four rounds of device reports, in order:
+items 1-4 (`de9a536`); item 5, the apostrophe key (addendum 1); items 6-8, the
+caret drag, the modal at rest and the straight glyph (addendum 2, base
+`f0a75d0`); items 9-10, the elision mark required as U+0027 and the modal sized
+to the gap between the app's bars (addendum 3).
 
 | File | What |
 | --- | --- |
@@ -584,3 +585,167 @@ of bug lives in the gap between what desktop CSS reports and what iOS shows.
 The at-rest geometry above is real, and the pinned Close button does not depend
 on the measurement at all, but the measurement itself is the one thing only
 your iPhone can confirm.
+
+---
+
+# Addendum 3 — items 9 and 10 (2026-08-07)
+
+| File | What |
+| --- | --- |
+| `src/lib/answer-check.js` | Item 9. The elision mark is required, and is no longer treated as droppable punctuation. |
+| `src/data/*.json` | Item 9. Every displayed elision mark is now U+0027 (14 strings). |
+| `src/data/speller-tiles.json`, `SpellerKeyboard.svelte` | Item 9. The key types U+0027. |
+| `scripts/apply-behavior-matrix.py` | Item 9. A pipeline rule, so a regenerated chapter cannot bring the koronis back. |
+| `scripts/check-content-shapes.mjs` | Item 9. The mark must be typeable, not merely omissible. |
+| `src/lib/viewport.js`, `src/app.css` | Item 10. The modal is sized to the gap **between the app's bars**. |
+| `EndOfChapterDialog`, `Paradigm`, `SelectActivity`, `Settings`, `SpellerKeyboard` | Item 10. A scroll region so the action block is a real footer. |
+| `scripts/ui-behavior.mjs`, `scripts/ui-modals.mjs` | Both items. **307 checks.** |
+
+---
+
+## Item 9 — the elision mark is an apostrophe, and it is required
+
+You are right and the original was wrong. A breathing is a diacritic that sits
+on a vowel; an elision mark is a spacing character standing in for a dropped
+letter. They are different things that happen to share a glyph shape, which is
+how the original — with no apostrophe key — came to conflate them.
+
+**Swept the whole app.** Every elision mark in rendered data was U+1FBD GREEK
+KORONIS (`δι᾽`, `παρ᾽`, and the chapter-2 marks-chart label). All 14 strings
+are now U+0027, across chapters 2, 4 and 5 and the chapter-2 lexicon. The rule
+lives in `apply-behavior-matrix.py` beside the em-dash rule, so regenerating a
+chapter cannot quietly restore the koronis.
+
+**The keyboard** types U+0027 and prints U+0027 — what you type is now exactly
+what the verse stores.
+
+**The grader** accepts the apostrophe (in any of its Unicode spellings) *or* a
+smooth breathing on the preceding vowel — the original's form, so nobody
+trained on it is punished — and **rejects the mark's absence**. `δι` on its own
+is now a misspelling. That required taking the apostrophe out of the droppable
+punctuation class: it is not sentence punctuation, and D-18 should never have
+covered it.
+
+### The hazard the sweep caught
+
+The sweep found four Greek words carrying a breathing that Greek "cannot"
+place: **κἀγώ** and **τοὔνομα**. Those are not elisions — they are **crasis**,
+and the mark is a **coronis**, which is legitimate. Chapter 2 ships both and
+scores them in the Marking Recognition Drill under "Coronis", an answer it
+lists separately from "Apostrophe".
+
+My previous rule — "a breathing Greek cannot place is an elision mark" — would
+have silently rewritten both. The rule is now positional, which separates them
+cleanly:
+
+| | mark position | verdict |
+| --- | --- | --- |
+| `δἰ` elision | on the word's **final** cluster | → apostrophe |
+| `κἀγώ`, `τοὔνομα` coronis | **inside** the word, letters follow | untouched |
+| `οὐ`, `εἰ`, `ῥ-` | initial vowel run / initial rho | untouched |
+
+Verified: κἀγώ and τοὔνομα still grade correct, and still *require* their
+coronis (`καγώ` is rejected).
+
+**Negative controls**: with the apostrophe droppable again, `δι` passes for
+`δι'` — the assertion bites. The build guard fires too if a displayed
+punctuation mark has no key.
+
+Capture: `5e-spec3-answered/41-elision-typed-as-u0027.png` — `δι' εμου` typed
+entirely from the tiles, with the straight mark.
+
+---
+
+## Item 10 — the modal, fourth time. This one is the actual cause.
+
+**Your suggestion was the fix.** "Can you not do 100vh minus the width of the
+top and bottom bars to get the true viewport size?" — yes, and that is exactly
+what was missing.
+
+### What was wrong
+
+Every previous attempt sized the modal to **the viewport**. But the app draws a
+fixed top bar and a fixed bottom tab bar, and the modal overlay spans the whole
+screen *underneath* them. Measured at 390×844 with your Hint open, before this
+change:
+
+```
+top bar     0 .. 56
+tab bar   790 .. 844
+modal      20 .. 824     ← inside the viewport, under a bar at BOTH ends
+```
+
+20px of clearance at each end — which is why it looked so nearly right, and why
+"inside the viewport" passed every test I wrote while the title sat behind the
+header and Close sat behind the tab bar. I was asserting the wrong rectangle
+three rounds running.
+
+### The fix
+
+`viewport.js` now measures the two bars' own rects — they are in the same
+client-coordinate space a `position: fixed` overlay uses, so no arithmetic is
+needed — and publishes `--chrome-top` / `--chrome-bottom`. The modal is capped
+to the **gap between them**, with `env()` as the floor for routes that have no
+bar (the table of contents has no tab bar). Re-measured on resize, rotation,
+and DOM changes, so a bar appearing or disappearing is followed.
+
+Measured after, at your device's real heights:
+
+| Viewport | gap between bars | modal | Close |
+| --- | --- | --- | --- |
+| 390×844 iPhone 14 | 56 … 790 | 68 … 778 | ends 756 |
+| 390×734 toolbars | 56 … 680 | 68 … 668 | ends 646 |
+| 390×664 URL bar | 56 … 610 | 68 … 598 | ends 576 |
+| 320×360 | 56 … 306 | 68 … 294 | ends 272 |
+
+Both borders and the whole Close button, inside the gap, at rest, on every one.
+
+### And a second defect found while fixing it
+
+The pinned Close button was `position: sticky`, and Chrome left the sticky
+block hanging **16px below the modal's own bottom edge until something
+scrolled** — correct once moved, wrong at rest. Since "at rest" is the entire
+requirement, sticky was the wrong tool. The modal is now a flex column: a
+`.modal-scroll` region holds the content and `.modal-actions` is a real footer
+with `flex: 0 0 auto`. It has no unstuck state to get wrong. That needed a
+wrapper element in all five modal components, which is why they are in the
+file list.
+
+One consequence worth naming: at 320×360 the end-of-chapter dialog's four
+stacked buttons are 234px tall in a 226px gap — no positioning can pin what
+does not fit — so below 420px of height the action buttons compact to 40px.
+That is a landscape-iPhone-SE case, not a portrait phone.
+
+### The test now measures against the bars
+
+`checkCloseReachable` asserts the modal's borders and Close against
+`.topbar`'s bottom and `.bottom-bar`'s top, at rest, scrolling nothing.
+**Negative control**: sizing to the viewport again produces **33 failures**,
+e.g. `modal 20..340 inside gap 56..306`.
+
+`ui-modals.mjs` reports the gap alongside the modal box in every line and
+captures each surface at rest plus once with the content scrolled, to show the
+footer holding still.
+
+---
+
+## Verification
+
+| | |
+| --- | --- |
+| `ui-behavior.mjs` | **307/307** |
+| `npm run verify` | green |
+| `ui-modals.mjs` | 55/55 at rest, five viewports, every one clearing the bars |
+| `ui-walk.mjs` | 105 stops × 2 widths, 0px overflow, no console errors |
+| offline | 7/7 |
+| stamper | idempotent; elision rule applied 14 strings on first run, 0 on second |
+
+Images to look at: `5e-spec3-modals/iphone14-844--ch5-first-decl-hint-meanings--1-at-rest.png`
+is your exact modal, title and both borders and Close all clear of the bars
+with nothing scrolled.
+
+**Still only your device can confirm** the `visualViewport` measurement itself.
+But the bar-relative sizing does not depend on it: `--chrome-top` and
+`--chrome-bottom` come from the bars' real rects on whatever device is running,
+so even if the height estimate were off, the modal is positioned against the
+things that were actually covering it.

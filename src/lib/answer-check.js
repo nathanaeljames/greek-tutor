@@ -47,7 +47,12 @@
 // appear in) a Scripture Memory verse. U+0387 GREEK ANO TELEIA and U+00B7
 // MIDDLE DOT are the same mark spelled two ways; NFC maps the former onto the
 // latter, so both are listed for input typed before normalization.
-const PUNCTUATION = /[.,;:!?'"()\[\]··;᾽’ʼ‘“”«»—–-]/gu;
+// THE APOSTROPHE IS DELIBERATELY NOT IN THIS SET. It was, and that was wrong:
+// in Greek an apostrophe is not sentence punctuation, it is the ELISION MARK,
+// and it carries meaning — δι' is διά with its alpha gone. Dropping it let a
+// bare `δι` pass, which teaches that the mark is decorative. It is REQUIRED
+// now (Nathanael, 2026-08-07). See ELISION_MARKS below for what counts as one.
+const PUNCTUATION = /[.,;:!?"()\[\]··;“”«»—–-]/gu;
 
 export function stripPunctuation(text) {
   return (text || '').replace(PUNCTUATION, '');
@@ -61,36 +66,47 @@ export function stripPunctuation(text) {
 // settings (C5).
 const ACCENTS = /[̀́͂]/gu;   // varia, oxia, perispomeni
 
-// ---- THE ELISION MARK, AND WHY IT LOOKS LIKE A BREATHING -------------------
-// `δι᾽ ἐμοῦ` (John 14:6b). That mark after the iota is NOT a breathing: it is
-// the elision apostrophe, standing where διά lost its final alpha. Unicode
-// calls it U+1FBD GREEK KORONIS and gives it the compatibility decomposition
-// <space> + U+0313 — it is literally a smooth breathing drawn over nothing,
-// which is why it looks like one, and why the original's keyboard (which has
-// no apostrophe key, and neither does ours — D-15) let the learner type it
-// with the smooth-breathing tile.
+// ---- THE ELISION MARK -----------------------------------------------------
+// `δι' ἐμοῦ` (John 14:6b). διά loses its alpha before a vowel and an
+// apostrophe stands in its place. It is a SPACING character, not a diacritic,
+// and it is part of the spelling: a learner who omits it has not written the
+// word. The app stores it as U+0027, the straight vertical apostrophe the
+// printed Greek New Testaments use.
 //
-// A REAL breathing can only ever sit on a word's initial vowel, on the second
-// vowel of an initial diphthong, or on an initial rho. It never floats and it
-// never appears after a consonant-initial word's vowel. So a breathing outside
-// those positions is not a breathing at all; it is this apostrophe, entered
-// the only way the shared keyboard allows. Punctuation is optional (D-18), so
-// it comes off with the rest of the punctuation.
+// WHY A SMOOTH BREATHING IS ALSO ACCEPTED. The original program had no
+// apostrophe key and wrote the mark as a smooth breathing ON the preceding
+// vowel -- it drew it that way, accepted that, and rejected a real apostrophe.
+// That is objectively wrong for Greek (Nathanael, 2026-08-07) and the app no
+// longer imitates it, but a learner trained on the original must not be
+// punished for the habit, so the breathing form still grades as correct. What
+// no longer grades as correct is leaving the mark out entirely.
 //
-// Verified across all 148 delivered spelling answers in chapters 1-5: not one
-// carries a breathing in a position this rule would strip, so it can only ever
-// forgive input and never change a correct answer's key. `οὐδεὶς` keeps its
-// psili (initial diphthong, second vowel), `ἐμοῦ` keeps its (initial vowel),
-// `ῥ`-initial words keep theirs, and `δἰ` becomes `δι` — which is what the
-// answer's own `δι᾽` reduces to once its koronis is stripped as punctuation.
-// (5E-SPEC3-RESPONSE item 4.)
+// TELLING AN ELISION MARK FROM A CORONIS, which is the whole difficulty here.
+// Both are written with the smooth-breathing glyph. The coronis marks CRASIS,
+// two words fused: κἀγώ (καὶ + ἐγώ) and τοὔνομα (τὸ + ὄνομα), both of
+// which chapter 2 ships and scores in the Marking Recognition Drill under
+// "Coronis" -- an answer it lists separately from "Apostrophe". A coronis is
+// legitimate Greek and must survive untouched. The two separate by POSITION:
+//
+//   elision  ENDS the word    δἰ            nothing follows the marked vowel
+//   coronis  sits INSIDE it   κἀγώ, τοὔνομα   letters follow it
+//
+// So a breathing becomes an apostrophe only where it is on the FINAL cluster
+// of a word that cannot legitimately carry one there. A word-initial vowel or
+// diphthong (οὐ, εἰ) and an initial rho (ῥ) keep theirs, and so does every
+// coronis. Swept over all 148 delivered spelling answers: none is touched.
 const BREATHINGS = /[̓̔]/u;      // psili, dasia
 const COMBINING = /\p{M}/u;
 const GREEK_VOWEL = /[αεηιουω]/u;   // lowercased and decomposed by this point
+// Every spelling of the mark folds to U+0027 before comparison: the koronis
+// the data used to carry, the two curled quotes, and the straight form itself.
+const ELISION_MARKS = /[᾽’ʼ‘']/gu;
+const ELISION = "'";
 
-function dropElisionMarks(word) {
-  if (!BREATHINGS.test(word)) return word;
-  const chars = [...word];
+function elisionKey(word) {
+  const out = word.replace(ELISION_MARKS, ELISION);
+  if (!BREATHINGS.test(out)) return out;
+  const chars = [...out];
   const bases = chars.filter(ch => !COMBINING.test(ch));
   // The last base index a breathing may legitimately sit on, or -1 for a word
   // that cannot carry one at all.
@@ -104,11 +120,20 @@ function dropElisionMarks(word) {
       lastLegal = 0;                     // ῥ-
     }
   }
+  const lastBase = bases.length - 1;
   let baseIndex = -1;
-  return chars.filter(ch => {
-    if (!COMBINING.test(ch)) { baseIndex += 1; return true; }
-    return !(BREATHINGS.test(ch) && baseIndex > lastLegal);
-  }).join('');
+  let elided = false;
+  const kept = [];
+  for (const ch of chars) {
+    if (!COMBINING.test(ch)) { baseIndex += 1; kept.push(ch); continue; }
+    if (BREATHINGS.test(ch) && baseIndex > lastLegal && baseIndex === lastBase) {
+      elided = true;                     // the original's way of writing elision
+      continue;
+    }
+    kept.push(ch);                       // a coronis, or a real breathing
+  }
+  const key = kept.join('');
+  return elided && !key.endsWith(ELISION) ? key + ELISION : key;
 }
 
 // One comparison key. Two spellings match iff their keys are equal.
@@ -125,8 +150,9 @@ export function spellingKey(text, options) {
   // together so two spellings that differ only in normalization still match.
   out = out.normalize('NFD');
   if (!withAccents) out = out.replace(ACCENTS, '');
-  // Word by word, because "legitimate position" is a property of a WORD.
-  if (punctuationOptional) out = out.split(' ').map(dropElisionMarks).join(' ');
+  // Word by word, because "final cluster" is a property of a WORD. Always, not
+  // just when punctuation is optional: the elision mark is not punctuation.
+  out = out.split(' ').map(elisionKey).join(' ');
   return out.normalize('NFC');
 }
 

@@ -503,7 +503,9 @@
   <!-- The original's Hint POPUP: the chapter's paradigm chart over the drill. -->
   <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
     <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
+      <div class="modal-scroll">
       <Paradigm paradigm={hintChart} title={hintChart.title || hintChart.charts?.[0]?.title || null} />
+      </div>
       <div class="modal-actions">
         <!-- svelte-ignore a11y-autofocus -->
         <button class="btn" autofocus on:click={() => (showHint = false)}>Close</button>
