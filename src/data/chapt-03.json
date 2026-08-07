@@ -2077,20 +2077,20 @@
    "punctuationOptional": true,
    "majorHint": {
     "alwaysAvailable": true,
-    "_note": "DEPARTURE (divergence log D-11, Nathanael D8): original hides the verse after typing begins; the port keeps Major Hint available at all times."
+    "_note": "DEPARTURE (divergence log D-11, Nathanael D8): original hides the verse after typing begins; the port keeps it available at all times. REVISED 2026-08-07 (D-30): the Major Hint button and its 7-second timer are replaced by a Show Answer checkbox that draws below the keyboard and clears when typing resumes, matching every other speller."
    },
    "ui": {
     "fields": [
      "Spell Greek"
     ],
     "buttons": [
-     "Major Hint",
      "Pronounce",
      "Check Answer",
      "Greek Keyboard",
      "Restart Exercise"
     ],
     "checkboxes": [
+     "Show Answer",
      "With Accents"
     ],
     "_restart_note": "DEPARTURE (D-12): \"Repeat This Exercise\" renamed \"Restart Exercise\" (Nathanael D8)."

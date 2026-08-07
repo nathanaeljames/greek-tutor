@@ -1031,9 +1031,9 @@ def build(tbk, conv):
         'majorHint': {'alwaysAvailable': True, '_note': 'DEPARTURE D-11.'},
         'audio': aud('e_rom323'), 'spellerTilesRef': 'chapt_1',
         'ui': {'fields': ['Spell Greek'],
-               'buttons': ['Major Hint', 'Pronounce', 'Check Answer',
+               'buttons': ['Pronounce', 'Check Answer',
                            'Greek Keyboard', 'Restart Exercise'],
-               'checkboxes': ['With Accents'],
+               'checkboxes': ['Show Answer', 'With Accents'],
                '_restart_note': 'DEPARTURE D-12.'},
     }
 

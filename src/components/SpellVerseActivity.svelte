@@ -5,10 +5,15 @@
   // word-at-a-time stepper, exactly as the original.
   //
   // Three logged departures from the original live here:
-  //   D-11  Major Hint (verse + translation) is ALWAYS available; the original
-  //         hides the verse once typing begins. Tuned at the 5D device pass:
-  //         available at any time, but it clears itself after HINT_VISIBLE_MS
-  //         and has to be asked for again — a glance, not a crib sheet.
+  //   D-11  The verse + translation are ALWAYS available; the original hides
+  //         the verse once typing begins. REVISED 2026-08-07 (D-30): this was
+  //         a "Major Hint" BUTTON that opened a panel above the keyboard and
+  //         withdrew it again after HINT_VISIBLE_MS. It is now a `Show Answer`
+  //         CHECKBOX beside `With Accents`, drawing below the keyboard, and it
+  //         clears the moment typing resumes — which is what every other
+  //         speller and drill in the app already does. One idiom, not two: the
+  //         seven-second timer was this surface's alone and nothing else in
+  //         the app made a learner race a clock.
   //   D-12  "Repeat This Exercise" is labelled "Restart Exercise".
   //   D-13  wrong/missing-word feedback names the WORD. The original prints a
   //         bare index ("The word you missed was: 2"), which tells a learner
@@ -34,7 +39,6 @@
   import { play, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import { checkVerse } from '../lib/answer-check.js';
-  import { HINT_VISIBLE_MS } from '../lib/timing.js';
   import * as input from '../lib/speller-input.js';
   import SpellerKeyboard, { KEYMAP, PUNCT_KEYS } from './SpellerKeyboard.svelte';
   import SpellerField from './SpellerField.svelte';
@@ -53,7 +57,7 @@
   let feedback = '';
   let feedbackKind = '';
   let detail = null;          // { text, word? } — the word renders in the Greek face
-  let showHint = false;
+  let showAnswer = false;
   let showKeyboard = false;
   let withAccents = false;
   let solved = false;
@@ -64,10 +68,15 @@
     ? chapter.alphabet.letters.map(l => (l.lower === 'σ/ς' ? 'σ' : l.lower))
     : [];
 
-  function appendChar(ch) { if (!solved) buffer = input.insertText(buffer, ch); }
-  function appendMark(apply) { if (!solved) buffer = input.applyMark(buffer, apply); }
-  function backspace() { if (!solved) buffer = input.backspace(buffer); }
-  function clearInput() { if (!solved) buffer = input.clear(); }
+  // §4.3, as on every other speller: Show Answer clears the moment typing
+  // resumes. Every edit path goes through these four, so there is one place to
+  // enforce it. Caret moves deliberately do NOT clear it — repositioning is
+  // not typing, and the word spellers behave the same way.
+  function typingResumed() { showAnswer = false; }
+  function appendChar(ch) { if (!solved) { typingResumed(); buffer = input.insertText(buffer, ch); } }
+  function appendMark(apply) { if (!solved) { typingResumed(); buffer = input.applyMark(buffer, apply); } }
+  function backspace() { if (!solved) { typingResumed(); buffer = input.backspace(buffer); } }
+  function clearInput() { if (!solved) { typingResumed(); buffer = input.clear(); } }
   function moveCaret(index, after) { if (!solved) buffer = input.placeCaret(buffer, index, after); }
   function caretToEnd() { if (!solved) buffer = input.caretToEnd(buffer); }
 
@@ -103,31 +112,12 @@
     feedbackKind = '';
     detail = null;
     solved = false;
-    hideHint();
-  }
-
-  // Major Hint shows for HINT_VISIBLE_MS and then clears itself; tapping again
-  // buys another look. Tapping while it is up dismisses it early.
-  let hintTimer = null;
-  function hideHint() {
-    showHint = false;
-    if (hintTimer) { clearTimeout(hintTimer); hintTimer = null; }
-  }
-  function toggleHint() {
-    if (showHint) { hideHint(); return; }
-    hideHint();                       // cancel any timer left from a fast re-tap
-    showHint = true;
-    hintTimer = setTimeout(() => { showHint = false; hintTimer = null; }, HINT_VISIBLE_MS);
+    showAnswer = false;               // Restart resets it, as Next does elsewhere
   }
 
   function onKey(e) {
     if (showKeyboard) return;                     // the keyboard reference is a modal
     if (e.metaKey || e.ctrlKey || e.altKey) return;
-    // The hint no longer waits to be dismissed, so it must not swallow up to
-    // HINT_VISIBLE_MS of typing on a hardware keyboard: typing clears it and
-    // the keystroke still lands. (Tile taps come in through on:insert and never
-    // reach here, so tapping tiles leaves the hint up for its full 7 seconds.)
-    if (showHint) hideHint();
     if (e.key === 'Backspace') { e.preventDefault(); backspace(); return; }
     if (e.key === 'Enter') { e.preventDefault(); check(); return; }
     // Tap-to-position is the contract (A6 defect 1); the arrow keys are the
@@ -141,7 +131,6 @@
   onMount(() => window.addEventListener('keydown', onKey));
   onDestroy(() => {
     window.removeEventListener('keydown', onKey);
-    if (hintTimer) clearTimeout(hintTimer);
     stopAudio();                                   // §3.1
   });
 </script>
@@ -163,7 +152,6 @@
   {/if}
 
   <div class="controls grouped">
-    <button class="btn secondary" on:click={toggleHint}>Major Hint</button>
     <button class="btn" disabled={!activity.audio} on:click={() => activity.audio && play(activity.audio)}>Pronounce</button>
     <button class="btn" on:click={check}>Check Answer</button>
     <button class="btn secondary" on:click={() => (showKeyboard = true)}>Greek Keyboard</button>
@@ -171,17 +159,9 @@
   </div>
 
   <div class="spell-checks">
+    <label><input type="checkbox" bind:checked={showAnswer} /> Show Answer</label>
     <label><input type="checkbox" bind:checked={withAccents} /> With Accents</label>
   </div>
-
-  {#if showHint}
-    <!-- D-11: available at any time, typing started or not. -->
-    <div class="sv-hint">
-      <div class="label">{activity.reference || 'Verse'}</div>
-      <div class="greek sv-verse">{verseText}</div>
-      {#if activity.translation}<div class="sv-translation">{activity.translation}</div>{/if}
-    </div>
-  {/if}
 
   <SpellerKeyboard
     tilesRef={activity.spellerTilesRef}
@@ -192,4 +172,15 @@
     on:mark={e => appendMark(e.detail)}
     on:backspace={backspace}
     on:clear={clearInput} />
+
+  <!-- BELOW the keyboard, where every other speller puts its answer (D-11 as
+       revised). The reference and translation come with it because on this
+       surface the "answer" IS the whole verse. -->
+  {#if showAnswer}
+    <div class="spell-answer sv-answer">
+      <span class="label">{activity.reference || 'Answer'}</span>
+      <span class="greek sv-verse">{verseText}</span>
+      {#if activity.translation}<span class="sv-translation">{activity.translation}</span>{/if}
+    </div>
+  {/if}
 </div>

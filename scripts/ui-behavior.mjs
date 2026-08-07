@@ -1899,6 +1899,94 @@ const caretIndex = () => page.evaluate(() => {
     `printed ${JSON.stringify(printed.trim())}, typed ${JSON.stringify(await typed())}`);
 }
 
+// ---- item 11: the caret is visible WHILE dragging -----------------------
+// "the cursor itself does not appear until I lift my finger." The caret blinks
+// with `animation: blink 1s step-start infinite`, and step-start jumps to the
+// 50% keyframe at the START of the cycle — so its first 500ms are at opacity
+// 0. The caret <span> is re-created at a new position on every pointermove, so
+// the animation restarted on every one and never reached its visible half
+// until the finger stopped. Asserted as OPACITY DURING A HELD DRAG.
+{
+  await go('#/activity/chapt_3/c3_ex_verb_speller');
+  await setAccents(false);
+  await typeGreek('λυει');
+  const first = await page.locator('.spell-target .sp-cluster').first().boundingBox();
+  const last = await page.locator('.spell-target .sp-cluster').last().boundingBox();
+  const y = first.y + first.height / 2;
+  await page.mouse.move(last.x + last.width - 1, y);
+  await page.mouse.down();
+  await page.mouse.move(first.x + 1, y, { steps: 6 });
+  // Still held. This is the state Nathanael sees nothing in.
+  const held = await page.evaluate(() => {
+    const field = document.querySelector('.spell-target');
+    const caret = field.querySelector('.caret');
+    if (!caret) return { present: false };
+    const s = getComputedStyle(caret);
+    return {
+      present: true,
+      dragging: field.classList.contains('dragging'),
+      opacity: Number(s.opacity),
+      animationName: s.animationName,
+      width: Math.round(parseFloat(s.width))
+    };
+  });
+  await page.mouse.up();
+  const released = await page.locator('.spell-target').evaluate(el => el.classList.contains('dragging'));
+  check('5E-R11 the caret is drawn and fully opaque WHILE the drag is held',
+    held.present && held.dragging && held.opacity === 1 && held.animationName === 'none',
+    JSON.stringify(held));
+  check('5E-R11 the blink resumes once the drag is released',
+    released === false
+      && await page.locator('.spell-target .caret').evaluate(el => getComputedStyle(el).animationName) === 'blink',
+    `dragging after release ${released}`);
+}
+
+// ---- item 12: the verse spellers use Show Answer, not Major Hint --------
+// D-30. One reveal idiom app-wide: a checkbox beside "With Accents", drawing
+// BELOW the keyboard, clearing when typing resumes. No button, no 7s timer.
+for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+  const activity = activitiesOf(chapter).find(a => a && a.type === 'spellVerse');
+  if (!activity) continue;
+  const hash = `#/activity/${chapterId}/${activity.id}`;
+  await go(hash);
+
+  const majorHint = await page.locator('.card').getByRole('button', { name: 'Major Hint', exact: true }).count();
+  const box = page.locator('.spell-checks label', { hasText: 'Show Answer' }).locator('input');
+  check(`5E-R12 ${chapterId} ${activity.id}: Major Hint is gone and Show Answer is a checkbox`,
+    majorHint === 0 && await box.count() === 1,
+    `Major Hint buttons ${majorHint}, Show Answer checkboxes ${await box.count()}`);
+
+  await box.setChecked(true);
+  await page.waitForTimeout(120);
+  const shown = await page.locator('.sv-answer').count();
+  // BELOW the keyboard, where every other speller puts its answer.
+  const order = await page.evaluate(() => {
+    const answer = document.querySelector('.sv-answer');
+    const keyboard = document.querySelector('.tile-keyboard');
+    if (!answer || !keyboard) return null;
+    return keyboard.compareDocumentPosition(answer) & Node.DOCUMENT_POSITION_FOLLOWING ? 'below' : 'above';
+  });
+  const verse = normalizeText(await page.locator('.sv-answer .sv-verse').innerText());
+  check(`5E-R12 ${chapterId} ${activity.id}: the answer shows the verse BELOW the keyboard`,
+    shown === 1 && order === 'below'
+      && verse === normalizeText((activity.answerWords || []).join(' ')),
+    `panels ${shown}, position ${order}, verse ${JSON.stringify(verse.slice(0, 40))}`);
+  await shot(`R12 ${chapterId} show answer`);
+
+  // NO TIMER: it is still up well past the 7000ms the old panel lived for.
+  await page.waitForTimeout(7600);
+  check(`5E-R12 ${chapterId} ${activity.id}: it does NOT hide itself on a timer`,
+    await page.locator('.sv-answer').count() === 1 && await box.isChecked(),
+    `panels ${await page.locator('.sv-answer').count()}, checked ${await box.isChecked()}`);
+
+  // ...and it clears the moment typing resumes, like every other speller.
+  await typeGreek('λ');
+  await page.waitForTimeout(120);
+  check(`5E-R12 ${chapterId} ${activity.id}: it clears as soon as typing resumes`,
+    await page.locator('.sv-answer').count() === 0 && !await box.isChecked(),
+    `panels ${await page.locator('.sv-answer').count()}, checked ${await box.isChecked()}`);
+}
+
 // ------------------------------------------------------ §6.8 option grids
 // A CENSUS, not a list: every select activity in chapters 1-5, measured at both
 // widths. The responsive pool must be 2-up at 320 and 4-up at 768 whatever

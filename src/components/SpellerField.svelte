@@ -33,6 +33,11 @@
 
   let fieldEl;
   let dragPointer = null;
+  // Drives `.dragging` on the field, which stops the caret blinking for the
+  // duration. See the .caret rules in app.css: the blink restarts every time
+  // the caret span is re-created at a new position, and its first half is the
+  // invisible one, so a moving caret never got to be drawn.
+  $: dragging = dragPointer !== null;
 
   // The caret position nearest a point, measured from the LAID-OUT clusters so
   // wrapping, kerning and the Greek font are all the browser's business. Every
@@ -101,7 +106,7 @@
        spacing form so a breathing tapped before its letter reads as waiting
        rather than lost. -->
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-  <div class="value greek spell-target {fieldClass}" bind:this={fieldEl}
+  <div class="value greek spell-target {fieldClass}" class:dragging bind:this={fieldEl}
     role="application" aria-label="{label}. Tap or drag to move the cursor."
     on:pointerdown={onPointerDown}
     on:pointermove={onPointerMove}

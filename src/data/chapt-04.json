@@ -2229,13 +2229,13 @@
      "Spell Greek"
     ],
     "buttons": [
-     "Major Hint",
      "Pronounce",
      "Check Answer",
      "Greek Keyboard",
      "Restart Exercise"
     ],
     "checkboxes": [
+     "Show Answer",
      "With Accents"
     ],
     "_restart_note": "DEPARTURE D-12."

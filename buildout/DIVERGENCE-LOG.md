@@ -173,6 +173,18 @@ D-29 | app | THE SHARED KEYBOARD GAINS AN APOSTROPHE TILE (U+1FBD
      A build guard now fails if any displayed punctuation in a
      spelling answer has no tile. | Nathanael, 2026-08-07;
      5E-SPEC3-PATCH item 5.
+D-30 | ch3,4,5 | THE WHOLE-VERSE SPELLERS USE `Show Answer`, NOT
+     `Major Hint`. D-11 gave this surface a Major Hint BUTTON that
+     opened the verse and translation above the keyboard and withdrew
+     them again after HINT_VISIBLE_MS (7s). Nathanael, 2026-08-07:
+     replace it with the `Show Answer` CHECKBOX every other spelling
+     exercise and drill already has, drawn BELOW the keyboard where
+     every other answer appears, clearing as soon as typing resumes
+     rather than on a timer. One reveal idiom app-wide instead of two,
+     and nothing in the app now makes a learner race a clock.
+     HINT_VISIBLE_MS is deleted with it. D-11's substance stands: the
+     verse is still available at any time, which the original does not
+     allow. | Nathanael, 2026-08-07; 5E-SPEC3-PATCH item 12.
 
 ## Auto-progress / advance rule matrix
 

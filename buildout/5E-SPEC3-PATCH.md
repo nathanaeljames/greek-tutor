@@ -1,10 +1,14 @@
 # 5E-SPEC3-PATCH.md — the four device reports from 5E-SPEC3-RESPONSE
 
-Nothing committed, nothing pushed. Four rounds of device reports, in order:
-items 1-4 (`de9a536`); item 5, the apostrophe key (addendum 1); items 6-8, the
-caret drag, the modal at rest and the straight glyph (addendum 2, base
-`f0a75d0`); items 9-10, the elision mark required as U+0027 and the modal sized
-to the gap between the app's bars (addendum 3).
+Nothing committed, nothing pushed. FIVE rounds of device reports from one
+conversation, each addendum appended as it was fixed. A full index of all
+twelve items is at the END of this document; read that first for handoff.
+
+  items 1-4  (`de9a536`)  heading, modal attempt 1, arrival audio, elision
+  item  5    addendum 1   the apostrophe key (D-29)
+  items 6-8  addendum 2   caret drag, modal at rest, straight glyph
+  items 9-10 addendum 3   elision required as U+0027, modal vs the app bars
+  items 11-12 addendum 4  caret visible while dragging, Show Answer (D-30)
 
 | File | What |
 | --- | --- |
@@ -749,3 +753,127 @@ But the bar-relative sizing does not depend on it: `--chrome-top` and
 `--chrome-bottom` come from the bars' real rects on whatever device is running,
 so even if the height estimate were off, the modal is positioned against the
 things that were actually covering it.
+
+---
+
+# Addendum 4 — items 11 and 12 (2026-08-07)
+
+| File | What |
+| --- | --- |
+| `src/app.css` | Item 11. The caret stops blinking while a drag is held. |
+| `src/components/SpellerField.svelte` | Item 11. Publishes `.dragging` on the field. |
+| `src/components/SpellVerseActivity.svelte` | Item 12. `Major Hint` → a `Show Answer` checkbox below the keyboard, no timer. |
+| `src/lib/timing.js` | Item 12. `HINT_VISIBLE_MS` deleted — nothing races a clock any more. |
+| `src/data/chapt-03/04/05.json`, `assemble_ch3/4/5.py` | Item 12. The declared control set matches what renders. |
+| `buildout/DIVERGENCE-LOG.md` | D-30. |
+| `scripts/ui-behavior.mjs` | Both items. **321 checks.** |
+
+---
+
+## Item 11 — the caret was invisible for the whole drag
+
+Real bug with a precise cause, and it was mine from the previous round.
+
+```css
+.caret { animation: blink 1s step-start infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+```
+
+`step-start` jumps to a keyframe interval's END value at its START, so the
+interval `[0%, 50%)` renders at the **50% value — opacity 0**. The caret is
+therefore invisible for the first 500ms of every cycle.
+
+And the caret is a `<span>` inside the `{#each}` whose position changes, so
+**every `pointermove` destroys and re-creates it**, restarting the animation.
+During a continuous drag it never got past its invisible half. It appeared
+~500ms after the last movement — which is exactly "does not appear until I lift
+my finger".
+
+The fix is the Syllable Division divider's own idiom: while the drag is held,
+the caret stops blinking and thickens slightly (2px → 3px), so it tracks the
+finger solidly. The blink resumes on release.
+
+**Negative control**: without the rule, the assertion reads
+`{"dragging":true,"opacity":0,"animationName":"blink"}` mid-drag — the reported
+symptom, measured.
+
+On "the letters get bigger as feedback": nothing in the app does that
+deliberately — there is no `:active` or scale rule on the clusters. It is most
+likely iOS's own touch feedback on the element now that it owns the gesture. If
+it is unwanted, say so and I will look properly.
+
+---
+
+## Item 12 — Show Answer on the scripture spellers
+
+The whole-verse spellers had the app's only second reveal idiom: a `Major Hint`
+**button** opening a panel **above** the keyboard that **withdrew itself after
+7 seconds**. Every other speller and drill uses a `Show Answer` **checkbox**
+whose panel appears **below** the keyboard and clears **when typing resumes**.
+
+All three now use the shared idiom:
+
+- `Major Hint` button — **gone**.
+- `Show Answer` checkbox sits beside `With Accents`.
+- The panel draws **below the keyboard**, carrying the reference, the verse and
+  the translation (on this surface the "answer" is the whole verse).
+- **No timer.** Asserted still open after 7.6s — past the life of the old panel.
+- It clears the instant typing resumes, through the same `typingResumed()`
+  gate the word spellers use. Caret moves deliberately do **not** clear it:
+  repositioning is not typing, and that matches the word spellers.
+- `Restart Exercise` resets it, as `Next` does elsewhere.
+
+`HINT_VISIBLE_MS` is deleted from `timing.js`, with a note saying not to
+reintroduce it. **Nothing in the app now makes a learner race a clock.**
+
+Housekeeping that goes with it: the three chapters' `ui.buttons` still listed
+`"Major Hint"` and their `ui.checkboxes` did not list `Show Answer`. Both are
+corrected in the data **and in `assemble_ch3/4/5.py`**, so regenerating a
+chapter cannot reintroduce a control the component does not render. (This is
+the same class of stale-declaration problem I reported for `c1_ex_pronounce` in
+§6.2 of the RESULTS — worth fixing here since I was in the file.)
+
+**D-30** logs the change. D-11's substance stands: the verse is still available
+at any time, which the original does not allow; only the mechanism changed.
+
+Capture: `5e-spec3-answered/43-r12-answer-below-keyboard.png` — the panel under
+the keyboard, with `δι'` in the straight apostrophe from item 9.
+
+---
+
+## Verification
+
+| | |
+| --- | --- |
+| `ui-behavior.mjs` | **321/321** (was 307) |
+| `npm run verify` | green |
+| `ui-modals.mjs` | 55/55 at rest, clearing the bars |
+| `ui-walk.mjs` | 105 stops × 2 widths, 0px overflow, no console errors |
+| offline | 7/7 |
+
+---
+
+# Round index
+
+Everything in this conversation, in the order it was reported and fixed:
+
+| # | Item | Where |
+| --- | --- | --- |
+| 1 | Duplicated `First Declension—Masc` heading (em-dash broke the dedup key) | main |
+| 2 | Modal scroll model, first attempt | main |
+| 3 | `beforeGuess` clip silent on arrival (Svelte `$:` not yet evaluated in `init()`) | main |
+| 4 | Elision mark rejected when typed as a breathing | main |
+| 5 | Apostrophe key added to the shared keyboard (D-29) | addendum 1 |
+| 6 | Hold-and-drag moves the caret; native selection suppressed | addendum 2 |
+| 7 | Modal at rest, sized from `visualViewport` | addendum 2 |
+| 8 | Straight apostrophe glyph on the key | addendum 2 |
+| 9 | Elision mark is U+0027 app-wide and REQUIRED; coronis preserved | addendum 3 |
+| 10 | Modal sized to the gap between the app's bars; flex footer | addendum 3 |
+| 11 | Caret visible while dragging | addendum 4 |
+| 12 | `Show Answer` replaces `Major Hint` on the verse spellers (D-30) | addendum 4 |
+
+Behavior suite over the round: **240 → 321 checks**. Two divergences logged
+(D-29, D-30). Three harness defects found and fixed along the way — an
+assertion that passed via `scrollIntoViewIfNeeded`, one that measured the
+viewport instead of the usable gap, and a same-hash navigation that silently
+skipped captures. No commits, no pushes.

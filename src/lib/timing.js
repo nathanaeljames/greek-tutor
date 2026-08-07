@@ -25,12 +25,13 @@
 export const ADVANCE_CORRECT_MS = 2000;
 export const ADVANCE_INCORRECT_MS = 4000;
 
-// How long a Major Hint stays on screen before clearing itself (5D device
-// pass, Nathanael). The hint is a GLANCE, not a crib sheet: it is available at
-// any time (D-11), but the learner has to ask for it again rather than leaving
-// the verse parked next to the answer box while they copy it out. Lives here
-// for the same reason the advance constants do — one number, one place.
-export const HINT_VISIBLE_MS = 7000;
+// HINT_VISIBLE_MS IS GONE (D-30, 2026-08-07). It was 7000ms, the life of the
+// whole-verse speller's "Major Hint" panel before it withdrew itself. That
+// surface now uses the same `Show Answer` checkbox as every other speller,
+// which clears when typing resumes rather than on a timer, so no part of the
+// app makes a learner race a clock and there is no duration left to name here.
+// Do not reintroduce it: a self-hiding reveal was this one surface's idiom and
+// nothing else in the app ever behaved that way.
 
 // THE FOUR ADVANCE CLASSES (DRILL-BEHAVIOR-RULES §B1, 5E-SPEC3 §1). There are
 // four and there are no per-activity exceptions: a new activity is ASSIGNED to

@@ -752,6 +752,15 @@ button { font: inherit; cursor: pointer; }
 .caret { display: inline-block; width: 2px; height: 1.05em; vertical-align: -0.15em;
   background: var(--teal); animation: blink 1s step-start infinite; }
 @keyframes blink { 50% { opacity: 0; } }
+/* SOLID AND WIDER WHILE DRAGGING, like the Syllable Division divider above.
+   Not cosmetic: `step-start` jumps to the 50% keyframe at the START of the
+   cycle, so the caret spends its first 500ms at opacity 0 -- and because the
+   caret <span> is re-created at a new position on every pointermove, the
+   animation restarted on every one. The caret was therefore invisible for the
+   whole of a drag and only appeared once the finger stopped, which is exactly
+   what Nathanael reported. Killing the animation for the duration of the drag
+   makes it track the finger. */
+.spell-target.dragging .caret { animation: none; opacity: 1; width: 3px; }
 .spell-checks { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 10px 0; font-size: 0.9375rem; }
 .spell-checks label { display: inline-flex; align-items: center; gap: 6px; }
 .tile-keyboard { margin-top: 10px; }
@@ -950,10 +959,16 @@ button { font: inherit; cursor: pointer; }
   overflow-wrap: break-word; }
 .sv-detail { text-align: center; color: var(--teal-dark); font-size: 0.95rem; margin: -4px 0 8px; }
 .sv-word { font-size: 1.2rem; }
-.sv-hint { background: #fffdf3; border: 1px solid #e7dfbf; border-radius: 10px;
-  padding: 10px 12px; margin: 10px 0; }
-.sv-hint .label { font-size: 0.75rem; color: var(--teal-dark); font-weight: 700; text-transform: uppercase; }
-.sv-verse { font-size: 1.25rem; line-height: 1.5; margin: 4px 0 6px; overflow-wrap: anywhere; }
+/* The whole-verse Show Answer panel (D-30). It shares .spell-answer with the
+   word spellers so the two read as the same control, and adds a stacked layout
+   because the "answer" here is a fourteen-word verse plus its translation
+   rather than a single word. The old .sv-hint box sat ABOVE the keyboard and
+   is gone with the Major Hint button. */
+.sv-answer { display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: #fffdf3; border: 1px solid #e7dfbf; border-radius: 10px;
+  padding: 10px 12px; }
+.sv-answer .label { margin-right: 0; }
+.sv-verse { font-size: 1.25rem; line-height: 1.5; overflow-wrap: anywhere; }
 .sv-translation { font-size: 0.95rem; color: var(--teal-dark); }
 
 /* ---- Chapter 2 divide / placeAccent activities ---- */

@@ -938,9 +938,9 @@ def build(tbk, conv):
                       '_note': 'DEPARTURE D-11.'},
         'audio': aud('d_jn146b'),
         'ui': {'fields': ['Spell Greek'],
-               'buttons': ['Major Hint', 'Pronounce', 'Check Answer',
+               'buttons': ['Pronounce', 'Check Answer',
                            'Greek Keyboard', 'Restart Exercise'],
-               'checkboxes': ['With Accents'],
+               'checkboxes': ['Show Answer', 'With Accents'],
                '_restart_note': 'DEPARTURE D-12.'},
         'spellerTilesRef': 'chapt_1',
     }
