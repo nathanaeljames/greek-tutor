@@ -15,7 +15,72 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
 internet. Full license from the author. Secondary goal: portfolio
 piece. Nathanael goes by "Fable" when addressing Claude (chat).
 
-## Live state (2026-08-03)
+## Live state (2026-08-07)
+
+**COHORT 5E IS CLOSED.** Chapters 1 through 5 are shipped, verified on
+device, and behaviorally corrected. Full round history:
+
+- **5E-SPEC1** (2026-08-03) — chapters 4 and 5 built, DUAL round: Sol
+  and Opus in parallel, each in its own copy of the repo, no branches.
+  Sol won; `5E-XPATCH1.md` ported three Opus pieces onto the Sol base
+  (sentence-prompt resolution in code, reveal-button order from data,
+  `MeaningsCard.svelte` extraction) plus an offline preview walk.
+- **5E-SPEC2** (2026-08-06) — the big behavioral correction, following
+  Nathanael's DOSBox pass over all 50 drills/exercises in chapters 1-5.
+  Replaced `DRILL-MATRIX.md` (now DELETED) with two canonical
+  documents: **`DRILL-BEHAVIOR-RULES.md`** (the ruleset) and
+  **`DRILLBEHAVIORLEDGER.csv`** (the per-activity record — note the
+  filename: Claude.ai's uploader strips hyphens, so this is now the
+  PERMANENT canonical name, not a typo). `scripts/apply-behavior-matrix.py`
+  ships to stamp the ledger onto data and MUST run after every
+  `assemble_chNN.py`.
+- **5E-SPEC3** (2026-08-06) — corrected an over-reach in SPEC2: six
+  advance classes collapsed to FOUR, because SPEC2 had invented
+  "wait for Next on a correct answer" for 14 activities that were never
+  marked for that change. Rule **B1a**: every correct answer
+  auto-advances, no exceptions, overriding the original where the
+  original waited (D-28).
+- **5E-SPEC3-PATCH** (2026-08-07, five addenda) — real device feedback,
+  fourteen items. Two new standing rules now canonical for chapter 6+:
+  **C8** (`Show Answer` is the ONE reveal control, app-wide — the three
+  whole-verse spellers' `Major Hint` button/timer is GONE, `HINT_VISIBLE_MS`
+  is DELETED, never reintroduce it; D-30) and **C9** (a combining
+  breathing and the elision apostrophe are NOT interchangeable anywhere,
+  including the checker; elision is U+0027 everywhere displayed; a
+  dedicated speller tile now inserts it, D-29). Also fixed: a dedup key
+  broken by the em-dash rule (duplicated `First Declension—Masc`
+  heading), a Svelte reactivity bug that left the first item of every
+  `beforeGuess` drill silent on arrival, and three rounds of modal
+  sizing (the real fix uses `visualViewport` sized to the gap between
+  the app's own bars, not a CSS viewport unit — no CSS unit describes
+  an iPhone). Behavior suite: 203 → 322 checks.
+
+**All 78 rows of `DRILLBEHAVIORLEDGER.csv` are CONFIRMED — chapters 1-8,
+zero open rows.** Chapters 6-8 aren't built yet, but their BEHAVIOR is
+already verified against DOSBox, ahead of the build. This inverts the
+5E process on purpose: 5E's data was wrong 23/50 rows because behavior
+was inferred from screenshots after the fact. 5F's data goes in
+correct the first time because the ledger already has the answers.
+
+One extraction-side finding from filling the ch6-8 ledger, now rule
+**A1a**: multi-word Greek-phrase prompts (the "X Translation Drill"
+family — Preposition, Adjective, "Eimi", Personal Pronoun, Autos) defer
+their audio to `afterGuess` even though Greek is the prompt, because the
+ORIGINAL cannot accept input while its own audio plays and a multi-word
+clip makes that lockout long enough to matter. The port has no such
+constraint but matches for uniformity. Rule **E4b** records the
+methodology lesson that produced the one set of wrong ch6-8 predictions
+Fable made before Nathanael's pass corrected them: a same-chapter
+precedent is not enough when the chapter offers more than one candidate
+shape (chapter 3 has two verb drills with opposite timing).
+
+**REPO IS AHEAD OF PROJECT FILES** as of this writing on four files —
+`DIVERGENCE-LOG.md`, `DRILL-BEHAVIOR-RULES.md`, `DRILLBEHAVIORLEDGER.csv`,
+`chapt-04.json`, `chapt-05.json` — all correctly committed from the
+SPEC3-PATCH round, just not yet re-uploaded to project files. See the
+Immediate queue.
+
+**Superseded state below, kept for context (5D closure onward):**
 
 - Repo: github.com/nathanaeljames/greek-tutor (Netlify CD from main).
   Deploy: https://greektutorv1.netlify.app — installed as PWA on the
@@ -162,8 +227,17 @@ attachment to its cohort's coding rounds.
 Divergence rule (2026-07-28): every deliberate departure from the
 original is logged in DIVERGENCE-LOG.md (canonical living set) at
 decision time, numbered D-n, never renumbered. Fidelity restorations
-are not logged. The advance-timing rule matrix (advanceClass x two
-shared constants) also lives there.
+are not logged. The advance-timing rule matrix now lives in
+DRILL-BEHAVIOR-RULES.md / DRILLBEHAVIORLEDGER.csv (DRILL-MATRIX.md
+DELETED at 5E-SPEC2).
+
+LEDGER-FIRST RULE (2026-08-07, from 5F): where DRILLBEHAVIORLEDGER.csv
+already carries a CONFIRMED row for an activity that has not been built
+yet, that row is authoritative for its behavior and is not
+re-inferred at spec time. A rail walk is still required for page
+content, prose, layout and audio inventory — the ledger covers
+audioTiming, advanceClass, and Prev/Next only. This inverts 5E's
+build-then-correct order specifically to avoid repeating it.
 
 ## Visual verification (MANDATORY, established 2026-07-28)
 
@@ -430,41 +504,47 @@ files carry only what a new chat needs.
   i_rm623b pre-ships in CHAPT_8). Full taxonomy:
   buildout/5C-RECON-FINDINGS.md §3.
 
-## Immediate queue (as of 2026-08-03 — 5E-SPEC1 issued)
+## Immediate queue (as of 2026-08-07 — cohort 5E closed, 5F opening)
 
-1. **Nathanael: commit the complete 5E round-1 package**, then upload
-   the changed copies to project files immediately. The package:
-   buildout/5E-SPEC1.md, 5E-RESULTS-TEMPLATE.md, 5E-BUILD-TEMPLATE.md,
-   5E-VISUAL-CHECKLIST.md, 5E-EXTRACTION-MAP.md; src/data/chapt-04.json,
-   lexicon-chapt04.json, chapt-05.json, lexicon-chapt05.json;
-   scripts/assemble_ch4.py, assemble_ch5.py, tbk_fields.py; and the
-   updated CHAT-HANDOFF.md, PHASE5-PLAN.md, DIVERGENCE-LOG.md,
-   DRILL-MATRIX.md.
-2. **Run 5E-SPEC1 as a DUAL round** — Sol in Codex and Opus in Claude
-   Code, in parallel, each in its own separate copy of the repo from
-   the same starting commit (Nathanael's existing isolation setup; no
-   branches, no pushes). Both get ch4railwalk.pdf and ch5railwalk.pdf
-   attached. Each returns
-   5E-SPEC1-RESULTS-{ME}.md, 5E-SPEC1-BUILD-{ME}.md (complete git diff
-   embedded, non-negotiable) and 5E-VISUAL-CHECKLIST-{ME}.md.
-3. **Grading chat** reads both BUILD diffs against GRADER-PROMPT.md,
-   scores, and may emit an XPATCH. The WINNER then applies the XPATCH
-   and authors VERIFY-5E.md.
-4. AGENTS.md is DONE — it already points at `buildout/ONBOARD-SOL.md`
-   and carries no absolute paths. Item closed 2026-08-03.
-   NOTE for any future chapter assembly: `GreekTutor.iso` persists only
-   inside one conversation, so re-upload it in whichever chat does the
-   extraction.
-5. Data debt at the next chapt-01/intro regen: residual "--" in
-   chapt-01.json.learn[7].content[1].text, intro.json.learn[0]
-   .content[1].text and .content[3].text, and lexicon-chapt01.json
-   exampleWords.anthropoi.gloss / .anthropois.gloss.
-6. Registry debt: unify paradigm row `person` onto `label` at the next
-   chapt-03 regeneration (5E ships `label`; the renderer reads
-   `row.label ?? row.person` so chapter 3's chunk hash stays put).
-7. Quiet watch item: the mark-geometry table is generated from the
-   REGULAR weight only. Correct today — every red-overlay surface
-   sets Greek at 400.
+1. **Nathanael: re-upload four files to project files from the repo**
+   (repo already has them; project files are stale) —
+   `DIVERGENCE-LOG.md`, `DRILL-BEHAVIOR-RULES.md`,
+   `DRILLBEHAVIORLEDGER.csv`, `chapt-04.json`, `chapt-05.json`. Also
+   upload the refreshed `CHAT-HANDOFF.md`, `PHASE5-PLAN.md` and
+   `ONBOARD-SOL.md` this turn produced.
+2. **Duplicate file flag**: the project's file list shows TWO uploads
+   named `ONBOARD-SOL.md` (300 lines and 275 lines). Only one is
+   reachable from this side (299 lines, matches the repo). Delete
+   whichever the Claude.ai file manager shows as the older/orphaned
+   one — Fable cannot tell from here which upload is which.
+3. **Cohort 5F opens: chapters 6, 7, 8 (Prepositions; Adjectives and
+   the verb εἰμί; Pronouns), rail-walk-then-build, one chapter at a
+   time.** Confirmed sane process (see below). Nathanael supplies
+   `ch6railwalk.pdf`; Fable extracts `6_PREPS.TBK` from a re-uploaded
+   `GreekTutor.iso` (chat-scoped, does not persist across sessions),
+   assembles `chapt-06.json` + `lexicon-chapt06.json` via a new
+   `scripts/assemble_ch6.py`, runs `apply-behavior-matrix.py` against
+   the already-CONFIRMED chapter-6 ledger rows, and delivers both files
+   plus updated `DIVERGENCE-LOG.md`/`5F-EXTRACTION-MAP.md` entries for
+   review — repeat for ch7, ch8. **Only after all three chapters' data
+   is assembled and reviewed does Fable draft `5F-SPEC1.md`** — one
+   spec covering all three chapters, matching the 5E precedent of
+   batching same-cohort chapters into one implementation round.
+   The chapter-6/7/8 activity names and predicted behavior are ALREADY
+   in `DRILLBEHAVIORLEDGER.csv` (28 CONFIRMED rows) — the rail walks are
+   for page content, layout and prose, not for behavior discovery.
+4. Registry debt carried from 5E: `attemptsPerItem` on `retryUntilRight`
+   activities is confirmed dead weight (5E-SPEC3-RESULTS §6.1) — the
+   class alone drives behavior. Safe removal order: make
+   `answerPolicy` without `advanceClass` a `check:shapes` failure
+   FIRST, then delete the field and the fallback branch in
+   `timing.js::classOf` together. Not done; do it opportunistically
+   during 5F if the file is already open, not as a dedicated round.
+5. `scripts/ui-walk.mjs`'s `--out` default still points at a fixed
+   directory rather than being round-scoped — flagged during 5E-SPEC2
+   and never fixed; it overwrote 475 of Sol's screenshots once already.
+   Low priority since chapters are no longer built in parallel, but
+   worth a one-line fix before any future dual round.
 
 ## Known open questions
 
@@ -472,15 +552,22 @@ files carry only what a new chat needs.
 - ch3 unreferenced audio c_pisou2 (heard as "pistuousi") has no
   surface in the chapter; leave unwired unless a later chapter
   claims it.
-- ch4 unreferenced audio `d_adepar` (the ἀδελφός whole-paradigm clip)
-  has no chart on any chapter-4 Learn page — ἀδελφός appears only as
-  the Declining Noun Drill's third word family. Leave unwired unless
-  the build finds a surface; raise it in VERIFY-5E only if a rail-walk
-  page contradicts this.
-- Does the Declining Noun Drill reveal its translation automatically
-  once the item is answered, or only on the Translate button? The rail
-  walks show it present in both answered states, but the button may
-  have been pressed. Built button-only; VERIFY-5E item.
+- ch4 unreferenced audio `d_adepar` RESOLVED (VERIFY-5E #17): confirmed
+  no surface exists in the original either. Left unwired permanently.
+  Compiling a per-chapter unused-audio list is now a standing ask
+  (VERIFY-5E #16) — do this for chapters 6-8 too.
+- Declining Noun Drill translation reveal RESOLVED (VERIFY-5E #3):
+  button-only in the original as well, in both chapters. No change
+  needed; the port already matches.
+- ch4 Greek Noun Drill item 3 (Mat 5:24) RESOLVED (VERIFY-5E #18): BOTH
+  `to` and `brother` are underlined in the original — intentional, a
+  dative-case hint. The port currently underlines only `brother`
+  (single-string `underline` field). **Still open as a SHAPE gap**: the
+  data model needs a way to mark more than one underlined span per
+  item before this can be fixed; not scheduled, flag if ch6-8 need it.
+- English-gloss vocabulary grids RESOLVED (VERIFY-5E #20): D-19 (2-up
+  phone / 4-up 768px) applies to ALL chapters past and future; already
+  correctly implemented in chapters 1-5 per the SPEC2 audit. No action.
 - "Learn Vocabulary Builder": D2 answered — the chapter rail as
   verified (D1) does not include it; nothing visibly book-jumps. NOT
   ported in 5D; revisit only if a later chapter surfaces it in-rail.

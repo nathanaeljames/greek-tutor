@@ -1,6 +1,6 @@
 # PHASE5-PLAN.md — vertical buildout roadmap (LIVING DOCUMENT)
 
-Status date: 2026-08-03 (5D closed, 5E open). Roadmap only; per-cohort
+Status date: 2026-08-07 (5E closed, 5F open). Roadmap only; per-cohort
 detail lives in the numbered specs. Updated at every cohort boundary.
 
 ## Principles (unchanged)
@@ -55,28 +55,50 @@ COHORT 5D — Chapter 3 (Present Active Verbs), SOLO. **CLOSED
   (Playwright harnesses, shared speller input model) now inherited.
 
 COHORT 5E — Chapters 4 + 5 (Second/First Declension Nouns), BATCHED.
-  **OPEN, round 1 issued 2026-08-03 (5E-SPEC1.md).** Confirmed still
-  4+5 at spec time against a full DOSBox rail walk of both chapters
-  plus a fresh extraction pass: chapter 5 is chapter 4 plus the
-  definite-article family, so batching them costs one set of renderer
-  changes instead of two. Near-pure reuse of 5D vocabulary. The seven
-  new renderer items (5E-SPEC1 §4) are: paradigm row `label`;
-  multi-chart paradigm blocks with More/Back and Singular/Plural
-  switching; the Meanings expander on a chart; the D-19 exemption for
-  paradigm-shaped option grids; generic reveal buttons on select
-  drills (Translate, Gender); `spell` prompt-label and per-item ref;
-  the `note` line under a chart. Recon: none owed — the ch4/ch5 rail
-  walks arrived with the request and serve as RECON-RESULTS. Gate:
-  VERIFY-5E.
-  Rail walks for chapters 6, 7 and 8 exist and can be supplied on
-  request, which shortens 5F's recon step the same way.
+  **CLOSED 2026-08-07.** Four rounds: 5E-SPEC1 (dual Sol/Opus build +
+  XPATCH1), 5E-SPEC2 (behavior correction against Nathanael's DOSBox
+  pass — six advance classes, wrong on the correct-answer path for 14
+  activities), 5E-SPEC3 (corrected SPEC2's over-reach — four classes,
+  every correct answer auto-advances, D-28), 5E-SPEC3-PATCH (five
+  addenda of real device feedback — modal geometry, an audio-on-arrival
+  reactivity bug, the elision-mark/breathing distinction, the
+  apostrophe key, `Show Answer` replacing `Major Hint` app-wide).
+  Confirmed still 4+5 at spec time against a full DOSBox rail walk of
+  both chapters plus a fresh extraction pass: chapter 5 is chapter 4
+  plus the definite-article family, so batching them cost one set of
+  renderer changes instead of two. The seven renderer items from
+  5E-SPEC1 §4 (paradigm row `label`; multi-chart blocks with
+  More/Back and Singular/Plural switching; the Meanings expander; the
+  D-19 exemption for paradigm-shaped grids; generic reveal buttons;
+  `spell` prompt-label and per-item ref; chart `note`) all shipped and
+  are now registered vocabulary — see the mode registry below.
+  DRILL-MATRIX.md is DELETED, replaced by DRILL-BEHAVIOR-RULES.md +
+  DRILLBEHAVIORLEDGER.csv, which now cover all 78 activities across
+  chapters 1-8 (chapters 6-8 CONFIRMED ahead of being built — see 5F).
+  Records: 5E-SPEC{1,2,3}.md, 5E-XPATCH1.md, 5E-SPEC{1,2,3}-RESULTS*.md,
+  5E-SPEC3-PATCH.md, VERIFY-5E.md + VERIFY-5E-RESPONSE.pdf.
 
-COHORT 5F — Chapters 6 + 7 + 8 (Prepositions, Adjectives, Pronouns),
-  BATCHED. Reuse at volume. Contains the cohort's only interaction
-  novelties: Spell Greek Phrase (space tile), the ch8 two-step
-  person-then-case drill, and the possible ch6 prepositions graphic
-  (recon question — if it is a real spatial diagram, decide render
-  approach in the spec).
+COHORT 5F — Chapters 6 + 7 + 8 (Prepositions, Adjectives and the verb
+  εἰμί, Pronouns), BATCHED. **OPEN 2026-08-07.** Reuse at volume — no
+  new renderer items are expected, pending the rail walks. Process
+  DEPARTS from 5E on purpose: behavior is ledger-first this time.
+  `DRILLBEHAVIORLEDGER.csv` already carries CONFIRMED rows for all 28
+  chapter 6-8 activities (Nathanael's DOSBox pass, cross-checked
+  against a fresh TBK extraction), so the rail walks now supplied
+  chapter-by-chapter are for page content, prose and layout — not
+  behavior discovery. Per-chapter loop: rail walk in -> Fable extracts
+  the TBK, assembles `chapt-0N.json` + `lexicon-chapt0N.json` via a new
+  `assemble_ch{6,7,8}.py`, stamps behavior via
+  `apply-behavior-matrix.py` against the already-confirmed rows,
+  delivers for review. Repeat for all three chapters, THEN issue one
+  `5F-SPEC1.md` covering all three, matching 5E's batching precedent.
+  Contains the cohort's only interaction novelty flagged so far: the
+  ch8 Personal Pronoun Case Drill's two-step person-then-case selection
+  (confirmed via TBK instruction text, "Click on the person then the
+  case" — a genuinely different option layout from every other Case
+  Drill in the app, not covered by any existing rule). Also: Autos has
+  no Case Drill, only Translation — confirmed by exhaustive TBK title
+  search, not assumed; do not add one.
 
 COHORT 5G+ (INFERENCE, pending each cohort's extraction pass) —
   chapters 9-28 grouped by grammatical family, expecting the first

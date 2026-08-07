@@ -251,43 +251,62 @@ against:
   Vary behavior — some WebKit behaviors are device-only observations;
   say so in handoffs rather than claiming Chrome proved them.
 
-## 9. Current state (updated 2026-08-06 — cohort 5E, round 3)
+## 9. Current state (updated 2026-08-07 — cohort 5E CLOSED, 5F opening)
 
-Chapters 1 through 5 are shipped. Chapters 1 and 2 closed 2026-07-27;
-chapter 3 (cohort 5D) closed 2026-08-03; chapters 4 and 5 (cohort 5E)
-were built in a dual round, Sol winning with an Opus cross-patch, and
-are now in behaviour correction: 5E-SPEC2 landed, and 5E-SPEC3 corrects
-an over-reach in it.
+Chapters 1 through 5 are shipped, device-verified, and behaviorally
+correct. Cohort 5E ran four rounds — 5E-SPEC1 (dual build), 5E-SPEC2
+(behavior correction), 5E-SPEC3 (corrected an over-reach in SPEC2),
+5E-SPEC3-PATCH (device feedback, five addenda) — and is now closed.
 
 **Read these two before any drill or exercise work. They are canonical
-and they REPLACE DRILL-MATRIX.md, which is deleted:**
+and they REPLACE DRILL-MATRIX.md, which is DELETED:**
 
-- **DRILL-BEHAVIOR-RULES.md** — the ruleset. Audio timing follows the
-  PROMPT LANGUAGE (Greek prompt plays before the guess, English prompt
-  after). There are FOUR advance classes and every correct answer
-  auto-advances, with no exception in any class, activity or chapter.
-- **DRILL-BEHAVIOR-LEDGER.csv** — the per-activity record, from
-  Nathanael's DOSBox pass over all 50 activities in chapters 1-5, and
-  the source `scripts/apply-behavior-matrix.py` reads.
+- **DRILL-BEHAVIOR-RULES.md** — the ruleset, now at rule C9 / E4b.
+  Load-bearing ones: audio timing follows PROMPT LANGUAGE (A1), except
+  a multi-word Greek phrase defers to `afterGuess` regardless (A1a, for
+  parity with the original's own input-lockout workaround); there are
+  FOUR advance classes and every correct answer auto-advances with no
+  exception (B1a); a wrong spelling never reveals the answer (C0a);
+  **`Show Answer` is the ONE reveal control app-wide — there is no
+  `Major Hint`, on any surface, ever again (C8)**; a combining breathing
+  and the elision apostrophe are NOT interchangeable anywhere (C9).
+- **DRILLBEHAVIORLEDGER.csv** — the per-activity record. **All 78 rows,
+  chapters 1-8, are CONFIRMED** — chapters 6-8 ahead of being built.
+  Read a chapter's rows before writing or reviewing its spec; do not
+  re-derive behavior that is already in the ledger.
 
 `apply-behavior-matrix.py` MUST run after every `assemble_chNN.py`. It
 stamps `audioTiming`, `answerPolicy.advanceClass`, the Pronounce-Each
-default and Previous/Next presence onto the data, applies the em-dash
-and accent-rule-underline typography rules, and fails loudly if an
-activity has no CONFIRMED ledger row. Without it a regenerated chapter
-silently reverts to whatever its assembler hard-coded.
+default, Previous/Next presence, the em-dash typography rule and the
+chapter-2 accent-rule underlines onto the data, and fails loudly if an
+activity has no CONFIRMED ledger row.
 
-The hard lesson of cohort 5E, and the reason those documents exist:
-behaviour was inferred from screenshots and feedback strings, and 23 of
-50 rows were wrong. **Never infer behaviour from a feedback string, a
-button's presence, an activity's name, or how the same-named activity
-behaves in another chapter.** If a behaviour is not in the ledger, it
-is not known, and saying so is the correct answer.
+**`HINT_VISIBLE_MS` is DELETED (C8/D-30). Do not reintroduce it under
+any name.** Nothing in this app makes a learner race a clock.
+
+The hard lesson of cohort 5E, and the reason these documents exist:
+behaviour was inferred from screenshots and feedback strings at 5E-SPEC1
+time, and 23 of 50 rows were wrong. **Never infer behaviour from a
+feedback string, a button's presence, an activity's name, or how the
+same-named activity behaves in another chapter (E4a/E4b).** Chapter 3
+has two verb drills with opposite audio timing under the same-sounding
+name; that ambiguity produced the one set of wrong 5F predictions
+before Nathanael's DOSBox pass corrected them.
+
+Cohort 5F (chapters 6-8: Prepositions; Adjectives and εἰμί; Pronouns)
+inverts the 5E order deliberately: behavior is ledger-first. The 28
+chapter 6-8 rows are already CONFIRMED before any of the three chapters
+is built, so rail walks this round are for page content and layout, not
+behavior discovery.
 
 Expect new chapters to reuse the existing vocabulary — topicPages,
 greekRows, expander, subheading, divide, placeAccent, optionValues,
 redMarkCluster, paradigm, interlinearVerse, spellVerse, `charts[]` with
-`switch`, `meanings`, `revealButtons` — before inventing anything.
+`switch`, `meanings`, `revealButtons` — before inventing anything. One
+flagged exception already known for 5F: chapter 8's Personal Pronoun
+Case Drill uses a two-step person-then-case selection, not the single
+grouped option grid every other Case Drill uses — a genuinely new
+layout, not covered by any existing mode.
 
 ## 10. When in doubt
 
