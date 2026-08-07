@@ -324,15 +324,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_ex_letter_to_name.png",
       "heading": "",
-      "text": "γ\nalpha\nbeta\ngamma\ndelta\nepsilon\nzeta\neta\ntheta\niota\nkappa\nlambda\nmu\nnu\nxi\nomicron\npi\nrho\nsigma\ntau\nupsilon\nphi\nchi\npsi\nomega\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "η\nalpha\nbeta\ngamma\ndelta\nepsilon\nzeta\neta\ntheta\niota\nkappa\nlambda\nmu\nnu\nxi\nomicron\npi\nrho\nsigma\ntau\nupsilon\nphi\nchi\npsi\nomega\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [
-       "γ"
+       "η"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "γ",
+       "η",
        "alpha",
        "beta",
        "gamma",
@@ -379,15 +379,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_ex_letter_to_name.png",
       "heading": "",
-      "text": "λ\nalpha\nbeta\ngamma\ndelta\nepsilon\nzeta\neta\ntheta\niota\nkappa\nlambda\nmu\nnu\nxi\nomicron\npi\nrho\nsigma\ntau\nupsilon\nphi\nchi\npsi\nomega\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "τ\nalpha\nbeta\ngamma\ndelta\nepsilon\nzeta\neta\ntheta\niota\nkappa\nlambda\nmu\nnu\nxi\nomicron\npi\nrho\nsigma\ntau\nupsilon\nphi\nchi\npsi\nomega\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [
-       "λ"
+       "τ"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "λ",
+       "τ",
        "alpha",
        "beta",
        "gamma",
@@ -436,7 +436,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_ex_name_to_letter.png",
       "heading": "",
-      "text": "theta\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "upsilon\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -488,7 +488,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_ex_name_to_letter.png",
       "heading": "",
-      "text": "mu\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "alpha\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -803,15 +803,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_ex_translit.png",
       "heading": "",
-      "text": "ι\na\nb\ng\nd\ne\nz\nē\nth\ni\nk\nl\nm\nn\nx\no\np\nr\ns\nt\nu\nph\nch\nps\nō\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "β\na\nb\ng\nd\ne\nz\nē\nth\ni\nk\nl\nm\nn\nx\no\np\nr\ns\nt\nu\nph\nch\nps\nō\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [
-       "ι"
+       "β"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ι",
+       "β",
        "a",
        "b",
        "g",
@@ -860,7 +860,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_ex_transcribe.png",
       "heading": "",
-      "text": "t\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "k\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -912,7 +912,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_ex_transcribe.png",
       "heading": "",
-      "text": "l\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
+      "text": "s\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ/ς\nτ\nυ\nφ\nχ\nψ\nω\nPronounce\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -1866,15 +1866,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "ἄγγελος\nangel\ntruly, verily\nman\nI\nGod\nand, even\nheart\nI say\nprophet\nChrist\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "ἀμήν\nangel\ntruly, verily\nman\nI\nGod\nand, even\nheart\nI say\nprophet\nChrist\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "ἄγγελος"
+       "ἀμήν"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἄγγελος",
+       "ἀμήν",
        "angel",
        "truly, verily",
        "man",
@@ -1950,7 +1950,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "Christ\nἄγγελος\nἀμήν\nἄνθρωπος\nἐγώ\nθεός\nκαί\nκαρδία\nλέγω\nπροφήτης\nΧριστός\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "man\nἄγγελος\nἀμήν\nἄνθρωπος\nἐγώ\nθεός\nκαί\nκαρδία\nλέγω\nπροφήτης\nΧριστός\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -1988,7 +1988,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "God\nἄγγελος\nἀμήν\nἄνθρωπος\nἐγώ\nθεός\nκαί\nκαρδία\nλέγω\nπροφήτης\nΧριστός\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "angel\nἄγγελος\nἀμήν\nἄνθρωπος\nἐγώ\nθεός\nκαί\nκαρδία\nλέγω\nπροφήτης\nΧριστός\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -2028,7 +2028,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_1/c1_ex_speller.png",
       "heading": "",
-      "text": "ENGLISH MEANING\nangel\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH MEANING\nangel\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -2083,6 +2083,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -2106,7 +2107,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_1/c1_ex_speller.png",
       "heading": "",
-      "text": "ENGLISH MEANING\nangel\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH MEANING\nangel\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -2161,6 +2162,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -3810,15 +3812,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_syllable_counting.png",
       "heading": "",
-      "text": "λέγω\n1\n2\n3\n4\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "ἀκούω\n1\n2\n3\n4\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [],
       "taps": [
-       "λέγω"
+       "ἀκούω"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "λέγω",
+       "ἀκούω",
        "1",
        "2",
        "3",
@@ -3849,15 +3851,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_2/c2_drill_syllable_counting.png",
       "heading": "",
-      "text": "υἱός\n1\n2\n3\n4\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "λόγος\n1\n2\n3\n4\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [],
       "taps": [
-       "υἱός"
+       "λόγος"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "υἱός",
+       "λόγος",
        "1",
        "2",
        "3",
@@ -8050,15 +8052,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_accent_rule.png",
       "heading": "",
-      "text": "᾿΄ανθρωπων\nPotential Placement\nNouns Retentive\nVerbs Recessive\nIf long ultima then antepenult cannot be accented\nIf long ultima then if penult accented must be acute\nIf short ultima then accented long penult takes circumflex\nIf ultima acute followed by a word it becomes grave\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "πρ῀ωτος\nPotential Placement\nNouns Retentive\nVerbs Recessive\nIf long ultima then antepenult cannot be accented\nIf long ultima then if penult accented must be acute\nIf short ultima then accented long penult takes circumflex\nIf ultima acute followed by a word it becomes grave\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [],
       "taps": [
-       "᾿΄ανθρωπων"
+       "πρ῀ωτος"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "᾿΄ανθρωπων",
+       "πρ῀ωτος",
        "Potential Placement",
        "Nouns Retentive",
        "Verbs Recessive",
@@ -8092,15 +8094,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_2/c2_drill_accent_rule.png",
       "heading": "",
-      "text": "ἐχ΄ω\nPotential Placement\nNouns Retentive\nVerbs Recessive\nIf long ultima then antepenult cannot be accented\nIf long ultima then if penult accented must be acute\nIf short ultima then accented long penult takes circumflex\nIf ultima acute followed by a word it becomes grave\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "ἀκου΄ω\nPotential Placement\nNouns Retentive\nVerbs Recessive\nIf long ultima then antepenult cannot be accented\nIf long ultima then if penult accented must be acute\nIf short ultima then accented long penult takes circumflex\nIf ultima acute followed by a word it becomes grave\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [],
       "taps": [
-       "ἐχ΄ω"
+       "ἀκου΄ω"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἐχ΄ω",
+       "ἀκου΄ω",
        "Potential Placement",
        "Nouns Retentive",
        "Verbs Recessive",
@@ -9488,15 +9490,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_marking_recognition.png",
       "heading": "",
-      "text": "λόγος;\nAcute\nGrave\nCircumflex\nApostrophe\nCoronis\nDiaeresis\nSmooth Breathing\nRough Breathing\nColon\nQuestion\nPrevious\nNext\nPronounce\nTranslate\nScore\nPronounce each\n1 of 25",
+      "text": "υ῾ιός\nAcute\nGrave\nCircumflex\nApostrophe\nCoronis\nDiaeresis\nSmooth Breathing\nRough Breathing\nColon\nQuestion\nPrevious\nNext\nPronounce\nTranslate\nScore\nPronounce each\n1 of 25",
       "marked": [],
       "taps": [
-       "λόγος;"
+       "υ῾ιός"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "λόγος;",
+       "υ῾ιός",
        "Acute",
        "Grave",
        "Circumflex",
@@ -9532,15 +9534,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_2/c2_drill_marking_recognition.png",
       "heading": "",
-      "text": "᾿εγώ\nAcute\nGrave\nCircumflex\nApostrophe\nCoronis\nDiaeresis\nSmooth Breathing\nRough Breathing\nColon\nQuestion\nPrevious\nNext\nPronounce\nTranslate\nScore\nPronounce each\n1 of 25",
+      "text": "υ῾ιός\nAcute\nGrave\nCircumflex\nApostrophe\nCoronis\nDiaeresis\nSmooth Breathing\nRough Breathing\nColon\nQuestion\nPrevious\nNext\nPronounce\nTranslate\nScore\nPronounce each\n1 of 25",
       "marked": [],
       "taps": [
-       "᾿εγώ"
+       "υ῾ιός"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "᾿εγώ",
+       "υ῾ιός",
        "Acute",
        "Grave",
        "Circumflex",
@@ -12954,11 +12956,11 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_part_of_speech.png",
       "heading": "",
-      "text": "Learning it takes time and effort.\nAdjective\nNoun\nAdverb\nPreposition\nConjunction\nPronoun\nDefinite Article\nVerb\nPrevious\nNext\nScore\n1 of 29",
+      "text": "Relax and enjoy it over a coke.\nAdjective\nNoun\nAdverb\nPreposition\nConjunction\nPronoun\nDefinite Article\nVerb\nPrevious\nNext\nScore\n1 of 29",
       "marked": [
        {
         "role": "underline",
-        "text": "and"
+        "text": "it"
        }
       ],
       "taps": [],
@@ -12996,11 +12998,11 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_2/c2_drill_part_of_speech.png",
       "heading": "",
-      "text": "But you must do the work.\nAdjective\nNoun\nAdverb\nPreposition\nConjunction\nPronoun\nDefinite Article\nVerb\nPrevious\nNext\nScore\n1 of 29",
+      "text": "The program will help.\nAdjective\nNoun\nAdverb\nPreposition\nConjunction\nPronoun\nDefinite Article\nVerb\nPrevious\nNext\nScore\n1 of 29",
       "marked": [
        {
         "role": "underline",
-        "text": "work"
+        "text": "The"
        }
       ],
       "taps": [],
@@ -13174,15 +13176,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "κόσμος\nbrother\nI hear\nglory\nI have\nworld\nlord\nword\nPeter\nson\nPharisee\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "κύριος\nbrother\nI hear\nglory\nI have\nworld\nlord\nword\nPeter\nson\nPharisee\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "κόσμος"
+       "κύριος"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "κόσμος",
+       "κύριος",
        "brother",
        "I hear",
        "glory",
@@ -13258,7 +13260,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "Peter\nἀδελφός\nἀκούω\nδόξα\nἔχω\nκόσμος\nκύριος\nλόγος\nΠέτρος\nυἱός\nΦαρισαῖος\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "glory\nἀδελφός\nἀκούω\nδόξα\nἔχω\nκόσμος\nκύριος\nλόγος\nΠέτρος\nυἱός\nΦαρισαῖος\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -13296,7 +13298,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_2/c2_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "I have\nἀδελφός\nἀκούω\nδόξα\nἔχω\nκόσμος\nκύριος\nλόγος\nΠέτρος\nυἱός\nΦαρισαῖος\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "brother\nἀδελφός\nἀκούω\nδόξα\nἔχω\nκόσμος\nκύριος\nλόγος\nΠέτρος\nυἱός\nΦαρισαῖος\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -13336,7 +13338,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_2/c2_ex_speller.png",
       "heading": "",
-      "text": "ENGLISH MEANING\nbrother\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH MEANING\nbrother\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -13391,6 +13393,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -13414,7 +13417,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_2/c2_ex_speller.png",
       "heading": "",
-      "text": "ENGLISH MEANING\nbrother\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH MEANING\nbrother\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -13469,6 +13472,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -18662,21 +18666,21 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_drill_verb_translating.png",
       "heading": "",
-      "text": "βλέπουσιν\nMat 13:13\nI see\nwe see\nyou see (sg)\nyou see (pl)\nhe/she/it sees\nthey see\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
+      "text": "λύετε\nLuk 19:31\nI loose\nwe loose\nyou loose (sg)\nyou loose (pl)\nhe/she/it looses\nthey loose\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [
-       "βλέπουσιν"
+       "λύετε"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "βλέπουσιν",
-       "I see",
-       "we see",
-       "you see (sg)",
-       "you see (pl)",
-       "he/she/it sees",
-       "they see",
+       "λύετε",
+       "I loose",
+       "we loose",
+       "you loose (sg)",
+       "you loose (pl)",
+       "he/she/it looses",
+       "they loose",
        "Previous",
        "Next",
        "Pronounce",
@@ -18746,21 +18750,21 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_verb_translating.png",
       "heading": "",
-      "text": "βλέπετε\nMat 11:4\nI see\nwe see\nyou see (sg)\nyou see (pl)\nhe/she/it sees\nthey see\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
+      "text": "ἀκούομεν\nActs 2:8\nI hear\nwe hear\nyou hear (sg)\nyou hear (pl)\nhe/she/it hears\nthey hear\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [
-       "βλέπετε"
+       "ἀκούομεν"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "βλέπετε",
-       "I see",
-       "we see",
-       "you see (sg)",
-       "you see (pl)",
-       "he/she/it sees",
-       "they see",
+       "ἀκούομεν",
+       "I hear",
+       "we hear",
+       "you hear (sg)",
+       "you hear (pl)",
+       "he/she/it hears",
+       "they hear",
        "Previous",
        "Next",
        "Pronounce",
@@ -18832,15 +18836,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_drill_greek_verb.png",
       "heading": "",
-      "text": "you see (pl)\nMat 11:4\nβλέπετε\nβλέπει\nβλέπουσι\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 28",
+      "text": "they are seeing\nMat 18:10\nβλέπομεν\nβλέπουσι\nβλέπεις\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [],
       "lists": [],
       "paras": [],
       "buttons": [
-       "βλέπετε",
-       "βλέπει",
+       "βλέπομεν",
        "βλέπουσι",
+       "βλέπεις",
        "Previous",
        "Next",
        "Pronounce",
@@ -18909,15 +18913,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_greek_verb.png",
       "heading": "",
-      "text": "I am believing\nMk 9:24\nπιστεύει\nπιστεύω\nπιστεύετε\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 28",
+      "text": "we are hearing\nActs 2:8\nἀκούεις\nἀκούομεν\nἀκούουσιν\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [],
       "lists": [],
       "paras": [],
       "buttons": [
-       "πιστεύει",
-       "πιστεύω",
-       "πιστεύετε",
+       "ἀκούεις",
+       "ἀκούομεν",
+       "ἀκούουσιν",
        "Previous",
        "Next",
        "Pronounce",
@@ -19072,15 +19076,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_parsing.png",
       "heading": "",
-      "text": "λέγει\nMt 4:6\nFirst Person Singular Present Active Indicative\nSecond Person Singular Present Active Indicative\nThird Person Singular Present Active Indicative\nFirst Person Plural Present Active Indicative\nSecond Person Plural Present Active Indicative\nThird Person Plural Present Active Indicative\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
+      "text": "λύετε\nLk 19:31\nFirst Person Singular Present Active Indicative\nSecond Person Singular Present Active Indicative\nThird Person Singular Present Active Indicative\nFirst Person Plural Present Active Indicative\nSecond Person Plural Present Active Indicative\nThird Person Plural Present Active Indicative\nPrevious\nNext\nPronounce\nTranslate\nHint\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [
-       "λέγει"
+       "λύετε"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "λέγει",
+       "λύετε",
        "First Person Singular Present Active Indicative",
        "Second Person Singular Present Active Indicative",
        "Third Person Singular Present Active Indicative",
@@ -19158,7 +19162,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_ex_verb_speller.png",
       "heading": "",
-      "text": "ENGLISH MEANING\nhe looses\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH MEANING\nhe looses\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -19213,6 +19217,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -19236,7 +19241,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_ex_verb_speller.png",
       "heading": "",
-      "text": "ENGLISH MEANING\nhe looses\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH MEANING\nhe looses\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -19291,6 +19296,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -19450,15 +19456,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "βλέπω\nbut\napostle\nI see\nfor\nI know\nJesus\nI take\nI loose\nheaven\nI believe\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "γάρ\nbut\napostle\nI see\nfor\nI know\nJesus\nI take\nI loose\nheaven\nI believe\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "βλέπω"
+       "γάρ"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "βλέπω",
+       "γάρ",
        "but",
        "apostle",
        "I see",
@@ -19491,15 +19497,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "γινώσκω\nbut\napostle\nI see\nfor\nI know\nJesus\nI take\nI loose\nheaven\nI believe\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "λύω\nbut\napostle\nI see\nfor\nI know\nJesus\nI take\nI loose\nheaven\nI believe\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "γινώσκω"
+       "λύω"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "γινώσκω",
+       "λύω",
        "but",
        "apostle",
        "I see",
@@ -19572,7 +19578,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "I take\nἀλλά\nἀπόστολος\nβλέπω\nγάρ\nγινώσκω\nἸησοῦς\nλαμβάνω\nλύω\nοὐρανός\nπιστεύω\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "apostle\nἀλλά\nἀπόστολος\nβλέπω\nγάρ\nγινώσκω\nἸησοῦς\nλαμβάνω\nλύω\nοὐρανός\nπιστεύω\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -19612,7 +19618,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_ex_vocab_speller.png",
       "heading": "",
-      "text": "ENGLISH MEANING\nbut, yet\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH MEANING\nbut, yet\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -19667,6 +19673,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -19690,7 +19697,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_ex_vocab_speller.png",
       "heading": "",
-      "text": "ENGLISH MEANING\nbut, yet\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH MEANING\nbut, yet\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -19745,6 +19752,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -19884,6 +19892,47 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_drill_scripture_memory.png",
       "heading": "",
+      "text": "Ἐγώ\nand\nlife\nhe says\nthe\nI\nto him\nI am\ntruth\nJesus\nway\nPronounce\nScore\nPronounce each\n1 of 10",
+      "marked": [],
+      "taps": [
+       "Ἐγώ"
+      ],
+      "lists": [],
+      "paras": [],
+      "buttons": [
+       "Ἐγώ",
+       "and",
+       "life",
+       "he says",
+       "the",
+       "I",
+       "to him",
+       "I am",
+       "truth",
+       "Jesus",
+       "way",
+       "Pronounce",
+       "Score"
+      ],
+      "expanders": [],
+      "rail": {
+       "count": "13 of 18",
+       "previousDisabled": false,
+       "nextDisabled": false
+      },
+      "overflow": [],
+      "docOverrun": 0,
+      "cardOverrun": 0,
+      "structuralOverrun": 0,
+      "overrunPx": 0,
+      "docOverflow": false,
+      "topics": [],
+      "states": []
+     },
+     "768": {
+      "label": "rail stop",
+      "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_scripture_memory.png",
+      "heading": "",
       "text": "εἰμι\nand\nlife\nhe says\nthe\nI\nto him\nI am\ntruth\nJesus\nway\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
@@ -19920,47 +19969,6 @@
       "docOverflow": false,
       "topics": [],
       "states": []
-     },
-     "768": {
-      "label": "rail stop",
-      "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_drill_scripture_memory.png",
-      "heading": "",
-      "text": "Ἰησοῦς\nand\nlife\nhe says\nthe\nI\nto him\nI am\ntruth\nJesus\nway\nPronounce\nScore\nPronounce each\n1 of 10",
-      "marked": [],
-      "taps": [
-       "Ἰησοῦς"
-      ],
-      "lists": [],
-      "paras": [],
-      "buttons": [
-       "Ἰησοῦς",
-       "and",
-       "life",
-       "he says",
-       "the",
-       "I",
-       "to him",
-       "I am",
-       "truth",
-       "Jesus",
-       "way",
-       "Pronounce",
-       "Score"
-      ],
-      "expanders": [],
-      "rail": {
-       "count": "13 of 18",
-       "previousDisabled": false,
-       "nextDisabled": false
-      },
-      "overflow": [],
-      "docOverrun": 0,
-      "cardOverrun": 0,
-      "structuralOverrun": 0,
-      "overrunPx": 0,
-      "docOverflow": false,
-      "topics": [],
-      "states": []
      }
     },
     "c3_ex_scripture_speller": {
@@ -19968,7 +19976,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_3/c3_ex_scripture_speller.png",
       "heading": "",
-      "text": "John 14:6a\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "John 14:6a\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -20022,6 +20030,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -20045,7 +20054,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_3/c3_ex_scripture_speller.png",
       "heading": "",
-      "text": "John 14:6a\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "John 14:6a\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -20099,6 +20108,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -27648,11 +27658,11 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_4/c4_drill_greek_noun.png",
       "heading": "",
-      "text": "first be reconciled to your brother\nMat 5:24\nἀδελφός\nἀδελφοί\nἀδελφοῦ\nἀδελφῶν\nἀδελφῷ\nἀδελφοῖς\nἀδελφόν\nἀδελφούς\nἀδελφέ\nἀδελφοί\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 22",
+      "text": "go and tell my brothers to go to Galilee\nMat 28:10\nἀδελφός\nἀδελφοί\nἀδελφοῦ\nἀδελφῶν\nἀδελφῷ\nἀδελφοῖς\nἀδελφόν\nἀδελφούς\nἀδελφέ\nἀδελφοί\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 22",
       "marked": [
        {
         "role": "underline",
-        "text": "brother"
+        "text": "brothers"
        }
       ],
       "taps": [],
@@ -27770,11 +27780,11 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_drill_greek_noun.png",
       "heading": "",
-      "text": "first be reconciled to your brother\nMat 5:24\nἀδελφός\nἀδελφοί\nἀδελφοῦ\nἀδελφῶν\nἀδελφῷ\nἀδελφοῖς\nἀδελφόν\nἀδελφούς\nἀδελφέ\nἀδελφοί\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 22",
+      "text": "his mother and his brothers were standing outside\nMat 12:46\nἀδελφός\nἀδελφοί\nἀδελφοῦ\nἀδελφῶν\nἀδελφῷ\nἀδελφοῖς\nἀδελφόν\nἀδελφούς\nἀδελφέ\nἀδελφοί\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 22",
       "marked": [
        {
         "role": "underline",
-        "text": "brother"
+        "text": "brothers"
        }
       ],
       "taps": [],
@@ -27894,15 +27904,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_4/c4_drill_declining.png",
       "heading": "",
-      "text": "ἀδελφοὶ\nMatt 12:46\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 28",
+      "text": "ἀνθρώπων\nJn 1:4\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [
-       "ἀδελφοὶ"
+       "ἀνθρώπων"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἀδελφοὶ",
+       "ἀνθρώπων",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -28015,15 +28025,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_drill_declining.png",
       "heading": "",
-      "text": "λόγοις\nActs 2:40\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 28",
+      "text": "λόγου\nJn 15:20\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 28",
       "marked": [],
       "taps": [
-       "λόγοις"
+       "λόγου"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "λόγοις",
+       "λόγου",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -28138,7 +28148,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_4/c4_ex_noun_speller.png",
       "heading": "",
-      "text": "ENGLISH WORD\nto or by a word\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH WORD\nto or by a word\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -28193,6 +28203,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -28216,7 +28227,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_ex_noun_speller.png",
       "heading": "",
-      "text": "ENGLISH WORD\nto or by a word\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH WORD\nto or by a word\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -28271,6 +28282,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -28471,15 +28483,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "δοῦλος\nI love\nI write\nbut, and\nservant\nI find\ntemple\npeople\nlaw\nhouse\nas, about\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "εὑρίσκω\nI love\nI write\nbut, and\nservant\nI find\ntemple\npeople\nlaw\nhouse\nas, about\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "δοῦλος"
+       "εὑρίσκω"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "δοῦλος",
+       "εὑρίσκω",
        "I love",
        "I write",
        "but, and",
@@ -28514,7 +28526,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_4/c4_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "law\nἀγαπάω\nγράφω\nδέ\nδοῦλος\nεὑρίσκω\nἱερόν\nλαός\nνόμος\nοἶκος\nὡς\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "but, and\nἀγαπάω\nγράφω\nδέ\nδοῦλος\nεὑρίσκω\nἱερόν\nλαός\nνόμος\nοἶκος\nὡς\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -28552,7 +28564,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "people\nἀγαπάω\nγράφω\nδέ\nδοῦλος\nεὑρίσκω\nἱερόν\nλαός\nνόμος\nοἶκος\nὡς\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "I write\nἀγαπάω\nγράφω\nδέ\nδοῦλος\nεὑρίσκω\nἱερόν\nλαός\nνόμος\nοἶκος\nὡς\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -28592,7 +28604,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_4/c4_ex_vocab_speller.png",
       "heading": "",
-      "text": "ENGLISH WORD\nI love\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH WORD\nI love\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -28647,6 +28659,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -28670,7 +28683,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_ex_vocab_speller.png",
       "heading": "",
-      "text": "ENGLISH WORD\nI love\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH WORD\nI love\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -28725,6 +28738,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -28844,15 +28858,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_4/c4_drill_scripture_memory.png",
       "heading": "",
-      "text": "δι᾽\nexcept, but\ncomes\nfather\nthe\nme\nthrough\nno one\nto\nPronounce\nScore\nPronounce each\n1 of 8",
+      "text": "ἐμοῦ\nexcept, but\ncomes\nfather\nthe\nme\nthrough\nno one\nto\nPronounce\nScore\nPronounce each\n1 of 8",
       "marked": [],
       "taps": [
-       "δι᾽"
+       "ἐμοῦ"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "δι᾽",
+       "ἐμοῦ",
        "except, but",
        "comes",
        "father",
@@ -28883,15 +28897,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_drill_scripture_memory.png",
       "heading": "",
-      "text": "εἰ μὴ\nexcept, but\ncomes\nfather\nthe\nme\nthrough\nno one\nto\nPronounce\nScore\nPronounce each\n1 of 8",
+      "text": "πατέρα\nexcept, but\ncomes\nfather\nthe\nme\nthrough\nno one\nto\nPronounce\nScore\nPronounce each\n1 of 8",
       "marked": [],
       "taps": [
-       "εἰ μὴ"
+       "πατέρα"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "εἰ μὴ",
+       "πατέρα",
        "except, but",
        "comes",
        "father",
@@ -28924,7 +28938,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_4/c4_ex_scripture_speller.png",
       "heading": "",
-      "text": "John 14:6b\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "John 14:6b\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -28978,6 +28992,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -29001,7 +29016,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_4/c4_ex_scripture_speller.png",
       "heading": "",
-      "text": "John 14:6b\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "John 14:6b\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -29055,6 +29070,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -32324,7 +32340,7 @@
         "label": "topic 7",
         "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_learn_nouns--topic7.png",
         "heading": "First Declension—Masc",
-        "text": "First Declension—Masc\nFirst Declension—Masculine\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
+        "text": "First Declension—Masc\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
         "marked": [],
         "taps": [
          "προφήτης",
@@ -34230,7 +34246,7 @@
         "label": "topic 7",
         "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_learn_nouns--topic7.png",
         "heading": "First Declension—Masc",
-        "text": "First Declension—Masc\nFirst Declension—Masculine\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
+        "text": "First Declension—Masc\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
         "marked": [],
         "taps": [
          "προφήτης",
@@ -34305,7 +34321,7 @@
         "label": "expander: Meanings",
         "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_learn_nouns--topic7--expander1-meanings.png",
         "heading": "First Declension—Masc",
-        "text": "First Declension—Masc\nFirst Declension—Masculine\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nMeanings: Translation of Inflectional Forms\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nprophet\nπροφῆται\nprophets (subject)\nGen.\nπροφήτου\nof a prophet\nπροφητῶν\nof prophets (possessive)\nDat.\nπροφήτῃ\nto a prophet\nπροφήταις\nto prophets (indirect obj)\nAcc.\nπροφήτην\nprophet\nπροφήτας\nprophets (direct obj)\nVoc.\nπροφῆτα\nprophet\nπροφῆται\nprophets (direct address)\nNominative\n= subject of the sentence\nGenitive\n= possessive usually translated with \"of\"\nDative\n= indirect object usually translated with \"to\"\nAccusative\n= direct object of a sentence\nVocative\n= direct address (e.g. O prophet, speak ... )\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
+        "text": "First Declension—Masc\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nMeanings: Translation of Inflectional Forms\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nprophet\nπροφῆται\nprophets (subject)\nGen.\nπροφήτου\nof a prophet\nπροφητῶν\nof prophets (possessive)\nDat.\nπροφήτῃ\nto a prophet\nπροφήταις\nto prophets (indirect obj)\nAcc.\nπροφήτην\nprophet\nπροφήτας\nprophets (direct obj)\nVoc.\nπροφῆτα\nprophet\nπροφῆται\nprophets (direct address)\nNominative\n= subject of the sentence\nGenitive\n= possessive usually translated with \"of\"\nDative\n= indirect object usually translated with \"to\"\nAccusative\n= direct object of a sentence\nVocative\n= direct address (e.g. O prophet, speak ... )\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
         "marked": [],
         "taps": [
          "προφήτης",
@@ -34968,7 +34984,7 @@
         "label": "topic 7",
         "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_learn_nouns--topic7.png",
         "heading": "First Declension—Masc",
-        "text": "First Declension—Masc\nFirst Declension—Masculine\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
+        "text": "First Declension—Masc\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
         "marked": [],
         "taps": [
          "προφήτης",
@@ -36874,7 +36890,7 @@
         "label": "topic 7",
         "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_learn_nouns--topic7.png",
         "heading": "First Declension—Masc",
-        "text": "First Declension—Masc\nFirst Declension—Masculine\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
+        "text": "First Declension—Masc\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
         "marked": [],
         "taps": [
          "προφήτης",
@@ -36949,7 +36965,7 @@
         "label": "expander: Meanings",
         "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_learn_nouns--topic7--expander1-meanings.png",
         "heading": "First Declension—Masc",
-        "text": "First Declension—Masc\nFirst Declension—Masculine\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nMeanings: Translation of Inflectional Forms\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nprophet\nπροφῆται\nprophets (subject)\nGen.\nπροφήτου\nof a prophet\nπροφητῶν\nof prophets (possessive)\nDat.\nπροφήτῃ\nto a prophet\nπροφήταις\nto prophets (indirect obj)\nAcc.\nπροφήτην\nprophet\nπροφήτας\nprophets (direct obj)\nVoc.\nπροφῆτα\nprophet\nπροφῆται\nprophets (direct address)\nNominative\n= subject of the sentence\nGenitive\n= possessive usually translated with \"of\"\nDative\n= indirect object usually translated with \"to\"\nAccusative\n= direct object of a sentence\nVocative\n= direct address (e.g. O prophet, speak ... )\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
+        "text": "First Declension—Masc\nπροφήτης\nprophet\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nπροφῆται\nGen.\nπροφήτου\nπροφητῶν\nDat.\nπροφήτῃ\nπροφήταις\nAcc.\nπροφήτην\nπροφήτας\nVoc.\nπροφῆτα\nπροφῆται\nMeanings\nMeanings: Translation of Inflectional Forms\n \nSINGULAR\nPLURAL\nNom.\nπροφήτης\nprophet\nπροφῆται\nprophets (subject)\nGen.\nπροφήτου\nof a prophet\nπροφητῶν\nof prophets (possessive)\nDat.\nπροφήτῃ\nto a prophet\nπροφήταις\nto prophets (indirect obj)\nAcc.\nπροφήτην\nprophet\nπροφήτας\nprophets (direct obj)\nVoc.\nπροφῆτα\nprophet\nπροφῆται\nprophets (direct address)\nNominative\n= subject of the sentence\nGenitive\n= possessive usually translated with \"of\"\nDative\n= indirect object usually translated with \"to\"\nAccusative\n= direct object of a sentence\nVocative\n= direct address (e.g. O prophet, speak ... )\nSay Whole List\nPrevious Topic\n7 of 7\nNext Topic",
         "marked": [],
         "taps": [
          "προφήτης",
@@ -37028,7 +37044,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_drill_first_decl_noun.png",
       "heading": "",
-      "text": "and the truth will make you free\nJn 8:32\nἀλήθεια\nἀληθείας\nἀληθείᾳ\nἀλήθειαν\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "and he testified to the truth\nJn 5:33\nἀλήθεια\nἀληθείας\nἀληθείᾳ\nἀλήθειαν\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [
        {
         "role": "underline",
@@ -37139,21 +37155,21 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_drill_first_decl_noun.png",
       "heading": "",
-      "text": "and the truth will make you free\nJn 8:32\nἀλήθεια\nἀληθείας\nἀληθείᾳ\nἀλήθειαν\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 20",
+      "text": "the glory of the Lord shone around\nLuk 2:9\nδόξα\nδόξης\nδόξῃ\nδόξαν\nPrevious\nNext\nPronounce\nHint\nScore\nPronounce each\n1 of 20",
       "marked": [
        {
         "role": "underline",
-        "text": "truth"
+        "text": "glory"
        }
       ],
       "taps": [],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἀλήθεια",
-       "ἀληθείας",
-       "ἀληθείᾳ",
-       "ἀλήθειαν",
+       "δόξα",
+       "δόξης",
+       "δόξῃ",
+       "δόξαν",
        "Previous",
        "Next",
        "Pronounce",
@@ -37252,15 +37268,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_drill_declining.png",
       "heading": "",
-      "text": "ὥραις\nJn 12:27\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 25",
+      "text": "ὥρᾳ\nJn 11:9\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 25",
       "marked": [],
       "taps": [
-       "ὥραις"
+       "ὥρᾳ"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ὥραις",
+       "ὥρᾳ",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -37368,15 +37384,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_drill_declining.png",
       "heading": "",
-      "text": "ὥρᾳ\nJn 11:9\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 25",
+      "text": "προφητῶν\nMat 10:41\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nVocative Singular\nVocative Plural\nPrevious\nNext\nPronounce\nHint\nTranslate\nScore\nPronounce each\n1 of 25",
       "marked": [],
       "taps": [
-       "ὥρᾳ"
+       "προφητῶν"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ὥρᾳ",
+       "προφητῶν",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -37486,7 +37502,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_ex_noun_speller.png",
       "heading": "",
-      "text": "ENGLISH WORD\nto an hour\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH WORD\nto an hour\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -37541,6 +37557,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -37564,7 +37581,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_ex_noun_speller.png",
       "heading": "",
-      "text": "ENGLISH WORD\nto an hour\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH WORD\nto an hour\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -37619,6 +37636,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -38328,15 +38346,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_drill_article.png",
       "heading": "",
-      "text": "τῶν\nJn 1:4\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nPrevious\nNext\nPronounce\nHint\nGender\nScore\nPronounce each\n1 of 24",
+      "text": "τοῖς\nJn 2:23\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nPrevious\nNext\nPronounce\nHint\nGender\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [
-       "τῶν"
+       "τοῖς"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "τῶν",
+       "τοῖς",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -38427,15 +38445,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_drill_article.png",
       "heading": "",
-      "text": "τά\nJn 3:19\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nPrevious\nNext\nPronounce\nHint\nGender\nScore\nPronounce each\n1 of 24",
+      "text": "τῷ\nJn 1:10\nNominative Singular\nNominative Plural\nGenitive Singular\nGenitive Plural\nDative Singular\nDative Plural\nAccusative Singular\nAccusative Plural\nPrevious\nNext\nPronounce\nHint\nGender\nScore\nPronounce each\n1 of 24",
       "marked": [],
       "taps": [
-       "τά"
+       "τῷ"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "τά",
+       "τῷ",
        "Nominative Singular",
        "Nominative Plural",
        "Genitive Singular",
@@ -38528,7 +38546,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_ex_article_speller.png",
       "heading": "",
-      "text": "DEFINITE ARTICLE INFLECTION\nacc. sing. masc.\nJn 1:1\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "DEFINITE ARTICLE INFLECTION\nacc. sing. masc.\nJn 1:1\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -38583,6 +38601,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -38606,7 +38625,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_ex_article_speller.png",
       "heading": "",
-      "text": "DEFINITE ARTICLE INFLECTION\nacc. sing. masc.\nJn 1:1\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "DEFINITE ARTICLE INFLECTION\nacc. sing. masc.\nJn 1:1\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -38661,6 +38680,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -38820,15 +38840,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "ἔργον\nlove\ntruth\nsin\nkingdom\nwriting\nI raise up\nassembly\nwork\ndisciple\nhour\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "ἐγείρω\nlove\ntruth\nsin\nkingdom\nwriting\nI raise up\nassembly\nwork\ndisciple\nhour\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "ἔργον"
+       "ἐγείρω"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἔργον",
+       "ἐγείρω",
        "love",
        "truth",
        "sin",
@@ -38861,15 +38881,15 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_drill_vocab_gk_en.png",
       "heading": "",
-      "text": "ἀλήθεια\nlove\ntruth\nsin\nkingdom\nwriting\nI raise up\nassembly\nwork\ndisciple\nhour\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "βασιλεία\nlove\ntruth\nsin\nkingdom\nwriting\nI raise up\nassembly\nwork\ndisciple\nhour\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [
-       "ἀλήθεια"
+       "βασιλεία"
       ],
       "lists": [],
       "paras": [],
       "buttons": [
-       "ἀλήθεια",
+       "βασιλεία",
        "love",
        "truth",
        "sin",
@@ -38942,7 +38962,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_drill_vocab_en_gk.png",
       "heading": "",
-      "text": "sin\nἀγάπη\nἀλήθεια\nἁμαρτία\nβασιλεία\nγραφή\nἐγείρω\nἐκκλησία\nἔργον\nμαθητής\nὥρα\nPronounce\nScore\nPronounce each\n1 of 10",
+      "text": "work\nἀγάπη\nἀλήθεια\nἁμαρτία\nβασιλεία\nγραφή\nἐγείρω\nἐκκλησία\nἔργον\nμαθητής\nὥρα\nPronounce\nScore\nPronounce each\n1 of 10",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -38982,7 +39002,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_ex_vocab_speller.png",
       "heading": "",
-      "text": "ENGLISH WORD\nlove\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH WORD\nlove\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -39037,6 +39057,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -39060,7 +39081,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_ex_vocab_speller.png",
       "heading": "",
-      "text": "ENGLISH WORD\nlove\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "ENGLISH WORD\nlove\nSPELL GREEK WORD\nPronounce\nPrevious\nNext\nCheck Answer\nScore\nGreek Keyboard\nShow Answer\nWith Accents\nPronounce Each Exercise\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -39115,6 +39136,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -39316,7 +39338,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/320/chapt_5/c5_ex_scripture_speller.png",
       "heading": "",
-      "text": "Rom 3:23\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "Rom 3:23\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -39370,6 +39392,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"
@@ -39393,7 +39416,7 @@
       "label": "rail stop",
       "shot": "buildout/screenshots/5e-spec3/768/chapt_5/c5_ex_scripture_speller.png",
       "heading": "",
-      "text": "Rom 3:23\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\nspace\n⌫ Backspace\nClear",
+      "text": "Rom 3:23\nSPELL GREEK\nMajor Hint\nPronounce\nCheck Answer\nGreek Keyboard\nRestart Exercise\nWith Accents\nα\nβ\nγ\nδ\nε\nζ\nη\nθ\nι\nκ\nλ\nμ\nν\nξ\nο\nπ\nρ\nσ\nτ\nυ\nφ\nχ\nψ\nω\nς\n´\n`\n῀\n῾\n᾿\n῎\n῞\n῍\n῝\n῏\n῟\nᾳ\nῃ\nῳ\n,\n·\n.\n;\n᾽\nspace\n⌫ Backspace\nClear",
       "marked": [],
       "taps": [],
       "lists": [],
@@ -39447,6 +39470,7 @@
        "·",
        ".",
        ";",
+       "᾽",
        "space",
        "⌫ Backspace",
        "Clear"

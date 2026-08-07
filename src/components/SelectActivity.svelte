@@ -215,7 +215,16 @@
     // §2.1: the prompt clip on arrival, and only where the data says so. A
     // drill whose ANSWER is the Greek (Greek Verb Drill) is `afterGuess`, and
     // speaking anything here would hand the answer over.
-    if (audioTiming !== 'beforeGuess') return;
+    //
+    // READ FROM THE DATA, NOT FROM THE REACTIVE `audioTiming`. init() runs in
+    // the component's instance body, and Svelte does not evaluate `$:`
+    // declarations until after that body returns — so at first mount
+    // `audioTiming` is still undefined here, this returned early, and the
+    // FIRST item of every beforeGuess drill arrived silent while every item
+    // after it spoke (5E-SPEC3-RESPONSE item 3). Stepping to item 2 worked,
+    // which is exactly why it survived a round of testing: nothing asserted
+    // the clip on ARRIVAL.
+    if ((activity.audioTiming || 'beforeGuess') !== 'beforeGuess') return;
     if (pronounceEach && q && !q.pending && q.promptAudio) play(q.promptAudio);
   }
 

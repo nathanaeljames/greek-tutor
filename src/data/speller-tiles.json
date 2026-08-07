@@ -108,6 +108,11 @@
       "name": "question mark",
       "label": ";",
       "insert": ";"
+    },
+    {
+      "name": "apostrophe",
+      "label": "᾽",
+      "insert": "᾽"
     }
   ],
   "space": {
@@ -116,5 +121,6 @@
     "insert": " "
   },
   "_source": "C1 finalized from speller close-up photo (2026-07-17): tile rows are the 24 lowercase letters, then final sigma + 3 single accents + 2 breathings + 1 combo, then 5 more breathing+accent combos + the 3 iota-subscript composites. Inventory = 25 letters + 11 marks + 3 composites (39 tiles). All six breathing+accent combinations exist (incl. rough+grave and smooth+grave). On-screen arrangement is the app's own; this inventory is the contract. Diacritic 'apply' = combining sequence appended to the previous character, then NFC-normalize.",
-  "_extension_5d": "5D Phase 0 (divergence log D-15, layout A chosen by Nathanael): one added bottom row of 4 punctuation keys + a space bar. The original on-screen keyboard has neither, and the chapter-3 Scripture Memory Spelling Exercise types a 14-word verse; chapter 6's Spell Greek Phrase needs the space too. Punctuation covers the Scripture Memory family through chapter 8 (comma, raised dot, period) plus the Greek question mark. NO CAPITALS and no shift layer: the checking policy folds case under both 'With Accents' settings instead. The question-mark tile inserts U+003B, which is what U+037E normalizes to under NFC. This file is the SHARED contract for every spell surface app-wide; SpellActivity reads it in preference to any inline activity.spellerTiles copy so a chapter cannot fork the keyboard."
+  "_extension_5d": "5D Phase 0 (divergence log D-15, layout A chosen by Nathanael): one added bottom row of punctuation keys + a space bar. The original on-screen keyboard has neither, and the chapter-3 Scripture Memory Spelling Exercise types a 14-word verse; chapter 6's Spell Greek Phrase needs the space too. Punctuation covers the Scripture Memory family through chapter 8 (comma, raised dot, period) plus the Greek question mark. NO CAPITALS and no shift layer: the checking policy folds case under both 'With Accents' settings instead. The question-mark tile inserts U+003B, which is what U+037E normalizes to under NFC. This file is the SHARED contract for every spell surface app-wide; SpellActivity reads it in preference to any inline activity.spellerTiles copy so a chapter cannot fork the keyboard.",
+  "_extension_5e3": "APOSTROPHE tile added (divergence log D-29, Nathanael 2026-08-07). Chapter 2 TEACHES elision by name -- Learn Marks has an 'Apostrophe' topic deriving dia + autou -> di' autou, the Marking Recognition Drill scores 'Apostrophe' as an answer distinct from 'Smooth Breathing' and 'Coronis', and the Quick Review marks chart lists 'Apostrophe: ( U+1FBD ) elided letters'. Chapter 4's Scripture Memory Spelling Exercise then requires the learner to type di' in John 14:6b, and until now no tile could produce it. The original has no apostrophe key either and represents the elision mark as a smooth breathing ON the iota -- it accepts that form and rejects a real apostrophe -- but that is the original working around its own missing key, not Greek: the elision mark is a spacing apostrophe (U+1FBD GREEK KORONIS) and a breathing can only sit on a word-initial vowel or rho. The tile inserts U+1FBD, the form the delivered data and the chapter-2 chart both use. The checker accepts the apostrophe, any of its Unicode spellings, the original's smooth-breathing form, and nothing at all (D-18 punctuation optional), so no learner is punished for typing it the way the original taught them."
 }

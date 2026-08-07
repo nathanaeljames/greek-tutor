@@ -11,7 +11,12 @@
   };
   // Keys that type themselves. Space is here because the whole-verse speller
   // needs word boundaries; the punctuation follows the tiles.
-  export const PUNCT_KEYS = { ' ': ' ', ',': ',', '.': '.', ';': ';' };
+  //
+  // The apostrophe key types U+1FBD GREEK KORONIS, the elision mark, NOT the
+  // ASCII apostrophe it is printed with (D-29). Both are accepted by the
+  // checker, but what lands in the field should be the character the chapter-2
+  // marks chart and the delivered verses actually use.
+  export const PUNCT_KEYS = { ' ': ' ', ',': ',', '.': '.', ';': ';', "'": '᾽' };
 </script>
 
 <script>
@@ -90,7 +95,7 @@
           <div class="kb-cell"><span class="kb-roman">{k}</span><span class="kb-greek greek">{g}</span></div>
         {/each}
       </div>
-      <p class="modal-note">Diacritics: use the mark tiles (they combine onto the previous letter). Space, comma, period and ; type themselves. Enter = Check, Backspace = delete.</p>
+      <p class="modal-note">Diacritics: use the mark tiles (they combine onto the previous letter). Space, comma, period, ; and ' type themselves — ' is the apostrophe that marks an elided letter (δι᾽ ἐμοῦ). Enter = Check, Backspace = delete.</p>
       <div class="modal-actions">
         <!-- svelte-ignore a11y-autofocus -->
         <button class="btn" autofocus on:click={() => (showHelp = false)}>Close</button>

@@ -420,6 +420,9 @@ for (const base of [...PRODUCIBLE]) {
 }
 for (const p of TILES.punctuation || []) PRODUCIBLE.add(p.insert);
 if (TILES.space) PRODUCIBLE.add(TILES.space.insert);
+// The same class answer-check.js may drop. Kept as a non-global regex so
+// `.test()` has no lastIndex to carry between calls.
+const PUNCTUATION = /[.,;:!?'"()\[\]··;᾽’ʼ‘“”«»—–-]/u;
 
 for (const file of files) {
   const data = JSON.parse(readFileSync(join(DATA, file), 'utf8'));
@@ -444,11 +447,24 @@ for (const file of files) {
       // The checker lowercases under both toggle settings (no shift layer),
       // and drops punctuation unless the surface requires it.
       let folded = answer.toLowerCase();
-      if (punctuationOptional) folded = folded.replace(/[.,;:!?'"()\[\]··;᾽’ʼ‘“”«»—–-]/gu, '');
+      if (punctuationOptional) folded = folded.replace(PUNCTUATION, '');
       for (const { segment } of segment_(folded)) {
         const cluster = segment.normalize('NFC');
         if (!PRODUCIBLE.has(cluster)) {
           problems.push(`${path}: "${answer}" needs "${cluster}" (U+${[...cluster].map(c => c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')).join('+')}), which no speller tile can produce.`);
+        }
+      }
+      // AND THE PUNCTUATION ITSELF MUST BE TYPEABLE (5E-SPEC3-PATCH, D-29).
+      // The loop above deletes punctuation before checking, which is right for
+      // "can this answer be entered at all" — D-18 makes it optional — but it
+      // meant `δι᾽` counted as typeable while no tile on the keyboard could
+      // produce the mark. Chapter 2 teaches that mark by name and scores it in
+      // a drill; a learner who has been taught it and then reaches for it must
+      // find a key. Reported separately so the two failures never blur.
+      for (const { segment } of segment_(answer.toLowerCase())) {
+        const cluster = segment.normalize('NFC');
+        if (PUNCTUATION.test(cluster) && !PRODUCIBLE.has(cluster)) {
+          problems.push(`${path}: "${answer}" displays punctuation "${cluster}" (U+${[...cluster].map(c => c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')).join('+')}) that no speller tile can produce. It is optional under D-18, but a learner who tries to type it has no key.`);
         }
       }
     }

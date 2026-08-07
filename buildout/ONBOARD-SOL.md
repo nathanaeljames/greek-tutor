@@ -4,9 +4,14 @@ You (Sol, in Codex) are taking over the implementation seat previously
 held by Claude Code. This document is everything the previous
 implementer knew that is NOT in the individual specs: project law,
 architecture invariants, conventions, and footguns. Read it fully
-before touching the repo. The specs you execute are 5A-SPEC.md (FIRST
-— it is a hard precondition) and 5B-SPEC.md (only after 5A passes its
-device gate, VERIFY-5A.md).
+before touching the repo. You execute the current cohort's *-SPEC#.md
+under buildout process v2: for every spec you produce TWO documents —
+SPEC#-RESULTS-<MODEL>.md (the handoff) and SPEC#-BUILD-<MODEL>.md
+containing (a) the exact git diff, (b) your full thought/tool log,
+(c) wall-clock time. You run in an isolated repo copy; a parallel
+model runs the same spec; a grading chat audits both BUILD diffs and
+may hand the winner an XPATCH#.md to apply (the patch phase updates
+your SPEC#-RESULTS, no BUILD doc).
 
 ## 1. What this is
 
@@ -38,8 +43,8 @@ Protocol rules that are load-bearing:
   scope is out of scope even if you see an improvement. Off-task
   recommendations go in the handoff's notes, not in the diff.
 - Every spec ends with an acceptance checklist. Run it BEFORE writing
-  the handoff; record results in the handoff.
-- HANDOFF-*.md contents: what changed per module, deviations from the
+  RESULTS; record outcomes there.
+- SPEC#-RESULTS contents: what changed per module, deviations from the
   spec with reasons, acceptance results, surprises. Never silently
   absorb a surprise — flag it even if you worked around it.
 - Diagnose-first for repeat failures: if something the spec assumes
@@ -128,6 +133,26 @@ Protocol rules that are load-bearing:
   per-chapter lazy chunks (import.meta.glob) with sync getters over a
   loaded-chapters registry and one async loadChapter(id) awaited at
   the route level. toc.json and intro.json stay static.
+
+## 4b. Typography and interaction contracts (post chapter 2 — binding)
+
+- MARK GEOMETRY IS GENERATED, NEVER HAND-WRITTEN. The bundled Greek
+  face and src/lib/mark-geometry.json are a matched pair produced by
+  scripts/make-greek-font.py and scripts/make-mark-geometry.py; rebuild
+  one and you regenerate the other in the same commit. Hand-tuning an
+  offset is working against the design — if a mark renders wrong, the
+  generator or its inputs are the bug. The old M1-M6 hand rules are
+  SUPERSEDED and survive only as a build-guarded fallback.
+- `npm run check:shapes` is a designed gate, not an obstacle: it fails
+  on unknown block types, bad redMarkCluster indices (past the word,
+  on a markless cluster, or missing a geometry row), and object-form
+  biblist items. Never route around it; a failure means the DATA or a
+  missing renderer is the problem to report.
+- The syllable-division exercise is dividers placed on the word (not
+  numbered gap buttons); the word renders in INK because tapping it
+  places a divider — this is a standing exception to the Greek-tap
+  rule (directive 9), alongside the speller tiles, Phonetic Reading,
+  and the Review Letters Quick Chart.
 
 ## 5. Audio semantics cheat sheet (most-relitigated facts)
 
@@ -226,22 +251,43 @@ against:
   Vary behavior — some WebKit behaviors are device-only observations;
   say so in handoffs rather than claiming Chrome proved them.
 
-## 9. Current task queue (July 2026)
+## 9. Current state (updated 2026-08-06 — cohort 5E, round 3)
 
-1. 5A-SPEC.md — B5 lazy chapter loading. Lands ALONE. Its acceptance
-   checklist is the contract; HANDOFF-5A.md back. Then STOP: Nathanael
-   runs VERIFY-5A.md on device.
-2. 5B-SPEC.md — chapter 2 wiring (chapt-02.json +
-   lexicon-chapt02.json, four new vocabulary pieces, reuse map).
-   Gated on VERIFY-5A passing. HANDOFF-5B.md back, including
-   screenshots of the four topicPages activities.
-3. Chapter 2 data patch will arrive after VERIFY-chapt02 returns from
-   DOSBox — schema-stable; your components should not need changes.
+Chapters 1 through 5 are shipped. Chapters 1 and 2 closed 2026-07-27;
+chapter 3 (cohort 5D) closed 2026-08-03; chapters 4 and 5 (cohort 5E)
+were built in a dual round, Sol winning with an Opus cross-patch, and
+are now in behaviour correction: 5E-SPEC2 landed, and 5E-SPEC3 corrects
+an over-reach in it.
 
-Known cosmetic open items you may see in the wild and should NOT
-chase inside 5A/5B: a storage-counter estimate anomaly (browser
-reporting artifact, documented) and an occasional spurious toast when
-audio plays (bounded, tracked).
+**Read these two before any drill or exercise work. They are canonical
+and they REPLACE DRILL-MATRIX.md, which is deleted:**
+
+- **DRILL-BEHAVIOR-RULES.md** — the ruleset. Audio timing follows the
+  PROMPT LANGUAGE (Greek prompt plays before the guess, English prompt
+  after). There are FOUR advance classes and every correct answer
+  auto-advances, with no exception in any class, activity or chapter.
+- **DRILL-BEHAVIOR-LEDGER.csv** — the per-activity record, from
+  Nathanael's DOSBox pass over all 50 activities in chapters 1-5, and
+  the source `scripts/apply-behavior-matrix.py` reads.
+
+`apply-behavior-matrix.py` MUST run after every `assemble_chNN.py`. It
+stamps `audioTiming`, `answerPolicy.advanceClass`, the Pronounce-Each
+default and Previous/Next presence onto the data, applies the em-dash
+and accent-rule-underline typography rules, and fails loudly if an
+activity has no CONFIRMED ledger row. Without it a regenerated chapter
+silently reverts to whatever its assembler hard-coded.
+
+The hard lesson of cohort 5E, and the reason those documents exist:
+behaviour was inferred from screenshots and feedback strings, and 23 of
+50 rows were wrong. **Never infer behaviour from a feedback string, a
+button's presence, an activity's name, or how the same-named activity
+behaves in another chapter.** If a behaviour is not in the ledger, it
+is not known, and saying so is the correct answer.
+
+Expect new chapters to reuse the existing vocabulary — topicPages,
+greekRows, expander, subheading, divide, placeAccent, optionValues,
+redMarkCluster, paradigm, interlinearVerse, spellVerse, `charts[]` with
+`switch`, `meanings`, `revealButtons` — before inventing anything.
 
 ## 10. When in doubt
 

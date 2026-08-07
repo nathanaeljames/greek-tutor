@@ -1,0 +1,405 @@
+# 5E-SPEC3-PATCH.md — the four device reports from 5E-SPEC3-RESPONSE
+
+Base commit `de9a536` ("phase 5E spec 3 results"). Nothing committed, nothing
+pushed. Items 1-4 are the device report; the addendum at the end is item 5,
+the apostrophe key, added after the 2026-08-07 DOSBox follow-up.
+
+| File | What |
+| --- | --- |
+| `src/app.css` | Item 2. The modal no longer scrolls itself; the overlay scrolls the whole modal. Also removes the keyboard grid's own 50vh scroll. |
+| `src/components/RichContent.svelte` | Item 1. The heading dedup key no longer depends on which dash the typographic pass chose. |
+| `src/components/SelectActivity.svelte` | Item 3. The arrival clip reads its timing from the data, not from a reactive value that does not exist yet. |
+| `src/lib/answer-check.js` | Item 4. A breathing in a position Greek cannot put one is the elision apostrophe, and comes off with the punctuation. |
+| `scripts/ui-behavior.mjs` | The assertion that passed on the broken modal, rewritten; plus new assertions per item. **283 checks.** |
+| `scripts/ui-modals.mjs` | **New.** A modal visual pass at real device heights. |
+| `src/data/speller-tiles.json` | Item 5. The apostrophe tile (D-29), app-wide via the shared D-15 contract. |
+| `src/components/SpellerKeyboard.svelte` | Item 5. The `'` physical key types U+1FBD; the reference popup names it. |
+| `scripts/check-content-shapes.mjs` | Item 5. Build fails if displayed punctuation in a spelling answer has no tile. |
+| `buildout/DIVERGENCE-LOG.md` | D-29. |
+
+---
+
+## Item 2 — the modals, and why the last "fix" made it worse
+
+**You were right that it got worse, and the test that said otherwise was
+mine.** Worth being precise about both halves.
+
+### What shipped
+
+5E-SPEC2 capped `.modal` at `calc(100dvh - 40px)` and gave it
+`overflow-y: auto`. Measured on your exact surface — chapter 5 First Declension
+Hint with Meanings open — at 390×734:
+
+```
+modal height        694px   (capped to the viewport)
+modal content      1175px
+overlay scroll range   0px   ← the overlay had nothing left to scroll
+Close button at     y=1129   ← 435px below the fold, inside the modal
+```
+
+So every pixel of travel lived in a **nested scroll region inside a
+`position: fixed` overlay**, which is the one thing iOS touch scrolling is
+worst at grabbing. "I can barely click on the button" and then "I can't click
+on it at all" is an accurate description of that arrangement getting slightly
+taller. The previous shape (86vh + flex centring) overflowed at both ends
+unscrollably; this one moved the trap inward rather than removing it.
+
+### Why the test passed anyway
+
+The §6.7 check called `close.scrollIntoViewIfNeeded()` and then measured. That
+helper drives **whatever** scroll container the element sits in, including the
+inner one. It proved the button existed somewhere scrollable — never in doubt —
+and said nothing about whether a thumb could reach it. Playwright got there;
+you could not. That is the actual defect in this round, and it is a testing
+defect, not a CSS one.
+
+### The fix
+
+Your sentence is the specification: *"You should be able to scroll until you
+can see the top border and bottom border of the modal popup on any popup in the
+app."* That rules out any inner scroll, so:
+
+- `.modal` gets **no `max-height` and no `overflow`**. It is as tall as its
+  content.
+- `.modal-overlay` is the **single** scroll container. Scrolling it end to end
+  therefore passes both borders — at any viewport height, on any engine, with
+  no `dvh` support required.
+- The overlay's height is pinned to `100dvh` (with a `100vh` fallback) so its
+  bottom edge on iOS is the bottom you can *see*, not the one behind the
+  toolbar. `.app` already pinned itself the same way.
+- Flex + `margin: auto` centring stays and is safe: when the modal is shorter
+  than the overlay it centres; when it is taller the free space is negative,
+  auto margins resolve to zero (CSS Flexbox §8.1) and it falls back to the top,
+  which is the scrollable arrangement. The browser picks between them.
+
+**One more nested scroller found and removed while in there:**
+`.kb-ref .kb-grid` capped the Greek Keyboard reference's tile grid at 50vh with
+its own scroll — the same trap, one tap away from every speller. Gone; the
+overlay scrolls the whole reference card.
+
+### Measured, at your device's real sizes
+
+iPhone 14 is 390×844 CSS px; Safari showing its toolbars leaves about 390×734,
+and with the URL bar expanded about 390×664. All three are now in the harness,
+along with 320×360 and the iPad breakpoint.
+
+| Viewport | modal | overlay scroll | top border | bottom border | Close |
+| --- | --- | --- | --- | --- | --- |
+| 390×844 iPhone 14 | 1175px | 371px | 20 ✓ | 824 / 844 ✓ | 758–802 ✓ |
+| 390×734 toolbars | 1175px | 481px | 20 ✓ | 714 / 734 ✓ | 648–692 ✓ |
+| 390×664 URL bar | 1175px | 551px | 20 ✓ | 644 / 664 ✓ | 578–622 ✓ |
+| 320×360 | 1451px | 1011px | 20 ✓ | 340 / 360 ✓ | 394–438 ✓ |
+| 768×1024 iPad | 1126px | 142px | 20 ✓ | 1004 / 1024 ✓ | 938–982 ✓ |
+
+### The new test
+
+`checkCloseReachable` no longer uses `scrollIntoViewIfNeeded`. It drives
+**only** `overlay.scrollTop` — the one container a finger can grab — and
+asserts your four things: top border on screen at scroll 0, bottom border on
+screen at scroll end, Close fully inside the viewport there, and **zero**
+scrollable elements anywhere under the overlay.
+
+**Negative control**: with the shipped CSS restored, that loop produces **24
+failures**, including the case you hit — `ch4 Greek Noun Hint + Meanings at
+390×844: close 1170..1214, viewport 844`. The old loop reported all 24 as
+passes.
+
+---
+
+## Item 1 — the duplicated heading
+
+Chapter 5's seventh Learn topic is titled `First Declension—Masc`; its chart is
+titled `First Declension—Masculine`. `RichContent` has deduplicated exactly
+this pair since 5E-SPEC1 — **by matching the literal string `--Masc`**.
+
+Then the D2 typographic rule rewrote every displayed `--` as an em dash. The
+two titles stopped keying the same and the heading came back doubled. A
+typographic rule silently disarmed a deduplication rule that was matching on
+the old punctuation, and nothing failed.
+
+The key now folds every dash form, case and spacing before comparing, so it
+cannot be broken again by a decision about punctuation. Your instruction —
+"just keep the title at the top" — is what it does: the topic's own heading
+stays, the chart's is suppressed. Verified in
+`5e-spec3/768/chapt_5/c5_learn_nouns--topic7.png`.
+
+Also added: a sweep over every topic/chart title pair in chapters 1–5 that
+fails if a **second** abbreviation ever appears. Today `masc` is the only one,
+which is what makes a one-word expansion safe.
+
+**Negative control**: with the old key restored, the assertion reports
+`["topic-heading: First Declension—Masc", "pg-title: First Declension—Masculine"]`.
+
+---
+
+## Item 3 — the first word no longer read on arrival
+
+Real bug, and a nasty little one. `SelectActivity.init()` runs in the
+component's instance body. Svelte does not evaluate `$:` declarations until
+**after** that body returns — so when `init()` called `maybePronounce()`, the
+reactive `audioTiming` was still `undefined`, the guard
+`if (audioTiming !== 'beforeGuess') return;` fired, and the first item arrived
+silent. Item 2 onward spoke normally, because by then the reactive pass had
+run.
+
+That "everything after the first one works" shape is exactly why it survived a
+round of testing: every audio assertion in the harness answered an item before
+looking, so none of them ever observed arrival.
+
+`maybePronounce` now reads `activity.audioTiming` from the data directly. All
+16 `beforeGuess` drills in chapters 1–5 are now asserted to speak on arrival
+with **no click and no keystroke**.
+
+**Negative control**: with the reactive read restored, all 16 fail with
+"no clip was created at all".
+
+---
+
+## Item 4 — the free-floating mark, answered
+
+**No, a free-floating breathing is never correct in Koine — and that mark is
+not a breathing.**
+
+`δι᾽ ἐμοῦ` is διά with its final alpha elided before a vowel, and the mark is
+the **elision apostrophe**. Unicode calls it U+1FBD GREEK KORONIS and gives it
+the compatibility decomposition `<space> + U+0313 combining comma above` — it
+is *literally* a smooth breathing drawn over nothing. That is why it looks like
+one, why the original's keyboard let you enter it with the smooth-breathing
+key, and why your instinct that something was off was right.
+
+A real breathing can only sit in three places: on a word's initial vowel, on
+the second vowel of an initial diphthong (`οὐ`, `εἰ`), or on an initial rho
+(`ῥ`). It never floats and it never appears after a consonant-initial word's
+vowel. So on `δι` — a word starting with δ — no breathing is possible at all,
+and what you typed could only ever have meant the apostrophe.
+
+**Your other two observations were also correct:**
+
+- The port draws it slightly *after* the iota because it is its own character
+  with its own advance width; the original's font drew it tucked over the
+  preceding letter. Same character, different metrics.
+- Chapter 3's `Ἰησοῦς` and `Ἐγώ` put the breathing *before* the letter because
+  they are **capitals**. Greek sets a breathing to the upper-left of a capital
+  rather than above it. You guessed that and you were right — it is not the
+  same phenomenon as `δι᾽`.
+
+**How would you type it?** You would not, and now you do not have to. The
+shared keyboard's punctuation row is comma, raised dot, period, question mark —
+no apostrophe — and neither did the original's. So the fix is on the grading
+side, which is what the original was doing all along:
+
+> When punctuation is optional (D-18), a breathing in a position Greek cannot
+> put one in is the elision apostrophe, and comes off with the punctuation.
+
+All three forms are now accepted for `δι᾽`: `δἰ` (your typing), `δι` (nothing
+at all), and `δι᾽` verbatim.
+
+**This can only ever forgive input, never change a correct answer.** Swept all
+**148** delivered spelling answers across chapters 1–5: not one carries a
+breathing in a position this rule would strip. `οὐδεὶς` keeps its psili
+(initial diphthong), `ἐμοῦ` keeps its (initial vowel), `ῥ`-initial words keep
+theirs. And the leniency is asserted to be scoped — a verse stripped of its
+*real* breathings is still rejected.
+
+**Negative control**: without the rule, `δἰ` fails with `feedback bad`.
+
+**On the original being unwinnable** (your chapter-3 note): I did not touch
+that. You said the ported version behaves as you expect there, and the port
+does not clear the slate on a wrong answer, so nothing about chapter 3's
+speller changes here.
+
+---
+
+## Verification
+
+| Harness | Result |
+| --- | --- |
+| `npm run check:shapes` | PASS |
+| `npm run build` | 27 precache entries; one pre-existing A11y warning at `DivideActivity.svelte:368` |
+| `npm run check:lazy-chunk` | PASS |
+| `npm run verify` | green |
+| `ui-behavior.mjs` | **280/280**, three consecutive runs (was 240; +40 for this patch) |
+| `ui-modals.mjs` | **55/55 modal states clean** — 11 surfaces × 5 viewports |
+| `ui-walk.mjs` | 105 stops × 2 widths, 0px overflow, no console errors |
+| offline (throwaway) | 7/7 |
+
+### Visual verification
+
+Two corpora, both regenerated:
+
+- `buildout/screenshots/5e-spec3-modals/` — **110 new PNGs.** Every modal
+  surface at each of the five viewports, captured **twice**: at the top of the
+  overlay's scroll and at the end of it. The pair *is* the evidence for your
+  rule, because the first image must show the top border and the second must
+  show the bottom border and the close control.
+- `buildout/screenshots/5e-spec3/` and `5e-spec3-answered/` — the rail walk and
+  the answered-state captures, re-run against this build.
+
+I looked at the images rather than only the numbers. Specifically:
+`iphone14-844--ch5-first-decl-hint-meanings--1-top.png` (title and top border
+on screen) and `--2-bottom.png` (Close fully visible with the modal's bottom
+border below it) — the exact modal in your second screenshot;
+`short-320x360--ch5-first-decl-hint-meanings--2-bottom.png` for the cruel case;
+and `5e-spec3/768/chapt_5/c5_learn_nouns--topic7.png` for item 1's single
+heading.
+
+### On "did you not visually verify this"
+
+Partly. Last round's walk photographed 474 rail stops and this round's harness
+photographed 37 answered drills — but **no image in any corpus had ever shown a
+modal**, so the one surface the round was supposed to fix was the one surface
+nobody looked at. That is what `ui-modals.mjs` exists to prevent, and why it
+captures both scroll ends rather than one representative shot. It also carries
+the same refuse-to-overwrite guard as `ui-walk.mjs`.
+
+---
+
+## Not touched
+
+Concurrent edits of yours are in the working tree and I left all of them alone:
+`buildout/DRILL-BEHAVIOR-LEDGER.csv` renamed to `DRILLBEHAVIORLEDGER.csv`, plus
+new `GRADER-PROMPT.md`, `PROJECT.md`, `scripts/transcode_audio.py` and a
+modified `ONBOARD-SOL.md`.
+
+One consequence worth flagging rather than fixing: `apply-behavior-matrix.py`
+takes the ledger path as an argument so it still runs, but the invocation
+recorded in its own docstring and in 5E-SPEC3-BUILD §5 names the old filename.
+Say the word and I will update the references.
+
+---
+
+# Addendum — item 5: the apostrophe key (D-29)
+
+Added 2026-08-07, after your DOSBox follow-up. Base for this addendum is the
+same working tree; `speller-tiles.json`, `SpellerKeyboard.svelte`,
+`check-content-shapes.mjs`, `ui-behavior.mjs` and `DIVERGENCE-LOG.md` changed.
+
+## Your understanding, confirmed — with one correction
+
+You wrote that the original *"seems to represent it as a breathing mark, depict
+it as a breathing mark above the iota, and accept it as a smooth breathing mark
+above the iota even while it actually rejects an apostrophe."*
+
+**Confirmed on all four counts**, and your two DOSBox screenshots are what
+confirm the last one: `δι'` typed with a real apostrophe returns
+*"The word you missed was: 8"* — word 8 is `δι᾽` — while the smooth-breathing
+form is accepted. Combined with the Major Hint drawing the mark *over* the
+iota, the original is representing and comparing this as a combining breathing.
+
+**The one correction**: I cannot tell from outside whether the original stores
+a combining breathing, or simply has no notion of the apostrophe character at
+all and rejects it as unknown input. Both explain the screenshots. The
+distinction does not change anything we do, but it is the difference between
+"the original models elision as a breathing" and "the original cannot represent
+elision at all", and I do not want to assert the first when the evidence
+supports either.
+
+What is not in doubt: **a free-floating breathing is not legal Greek**, and the
+original renders and grades one anyway. So it is working around its own missing
+key, and the port should not inherit the workaround as though it were the
+language.
+
+## Also confirmed: the Iesous exercise is fine
+
+Your first screenshot ends in *"Yes! that's right"*. The earlier failure was
+the `η`→`ε` substitution in `Ιεσους`, exactly as I guessed — nothing to do with
+breathings, and the capitals fold as they should. Nothing was changed for it.
+
+## What the curriculum already says — the real argument for the key
+
+This is the part that decided it, and it is stronger than anything I said
+yesterday. **Chapter 2 teaches elision by name, three times:**
+
+- **Learn Marks → topic "Apostrophe"**: *"Greek also uses an apostrophe to mark
+  the missing letter(s). The final letter of a preposition, if it is a vowel,
+  is dropped when it precedes a word that begins with a vowel"*, deriving
+  `διά + αὐτοῦ` → `δι᾽ αὐτοῦ`, with the note *"the 'a' lost is replaced by an
+  apostrophe; Jn 1:3,7 cf. Jn 1:39"*.
+- **Marking Recognition Drill**: two scored items, `δι᾽ αὐτοῦ` and
+  `παρ᾽ αὐτῷ`, whose answer is **"Apostrophe"** — from an option list that
+  *separately* contains **"Smooth Breathing"** and **"Coronis"**.
+- **Quick Review, Marks chart**: *"Apostrophe: ( ᾽ ) elided letters"*.
+
+So the app teaches the mark, then drills the learner on telling it apart from a
+breathing, and then two chapters later asks them to type it with no key for it.
+That is the gap, and it is the app's own gap rather than an inherited one.
+
+## The change
+
+**1. A 40th tile.** `src/data/speller-tiles.json` gains an `apostrophe`
+punctuation tile inserting **U+1FBD GREEK KORONIS** — the character the
+delivered verses and the chapter-2 marks chart both use. Because that file is
+the shared D-15 contract, the key appears on **every** spell surface in the app
+at once and on the Greek Keyboard reference; no chapter can have a different
+keyboard. The punctuation row is now `, · . ; ᾽` + space.
+
+**2. The physical key.** `PUNCT_KEYS` maps `'` to U+1FBD — so the desktop
+apostrophe key types the Greek elision mark, not the ASCII one. Both are
+accepted, but what lands in the field should be the character the data uses.
+
+**3. Grading accepts all three forms**, deliberately:
+
+| Typed | Accepted | Why |
+| --- | --- | --- |
+| `δι᾽` — the new tile | ✓ | the correct character |
+| `δι’` (U+2019) / `δι'` (U+0027) / U+02BC | ✓ | every Unicode spelling of the apostrophe |
+| `δἰ` — smooth breathing on the iota | ✓ | **the original's own form**, so the habit it taught is never punished |
+| `δι` — nothing at all | ✓ | punctuation is optional (D-18) |
+
+The breathing leniency stays exactly as scoped as before: a breathing in a
+position Greek *can* put one is still required. `οὐδεὶς`, `ἐμοῦ` and `ῥ`-initial
+words are unaffected, and a verse stripped of its real breathings is still
+rejected — asserted.
+
+**4. A build guard so this cannot recur.** `check:shapes` previously deleted
+punctuation before asking "is this answer typeable", which is right for
+*whether the answer can be entered* (D-18 makes it optional) but meant `δι᾽`
+counted as typeable while no key could produce the mark. It now *also* fails
+when displayed punctuation in a spelling answer has no tile:
+
+```
+FAIL: chapt-04.json.exercise[2]: "δι᾽" displays punctuation "᾽" (U+1FBD) that
+no speller tile can produce. It is optional under D-18, but a learner who
+tries to type it has no key.
+```
+
+That is a negative control: removing the tile reproduces it exactly.
+
+**5. `DIVERGENCE-LOG.md` D-29** records the 40th tile as a deliberate departure
+from the original's inventory, with the chapter-2 teaching as its justification
+and the original's breathing workaround described rather than copied.
+
+## Verification
+
+| | |
+| --- | --- |
+| `ui-behavior.mjs` | **283/283** (was 280; +3 for this item) |
+| `npm run verify` | green, including the new punctuation guard |
+| `ui-modals.mjs` | 55/55 — the keyboard reference grew a tile and still scrolls to both borders at all five viewports |
+| `ui-walk.mjs` | 105 stops × 2 widths, 0px overflow, no console errors |
+| offline | 7/7 |
+
+The John 14:6b verse is now typed **verbatim** in the harness — apostrophe and
+all — through the real tiles. That test could not be written before today: it
+threw `no punctuation tile inserts "᾽"`, which was the defect stated as a stack
+trace. The smooth-breathing form is now the fallback case rather than the only
+one.
+
+Visual: `buildout/screenshots/5e-spec3-answered/39-d29-apostrophe-tile.png`
+shows the new key in the punctuation row with `δι᾽ ` typed into the field
+entirely by tapping tiles.
+
+## One thing worth your eye
+
+The apostrophe tile and the smooth-breathing tile look nearly identical on
+screen — they are the same comma-above shape, which is precisely why the
+original conflated them. They sit in different rows (marks vs punctuation) and
+the tile carries an `apostrophe` tooltip, and the Greek Keyboard reference now
+says *"' is the apostrophe that marks an elided letter (δι᾽ ἐμοῦ)"*. If that
+still reads as ambiguous on device, the cheap fix is a distinct label on the
+punctuation tile rather than the bare glyph — say the word.
+
+Chapter 1 ships an inline `spellerTiles` fallback that predates the 5D
+punctuation row entirely (it has no punctuation or space keys at all), so it
+was left alone: the shared contract always wins, and adding one key to a
+fallback that is already three keys behind would only look like it was current.

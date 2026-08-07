@@ -1460,34 +1460,77 @@ for (const [label, chapterId, activityId, open] of [
 }
 
 // ------------------------------------------------- §6.7 modals reach Close
-// A close control counts as reachable only if it can be brought FULLY inside
-// the viewport. Checked at 320px wide and at two heights: 480 (a phone) and
-// 360 (short enough that a Hint with its Meanings table expanded overflows the
-// cap and the scroll path has to work).
+// REWRITTEN after 5E-SPEC3-RESPONSE item 2, because the previous version of
+// this loop PASSED on a modal Nathanael could not close on an iPhone 14.
 //
-// HONEST LIMIT, recorded here rather than in a handoff nobody reads next to
-// the test: the reported failure is a WebKit one. It needs a VISUAL viewport
-// shorter than 100vh -- iOS Safari with its toolbar showing -- and Chrome has
-// no such split, so this loop would have passed before the fix as well. What
-// it guards is the regression; the structural assertion below is what encodes
-// the actual fix, and the device pass is what confirms it (VERIFY-5E2).
-const MODAL_HEIGHTS = [480, 360];
+// It called `close.scrollIntoViewIfNeeded()` and then measured. That helper
+// drives whatever scroll container the element happens to sit in, including
+// the modal's own inner one — so it proved the button existed somewhere
+// scrollable, which was never in doubt, and said nothing about whether a
+// finger could get there. The modal capped itself to the viewport, the overlay
+// therefore had nothing left to scroll, and every pixel of travel lived in a
+// nested scroll region inside a position:fixed overlay. Playwright reached it;
+// a thumb on iOS did not.
+//
+// What is asserted now is his own sentence: "You should be able to scroll
+// until you can see the top border and bottom border of the modal popup on any
+// popup in the app." So, driving ONLY the overlay's scrollTop — the one
+// container a user can actually grab:
+//   * the modal's TOP border is on screen at the top of the scroll range,
+//   * its BOTTOM border is on screen at the end of it,
+//   * Close is fully inside the viewport there,
+//   * and the modal has NO inner scroll of its own to hide travel in.
+//
+// Heights are real ones. iPhone 14 is 390x844 CSS; Safari showing its toolbars
+// leaves about 390x734, and with the URL bar expanded about 390x664. 320x360
+// stays as the cruel case. Nothing here needs a WebKit-only visual viewport
+// any more: the failure is now reproducible in Chrome at any of them.
+const MODAL_VIEWPORTS = [
+  { width: 390, height: 844, name: 'iPhone 14' },
+  { width: 390, height: 664, name: 'iPhone 14, toolbars' },
+  { width: 320, height: 360, name: 'short 320' }
+];
 async function checkCloseReachable(label, open) {
-  for (const height of MODAL_HEIGHTS) {
-    await page.setViewportSize({ width: 320, height });
+  for (const { width, height, name } of MODAL_VIEWPORTS) {
+    await page.setViewportSize({ width, height });
     await open();
     const close = page.locator('.modal .modal-actions .btn', { hasText: 'Close' }).first();
-    const present = await close.count() === 1;
-    let inside = false;
-    let box = null;
-    if (present) {
-      await close.scrollIntoViewIfNeeded();
-      await page.waitForTimeout(80);
-      box = await close.boundingBox();
-      inside = !!box && box.y >= 0 && box.y + box.height <= height && box.x >= 0 && box.x + box.width <= 320;
+    if (await close.count() !== 1) {
+      check(`5E §6.7 ${label}: both modal borders and Close are reachable at ${width}x${height} (${name})`,
+        false, 'no close button found');
+      continue;
     }
-    check(`5E §6.7 ${label}: the close control is reachable at 320x${height}`, present && inside,
-      box ? `close box ${JSON.stringify(box)}` : 'no close button found');
+    const seen = await page.evaluate(() => {
+      const overlay = document.querySelector('.modal-overlay');
+      const modal = overlay.querySelector('.modal');
+      const closeBtn = [...modal.querySelectorAll('.modal-actions .btn')]
+        .find(b => /close/i.test(b.textContent));
+      const box = el => { const r = el.getBoundingClientRect(); return { top: r.top, bottom: r.bottom }; };
+      overlay.scrollTop = 0;
+      const atTop = box(modal);
+      overlay.scrollTop = overlay.scrollHeight;
+      const atEnd = { modal: box(modal), close: box(closeBtn) };
+      // NOTHING under the overlay may scroll except the overlay. A nested
+      // scroll region anywhere inside is the defect, whether it is on .modal
+      // itself or on a grid three levels down (.kb-ref .kb-grid was).
+      const nested = [...overlay.querySelectorAll('*')].filter(el => {
+        const s = getComputedStyle(el);
+        return /auto|scroll/.test(s.overflowY) && el.scrollHeight > el.clientHeight + 1;
+      }).map(el => el.className || el.tagName);
+      return {
+        vh: window.innerHeight,
+        topBorder: Math.round(atTop.top),
+        bottomBorder: Math.round(atEnd.modal.bottom),
+        close: { top: Math.round(atEnd.close.top), bottom: Math.round(atEnd.close.bottom) },
+        nested
+      };
+    });
+    const topReachable = seen.topBorder >= 0 && seen.topBorder < seen.vh;
+    const bottomReachable = seen.bottomBorder > 0 && seen.bottomBorder <= seen.vh;
+    const closeReachable = seen.close.top >= 0 && seen.close.bottom <= seen.vh;
+    check(`5E §6.7 ${label}: both modal borders and Close are reachable at ${width}x${height} (${name})`,
+      topReachable && bottomReachable && closeReachable && seen.nested.length === 0,
+      `top border ${seen.topBorder}, bottom border ${seen.bottomBorder}, close ${seen.close.top}..${seen.close.bottom}, viewport ${seen.vh}, nested scrollers ${JSON.stringify(seen.nested)}`);
   }
   await page.setViewportSize({ width: 390, height: 900 });
 }
@@ -1532,52 +1575,218 @@ await checkCloseReachable('ch5 whole-verse speller Greek Keyboard reference', as
   await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();
   await page.waitForTimeout(100);
 });
-// THE STRUCTURAL HALF OF D3, which is what actually fixes WebKit and what a
-// future edit is most likely to undo by accident:
-//   * the OVERLAY scrolls. A flex-centred item that overflows its container
-//     overflows equally at BOTH ends and cannot be scrolled to; auto margins
-//     centre the same way and leave the overflow scrollable.
-//   * the modal's height cap is expressed against the VISIBLE viewport (dvh),
-//     not the largest-possible one (vh), so an iOS toolbar cannot push the
-//     bottom of the dialog past the bottom of the screen.
+// THE STRUCTURAL HALF OF D3 — the shape a future edit is most likely to undo
+// by accident, and the shape that was WRONG in what shipped. There is exactly
+// one scroll container for a modal and it is the overlay. The modal takes no
+// height cap and no overflow of its own; if it ever does, the overlay's scroll
+// range collapses to zero again and the borders stop being reachable, which is
+// the defect this replaces.
 {
-  await page.setViewportSize({ width: 320, height: 480 });
+  await page.setViewportSize({ width: 320, height: 360 });
   await go('#/activity/chapt_4/c4_drill_greek_noun');
   await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
-  await page.waitForTimeout(100);
+  await page.waitForTimeout(120);
   const shape = await page.locator('.modal-overlay').evaluate(el => {
     const overlay = getComputedStyle(el);
-    const modal = getComputedStyle(el.querySelector('.modal'));
+    const modalEl = el.querySelector('.modal');
+    const modal = getComputedStyle(modalEl);
     return {
       overlayOverflowY: overlay.overflowY,
-      overlayAlignItems: overlay.alignItems,
+      overlayScrollRange: el.scrollHeight - el.clientHeight,
       modalOverflowY: modal.overflowY,
       modalMaxHeight: modal.maxHeight,
-      viewport: el.clientHeight
+      nested: [...el.querySelectorAll('*')].filter(node => {
+        const s = getComputedStyle(node);
+        return /auto|scroll/.test(s.overflowY) && node.scrollHeight > node.clientHeight + 1;
+      }).map(node => node.className || node.tagName)
     };
   });
-  const capped = Math.abs(parseFloat(shape.modalMaxHeight) - (480 - 40)) < 1.5;
-  check('5E §6.7 the modal overlay scrolls and the modal is capped to the visible viewport',
-    /auto|scroll/.test(shape.overlayOverflowY) && shape.overlayAlignItems !== 'center'
-      && /auto|scroll/.test(shape.modalOverflowY) && capped,
+  check('5E §6.7 the overlay is the ONLY scroll container: the modal has no cap and nothing under it scrolls',
+    /auto|scroll/.test(shape.overlayOverflowY) && shape.overlayScrollRange > 0
+      && shape.modalMaxHeight === 'none' && !/auto|scroll/.test(shape.modalOverflowY)
+      && shape.nested.length === 0,
     JSON.stringify(shape));
   await page.setViewportSize({ width: 390, height: 900 });
 }
 
 // The end-of-chapter dialog has no "Close" button by name; its escape actions
-// are the ones that must be reachable.
-{
-  await page.setViewportSize({ width: 320, height: 480 });
+// are the ones that must be reachable. Driven through the OVERLAY's scroll for
+// the same reason as above.
+for (const { width, height, name } of MODAL_VIEWPORTS) {
+  await page.setViewportSize({ width, height });
   const last = ch1.sequence[ch1.sequence.length - 1];
   await go(`#/activity/chapt_1/${last}`);
   await page.locator('.rail-next').click();
   await page.waitForTimeout(150);
-  const stay = page.locator('.modal .modal-actions .btn', { hasText: 'Stay' }).first();
-  await stay.scrollIntoViewIfNeeded();
-  const box = await stay.boundingBox();
-  check('5E §6.7 end-of-chapter dialog: its last action is reachable at 320x480',
-    !!box && box.y >= 0 && box.y + box.height <= 480, JSON.stringify(box));
-  await page.setViewportSize({ width: 390, height: 900 });
+  const seen = await page.evaluate(() => {
+    const overlay = document.querySelector('.modal-overlay');
+    const stay = [...overlay.querySelectorAll('.modal-actions .btn')].find(b => /stay/i.test(b.textContent));
+    overlay.scrollTop = overlay.scrollHeight;
+    const r = stay.getBoundingClientRect();
+    return { top: Math.round(r.top), bottom: Math.round(r.bottom), vh: window.innerHeight };
+  });
+  check(`5E §6.7 end-of-chapter dialog: its last action is reachable at ${width}x${height} (${name})`,
+    seen.top >= 0 && seen.bottom <= seen.vh, JSON.stringify(seen));
+}
+await page.setViewportSize({ width: 390, height: 900 });
+
+// =========================================== 5E-SPEC3-RESPONSE items 1, 3, 4
+// Three device-reported defects, each with the assertion that would have
+// caught it. All three had shipped through a round of testing because nothing
+// looked at the state they lived in.
+
+// ---- item 1: one heading, not two --------------------------------------
+// Chapter 5's seventh Learn topic is titled "First Declension—Masc" and its
+// chart is titled "First Declension—Masculine". RichContent has deduplicated
+// those since 5E-SPEC1 — but by matching the literal `--Masc`, so the moment
+// the D2 rule rewrote the double hyphen as an em dash the two titles stopped
+// keying the same and the heading came back doubled. A dedup key must not
+// depend on which dash the typographic pass last chose.
+{
+  await go('#/activity/chapt_5/c5_learn_nouns');
+  await gotoTopic(6);
+  // Every leaf element on the card whose whole text is a "First Declension"
+  // heading — the topic's own `.topic-heading` and the chart's `.pg-title`,
+  // which is the pair that was rendering stacked.
+  const headings = await page.evaluate(() => [...document.querySelectorAll('.card *')]
+    .filter(el => el.children.length === 0 && /^\s*First Declension/i.test(el.textContent))
+    .map(el => `${el.className}: ${el.textContent.trim()}`));
+  check('5E-R1 ch5 Learn Greek Nouns / First Declension—Masc prints ONE heading, not two',
+    headings.length === 1, JSON.stringify(headings));
+}
+// ...and the data sweep that established "masc" is the only abbreviation the
+// key has to know about. A second one would silently double a heading again.
+{
+  const ABBREVIATIONS = /\b(masc|fem|neut|sing|plur|pl|nom|gen|dat|acc|voc)\b/i;
+  const mismatches = [];
+  for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+    for (const activity of activitiesOf(chapter)) {
+      for (const topic of (activity && activity.topics) || []) {
+        for (const block of topic.content || []) {
+          const titles = [block.title, ...((block.charts || []).map(c => c.title))].filter(Boolean);
+          for (const title of titles) {
+            if (topic.title && normalizeText(title) !== normalizeText(topic.title)) {
+              mismatches.push(`${chapterId} ${JSON.stringify(topic.title)} vs ${JSON.stringify(title)}`);
+            }
+          }
+        }
+      }
+    }
+  }
+  // Every mismatch must be an abbreviation of the same heading, and the only
+  // one the renderer's key expands is "masc".
+  const unhandled = mismatches.filter(m => !/masc/i.test(m) || !ABBREVIATIONS.test(m));
+  check('5E-R1 the only topic/chart title mismatch in chapters 1-5 is the one the dedup key handles',
+    unhandled.length === 0, mismatches.length ? mismatches.join('; ') : 'no mismatches at all');
+}
+
+// ---- item 3: the beforeGuess clip speaks on ARRIVAL ----------------------
+// "the initial word no longer reads upon initial activity load." It did not:
+// init() runs in the component's instance body, before Svelte evaluates any
+// `$:` declaration, so the reactive `audioTiming` was undefined at that moment
+// and the arrival branch returned early. Item 2 onwards spoke normally, which
+// is exactly why it survived — every existing audio assertion answered an item
+// first. This one asserts the clip on the FIRST item of every beforeGuess
+// drill in chapters 1-5, having touched nothing.
+{
+  const beforeGuess = [];
+  for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+    for (const activity of activitiesOf(chapter)) {
+      if (activity && activity.type === 'select' && activity.audioTiming === 'beforeGuess') {
+        beforeGuess.push([chapterId, activity.id]);
+      }
+    }
+  }
+  check('5E-R3 chapters 1-5 ship beforeGuess drills to test', beforeGuess.length >= 10, `${beforeGuess.length} found`);
+  for (const [chapterId, activityId] of beforeGuess) {
+    await page.evaluate(() => { window.__clips.length = 0; });
+    await go(`#/activity/${chapterId}/${activityId}`);
+    // No click, no keystroke: this is arrival and nothing else.
+    await page.waitForTimeout(900);
+    const spoke = await clips();
+    check(`5E-R3 ${chapterId} ${activityId}: the first item speaks on arrival, with no interaction`,
+      spoke.length >= 1 && !!spoke[0].startedAt,
+      spoke.length ? JSON.stringify(spoke[0]) : 'no clip was created at all');
+  }
+}
+
+// ---- item 4: the elision apostrophe -------------------------------------
+// `δι᾽ ἐμοῦ` (John 14:6b). The mark after the iota is not a breathing, it is
+// the elision apostrophe — and as of D-29 the keyboard has a key for it.
+// Chapter 2 teaches the mark by name and scores it in the Marking Recognition
+// Drill as an answer distinct from "Smooth Breathing"; chapter 4 then asks the
+// learner to type it. All three ways of entering it are accepted here: the
+// apostrophe itself, the smooth breathing the ORIGINAL represents it with, and
+// nothing at all (D-18). Typed through the real keyboard in every case.
+{
+  const activity = activityById(ch4, 'c4_ex_scripture_speller');
+  const strip = s => s.normalize('NFD').replace(/[̀́͂]/gu, '').normalize('NFC');
+  const words = (activity.answerWords || []).map(w => strip(w).replace(/\.$/, ''));
+  const elided = words.findIndex(w => /δι/.test(w));
+  check('5E-R4 ch4 John 14:6b carries the elided δι᾽ this is about', elided >= 0, JSON.stringify(words));
+
+  // (0) THE APOSTROPHE HAS A KEY. Chapter 2 taught this mark and scored it in
+  // a drill; until this round no tile could produce it.
+  {
+    const tile = (TILES.punctuation || []).find(t => t.name === 'apostrophe');
+    check('5E-R4 the shared keyboard has an apostrophe tile that inserts U+1FBD',
+      !!tile && tile.insert === '᾽', JSON.stringify(tile));
+    await go('#/activity/chapt_4/c4_ex_scripture_speller');
+    const onScreen = await page.locator('.tk-key.punct[title="apostrophe"]').count();
+    await page.locator('.tk-key.punct[title="apostrophe"]').first().click();
+    await page.waitForTimeout(150);
+    check('5E-R4 tapping it puts the elision mark in the field as its own character',
+      onScreen === 1 && (await typed()).normalize('NFC') === '᾽',
+      `tile count ${onScreen}, field ${JSON.stringify(await typed())}`);
+  }
+
+  // (a) THE VERSE TYPED VERBATIM, elision mark and all, through the tiles.
+  // Before D-29 this line could not be written: typeAccented threw
+  // `no punctuation tile inserts "᾽"`, which is the defect stated as a stack
+  // trace. It is the primary case now; the breathing form below is the fallback.
+  await go('#/activity/chapt_4/c4_ex_scripture_speller');
+  await setAccents(false);
+  await typeAccented(words.join(' '));
+  const verbatimTyped = await typed();
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(250);
+  const verbatim = await feedbackKind();
+  await shot('R4 elision typed with the new apostrophe tile');
+  check('5E-R4 the verse typed VERBATIM with the apostrophe tile is accepted',
+    verbatim === 'ok' && verbatimTyped.includes('᾽'),
+    `feedback ${verbatim} for ${JSON.stringify(verbatimTyped)}`);
+
+  // (b) with the elision mark typed as a smooth breathing — the way the
+  // ORIGINAL represents it, and the way Nathanael typed it. Still accepted, so
+  // nobody is punished for the habit the original taught them.
+  await go('#/activity/chapt_4/c4_ex_scripture_speller');
+  await setAccents(false);
+  await typeAccented(words.map(w => (/δι/.test(w) ? 'δἰ'.normalize('NFC') : w)).join(' '));
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(250);
+  const withBreathing = await feedbackKind();
+  await shot('R4 elision typed as a smooth breathing');
+  check("5E-R4 δι + smooth breathing is still accepted for δι᾽ (the original's own form)",
+    withBreathing === 'ok', `feedback ${withBreathing} for ${JSON.stringify(await typed())}`);
+
+  // (c) with no mark at all — punctuation is optional (D-18).
+  await go('#/activity/chapt_4/c4_ex_scripture_speller');
+  await setAccents(false);
+  await typeAccented(stripElision(words.join(' ')));
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(250);
+  check('5E-R4 δι with no elision mark is also accepted (D-18)',
+    await feedbackKind() === 'ok', `feedback ${await feedbackKind()}`);
+
+  // (c) and the leniency is SCOPED: a breathing is still required where Greek
+  // actually puts one, so this cannot be "the checker stopped caring".
+  await go('#/activity/chapt_4/c4_ex_scripture_speller');
+  await setAccents(false);
+  await typeAccented(stripElision(words.map(w => stripAllMarks(w)).join(' ')));
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(250);
+  check('5E-R4 a verse stripped of its real breathings is still REJECTED',
+    await feedbackKind() === 'bad', `feedback ${await feedbackKind()}`);
 }
 
 // ------------------------------------------------------ §6.8 option grids

@@ -29,9 +29,22 @@
   // edit, so the renderer declines to say it twice.
   export let suppressTitle = null;
   // One delivered topic abbreviates Masculine to Masc while its chart spells
-  // the word out. They are the same heading in the original, not two stacked
+  // the word out ("First Declension—Masc" over "First Declension—Masculine",
+  // chapter 5). They are the same heading in the original, not two stacked
   // headings; normalize the authored abbreviation for deduplication only.
-  const titleKey = t => String(t || '').trim().replace(/--Masc$/i, '--Masculine');
+  //
+  // This key used to match the literal `--Masc`, and the D2 em-dash rule
+  // silently broke it: once the stamper rewrote `--` as `—` the two titles no
+  // longer keyed the same and the heading came back doubled (5E-SPEC3-RESPONSE
+  // item 1). A dedup key must not depend on which dash the typographic pass
+  // last decided on, so every dash form folds to one and case and spacing fold
+  // with it. `masc` is the only abbreviation any delivered title uses; the
+  // sweep that established that is in ui-behavior.mjs, which now fails if a
+  // second one appears.
+  const titleKey = t => String(t || '').trim().toLowerCase()
+    .replace(/—|–|--/g, '-')
+    .replace(/\s+/g, ' ')
+    .replace(/\bmasc\b/, 'masculine');
   const sameTitle = t => !!t && !!suppressTitle && titleKey(t) === titleKey(suppressTitle);
 
   // The 6 Accent Rules topic ships the "Chart: Accent Possibilities" expander

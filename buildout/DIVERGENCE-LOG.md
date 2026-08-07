@@ -152,6 +152,27 @@ D-28 | app | EVERY CORRECT ANSWER AUTO-ADVANCES, overriding the
      correct and stop rather than driving the sequential rail.
      | Nathanael, 2026-08-06; DRILL-BEHAVIOR-RULES B1a/B1b;
      5E-SPEC3 §1.
+D-29 | app | THE SHARED KEYBOARD GAINS AN APOSTROPHE TILE (U+1FBD
+     GREEK KORONIS), a 40th tile the original's keyboard does not
+     have. Chapter 2 TEACHES elision by name: Learn Marks has an
+     "Apostrophe" topic deriving διά + αὐτοῦ -> δι᾽ αὐτοῦ, the
+     Marking Recognition Drill scores "Apostrophe" as an answer
+     distinct from "Smooth Breathing" and "Coronis", and the Quick
+     Review marks chart lists "Apostrophe: ( ᾽ ) elided letters".
+     Chapter 4's Scripture Memory Spelling Exercise then requires the
+     learner to type δι᾽ in John 14:6b, and no tile could produce it.
+     The ORIGINAL has no apostrophe key either and works around its
+     own gap: it represents the elision mark as a smooth breathing ON
+     the iota, draws it that way in the Major Hint, accepts that form,
+     and REJECTS a real apostrophe (DOSBox, Nathanael 2026-08-07).
+     That is the original's workaround, not Greek — the elision mark
+     is a spacing apostrophe and a breathing can only sit on a
+     word-initial vowel or rho. So the port adds the key and the
+     checker accepts BOTH forms plus the mark's absence (D-18), so a
+     learner trained on the original's habit is never punished for it.
+     A build guard now fails if any displayed punctuation in a
+     spelling answer has no tile. | Nathanael, 2026-08-07;
+     5E-SPEC3-PATCH item 5.
 
 ## Auto-progress / advance rule matrix
 

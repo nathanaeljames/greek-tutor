@@ -61,6 +61,56 @@ export function stripPunctuation(text) {
 // settings (C5).
 const ACCENTS = /[̀́͂]/gu;   // varia, oxia, perispomeni
 
+// ---- THE ELISION MARK, AND WHY IT LOOKS LIKE A BREATHING -------------------
+// `δι᾽ ἐμοῦ` (John 14:6b). That mark after the iota is NOT a breathing: it is
+// the elision apostrophe, standing where διά lost its final alpha. Unicode
+// calls it U+1FBD GREEK KORONIS and gives it the compatibility decomposition
+// <space> + U+0313 — it is literally a smooth breathing drawn over nothing,
+// which is why it looks like one, and why the original's keyboard (which has
+// no apostrophe key, and neither does ours — D-15) let the learner type it
+// with the smooth-breathing tile.
+//
+// A REAL breathing can only ever sit on a word's initial vowel, on the second
+// vowel of an initial diphthong, or on an initial rho. It never floats and it
+// never appears after a consonant-initial word's vowel. So a breathing outside
+// those positions is not a breathing at all; it is this apostrophe, entered
+// the only way the shared keyboard allows. Punctuation is optional (D-18), so
+// it comes off with the rest of the punctuation.
+//
+// Verified across all 148 delivered spelling answers in chapters 1-5: not one
+// carries a breathing in a position this rule would strip, so it can only ever
+// forgive input and never change a correct answer's key. `οὐδεὶς` keeps its
+// psili (initial diphthong, second vowel), `ἐμοῦ` keeps its (initial vowel),
+// `ῥ`-initial words keep theirs, and `δἰ` becomes `δι` — which is what the
+// answer's own `δι᾽` reduces to once its koronis is stripped as punctuation.
+// (5E-SPEC3-RESPONSE item 4.)
+const BREATHINGS = /[̓̔]/u;      // psili, dasia
+const COMBINING = /\p{M}/u;
+const GREEK_VOWEL = /[αεηιουω]/u;   // lowercased and decomposed by this point
+
+function dropElisionMarks(word) {
+  if (!BREATHINGS.test(word)) return word;
+  const chars = [...word];
+  const bases = chars.filter(ch => !COMBINING.test(ch));
+  // The last base index a breathing may legitimately sit on, or -1 for a word
+  // that cannot carry one at all.
+  let lastLegal = -1;
+  if (bases.length) {
+    if (GREEK_VOWEL.test(bases[0])) {
+      let i = 0;
+      while (i < bases.length && GREEK_VOWEL.test(bases[i])) i += 1;
+      lastLegal = i - 1;                 // the whole initial vowel run
+    } else if (bases[0] === 'ρ') {
+      lastLegal = 0;                     // ῥ-
+    }
+  }
+  let baseIndex = -1;
+  return chars.filter(ch => {
+    if (!COMBINING.test(ch)) { baseIndex += 1; return true; }
+    return !(BREATHINGS.test(ch) && baseIndex > lastLegal);
+  }).join('');
+}
+
 // One comparison key. Two spellings match iff their keys are equal.
 export function spellingKey(text, options) {
   const {
@@ -75,6 +125,8 @@ export function spellingKey(text, options) {
   // together so two spellings that differ only in normalization still match.
   out = out.normalize('NFD');
   if (!withAccents) out = out.replace(ACCENTS, '');
+  // Word by word, because "legitimate position" is a property of a WORD.
+  if (punctuationOptional) out = out.split(' ').map(dropElisionMarks).join(' ');
   return out.normalize('NFC');
 }
 

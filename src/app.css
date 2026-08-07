@@ -311,41 +311,54 @@ button { font: inherit; cursor: pointer; }
 .rail-count { font-weight: 700; color: var(--teal-dark); font-size: 0.95rem; }
 .rail-next-placeholder { min-width: 96px; }
 
-/* ---- MODAL SURFACES (5E-SPEC2 §5.1, rule D3) ----
-   EVERY modal, popup and expander must scroll to its close control at every
-   supported width down to 320px. A close button the user cannot reach is a
-   trap, and this one was reachable in theory and not in practice:
+/* ---- MODAL SURFACES (rule D3, rewritten for 5E-SPEC3-RESPONSE item 2) ----
+   THE MODAL DOES NOT SCROLL. THE OVERLAY SCROLLS THE MODAL.
 
-   the overlay is `position: fixed` and did not scroll, the modal was capped at
-   86vh and CENTERED in it. On any engine where the visual viewport is shorter
-   than 100vh -- iOS Safari with its toolbar showing, which is the target
-   device -- 86vh plus 20px of padding at each end is taller than what the user
-   can see, and a centered flex item that overflows its container overflows
-   EQUALLY at both ends with no way to scroll to either. Opening Meanings
-   inside a chapter 4/5 drill Hint is what made the modal tall enough to prove
-   it.
+   Nathanael, on an iPhone 14: "You should be able to scroll until you can see
+   the top border and bottom border of the modal popup on any popup in the
+   app." That sentence is the whole specification, and it rules out the two
+   arrangements this file has already tried:
 
-   Two changes fix it for every modal at once, which is why they live on the
-   shared classes and not on .hint-modal:
-     * the OVERLAY scrolls (overflow-y: auto) and `margin: auto` on the modal
-       does the centering. Flexbox centering cannot be scrolled past; auto
-       margins centre the same way and still let the scroll container reach
-       both ends.
-     * the cap is dvh-based, so it is the height the device is actually
-       showing rather than the height it would show with the toolbar hidden.
-       The vh line stays first as the fallback for engines without dvh. */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45);
+     * 86vh + flex centering (pre-5E-SPEC2). A centered flex item taller than
+       its container overflows EQUALLY at both ends with no way to scroll to
+       either.
+     * a dvh cap + `overflow-y: auto` ON THE MODAL (5E-SPEC2 §5.1). This is
+       what shipped and what he reported as WORSE. The modal sizes itself to
+       the viewport, so the overlay has nothing left to scroll
+       (scrollHeight === clientHeight) and every bit of travel lives in a
+       NESTED scroll region inside a position:fixed overlay -- the one thing
+       iOS touch scrolling is worst at grabbing. Measured on the chapter-5
+       First Declension Hint with Meanings open at 390x734: modal 694px tall
+       over 1175px of content, Close 435px below the fold, outer scroll range
+       zero. "I can't click on it at all" is the correct description of that.
+
+   So the modal gets NO height cap and NO inner scroll. It is as tall as its
+   content, the overlay is the single scroll container, and scrolling that
+   container from end to end necessarily passes both of the modal's borders --
+   at any viewport height, on any engine, with no dvh support required.
+
+   Why the flex + `margin: auto` centering is still safe: when the modal is
+   SHORTER than the overlay it is centred; when it is taller the free space is
+   negative, auto margins resolve to zero (CSS Flexbox 8.1), and the item
+   falls back to cross-start. Top-aligned and scrollable beats centred and
+   trapped, and the browser picks between them by itself.
+
+   The overlay's height is pinned to dvh rather than left to `inset: 0` so that
+   on iOS its bottom edge is the bottom the user can SEE rather than the one
+   hiding behind the toolbar; `.app` above pins its height the same way. */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  height: 100vh; height: 100dvh;
+  background: rgba(0, 0, 0, 0.45);
   display: flex; justify-content: center; z-index: 100;
   padding: 20px; padding-top: calc(20px + env(safe-area-inset-top));
   padding-bottom: calc(20px + env(safe-area-inset-bottom));
   overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
 .modal { background: var(--card); border-radius: var(--radius); padding: 22px 20px;
   max-width: 360px; width: 100%; margin: auto; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-  /* The cap and the inner scroll are on the SHARED class, so a new modal
-     inherits D3 instead of having to remember it. */
-  max-height: calc(100vh - 40px);
-  max-height: calc(100dvh - 40px);
-  overflow-y: auto; }
+  /* No max-height and no overflow here, deliberately. A modal that scrolls
+     itself takes its travel away from the overlay; see the note above before
+     adding either back. */
+  flex-shrink: 0; }
 .modal-title { margin: 0 0 8px; font-size: 1.2rem; }
 .modal-body { margin: 0 0 6px; color: var(--ink); }
 .modal-note { margin: 0; font-size: 0.9rem; color: var(--teal-dark); font-weight: 600; }
@@ -703,7 +716,12 @@ button { font: inherit; cursor: pointer; }
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06); }
 .score-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.95rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
 .score-row span:last-child { font-weight: 700; color: var(--teal-dark); }
-.kb-ref .kb-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 8px 0; max-height: 50vh; overflow-y: auto; }
+/* NO INNER SCROLL, for the same reason .modal has none (D3). This grid used to
+   cap itself at 50vh and scroll, which put a nested scroll region inside a
+   position:fixed overlay one tap away from every speller — the arrangement
+   5E-SPEC3-RESPONSE item 2 is about. The grid is as tall as its 39 tiles and
+   the overlay scrolls the whole reference card. */
+.kb-ref .kb-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 8px 0; }
 .kb-cell { display: flex; align-items: center; justify-content: center; gap: 6px; background: #fbf7e6;
   border-radius: 8px; padding: 8px 4px; }
 .kb-roman { font-family: ui-monospace, monospace; font-weight: 700; color: #7a6f45; }
@@ -804,8 +822,9 @@ button { font: inherit; cursor: pointer; }
 .pg-endgloss { font-size: 0.78rem; color: var(--teal-dark); overflow-wrap: break-word; text-align: center; }
 
 /* Hint popup: the paradigm over the drill (the original's Hint window). The
-   height cap and the inner scroll come from .modal (D3); only the width is
-   this popup's own -- a paradigm needs more than the 360px a text dialog does. */
+   scroll model comes from .modal and .modal-overlay (D3) and must not be
+   overridden here; only the width is this popup's own -- a paradigm needs more
+   than the 360px a text dialog does. */
 .hint-modal { max-width: 400px; }
 
 /* ---- INTERLINEAR VERSE (Scripture Memory) ----
