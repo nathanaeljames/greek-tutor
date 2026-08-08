@@ -1,0 +1,111 @@
+{
+ "_comment": "Chapter 7 lexicon, assembled from 7_ADJS.TBK (cohort 5F). Vocabulary order is the TBK list order (alphabetical), which matches g_voc1..10. ntFreq values are the Review Vocabulary Chart's own counts (0x0ea40e). CHAPT_7 ships g_* plus chapters 3-6's c_sm*, d_sm*, e_sm* and f_sm* for the four cumulative Scripture review charts; the data references those LOCAL copies.",
+ "lemmas": {
+  "agathos": {
+   "greek": "ἀγαθός",
+   "translit": "agathos",
+   "gloss": "good",
+   "glossShort": "good",
+   "pos": "adjective",
+   "audio": "chapt_7_g_voc1",
+   "ntFreq": 102,
+   "lexicalForm": "ἀγαθός, -ή, -όν"
+  },
+  "hagios": {
+   "greek": "ἅγιος",
+   "translit": "hagios",
+   "gloss": "holy",
+   "glossShort": "holy",
+   "pos": "adjective",
+   "audio": "chapt_7_g_voc2",
+   "ntFreq": 233,
+   "lexicalForm": "ἅγιος, -α, -ον"
+  },
+  "dikaios": {
+   "greek": "δίκαιος",
+   "translit": "dikaios",
+   "gloss": "righteous",
+   "glossShort": "righteous",
+   "pos": "adjective",
+   "audio": "chapt_7_g_voc3",
+   "ntFreq": 79,
+   "lexicalForm": "δίκαιος, -α, -ον"
+  },
+  "eimi": {
+   "greek": "εἰμί",
+   "translit": "eimi",
+   "gloss": "I am",
+   "glossShort": "I am",
+   "pos": "verb",
+   "audio": "chapt_7_g_voc4",
+   "ntFreq": 2460,
+   "lexicalForm": "εἰμί"
+  },
+  "ioudaios": {
+   "greek": "Ἰουδαῖος",
+   "translit": "ioudaios",
+   "gloss": "Jewish",
+   "glossShort": "Jewish",
+   "pos": "adjective",
+   "audio": "chapt_7_g_voc5",
+   "ntFreq": 195,
+   "lexicalForm": "Ἰουδαῖος, -α, -ον"
+  },
+  "megas": {
+   "greek": "μέγας",
+   "translit": "megas",
+   "gloss": "large, great",
+   "glossShort": "large, great",
+   "pos": "adjective",
+   "audio": "chapt_7_g_voc6",
+   "ntFreq": 243,
+   "lexicalForm": "μέγας"
+  },
+  "nekros": {
+   "greek": "νεκρός",
+   "translit": "nekros",
+   "gloss": "dead",
+   "glossShort": "dead",
+   "pos": "adjective",
+   "audio": "chapt_7_g_voc7",
+   "ntFreq": 128,
+   "lexicalForm": "νεκρός, -ά, -όν"
+  },
+  "ou": {
+   "greek": "οὐ",
+   "translit": "ou",
+   "gloss": "no, not",
+   "glossShort": "no, not",
+   "pos": "adverb",
+   "audio": "chapt_7_g_voc8",
+   "ntFreq": 1606,
+   "lexicalForm": "οὐ, οὐκ, οὐχ",
+   "audioAlt": [
+    "chapt_7_g_voc8a",
+    "chapt_7_g_voc8b"
+   ],
+   "_audio_note": "The lemma is the three-form set ou / ouk / ouch; the chapter ships g_voc8, g_voc8a and g_voc8b, one per form."
+  },
+  "protos": {
+   "greek": "πρῶτος",
+   "translit": "protos",
+   "gloss": "first",
+   "glossShort": "first",
+   "pos": "adjective",
+   "audio": "chapt_7_g_voc9",
+   "ntFreq": 155,
+   "lexicalForm": "πρῶτος, -η, -ον"
+  },
+  "phone": {
+   "greek": "φωνή",
+   "translit": "phone",
+   "gloss": "voice, sound",
+   "glossShort": "voice, sound",
+   "pos": "noun",
+   "audio": "chapt_7_g_voc10",
+   "ntFreq": 139,
+   "lexicalForm": "φωνή, -ῆς, ἡ"
+  }
+ },
+ "exampleWords": {}
+}

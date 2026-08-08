@@ -1,0 +1,2636 @@
+{
+ "_comment": "Chapter 7 (Adjectives; the verb eimi), assembled from 7_ADJS.TBK + CHAPT_7 audio + ch7railwalk.pdf. Fields read by offset (5F-EXTRACTION-MAP.md sec 2). The Adjective Case Drill and the Adjective Spelling Exercise are the same twenty items in the same order and are used as each other's answer key, asserted parallel on all twenty references. Behavior fields are stamped by apply-behavior-matrix.py from the eleven CONFIRMED chapter-7 rows of DRILLBEHAVIORLEDGER.csv and are not set here.",
+ "id": "chapt_7",
+ "number": 7,
+ "title": "Adjectives",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "understand English adjectives and their various uses",
+  "learn and translate various Greek adjectives",
+  "identify attributive, predicate, and substantive uses of Greek adjectives",
+  "properly identify the grammatical agreement between an adjective and its accompanying substantive",
+  "identify the various forms of the verb εἰμί in the present active indicative",
+  "master 10 more high frequency vocabulary words",
+  "finish memorizing Jn 1:1 in Greek"
+ ],
+ "vocab": [
+  "agathos",
+  "hagios",
+  "dikaios",
+  "eimi",
+  "ioudaios",
+  "megas",
+  "nekros",
+  "ou",
+  "protos",
+  "phone"
+ ],
+ "learn": [
+  {
+   "id": "c7_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives",
+   "instructions": ""
+  },
+  {
+   "id": "c7_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "topics": [
+    {
+     "id": "definition",
+     "title": "Definition",
+     "content": [
+      {
+       "type": "para",
+       "text": "An adjective is a word used to modify"
+      },
+      {
+       "type": "para",
+       "text": "a noun or pronoun. The adjective often"
+      },
+      {
+       "type": "para",
+       "text": "specifies more clearly what the noun"
+      },
+      {
+       "type": "para",
+       "text": "or pronoun actually means. It often"
+      },
+      {
+       "type": "para",
+       "text": "answers the question \"What kind of"
+      },
+      {
+       "type": "para",
+       "text": "______ is ιτ͂̔"
+      },
+      {
+       "type": "para",
+       "text": "The [[u]]soft[[/u]] snow hit the windshield."
+      },
+      {
+       "type": "para",
+       "text": "Answers: what kind of σνοῶ soft"
+      },
+      {
+       "type": "para",
+       "text": "The snow was [[u]]soft[[/u]]."
+      }
+     ]
+    },
+    {
+     "id": "threeUses",
+     "title": "3 Uses of Adjectives",
+     "content": [
+      {
+       "type": "para",
+       "text": "Adjectives are used in 3 ways:"
+      },
+      {
+       "type": "para",
+       "text": "1) [[u]]Attributive:[[/u]] the adjective attributes a"
+      },
+      {
+       "type": "para",
+       "text": "characteristic to the noun it modifies."
+      },
+      {
+       "type": "para",
+       "text": "The [[u]]good[[/u]] book"
+      },
+      {
+       "type": "para",
+       "text": "2) [[u]]Predicate:[[/u]] the adjective assigns a"
+      },
+      {
+       "type": "para",
+       "text": "characteristic to the subject of the"
+      },
+      {
+       "type": "para",
+       "text": "sentence."
+      },
+      {
+       "type": "para",
+       "text": "The book is [[u]]good[[/u]]."
+      },
+      {
+       "type": "para",
+       "text": "3) [[u]]Substantive:[[/u]] the adjective acts"
+      },
+      {
+       "type": "para",
+       "text": "independently as a noun itself."
+      },
+      {
+       "type": "para",
+       "text": "The [[u]]good[[/u]] die young."
+      }
+     ]
+    },
+    {
+     "id": "examples",
+     "title": "Examples",
+     "content": [
+      {
+       "type": "para",
+       "text": "1) Attributive use:"
+      },
+      {
+       "type": "para",
+       "text": "The [[u]]red[[/u]] car hit the [[u]]big[[/u]] truck"
+      },
+      {
+       "type": "para",
+       "text": "behind the [[u]]rear[[/u]] tire."
+      },
+      {
+       "type": "para",
+       "text": "2) Predicate use:"
+      },
+      {
+       "type": "para",
+       "text": "Roses are [[u]]red[[/u]] and violets are [[u]]blue[[/u]]."
+      },
+      {
+       "type": "para",
+       "text": "3) Substantive use:"
+      },
+      {
+       "type": "para",
+       "text": "The [[u]]kind[[/u]] receive their rewards but"
+      },
+      {
+       "type": "para",
+       "text": "the [[u]]unjust[[/u]] are often surprised."
+      },
+      {
+       "type": "para",
+       "text": "(i.e. the kind person; the unjust person)"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c7_learn_adjectives",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Greek Adjectives",
+   "greekTaps": true,
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "Adjectives modify nouns and pronouns."
+      },
+      {
+       "type": "para",
+       "text": "They will match the nouns they modify"
+      },
+      {
+       "type": "para",
+       "text": "in number, gender and case."
+      },
+      {
+       "type": "para",
+       "text": "Adjectives frequently use a 2-1-2 paradigm:"
+      },
+      {
+       "type": "para",
+       "text": "masculine = 2nd declension forms,"
+      },
+      {
+       "type": "para",
+       "text": "feminine = 1st declension forms, and"
+      },
+      {
+       "type": "para",
+       "text": "neuter = 2nd declension forms."
+      },
+      {
+       "type": "para",
+       "text": "When an adjective's root ends in an"
+      },
+      {
+       "type": "para",
+       "text": "epsilon, iota, or rho, the \"a\" 1st declension"
+      },
+      {
+       "type": "para",
+       "text": "form will be used."
+      }
+     ]
+    },
+    {
+     "id": "adjectiveParadigm",
+     "title": "Adjective Paradigm",
+     "content": [
+      {
+       "type": "para",
+       "text": "ἀγαθός = good"
+      },
+      {
+       "type": "para",
+       "text": "Singular"
+      },
+      {
+       "type": "para",
+       "text": "N. ἀγαθός ἀγαθή ἀγαθόν"
+      },
+      {
+       "type": "para",
+       "text": "G. ἀγαθοῦ ἀγαθῆς ἀγαθοῦ"
+      },
+      {
+       "type": "para",
+       "text": "D. ἀγαθῷ ἀγαθῇ ἀγαθῷ"
+      },
+      {
+       "type": "para",
+       "text": "A. ἀγαθόν ἀγαθήν ἀγαθόν"
+      },
+      {
+       "type": "para",
+       "text": "V. ἀγαθέ ἀγαθή ἀγαθόν"
+      }
+     ]
+    },
+    {
+     "id": "secondAdjectiveParadigm",
+     "title": "2nd Adjective Paradigm",
+     "content": [
+      {
+       "type": "para",
+       "text": "for words ending in ε, ι, or ρ"
+      },
+      {
+       "type": "para",
+       "text": "δίκαιος = righteous"
+      },
+      {
+       "type": "para",
+       "text": "Singular"
+      },
+      {
+       "type": "para",
+       "text": "N. δίκαιος δικαία δίκαιον"
+      },
+      {
+       "type": "para",
+       "text": "G. δικαίου δικαίας δικαίου"
+      },
+      {
+       "type": "para",
+       "text": "D. δικαίῳ δικαίᾳ δικαίῳ"
+      },
+      {
+       "type": "para",
+       "text": "A. δίκαιον δικαίαν δίκαιον"
+      },
+      {
+       "type": "para",
+       "text": "V. δίκαιε δικαία δίκαιον"
+      }
+     ]
+    },
+    {
+     "id": "attributivePosition",
+     "title": "Attributive Position",
+     "content": [
+      {
+       "type": "para",
+       "text": "Adjective has definite article"
+      },
+      {
+       "type": "para",
+       "text": "ὁ ἀγαθὸς λόγος the good word"
+      },
+      {
+       "type": "para",
+       "text": "ὁ λόγος ὁ ἀγαθός \""
+      },
+      {
+       "type": "para",
+       "text": "ἐγώ εἰμι ὁ ποιμὴν ὁ καλός"
+      },
+      {
+       "type": "para",
+       "text": "I am the [[u]]good[[/u]] shepherd (Jn 10:11)"
+      },
+      {
+       "type": "para",
+       "text": "ἐν τῇ ἐσχάτῃ ἡμέρᾳ"
+      },
+      {
+       "type": "para",
+       "text": "in the [[u]]last[[/u]] day (Jn 6:39)"
+      }
+     ]
+    },
+    {
+     "id": "predicatePosition",
+     "title": "Predicate Position",
+     "content": [
+      {
+       "type": "para",
+       "text": "Adjective has no definite article"
+      },
+      {
+       "type": "para",
+       "text": "ἀγαθὸς ὁ λόγος the word is good"
+      },
+      {
+       "type": "para",
+       "text": "ὁ λόγος ἀγαθός \""
+      },
+      {
+       "type": "para",
+       "text": "καὶ ὁ ἄνθρωπος οὗτος δίκαιος"
+      },
+      {
+       "type": "para",
+       "text": "and this man was [[u]]righteous[[/u]] (Lk 2:25)"
+      },
+      {
+       "type": "para",
+       "text": "φαίνεσθε τοῖς ἀνθρώποις"
+      },
+      {
+       "type": "para",
+       "text": "δίκαιοι (Mat 23:28)"
+      },
+      {
+       "type": "para",
+       "text": "you appear to men to be [[u]]righteous[[/u]]"
+      }
+     ]
+    },
+    {
+     "id": "substantiveUse",
+     "title": "Substantive Use",
+     "content": [
+      {
+       "type": "para",
+       "text": "The substantive use of the adjective is"
+      },
+      {
+       "type": "para",
+       "text": "when the adjective is used as a noun."
+      },
+      {
+       "type": "para",
+       "text": "The substantive use often has the article."
+      },
+      {
+       "type": "para",
+       "text": "οἱ δὲ δίκαιοι εἰς ζωὴν αἰώνιον"
+      },
+      {
+       "type": "para",
+       "text": "and the [[u]]righteous[[/u]] unto eternal life"
+      },
+      {
+       "type": "para",
+       "text": "(Mat 25:46)"
+      },
+      {
+       "type": "para",
+       "text": "Ὁ δὲ δίκαιος ἐκ πίστεως"
+      },
+      {
+       "type": "para",
+       "text": "ζήσεται (Rom 1:17)"
+      },
+      {
+       "type": "para",
+       "text": "and the [[u]]righteous[[/u]] will live by faith"
+      }
+     ]
+    },
+    {
+     "id": "predicateOrAttributive",
+     "title": "Predicate or Attributive",
+     "content": [
+      {
+       "type": "para",
+       "text": "Sometimes neither the adjective nor the"
+      },
+      {
+       "type": "para",
+       "text": "noun has the article in which case context"
+      },
+      {
+       "type": "para",
+       "text": "must determine whether to translate it"
+      },
+      {
+       "type": "para",
+       "text": "attributively or predicatively."
+      },
+      {
+       "type": "para",
+       "text": "καὶ ἀνὴρ ἀγαθὸς καὶ δίκαιος"
+      },
+      {
+       "type": "para",
+       "text": "and a [[u]]good and righteous[[/u]] man"
+      },
+      {
+       "type": "para",
+       "text": "(Lk 23:50)"
+      }
+     ]
+    }
+   ],
+   "_paradigm_note": "The Adjective Paradigm and 2nd Adjective Paradigm topics each carry a Singular chart with a More button to the Plural chart (0x1a4aa / 0x1ba78). The charts themselves are emitted as quickReview paradigms and referenced from here."
+  },
+  {
+   "id": "c7_learn_eimi",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Verb:  εἰμί",
+   "greekTaps": true,
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "εἰμί is a stative verb (it indicates a state"
+      },
+      {
+       "type": "para",
+       "text": "of being) and so has no voice (active,"
+      },
+      {
+       "type": "para",
+       "text": "middle, passive)."
+      },
+      {
+       "type": "para",
+       "text": "In English \"is\" takes a [[u]]predicate[[/u]]"
+      },
+      {
+       "type": "para",
+       "text": "[[u]]nominative[[/u]] rather than the normal"
+      },
+      {
+       "type": "para",
+       "text": "accusative. It is correct to say \"This is"
+      },
+      {
+       "type": "para",
+       "text": "he\" and incorrect to say \"This is him.\""
+      },
+      {
+       "type": "para",
+       "text": "Similarly in Greek a noun or pronoun in"
+      },
+      {
+       "type": "para",
+       "text": "the nominative follows the verb εἰμί."
+      }
+     ]
+    },
+    {
+     "id": "presentIndicative",
+     "title": "Present Indicative of εἰμί",
+     "content": [
+      {
+       "type": "para",
+       "text": "Singular Plural"
+      },
+      {
+       "type": "para",
+       "text": "εἰμί I am ἐσμέν we are"
+      },
+      {
+       "type": "para",
+       "text": "εἶ you are ἐστέ you are"
+      },
+      {
+       "type": "para",
+       "text": "ἐστί(ν) he/she/it is εἰσί(ν) they are"
+      },
+      {
+       "type": "para",
+       "text": "Things to Note:"
+      },
+      {
+       "type": "para",
+       "text": "1) all forms except the second singular"
+      },
+      {
+       "type": "para",
+       "text": "are enclitic often taking no accent; and"
+      },
+      {
+       "type": "para",
+       "text": "2) the third singular and plural may take"
+      },
+      {
+       "type": "para",
+       "text": "a moveable ν"
+      }
+     ]
+    },
+    {
+     "id": "examples",
+     "title": "Examples",
+     "content": [
+      {
+       "type": "para",
+       "text": "ὅτι ὁ θεὸς ἀληθής ἐστιν"
+      },
+      {
+       "type": "para",
+       "text": "that God is true (Jn 3:33)"
+      },
+      {
+       "type": "para",
+       "text": "Ἠλίας εἶ; καὶ λέγει, Οὐκ"
+      },
+      {
+       "type": "para",
+       "text": "εἰμί. Ὁ προφήτης εἶ σύ;"
+      },
+      {
+       "type": "para",
+       "text": "Are you Elijah? and he said, \"I am"
+      },
+      {
+       "type": "para",
+       "text": "not.\" Are you the prophet? (Jn 1:21)"
+      }
+     ]
+    },
+    {
+     "id": "ouOukOuch",
+     "title": "οὐ, οὐκ and οὐχ",
+     "content": [
+      {
+       "type": "para",
+       "text": "οὐ is placed before the word it negates"
+      },
+      {
+       "type": "para",
+       "text": "which is usually the verb."
+      },
+      {
+       "type": "para",
+       "text": "There are three forms of this word"
+      },
+      {
+       "type": "para",
+       "text": "depending on the initial letter of the word"
+      },
+      {
+       "type": "para",
+       "text": "that follows it:"
+      },
+      {
+       "type": "para",
+       "text": "1) οὐ before a consonant;"
+      },
+      {
+       "type": "para",
+       "text": "2) οὐκ before a vowel with a smooth"
+      },
+      {
+       "type": "para",
+       "text": "breathing mark; and"
+      },
+      {
+       "type": "para",
+       "text": "3) οὐχ before a vowel with a rough"
+      },
+      {
+       "type": "para",
+       "text": "breathing mark."
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "id": "ou",
+     "greek": "οὐ",
+     "gloss": "no, not",
+     "condition": "when before a word that begins with a consonant",
+     "audio": "chapt_7_g_ou",
+     "examples": [
+      {
+       "greek": "καὶ ταῦτα οὐ γινώσκεις;",
+       "gloss": "and you do not understand these things?",
+       "ref": "Jn 3:10",
+       "audio": "chapt_7_g_ou1"
+      },
+      {
+       "greek": "καὶ οὐ λαμβάνετέ με",
+       "gloss": "and you do not accept me",
+       "ref": "Jn 5:43",
+       "audio": "chapt_7_g_ou2"
+      }
+     ]
+    },
+    {
+     "id": "ouk",
+     "greek": "οὐκ",
+     "gloss": "no, not",
+     "condition": "when before a word that begins with a vowel",
+     "audio": "chapt_7_g_ouk",
+     "examples": [
+      {
+       "greek": "ωιτη α σμοοτη βρεατηινγ)",
+       "gloss": "kai> to>n lo<gon au]tou? ou]k e@xete e]n u[mi?n",
+       "ref": null,
+       "audio": "chapt_7_g_ouk1"
+      },
+      {
+       "greek": "ανδ ψου δο νοτ ηανε ηισ ωορδ ιν ψου (Σν 5:38)",
+       "gloss": "kai> le<gei Ou]k ei]mi<.",
+       "ref": null,
+       "audio": "chapt_7_g_ouk2"
+      }
+     ]
+    },
+    {
+     "id": "ouch",
+     "greek": "οὐχ",
+     "gloss": "no, not",
+     "condition": "when before a word that begins with a vowel",
+     "audio": "chapt_7_g_oux",
+     "examples": [
+      {
+       "greek": "ωιτη α ρουγη βρεατηινγ)",
+       "gloss": "ou]x u[mei?j le<gete o!ti",
+       "ref": null,
+       "audio": "chapt_7_g_oux1"
+      },
+      {
+       "greek": "δο ψου νοτ σαψ τηατ (Σν 4:35)",
+       "gloss": "kai> ou]x o[ a@nqrwpoj dia> to> sa<bbaton",
+       "ref": null,
+       "audio": "chapt_7_g_oux2"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c7_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "lemmas"
+  },
+  {
+   "reference": "Jn 1:1",
+   "words": [
+    {
+     "greek": "Ἐν",
+     "gloss": "in",
+     "audio": "chapt_7_f_sm1"
+    },
+    {
+     "greek": "ἀρχῇ",
+     "gloss": "the beginning",
+     "audio": "chapt_7_f_sm2"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_7_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_7_f_sm4"
+    },
+    {
+     "greek": "λόγος,",
+     "gloss": "word",
+     "audio": "chapt_7_f_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_7_f_sm6"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_7_f_sm7"
+    },
+    {
+     "greek": "λόγος",
+     "gloss": "word",
+     "audio": "chapt_7_f_sm8"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_7_f_sm9"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "with",
+     "audio": "chapt_7_f_sm10"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_7_f_sm11"
+    },
+    {
+     "greek": "θεόν,",
+     "gloss": "God",
+     "audio": "chapt_7_f_sm12"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_7_f_sm6"
+    },
+    {
+     "greek": "θεὸς",
+     "gloss": "God",
+     "audio": "chapt_7_f_sm13"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_7_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_7_f_sm4"
+    },
+    {
+     "greek": "λόγος.",
+     "gloss": "word.",
+     "audio": "chapt_7_f_sm5"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_7_f_jn1_1"
+   },
+   "id": "c7_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory"
+  },
+  {
+   "id": "c7_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham. [[i]]New Testament Greek for Beginners[[/i]] (Toronto: The Macmillan Company, 1923), pp. 33-38.",
+      "Mounce, William D. [[i]]Basics of Biblical Greek: Grammar[[/i]] (Grand Rapids: Zondervan, 1993), pp. 63-70.",
+      "Summers, Ray and Thomas Sawyer. [[i]]Essentials of New Testament Greek[[/i]] (Nashville: Broadman & Holman, 1995), pp. 25-28.",
+      "Wenham, J. W. [[i]]The Elements of New Testament Greek[[/i]] (Cambridge: Cambridge University Press, 1965), pp. 47-52."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c7_drill_case",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Adjective Case Drill",
+   "instructions": "Click on the matching case and number",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "Nominative Singular",
+    "Nominative Plural",
+    "Genitive Singular",
+    "Genitive Plural",
+    "Dative Singular",
+    "Dative Plural",
+    "Accusative Singular",
+    "Accusative Plural",
+    "Vocative Singular",
+    "Vocative Plural"
+   ],
+   "optionLayout": "paradigm2col",
+   "_layout_note": "D-26.",
+   "items": [
+    {
+     "greek": "ἀγαθοὺς",
+     "ref": "Mat 5:45",
+     "answer": "Accusative Plural",
+     "audio": "chapt_7_g_agaamp"
+    },
+    {
+     "greek": "ἀγαθὰ",
+     "ref": "Mat 7:11",
+     "answer": "Accusative Plural",
+     "audio": "chapt_7_g_agaanp"
+    },
+    {
+     "greek": "ἀγαθὸν",
+     "ref": "Mat 7:17",
+     "answer": "Nominative Singular",
+     "audio": "chapt_7_g_aganns"
+    },
+    {
+     "greek": "ἀγαθὸς",
+     "ref": "Mat 12:35",
+     "answer": "Nominative Singular",
+     "audio": "chapt_7_g_aganms"
+    },
+    {
+     "greek": "ἀγαθὲ",
+     "ref": "Mat 25:21",
+     "answer": "Vocative Singular",
+     "audio": "chapt_7_g_agavms"
+    },
+    {
+     "greek": "ἀγαθὴν",
+     "ref": "Luk 8:8",
+     "answer": "Accusative Singular",
+     "audio": "chapt_7_g_agaafs"
+    },
+    {
+     "greek": "ἀγαθῇ",
+     "ref": "Luk 8:15",
+     "answer": "Dative Singular",
+     "audio": "chapt_7_g_agadfs"
+    },
+    {
+     "greek": "ἀγαθῶν",
+     "ref": "Acts 9:36",
+     "answer": "Genitive Plural",
+     "audio": "chapt_7_g_agagnp"
+    },
+    {
+     "greek": "ἀγαθή",
+     "ref": "Rom 7:12",
+     "answer": "Nominative Singular",
+     "audio": "chapt_7_g_aganfs"
+    },
+    {
+     "greek": "ἀγαθῷ",
+     "ref": "Rom 12:9",
+     "answer": "Dative Singular",
+     "audio": "chapt_7_g_agadns"
+    },
+    {
+     "greek": "ἀγαθάς",
+     "ref": "Tit 2:5",
+     "answer": "Accusative Plural",
+     "audio": "chapt_7_g_agaafp"
+    },
+    {
+     "greek": "ἀγαθοῖς",
+     "ref": "1 Pet 2:18",
+     "answer": "Dative Plural",
+     "audio": "chapt_7_g_agadmp"
+    },
+    {
+     "greek": "δικαίου",
+     "ref": "Mat 10:41",
+     "answer": "Genitive Singular",
+     "audio": "chapt_7_g_dikgms"
+    },
+    {
+     "greek": "δικαίους",
+     "ref": "Mat 5:45",
+     "answer": "Accusative Plural",
+     "audio": "chapt_7_g_dikamp"
+    },
+    {
+     "greek": "δίκαιοι",
+     "ref": "Mat 13:17",
+     "answer": "Nominative Plural",
+     "audio": "chapt_7_g_diknmp"
+    },
+    {
+     "greek": "δικαίων",
+     "ref": "Mat 13:49",
+     "answer": "Genitive Plural",
+     "audio": "chapt_7_g_dikgmp"
+    },
+    {
+     "greek": "δίκαιον",
+     "ref": "Mat 20:4",
+     "answer": "Nominative Singular",
+     "audio": "chapt_7_g_diknns"
+    },
+    {
+     "greek": "δικαίῳ",
+     "ref": "Mat 27:19",
+     "answer": "Dative Singular",
+     "audio": "chapt_7_g_dikdms"
+    },
+    {
+     "greek": "δικαίαν",
+     "ref": "Jn 7:24",
+     "answer": "Accusative Singular",
+     "audio": "chapt_7_g_dikafs"
+    },
+    {
+     "greek": "δικαία",
+     "ref": "Jn 5:30",
+     "answer": "Nominative Singular",
+     "audio": "chapt_7_g_diknfs"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "adjectiveParadigm"
+   },
+   "_answer_note": "Derived from the Adjective Spelling Exercise, which is the same twenty items in the same order with the parse spelled out; the two pools are asserted to cite the same twenty references.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c7_drill_translation",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Adjective Translation Drill",
+   "instructions": "Click on the correct English translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "καὶ πρὸς πᾶν ἔργον",
+     "greek2": "ἀγαθὸν",
+     "ref": "Tit 1:16",
+     "options": [
+      "and for any righteous deed",
+      "and for any holy deed",
+      "and for any good deed"
+     ],
+     "answer": "and for any good deed",
+     "audio": "chapt_7_g_atd1"
+    },
+    {
+     "greek": "ἐν παντὶ ἔργῳ καὶ",
+     "greek2": "λόγῳ ἀγαθῷ",
+     "ref": "2 Thes 2:17",
+     "options": [
+      "in every good work and word",
+      "in every righteous work and word",
+      "in every holy work and word"
+     ],
+     "answer": "in every good work and word",
+     "audio": "chapt_7_g_atd2"
+    },
+    {
+     "greek": "ἐπὶ ἔργοις ἀγαθοῖς",
+     "greek2": null,
+     "ref": "Eph 2:10",
+     "options": [
+      "for a good work",
+      "for righteous deeds",
+      "for good works"
+     ],
+     "answer": "for good works",
+     "audio": "chapt_7_g_atd3"
+    },
+    {
+     "greek": "οὐκ εἰσὶν φόβος τῷ",
+     "greek2": "ἀγαθῷ ἔργῳ",
+     "ref": "Rom 13:3",
+     "options": [
+      "he is not fearful to good deeds",
+      "they are not fearful to good work",
+      "they are not fearful to good deeds"
+     ],
+     "answer": "they are not fearful to good work",
+     "audio": "chapt_7_g_atd4"
+    },
+    {
+     "greek": "δι' ἔργων ἀγαθῶν",
+     "greek2": null,
+     "ref": "1 Tim 2:10",
+     "options": [
+      "by means of a good deed",
+      "by means of good deeds",
+      "good is on account of deeds"
+     ],
+     "answer": "by means of good deeds",
+     "audio": "chapt_7_g_atd5"
+    },
+    {
+     "greek": "ὁ ἀγαθὸς ἄνθρωπος",
+     "greek2": null,
+     "ref": "Mat 12:35",
+     "options": [
+      "the man is good",
+      "the good is a man",
+      "the good man"
+     ],
+     "answer": "the good man",
+     "audio": "chapt_7_g_atd6"
+    },
+    {
+     "greek": "ὅτι ἐγὼ ἀγαθός εἰμι",
+     "greek2": null,
+     "ref": "Mat 20:15",
+     "options": [
+      "because I am good",
+      "because of my goodness",
+      "because goodness is in me"
+     ],
+     "answer": "because I am good",
+     "audio": "chapt_7_g_atd7"
+    },
+    {
+     "greek": "ἐν γραφαῖς ἁγίαις",
+     "greek2": null,
+     "ref": "Rom 1:2",
+     "options": [
+      "in the holy writing",
+      "in the righteous writings",
+      "in the holy writings"
+     ],
+     "answer": "in the holy writings",
+     "audio": "chapt_7_g_atd8"
+    },
+    {
+     "greek": "τοῖς ἁγίοις ἀποστόλοις",
+     "greek2": null,
+     "ref": "Eph 3:5",
+     "options": [
+      "the apostle is holy",
+      "to the holy apostles",
+      "to the apostles who are holy"
+     ],
+     "answer": "to the holy apostles",
+     "audio": "chapt_7_g_atd9"
+    },
+    {
+     "greek": "μετὰ τῶν ἀγγέλων",
+     "greek2": "τῶν ἁγίων",
+     "ref": "Mk 8:38",
+     "options": [
+      "with the righteous angel",
+      "with the holy angel",
+      "with the holy angels"
+     ],
+     "answer": "with the holy angels",
+     "audio": "chapt_7_g_atd10"
+    },
+    {
+     "greek": "ὑπὸ τῶν ἁγίων",
+     "greek2": "προφητῶν",
+     "ref": "2 Pet 3:2",
+     "options": [
+      "by the holy prophets",
+      "by the holy one, the prophet",
+      "by the holy prophet"
+     ],
+     "answer": "by the holy prophets",
+     "audio": "chapt_7_g_atd11"
+    },
+    {
+     "greek": "ὁ ... νόμος ἅγιος",
+     "greek2": null,
+     "ref": "Rom 7:12",
+     "options": [
+      "the law is holy",
+      "the holy law",
+      "the righteous law"
+     ],
+     "answer": "the law is holy",
+     "audio": "chapt_7_g_atd12"
+    },
+    {
+     "greek": "ἡ ἐντολὴ ἁγία καὶ ...",
+     "greek2": "ἀγαθή",
+     "ref": "Rom 7:12",
+     "options": [
+      "the commandment is holy and good",
+      "the holy and good commandment",
+      "the commandments are holy and good"
+     ],
+     "answer": "the commandment is holy and good",
+     "audio": "chapt_7_g_atd13"
+    },
+    {
+     "greek": "τῆς ἡμέρας τῆς",
+     "greek2": "μεγάλης τοῦ θεοῦ",
+     "ref": "Rev 16:14",
+     "options": [
+      "of the great days of God",
+      "of the great day of God",
+      "of the day is great for God"
+     ],
+     "answer": "of the great day of God",
+     "audio": "chapt_7_g_atd14"
+    },
+    {
+     "greek": "ὅτι εἰσὶν δίκαιοι",
+     "greek2": null,
+     "ref": "Lk 18:9",
+     "options": [
+      "because he is righteous",
+      "because they are holy",
+      "because they are righteous"
+     ],
+     "answer": "because they are righteous",
+     "audio": "chapt_7_g_atd15"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "adjectivePositions"
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c7_drill_parsing_eimi",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Parsing εἰμί Drill",
+   "instructions": "Click on the matching case",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "First Person Singular",
+    "First Person Plural",
+    "Second Person Singular",
+    "Second Person Plural",
+    "Third Person Singular",
+    "Third Person Plural"
+   ],
+   "optionLayout": "paradigm2col",
+   "_layout_note": "D-26.",
+   "items": [
+    {
+     "greek": "εἶ",
+     "ref": "Jn 1:19",
+     "answer": "Second Person Singular",
+     "audio": "chapt_7_g_eimi2s"
+    },
+    {
+     "greek": "ἐστὶν",
+     "ref": "Jn 1:19",
+     "answer": "Third Person Singular",
+     "audio": "chapt_7_g_eimi3s"
+    },
+    {
+     "greek": "ἐστέ",
+     "ref": "Jn 8:23",
+     "answer": "Second Person Plural",
+     "audio": "chapt_7_g_eimi2p"
+    },
+    {
+     "greek": "εἰμὶ",
+     "ref": "Jn 1:20",
+     "answer": "First Person Singular",
+     "audio": "chapt_7_g_eimi1s"
+    },
+    {
+     "greek": "εἰσιν",
+     "ref": "Jn 4:35",
+     "answer": "Third Person Plural",
+     "audio": "chapt_7_g_eimi3p"
+    },
+    {
+     "greek": "ἐσμεν",
+     "ref": "Jn 8:33",
+     "answer": "First Person Plural",
+     "audio": "chapt_7_g_eimi1p"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "eimiParadigm"
+   },
+   "_answer_note": "Derived from the chapter's own Present Indicative chart; each prompt matches exactly one paradigm cell, moveable nu allowed.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c7_drill_translation_eimi",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "εἰμί Translation Drill",
+   "instructions": "Click on the correct English translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "Οὐχὶ δώδεκα ὧραὶ",
+     "greek2": "εἰσιν τὴς ἡμέρας;",
+     "ref": "Jn 11:9",
+     "options": [
+      "Do you not have 12 hours in the day?",
+      "Are there not 12 hours in the day?",
+      "Do they not have 12 hours in the day?"
+     ],
+     "answer": "Are there not 12 hours in the day?",
+     "audio": "chapt_7_g_etd1"
+    },
+    {
+     "greek": "ἐκ τοῦ κόσμου οὐκ εἰσὶν",
+     "greek2": null,
+     "ref": "Jn 17:16",
+     "options": [
+      "they are not from the world",
+      "we are not from the world",
+      "you are not from the world"
+     ],
+     "answer": "they are not from the world",
+     "audio": "chapt_7_g_etd2"
+    },
+    {
+     "greek": "καὶ λέγει, Οὐκ εἰμί",
+     "greek2": null,
+     "ref": "Jn 1:21",
+     "options": [
+      "and he said, \"You are not\"",
+      "and he said, \"I am not\"",
+      "and he said, \"They are not\""
+     ],
+     "answer": "and he said, \"I am not\"",
+     "audio": "chapt_7_g_etd3"
+    },
+    {
+     "greek": "Σπέρμα Ἀβραάμ ἐσμεν",
+     "greek2": null,
+     "ref": "Jn 8:33",
+     "options": [
+      "we are Abraham's seed",
+      "you are Abraham's seed",
+      "they are Abraham's seed"
+     ],
+     "answer": "we are Abraham's seed",
+     "audio": "chapt_7_g_etd4"
+    },
+    {
+     "greek": "ὅτι προφήτης εἶ σύ",
+     "greek2": null,
+     "ref": "Jn 4:19",
+     "options": [
+      "that he is a prophet",
+      "that I am a prophet",
+      "that you are a prophet"
+     ],
+     "answer": "that you are a prophet",
+     "audio": "chapt_7_g_etd5"
+    },
+    {
+     "greek": "Ὑμεῖς ἐστε τὸ φῶς",
+     "greek2": "τοῦ κόσμου",
+     "ref": "Mat 5:14",
+     "options": [
+      "you are the light of the world",
+      "I am the light of the world",
+      "we are the light of the world"
+     ],
+     "answer": "you are the light of the world",
+     "audio": "chapt_7_g_etd6"
+    },
+    {
+     "greek": "Υἱὸς τοῦ θεοῦ εἰμι",
+     "greek2": null,
+     "ref": "Jn 10:36",
+     "options": [
+      "You are the son of God",
+      "He is the son of God",
+      "I am the son of God"
+     ],
+     "answer": "I am the son of God",
+     "audio": "chapt_7_g_etd7"
+    },
+    {
+     "greek": "ὅτι δὲ ἐκ τοῦ κόσμου",
+     "greek2": "οὐκ ἐστέ",
+     "ref": "Jn 15:19",
+     "options": [
+      "because they are not of the world",
+      "because you are not of the world",
+      "because I am not of the world"
+     ],
+     "answer": "because you are not of the world",
+     "audio": "chapt_7_g_etd8"
+    },
+    {
+     "greek": "ὅτι σὺ εἶ ὁ ἅγιος τοῦ",
+     "greek2": "θεοῦ",
+     "ref": "Jn 6:69",
+     "options": [
+      "because he is the holy one of God",
+      "because you are the holy one of God",
+      "because we are the holy ones of God"
+     ],
+     "answer": "because you are the holy one of God",
+     "audio": "chapt_7_g_etd9"
+    },
+    {
+     "greek": "ὅτι ἐκ τῆς ἀληθείας",
+     "greek2": "ἐσμέν",
+     "ref": "1 Jn 3:19",
+     "options": [
+      "because we are of the truth",
+      "because he is of the truth",
+      "because you are of the truth"
+     ],
+     "answer": "because we are of the truth",
+     "audio": "chapt_7_g_etd10"
+    },
+    {
+     "greek": "ὅτι οὐκ εἰσὶν ἐκ τοῦ",
+     "greek2": "κόσμου",
+     "ref": "Jn 17:14",
+     "options": [
+      "because he is not of the world",
+      "because you are not of the world",
+      "because they are not of the world"
+     ],
+     "answer": "because they are not of the world",
+     "audio": "chapt_7_g_etd11"
+    },
+    {
+     "greek": "ὅτι ἐκ τοῦ θεοῦ οὐκ",
+     "greek2": "ἐστέ",
+     "ref": "Jn 8:47",
+     "options": [
+      "for he is not from God",
+      "for you are not from God",
+      "for they are not from God"
+     ],
+     "answer": "for you are not from God",
+     "audio": "chapt_7_g_etd12"
+    },
+    {
+     "greek": "Ἐγώ εἰμι ἡ ὁδὸς καὶ",
+     "greek2": "ἡ ἀλήθεια",
+     "ref": "Jn 14:6",
+     "options": [
+      "he is the way and the truth",
+      "you are the way and the truth",
+      "I am the way and the truth"
+     ],
+     "answer": "I am the way and the truth",
+     "audio": "chapt_7_g_etd13"
+    },
+    {
+     "greek": "ἡμεῖς δὲ τοῦ Μωϋσέως",
+     "greek2": "ἐσμὲν μαθηταί",
+     "ref": "Jn 9:28",
+     "options": [
+      "but we are disciples of Moses",
+      "but you are disciples of Moses",
+      "but they are disciples of Moses"
+     ],
+     "answer": "but we are disciples of Moses",
+     "audio": "chapt_7_g_etd14"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "eimiParadigm"
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c7_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptFrom": {
+    "lexicon": "lemmas",
+    "show": "greek",
+    "audio": "pronounceButton"
+   },
+   "options": "glossShortPool",
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c7_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "promptFrom": {
+    "lexicon": "lemmas",
+    "show": "glossShort"
+   },
+   "options": "greekPool",
+   "optionsAreGreek": true,
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c7_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "in",
+    "beginning",
+    "was",
+    "the (nom)",
+    "word",
+    "and",
+    "with",
+    "the (acc)",
+    "God"
+   ],
+   "items": [
+    {
+     "greek": "Ἐν",
+     "answer": "in",
+     "audio": "chapt_7_f_sm1"
+    },
+    {
+     "greek": "ἀρχῇ",
+     "answer": "beginning",
+     "audio": "chapt_7_f_sm2"
+    },
+    {
+     "greek": "ἦν",
+     "answer": "was",
+     "audio": "chapt_7_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "answer": "the (nom)",
+     "audio": "chapt_7_f_sm4"
+    },
+    {
+     "greek": "λόγος",
+     "answer": "word",
+     "audio": "chapt_7_f_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "answer": "and",
+     "audio": "chapt_7_f_sm6"
+    },
+    {
+     "greek": "πρὸς",
+     "answer": "with",
+     "audio": "chapt_7_f_sm7"
+    },
+    {
+     "greek": "τὸν",
+     "answer": "the (acc)",
+     "audio": "chapt_7_f_sm8"
+    },
+    {
+     "greek": "θεόν",
+     "answer": "God",
+     "audio": "chapt_7_f_sm9"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c7_ex_speller",
+   "type": "spell",
+   "title": "Adjective Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Translation",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "good",
+     "note": "(acc. pl. masc.)",
+     "ref": "Mat 5:45",
+     "answer": "ἀγαθοὺς",
+     "audio": "chapt_7_g_agaamp"
+    },
+    {
+     "prompt": "good",
+     "note": "(acc. pl. neut.)",
+     "ref": "Mat 7:11",
+     "answer": "ἀγαθὰ",
+     "audio": "chapt_7_g_agaanp"
+    },
+    {
+     "prompt": "good",
+     "note": "(nom. neut. sg)",
+     "ref": "Mat 7:17",
+     "answer": "ἀγαθὸν",
+     "audio": "chapt_7_g_aganns"
+    },
+    {
+     "prompt": "good",
+     "note": "(nom. sg. masc.)",
+     "ref": "Mat 12:35",
+     "answer": "ἀγαθὸς",
+     "audio": "chapt_7_g_aganms"
+    },
+    {
+     "prompt": "good",
+     "note": "(voc. sg. masc.)",
+     "ref": "Mat 25:21",
+     "answer": "ἀγαθὲ",
+     "audio": "chapt_7_g_agavms"
+    },
+    {
+     "prompt": "good",
+     "note": "(acc. sg. fem.)",
+     "ref": "Lk 8:8",
+     "answer": "ἀγαθὴν",
+     "audio": "chapt_7_g_agaafs"
+    },
+    {
+     "prompt": "good",
+     "note": "(dat. sg. fem.)",
+     "ref": "Lk 8:15",
+     "answer": "ἀγαθῇ",
+     "audio": "chapt_7_g_agadfs"
+    },
+    {
+     "prompt": "good",
+     "note": "(gen. pl. neut.)",
+     "ref": "Acts 9:36",
+     "answer": "ἀγαθῶν",
+     "audio": "chapt_7_g_agagnp"
+    },
+    {
+     "prompt": "good",
+     "note": "(nom. sg. fem.)",
+     "ref": "Rom. 7:12",
+     "answer": "ἀγαθή",
+     "audio": "chapt_7_g_aganfs"
+    },
+    {
+     "prompt": "good",
+     "note": "(dat. sg. neut.)",
+     "ref": "Rom 12:9",
+     "answer": "ἀγαθῷ",
+     "audio": "chapt_7_g_agadns"
+    },
+    {
+     "prompt": "good",
+     "note": "(acc. pl. fem.)",
+     "ref": "Tit 2:5",
+     "answer": "ἀγαθάς",
+     "audio": "chapt_7_g_agaafp"
+    },
+    {
+     "prompt": "good",
+     "note": "(dat. pl. masc.)",
+     "ref": "1 Pet 2:18",
+     "answer": "ἀγαθοῖς",
+     "audio": "chapt_7_g_agadmp"
+    },
+    {
+     "prompt": "righteous",
+     "note": "(gen. sg. masc.)",
+     "ref": "Mat 10:41",
+     "answer": "δικαίου",
+     "audio": "chapt_7_g_dikgms"
+    },
+    {
+     "prompt": "righteous",
+     "note": "(acc. pl. masc.)",
+     "ref": "Mat 5:45",
+     "answer": "δικαίους",
+     "audio": "chapt_7_g_dikamp"
+    },
+    {
+     "prompt": "righteous",
+     "note": "(nom. pl. masc.)",
+     "ref": "Mat 13:17",
+     "answer": "δίκαιοι",
+     "audio": "chapt_7_g_diknmp"
+    },
+    {
+     "prompt": "righteous",
+     "note": "(gen. pl. masc.)",
+     "ref": "Mat 13:49",
+     "answer": "δικαίων",
+     "audio": "chapt_7_g_dikgmp"
+    },
+    {
+     "prompt": "righteous",
+     "note": "(nom. sg. neut.)",
+     "ref": "Mat 20:4",
+     "answer": "δίκαιον",
+     "audio": "chapt_7_g_diknns"
+    },
+    {
+     "prompt": "righteous",
+     "note": "(dat. sg. masc.)",
+     "ref": "Mat 27:19",
+     "answer": "δικαίῳ",
+     "audio": "chapt_7_g_dikdms"
+    },
+    {
+     "prompt": "righteous",
+     "note": "(acc. sg. fem.)",
+     "ref": "Jn 7:24",
+     "answer": "δικαίαν",
+     "audio": "chapt_7_g_dikafs"
+    },
+    {
+     "prompt": "righteous",
+     "note": "(nom. sg. fem.)",
+     "ref": "Jn 5:30",
+     "answer": "δικαία",
+     "audio": "chapt_7_g_diknfs"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Translation",
+     "Spell Greek Phrase"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c7_ex_speller_eimi",
+   "type": "spell",
+   "title": "εἰμί Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Translation",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "he is",
+     "ref": "Jn 1:19",
+     "answer": "ἐστίν",
+     "answerAlt": "ἐστί(ν)",
+     "audio": "chapt_7_g_eimi3s"
+    },
+    {
+     "prompt": "I am",
+     "ref": "Jn 1:20",
+     "answer": "εἰμί",
+     "answerAlt": "εἰμί",
+     "audio": "chapt_7_g_eimi1s"
+    },
+    {
+     "prompt": "we are",
+     "ref": "Jn 8:33",
+     "answer": "ἐσμέν",
+     "answerAlt": "ἐσμέν",
+     "audio": "chapt_7_g_eimi1p"
+    },
+    {
+     "prompt": "they are",
+     "ref": "Jn 4:35",
+     "answer": "εἰσίν",
+     "answerAlt": "εἰσί(ν)",
+     "audio": "chapt_7_g_eimi3p"
+    },
+    {
+     "prompt": "you (pl) are",
+     "ref": "Jn 8:23",
+     "answer": "ἐστέ",
+     "answerAlt": "ἐστέ",
+     "audio": "chapt_7_g_eimi2p"
+    },
+    {
+     "prompt": "you (sg) are",
+     "ref": "Jn 1:19",
+     "answer": "εἶ",
+     "answerAlt": "εἶ",
+     "audio": "chapt_7_g_eimi2s"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Translation",
+     "Spell Greek Phrase"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_moveable_nu_note": "The third singular and plural may take a moveable nu, which the chapter teaches on the Present Indicative page; `answerAlt` carries the printed (n) form.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c7_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Meaning",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "ref": "agathos",
+     "prompt": "good"
+    },
+    {
+     "ref": "hagios",
+     "prompt": "holy"
+    },
+    {
+     "ref": "dikaios",
+     "prompt": "righteous"
+    },
+    {
+     "ref": "eimi",
+     "prompt": "I am"
+    },
+    {
+     "ref": "ioudaios",
+     "prompt": "Jewish"
+    },
+    {
+     "ref": "megas",
+     "prompt": "large"
+    },
+    {
+     "ref": "nekros",
+     "prompt": "dead"
+    },
+    {
+     "ref": "ou",
+     "prompt": "no, not"
+    },
+    {
+     "ref": "protos",
+     "prompt": "first"
+    },
+    {
+     "ref": "phone",
+     "prompt": "voice"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c7_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of John 1:1 then click \"Check Answer\"",
+   "reference": "Jn 1:1",
+   "answerWords": [
+    "Ἐν",
+    "ἀρχῇ",
+    "ἦν",
+    "ὁ",
+    "λόγος,",
+    "καὶ",
+    "ὁ",
+    "λόγος",
+    "ἦν",
+    "πρὸς",
+    "τὸν",
+    "θεόν,",
+    "καὶ",
+    "θεὸς",
+    "ἦν",
+    "ὁ",
+    "λόγος."
+   ],
+   "translation": "In the beginning was the word and the word was with God and the word was God.",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "audio": "chapt_7_f_jn1_1",
+   "spellerTilesRef": "chapt_1",
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents"
+    ],
+    "_reveal_note": "RULES C8 / D-30: Show Answer is the one reveal control. No Major Hint button."
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c7_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "lemmas",
+   "columns": 2,
+   "showNtFreq": true,
+   "footnote": "The number after the translation is the number of times the word occurs in the New Testament.",
+   "playAll": {
+    "audio": "chapt_7_g_vocl7",
+    "label": "Say Whole List"
+   }
+  },
+  {
+   "id": "c7_qr_adjectives",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Adjectives Paradigm",
+   "chartTitle": "Adjective Paradigm",
+   "paradigm": {
+    "lemma": "ἀγαθός",
+    "gloss": "good",
+    "columns": [
+     "Masculine",
+     "Feminine",
+     "Neuter"
+    ],
+    "rows": [
+     {
+      "label": "N.",
+      "number": "s",
+      "cells": [
+       {
+        "greek": "ἀγαθός",
+        "audio": "chapt_7_g_aganms"
+       },
+       {
+        "greek": "ἀγαθή",
+        "audio": "chapt_7_g_aganfs"
+       },
+       {
+        "greek": "ἀγαθόν",
+        "audio": "chapt_7_g_aganns"
+       }
+      ]
+     },
+     {
+      "label": "G.",
+      "number": "s",
+      "cells": [
+       {
+        "greek": "ἀγαθοῦ",
+        "audio": "chapt_7_g_agagms"
+       },
+       {
+        "greek": "ἀγαθῆς",
+        "audio": "chapt_7_g_agagfs"
+       },
+       {
+        "greek": "ἀγαθοῦ",
+        "audio": "chapt_7_g_agagns"
+       }
+      ]
+     },
+     {
+      "label": "D.",
+      "number": "s",
+      "cells": [
+       {
+        "greek": "ἀγαθῷ",
+        "audio": "chapt_7_g_agadms"
+       },
+       {
+        "greek": "ἀγαθῇ",
+        "audio": "chapt_7_g_agadfs"
+       },
+       {
+        "greek": "ἀγαθῷ",
+        "audio": "chapt_7_g_agadns"
+       }
+      ]
+     },
+     {
+      "label": "A.",
+      "number": "s",
+      "cells": [
+       {
+        "greek": "ἀγαθόν",
+        "audio": "chapt_7_g_agaams"
+       },
+       {
+        "greek": "ἀγαθήν",
+        "audio": "chapt_7_g_agaafs"
+       },
+       {
+        "greek": "ἀγαθόν",
+        "audio": "chapt_7_g_agaans"
+       }
+      ]
+     },
+     {
+      "label": "V.",
+      "number": "s",
+      "cells": [
+       {
+        "greek": "ἀγαθέ",
+        "audio": "chapt_7_g_agavms"
+       },
+       {
+        "greek": "ἀγαθή",
+        "audio": "chapt_7_g_agavfs"
+       },
+       {
+        "greek": "ἀγαθόν",
+        "audio": "chapt_7_g_agavns"
+       }
+      ]
+     },
+     {
+      "label": "N.V.",
+      "number": "p",
+      "cells": [
+       {
+        "greek": "ἀγαθοί",
+        "audio": "chapt_7_g_aganmp"
+       },
+       {
+        "greek": "ἀγαθαί",
+        "audio": "chapt_7_g_aganfp"
+       },
+       {
+        "greek": "ἀγαθά",
+        "audio": "chapt_7_g_agannp"
+       }
+      ]
+     },
+     {
+      "label": "G.",
+      "number": "p",
+      "cells": [
+       {
+        "greek": "ἀγαθῶν",
+        "audio": "chapt_7_g_agagmp"
+       },
+       {
+        "greek": "ἀγαθῶν",
+        "audio": "chapt_7_g_agagfp"
+       },
+       {
+        "greek": "ἀγαθῶν",
+        "audio": "chapt_7_g_agagnp"
+       }
+      ]
+     },
+     {
+      "label": "D.",
+      "number": "p",
+      "cells": [
+       {
+        "greek": "ἀγαθοῖς",
+        "audio": "chapt_7_g_agadmp"
+       },
+       {
+        "greek": "ἀγαθαῖς",
+        "audio": "chapt_7_g_agadfp"
+       },
+       {
+        "greek": "ἀγαθοῖς",
+        "audio": "chapt_7_g_agadnp"
+       }
+      ]
+     },
+     {
+      "label": "A.",
+      "number": "p",
+      "cells": [
+       {
+        "greek": "ἀγαθούς",
+        "audio": "chapt_7_g_agaamp"
+       },
+       {
+        "greek": "ἀγαθάς",
+        "audio": "chapt_7_g_agaafp"
+       },
+       {
+        "greek": "ἀγαθά",
+        "audio": "chapt_7_g_agaanp"
+       }
+      ]
+     }
+    ],
+    "sayWhole": {
+     "label": "Say Whole List",
+     "audio": "chapt_7_g_agapar"
+    }
+   }
+  },
+  {
+   "id": "c7_qr_eimi",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Present Indicative of \"Eimi\"",
+   "chartTitle": "Present Indicative of εἰμί",
+   "paradigm": {
+    "title": "\"εἰμί\" Paradigm",
+    "columns": [
+     "Singular",
+     "Plural"
+    ],
+    "rows": [
+     {
+      "cells": [
+       {
+        "greek": "εἰμί",
+        "gloss": "I am",
+        "audio": "chapt_7_g_eimi1s"
+       },
+       {
+        "greek": "ἐσμέν",
+        "gloss": "we are",
+        "audio": "chapt_7_g_eimi1p"
+       }
+      ]
+     },
+     {
+      "cells": [
+       {
+        "greek": "εἶ",
+        "gloss": "you are",
+        "audio": "chapt_7_g_eimi2s"
+       },
+       {
+        "greek": "ἐστέ",
+        "gloss": "you are",
+        "audio": "chapt_7_g_eimi2p"
+       }
+      ]
+     },
+     {
+      "cells": [
+       {
+        "greek": "ἐστί(ν)",
+        "gloss": "he/she/it is",
+        "audio": "chapt_7_g_eimi3s"
+       },
+       {
+        "greek": "εἰσί(ν)",
+        "gloss": "they are",
+        "audio": "chapt_7_g_eimi3p"
+       }
+      ]
+     }
+    ],
+    "sayWhole": {
+     "label": "Say Whole List",
+     "audio": "chapt_7_g_ispar"
+    }
+   }
+  },
+  {
+   "reference": "John 14:6a",
+   "words": [
+    {
+     "greek": "λέγει",
+     "gloss": "he said",
+     "audio": "chapt_7_c_sm1"
+    },
+    {
+     "greek": "αὐτῷ",
+     "gloss": "to him",
+     "audio": "chapt_7_c_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_7_c_sm3"
+    },
+    {
+     "greek": "Ἰησοῦς,",
+     "gloss": "Jesus",
+     "audio": "chapt_7_c_sm4"
+    },
+    {
+     "greek": "Ἐγώ",
+     "gloss": "I",
+     "audio": "chapt_7_c_sm5"
+    },
+    {
+     "greek": "εἰμι",
+     "gloss": "I am",
+     "audio": "chapt_7_c_sm6"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_7_c_sm7"
+    },
+    {
+     "greek": "ὁδὸς",
+     "gloss": "way",
+     "audio": "chapt_7_c_sm8"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_7_c_sm9"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_7_c_sm10"
+    },
+    {
+     "greek": "ἀλήθεια",
+     "gloss": "truth",
+     "audio": "chapt_7_c_sm11"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_7_c_sm12"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_7_c_sm13"
+    },
+    {
+     "greek": "ζωή:",
+     "gloss": "life:",
+     "audio": "chapt_7_c_sm14"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_7_c_sm14_6"
+   },
+   "id": "c7_qr_scripture_146a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6a"
+  },
+  {
+   "reference": "John 14:6b",
+   "words": [
+    {
+     "greek": "οὐδεὶς",
+     "gloss": "no one",
+     "audio": "chapt_7_d_sm1"
+    },
+    {
+     "greek": "ἔρχεται",
+     "gloss": "comes",
+     "audio": "chapt_7_d_sm2"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "to",
+     "audio": "chapt_7_d_sm3"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_7_d_sm4"
+    },
+    {
+     "greek": "πατέρα",
+     "gloss": "father",
+     "audio": "chapt_7_d_sm5"
+    },
+    {
+     "greek": "εἰ",
+     "gloss": "except",
+     "audio": "chapt_7_d_sm6"
+    },
+    {
+     "greek": "μὴ",
+     "gloss": null,
+     "audio": "chapt_7_d_sm7"
+    },
+    {
+     "greek": "δἰ",
+     "gloss": "through",
+     "audio": "chapt_7_d_sm8"
+    },
+    {
+     "greek": "ἐμοῦ.",
+     "gloss": "me",
+     "audio": "chapt_7_d_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_7_d_jn146b"
+   },
+   "id": "c7_qr_scripture_146b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6b"
+  },
+  {
+   "reference": "Rom 3:23",
+   "words": [
+    {
+     "greek": "πάντες",
+     "gloss": "all",
+     "audio": "chapt_7_e_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_7_e_sm2"
+    },
+    {
+     "greek": "ἥμαρτον",
+     "gloss": "have sinned",
+     "audio": "chapt_7_e_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_7_e_sm4"
+    },
+    {
+     "greek": "ὑστεροῦνται",
+     "gloss": "fall short",
+     "audio": "chapt_7_e_sm5"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "of the",
+     "audio": "chapt_7_e_sm6"
+    },
+    {
+     "greek": "δόξης",
+     "gloss": "glory",
+     "audio": "chapt_7_e_sm7"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of [the]",
+     "audio": "chapt_7_e_sm8"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_7_e_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_7_e_rom323"
+   },
+   "id": "c7_qr_scripture_rom",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 3:23"
+  },
+  {
+   "reference": "Jn 1:1",
+   "words": [
+    {
+     "greek": "Ἐν",
+     "gloss": "in",
+     "audio": "chapt_7_f_sm1"
+    },
+    {
+     "greek": "ἀρχῇ",
+     "gloss": "beginning",
+     "audio": "chapt_7_f_sm2"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_7_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_7_f_sm4"
+    },
+    {
+     "greek": "λόγος,",
+     "gloss": "word",
+     "audio": "chapt_7_f_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_7_f_sm6"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_7_f_sm7"
+    },
+    {
+     "greek": "λόγος",
+     "gloss": "word",
+     "audio": "chapt_7_f_sm8"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_7_f_sm9"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "with",
+     "audio": "chapt_7_f_sm10"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_7_f_sm11"
+    },
+    {
+     "greek": "θεόν,",
+     "gloss": "God",
+     "audio": "chapt_7_f_sm12"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_7_f_sm6"
+    },
+    {
+     "greek": "θεὸς",
+     "gloss": "God",
+     "audio": "chapt_7_f_sm13"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_7_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_7_f_sm4"
+    },
+    {
+     "greek": "λόγος.",
+     "gloss": "word.",
+     "audio": "chapt_7_f_sm5"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_7_f_jn1_1"
+   },
+   "id": "c7_qr_scripture_jn11",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 1:1"
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Great!",
+   "Congratulations",
+   "Perfect!",
+   "Right On!",
+   "Fantastic!",
+   "Yes",
+   "Awesome!",
+   "Good student!",
+   "Well done!"
+  ],
+  "incorrect": [
+   "Try again",
+   "Swing and a miss",
+   "Repetition will get it",
+   "Never give up",
+   "Keep trying",
+   "Persistence",
+   "Practice makes perfect",
+   "Not quite"
+  ]
+ },
+ "sequence": [
+  "c7_learn_objectives",
+  "c7_learn_english_concepts",
+  "c7_learn_adjectives",
+  "c7_drill_case",
+  "c7_drill_translation",
+  "c7_ex_speller",
+  "c7_learn_eimi",
+  "c7_drill_parsing_eimi",
+  "c7_drill_translation_eimi",
+  "c7_ex_speller_eimi",
+  "c7_learn_vocab",
+  "c7_drill_vocab_gk_en",
+  "c7_drill_vocab_en_gk",
+  "c7_ex_vocab_speller",
+  "c7_learn_scripture",
+  "c7_drill_scripture_memory",
+  "c7_ex_scripture_speller",
+  "c7_qr_vocab",
+  "c7_qr_adjectives",
+  "c7_qr_eimi",
+  "c7_qr_scripture_146a",
+  "c7_qr_scripture_146b",
+  "c7_qr_scripture_rom",
+  "c7_qr_scripture_jn11",
+  "c7_learn_bibliography"
+ ],
+ "_sequence_note": "Rail order from ch7railwalk.pdf (Nathanael, 2026-08-07).",
+ "_audioVerify": "CHAPT_7 ships 190 WAVs; 182 are wired. UNWIRED, each checked against the dispatch tables rather than assumed: c_sm10 and d_sm6b (second takes inside the two cumulative Jn 14:6 review verses, exactly as chapters 5 and 6 left them); g_dikvfp (the vocative feminine plural of dikaios -- the chart merges N.V. in the plural, so no cell claims it); and g_ei, g_estin, g_este, g_eisin, g_esmen (bare eimi-form clips superseded by the g_eimi1s..3p paradigm-cell family, which is what the TBK actually dispatches). Leave all eight unwired unless the build finds a surface."
+}

@@ -1,0 +1,206 @@
+{
+ "_comment": "Chapter 8 lexicon, assembled from 8_PRONS.TBK (cohort 5F). TEN lemmas, THIRTEEN flashcard entries and FIFTEEN drill entries: para splits three ways and hupo two by case (the chapter-6 pattern), and ego/hemeis and su/humeis are PAIRED lemmas that split into two drill entries each -- a shape no earlier chapter produced. senses[] carries the split; ntFreq values are the Review Vocabulary Chart's own counts (0x0f01bc).",
+ "lemmas": {
+  "autos": {
+   "greek": "αὐτός",
+   "translit": "autos",
+   "lexicalForm": "αὐτός, -ή, -ό",
+   "gloss": "he/she/it",
+   "glossShort": "he",
+   "audio": "chapt_8_h_voc1",
+   "ntFreq": 5595,
+   "senses": [
+    {
+     "greek": "αὐτός",
+     "caseTag": null,
+     "glossShort": "he",
+     "audio": "chapt_8_h_voc1"
+    }
+   ]
+  },
+  "ge": {
+   "greek": "γῆ",
+   "translit": "ge",
+   "lexicalForm": "γῆ, -ῆς, ἡ",
+   "gloss": "earth, land",
+   "glossShort": "earth, land",
+   "audio": "chapt_8_h_voc2",
+   "ntFreq": 250,
+   "senses": [
+    {
+     "greek": "γῆ",
+     "caseTag": null,
+     "glossShort": "earth, land",
+     "audio": "chapt_8_h_voc2"
+    }
+   ]
+  },
+  "ego": {
+   "greek": "ἐγώ",
+   "translit": "ego",
+   "lexicalForm": "ἐγώ / ἡμεῖς",
+   "gloss": "I / we",
+   "glossShort": "I",
+   "audio": "chapt_8_h_voc3a",
+   "ntFreq": 2666,
+   "senses": [
+    {
+     "greek": "ἐγώ",
+     "caseTag": null,
+     "glossShort": "I",
+     "audio": "chapt_8_h_voc3a"
+    },
+    {
+     "greek": "ἡμεῖς",
+     "caseTag": null,
+     "glossShort": "we",
+     "audio": "chapt_8_h_voc3b"
+    }
+   ]
+  },
+  "hemera": {
+   "greek": "ἡμέρα",
+   "translit": "hemera",
+   "lexicalForm": "ἡμέρα, -ας, ἡ",
+   "gloss": "day",
+   "glossShort": "day",
+   "audio": "chapt_8_h_voc4",
+   "ntFreq": 389,
+   "senses": [
+    {
+     "greek": "ἡμέρα",
+     "caseTag": null,
+     "glossShort": "day",
+     "audio": "chapt_8_h_voc4"
+    }
+   ]
+  },
+  "hoti": {
+   "greek": "ὅτι",
+   "translit": "hoti",
+   "lexicalForm": "ὅτι",
+   "gloss": "that, so that",
+   "glossShort": "that, so that",
+   "audio": "chapt_8_h_voc5",
+   "ntFreq": 1296,
+   "senses": [
+    {
+     "greek": "ὅτι",
+     "caseTag": null,
+     "glossShort": "that, so that",
+     "audio": "chapt_8_h_voc5"
+    }
+   ]
+  },
+  "oun": {
+   "greek": "οὖν",
+   "translit": "oun",
+   "lexicalForm": "οὖν",
+   "gloss": "so, therefore",
+   "glossShort": "so, therefore",
+   "audio": "chapt_8_h_voc6",
+   "ntFreq": 499,
+   "senses": [
+    {
+     "greek": "οὖν",
+     "caseTag": null,
+     "glossShort": "so, therefore",
+     "audio": "chapt_8_h_voc6"
+    }
+   ]
+  },
+  "ochlos": {
+   "greek": "ὄχλος",
+   "translit": "ochlos",
+   "lexicalForm": "ὄχλος, -ου, ὁ",
+   "gloss": "crowd",
+   "glossShort": "crowd",
+   "audio": "chapt_8_h_voc7",
+   "ntFreq": 175,
+   "senses": [
+    {
+     "greek": "ὄχλος",
+     "caseTag": null,
+     "glossShort": "crowd",
+     "audio": "chapt_8_h_voc7"
+    }
+   ]
+  },
+  "para": {
+   "greek": "παρά",
+   "translit": "para",
+   "lexicalForm": "παρά (with gen.)",
+   "gloss": "from; beside, with; alongside, beside",
+   "glossShort": "from",
+   "audio": "chapt_8_h_voc8",
+   "ntFreq": 194,
+   "senses": [
+    {
+     "greek": "παρά",
+     "caseTag": "(with gen.)",
+     "glossShort": "from",
+     "audio": "chapt_8_h_voc8"
+    },
+    {
+     "greek": "παρά",
+     "caseTag": "(with dat.)",
+     "glossShort": "beside, with",
+     "audio": "chapt_8_h_voc8"
+    },
+    {
+     "greek": "παρά",
+     "caseTag": "(with acc.)",
+     "glossShort": "alongside",
+     "audio": "chapt_8_h_voc8"
+    }
+   ]
+  },
+  "su": {
+   "greek": "σύ",
+   "translit": "su",
+   "lexicalForm": "σύ / ὑμεῖς",
+   "gloss": "you / you (pl)",
+   "glossShort": "you (sg)",
+   "audio": "chapt_8_h_voc9a",
+   "ntFreq": 2905,
+   "senses": [
+    {
+     "greek": "σύ",
+     "caseTag": null,
+     "glossShort": "you (sg)",
+     "audio": "chapt_8_h_voc9a"
+    },
+    {
+     "greek": "ὑμεῖς",
+     "caseTag": null,
+     "glossShort": "you (pl)",
+     "audio": "chapt_8_h_voc9b"
+    }
+   ]
+  },
+  "hupo": {
+   "greek": "ὑπό",
+   "translit": "hupo",
+   "lexicalForm": "ὑπό (with gen.)",
+   "gloss": "by, at the hands of; under, below",
+   "glossShort": "by",
+   "audio": "chapt_8_h_voc10",
+   "ntFreq": 220,
+   "senses": [
+    {
+     "greek": "ὑπό",
+     "caseTag": "(with gen.)",
+     "glossShort": "by",
+     "audio": "chapt_8_h_voc10"
+    },
+    {
+     "greek": "ὑπό",
+     "caseTag": "(with acc.)",
+     "glossShort": "under, below",
+     "audio": "chapt_8_h_voc10"
+    }
+   ]
+  }
+ },
+ "exampleWords": {}
+}

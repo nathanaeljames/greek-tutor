@@ -1,0 +1,3188 @@
+{
+ "_comment": "Chapter 8 (Personal Pronouns), assembled from 8_PRONS.TBK + CHAPT_8 audio + ch8railwalk.pdf. Fields read BY LENGTH PREFIX (5F-EXTRACTION-MAP.md sec 3). Every drill and exercise answer is looked up in the chapter's own three paradigm charts, and every form in that lookup table is asserted to appear verbatim in the chart field before it is used. Behavior fields are stamped by apply-behavior-matrix.py from the nine CONFIRMED chapter-8 rows of DRILLBEHAVIORLEDGER.csv and are not set here.",
+ "id": "chapt_8",
+ "number": 8,
+ "title": "Personal Pronouns",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "understand English pronouns and their various uses",
+  "learn and translate the various Greek pronouns",
+  "recognize proclitics and enclitics and how they effect accent changes",
+  "describe how the pronoun works with its antecedent",
+  "describe how a pronoun is used for emphasis, possession, and in attributive and predicate positions",
+  "master 10 more high frequency vocabulary words",
+  "memorize Rom 6:23a in Greek"
+ ],
+ "vocab": [
+  "autos",
+  "ge",
+  "ego",
+  "hemera",
+  "hoti",
+  "oun",
+  "ochlos",
+  "para",
+  "su",
+  "hupo"
+ ],
+ "learn": [
+  {
+   "id": "c8_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives",
+   "instructions": ""
+  },
+  {
+   "id": "c8_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "topics": [
+    {
+     "id": "definition",
+     "title": "Definition",
+     "content": [
+      {
+       "type": "para",
+       "text": "A pronoun is a word that stands in place"
+      },
+      {
+       "type": "para",
+       "text": "of a noun usually for brevity or to avoid"
+      },
+      {
+       "type": "para",
+       "text": "repetition. The person or object to which"
+      },
+      {
+       "type": "para",
+       "text": "the pronoun refers is called its"
+      },
+      {
+       "type": "para",
+       "text": "\"antecedent.\""
+      },
+      {
+       "type": "para",
+       "text": "Zach threw the ball to Elliott."
+      },
+      {
+       "type": "para",
+       "text": "[[u]]It[[/u]] (the ball) hit [[u]]him[[/u]] (Elliott) in the head."
+      }
+     ]
+    },
+    {
+     "id": "typesOfPronouns",
+     "title": "Types of Pronouns",
+     "content": [
+      {
+       "type": "para",
+       "text": "There are various types of Pronouns:"
+      },
+      {
+       "type": "para",
+       "text": "1) [[u]]Personal pronouns:[[/u]] stand in for a"
+      },
+      {
+       "type": "para",
+       "text": "person—\"Bill did it. [[u]]He[[/u]] was there.\""
+      },
+      {
+       "type": "para",
+       "text": "2) [[u]]Demonstrative pronouns:[[/u]] point to"
+      },
+      {
+       "type": "para",
+       "text": "a person or object which is near"
+      },
+      {
+       "type": "para",
+       "text": "(this/these) or far (that/those)."
+      },
+      {
+       "type": "para",
+       "text": "3) [[u]]Relative pronouns:[[/u]] relate a"
+      },
+      {
+       "type": "para",
+       "text": "subordinate clause to a noun—\"It is"
+      },
+      {
+       "type": "para",
+       "text": "a great person [[u]]who[[/u]] attempts to"
+      },
+      {
+       "type": "para",
+       "text": "master Greek.\""
+      },
+      {
+       "type": "para",
+       "text": "4) [[u]]Reciprocal pronouns:[[/u]] state an"
+      },
+      {
+       "type": "para",
+       "text": "interchange between two"
+      },
+      {
+       "type": "para",
+       "text": "things/persons—They loved [[u]]one[[/u]]"
+      },
+      {
+       "type": "para",
+       "text": "[[u]]another[[/u]]."
+      },
+      {
+       "type": "para",
+       "text": "5) [[u]]Reflexive pronouns:[[/u]] direct the action"
+      },
+      {
+       "type": "para",
+       "text": "of the verb back to the subject—"
+      },
+      {
+       "type": "para",
+       "text": "\"She hid [[u]]herself[[/u]] behind the door.\""
+      },
+      {
+       "type": "para",
+       "text": "6) [[u]]Interrogative pronouns:[[/u]] ask a"
+      },
+      {
+       "type": "para",
+       "text": "question—[[u]]Who[[/u]] broke the ξηαιρ͂"
+      }
+     ]
+    },
+    {
+     "id": "case",
+     "title": "Case",
+     "content": [
+      {
+       "type": "para",
+       "text": "In English, pronouns have three cases:"
+      },
+      {
+       "type": "para",
+       "text": "1) [[u]]Subjective[[/u]]—which are used when a"
+      },
+      {
+       "type": "para",
+       "text": "pronoun is the subject of a sentence"
+      },
+      {
+       "type": "para",
+       "text": "([[u]]He[[/u]] turned left)."
+      },
+      {
+       "type": "para",
+       "text": "2) [[u]]Possessive[[/u]]—which are used to"
+      },
+      {
+       "type": "para",
+       "text": "indicate ownership"
+      },
+      {
+       "type": "para",
+       "text": "(He gave [[u]]his[[/u]] best)."
+      },
+      {
+       "type": "para",
+       "text": "3) [[u]]Objective[[/u]]—which are used when a"
+      },
+      {
+       "type": "para",
+       "text": "pronoun is the object of a sentence"
+      },
+      {
+       "type": "para",
+       "text": "(He left [[u]]him[[/u]])."
+      }
+     ]
+    },
+    {
+     "id": "number",
+     "title": "Number",
+     "content": [
+      {
+       "type": "para",
+       "text": "In English there are singular and plural"
+      },
+      {
+       "type": "para",
+       "text": "pronouns. Pronouns agree with their"
+      },
+      {
+       "type": "para",
+       "text": "antecedents in number and person."
+      },
+      {
+       "type": "para",
+       "text": "[[u]]Singular[[/u]] [[u]]Plural[[/u]] [[u]]Singular[[/u]] [[u]]Plural[[/u]]"
+      },
+      {
+       "type": "para",
+       "text": "I we he they"
+      },
+      {
+       "type": "para",
+       "text": "my our his theirs"
+      },
+      {
+       "type": "para",
+       "text": "me us him them"
+      },
+      {
+       "type": "para",
+       "text": "you you she they"
+      },
+      {
+       "type": "para",
+       "text": "your your hers theirs"
+      },
+      {
+       "type": "para",
+       "text": "her them"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c8_learn_pronouns",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Greek Personal Pronouns",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "Personal pronouns in Greek will match"
+      },
+      {
+       "type": "para",
+       "text": "their antecedent in person, gender, and"
+      },
+      {
+       "type": "para",
+       "text": "number. The case will be determined by"
+      },
+      {
+       "type": "para",
+       "text": "the role the pronoun plays in the sentence."
+      },
+      {
+       "type": "para",
+       "text": "Personal pronouns will be either first"
+      },
+      {
+       "type": "para",
+       "text": "person (I, we), second person (you), or"
+      },
+      {
+       "type": "para",
+       "text": "third person (he/she/it/they)."
+      },
+      {
+       "type": "para",
+       "text": "Greek will use the genitive where we"
+      },
+      {
+       "type": "para",
+       "text": "would normally use a possessive pronoun"
+      },
+      {
+       "type": "para",
+       "text": "(e.g. his, her)."
+      }
+     ]
+    },
+    {
+     "id": "firstPersonParadigm",
+     "title": "First Person Paradigm",
+     "content": [
+      {
+       "type": "para",
+       "text": "Singular Plural"
+      },
+      {
+       "type": "para",
+       "text": "N. ἐγώ I ἡμεῖς we"
+      },
+      {
+       "type": "para",
+       "text": "G. μου of me\\my ἡμῶν of us\\our"
+      },
+      {
+       "type": "para",
+       "text": "D. μοι to me\\for me ἡμῖν to us\\for us"
+      },
+      {
+       "type": "para",
+       "text": "A. με me ἡμᾶς us"
+      },
+      {
+       "type": "para",
+       "text": "Emphatic first person forms are made by"
+      },
+      {
+       "type": "para",
+       "text": "prefixing an epsilon and adding an accent"
+      },
+      {
+       "type": "para",
+       "text": "to the genitive, dative and accusative"
+      },
+      {
+       "type": "para",
+       "text": "singular forms ( ἐμοῦ, ἐμοί, ἐμέ)."
+      }
+     ]
+    },
+    {
+     "id": "secondPersonParadigm",
+     "title": "Second Person Paradigm",
+     "content": [
+      {
+       "type": "para",
+       "text": "Singular Plural"
+      },
+      {
+       "type": "para",
+       "text": "N. σύ you ὑμεῖς you"
+      },
+      {
+       "type": "para",
+       "text": "G. σου of you\\your ὑμῶν your"
+      },
+      {
+       "type": "para",
+       "text": "D. σοι to you\\ ὑμῖν to you\\"
+      },
+      {
+       "type": "para",
+       "text": "for you for you"
+      },
+      {
+       "type": "para",
+       "text": "A. σε you ὑμᾶς you"
+      },
+      {
+       "type": "para",
+       "text": "The emphatic form is made by adding an"
+      },
+      {
+       "type": "para",
+       "text": "accent to the singulars ( σοῦ, σοί, σέ )."
+      }
+     ]
+    },
+    {
+     "id": "examples",
+     "title": "Examples",
+     "content": [
+      {
+       "type": "greekRows",
+       "layout": "verseExamples",
+       "rows": [
+        {
+         "greek": "̓Εγώ εἰμι τὸ φῶς τοῦ κόσμου",
+         "greek2": null,
+         "gloss": "I am the light of the world",
+         "ref": "Jn 8:12",
+         "audio": "chapt_8_h_ex1"
+        },
+        {
+         "greek": "Σὺ εἶ Σίμων ὁ υἱὸς Ἰωάννου",
+         "greek2": null,
+         "gloss": "You are Simon, son of John",
+         "ref": "Jn 1:42",
+         "audio": "chapt_8_h_exx2"
+        },
+        {
+         "greek": "ἀλλ ἐ̓γὼ τὴν ἀλήθειαν",
+         "greek2": "λέγω ὑμῖν",
+         "gloss": "but I speak the truth to you",
+         "ref": "Jn 16:7",
+         "audio": "chapt_8_h_ex3"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "enclitics",
+     "title": "Enclitics",
+     "content": [
+      {
+       "type": "para",
+       "text": "An enclitic is a word that is phonetically"
+      },
+      {
+       "type": "para",
+       "text": "attached so closely with the word that"
+      },
+      {
+       "type": "para",
+       "text": "precedes it that it has no accent of its own."
+      },
+      {
+       "type": "para",
+       "text": "Many personal pronouns are enclitics"
+      },
+      {
+       "type": "para",
+       "text": "(e.g. μου, μοι, με, σου, σοι, σε)."
+      },
+      {
+       "type": "para",
+       "text": "Enclitics are sometimes accented:"
+      },
+      {
+       "type": "para",
+       "text": "1) for emphasis"
+      },
+      {
+       "type": "para",
+       "text": "2) when the first word in a"
+      },
+      {
+       "type": "para",
+       "text": "sentence."
+      },
+      {
+       "type": "para",
+       "text": "If the preceding word has an acute on"
+      },
+      {
+       "type": "para",
+       "text": "the antepenult or a circumflex on the"
+      },
+      {
+       "type": "para",
+       "text": "penult, a second accent will be added"
+      },
+      {
+       "type": "para",
+       "text": "on the ultima. This results in the word"
+      },
+      {
+       "type": "para",
+       "text": "preceding the enclitic being double"
+      },
+      {
+       "type": "para",
+       "text": "accented."
+      },
+      {
+       "type": "para",
+       "text": "ἄνθρωπός μου my man"
+      },
+      {
+       "type": "para",
+       "text": "δῶρόν σου your gift"
+      },
+      {
+       "type": "para",
+       "text": "Finally, an acute on the ultima is not"
+      },
+      {
+       "type": "para",
+       "text": "changed to a grave before an enclitic."
+      }
+     ]
+    },
+    {
+     "id": "declensionFormat",
+     "title": "Declension Format",
+     "content": [
+      {
+       "type": "para",
+       "text": "Person + Case + Number"
+      },
+      {
+       "type": "para",
+       "text": "ἐγώ 1st nominative singular (I)"
+      },
+      {
+       "type": "para",
+       "text": "σοί 2nd dative singular (you)"
+      },
+      {
+       "type": "para",
+       "text": "ὑμῶν 2nd genitive plural (you)"
+      }
+     ]
+    }
+   ],
+   "greekTaps": true,
+   "audioMap": {
+    "ἐγώ": "chapt_8_h_1ns",
+    "μου": "chapt_8_h_gs1",
+    "μοι": "chapt_8_h_1ds",
+    "με": "chapt_8_h_1as",
+    "ἡμεῖς": "chapt_8_h_1np",
+    "ἡμῶν": "chapt_8_h_1gp",
+    "ἡμῖν": "chapt_8_h_1dp",
+    "ἡμᾶς": "chapt_8_h_1ap",
+    "σύ": "chapt_8_h_2ns",
+    "σου": "chapt_8_h_2gs",
+    "σοι": "chapt_8_h_2ds",
+    "σε": "chapt_8_h_2as",
+    "ὑμεῖς": "chapt_8_h_2np",
+    "ὑμῶν": "chapt_8_h_2gp",
+    "ὑμῖν": "chapt_8_h_2dp",
+    "ὑμᾶς": "chapt_8_h_2ap",
+    "αὐτός": "chapt_8_h_3mns",
+    "αὐτοῦ": "chapt_8_h_3mgs",
+    "αὐτῷ": "chapt_8_h_3mds",
+    "αὐτόν": "chapt_8_h_3mas",
+    "αὐτοί": "chapt_8_h_3mnp",
+    "αὐτῶν": "chapt_8_h_3mgp",
+    "αὐτοῖς": "chapt_8_h_3mdp",
+    "αὐτούς": "chapt_8_h_3map",
+    "αὐτή": "chapt_8_h_3fns",
+    "αὐτῆς": "chapt_8_h_3fgs",
+    "αὐτῇ": "chapt_8_h_3fds",
+    "αὐτήν": "chapt_8_h_3fas",
+    "αὐταί": "chapt_8_h_3fnp",
+    "αὐταῖς": "chapt_8_h_3fdp",
+    "αὐτάς": "chapt_8_h_3fap",
+    "αὐτό": "chapt_8_h_3nns",
+    "αὐτά": "chapt_8_h_3nnp",
+    "ἐμοῦ": "chapt_8_h_1gse",
+    "ἐμοί": "chapt_8_h_1dse",
+    "ἐμέ": "chapt_8_h_1ase"
+   }
+  },
+  {
+   "id": "c8_learn_third_person",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Third Person Pronoun",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "The third person pronoun αὐτός differs"
+      },
+      {
+       "type": "para",
+       "text": "from the first and second person"
+      },
+      {
+       "type": "para",
+       "text": "pronouns in that it is marked for gender."
+      },
+      {
+       "type": "para",
+       "text": "With first and second person pronouns,"
+      },
+      {
+       "type": "para",
+       "text": "there is no need to specify gender"
+      },
+      {
+       "type": "para",
+       "text": "because it is understood as the one"
+      },
+      {
+       "type": "para",
+       "text": "speaking or one being spoken to."
+      },
+      {
+       "type": "para",
+       "text": "αὐτός also has some other special"
+      },
+      {
+       "type": "para",
+       "text": "features which we will examine here."
+      }
+     ]
+    },
+    {
+     "id": "thirdPersonParadigm",
+     "title": "Third Person Paradigm",
+     "content": [
+      {
+       "type": "para",
+       "text": "Masculine"
+      },
+      {
+       "type": "para",
+       "text": "Singular Plural"
+      },
+      {
+       "type": "para",
+       "text": "N. αὐτός he αὐτοί they"
+      },
+      {
+       "type": "para",
+       "text": "G. αὐτοῦ his αὐτῶν their"
+      },
+      {
+       "type": "para",
+       "text": "D. αὐτῷ to him/ αὐτοῖς to them/"
+      },
+      {
+       "type": "para",
+       "text": "for him for them"
+      },
+      {
+       "type": "para",
+       "text": "A. αὐτόν him αὐτούς them"
+      },
+      {
+       "type": "para",
+       "text": "Feminine"
+      },
+      {
+       "type": "para",
+       "text": "Singular Plural"
+      },
+      {
+       "type": "para",
+       "text": "N. αὐτή she αὐταί they"
+      },
+      {
+       "type": "para",
+       "text": "G. αὐτῆς hers αὐτῶν their"
+      },
+      {
+       "type": "para",
+       "text": "D. αὐτῇ to her/ αὐταῖς to them/"
+      },
+      {
+       "type": "para",
+       "text": "for her for them"
+      },
+      {
+       "type": "para",
+       "text": "A. αὐτήν her αὐτάς them"
+      },
+      {
+       "type": "para",
+       "text": "Neuter"
+      },
+      {
+       "type": "para",
+       "text": "Singular Plural"
+      },
+      {
+       "type": "para",
+       "text": "N. αὐτό it αὐτά they"
+      },
+      {
+       "type": "para",
+       "text": "G. αὐτοῦ its αὐτῶν their"
+      },
+      {
+       "type": "para",
+       "text": "D. αὐτῷ to it/ αὐτοῖς to them/"
+      },
+      {
+       "type": "para",
+       "text": "for it for them"
+      },
+      {
+       "type": "para",
+       "text": "A. αὐτό it αὐτά them"
+      }
+     ]
+    },
+    {
+     "id": "threeUses",
+     "title": "Three Uses",
+     "content": [
+      {
+       "type": "para",
+       "text": "αὐτός can be used in three ways:"
+      },
+      {
+       "type": "para",
+       "text": "1) [[u]]As a pronoun[[/u]]—matching its"
+      },
+      {
+       "type": "para",
+       "text": "antecedent in number and gender"
+      },
+      {
+       "type": "para",
+       "text": "and translated as \"he,\" \"she,\" \"it,\""
+      },
+      {
+       "type": "para",
+       "text": "or \"they.\""
+      },
+      {
+       "type": "para",
+       "text": "2) [[u]]Reflexive Intensifier[[/u]]—when it is"
+      },
+      {
+       "type": "para",
+       "text": "used as an adjective in the predicate"
+      },
+      {
+       "type": "para",
+       "text": "position (usually in the nominative"
+      },
+      {
+       "type": "para",
+       "text": "case) it is translated reflexively"
+      },
+      {
+       "type": "para",
+       "text": "(e.g. he [[u]]himself[[/u]] will get the car)."
+      },
+      {
+       "type": "para",
+       "text": "3) [[u]]Adjective meaning \"same\"[[/u]]—"
+      },
+      {
+       "type": "para",
+       "text": "when it is used as an adjective in"
+      },
+      {
+       "type": "para",
+       "text": "the attributive position, it is"
+      },
+      {
+       "type": "para",
+       "text": "translated as \"same.\""
+      }
+     ]
+    }
+   ],
+   "greekTaps": true,
+   "audioMap": {
+    "ἐγώ": "chapt_8_h_1ns",
+    "μου": "chapt_8_h_gs1",
+    "μοι": "chapt_8_h_1ds",
+    "με": "chapt_8_h_1as",
+    "ἡμεῖς": "chapt_8_h_1np",
+    "ἡμῶν": "chapt_8_h_1gp",
+    "ἡμῖν": "chapt_8_h_1dp",
+    "ἡμᾶς": "chapt_8_h_1ap",
+    "σύ": "chapt_8_h_2ns",
+    "σου": "chapt_8_h_2gs",
+    "σοι": "chapt_8_h_2ds",
+    "σε": "chapt_8_h_2as",
+    "ὑμεῖς": "chapt_8_h_2np",
+    "ὑμῶν": "chapt_8_h_2gp",
+    "ὑμῖν": "chapt_8_h_2dp",
+    "ὑμᾶς": "chapt_8_h_2ap",
+    "αὐτός": "chapt_8_h_3mns",
+    "αὐτοῦ": "chapt_8_h_3mgs",
+    "αὐτῷ": "chapt_8_h_3mds",
+    "αὐτόν": "chapt_8_h_3mas",
+    "αὐτοί": "chapt_8_h_3mnp",
+    "αὐτῶν": "chapt_8_h_3mgp",
+    "αὐτοῖς": "chapt_8_h_3mdp",
+    "αὐτούς": "chapt_8_h_3map",
+    "αὐτή": "chapt_8_h_3fns",
+    "αὐτῆς": "chapt_8_h_3fgs",
+    "αὐτῇ": "chapt_8_h_3fds",
+    "αὐτήν": "chapt_8_h_3fas",
+    "αὐταί": "chapt_8_h_3fnp",
+    "αὐταῖς": "chapt_8_h_3fdp",
+    "αὐτάς": "chapt_8_h_3fap",
+    "αὐτό": "chapt_8_h_3nns",
+    "αὐτά": "chapt_8_h_3nnp",
+    "ἐμοῦ": "chapt_8_h_1gse",
+    "ἐμοί": "chapt_8_h_1dse",
+    "ἐμέ": "chapt_8_h_1ase"
+   },
+   "popups": [
+    {
+     "id": "asAPronoun",
+     "title": "αὐτός as a pronoun",
+     "examples": [
+      {
+       "greek": "λέγει αὐτῷ ὁ Ἰησοῦς",
+       "gloss": "and Jesus said to him",
+       "ref": "Jn 14:6",
+       "audio": "chapt_8_h_ex31"
+      },
+      {
+       "greek": "πρὸς τοὺς πόδας αὐτοῦ",
+       "gloss": "at his feet",
+       "ref": "Acts 5:10",
+       "audio": "chapt_8_h_ex32"
+      },
+      {
+       "greek": "ἐν τρισὶν ἡμέραις ἐγερῶ αὐτόν.",
+       "gloss": "in three days I will raise it",
+       "ref": "Jn 2:19",
+       "audio": "chapt_8_h_ex33"
+      }
+     ]
+    },
+    {
+     "id": "reflexiveIntensifier",
+     "title": "αὐτός as a Reflexive Intensifier",
+     "examples": [
+      {
+       "greek": "αὐτὸ τὸ πνεῦμα συμμαρτυρεῖ",
+       "gloss": "The Spirit itself beareth witness",
+       "ref": "Rom 8:16",
+       "audio": "chapt_8_h_ex3r1"
+      },
+      {
+       "greek": "Ἰησοῦς αὐτὸς οὐκ ἐβάπτιζεν",
+       "gloss": "Jesus himself did not baptize",
+       "ref": "Jn 4:2",
+       "audio": "chapt_8_h_ex3r2"
+      }
+     ]
+    },
+    {
+     "id": "adjectiveMeaningSame",
+     "title": "αὐτός as an Adjective meaning \"same\"",
+     "examples": [
+      {
+       "greek": "ἡ αὐτὴ σὰρξ",
+       "gloss": "the same flesh",
+       "ref": "1 Cor 15:39",
+       "audio": "chapt_8_h_ex3a1"
+      },
+      {
+       "greek": "ἐν αὐτῇ τῇ ἡμέρᾳ",
+       "gloss": "in that same day",
+       "ref": "Lk 23:12",
+       "audio": "chapt_8_h_ex3a2"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c8_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "senses"
+  },
+  {
+   "reference": "Rom 6:23a",
+   "words": [
+    {
+     "greek": "τὰ",
+     "gloss": "the",
+     "audio": "chapt_8_h_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_8_h_sm2"
+    },
+    {
+     "greek": "ὀψώνια",
+     "gloss": "wages",
+     "audio": "chapt_8_h_sm3"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": null,
+     "audio": "chapt_8_h_sm4"
+    },
+    {
+     "greek": "ἁμαρτίας",
+     "gloss": "of   sin",
+     "audio": "chapt_8_h_sm5"
+    },
+    {
+     "greek": "θάνατος,",
+     "gloss": "[is]        death",
+     "audio": "chapt_8_h_sm6"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_8_h_rm623a"
+   },
+   "id": "c8_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory"
+  },
+  {
+   "id": "c8_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham. [[i]]New Testament Greek for Beginners[[/i]] (Toronto: The Macmillan Company, 1923), pp. 44-51.",
+      "Mounce, William D. [[i]]Basics of Biblical Greek: Grammar[[/i]] (Grand Rapids: Zondervan, 1993), pp. 86-100.",
+      "Summers, Ray and Thomas Sawyer. [[i]]Essentials of New Testament Greek[[/i]] (Nashville: Broadman & Holman, 1995), pp. 39-44.",
+      "Wenham, J. W. [[i]]The Elements of New Testament Greek[[/i]] (Cambridge: Cambridge University Press, 1965), pp. 79-82."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c8_drill_translation",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Personal Pronoun Translation Drill",
+   "instructions": "Click on the correct English translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "Ἰησοῦν τὸν κύριον",
+     "greek2": "ἡμῶν",
+     "ref": "Rom 4:24",
+     "options": [
+      "Jesus my lord",
+      "Jesus your lord",
+      "Jesus our lord"
+     ],
+     "answer": "Jesus our lord",
+     "audio": "chapt_8_h_d2_1"
+    },
+    {
+     "greek": "ἡμᾶς τοὺς ἀποστόλους",
+     "greek2": null,
+     "ref": "1 Cor 4:9",
+     "options": [
+      "us apostles",
+      "you apostles",
+      "we apostles"
+     ],
+     "answer": "us apostles",
+     "audio": "chapt_8_h_d2_2"
+    },
+    {
+     "greek": "ὅτι ἀκούει ἡμῶν",
+     "greek2": null,
+     "ref": "1 Jn 5:15",
+     "options": [
+      "that he hears you (sg)",
+      "that he hears us",
+      "that he hears you (pl)"
+     ],
+     "answer": "that he hears us",
+     "audio": "chapt_8_h_d2_3"
+    },
+    {
+     "greek": "ἀμὴν ἀμὴν λέγω ὑμῖν",
+     "greek2": null,
+     "ref": "Jn 13:20",
+     "options": [
+      "truly, truly I say to you (pl)",
+      "truly, truly I say to you (sg)",
+      "truly, truly I say to them"
+     ],
+     "answer": "truly, truly I say to you (pl)",
+     "audio": "chapt_8_h_d2_4"
+    },
+    {
+     "greek": "ἀλλὰ ὑμεῖς οὐ",
+     "greek2": "πιστεύετε",
+     "ref": "Jn 10:26",
+     "options": [
+      "but you (sg) do not believe",
+      "but you (pl) do not believe",
+      "but they did not believe"
+     ],
+     "answer": "but you (pl) do not believe",
+     "audio": "chapt_8_h_d2_5"
+    },
+    {
+     "greek": "τὸν λόγον μου",
+     "greek2": null,
+     "ref": "Jn 5:24",
+     "options": [
+      "your (sg) word",
+      "your (pl) word",
+      "my word"
+     ],
+     "answer": "my word",
+     "audio": "chapt_8_h_d2_6"
+    },
+    {
+     "greek": "οὐκέτι λέγω ὑμᾶς",
+     "greek2": "δούλους",
+     "ref": "Jn 15:15",
+     "options": [
+      "I no longer call you (sg) servants",
+      "I no longer call them servants",
+      "I no longer call you (pl) servants"
+     ],
+     "answer": "I no longer call you (pl) servants",
+     "audio": "chapt_8_h_d2_7"
+    },
+    {
+     "greek": "καὶ ὁ πατὴρ ἐν ἐμοί",
+     "greek2": "ἐστιν",
+     "ref": "Jn 14:10",
+     "options": [
+      "and the father is in us",
+      "and the father is in me",
+      "and the father is in you (sg)"
+     ],
+     "answer": "and the father is in me",
+     "audio": "chapt_8_h_d2_8"
+    },
+    {
+     "greek": "ἀλλ' ἐγὼ τὴν ἀλήθειαν",
+     "greek2": "λέγω ὑμῖν",
+     "ref": "Jn 16:7",
+     "options": [
+      "but I tell you (pl) the truth",
+      "but I tell you (sg) the truth",
+      "but I tell them the truth"
+     ],
+     "answer": "but I tell you (pl) the truth",
+     "audio": "chapt_8_h_d2_9"
+    },
+    {
+     "greek": "καὶ ἡμᾶς σὺν Ἰησοῦ",
+     "greek2": "ἐγερεῖ",
+     "ref": "2 Cor 4:14",
+     "options": [
+      "and he will raise us with Jesus",
+      "and we will raise with Jesus",
+      "and he will raise you with Jesus"
+     ],
+     "answer": "and he will raise us with Jesus",
+     "audio": "chapt_8_h_d2_10"
+    },
+    {
+     "greek": "τὴν καρδίαν ἡμῶν",
+     "greek2": null,
+     "ref": "1 Jn 3:19",
+     "options": [
+      "your (sg) heart",
+      "my heart",
+      "our heart"
+     ],
+     "answer": "our heart",
+     "audio": "chapt_8_h_d2_11"
+    },
+    {
+     "greek": "καὶ γινώσκουσί με",
+     "greek2": "τὰ ἐμά",
+     "ref": "Jn 10:14",
+     "options": [
+      "and my own know me",
+      "and you (pl) know me",
+      "and they know us"
+     ],
+     "answer": "and my own know me",
+     "audio": "chapt_8_h_d2_12"
+    },
+    {
+     "greek": "ἀγάπην εἰς ἡμᾶς",
+     "greek2": null,
+     "ref": "Rom 5:8",
+     "options": [
+      "love for you (pl)",
+      "love for you (sg)",
+      "love for us"
+     ],
+     "answer": "love for us",
+     "audio": "chapt_8_h_d2_13"
+    },
+    {
+     "greek": "κἀγὼ ἐν τῷ πατρί",
+     "greek2": null,
+     "ref": "Jn 10:38",
+     "options": [
+      "and I in the father",
+      "and you in the father",
+      "and they in the father"
+     ],
+     "answer": "and I in the father",
+     "audio": "chapt_8_h_d2_14"
+    },
+    {
+     "greek": "καὶ ὑμεῖς ἐν ἐμοὶ",
+     "greek2": null,
+     "ref": "Jn 14:20",
+     "options": [
+      "and you (sg) in me",
+      "and you (pl) with us",
+      "and you (pl) in me"
+     ],
+     "answer": "and you (pl) in me",
+     "audio": "chapt_8_h_d2_15"
+    },
+    {
+     "greek": "τί πρὸς σέ",
+     "greek2": null,
+     "ref": "Jn 21:22",
+     "options": [
+      "what is between us",
+      "what is that to you (pl)",
+      "what is that to you (sg)"
+     ],
+     "answer": "what is that to you (sg)",
+     "audio": "chapt_8_h_d2_16"
+    },
+    {
+     "greek": "Ἡμεῖς νόμον ἔχομεν",
+     "greek2": null,
+     "ref": "Jn 19:7",
+     "options": [
+      "I have a law",
+      "we have a law",
+      "you (pl) have a law"
+     ],
+     "answer": "we have a law",
+     "audio": "chapt_8_h_d2_17"
+    },
+    {
+     "greek": "Ἀμὴν ἀμὴν λέγω σοι",
+     "greek2": null,
+     "ref": "Jn 3:3",
+     "options": [
+      "truly, truly I tell you (sg)",
+      "truly, truly I tell you (pl)",
+      "truly, truly I tell him"
+     ],
+     "answer": "truly, truly I tell you (sg)",
+     "audio": "chapt_8_h_d2_18"
+    },
+    {
+     "greek": "καὶ ἐν τῇ ἁμαρτίᾳ",
+     "greek2": "ὑμῶν",
+     "ref": "Jn 8:21",
+     "options": [
+      "and in your (pl) sin",
+      "and in your (sg) sin",
+      "and in our sin"
+     ],
+     "answer": "and in your (pl) sin",
+     "audio": "chapt_8_h_d2_19"
+    },
+    {
+     "greek": "τὴν δόξαν μου",
+     "greek2": null,
+     "ref": "Jn 8:50",
+     "options": [
+      "our glory",
+      "your glory",
+      "my glory"
+     ],
+     "answer": "my glory",
+     "audio": "chapt_8_h_d2_20"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "firstPersonParadigm"
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c8_drill_translation_autos",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Aὐτός Translation Drill",
+   "instructions": "Click on the correct English translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "κατὰ τὸ αὐτὸ πνεῦμα",
+     "greek2": null,
+     "ref": "1 Cor 12:8",
+     "options": [
+      "according to their spirit",
+      "according to the same spirit",
+      "according to your spirit"
+     ],
+     "answer": "according to the same spirit",
+     "audio": "chapt_8_h_d3_1"
+    },
+    {
+     "greek": "λέγει αὐτοῖς ὁ Ἰησοῦς",
+     "greek2": null,
+     "ref": "Jn 2:7",
+     "options": [
+      "Jesus said to them",
+      "Jesus said of them",
+      "They said to Jesus"
+     ],
+     "answer": "Jesus said to them",
+     "audio": "chapt_8_h_d3_2"
+    },
+    {
+     "greek": "ἐγὼ ἐν αὐτοῖς καὶ σὺ",
+     "greek2": "ἐν ἐμοί",
+     "ref": "Jn 17:23",
+     "options": [
+      "I in you and you in them",
+      "I in them and they in me",
+      "I in them and you in me"
+     ],
+     "answer": "I in them and you in me",
+     "audio": "chapt_8_h_d3_3"
+    },
+    {
+     "greek": "λέγει ἡ μήτηρ τοῦ",
+     "greek2": "Ἰησοῦ πρὸς αὐτόν",
+     "ref": "Jn 2:3",
+     "options": [
+      "the mother of Jesus said to them",
+      "the mother of Jesus said to us",
+      "the mother of Jesus said to him"
+     ],
+     "answer": "the mother of Jesus said to him",
+     "audio": "chapt_8_h_d3_4"
+    },
+    {
+     "greek": "ἡ ὥρα αὐτοῦ",
+     "greek2": null,
+     "ref": "Jn 8:20",
+     "options": [
+      "their hour",
+      "his hour",
+      "my hour"
+     ],
+     "answer": "his hour",
+     "audio": "chapt_8_h_d3_5"
+    },
+    {
+     "greek": "ὁ Ἰησοῦς καὶ λέγει",
+     "greek2": "αὐτοῖς",
+     "ref": "Jn 20:2",
+     "options": [
+      "and Jesus said to him",
+      "and Jesus said to them",
+      "and Jesus said to her"
+     ],
+     "answer": "and Jesus said to them",
+     "audio": "chapt_8_h_d3_6"
+    },
+    {
+     "greek": "οἱ δοῦλοι αὐτοῦ",
+     "greek2": null,
+     "ref": "Rev 19:5",
+     "options": [
+      "her servants",
+      "their servants",
+      "his servants"
+     ],
+     "answer": "his servants",
+     "audio": "chapt_8_h_d3_7"
+    },
+    {
+     "greek": "καὶ ὁ λόγος αὐτοῦ",
+     "greek2": "οὐκ ἔστιν ἐν ἡμῖν",
+     "ref": "1 Jn 1:10",
+     "options": [
+      "and his word is not in us",
+      "and the same word is not in us",
+      "and the word itself is not in us"
+     ],
+     "answer": "and his word is not in us",
+     "audio": "chapt_8_h_d3_8"
+    },
+    {
+     "greek": "κἀγὼ γινώσκω αὐτὰ",
+     "greek2": null,
+     "ref": "Jn 10:27",
+     "options": [
+      "and I know him",
+      "and I know her",
+      "and I know them"
+     ],
+     "answer": "and I know them",
+     "audio": "chapt_8_h_d3_9"
+    },
+    {
+     "greek": "ἐν αὐτῇ τῇ ὥρᾳ",
+     "greek2": null,
+     "ref": "Lk 12:12",
+     "options": [
+      "in her hour",
+      "in that very hour",
+      "in his hour"
+     ],
+     "answer": "in that very hour",
+     "audio": "chapt_8_h_d3_10"
+    },
+    {
+     "greek": "ἐν αὐτῇ τῇ ἡμέρᾳ",
+     "greek2": null,
+     "ref": "Lk 23:12",
+     "options": [
+      "on his day",
+      "on her day",
+      "on that very day"
+     ],
+     "answer": "on that very day",
+     "audio": "chapt_8_h_d3_11"
+    },
+    {
+     "greek": "εἶπέν τε πρὸς αὐτούς",
+     "greek2": null,
+     "ref": "Acts 5:35",
+     "options": [
+      "then he said to him",
+      "then he said to her",
+      "then he said to them"
+     ],
+     "answer": "then he said to them",
+     "audio": "chapt_8_h_d3_12"
+    },
+    {
+     "greek": "κύριος ὁ θεὸς",
+     "greek2": "φωτίσει ἐπ' αὐτούς",
+     "ref": "Rev 22:5",
+     "options": [
+      "the Lord God will shine upon him",
+      "the Lord God will shine upon them",
+      "the Lord God will shine upon her"
+     ],
+     "answer": "the Lord God will shine upon them",
+     "audio": "chapt_8_h_d3_13"
+    },
+    {
+     "greek": "οἱ μαθηταὶ αὐτοῦ",
+     "greek2": null,
+     "ref": "Mat 14:12",
+     "options": [
+      "his disciples",
+      "the same disciples",
+      "their disciples"
+     ],
+     "answer": "his disciples",
+     "audio": "chapt_8_h_d3_14"
+    },
+    {
+     "greek": "τότε λέγει αὐταῖς ὁ",
+     "greek2": "Ἰησοῦς",
+     "ref": "Mat 28:10",
+     "options": [
+      "then Jesus said to him",
+      "then Jesus said to them",
+      "then Jesus said to her"
+     ],
+     "answer": "then Jesus said to them",
+     "audio": "chapt_8_h_d3_15"
+    },
+    {
+     "greek": "λέγει αὐτῇ",
+     "greek2": null,
+     "ref": "Mk 5:41",
+     "options": [
+      "he said to her",
+      "he said to him",
+      "she said to him"
+     ],
+     "answer": "he said to her",
+     "audio": "chapt_8_h_d3_16"
+    },
+    {
+     "greek": "ὁ γὰρ αὐτὸς κύριος",
+     "greek2": null,
+     "ref": "Rom 10:12",
+     "options": [
+      "for he is the Lord",
+      "for his Lord",
+      "for the same Lord"
+     ],
+     "answer": "for the same Lord",
+     "audio": "chapt_8_h_d3_17"
+    },
+    {
+     "greek": "καὶ οἱ ἁμαρτωλοὶ",
+     "greek2": "τὸ αὐτὸ ποιοῦσιν",
+     "ref": "Luk 6:33",
+     "options": [
+      "even sinners do the same",
+      "even sinners do it",
+      "even sinners themselves do it"
+     ],
+     "answer": "even sinners do the same",
+     "audio": "chapt_8_h_d3_18"
+    },
+    {
+     "greek": "αὐτός μου ἀδελφὸς",
+     "greek2": "... ἐστίν",
+     "ref": "Mat 12:50",
+     "options": [
+      "he is my brother",
+      "he is the same brother",
+      "he is your brother"
+     ],
+     "answer": "he is my brother",
+     "audio": "chapt_8_h_d3_19"
+    },
+    {
+     "greek": "αὐτοὶ ὑμεῖς μοι",
+     "greek2": "μαρτυρεῖτε",
+     "ref": "Jn 3:28",
+     "options": [
+      "you testify for me",
+      "you yourselves testify for me",
+      "you testify for him"
+     ],
+     "answer": "you yourselves testify for me",
+     "audio": "chapt_8_h_d3_20"
+    },
+    {
+     "greek": "καὶ ἐγὼ αὐτὸς",
+     "greek2": "ἄνθρωπός εἰμι",
+     "ref": "Acts 10:26",
+     "options": [
+      "and I am a man",
+      "and I myself am a man",
+      "and he is a man"
+     ],
+     "answer": "and I myself am a man",
+     "audio": "chapt_8_h_d3_21"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "thirdPersonParadigm"
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c8_drill_case",
+   "type": "select",
+   "mode": "twoStageGrid",
+   "title": "Personal Pronoun Case Drill",
+   "instructions": "Click on the person then the case",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionStages": [
+    {
+     "label": "person",
+     "values": [
+      "First Person",
+      "Second Person",
+      "Third Person"
+     ]
+    },
+    {
+     "label": "caseNumber",
+     "values": [
+      "Nominative Singular",
+      "Nominative Plural",
+      "Genitive Singular",
+      "Genitive Plural",
+      "Dative Singular",
+      "Dative Plural",
+      "Accusative Singular",
+      "Accusative Plural"
+     ],
+     "layout": "paradigm2col"
+    }
+   ],
+   "items": [
+    {
+     "greek": "αὐτή",
+     "answer": [
+      "Third Person",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_8_h_3fns"
+    },
+    {
+     "greek": "ἡμεῖς",
+     "answer": [
+      "First Person",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_8_h_1np"
+    },
+    {
+     "greek": "σοι",
+     "answer": [
+      "Second Person",
+      "Dative Singular"
+     ],
+     "audio": "chapt_8_h_2ds"
+    },
+    {
+     "greek": "αὐτῶν",
+     "answer": [
+      "Third Person",
+      "Genitive Plural"
+     ],
+     "audio": "chapt_8_h_3mgp"
+    },
+    {
+     "greek": "μου",
+     "answer": [
+      "First Person",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_8_h_1gs"
+    },
+    {
+     "greek": "αὐτοῖς",
+     "answer": [
+      "Third Person",
+      "Dative Plural"
+     ],
+     "audio": "chapt_8_h_3mdp"
+    },
+    {
+     "greek": "ἡμῖν",
+     "answer": [
+      "First Person",
+      "Dative Plural"
+     ],
+     "audio": "chapt_8_h_1dp"
+    },
+    {
+     "greek": "ὑμῶν",
+     "answer": [
+      "Second Person",
+      "Genitive Plural"
+     ],
+     "audio": "chapt_8_h_2gp"
+    },
+    {
+     "greek": "αὐταῖς",
+     "answer": [
+      "Third Person",
+      "Dative Plural"
+     ],
+     "audio": "chapt_8_h_3fdp"
+    },
+    {
+     "greek": "σε",
+     "answer": [
+      "Second Person",
+      "Accusative Singular"
+     ],
+     "audio": "chapt_8_h_2as"
+    },
+    {
+     "greek": "ὑμᾶς",
+     "answer": [
+      "Second Person",
+      "Accusative Plural"
+     ],
+     "audio": "chapt_8_h_2ap"
+    },
+    {
+     "greek": "ἐγώ",
+     "answer": [
+      "First Person",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_8_h_1ns"
+    },
+    {
+     "greek": "αὐτόν",
+     "answer": [
+      "Third Person",
+      "Accusative Singular"
+     ],
+     "audio": "chapt_8_h_3mas"
+    },
+    {
+     "greek": "αὐτά",
+     "answer": [
+      "Third Person",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_8_h_3nnp",
+     "answerAlt": [
+      [
+       "Third Person",
+       "Accusative Plural"
+      ]
+     ],
+     "_ambiguous_note": "This form prints in more than one cell of the chart. ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ὑμεῖς",
+     "answer": [
+      "Second Person",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_8_h_2np"
+    },
+    {
+     "greek": "σου",
+     "answer": [
+      "Second Person",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_8_h_2gs"
+    },
+    {
+     "greek": "αὐτοῦ",
+     "answer": [
+      "Third Person",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_8_h_3mgs"
+    },
+    {
+     "greek": "αὐτάς",
+     "answer": [
+      "Third Person",
+      "Accusative Plural"
+     ],
+     "audio": "chapt_8_h_3fap"
+    },
+    {
+     "greek": "ἡμῶν",
+     "answer": [
+      "First Person",
+      "Genitive Plural"
+     ],
+     "audio": "chapt_8_h_1gp"
+    },
+    {
+     "greek": "αὐτῇ",
+     "answer": [
+      "Third Person",
+      "Dative Singular"
+     ],
+     "audio": "chapt_8_h_3fds"
+    },
+    {
+     "greek": "με",
+     "answer": [
+      "First Person",
+      "Accusative Singular"
+     ],
+     "audio": "chapt_8_h_1as"
+    },
+    {
+     "greek": "αὐτούς",
+     "answer": [
+      "Third Person",
+      "Accusative Plural"
+     ],
+     "audio": "chapt_8_h_3map"
+    },
+    {
+     "greek": "αὐταί",
+     "answer": [
+      "Third Person",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_8_h_3fnp"
+    },
+    {
+     "greek": "ὑμῖν",
+     "answer": [
+      "Second Person",
+      "Dative Plural"
+     ],
+     "audio": "chapt_8_h_2dp"
+    },
+    {
+     "greek": "μοι",
+     "answer": [
+      "First Person",
+      "Dative Singular"
+     ],
+     "audio": "chapt_8_h_1ds"
+    },
+    {
+     "greek": "αὐτός",
+     "answer": [
+      "Third Person",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_8_h_3mns"
+    },
+    {
+     "greek": "αὐτῆς",
+     "answer": [
+      "Third Person",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_8_h_3fgs"
+    },
+    {
+     "greek": "ἡμᾶς",
+     "answer": [
+      "First Person",
+      "Accusative Plural"
+     ],
+     "audio": "chapt_8_h_1ap"
+    },
+    {
+     "greek": "αὐτήν",
+     "answer": [
+      "Third Person",
+      "Accusative Singular"
+     ],
+     "audio": "chapt_8_h_3fas"
+    },
+    {
+     "greek": "σύ",
+     "answer": [
+      "Second Person",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_8_h_2ns"
+    },
+    {
+     "greek": "ἐμοί",
+     "answer": [
+      "First Person",
+      "Dative Singular"
+     ],
+     "audio": "chapt_8_h_1dse"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "thirdPersonParadigm"
+   },
+   "_stage_note": "NEW SHAPE. The original wants TWO clicks per item: the person column, then the case-and-number grid. NOTHING is judged until BOTH are chosen -- the learner may click a person, change their mind, and click a different person, as many times as they like, and only the case click commits the answer (Nathanael, VERIFY-5F item 7). The attempt is then scored on the pair.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c8_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "he",
+    "earth, land",
+    "I",
+    "we",
+    "day",
+    "that, so that",
+    "so, therefore",
+    "crowd",
+    "from",
+    "beside, with",
+    "alongside",
+    "you (sg)",
+    "you (pl)",
+    "by",
+    "under, below"
+   ],
+   "items": [
+    {
+     "greek": "αὐτός",
+     "note": null,
+     "answer": "he",
+     "audio": "chapt_8_h_voc1"
+    },
+    {
+     "greek": "γῆ",
+     "note": null,
+     "answer": "earth, land",
+     "audio": "chapt_8_h_voc2"
+    },
+    {
+     "greek": "ἐγώ",
+     "note": null,
+     "answer": "I",
+     "audio": "chapt_8_h_voc3a"
+    },
+    {
+     "greek": "ἡμεῖς",
+     "note": null,
+     "answer": "we",
+     "audio": "chapt_8_h_voc3b"
+    },
+    {
+     "greek": "ἡμέρα",
+     "note": null,
+     "answer": "day",
+     "audio": "chapt_8_h_voc4"
+    },
+    {
+     "greek": "ὅτι",
+     "note": null,
+     "answer": "that, so that",
+     "audio": "chapt_8_h_voc5"
+    },
+    {
+     "greek": "οὖν",
+     "note": null,
+     "answer": "so, therefore",
+     "audio": "chapt_8_h_voc6"
+    },
+    {
+     "greek": "ὄχλος",
+     "note": null,
+     "answer": "crowd",
+     "audio": "chapt_8_h_voc7"
+    },
+    {
+     "greek": "παρά",
+     "note": "(with gen.)",
+     "answer": "from",
+     "audio": "chapt_8_h_voc8"
+    },
+    {
+     "greek": "παρά",
+     "note": "(with dat.)",
+     "answer": "beside, with",
+     "audio": "chapt_8_h_voc8"
+    },
+    {
+     "greek": "παρά",
+     "note": "(with acc.)",
+     "answer": "alongside",
+     "audio": "chapt_8_h_voc8"
+    },
+    {
+     "greek": "σύ",
+     "note": null,
+     "answer": "you (sg)",
+     "audio": "chapt_8_h_voc9a"
+    },
+    {
+     "greek": "ὑμεῖς",
+     "note": null,
+     "answer": "you (pl)",
+     "audio": "chapt_8_h_voc9b"
+    },
+    {
+     "greek": "ὑπό",
+     "note": "(with gen.)",
+     "answer": "by",
+     "audio": "chapt_8_h_voc10"
+    },
+    {
+     "greek": "ὑπό",
+     "note": "(with acc.)",
+     "answer": "under, below",
+     "audio": "chapt_8_h_voc10"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c8_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "options": "static",
+   "optionsAreGreek": true,
+   "optionValues": [
+    "αὐτός",
+    "γῆ",
+    "ἐγώ",
+    "ἡμεῖς",
+    "ἡμέρα",
+    "ὅτι",
+    "οὖν",
+    "ὄχλος",
+    "παρά (gen)",
+    "παρά (dat)",
+    "παρά (acc)",
+    "σύ",
+    "ὑμεῖς",
+    "ὑπό (gen)",
+    "ὑπό (acc)"
+   ],
+   "items": [
+    {
+     "prompt": "he",
+     "answer": "αὐτός",
+     "audio": "chapt_8_h_voc1"
+    },
+    {
+     "prompt": "earth, land",
+     "answer": "γῆ",
+     "audio": "chapt_8_h_voc2"
+    },
+    {
+     "prompt": "I",
+     "answer": "ἐγώ",
+     "audio": "chapt_8_h_voc3a"
+    },
+    {
+     "prompt": "we",
+     "answer": "ἡμεῖς",
+     "audio": "chapt_8_h_voc3b"
+    },
+    {
+     "prompt": "day",
+     "answer": "ἡμέρα",
+     "audio": "chapt_8_h_voc4"
+    },
+    {
+     "prompt": "that, so that",
+     "answer": "ὅτι",
+     "audio": "chapt_8_h_voc5"
+    },
+    {
+     "prompt": "so, therefore",
+     "answer": "οὖν",
+     "audio": "chapt_8_h_voc6"
+    },
+    {
+     "prompt": "crowd",
+     "answer": "ὄχλος",
+     "audio": "chapt_8_h_voc7"
+    },
+    {
+     "prompt": "from",
+     "answer": "παρά (gen)",
+     "audio": "chapt_8_h_voc8"
+    },
+    {
+     "prompt": "beside, with",
+     "answer": "παρά (dat)",
+     "audio": "chapt_8_h_voc8"
+    },
+    {
+     "prompt": "alongside",
+     "answer": "παρά (acc)",
+     "audio": "chapt_8_h_voc8"
+    },
+    {
+     "prompt": "you (sg)",
+     "answer": "σύ",
+     "audio": "chapt_8_h_voc9a"
+    },
+    {
+     "prompt": "you (pl)",
+     "answer": "ὑμεῖς",
+     "audio": "chapt_8_h_voc9b"
+    },
+    {
+     "prompt": "by",
+     "answer": "ὑπό (gen)",
+     "audio": "chapt_8_h_voc10"
+    },
+    {
+     "prompt": "under, below",
+     "answer": "ὑπό (acc)",
+     "audio": "chapt_8_h_voc10"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c8_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "the (neut)",
+    "for",
+    "wages",
+    "the (fem)",
+    "sin",
+    "death"
+   ],
+   "items": [
+    {
+     "greek": "τὰ",
+     "answer": "the (neut)",
+     "audio": "chapt_8_h_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "answer": "for",
+     "audio": "chapt_8_h_sm2"
+    },
+    {
+     "greek": "ὀψώνια",
+     "answer": "wages",
+     "audio": "chapt_8_h_sm3"
+    },
+    {
+     "greek": "τῆς",
+     "answer": "the (fem)",
+     "audio": "chapt_8_h_sm4"
+    },
+    {
+     "greek": "ἁμαρτίας",
+     "answer": "sin",
+     "audio": "chapt_8_h_sm5"
+    },
+    {
+     "greek": "θάνατος",
+     "answer": "death",
+     "audio": "chapt_8_h_sm6"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c8_ex_speller",
+   "type": "spell",
+   "title": "Personal Pronoun Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Phrase",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "I",
+     "note": "(nom sg)",
+     "ref": "Jn 1:20",
+     "answer": "ἐγώ",
+     "audio": "chapt_8_h_1ns"
+    },
+    {
+     "prompt": "of me, my",
+     "note": "(gen sg)",
+     "ref": "Jn 1:15",
+     "answer": "μου",
+     "audio": "chapt_8_h_1gs"
+    },
+    {
+     "prompt": "to me",
+     "note": "(dat sg)",
+     "ref": "Jn 1:33",
+     "answer": "μοι",
+     "audio": "chapt_8_h_1ds"
+    },
+    {
+     "prompt": "me",
+     "note": "(acc sg)",
+     "ref": "Jn 1:33",
+     "answer": "με",
+     "audio": "chapt_8_h_1as"
+    },
+    {
+     "prompt": "we",
+     "note": "(nom pl)",
+     "ref": "Jn 1:16",
+     "answer": "ἡμεῖς",
+     "audio": "chapt_8_h_1np"
+    },
+    {
+     "prompt": "of us, our",
+     "note": "(gen pl)",
+     "ref": "Jn 3:11",
+     "answer": "ἡμῶν",
+     "audio": "chapt_8_h_1gp"
+    },
+    {
+     "prompt": "to us",
+     "note": "(dat pl)",
+     "ref": "Jn 1:14",
+     "answer": "ἡμῖν",
+     "audio": "chapt_8_h_1dp"
+    },
+    {
+     "prompt": "us",
+     "note": "(acc pl)",
+     "ref": "Jn 1:22",
+     "answer": "ἡμᾶς",
+     "audio": "chapt_8_h_1ap"
+    },
+    {
+     "prompt": "you",
+     "note": "(nom sg)",
+     "ref": "Jn 1:19",
+     "answer": "σύ",
+     "audio": "chapt_8_h_2ns"
+    },
+    {
+     "prompt": "of you, your",
+     "note": "(gen sg)",
+     "ref": "Jn 2:17",
+     "answer": "σου",
+     "audio": "chapt_8_h_2gs"
+    },
+    {
+     "prompt": "to you",
+     "note": "(dat sg)",
+     "ref": "Jn 1:50",
+     "answer": "σοι",
+     "audio": "chapt_8_h_2ds"
+    },
+    {
+     "prompt": "you",
+     "note": "(acc sg)",
+     "ref": "Jn 1:48",
+     "answer": "σε",
+     "audio": "chapt_8_h_2as"
+    },
+    {
+     "prompt": "you",
+     "note": "(nom pl)",
+     "ref": "Jn 1:26",
+     "answer": "ὑμεῖς",
+     "audio": "chapt_8_h_2np"
+    },
+    {
+     "prompt": "your",
+     "note": "(gen pl)",
+     "ref": "Jn 1:26",
+     "answer": "ὑμῶν",
+     "audio": "chapt_8_h_2gp"
+    },
+    {
+     "prompt": "to you",
+     "note": "(dat pl)",
+     "ref": "Jn 1:51",
+     "answer": "ὑμῖν",
+     "audio": "chapt_8_h_2dp"
+    },
+    {
+     "prompt": "you",
+     "note": "(acc pl)",
+     "ref": "Jn 3:7",
+     "answer": "ὑμᾶς",
+     "audio": "chapt_8_h_2ap"
+    },
+    {
+     "prompt": "he",
+     "note": "(nom sg)",
+     "ref": "Jn 2:12",
+     "answer": "αὐτός",
+     "audio": "chapt_8_h_3mns"
+    },
+    {
+     "prompt": "his",
+     "note": "(gen sg)",
+     "ref": "Jn 1:3",
+     "answer": "αὐτοῦ",
+     "audio": "chapt_8_h_3mgs"
+    },
+    {
+     "prompt": "to him",
+     "note": "(dat sg)",
+     "ref": "Jn 1:38",
+     "answer": "αὐτῷ",
+     "audio": "chapt_8_h_3mds"
+    },
+    {
+     "prompt": "him",
+     "note": "(acc sg)",
+     "ref": "Jn 1:10",
+     "answer": "αὐτόν",
+     "audio": "chapt_8_h_3mas"
+    },
+    {
+     "prompt": "they",
+     "note": "(masc nom 3 pl)",
+     "ref": "Jn 3:28",
+     "answer": "αὐτοί",
+     "audio": "chapt_8_h_3mnp"
+    },
+    {
+     "prompt": "their",
+     "note": "(masc gen 3 pl)",
+     "ref": "Jn 3:19",
+     "answer": "αὐτῶν",
+     "audio": "chapt_8_h_3mgp"
+    },
+    {
+     "prompt": "to them",
+     "note": "(masc dat 3 pl)",
+     "ref": "Jn 1:12",
+     "answer": "αὐτοῖς",
+     "audio": "chapt_8_h_3mdp"
+    },
+    {
+     "prompt": "them",
+     "note": "(masc acc 3 pl)",
+     "ref": "Jn 1:38",
+     "answer": "αὐτούς",
+     "audio": "chapt_8_h_3map"
+    },
+    {
+     "prompt": "she",
+     "note": "(fem nom 3 sg)",
+     "ref": "Mk 10:12",
+     "answer": "αὐτή",
+     "audio": "chapt_8_h_3fns"
+    },
+    {
+     "prompt": "her",
+     "note": "(fem gen 3 sg)",
+     "ref": "Jn 4:27",
+     "answer": "αὐτῆς",
+     "audio": "chapt_8_h_3fgs"
+    },
+    {
+     "prompt": "to her",
+     "note": "(fem dat 3 sg)",
+     "ref": "Jn 2:4",
+     "answer": "αὐτῇ",
+     "audio": "chapt_8_h_3fds"
+    },
+    {
+     "prompt": "her",
+     "note": "(fem acc 3 sg)",
+     "ref": "Jn 8:3",
+     "answer": "αὐτήν",
+     "audio": "chapt_8_h_3fas"
+    },
+    {
+     "prompt": "they",
+     "note": "(fem nom 3 pl)",
+     "ref": null,
+     "answer": "αὐταί",
+     "audio": "chapt_8_h_3fnp"
+    },
+    {
+     "prompt": "their",
+     "note": "(fem gen 3 pl)",
+     "ref": "Mat 4:8",
+     "answer": "αὐτῶν",
+     "audio": "chapt_8_h_3fgp"
+    },
+    {
+     "prompt": "to them",
+     "note": "(fem dat 3 pl)",
+     "ref": "Jn 5:39",
+     "answer": "αὐταῖς",
+     "audio": "chapt_8_h_3fdp"
+    },
+    {
+     "prompt": "them",
+     "note": "(fem acc 3 pl)",
+     "ref": "Jn 2:7",
+     "answer": "αὐτάς",
+     "audio": "chapt_8_h_3fap"
+    },
+    {
+     "prompt": "it",
+     "note": "(neut nom 3 sg)",
+     "ref": "Jn 1:5",
+     "answer": "αὐτό",
+     "audio": "chapt_8_h_3nns"
+    },
+    {
+     "prompt": "its",
+     "note": "(neut gen 3 sg)",
+     "ref": "Jn 3:8",
+     "answer": "αὐτοῦ",
+     "audio": "chapt_8_h_3ngs"
+    },
+    {
+     "prompt": "to it",
+     "note": "(neut dat 3 sg)",
+     "ref": "1 Jn 2:8",
+     "answer": "αὐτῷ",
+     "audio": "chapt_8_h_3nds"
+    },
+    {
+     "prompt": "it",
+     "note": "(neut acc 3 sg)",
+     "ref": "Jn 1:5",
+     "answer": "αὐτό",
+     "audio": "chapt_8_h_3nas"
+    },
+    {
+     "prompt": "they",
+     "note": "(neut nom 3 pl)",
+     "ref": "Mat 13:39",
+     "answer": "αὐτά",
+     "audio": "chapt_8_h_3nnp"
+    },
+    {
+     "prompt": "their",
+     "note": "(neut gen 3 pl)",
+     "ref": "Jn 10:4",
+     "answer": "αὐτῶν",
+     "audio": "chapt_8_h_3ngp"
+    },
+    {
+     "prompt": "to them",
+     "note": "(neut dat 3 pl)",
+     "ref": "Jn 10:28",
+     "answer": "αὐτοῖς",
+     "audio": "chapt_8_h_3ndp"
+    },
+    {
+     "prompt": "them",
+     "note": "(neut acc 3 pl)",
+     "ref": "Jn 10:28",
+     "answer": "αὐτά",
+     "audio": "chapt_8_h_3nap"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Phrase",
+     "Spell Greek Phrase"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "The forty prompts run the three paradigms in chart order (1st sg/pl, 2nd sg/pl, 3rd masc/fem/neut sg/pl, four cases each); each prompt's own case and number tag is asserted against that order before the form is taken from the chapter's chart.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c8_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Meaning",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "he",
+     "note": null,
+     "answer": "αὐτός",
+     "audio": "chapt_8_h_voc1"
+    },
+    {
+     "prompt": "earth, land",
+     "note": null,
+     "answer": "γῆ",
+     "audio": "chapt_8_h_voc2"
+    },
+    {
+     "prompt": "I",
+     "note": null,
+     "answer": "ἐγώ",
+     "audio": "chapt_8_h_voc3a"
+    },
+    {
+     "prompt": "we",
+     "note": null,
+     "answer": "ἡμεῖς",
+     "audio": "chapt_8_h_voc3b"
+    },
+    {
+     "prompt": "day",
+     "note": null,
+     "answer": "ἡμέρα",
+     "audio": "chapt_8_h_voc4"
+    },
+    {
+     "prompt": "that, so that",
+     "note": null,
+     "answer": "ὅτι",
+     "audio": "chapt_8_h_voc5"
+    },
+    {
+     "prompt": "so, therefore",
+     "note": null,
+     "answer": "οὖν",
+     "audio": "chapt_8_h_voc6"
+    },
+    {
+     "prompt": "crowd",
+     "note": null,
+     "answer": "ὄχλος",
+     "audio": "chapt_8_h_voc7"
+    },
+    {
+     "prompt": "from",
+     "note": "(with gen.)",
+     "answer": "παρά",
+     "audio": "chapt_8_h_voc8"
+    },
+    {
+     "prompt": "you (singular)",
+     "note": null,
+     "answer": "σύ",
+     "audio": "chapt_8_h_voc9a"
+    },
+    {
+     "prompt": "you (plural)",
+     "note": null,
+     "answer": "ὑμεῖς",
+     "audio": "chapt_8_h_voc9b"
+    },
+    {
+     "prompt": "by",
+     "note": "(with gen.)",
+     "answer": "ὑπό",
+     "audio": "chapt_8_h_voc10"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c8_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of Rom 6:23a then click \"Check Answer\"",
+   "reference": "Rom 6:23a",
+   "answerWords": [
+    "τὰ",
+    "γὰρ",
+    "ὀψώνια",
+    "τῆς",
+    "ἁμαρτίας",
+    "θάνατος,"
+   ],
+   "translation": "For the wages of sin is death",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "audio": "chapt_8_h_rm623a",
+   "spellerTilesRef": "chapt_1",
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents"
+    ],
+    "_reveal_note": "RULES C8 / D-30."
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c8_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "lemmas",
+   "columns": 2,
+   "showNtFreq": true,
+   "footnote": "The number after the translation is the number of times the word occurs in the New Testament.",
+   "playAll": {
+    "audio": "chapt_8_h_vocl8",
+    "label": "Say Whole List"
+   }
+  },
+  {
+   "id": "c8_qr_first",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Personal Pronouns:  1st Person",
+   "paradigm": {
+    "type": "pronounParadigm",
+    "title": "First Person Personal Pronouns",
+    "columns": [
+     "Singular",
+     "Plural"
+    ],
+    "rows": [
+     {
+      "label": "N.",
+      "text": "ἐγώ I ἡμεῖς we"
+     },
+     {
+      "label": "G.",
+      "text": "mou of me\\my ἡμῶν of us\\our"
+     },
+     {
+      "label": "D.",
+      "text": "moi to me\\for me ἡμῖν to us\\for us"
+     },
+     {
+      "label": "A.",
+      "text": "me me ἡμᾶς us"
+     }
+    ]
+   },
+   "sayWhole": {
+    "label": "Say Whole Paradigm",
+    "audio": "chapt_8_h_1par"
+   }
+  },
+  {
+   "id": "c8_qr_second",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Personal Pronouns:  2nd Person",
+   "paradigm": {
+    "type": "pronounParadigm",
+    "title": "Second Person Personal Pronouns",
+    "columns": [
+     "Singular",
+     "Plural"
+    ],
+    "rows": [
+     {
+      "label": "N.",
+      "text": "σύ you ὑμεῖς you"
+     },
+     {
+      "label": "G.",
+      "text": "sou of you\\your ὑμῶν your"
+     },
+     {
+      "label": "D.",
+      "text": "soi to you\\for you ὑμῖν to you\\for you"
+     },
+     {
+      "label": "A.",
+      "text": "se you ὑμᾶς you"
+     }
+    ]
+   },
+   "sayWhole": {
+    "label": "Say Whole Paradigm",
+    "audio": "chapt_8_h_2par"
+   }
+  },
+  {
+   "id": "c8_qr_third",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Pronouns:  Personal 3rd Person",
+   "paradigms": [
+    {
+     "type": "pronounParadigm",
+     "title": "Third Person Personal Pronouns",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "N.",
+       "text": "αὐτός he αὐτοί they"
+      },
+      {
+       "label": "G.",
+       "text": "αὐτοῦ his αὐτῶν their"
+      },
+      {
+       "label": "D.",
+       "text": "αὐτῷ to him/ αὐτοῖς to them/"
+      },
+      {
+       "label": "A.",
+       "text": "αὐτόν him αὐτούς them"
+      }
+     ],
+     "gender": "Masculine",
+     "sayWhole": {
+      "label": "Say Whole Paradigm",
+      "audio": "chapt_8_h_3mpar"
+     }
+    },
+    {
+     "type": "pronounParadigm",
+     "title": "Third Person Pronouns",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "N.",
+       "text": "αὐτή she αὐταί they"
+      },
+      {
+       "label": "G.",
+       "text": "αὐτῆς her αὐτῶν their"
+      },
+      {
+       "label": "D.",
+       "text": "αὐτῇ to her/ αὐταῖς to them/"
+      },
+      {
+       "label": "A.",
+       "text": "αὐτήν her αὐτάς them"
+      }
+     ],
+     "gender": "Feminine",
+     "sayWhole": {
+      "label": "Say Whole Paradigm",
+      "audio": "chapt_8_h_3fpar"
+     }
+    },
+    {
+     "type": "pronounParadigm",
+     "title": "Third Person Pronouns",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "N.",
+       "text": "αὐτό it αὐτά they"
+      },
+      {
+       "label": "G.",
+       "text": "αὐτοῦ its αὐτῶν their"
+      },
+      {
+       "label": "D.",
+       "text": "αὐτῷ to it/ αὐτοῖς to them/"
+      },
+      {
+       "label": "A.",
+       "text": "αὐτό it αὐτά them"
+      }
+     ],
+     "gender": "Neuter",
+     "sayWhole": {
+      "label": "Say Whole Paradigm",
+      "audio": "chapt_8_h_3npar"
+     }
+    }
+   ],
+   "_more_note": "Masculine, then More to Feminine, then More to Neuter, Back stepping down."
+  },
+  {
+   "reference": "John 14:6a",
+   "words": [
+    {
+     "greek": "λέγει",
+     "gloss": "he said",
+     "audio": "chapt_8_c_sm1"
+    },
+    {
+     "greek": "αὐτῷ",
+     "gloss": "to him",
+     "audio": "chapt_8_c_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": null,
+     "audio": "chapt_8_c_sm3"
+    },
+    {
+     "greek": "Ἰησοῦς,",
+     "gloss": "Jesus",
+     "audio": "chapt_8_c_sm4"
+    },
+    {
+     "greek": "Ἐγώ",
+     "gloss": "I",
+     "audio": "chapt_8_c_sm5"
+    },
+    {
+     "greek": "εἰμι",
+     "gloss": "I am",
+     "audio": "chapt_8_c_sm6"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_8_c_sm7"
+    },
+    {
+     "greek": "ὁδὸς",
+     "gloss": "way",
+     "audio": "chapt_8_c_sm8"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_8_c_sm9"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_8_c_sm10"
+    },
+    {
+     "greek": "ἀλήθεια",
+     "gloss": "truth",
+     "audio": "chapt_8_c_sm11"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_8_c_sm12"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_8_c_sm13"
+    },
+    {
+     "greek": "ζωή:",
+     "gloss": "life:",
+     "audio": "chapt_8_c_sm14"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_8_c_sm14_6"
+   },
+   "id": "c8_qr_scripture_146a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6a"
+  },
+  {
+   "reference": "John 14:6b",
+   "words": [
+    {
+     "greek": "οὐδεὶς",
+     "gloss": "no one",
+     "audio": "chapt_8_d_sm1"
+    },
+    {
+     "greek": "ἔρχεται",
+     "gloss": "comes",
+     "audio": "chapt_8_d_sm2"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "to",
+     "audio": "chapt_8_d_sm3"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_8_d_sm4"
+    },
+    {
+     "greek": "πατέρα",
+     "gloss": "father",
+     "audio": "chapt_8_d_sm5"
+    },
+    {
+     "greek": "εἰ",
+     "gloss": "except",
+     "audio": "chapt_8_d_sm6"
+    },
+    {
+     "greek": "μὴ",
+     "gloss": null,
+     "audio": "chapt_8_d_sm7"
+    },
+    {
+     "greek": "δἰ",
+     "gloss": "through",
+     "audio": "chapt_8_d_sm8"
+    },
+    {
+     "greek": "ἐμοῦ.",
+     "gloss": "me",
+     "audio": "chapt_8_d_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_8_d_jn146b"
+   },
+   "id": "c8_qr_scripture_146b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6b"
+  },
+  {
+   "reference": "Rom 3:23",
+   "words": [
+    {
+     "greek": "πάντες",
+     "gloss": "all",
+     "audio": "chapt_8_e_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_8_e_sm2"
+    },
+    {
+     "greek": "ἥμαρτον",
+     "gloss": "have sinned",
+     "audio": "chapt_8_e_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_8_e_sm4"
+    },
+    {
+     "greek": "ὑστεροῦνται",
+     "gloss": "fall short",
+     "audio": "chapt_8_e_sm5"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "of the",
+     "audio": "chapt_8_e_sm6"
+    },
+    {
+     "greek": "δόξης",
+     "gloss": "glory",
+     "audio": "chapt_8_e_sm7"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of [the]",
+     "audio": "chapt_8_e_sm8"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_8_e_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_8_e_rom323"
+   },
+   "id": "c8_qr_scripture_rom323",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 3:23"
+  },
+  {
+   "reference": "Jn 1:1",
+   "words": [
+    {
+     "greek": "Ἐν",
+     "gloss": "in",
+     "audio": "chapt_8_f_sm1"
+    },
+    {
+     "greek": "ἀρχῇ",
+     "gloss": "beginning",
+     "audio": "chapt_8_f_sm2"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_8_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_8_f_sm4"
+    },
+    {
+     "greek": "λόγος,",
+     "gloss": "word",
+     "audio": "chapt_8_f_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_8_f_sm6"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_8_f_sm7"
+    },
+    {
+     "greek": "λόγος",
+     "gloss": "word",
+     "audio": "chapt_8_f_sm8"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_8_f_sm9"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "with",
+     "audio": "chapt_8_f_sm10"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_8_f_sm11"
+    },
+    {
+     "greek": "θεόν,",
+     "gloss": "God",
+     "audio": "chapt_8_f_sm12"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_8_f_sm6"
+    },
+    {
+     "greek": "θεὸς",
+     "gloss": "God",
+     "audio": "chapt_8_f_sm13"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_8_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_8_f_sm4"
+    },
+    {
+     "greek": "λόγος.",
+     "gloss": "word.",
+     "audio": "chapt_8_f_sm5"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_8_f_jn1_1"
+   },
+   "id": "c8_qr_scripture_jn11",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 1:1"
+  },
+  {
+   "reference": "Rom 6:23a",
+   "words": [
+    {
+     "greek": "τὰ",
+     "gloss": "the",
+     "audio": "chapt_8_h_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_8_h_sm2"
+    },
+    {
+     "greek": "ὀψώνια",
+     "gloss": "wages",
+     "audio": "chapt_8_h_sm3"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "the",
+     "audio": "chapt_8_h_sm4"
+    },
+    {
+     "greek": "ἁμαρτίας",
+     "gloss": "of  sin",
+     "audio": "chapt_8_h_sm5"
+    },
+    {
+     "greek": "θάνατος,",
+     "gloss": "[is]      death",
+     "audio": "chapt_8_h_sm6"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_8_h_rm623a"
+   },
+   "id": "c8_qr_scripture_rom623",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 6:23a"
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Great!",
+   "Congratulations",
+   "Perfect!",
+   "Right On!",
+   "Fantastic!",
+   "Yes"
+  ],
+  "incorrect": [
+   "Try again",
+   "Swing and a miss",
+   "Repetition will get it",
+   "Never give up",
+   "Keep trying"
+  ]
+ },
+ "sequence": [
+  "c8_learn_objectives",
+  "c8_learn_english_concepts",
+  "c8_learn_pronouns",
+  "c8_drill_translation",
+  "c8_learn_third_person",
+  "c8_drill_translation_autos",
+  "c8_drill_case",
+  "c8_ex_speller",
+  "c8_learn_vocab",
+  "c8_drill_vocab_gk_en",
+  "c8_drill_vocab_en_gk",
+  "c8_ex_vocab_speller",
+  "c8_learn_scripture",
+  "c8_drill_scripture_memory",
+  "c8_ex_scripture_speller",
+  "c8_qr_vocab",
+  "c8_qr_first",
+  "c8_qr_second",
+  "c8_qr_third",
+  "c8_qr_scripture_146a",
+  "c8_qr_scripture_146b",
+  "c8_qr_scripture_rom323",
+  "c8_qr_scripture_jn11",
+  "c8_qr_scripture_rom623",
+  "c8_learn_bibliography"
+ ],
+ "_sequence_note": "Rail order from ch8railwalk.pdf (Nathanael, 2026-08-07).",
+ "_audioVerify": "CHAPT_8 ships 181 WAVs. i_rm623b is chapter 9's Rom 6:23b, shipped forward and NOT used here. Leave any clip the build cannot place unwired rather than inventing a surface for it; h_kai, h_kagw, h_gs1 and h_exx2 are single-word clips whose surfaces the extraction did not settle and are a VERIFY-5F ask."
+}

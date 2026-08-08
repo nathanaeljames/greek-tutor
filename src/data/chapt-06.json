@@ -1,0 +1,2579 @@
+{
+ "_comment": "Chapter 6 (Prepositions), assembled from 6_PREPS.TBK + CHAPT_6 audio + ch6railwalk.pdf. Fields read by offset (5F-EXTRACTION-MAP.md sec 1); drill answers derived from the chapter's own gloss charts and cross-checked against the extracted option columns at assembly. Behavior fields are stamped by apply-behavior-matrix.py from the eight CONFIRMED chapter-6 rows of DRILLBEHAVIORLEDGER.csv and are not set here.",
+ "id": "chapt_6",
+ "number": 6,
+ "title": "Prepositions",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "understand English prepositions and the various ways they connect words",
+  "translate the various Greek prepositions and how they relate to the noun inflectional system",
+  "be able to recognize and predict when prepositions will elide",
+  "identify and translate prepositions when they are compounded with other word forms",
+  "master 10 more high frequency vocabulary words",
+  "memorize Jn 1:1 in Greek"
+ ],
+ "vocab": [
+  "apo",
+  "dia",
+  "eis",
+  "ek",
+  "en",
+  "epi",
+  "kata",
+  "meta",
+  "peri",
+  "pros"
+ ],
+ "learn": [
+  {
+   "id": "c6_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives",
+   "instructions": ""
+  },
+  {
+   "id": "c6_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "topics": [
+    {
+     "id": "definition",
+     "title": "Definition",
+     "content": [
+      {
+       "type": "para",
+       "text": "Prepositions are usually small words that link or relate two words together. Often they tell position in space or time."
+      },
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "Put the book [[u]]on[[/u]] the table.",
+         "def": "Tells of the spatial relationship of the book to the table."
+        },
+        {
+         "term": "He went [[u]]after[[/u]] the game.",
+         "def": "Connects the person's going to the time of the game."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "prepositionalPhrase",
+     "title": "Prepositional Phrase",
+     "content": [
+      {
+       "type": "para",
+       "text": "A [[u]]phrase[[/u]] is a string of closely connected words.  A [[u]]clause[[/u]] is a string of connected words and/or phrases, including both a subject and a verb."
+      },
+      {
+       "type": "para",
+       "text": "A prepositional phrase is usually composed of a preposition followed by a noun which is called the [[u]]object of the preposition[[/u]]"
+      },
+      {
+       "type": "para",
+       "text": "Prep. + noun = in + the car"
+      }
+     ]
+    },
+    {
+     "id": "prepositionAndCase",
+     "title": "Preposition and Case",
+     "content": [
+      {
+       "type": "para",
+       "text": "In English, the object of the preposition is in the objective case. Thus we would say \"Send the disk with him\" and not \"with he\" or \"with his.\""
+      },
+      {
+       "type": "para",
+       "text": "Greek prepositions may be followed by nouns in the genitive, dative, or accusative inflectional forms. Each preposition will have a particular case(s) that it usually goes with."
+      }
+     ]
+    }
+   ],
+   "_underline_note": "phrase / clause / object of the preposition carry format id 0x62e against a 0x502 body in the run table at 0x2076c; on / after are from the rail walk."
+  },
+  {
+   "id": "c6_learn_prepositions",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Greek Prepositions",
+   "greekTaps": true,
+   "popups": [
+    {
+     "id": "apo",
+     "greek": "ἀπό",
+     "audio": "chapt_6_f_voc1",
+     "senses": [
+      "from, because of, by, of (with the genitive)"
+     ],
+     "examples": [
+      {
+       "greek": "Ἰησοῦν υἱὸν τοῦ Ἰωσὴφ τὸν ἀπὸ Ναζαρέτ",
+       "gloss": "Jesus son of Joseph from Nazareth",
+       "ref": "Jn 1:45",
+       "audio": "chapt_6_f_apo1"
+      },
+      {
+       "greek": "ἀπὸ τοῦ νόμου",
+       "gloss": "from the law",
+       "ref": "Mat 5:18",
+       "audio": "chapt_6_f_apo2"
+      },
+      {
+       "greek": "ἀφ' ὑμῶν",
+       "gloss": "from you",
+       "ref": "Jn 16:22",
+       "audio": "chapt_6_f_apo3"
+      }
+     ]
+    },
+    {
+     "id": "eis",
+     "greek": "εἰς",
+     "audio": "chapt_6_f_voc3",
+     "senses": [
+      "into, to, among, for, near (with the accusative)"
+     ],
+     "examples": [
+      {
+       "greek": "εἰς τὴν ζωὴν",
+       "gloss": "to life",
+       "ref": "Mat 7:14",
+       "audio": "chapt_6_f_eis1"
+      },
+      {
+       "greek": "εἰς τὴν οἰκίαν Πέτρου",
+       "gloss": "into Peter's house",
+       "ref": "Mat 8:14",
+       "audio": "chapt_6_f_eis2"
+      },
+      {
+       "greek": "εἰς τὴν βασιλείαν τῶν οὐρανῶν",
+       "gloss": "into the kingdom of heaven",
+       "ref": "Mat 19:23",
+       "audio": "chapt_6_f_eis3"
+      }
+     ]
+    },
+    {
+     "id": "ek",
+     "greek": "ἐκ",
+     "audio": "chapt_6_f_voc4",
+     "senses": [
+      "from, out of, of, because of (with the genitive)"
+     ],
+     "examples": [
+      {
+       "greek": "ἐκ τῶν Φαρισαίων",
+       "gloss": "from the Pharisees",
+       "ref": "Jn 1:24",
+       "audio": "chapt_6_f_ek1"
+      },
+      {
+       "greek": "ἐκ τῆς βασιλείας",
+       "gloss": "out of the kingdom",
+       "ref": "Mat 13:41",
+       "audio": "chapt_6_f_ek2"
+      },
+      {
+       "greek": "ἐξ οὐρανοῦ",
+       "gloss": "from heaven",
+       "ref": "Mat 28:2",
+       "audio": "chapt_6_f_ek3"
+      }
+     ]
+    },
+    {
+     "id": "en",
+     "greek": "ἐν",
+     "audio": "chapt_6_f_voc5",
+     "senses": [
+      "in, on, among, when, by, at (with the dative)"
+     ],
+     "examples": [
+      {
+       "greek": "ἐν ταῖς καρδίαις",
+       "gloss": "in the hearts",
+       "ref": "Mat 9:4",
+       "audio": "chapt_6_f_en1"
+      },
+      {
+       "greek": "ἐν τῷ ἀνθρώπῳ",
+       "gloss": "in the man",
+       "ref": "Jn 2:25",
+       "audio": "chapt_6_f_en2"
+      },
+      {
+       "greek": "ἐν ἡμέρᾳ κρίσεως",
+       "gloss": "on the day of judgment",
+       "ref": "Mat 10:15",
+       "audio": "chapt_6_f_en3"
+      }
+     ]
+    },
+    {
+     "id": "pros",
+     "greek": "πρός",
+     "audio": "chapt_6_f_voc10",
+     "senses": [
+      "to, towards, with (with the accusative)"
+     ],
+     "examples": [
+      {
+       "greek": "ἔρχεται πρὸς αὐτὸν λέγει πρὸς Φίλιππον",
+       "gloss": "he comes to him and said to Philip",
+       "ref": "Jn 6:5",
+       "audio": "chapt_6_f_pros1"
+      },
+      {
+       "greek": "πρὸς τοὺς μαθητὰς",
+       "gloss": "to the disciples",
+       "ref": "Mat 26:40",
+       "audio": "chapt_6_f_pros2"
+      },
+      {
+       "greek": "πρὸς τὸν ὄχλον",
+       "gloss": "to the crowd",
+       "ref": "Mat 17:14",
+       "audio": "chapt_6_f_pros3"
+      }
+     ]
+    },
+    {
+     "id": "sun",
+     "greek": "σύν",
+     "audio": "chapt_6_f_sun",
+     "senses": [
+      "with (with the dative)"
+     ],
+     "examples": [
+      {
+       "greek": "σὺν τοῖς μαθηταῖς",
+       "gloss": "with the disciples",
+       "ref": "Mk 8:34",
+       "audio": "chapt_6_f_sun1"
+      },
+      {
+       "greek": "σὺν τῷ ἀγγέλῳ",
+       "gloss": "with the angel",
+       "ref": "Lk 2:13",
+       "audio": "chapt_6_f_sun2"
+      },
+      {
+       "greek": "σὺν τοῖς πρεσβυτέροις",
+       "gloss": "with the elders",
+       "ref": "Lk 20:1",
+       "audio": "chapt_6_f_sun3"
+      }
+     ]
+    },
+    {
+     "id": "dia",
+     "greek": "διά",
+     "audio": "chapt_6_f_voc2",
+     "senses": [
+      "through, during, at, by (with the genitive)",
+      "because of (with the accusative)"
+     ],
+     "examples": [
+      {
+       "greek": "διὰ Ἰερεμίου τοῦ προφήτου",
+       "gloss": "through Jeremiah the prophet",
+       "ref": "Mat 2:17",
+       "audio": "chapt_6_f_dia1"
+      },
+      {
+       "greek": "διὰ τῶν προφητῶν τῷ υἱῷ τοῦ ἀνθρώπου",
+       "gloss": "by the prophets about the son of man",
+       "ref": "Lk 18:31",
+       "audio": "chapt_6_f_dia2"
+      },
+      {
+       "greek": "διὰ τὸν λόγον",
+       "gloss": "because of the word",
+       "ref": "Mat 13:21",
+       "audio": "chapt_6_f_dia3"
+      }
+     ]
+    },
+    {
+     "id": "kata",
+     "greek": "κατά",
+     "audio": "chapt_6_f_voc7",
+     "senses": [
+      "down, against (with the genitive)",
+      "according to, to, during (with the accusative)"
+     ],
+     "examples": [
+      {
+       "greek": "κατὰ τοῦ υἱοῦ τοῦ ἀνθρώπου",
+       "gloss": "against the son of man",
+       "ref": "Mat 12:32",
+       "audio": "chapt_6_f_kata1"
+      },
+      {
+       "greek": "κατὰ τοῦ λαοῦ",
+       "gloss": "against the people",
+       "ref": "Acts 21:28",
+       "audio": "chapt_6_f_kata2"
+      },
+      {
+       "greek": "καθ' ἡμέραν",
+       "gloss": "during the day",
+       "ref": "Mat 26:55",
+       "audio": "chapt_6_f_kata3"
+      }
+     ]
+    },
+    {
+     "id": "meta",
+     "greek": "μετά",
+     "audio": "chapt_6_f_voc8",
+     "senses": [
+      "with (with the genitive)",
+      "after (with the accusative)"
+     ],
+     "examples": [
+      {
+       "greek": "μετὰ τῶν υἱῶν αὐτῆς",
+       "gloss": "with her sons",
+       "ref": "Mat 20:20",
+       "audio": "chapt_6_f_meta1"
+      },
+      {
+       "greek": "μετὰ Ἰησοῦ τοῦ Ναζωραίου",
+       "gloss": "with Jesus of Nazareth",
+       "ref": "Mat 26:71",
+       "audio": "chapt_6_f_meta2"
+      },
+      {
+       "greek": "μεθ' ἡμέρας ἕξ",
+       "gloss": "after 6 days",
+       "ref": "Mat 17:1",
+       "audio": "chapt_6_f_meta3"
+      }
+     ]
+    },
+    {
+     "id": "peri",
+     "greek": "περί",
+     "audio": "chapt_6_f_voc9",
+     "senses": [
+      "about, concerning (with the genitive)",
+      "around, about (with the accusative)"
+     ],
+     "examples": [
+      {
+       "greek": "περὶ τῶν δύο ἀδελφῶν",
+       "gloss": "about the two brothers",
+       "ref": "Mat 20:24",
+       "audio": "chapt_6_f_peri1"
+      },
+      {
+       "greek": "περὶ τοῦ ἱεροῦ",
+       "gloss": "about the temple",
+       "ref": "Lk 21:5",
+       "audio": "chapt_6_f_peri2"
+      },
+      {
+       "greek": "περὶ τὴν ἀλήθειαν",
+       "gloss": "about the truth",
+       "ref": "2 Tim 2:18",
+       "audio": "chapt_6_f_peri3"
+      }
+     ]
+    },
+    {
+     "id": "epi",
+     "greek": "επί",
+     "audio": "chapt_6_f_voc6",
+     "senses": [
+      "on, over (with the genitive)",
+      "on, at, in, against (with the dative)",
+      "on, to, for (with the accusative)"
+     ],
+     "examples": [
+      {
+       "greek": "ἐπὶ γῆς",
+       "gloss": "on earth",
+       "ref": "Mat 6:10",
+       "audio": "chapt_6_f_epi1"
+      },
+      {
+       "greek": "πατὴρ ἐπὶ υἱῷ καὶ υἱὸς ἐπὶ πατρί",
+       "gloss": "father against son and son against father",
+       "ref": "Lk 12:53",
+       "audio": "chapt_6_f_epi2"
+      },
+      {
+       "greek": "ἐπὶ τοὺς μαθητὰς αὐτοῦ",
+       "gloss": "to his disciples",
+       "ref": "Mat 12:49",
+       "audio": "chapt_6_f_epi3"
+      }
+     ]
+    }
+   ],
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "Greek prepositions are connecting or linking words like English prepositions. Each preposition will take a noun in a certain case (genitive, dative, or accusative). This case must be learned along with the preposition's main meaning(s). The most common meanings are listed with each preposition but it is important to observe the context as many other meanings are possible."
+      },
+      {
+       "type": "para",
+       "text": "Note that the genitive often has the idea of separation, the dative the idea of location, and the accusative motion toward."
+      }
+     ]
+    },
+    {
+     "id": "oneCasePrepositions",
+     "title": "One Case Prepositions",
+     "content": [
+      {
+       "type": "para",
+       "text": "The following prepositions are used with only one case:"
+      },
+      {
+       "type": "greekRows",
+       "layout": "prepositionSenses",
+       "rows": [
+        {
+         "greek": "ἀπό",
+         "audio": "chapt_6_f_voc1",
+         "senses": [
+          {
+           "gloss": "from",
+           "caseTag": "(with gen.)"
+          }
+         ],
+         "popupRef": "apo"
+        },
+        {
+         "greek": "εἰς",
+         "audio": "chapt_6_f_voc3",
+         "senses": [
+          {
+           "gloss": "into, to, in",
+           "caseTag": "(with acc.)"
+          }
+         ],
+         "popupRef": "eis"
+        },
+        {
+         "greek": "ἐκ",
+         "audio": "chapt_6_f_voc4",
+         "senses": [
+          {
+           "gloss": "from, out of",
+           "caseTag": "(with gen.)"
+          }
+         ],
+         "popupRef": "ek"
+        },
+        {
+         "greek": "ἐν",
+         "audio": "chapt_6_f_voc5",
+         "senses": [
+          {
+           "gloss": "in, on, at",
+           "caseTag": "(with dat.)"
+          }
+         ],
+         "popupRef": "en"
+        },
+        {
+         "greek": "πρός",
+         "audio": "chapt_6_f_voc10",
+         "senses": [
+          {
+           "gloss": "to, towards",
+           "caseTag": "(with acc.)"
+          }
+         ],
+         "popupRef": "pros"
+        },
+        {
+         "greek": "σύν",
+         "audio": "chapt_6_f_sun",
+         "senses": [
+          {
+           "gloss": "with",
+           "caseTag": "(with dat.)"
+          }
+         ],
+         "popupRef": "sun"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "twoCasePrepositions",
+     "title": "Two Case Prepositions",
+     "content": [
+      {
+       "type": "para",
+       "text": "The following prepositions are used with two cases:"
+      },
+      {
+       "type": "greekRows",
+       "layout": "prepositionSenses",
+       "rows": [
+        {
+         "greek": "διά",
+         "audio": "chapt_6_f_voc2",
+         "senses": [
+          {
+           "gloss": "through, by, during",
+           "caseTag": "(with gen.)"
+          },
+          {
+           "gloss": "because of",
+           "caseTag": "(with acc.)"
+          }
+         ],
+         "popupRef": "dia"
+        },
+        {
+         "greek": "κατά",
+         "audio": "chapt_6_f_voc7",
+         "senses": [
+          {
+           "gloss": "down, against",
+           "caseTag": "(with gen.)"
+          },
+          {
+           "gloss": "according to, during",
+           "caseTag": "(with acc.)"
+          }
+         ],
+         "popupRef": "kata"
+        },
+        {
+         "greek": "μετά",
+         "audio": "chapt_6_f_voc8",
+         "senses": [
+          {
+           "gloss": "with",
+           "caseTag": "(with gen.)"
+          },
+          {
+           "gloss": "after",
+           "caseTag": "(with acc.)"
+          }
+         ],
+         "popupRef": "meta"
+        },
+        {
+         "greek": "περί",
+         "audio": "chapt_6_f_voc9",
+         "senses": [
+          {
+           "gloss": "for, concerning",
+           "caseTag": "(with gen.)"
+          },
+          {
+           "gloss": "around, about",
+           "caseTag": "(with acc.)"
+          }
+         ],
+         "popupRef": "peri"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "threeCasePreposition",
+     "title": "Three Case Preposition",
+     "content": [
+      {
+       "type": "para",
+       "text": "The following preposition is used with three cases:"
+      },
+      {
+       "type": "greekRows",
+       "layout": "prepositionSenses",
+       "rows": [
+        {
+         "greek": "ἐπί",
+         "audio": "chapt_6_f_voc6",
+         "senses": [
+          {
+           "gloss": "on, over, before",
+           "caseTag": "(with gen.)"
+          },
+          {
+           "gloss": "on, at, in",
+           "caseTag": "(with dat.)"
+          },
+          {
+           "gloss": "on, to, for",
+           "caseTag": "(with acc.)"
+          }
+         ],
+         "popupRef": "epi"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "prepositionsChart",
+     "title": "Prepositions Chart",
+     "content": [
+      {
+       "type": "prepositionsChart",
+       "title": "Prepositions Chart",
+       "nodes": [
+        {
+         "greek": "περί",
+         "gloss": "around",
+         "slot": "topLeft",
+         "arrow": "curveIn",
+         "audio": "chapt_6_f_voc9"
+        },
+        {
+         "greek": "μετά",
+         "gloss": "with",
+         "slot": "topRight",
+         "arrow": "in",
+         "audio": "chapt_6_f_voc8"
+        },
+        {
+         "greek": "ἐπί",
+         "gloss": "upon",
+         "slot": "top",
+         "arrow": "over",
+         "audio": "chapt_6_f_voc6"
+        },
+        {
+         "greek": "πρός",
+         "gloss": "to",
+         "slot": "left",
+         "arrow": "in",
+         "audio": "chapt_6_f_voc10"
+        },
+        {
+         "greek": "ἀπό",
+         "gloss": "from",
+         "slot": "right",
+         "arrow": "out",
+         "audio": "chapt_6_f_voc1"
+        },
+        {
+         "greek": "εἰς",
+         "gloss": "into",
+         "slot": "lowerLeft",
+         "arrow": "in",
+         "audio": "chapt_6_f_voc3"
+        },
+        {
+         "greek": "ἐκ",
+         "gloss": "out of",
+         "slot": "lowerRight",
+         "arrow": "out",
+         "audio": "chapt_6_f_voc4"
+        },
+        {
+         "greek": "διά",
+         "gloss": "through",
+         "slot": "bottomLeft",
+         "arrow": "across",
+         "audio": "chapt_6_f_voc2"
+        },
+        {
+         "greek": "κατά",
+         "gloss": "against, down",
+         "slot": "bottomRight",
+         "arrow": "down",
+         "audio": "chapt_6_f_voc7"
+        },
+        {
+         "greek": "ἐν",
+         "gloss": "in",
+         "slot": "centre",
+         "arrow": null,
+         "audio": "chapt_6_f_voc5"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "elision",
+     "title": "Elision",
+     "content": [
+      {
+       "type": "para",
+       "text": "Prepositions ending in a vowel often drop the final vowel when it comes before a word that begins with a vowel."
+      },
+      {
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "greek": "δι' ἐμοῦ",
+         "gloss": "= through me",
+         "ref": "Jn 14:6",
+         "audio": "chapt_6_f_elis1"
+        },
+        {
+         "parts": [
+          "διά",
+          "+",
+          "ἐμοῦ"
+         ],
+         "partAudio": [
+          "chapt_6_f_elis2",
+          null,
+          "chapt_6_f_elis3"
+         ],
+         "bracket": true
+        }
+       ]
+      },
+      {
+       "type": "para",
+       "text": "If there is a rough breathing mark on the next word, the consonant may be shifted:"
+      },
+      {
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "greek": "μεθ' ἡμέρας",
+         "gloss": "after days",
+         "ref": "Mat 17:1",
+         "audio": "chapt_6_f_elis4"
+        },
+        {
+         "parts": [
+          "μετά",
+          "+",
+          "ἡμέρας"
+         ],
+         "partAudio": [
+          "chapt_6_f_elis5",
+          null,
+          "chapt_6_f_elis6"
+         ],
+         "bracket": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "proclitics",
+     "title": "Proclitics",
+     "content": [
+      {
+       "type": "para",
+       "text": "A proclitic is a word that has no accent because it is joined so closely with the accented word that follows it."
+      },
+      {
+       "type": "para",
+       "text": "ἐν, εἰς and ἐκ are proclitics."
+      },
+      {
+       "type": "para",
+       "text": "They come before (pro) the word with the accent."
+      },
+      {
+       "type": "para",
+       "text": "Enclitics are accentless words that follow the word with the accent. Personal pronouns are often enclitics."
+      }
+     ]
+    },
+    {
+     "id": "compounds",
+     "title": "Compounds",
+     "content": [
+      {
+       "type": "para",
+       "text": "Prepositions are often found compounded with a verb in Greek. Sometimes the meaning of the compound may be determined by combining the meaning of the preposition with the meaning of the verb. Other times, however, the preposition affects the meaning of the verb in other ways, such as intensifying it."
+      },
+      {
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "parts": [
+          "διά",
+          "+",
+          "βλέπω"
+         ],
+         "partAudio": [
+          "chapt_6_f_voc2",
+          null,
+          "chapt_6_f_comp1"
+         ],
+         "gloss": "through + I see"
+        },
+        {
+         "greek": "διαβλέπω",
+         "gloss": "I see clearly",
+         "audio": "chapt_6_f_comp2"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c6_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "senses",
+   "_pool_note": "16 case-split cards over 10 lemmas (lexicon senses[]), not the 10-card lemma pool chapters 1-5 use."
+  },
+  {
+   "reference": "Jn 1:1",
+   "words": [
+    {
+     "greek": "Ἐν",
+     "gloss": "in",
+     "audio": "chapt_6_f_sm1"
+    },
+    {
+     "greek": "ἀρχῇ",
+     "gloss": "the beginning",
+     "audio": "chapt_6_f_sm2"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_6_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_6_f_sm4"
+    },
+    {
+     "greek": "λόγος,",
+     "gloss": "word",
+     "audio": "chapt_6_f_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_6_f_sm6"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_6_f_sm7"
+    },
+    {
+     "greek": "λόγος",
+     "gloss": "word",
+     "audio": "chapt_6_f_sm8"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_6_f_sm9"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "with",
+     "audio": "chapt_6_f_sm10"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": null,
+     "audio": "chapt_6_f_sm11"
+    },
+    {
+     "greek": "θεόν",
+     "gloss": "God",
+     "audio": "chapt_6_f_sm12"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_6_f_jn1_1"
+   },
+   "id": "c6_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory"
+  },
+  {
+   "id": "c6_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham. [[i]]New Testament Greek for Beginners[[/i]] (Toronto: The Macmillan Company, 1923), pp. 39-43.",
+      "Mounce, William D. [[i]]Basics of Biblical Greek: Grammar[[/i]] (Grand Rapids: Zondervan, 1993), pp. 28-54.",
+      "Summers, Ray and Thomas Sawyer. [[i]]Essentials of New Testament Greek[[/i]] (Nashville: Broadman & Holman, 1995), pp. 21-23.",
+      "Wenham, J. W. [[i]]The Elements of New Testament Greek[[/i]] (Cambridge: Cambridge University Press, 1965), pp. 39-42."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c6_drill_case",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Preposition Case Drill",
+   "instructions": "Click on the matching case",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "Genitive",
+    "Dative",
+    "Accusative"
+   ],
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "πρός",
+     "note": "(to)",
+     "answer": "Accusative",
+     "audio": "chapt_6_f_voc10"
+    },
+    {
+     "greek": "ἀπό",
+     "note": "(from)",
+     "answer": "Genitive",
+     "audio": "chapt_6_f_voc1"
+    },
+    {
+     "greek": "κατά",
+     "note": "(according to)",
+     "answer": "Accusative",
+     "audio": "chapt_6_f_voc7"
+    },
+    {
+     "greek": "διά",
+     "note": "(through)",
+     "answer": "Genitive",
+     "audio": "chapt_6_f_voc2"
+    },
+    {
+     "greek": "μετά",
+     "note": "(with)",
+     "answer": "Genitive",
+     "audio": "chapt_6_f_voc8"
+    },
+    {
+     "greek": "ἐν",
+     "note": "(in)",
+     "answer": "Dative",
+     "audio": "chapt_6_f_voc5"
+    },
+    {
+     "greek": "περί",
+     "note": "(about, concerning)",
+     "answer": "Genitive",
+     "audio": "chapt_6_f_voc9"
+    },
+    {
+     "greek": "ἐπί",
+     "note": "(on, at, in)",
+     "answer": "Dative",
+     "audio": "chapt_6_f_voc6"
+    },
+    {
+     "greek": "εἰς",
+     "note": "(into)",
+     "answer": "Accusative",
+     "audio": "chapt_6_f_voc3"
+    },
+    {
+     "greek": "διά",
+     "note": "(on account of)",
+     "answer": "Accusative",
+     "audio": "chapt_6_f_voc2"
+    },
+    {
+     "greek": "μετά",
+     "note": "(after, behind)",
+     "answer": "Accusative",
+     "audio": "chapt_6_f_voc8"
+    },
+    {
+     "greek": "ἐκ",
+     "note": "(out of)",
+     "answer": "Genitive",
+     "audio": "chapt_6_f_voc4"
+    },
+    {
+     "greek": "ἐπί",
+     "note": "(on, to, for)",
+     "answer": "Accusative",
+     "audio": "chapt_6_f_voc6"
+    },
+    {
+     "greek": "περί",
+     "note": "(around, near)",
+     "answer": "Accusative",
+     "audio": "chapt_6_f_voc9"
+    },
+    {
+     "greek": "κατά",
+     "note": "(down, against)",
+     "answer": "Genitive",
+     "audio": "chapt_6_f_voc7"
+    },
+    {
+     "greek": "ἐπί",
+     "note": "(on, over)",
+     "answer": "Genitive",
+     "audio": "chapt_6_f_voc6"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "prepositionsCaseChart"
+   },
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c6_drill_translation",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Preposition Translation Drill",
+   "instructions": "Click on the correct English translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "μετὰ τῶν δούλων",
+     "ref": "Mat 18:23",
+     "options": [
+      "by the servants",
+      "with the servants",
+      "for the servants"
+     ],
+     "answer": "with the servants",
+     "audio": "chapt_6_f_tpd1"
+    },
+    {
+     "greek": "διὰ τὸν λόγον",
+     "ref": "Jn 4:39",
+     "options": [
+      "on account of the word",
+      "in the word",
+      "by the word"
+     ],
+     "answer": "on account of the word",
+     "audio": "chapt_6_f_tpd2"
+    },
+    {
+     "greek": "ἐν τῷ κόσμῳ",
+     "ref": "Jn 1:10",
+     "options": [
+      "out of the world",
+      "in the world",
+      "into the world"
+     ],
+     "answer": "in the world",
+     "audio": "chapt_6_f_tpd3"
+    },
+    {
+     "greek": "εἰς τὸν οἶκον",
+     "ref": "Jn 7:53",
+     "options": [
+      "into the house",
+      "by the house",
+      "in the house"
+     ],
+     "answer": "into the house",
+     "audio": "chapt_6_f_tpd4"
+    },
+    {
+     "greek": "περὶ τοῦ ἀνθρώπου",
+     "ref": "Jn 2:25",
+     "options": [
+      "because of the man",
+      "for the man",
+      "concerning the man"
+     ],
+     "answer": "concerning the man",
+     "audio": "chapt_6_f_tpd5"
+    },
+    {
+     "greek": "ἐξ οὐρανοῦ",
+     "ref": "Jn 1:32",
+     "options": [
+      "from heaven",
+      "into heaven",
+      "on account of heaven"
+     ],
+     "answer": "from heaven",
+     "audio": "chapt_6_f_tpd6"
+    },
+    {
+     "greek": "κατὰ τὸν νόμον κυρίου",
+     "ref": "Lk 2:39",
+     "options": [
+      "according to the law of the Lord",
+      "in the law of the Lord",
+      "concerning the law of the Lord"
+     ],
+     "answer": "according to the law of the Lord",
+     "audio": "chapt_6_f_tpd7"
+    },
+    {
+     "greek": "εἰς τὸν κόσμον",
+     "ref": "Jn 10:36",
+     "options": [
+      "from the world",
+      "into the world",
+      "in the world"
+     ],
+     "answer": "into the world",
+     "audio": "chapt_6_f_tpd8"
+    },
+    {
+     "greek": "ἀπὸ τοῦ οὐρανοῦ",
+     "ref": "Jn 6:38",
+     "options": [
+      "into heaven",
+      "in heaven",
+      "from heaven"
+     ],
+     "answer": "from heaven",
+     "audio": "chapt_6_f_tpd9"
+    },
+    {
+     "greek": "πρὸς τὸν θεόν",
+     "ref": "Jn 1:1",
+     "options": [
+      "by God",
+      "with God",
+      "on account of God"
+     ],
+     "answer": "with God",
+     "audio": "chapt_6_f_tpd10"
+    },
+    {
+     "greek": "ἐν τῷ ὄχλῳ",
+     "ref": "Jn 7:43",
+     "options": [
+      "in the crowd",
+      "from the crowd",
+      "with the crowd"
+     ],
+     "answer": "in the crowd",
+     "audio": "chapt_6_f_tpd11"
+    },
+    {
+     "greek": "περὶ ἁμαρτίας",
+     "ref": "Jn 8:46",
+     "options": [
+      "from sin",
+      "into sin",
+      "concerning sin"
+     ],
+     "answer": "concerning sin",
+     "audio": "chapt_6_f_tpd12"
+    },
+    {
+     "greek": "ἐπὶ τὸν ὄχλον",
+     "ref": "Mat 15:32",
+     "options": [
+      "from the crowd",
+      "for the crowd",
+      "with the crowd"
+     ],
+     "answer": "for the crowd",
+     "audio": "chapt_6_f_tpd13"
+    },
+    {
+     "greek": "περὶ τὴν ἀλήθειαν",
+     "ref": "2 Tim 2:18",
+     "options": [
+      "by the truth",
+      "from the truth",
+      "around the truth"
+     ],
+     "answer": "around the truth",
+     "audio": "chapt_6_f_tpd14"
+    },
+    {
+     "greek": "εἰς τὸν υἱὸν τοῦ ἀνθρώπου",
+     "ref": "Jn 9:35",
+     "options": [
+      "in the son of man",
+      "from the son of man",
+      "with the son of man"
+     ],
+     "answer": "in the son of man",
+     "audio": "chapt_6_f_tpd15"
+    },
+    {
+     "greek": "μετὰ τῶν ἀγγέλων",
+     "ref": "Mat 16:27",
+     "options": [
+      "for the angels",
+      "to the angels",
+      "with the angels"
+     ],
+     "answer": "with the angels",
+     "audio": "chapt_6_f_tpd16"
+    },
+    {
+     "greek": "ἀπὸ θεοῦ",
+     "ref": "Jn 13:3",
+     "options": [
+      "with God",
+      "from God",
+      "on account of God"
+     ],
+     "answer": "from God",
+     "audio": "chapt_6_f_tpd17"
+    },
+    {
+     "greek": "ἐκ τῶν μαθητῶν",
+     "ref": "Jn 6:8",
+     "options": [
+      "from the disciples",
+      "by the disciples",
+      "concerning the disciples"
+     ],
+     "answer": "from the disciples",
+     "audio": "chapt_6_f_tpd18"
+    },
+    {
+     "greek": "διὰ τοὺς λόγους",
+     "ref": "Jn 10:19",
+     "options": [
+      "by the words",
+      "because of the words",
+      "in the words"
+     ],
+     "answer": "because of the words",
+     "audio": "chapt_6_f_tpd19"
+    },
+    {
+     "greek": "ἐπ' ἀληθείας",
+     "ref": "Mk 12:14",
+     "options": [
+      "on the basis of truth",
+      "from truth",
+      "with truth"
+     ],
+     "answer": "on the basis of truth",
+     "audio": "chapt_6_f_tpd20"
+    },
+    {
+     "greek": "ἀπὸ τῶν ἁμαρτιῶν",
+     "ref": "Mat 1:21",
+     "options": [
+      "from the sins",
+      "into the sins",
+      "because of the sins"
+     ],
+     "answer": "from the sins",
+     "audio": "chapt_6_f_tpd21"
+    },
+    {
+     "greek": "εἰς γῆν Ἰσραήλ",
+     "ref": "Mat 2:20",
+     "options": [
+      "in the land of Israel",
+      "on the land of Israel",
+      "into the land of Israel"
+     ],
+     "answer": "into the land of Israel",
+     "audio": "chapt_6_f_tpd22"
+    },
+    {
+     "greek": "ἐκ τῆς καρδίας",
+     "ref": "Mat 15:18",
+     "options": [
+      "on account of the heart",
+      "from the heart",
+      "with the heart"
+     ],
+     "answer": "from the heart",
+     "audio": "chapt_6_f_tpd23"
+    },
+    {
+     "greek": "διὰ τοῦ προφήτου",
+     "ref": "Mat 1:22",
+     "options": [
+      "through the prophet",
+      "because of the prophet",
+      "from the prophet"
+     ],
+     "answer": "through the prophet",
+     "audio": "chapt_6_f_tpd24"
+    },
+    {
+     "greek": "ἐν ἡμέραις Ἡρῴδου",
+     "ref": "Mat 2:1",
+     "options": [
+      "from the days of Herod",
+      "during the days of Herod",
+      "in the days of Herod"
+     ],
+     "answer": "in the days of Herod",
+     "audio": "chapt_6_f_tpd25"
+    },
+    {
+     "greek": "ἐπὶ τοῖς λόγοις",
+     "ref": "Mk 10:24",
+     "options": [
+      "from the words",
+      "at the words",
+      "in the words"
+     ],
+     "answer": "at the words",
+     "audio": "chapt_6_f_tpd26"
+    },
+    {
+     "greek": "κατὰ τοῦ ἀνθρώπου",
+     "ref": "Jn 18:29",
+     "options": [
+      "against the man",
+      "with the man",
+      "from the man"
+     ],
+     "answer": "against the man",
+     "audio": "chapt_6_f_tpd27"
+    },
+    {
+     "greek": "εἰς τὴν βασιλείαν",
+     "ref": "Mat 5:20",
+     "options": [
+      "into the kingdom",
+      "in the kingdom",
+      "with the kingdom"
+     ],
+     "answer": "into the kingdom",
+     "audio": "chapt_6_f_tpd28"
+    },
+    {
+     "greek": "ἀπὸ τῶν ἔργων",
+     "ref": "Mat 11:19",
+     "options": [
+      "for the works",
+      "while the works",
+      "by the works"
+     ],
+     "answer": "by the works",
+     "audio": "chapt_6_f_tpd29"
+    },
+    {
+     "greek": "διὰ τῶν μαθητῶν",
+     "ref": "Mat 11:2",
+     "options": [
+      "with the disciples",
+      "by the disciples",
+      "from the disciples"
+     ],
+     "answer": "by the disciples",
+     "audio": "chapt_6_f_tpd30"
+    },
+    {
+     "greek": "ἐπὶ τοὺς μαθητὰς",
+     "ref": "Mat 12:49",
+     "options": [
+      "to the disciples",
+      "from the disciples",
+      "by the disciples"
+     ],
+     "answer": "to the disciples",
+     "audio": "chapt_6_f_tpd31"
+    },
+    {
+     "greek": "καθ' ἡμέραν",
+     "ref": "Mat 26:55",
+     "options": [
+      "daily",
+      "during a day",
+      "in a day"
+     ],
+     "answer": "daily",
+     "audio": "chapt_6_f_tpd32"
+    },
+    {
+     "greek": "ἐξ ἀνθρώπων",
+     "ref": "Mk 11:30",
+     "options": [
+      "by men",
+      "with men",
+      "from men"
+     ],
+     "answer": "from men",
+     "audio": "chapt_6_f_tpd33"
+    },
+    {
+     "greek": "μετὰ τῶν μαθητῶν",
+     "ref": "Mat 26:18",
+     "options": [
+      "by the disciples",
+      "with the disciples",
+      "from the disciples"
+     ],
+     "answer": "with the disciples",
+     "audio": "chapt_6_f_tpd34"
+    },
+    {
+     "greek": "κατὰ τῶν ἀδελφῶν",
+     "ref": "Acts 14:2",
+     "options": [
+      "with the brothers",
+      "for the brothers",
+      "against the brothers"
+     ],
+     "answer": "against the brothers",
+     "audio": "chapt_6_f_tpd35"
+    },
+    {
+     "greek": "δι' ἡμερῶν",
+     "ref": "Mk 2:1",
+     "options": [
+      "after days",
+      "before days",
+      "by days"
+     ],
+     "answer": "after days",
+     "audio": "chapt_6_f_tpd36"
+    },
+    {
+     "greek": "ἐπὶ τὸν υἱὸν τοῦ ἀνθρώπου",
+     "ref": "Mk 9:12",
+     "options": [
+      "from the son of man",
+      "in the son of man",
+      "about the son of man"
+     ],
+     "answer": "about the son of man",
+     "audio": "chapt_6_f_tpd37"
+    },
+    {
+     "greek": "εἰς τὴν ζωὴν",
+     "ref": "Mat 18:8",
+     "options": [
+      "because of the life",
+      "by the life",
+      "into the life"
+     ],
+     "answer": "into the life",
+     "audio": "chapt_6_f_tpd38"
+    },
+    {
+     "greek": "διὰ τὸν ὄχλον",
+     "ref": "Mk 2:4",
+     "options": [
+      "against the crowd",
+      "because of the crowd",
+      "from the crowd"
+     ],
+     "answer": "because of the crowd",
+     "audio": "chapt_6_f_tpd39"
+    },
+    {
+     "greek": "ἐν τῇ ὥρᾳ",
+     "ref": "Mat 8:13",
+     "options": [
+      "in the hour",
+      "from the hour",
+      "after the hour"
+     ],
+     "answer": "in the hour",
+     "audio": "chapt_6_f_tpd40"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "prepositionsCaseChart"
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c6_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "from",
+    "through",
+    "on account of",
+    "into",
+    "out of",
+    "in",
+    "on, over",
+    "on, at, in",
+    "on, to, for",
+    "down",
+    "according to",
+    "with",
+    "after, behind",
+    "about",
+    "around, near",
+    "to"
+   ],
+   "items": [
+    {
+     "greek": "ἀπό",
+     "note": "(with gen.)",
+     "answer": "from",
+     "audio": "chapt_6_f_voc1"
+    },
+    {
+     "greek": "διά",
+     "note": "(with gen.)",
+     "answer": "through",
+     "audio": "chapt_6_f_voc2"
+    },
+    {
+     "greek": "διά",
+     "note": "(with acc.)",
+     "answer": "on account of",
+     "audio": "chapt_6_f_voc2"
+    },
+    {
+     "greek": "εἰς",
+     "note": "(with acc.)",
+     "answer": "into",
+     "audio": "chapt_6_f_voc3"
+    },
+    {
+     "greek": "ἐκ",
+     "note": "(with gen.)",
+     "answer": "out of",
+     "audio": "chapt_6_f_voc4"
+    },
+    {
+     "greek": "ἐν",
+     "note": "(with dat.)",
+     "answer": "in",
+     "audio": "chapt_6_f_voc5"
+    },
+    {
+     "greek": "ἐπί",
+     "note": "(with gen.)",
+     "answer": "on, over",
+     "audio": "chapt_6_f_voc6"
+    },
+    {
+     "greek": "ἐπί",
+     "note": "(with dat.)",
+     "answer": "on, at, in",
+     "audio": "chapt_6_f_voc6"
+    },
+    {
+     "greek": "ἐπί",
+     "note": "(with acc.)",
+     "answer": "on, to, for",
+     "audio": "chapt_6_f_voc6"
+    },
+    {
+     "greek": "κατά",
+     "note": "(with gen.)",
+     "answer": "down",
+     "audio": "chapt_6_f_voc7"
+    },
+    {
+     "greek": "κατά",
+     "note": "(with acc.)",
+     "answer": "according to",
+     "audio": "chapt_6_f_voc7"
+    },
+    {
+     "greek": "μετά",
+     "note": "(with gen.)",
+     "answer": "with",
+     "audio": "chapt_6_f_voc8"
+    },
+    {
+     "greek": "μετά",
+     "note": "(with acc.)",
+     "answer": "after, behind",
+     "audio": "chapt_6_f_voc8"
+    },
+    {
+     "greek": "περί",
+     "note": "(with gen.)",
+     "answer": "about",
+     "audio": "chapt_6_f_voc9"
+    },
+    {
+     "greek": "περί",
+     "note": "(with acc.)",
+     "answer": "around, near",
+     "audio": "chapt_6_f_voc9"
+    },
+    {
+     "greek": "πρός",
+     "note": "(with acc.)",
+     "answer": "to",
+     "audio": "chapt_6_f_voc10"
+    }
+   ],
+   "_answer_note": "Positional and SCRIPT-VERIFIED: the page ships sixteen option buttons Word1..Word16 whose captions are exactly this list, and prompt i is scored against Word i.",
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c6_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "options": "static",
+   "optionsAreGreek": true,
+   "optionValues": [
+    "ἀπό (gen)",
+    "διά (gen)",
+    "διά (acc)",
+    "εἰς (acc)",
+    "ἐκ (gen)",
+    "ἐν (dat)",
+    "ἐπί (gen)",
+    "ἐπί (dat)",
+    "ἐπί (acc)",
+    "κατά (gen)",
+    "κατά (acc)",
+    "μετά (gen)",
+    "μετά (acc)",
+    "περί (gen)",
+    "περί (acc)",
+    "πρός (acc)"
+   ],
+   "items": [
+    {
+     "prompt": "from",
+     "answer": "ἀπό (gen)",
+     "audio": "chapt_6_f_voc1"
+    },
+    {
+     "prompt": "through",
+     "answer": "διά (gen)",
+     "audio": "chapt_6_f_voc2"
+    },
+    {
+     "prompt": "on account of",
+     "answer": "διά (acc)",
+     "audio": "chapt_6_f_voc2"
+    },
+    {
+     "prompt": "into",
+     "answer": "εἰς (acc)",
+     "audio": "chapt_6_f_voc3"
+    },
+    {
+     "prompt": "out of",
+     "answer": "ἐκ (gen)",
+     "audio": "chapt_6_f_voc4"
+    },
+    {
+     "prompt": "in",
+     "answer": "ἐν (dat)",
+     "audio": "chapt_6_f_voc5"
+    },
+    {
+     "prompt": "on, over",
+     "answer": "ἐπί (gen)",
+     "audio": "chapt_6_f_voc6"
+    },
+    {
+     "prompt": "on, at, in",
+     "answer": "ἐπί (dat)",
+     "audio": "chapt_6_f_voc6"
+    },
+    {
+     "prompt": "on, to, for",
+     "answer": "ἐπί (acc)",
+     "audio": "chapt_6_f_voc6"
+    },
+    {
+     "prompt": "down",
+     "answer": "κατά (gen)",
+     "audio": "chapt_6_f_voc7"
+    },
+    {
+     "prompt": "according to",
+     "answer": "κατά (acc)",
+     "audio": "chapt_6_f_voc7"
+    },
+    {
+     "prompt": "with",
+     "answer": "μετά (gen)",
+     "audio": "chapt_6_f_voc8"
+    },
+    {
+     "prompt": "after",
+     "answer": "μετά (acc)",
+     "audio": "chapt_6_f_voc8"
+    },
+    {
+     "prompt": "about",
+     "answer": "περί (gen)",
+     "audio": "chapt_6_f_voc9"
+    },
+    {
+     "prompt": "around",
+     "answer": "περί (acc)",
+     "audio": "chapt_6_f_voc9"
+    },
+    {
+     "prompt": "to",
+     "answer": "πρός (acc)",
+     "audio": "chapt_6_f_voc10"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c6_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "in",
+    "beginning",
+    "was",
+    "the (nom)",
+    "word",
+    "and",
+    "with",
+    "the (acc)",
+    "God"
+   ],
+   "items": [
+    {
+     "greek": "Ἐν",
+     "answer": "in",
+     "audio": "chapt_6_f_sm1"
+    },
+    {
+     "greek": "ἀρχῇ",
+     "answer": "beginning",
+     "audio": "chapt_6_f_sm2"
+    },
+    {
+     "greek": "ἦν",
+     "answer": "was",
+     "audio": "chapt_6_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "answer": "the (nom)",
+     "audio": "chapt_6_f_sm4"
+    },
+    {
+     "greek": "λόγος",
+     "answer": "word",
+     "audio": "chapt_6_f_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "answer": "and",
+     "audio": "chapt_6_f_sm6"
+    },
+    {
+     "greek": "πρός",
+     "answer": "with",
+     "audio": "chapt_6_f_sm7"
+    },
+    {
+     "greek": "τόν",
+     "answer": "the (acc)",
+     "audio": "chapt_6_f_sm8"
+    },
+    {
+     "greek": "θεόν",
+     "answer": "God",
+     "audio": "chapt_6_f_sm9"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "_answer_note": "Positional and SCRIPT-VERIFIED: the page ships nine option buttons Word1..Word9 whose captions are exactly this list, and prompt i is scored against Word i.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c6_ex_speller",
+   "type": "spell",
+   "title": "Preposition Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Phrase",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "from God",
+     "note": "(not ἐκ)",
+     "ref": "Jn 13:3",
+     "answer": "ἀπὸ θεοῦ",
+     "audio": "chapt_6_f_tpd17"
+    },
+    {
+     "prompt": "against the man",
+     "note": null,
+     "ref": "Jn 18:29",
+     "answer": "κατὰ τοῦ ἀνθρώπου",
+     "audio": "chapt_6_f_tpd27"
+    },
+    {
+     "prompt": "in the hour",
+     "note": null,
+     "ref": "Mat 8:13",
+     "answer": "ἐν τῇ ὥρᾳ",
+     "audio": "chapt_6_f_tpd40"
+    },
+    {
+     "prompt": "into the kingdom",
+     "note": null,
+     "ref": "Mat 5:20",
+     "answer": "εἰς τὴν βασιλείαν",
+     "audio": "chapt_6_f_tpd28"
+    },
+    {
+     "prompt": "from the heart",
+     "note": null,
+     "ref": "Mat 15:18",
+     "answer": "ἐκ τῆς καρδίας",
+     "audio": "chapt_6_f_tpd23"
+    },
+    {
+     "prompt": "with the servants",
+     "note": null,
+     "ref": "Mat 18:23",
+     "answer": "μετὰ τῶν δούλων",
+     "audio": "chapt_6_f_tpd1"
+    },
+    {
+     "prompt": "because of the words",
+     "note": null,
+     "ref": "Jn 10:19",
+     "answer": "διὰ τοὺς λόγους",
+     "audio": "chapt_6_f_tpd19"
+    },
+    {
+     "prompt": "concerning the man",
+     "note": null,
+     "ref": "Jn 2:25",
+     "answer": "περὶ τοῦ ἀνθρώπου",
+     "audio": "chapt_6_f_tpd5"
+    },
+    {
+     "prompt": "because of the crowd",
+     "note": null,
+     "ref": "Mk 2:4",
+     "answer": "διὰ τὸν ὄχλον",
+     "audio": "chapt_6_f_tpd39"
+    },
+    {
+     "prompt": "from the sins",
+     "note": "(not ἐκ)",
+     "ref": "Mat 1:21",
+     "answer": "ἀπὸ τῶν ἁμαρτιῶν",
+     "audio": "chapt_6_f_tpd21"
+    },
+    {
+     "prompt": "to the disciples",
+     "note": null,
+     "ref": "Mat 12:49",
+     "answer": "ἐπὶ τοὺς μαθητὰς",
+     "audio": "chapt_6_f_tpd31"
+    },
+    {
+     "prompt": "on the basis of truth",
+     "note": null,
+     "ref": "Mk 12:14",
+     "answer": "ἐπ' ἀληθείας",
+     "audio": "chapt_6_f_tpd20"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Phrase",
+     "Spell Greek Phrase"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_elision_note": "Item 12's answer elides (ep' aletheias): the mark is U+0027, is REQUIRED, and is not interchangeable with a smooth breathing (RULES C9 / D-29).",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c6_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Meaning",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "ref": "apo",
+     "prompt": "from",
+     "note": "(gen.)"
+    },
+    {
+     "ref": "dia",
+     "prompt": "through",
+     "note": "(gen.)"
+    },
+    {
+     "ref": "eis",
+     "prompt": "into",
+     "note": "(acc.)"
+    },
+    {
+     "ref": "ek",
+     "prompt": "out of",
+     "note": "(gen.)"
+    },
+    {
+     "ref": "en",
+     "prompt": "in",
+     "note": "(dat.)"
+    },
+    {
+     "ref": "epi",
+     "prompt": "on, over",
+     "note": "(gen.)"
+    },
+    {
+     "ref": "kata",
+     "prompt": "down",
+     "note": "(gen.)"
+    },
+    {
+     "ref": "meta",
+     "prompt": "with",
+     "note": "(gen.)"
+    },
+    {
+     "ref": "peri",
+     "prompt": "about",
+     "note": "(gen.)"
+    },
+    {
+     "ref": "pros",
+     "prompt": "to",
+     "note": "(acc.)"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c6_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of John 1:1 then click \"Check Answer\"",
+   "reference": "Jn 1:1",
+   "answerWords": [
+    "Ἐν",
+    "ἀρχῇ",
+    "ἦν",
+    "ὁ",
+    "λόγος,",
+    "καὶ",
+    "ὁ",
+    "λόγος",
+    "ἦν",
+    "πρὸς",
+    "τὸν",
+    "θεόν"
+   ],
+   "translation": "In the beginning was the word and the word was with God",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "audio": "chapt_6_f_jn1_1",
+   "spellerTilesRef": "chapt_1",
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents"
+    ],
+    "_reveal_note": "RULES C8 / D-30: Show Answer is the one reveal control. No Major Hint button, no timer."
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c6_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "lemmas",
+   "columns": 2,
+   "showNtFreq": true,
+   "footnote": "The number after the translation is the number of times the word occurs in the New Testament.",
+   "playAll": {
+    "audio": "chapt_6_f_vocl6",
+    "label": "Say Whole List"
+   }
+  },
+  {
+   "id": "c6_qr_prepositions",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Review Prepositions Chart",
+   "content": [
+    {
+     "type": "prepositionsChart",
+     "title": "Prepositions Chart",
+     "nodes": [
+      {
+       "greek": "περί",
+       "gloss": "around",
+       "slot": "topLeft",
+       "arrow": "curveIn",
+       "audio": "chapt_6_f_voc9"
+      },
+      {
+       "greek": "μετά",
+       "gloss": "with",
+       "slot": "topRight",
+       "arrow": "in",
+       "audio": "chapt_6_f_voc8"
+      },
+      {
+       "greek": "ἐπί",
+       "gloss": "upon",
+       "slot": "top",
+       "arrow": "over",
+       "audio": "chapt_6_f_voc6"
+      },
+      {
+       "greek": "πρός",
+       "gloss": "to",
+       "slot": "left",
+       "arrow": "in",
+       "audio": "chapt_6_f_voc10"
+      },
+      {
+       "greek": "ἀπό",
+       "gloss": "from",
+       "slot": "right",
+       "arrow": "out",
+       "audio": "chapt_6_f_voc1"
+      },
+      {
+       "greek": "εἰς",
+       "gloss": "into",
+       "slot": "lowerLeft",
+       "arrow": "in",
+       "audio": "chapt_6_f_voc3"
+      },
+      {
+       "greek": "ἐκ",
+       "gloss": "out of",
+       "slot": "lowerRight",
+       "arrow": "out",
+       "audio": "chapt_6_f_voc4"
+      },
+      {
+       "greek": "διά",
+       "gloss": "through",
+       "slot": "bottomLeft",
+       "arrow": "across",
+       "audio": "chapt_6_f_voc2"
+      },
+      {
+       "greek": "κατά",
+       "gloss": "against, down",
+       "slot": "bottomRight",
+       "arrow": "down",
+       "audio": "chapt_6_f_voc7"
+      },
+      {
+       "greek": "ἐν",
+       "gloss": "in",
+       "slot": "centre",
+       "arrow": null,
+       "audio": "chapt_6_f_voc5"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "reference": "John 14:6a",
+   "words": [
+    {
+     "greek": "λέγει",
+     "gloss": "he said",
+     "audio": "chapt_6_c_sm1"
+    },
+    {
+     "greek": "αὐτῷ",
+     "gloss": "to him",
+     "audio": "chapt_6_c_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": null,
+     "audio": "chapt_6_c_sm3"
+    },
+    {
+     "greek": "Ἰησοῦς,",
+     "gloss": "Jesus",
+     "audio": "chapt_6_c_sm4"
+    },
+    {
+     "greek": "Ἐγώ",
+     "gloss": "I",
+     "audio": "chapt_6_c_sm5"
+    },
+    {
+     "greek": "εἰμι",
+     "gloss": "I am",
+     "audio": "chapt_6_c_sm6"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_6_c_sm7"
+    },
+    {
+     "greek": "ὁδὸς",
+     "gloss": "way",
+     "audio": "chapt_6_c_sm8"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_6_c_sm9"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_6_c_sm10"
+    },
+    {
+     "greek": "ἀλήθεια",
+     "gloss": "truth",
+     "audio": "chapt_6_c_sm11"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_6_c_sm12"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_6_c_sm13"
+    },
+    {
+     "greek": "ζωή:",
+     "gloss": "life:",
+     "audio": "chapt_6_c_sm14"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_6_c_sm14_6"
+   },
+   "id": "c6_qr_scripture_146a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6a"
+  },
+  {
+   "reference": "John 14:6b",
+   "words": [
+    {
+     "greek": "οὐδεὶς",
+     "gloss": "no one",
+     "audio": "chapt_6_d_sm1"
+    },
+    {
+     "greek": "ἔρχεται",
+     "gloss": "comes",
+     "audio": "chapt_6_d_sm2"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "to",
+     "audio": "chapt_6_d_sm3"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_6_d_sm4"
+    },
+    {
+     "greek": "πατέρα",
+     "gloss": "father",
+     "audio": "chapt_6_d_sm5"
+    },
+    {
+     "greek": "εἰ",
+     "gloss": "except",
+     "audio": "chapt_6_d_sm6"
+    },
+    {
+     "greek": "μὴ",
+     "gloss": null,
+     "audio": "chapt_6_d_sm7"
+    },
+    {
+     "greek": "δἰ",
+     "gloss": "through",
+     "audio": "chapt_6_d_sm8"
+    },
+    {
+     "greek": "ἐμοῦ.",
+     "gloss": "me",
+     "audio": "chapt_6_d_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_6_d_jn146b"
+   },
+   "id": "c6_qr_scripture_146b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6b"
+  },
+  {
+   "reference": "Rom 3:23",
+   "words": [
+    {
+     "greek": "πάντες",
+     "gloss": "all",
+     "audio": "chapt_6_e_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_6_e_sm2"
+    },
+    {
+     "greek": "ἥμαρτον",
+     "gloss": "have sinned",
+     "audio": "chapt_6_e_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_6_e_sm4"
+    },
+    {
+     "greek": "ὑστεροῦνται",
+     "gloss": "fall short",
+     "audio": "chapt_6_e_sm5"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "of the",
+     "audio": "chapt_6_e_sm6"
+    },
+    {
+     "greek": "δόξης",
+     "gloss": "glory",
+     "audio": "chapt_6_e_sm7"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of [the]",
+     "audio": "chapt_6_e_sm8"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_6_e_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_6_e_rom323"
+   },
+   "id": "c6_qr_scripture_rom",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 3:23"
+  },
+  {
+   "reference": "Jn 1:1",
+   "words": [
+    {
+     "greek": "Ἐν",
+     "gloss": "in",
+     "audio": "chapt_6_f_sm1"
+    },
+    {
+     "greek": "ἀρχῇ",
+     "gloss": "beginning",
+     "audio": "chapt_6_f_sm2"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_6_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_6_f_sm4"
+    },
+    {
+     "greek": "λόγος,",
+     "gloss": "word",
+     "audio": "chapt_6_f_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_6_f_sm6"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_6_f_sm7"
+    },
+    {
+     "greek": "λόγος",
+     "gloss": "word",
+     "audio": "chapt_6_f_sm8"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_6_f_sm9"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "with",
+     "audio": "chapt_6_f_sm10"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": null,
+     "audio": "chapt_6_f_sm11"
+    },
+    {
+     "greek": "θεόν",
+     "gloss": "God",
+     "audio": "chapt_6_f_sm12"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_6_f_jn1_1"
+   },
+   "id": "c6_qr_scripture_jn11",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 1:1"
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Great!",
+   "Congratulations",
+   "Perfect!",
+   "Right On!",
+   "Fantastic!",
+   "Yes"
+  ],
+  "incorrect": [
+   "Try again",
+   "Swing and a miss",
+   "Repetition will get it",
+   "Keep trying"
+  ]
+ },
+ "sequence": [
+  "c6_learn_objectives",
+  "c6_learn_english_concepts",
+  "c6_learn_prepositions",
+  "c6_drill_case",
+  "c6_drill_translation",
+  "c6_ex_speller",
+  "c6_learn_vocab",
+  "c6_drill_vocab_gk_en",
+  "c6_drill_vocab_en_gk",
+  "c6_ex_vocab_speller",
+  "c6_learn_scripture",
+  "c6_drill_scripture_memory",
+  "c6_ex_scripture_speller",
+  "c6_qr_vocab",
+  "c6_qr_prepositions",
+  "c6_qr_scripture_146a",
+  "c6_qr_scripture_146b",
+  "c6_qr_scripture_rom",
+  "c6_qr_scripture_jn11",
+  "c6_learn_bibliography"
+ ],
+ "_sequence_note": "Rail order from ch6railwalk.pdf (Nathanael, 2026-08-07).",
+ "_audioVerify": "CHAPT_6 ships 145 WAVs; 140 are wired. UNWIRED: a_alpha (the chapter-1 alphabet clip, no surface here), c_sm10 (the second article in Jn 14:6a -- the review page reuses c_sm7 for every occurrence of the same word, exactly as chapter 5 wired it), d_sm6b (a second take inside Jn 14:6b), f_comp3 (the Compounds page offers three taps and the script dispatches only comp1 and comp2) and f_dia (a bare dia clip with no dispatch entry; the teaching pages tap dia through f_voc2). Leave all five unwired unless the build finds a surface. LISTEN-CHECK: the six Elision clips f_elis1..6 are wired in page reading order (di' emou, dia, emou, meth' hemeras, meta, hemeras); the script confirms six tokens on that page but not which phrase each names."
+}

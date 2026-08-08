@@ -1,0 +1,388 @@
+{
+ "_comment": "Chapter 6 lexicon, assembled from 6_PREPS.TBK (cohort 5F). Vocabulary order is the TBK list order (alphabetical), which matches f_voc1..10 and is SCRIPT-VERIFIED through the drill pages' SayWord1 dispatch at 0x90930. `senses` carries the SIXTEEN case-split entries the flashcard and both vocabulary drills present over these ten lemmas -- chapters 1-5 had no such split. ntFreq values are the Review Vocabulary Chart's own counts (0x0b55a0). CHAPT_6 ships f_* plus chapter 3's c_sm*, chapter 4's d_sm* and chapter 5's e_sm* for the three cumulative Scripture review charts; the data references those LOCAL copies.",
+ "lemmas": {
+  "apo": {
+   "greek": "ἀπό",
+   "translit": "apo",
+   "gloss": "from (with gen.)",
+   "glossShort": "from",
+   "pos": "preposition",
+   "audio": "chapt_6_f_voc1",
+   "ntFreq": 646,
+   "lexicalForm": "ἀπό",
+   "senses": [
+    {
+     "gloss": "from",
+     "glossShort": "from",
+     "case": "gen",
+     "caseTag": "(with gen.)"
+    }
+   ]
+  },
+  "dia": {
+   "greek": "διά",
+   "translit": "dia",
+   "gloss": "through (with gen.); on account of (with acc.)",
+   "glossShort": "through",
+   "pos": "preposition",
+   "audio": "chapt_6_f_voc2",
+   "ntFreq": 667,
+   "lexicalForm": "διά",
+   "senses": [
+    {
+     "gloss": "through",
+     "glossShort": "through",
+     "case": "gen",
+     "caseTag": "(with gen.)"
+    },
+    {
+     "gloss": "on account of",
+     "glossShort": "on account of",
+     "case": "acc",
+     "caseTag": "(with acc.)"
+    }
+   ]
+  },
+  "eis": {
+   "greek": "εἰς",
+   "translit": "eis",
+   "gloss": "into (with acc.)",
+   "glossShort": "into",
+   "pos": "preposition",
+   "audio": "chapt_6_f_voc3",
+   "ntFreq": 1768,
+   "lexicalForm": "εἰς",
+   "senses": [
+    {
+     "gloss": "into",
+     "glossShort": "into",
+     "case": "acc",
+     "caseTag": "(with acc.)"
+    }
+   ]
+  },
+  "ek": {
+   "greek": "ἐκ",
+   "translit": "ek",
+   "gloss": "out of, from (with gen.)",
+   "glossShort": "out of",
+   "pos": "preposition",
+   "audio": "chapt_6_f_voc4",
+   "ntFreq": 914,
+   "lexicalForm": "ἐκ",
+   "senses": [
+    {
+     "gloss": "out of, from",
+     "glossShort": "out of",
+     "case": "gen",
+     "caseTag": "(with gen.)"
+    }
+   ]
+  },
+  "en": {
+   "greek": "ἐν",
+   "translit": "en",
+   "gloss": "in (with dat.)",
+   "glossShort": "in",
+   "pos": "preposition",
+   "audio": "chapt_6_f_voc5",
+   "ntFreq": 2752,
+   "lexicalForm": "ἐν",
+   "senses": [
+    {
+     "gloss": "in",
+     "glossShort": "in",
+     "case": "dat",
+     "caseTag": "(with dat.)"
+    }
+   ]
+  },
+  "epi": {
+   "greek": "ἐπί",
+   "translit": "epi",
+   "gloss": "on, over (with gen.); on, at, in (with dat.); on, to, for (with acc.)",
+   "glossShort": "on, over",
+   "pos": "preposition",
+   "audio": "chapt_6_f_voc6",
+   "ntFreq": 890,
+   "lexicalForm": "ἐπί",
+   "senses": [
+    {
+     "gloss": "on, over",
+     "glossShort": "on, over",
+     "case": "gen",
+     "caseTag": "(with gen.)"
+    },
+    {
+     "gloss": "on, at, in",
+     "glossShort": "on, at, in",
+     "case": "dat",
+     "caseTag": "(with dat.)"
+    },
+    {
+     "gloss": "on, to, for",
+     "glossShort": "on, to, for",
+     "case": "acc",
+     "caseTag": "(with acc.)"
+    }
+   ]
+  },
+  "kata": {
+   "greek": "κατά",
+   "translit": "kata",
+   "gloss": "down, against (with gen.); according to (with acc.)",
+   "glossShort": "down",
+   "pos": "preposition",
+   "audio": "chapt_6_f_voc7",
+   "ntFreq": 473,
+   "lexicalForm": "κατά",
+   "senses": [
+    {
+     "gloss": "down, against",
+     "glossShort": "down",
+     "case": "gen",
+     "caseTag": "(with gen.)"
+    },
+    {
+     "gloss": "according to",
+     "glossShort": "according to",
+     "case": "acc",
+     "caseTag": "(with acc.)"
+    }
+   ]
+  },
+  "meta": {
+   "greek": "μετά",
+   "translit": "meta",
+   "gloss": "with (with gen.); after (with acc.)",
+   "glossShort": "with",
+   "pos": "preposition",
+   "audio": "chapt_6_f_voc8",
+   "ntFreq": 469,
+   "lexicalForm": "μετά",
+   "senses": [
+    {
+     "gloss": "with",
+     "glossShort": "with",
+     "case": "gen",
+     "caseTag": "(with gen.)"
+    },
+    {
+     "gloss": "after",
+     "glossShort": "after",
+     "case": "acc",
+     "caseTag": "(with acc.)"
+    }
+   ]
+  },
+  "peri": {
+   "greek": "περί",
+   "translit": "peri",
+   "gloss": "about, concerning (with gen.); around, near (with acc.)",
+   "glossShort": "about",
+   "pos": "preposition",
+   "audio": "chapt_6_f_voc9",
+   "ntFreq": 333,
+   "lexicalForm": "περί",
+   "senses": [
+    {
+     "gloss": "about, concerning",
+     "glossShort": "about",
+     "case": "gen",
+     "caseTag": "(with gen.)"
+    },
+    {
+     "gloss": "around, near",
+     "glossShort": "around",
+     "case": "acc",
+     "caseTag": "(with acc.)"
+    }
+   ]
+  },
+  "pros": {
+   "greek": "πρός",
+   "translit": "pros",
+   "gloss": "to (with acc.)",
+   "glossShort": "to",
+   "pos": "preposition",
+   "audio": "chapt_6_f_voc10",
+   "ntFreq": 700,
+   "lexicalForm": "πρός",
+   "senses": [
+    {
+     "gloss": "to",
+     "glossShort": "to",
+     "case": "acc",
+     "caseTag": "(with acc.)"
+    }
+   ]
+  }
+ },
+ "exampleWords": {
+  "Ἰησοῦν υἱὸν τοῦ Ἰωσὴφ τὸν ἀπὸ Ναζαρέτ": {
+   "greek": "Ἰησοῦν υἱὸν τοῦ Ἰωσὴφ τὸν ἀπὸ Ναζαρέτ",
+   "gloss": "Jesus son of Joseph from Nazareth",
+   "audio": "chapt_6_f_apo1"
+  },
+  "ἀπὸ τοῦ νόμου": {
+   "greek": "ἀπὸ τοῦ νόμου",
+   "gloss": "from the law",
+   "audio": "chapt_6_f_apo2"
+  },
+  "ἀφ' ὑμῶν": {
+   "greek": "ἀφ' ὑμῶν",
+   "gloss": "from you",
+   "audio": "chapt_6_f_apo3"
+  },
+  "εἰς τὴν ζωὴν": {
+   "greek": "εἰς τὴν ζωὴν",
+   "gloss": "to life",
+   "audio": "chapt_6_f_eis1"
+  },
+  "εἰς τὴν οἰκίαν Πέτρου": {
+   "greek": "εἰς τὴν οἰκίαν Πέτρου",
+   "gloss": "into Peter's house",
+   "audio": "chapt_6_f_eis2"
+  },
+  "εἰς τὴν βασιλείαν τῶν οὐρανῶν": {
+   "greek": "εἰς τὴν βασιλείαν τῶν οὐρανῶν",
+   "gloss": "into the kingdom of heaven",
+   "audio": "chapt_6_f_eis3"
+  },
+  "ἐκ τῶν Φαρισαίων": {
+   "greek": "ἐκ τῶν Φαρισαίων",
+   "gloss": "from the Pharisees",
+   "audio": "chapt_6_f_ek1"
+  },
+  "ἐκ τῆς βασιλείας": {
+   "greek": "ἐκ τῆς βασιλείας",
+   "gloss": "out of the kingdom",
+   "audio": "chapt_6_f_ek2"
+  },
+  "ἐξ οὐρανοῦ": {
+   "greek": "ἐξ οὐρανοῦ",
+   "gloss": "from heaven",
+   "audio": "chapt_6_f_ek3"
+  },
+  "ἐν ταῖς καρδίαις": {
+   "greek": "ἐν ταῖς καρδίαις",
+   "gloss": "in the hearts",
+   "audio": "chapt_6_f_en1"
+  },
+  "ἐν τῷ ἀνθρώπῳ": {
+   "greek": "ἐν τῷ ἀνθρώπῳ",
+   "gloss": "in the man",
+   "audio": "chapt_6_f_en2"
+  },
+  "ἐν ἡμέρᾳ κρίσεως": {
+   "greek": "ἐν ἡμέρᾳ κρίσεως",
+   "gloss": "on the day of judgment",
+   "audio": "chapt_6_f_en3"
+  },
+  "ἔρχεται πρὸς αὐτὸν λέγει πρὸς Φίλιππον": {
+   "greek": "ἔρχεται πρὸς αὐτὸν λέγει πρὸς Φίλιππον",
+   "gloss": "he comes to him and said to Philip",
+   "audio": "chapt_6_f_pros1"
+  },
+  "πρὸς τοὺς μαθητὰς": {
+   "greek": "πρὸς τοὺς μαθητὰς",
+   "gloss": "to the disciples",
+   "audio": "chapt_6_f_pros2"
+  },
+  "πρὸς τὸν ὄχλον": {
+   "greek": "πρὸς τὸν ὄχλον",
+   "gloss": "to the crowd",
+   "audio": "chapt_6_f_pros3"
+  },
+  "σὺν τοῖς μαθηταῖς": {
+   "greek": "σὺν τοῖς μαθηταῖς",
+   "gloss": "with the disciples",
+   "audio": "chapt_6_f_sun1"
+  },
+  "σὺν τῷ ἀγγέλῳ": {
+   "greek": "σὺν τῷ ἀγγέλῳ",
+   "gloss": "with the angel",
+   "audio": "chapt_6_f_sun2"
+  },
+  "σὺν τοῖς πρεσβυτέροις": {
+   "greek": "σὺν τοῖς πρεσβυτέροις",
+   "gloss": "with the elders",
+   "audio": "chapt_6_f_sun3"
+  },
+  "διὰ Ἰερεμίου τοῦ προφήτου": {
+   "greek": "διὰ Ἰερεμίου τοῦ προφήτου",
+   "gloss": "through Jeremiah the prophet",
+   "audio": "chapt_6_f_dia1"
+  },
+  "διὰ τῶν προφητῶν τῷ υἱῷ τοῦ ἀνθρώπου": {
+   "greek": "διὰ τῶν προφητῶν τῷ υἱῷ τοῦ ἀνθρώπου",
+   "gloss": "by the prophets about the son of man",
+   "audio": "chapt_6_f_dia2"
+  },
+  "διὰ τὸν λόγον": {
+   "greek": "διὰ τὸν λόγον",
+   "gloss": "because of the word",
+   "audio": "chapt_6_f_dia3"
+  },
+  "κατὰ τοῦ υἱοῦ τοῦ ἀνθρώπου": {
+   "greek": "κατὰ τοῦ υἱοῦ τοῦ ἀνθρώπου",
+   "gloss": "against the son of man",
+   "audio": "chapt_6_f_kata1"
+  },
+  "κατὰ τοῦ λαοῦ": {
+   "greek": "κατὰ τοῦ λαοῦ",
+   "gloss": "against the people",
+   "audio": "chapt_6_f_kata2"
+  },
+  "καθ' ἡμέραν": {
+   "greek": "καθ' ἡμέραν",
+   "gloss": "during the day",
+   "audio": "chapt_6_f_kata3"
+  },
+  "μετὰ τῶν υἱῶν αὐτῆς": {
+   "greek": "μετὰ τῶν υἱῶν αὐτῆς",
+   "gloss": "with her sons",
+   "audio": "chapt_6_f_meta1"
+  },
+  "μετὰ Ἰησοῦ τοῦ Ναζωραίου": {
+   "greek": "μετὰ Ἰησοῦ τοῦ Ναζωραίου",
+   "gloss": "with Jesus of Nazareth",
+   "audio": "chapt_6_f_meta2"
+  },
+  "μεθ' ἡμέρας ἕξ": {
+   "greek": "μεθ' ἡμέρας ἕξ",
+   "gloss": "after 6 days",
+   "audio": "chapt_6_f_meta3"
+  },
+  "περὶ τῶν δύο ἀδελφῶν": {
+   "greek": "περὶ τῶν δύο ἀδελφῶν",
+   "gloss": "about the two brothers",
+   "audio": "chapt_6_f_peri1"
+  },
+  "περὶ τοῦ ἱεροῦ": {
+   "greek": "περὶ τοῦ ἱεροῦ",
+   "gloss": "about the temple",
+   "audio": "chapt_6_f_peri2"
+  },
+  "περὶ τὴν ἀλήθειαν": {
+   "greek": "περὶ τὴν ἀλήθειαν",
+   "gloss": "about the truth",
+   "audio": "chapt_6_f_peri3"
+  },
+  "ἐπὶ γῆς": {
+   "greek": "ἐπὶ γῆς",
+   "gloss": "on earth",
+   "audio": "chapt_6_f_epi1"
+  },
+  "πατὴρ ἐπὶ υἱῷ καὶ υἱὸς ἐπὶ πατρί": {
+   "greek": "πατὴρ ἐπὶ υἱῷ καὶ υἱὸς ἐπὶ πατρί",
+   "gloss": "father against son and son against father",
+   "audio": "chapt_6_f_epi2"
+  },
+  "ἐπὶ τοὺς μαθητὰς αὐτοῦ": {
+   "greek": "ἐπὶ τοὺς μαθητὰς αὐτοῦ",
+   "gloss": "to his disciples",
+   "audio": "chapt_6_f_epi3"
+  }
+ }
+}
