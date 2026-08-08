@@ -1,0 +1,1542 @@
+[
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch3-verb-translating-hint",
+  "atRest": {
+   "top": 170,
+   "bottom": 676,
+   "action": {
+    "top": 610,
+    "bottom": 654
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 170,
+   "bottom": 676,
+   "action": {
+    "top": 610,
+    "bottom": 654
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch4-greek-noun-hint",
+  "atRest": {
+   "top": 144,
+   "bottom": 703,
+   "action": {
+    "top": 637,
+    "bottom": 681
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 144,
+   "bottom": 703,
+   "action": {
+    "top": 637,
+    "bottom": 681
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch4-greek-noun-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 520,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch4-declining-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 520,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch5-first-decl-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 479,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch5-declining-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 479,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch5-article-hint-meanings",
+  "atRest": {
+   "top": 192,
+   "bottom": 654,
+   "action": {
+    "top": 588,
+    "bottom": 632
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 192,
+   "bottom": 654,
+   "action": {
+    "top": 588,
+    "bottom": 632
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch3-learn-verbs-endings",
+  "atRest": {
+   "top": 224,
+   "bottom": 622,
+   "action": {
+    "top": 555,
+    "bottom": 600
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 224,
+   "bottom": 622,
+   "action": {
+    "top": 555,
+    "bottom": 600
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch1-speller-greek-keyboard",
+  "atRest": {
+   "top": 91,
+   "bottom": 755,
+   "action": {
+    "top": 689,
+    "bottom": 733
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 91,
+   "bottom": 755,
+   "action": {
+    "top": 689,
+    "bottom": 733
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch5-verse-speller-greek-keyboard",
+  "atRest": {
+   "top": 91,
+   "bottom": 755,
+   "action": {
+    "top": 689,
+    "bottom": 733
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 91,
+   "bottom": 755,
+   "action": {
+    "top": 689,
+    "bottom": 733
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch1-end-of-chapter",
+  "atRest": {
+   "top": 257,
+   "bottom": 590,
+   "action": {
+    "top": 524,
+    "bottom": 568
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 257,
+   "bottom": 590,
+   "action": {
+    "top": 524,
+    "bottom": 568
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch3-verb-translating-hint",
+  "atRest": {
+   "top": 115,
+   "bottom": 621,
+   "action": {
+    "top": 555,
+    "bottom": 599
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 115,
+   "bottom": 621,
+   "action": {
+    "top": 555,
+    "bottom": 599
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch4-greek-noun-hint",
+  "atRest": {
+   "top": 89,
+   "bottom": 648,
+   "action": {
+    "top": 582,
+    "bottom": 626
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 89,
+   "bottom": 648,
+   "action": {
+    "top": 582,
+    "bottom": 626
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch4-greek-noun-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 630,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch4-declining-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 630,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch5-first-decl-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 589,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch5-declining-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 589,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch5-article-hint-meanings",
+  "atRest": {
+   "top": 137,
+   "bottom": 599,
+   "action": {
+    "top": 533,
+    "bottom": 577
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 137,
+   "bottom": 599,
+   "action": {
+    "top": 533,
+    "bottom": 577
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch3-learn-verbs-endings",
+  "atRest": {
+   "top": 169,
+   "bottom": 567,
+   "action": {
+    "top": 500,
+    "bottom": 545
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 169,
+   "bottom": 567,
+   "action": {
+    "top": 500,
+    "bottom": 545
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch1-speller-greek-keyboard",
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 64,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch5-verse-speller-greek-keyboard",
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 64,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch1-end-of-chapter",
+  "atRest": {
+   "top": 202,
+   "bottom": 535,
+   "action": {
+    "top": 469,
+    "bottom": 513
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 202,
+   "bottom": 535,
+   "action": {
+    "top": 469,
+    "bottom": 513
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch3-verb-translating-hint",
+  "atRest": {
+   "top": 80,
+   "bottom": 586,
+   "action": {
+    "top": 520,
+    "bottom": 564
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 80,
+   "bottom": 586,
+   "action": {
+    "top": 520,
+    "bottom": 564
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch4-greek-noun-hint",
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 29,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch4-greek-noun-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 700,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch4-declining-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 700,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch5-first-decl-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 659,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch5-declining-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 659,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch5-article-hint-meanings",
+  "atRest": {
+   "top": 102,
+   "bottom": 564,
+   "action": {
+    "top": 498,
+    "bottom": 542
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 102,
+   "bottom": 564,
+   "action": {
+    "top": 498,
+    "bottom": 542
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch3-learn-verbs-endings",
+  "atRest": {
+   "top": 134,
+   "bottom": 532,
+   "action": {
+    "top": 465,
+    "bottom": 510
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 134,
+   "bottom": 532,
+   "action": {
+    "top": 465,
+    "bottom": 510
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch1-speller-greek-keyboard",
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 134,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch5-verse-speller-greek-keyboard",
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 134,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch1-end-of-chapter",
+  "atRest": {
+   "top": 167,
+   "bottom": 500,
+   "action": {
+    "top": 434,
+    "bottom": 478
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 167,
+   "bottom": 500,
+   "action": {
+    "top": 434,
+    "bottom": 478
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch3-verb-translating-hint",
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 368,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch4-greek-noun-hint",
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 340,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch4-greek-noun-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 1120,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch4-declining-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 1120,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch5-first-decl-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 1246,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch5-declining-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 1246,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch5-article-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 262,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch3-learn-verbs-endings",
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 213,
+    "bottom": 258
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 182,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 213,
+    "bottom": 258
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch1-speller-greek-keyboard",
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 506,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch5-verse-speller-greek-keyboard",
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 506,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch1-end-of-chapter",
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 255,
+    "bottom": 296
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 82,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 255,
+    "bottom": 296
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch3-verb-translating-hint",
+  "atRest": {
+   "top": 268,
+   "bottom": 758,
+   "action": {
+    "top": 692,
+    "bottom": 736
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 268,
+   "bottom": 758,
+   "action": {
+    "top": 692,
+    "bottom": 736
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch4-greek-noun-hint",
+  "atRest": {
+   "top": 234,
+   "bottom": 793,
+   "action": {
+    "top": 727,
+    "bottom": 771
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 234,
+   "bottom": 793,
+   "action": {
+    "top": 727,
+    "bottom": 771
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch4-greek-noun-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 291,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch4-declining-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 291,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch5-first-decl-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 250,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch5-declining-hint-meanings",
+  "atRest": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 250,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch5-article-hint-meanings",
+  "atRest": {
+   "top": 282,
+   "bottom": 744,
+   "action": {
+    "top": 678,
+    "bottom": 722
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 282,
+   "bottom": 744,
+   "action": {
+    "top": 678,
+    "bottom": 722
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch3-learn-verbs-endings",
+  "atRest": {
+   "top": 314,
+   "bottom": 712,
+   "action": {
+    "top": 645,
+    "bottom": 690
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 314,
+   "bottom": 712,
+   "action": {
+    "top": 645,
+    "bottom": 690
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch1-speller-greek-keyboard",
+  "atRest": {
+   "top": 191,
+   "bottom": 835,
+   "action": {
+    "top": 769,
+    "bottom": 813
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 191,
+   "bottom": 835,
+   "action": {
+    "top": 769,
+    "bottom": 813
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch5-verse-speller-greek-keyboard",
+  "atRest": {
+   "top": 191,
+   "bottom": 835,
+   "action": {
+    "top": 769,
+    "bottom": 813
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 191,
+   "bottom": 835,
+   "action": {
+    "top": 769,
+    "bottom": 813
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch1-end-of-chapter",
+  "atRest": {
+   "top": 347,
+   "bottom": 680,
+   "action": {
+    "top": 614,
+    "bottom": 658
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 347,
+   "bottom": 680,
+   "action": {
+    "top": 614,
+    "bottom": 658
+   }
+  },
+  "ok": true
+ }
+]

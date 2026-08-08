@@ -12,10 +12,21 @@
   // the row's clip when present.
   import { play } from '../lib/audio.js';
   import { splitMarkRun } from '../lib/greek.js';
+  import { usePopups, popupFor } from '../lib/popups.js';
   import Marked from './Marked.svelte';
   import Paradigm from './Paradigm.svelte';
+  import PrepositionsChart from './PrepositionsChart.svelte';
+  import PronounParadigm from './PronounParadigm.svelte';
 
   export let blocks = [];
+  // Chapter-wide form -> clip map, for the block types whose cells are not
+  // lexicon lemmas (chapter 8's pronoun charts). Inherited by nested content.
+  export let audioMap = {};
+
+  // The activity's popup register, if its host provided one (5F §2.2).
+  const popups = usePopups();
+  const linkedPopup = ref => popupFor(popups, ref);
+  const openPopup = popup => { if (popups && popup) popups.open(popup); };
   // greekTaps declared once for a whole topic/page, inherited by every block
   // under it. Chapter 3's Learn Verbs page wires λύουσιν, λύουσι and λύω this
   // way: the words sit in running prose across three different topics, and
@@ -136,12 +147,12 @@
   }
 
   function splitTaps(text, taps) {
-    let parts = [{ t: text || '' }];
+    let parts = splitPopupHeadwords(text || '');
     if (!taps) return parts;
     for (const [sub, audio] of Object.entries(taps)) {
       const next = [];
       for (const p of parts) {
-        if (p.audio) { next.push(p); continue; }     // already claimed by another key
+        if (p.audio || p.popup) { next.push(p); continue; }   // already claimed
         // EVERY standalone occurrence, not just the first: two identical Greek
         // words on one page must behave the same way. The Parsing Format topic
         // prints λύω twice, and marking only the first left one blue-and-
@@ -158,6 +169,44 @@
       parts = next;
     }
     return parts;
+  }
+
+  // A popup whose entry carries a GREEK headword claims every standalone
+  // occurrence of that word in the prose, exactly as a greekTaps key does.
+  // This is what makes chapter 7's οὐ / οὐκ / οὐχ pages reach their three
+  // popups: unlike chapter 6, that page ships no popupRef and no underlined
+  // anchor of its own. Longest headword first, so οὐχ is never split by οὐ.
+  // See DIVERGENCE-LOG D-31.
+  function splitPopupHeadwords(text) {
+    if (!popups || !popups.byGreek.length) return [{ t: text }];
+    let parts = [{ t: text }];
+    for (const [greek, popup] of popups.byGreek) {
+      const next = [];
+      for (const p of parts) {
+        if (p.popup) { next.push(p); continue; }
+        let rest = p.t;
+        for (let i = standaloneIndexOf(rest, greek); i !== -1; i = standaloneIndexOf(rest, greek)) {
+          if (i > 0) next.push({ t: rest.slice(0, i) });
+          next.push({ t: greek, popup });
+          rest = rest.slice(i + greek.length);
+        }
+        if (rest) next.push({ t: rest });
+      }
+      parts = next;
+    }
+    return parts;
+  }
+
+  // A greekRows row may carry parts[] in TWO shapes. Chapters 4/5 ship objects
+  // ({greek, audio} / {text}); chapter 6 ships plain strings with a parallel
+  // partAudio[] whose null entries are the inert connectors (the "+"). Both
+  // normalize here so the template has one shape to draw.
+  function equationParts(row) {
+    return (row.parts || []).map((part, index) => {
+      if (part && typeof part === 'object') return part;
+      const audio = (row.partAudio || [])[index] || null;
+      return audio ? { greek: String(part), audio } : { text: String(part) };
+    });
   }
 </script>
 
@@ -180,10 +229,10 @@
            named Greek words in the line tappable; anything not named stays
            plain ink, which is how the λύ and ω MORPHEMES on that same line stay
            untappable — they are fragments with no clip of their own. -->
-      {@const taps = b.greekTaps || greekTaps}
+      {@const taps = (b.greekTaps || greekTaps) || (popups && popups.byGreek.length ? {} : null)}
       <p class="rc-para" class:example-block={isExampleBlock(b)}
          class:rc-strong={b.emphasis === 'strong'} class:rc-indent={b.indent}
-      >{#if taps}{#each splitTaps(b.text, taps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={b.text} />{/if}</p>
+      >{#if taps}{#each splitTaps(b.text, taps) as seg}{#if seg.popup}<button class="greek-tap popup-link greek" on:click={() => openPopup(seg.popup)}>{seg.t}</button>{:else if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={b.text} />{/if}</p>
       {#if b.example}
         <button class="rc-example" class:tappable={b.example.audio} on:click={() => playAudio(b.example.audio)}>
           <span class="greek">{b.example.greek}</span>
@@ -199,7 +248,7 @@
         {#each items as it}
           {@const itemTaps = it.greekTaps || greekTaps}
           <li>
-            {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else if b.labelStyle === 'underline'}<u class="rc-lead-u">{it.label}</u>{joiner(it.text)}{:else if b.labelStyle === 'plain'}<span class="rc-lead-plain">{it.label}</span>{joiner(it.text)}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#if itemTaps}{#each splitTaps(it.text, itemTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={it.text || ''} />{/if}
+            {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else if b.labelStyle === 'underline'}<u class="rc-lead-u">{it.label}</u>{joiner(it.text)}{:else if b.labelStyle === 'plain'}<span class="rc-lead-plain">{it.label}</span>{joiner(it.text)}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#if itemTaps}{#each splitTaps(it.text, itemTaps) as seg}{#if seg.popup}<button class="greek-tap popup-link greek" on:click={() => openPopup(seg.popup)}>{seg.t}</button>{:else if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={it.text || ''} />{/if}
             {#if it.example}
               <button class="rc-example" class:tappable={it.example.audio} on:click={() => playAudio(it.example.audio)}>
                 <span class="greek">{it.example.greek}</span>
@@ -306,13 +355,42 @@
             <div class="rc-greekrow rc-english-pair" style={`--greek-cols:${row.parts.length}`}>
               {#each row.parts as part}<span class="rc-english-cell">{part}</span>{/each}
             </div>
+          {:else if row.senses}
+            <!-- 5F \u00a72.3: a preposition and its sense lines. Each sense is a
+                 GLOSS (the link that opens the green page) and a case tag,
+                 which is plain ink. The headword plays its own clip. A row
+                 whose popupRef names nothing still prints its senses; the
+                 gloss simply stays ink rather than becoming a dead link. -->
+            {@const popup = linkedPopup(row.popupRef)}
+            <div class="rc-greekrow rc-sense-row" style="--greek-cols:2">
+              {#if row.audio}
+                <button class="rc-greekword greek greek-say" on:click={() => playAudio(row.audio)}>{row.greek}</button>
+              {:else}
+                <span class="rc-greekword greek">{row.greek}</span>
+              {/if}
+              <span class="rc-senses">
+                {#each row.senses as sense}
+                  <span class="rc-sense">
+                    {#if popup}
+                      <button class="popup-link rc-sense-link" on:click={() => openPopup(popup)}><Marked text={sense.gloss} /></button>
+                    {:else}
+                      <span class="rc-sense-gloss"><Marked text={sense.gloss} /></span>
+                    {/if}
+                    {#if sense.caseTag}<span class="rc-casetag">{sense.caseTag}</span>{/if}
+                  </span>
+                {/each}
+              </span>
+            </div>
           {:else if row.parts}
             <!-- C6: an equation row (\u03b4\u03b9\u03ac + \u03b1\u1f50\u03c4\u03bf\u1fe6 becomes \u03b4\u03b9\u1fbd \u03b1\u1f50\u03c4\u03bf\u1fe6). Each Greek
                  part is its OWN tap target with its own clip; the connecting
-                 words are inert ink. -->
-            <div class="rc-greekrow parts-row" style="--greek-cols:1">
+                 words are inert ink.
+                 5F \u00a72.3: `bracket` parenthesises the whole row \u2014 the Elision
+                 page sets its derivations that way. -->
+            <div class="rc-greekrow parts-row" class:rc-bracket={row.bracket} style="--greek-cols:1">
               <span class="rc-parts">
-                {#each row.parts as part}
+                {#if row.bracket}<span class="rc-bracket-mark">(</span>{/if}
+                {#each equationParts(row) as part}
                   {#if part.greek}
                     {#if part.audio}
                       <button class="rc-part greek greek-say" on:click={() => playAudio(part.audio)}>{part.greek}</button>
@@ -324,7 +402,22 @@
                   {/if}
                 {/each}
                 {#if row.gloss != null && row.gloss !== ''}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
+                {#if row.bracket}<span class="rc-bracket-mark">)</span>{/if}
               </span>
+              {#if row.ref}<span class="rc-greekref">{row.ref}</span>{/if}
+            </div>
+          {:else if row.greek2 !== undefined && (b.layout === 'verseExamples' || row.greek2)}
+            <!-- 5F: a worked verse example set over up to two lines, with its
+                 gloss and citation under it. One tap target: the two lines are
+                 one phrase and one clip (chapter 8's Examples page). -->
+            <div class="rc-greekrow rc-verse-example" style="--greek-cols:1">
+              <button class="rc-verse-greek greek greek-say" disabled={!row.audio}
+                      on:click={() => playAudio(row.audio)}>
+                <span class="rc-verse-line">{row.greek}</span>
+                {#if row.greek2}<span class="rc-verse-line">{row.greek2}</span>{/if}
+              </button>
+              {#if row.gloss}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
+              {#if row.ref}<span class="rc-greekref">{row.ref}</span>{/if}
             </div>
           {:else}
             {@const cellCount = (row.label ? 1 : 0) + (row.greek ? 1 : 0) + (row.gloss != null && row.gloss !== '' ? 1 : 0)}
@@ -346,6 +439,7 @@
                 {/if}
               {/if}
               {#if row.gloss != null && row.gloss !== ''}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
+              {#if row.ref}<span class="rc-greekref">{row.ref}</span>{/if}
             </div>
           {/if}
         {/each}
@@ -358,12 +452,23 @@
            Hint popup on three chapter-3 drills — one renderer, three hosts. -->
       <Paradigm paradigm={b} title={sameTitle(b.title) ? null : b.title} />
 
+    {:else if b.type === 'pronounParadigm'}
+      <!-- 5F §2.8: chapter 8's four-case Singular/Plural pronoun chart. Its
+           own component because its rows are set as one line of text, not as
+           {greek, gloss} cells. -->
+      <PronounParadigm paradigm={b} {audioMap} title={sameTitle(b.title) ? null : b.title} />
+
+    {:else if b.type === 'prepositionsChart'}
+      <!-- 5F §2.1: chapter 6's ten prepositions as a DIAGRAM. The same block
+           renders here (a Learn topic) and as the Review Prepositions Chart. -->
+      <PrepositionsChart block={b} title={sameTitle(b.title) ? null : b.title} />
+
     {:else if b.type === 'expander'}
       <details class="rc-expander">
         <summary><Marked text={b.label} /></summary>
         <div class="rc-expander-body">
           {#if b.content && b.content.length}
-            <svelte:self blocks={b.content} greekTaps={b.greekTaps || greekTaps} />
+            <svelte:self blocks={b.content} greekTaps={b.greekTaps || greekTaps} {audioMap} />
           {:else}
             <div class="pending-verification compact">Content pending verification.</div>
           {/if}

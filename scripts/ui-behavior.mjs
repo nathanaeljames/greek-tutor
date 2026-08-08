@@ -44,6 +44,9 @@ const ch4 = JSON.parse(readFileSync('src/data/chapt-04.json', 'utf8'));
 const ch5 = JSON.parse(readFileSync('src/data/chapt-05.json', 'utf8'));
 const ch1 = JSON.parse(readFileSync('src/data/chapt-01.json', 'utf8'));
 const ch2 = JSON.parse(readFileSync('src/data/chapt-02.json', 'utf8'));
+const ch6 = JSON.parse(readFileSync('src/data/chapt-06.json', 'utf8'));
+const ch7 = JSON.parse(readFileSync('src/data/chapt-07.json', 'utf8'));
+const ch8 = JSON.parse(readFileSync('src/data/chapt-08.json', 'utf8'));
 const verse = (ch3.exercise.find(a => a.type === 'spellVerse').answerWords || []).join(' ');
 // UNACCENTED, not unmarked (5E-SPEC2 §4.2). "With Accents" OFF forgives the
 // acute, the grave and the circumflex and NOTHING else, so a fixture that
@@ -703,9 +706,17 @@ for (const chapterId of ['chapt_1', 'chapt_2', 'chapt_3', 'chapt_4', 'chapt_5'])
 // option-grid census.
 await page.setViewportSize({ width: 390, height: 900 });
 
-const CHAPTERS = { chapt_1: ch1, chapt_2: ch2, chapt_3: ch3, chapt_4: ch4, chapt_5: ch5 };
+// 5F: chapters 6, 7 and 8 join the swept set, so every census, every ledger
+// assertion and every spelling rule below covers them without being restated.
+// That is the point of writing them as sweeps rather than as lists.
+const CHAPTERS = { chapt_1: ch1, chapt_2: ch2, chapt_3: ch3, chapt_4: ch4, chapt_5: ch5,
+                   chapt_6: ch6, chapt_7: ch7, chapt_8: ch8 };
 const LEXICON = id => JSON.parse(readFileSync(`src/data/lexicon-chapt0${id.split('_')[1]}.json`, 'utf8'));
 const promptGloss = () => page.locator('.card.speller .flash-pane .value').first().innerText();
+// WHICH ITEM the word speller is on. Not the prompt: chapter 7's adjective
+// speller prints "good" on six consecutive items and tells them apart by their
+// parse note, so a prompt comparison cannot see that word 1 became word 2.
+const spellerIndex = async () => page.locator('.card.speller').first().getAttribute('data-word-index');
 const exerciseCount = () => page.locator('.card .exercise-count').innerText();
 const awaitNextShown = async () => await page.locator('.await-next').count() > 0;
 
@@ -1075,7 +1086,7 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
   const word = answers[0];
   if (!word) { check(`5E §1 ${chapterId} ${activity.id}: correct auto-advances`, false, 'no first answer in the data'); continue; }
   await go(`#/activity/${chapterId}/${activity.id}`);
-  const before = await promptGloss();
+  const before = await spellerIndex();
   await setAccents(false);
   await typeAccented(stripAccents(word));
   const answeredAt = Date.now();
@@ -1084,16 +1095,16 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
   const kind = await feedbackKind();
   const said = await awaitNextShown();
   await shot(`B1a ${chapterId} ${activity.id} CORRECT`);
-  const early = await promptGloss();
+  const early = await spellerIndex();
   let late = early;
   while (late === before && Date.now() - answeredAt < CORRECT_MS * 3) {
     await page.waitForTimeout(50);
-    late = await promptGloss();
+    late = await spellerIndex();
   }
   const elapsed = Date.now() - answeredAt;
   check(`5E §1 ${chapterId} ${activity.id} (retryUntilRight): correct auto-advances on max(2000ms, clip)`,
     kind === 'ok' && !said && early === before && late !== before && elapsed >= CORRECT_MS * 0.8,
-    `feedback ${kind} for ${JSON.stringify(word)}, wait message ${said}, prompt ${JSON.stringify(before)} -> ${JSON.stringify(late)} at ${elapsed}ms`);
+    `feedback ${kind} for ${JSON.stringify(word)}, wait message ${said}, word ${before} -> ${late} at ${elapsed}ms`);
 }
 
 // Rule B1b, the one place a correct answer does NOT move: a whole-verse
@@ -1319,7 +1330,10 @@ function spellerAnswers(chapterId, activity) {
     }
     return null;
   };
-  return (activity.items || []).map(item => item.greek || (item.ref ? lookup(item.ref) : null));
+  // 5F: a speller item may carry its Greek as `answer` (the phrase and parse
+  // spellers) as well as `greek` or by lexicon ref. `ref` on those items is a
+  // scripture citation, not a lexicon key, so the lookup is tried last.
+  return (activity.items || []).map(item => item.greek || item.answer || (item.ref ? lookup(item.ref) : null));
 }
 for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
   for (const activity of activitiesOf(chapter).filter(a => a && a.type === 'spell')) {
@@ -2004,6 +2018,700 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
     alternates.length === 0, alternates.join('; '));
 }
 
+// ===================================================================
+// 5F: chapters 6, 7 and 8
+// ===================================================================
+// Everything above already sweeps the three new chapters (they are in
+// CHAPTERS). What follows is what only they have: the ledger read back off the
+// shipped surfaces activity by activity, the two-stage case drill, answerAlt
+// in both of its shapes, per-item option rendering, the elision apostrophe
+// round-tripping through the checker, and the popup pages.
+
+const CH_5F = { chapt_6: ch6, chapt_7: ch7, chapt_8: ch8 };
+
+// ---- the ledger, read off the SURFACE, activity by activity --------------
+// `audioTiming`, the Pronounce-Each default and the Previous/Next pair are
+// stamped into the data from DRILLBEHAVIORLEDGER.csv, and the components read
+// them from there. This asserts the SHIPPED SURFACE agrees with the stamp on
+// every scored activity of the three chapters — which is the check that would
+// notice a component quietly defaulting instead of reading.
+for (const [chapterId, chapter] of Object.entries(CH_5F)) {
+  for (const activity of activitiesOf(chapter).filter(a => a && (a.type === 'select' || a.type === 'spell' || a.type === 'spellVerse'))) {
+    await go(`#/activity/${chapterId}/${activity.id}`);
+    const buttons = (activity.ui && activity.ui.buttons) || [];
+    const wantsStepper = buttons.includes('Previous') || buttons.includes('Next');
+    const inCard = name => page.locator('.card').getByRole('button', { name, exact: true });
+    // The activity's OWN pair, never the rail's (both say "Next").
+    const hasPrev = await inCard('Previous').count() > 0;
+    const hasNext = await inCard('Next').count() > 0;
+    check(`5F ledger ${chapterId} ${activity.id}: Previous/Next ${wantsStepper ? 'present' : 'absent'} per the ledger`,
+      hasPrev === wantsStepper && hasNext === wantsStepper,
+      `declared [${buttons.join(', ')}], on screen Previous ${hasPrev} Next ${hasNext}`);
+
+    const wantPronounceEach = (activity.ui && activity.ui.defaults
+      && activity.ui.defaults.pronounceEach) ?? true;
+    const box = page.locator('label', { hasText: /Pronounce each/i }).locator('input');
+    if (await box.count()) {
+      check(`5F ledger ${chapterId} ${activity.id}: Pronounce Each defaults ${wantPronounceEach ? 'ON' : 'OFF'}`,
+        await box.first().isChecked() === !!wantPronounceEach,
+        `checked ${await box.first().isChecked()}`);
+    }
+
+    // §2 audio timing, on arrival. `beforeGuess` speaks the prompt with no
+    // click behind it; every other timing is silent until the learner acts.
+    await page.waitForTimeout(400);
+    const spokeOnArrival = (await clips()).some(c => c.startedAt);
+    const timing = activity.audioTiming || (activity.type === 'select' ? 'beforeGuess' : 'afterGuess');
+    check(`5F ledger ${chapterId} ${activity.id}: audioTiming "${timing}" — ${timing === 'beforeGuess' ? 'speaks' : 'is silent'} on arrival`,
+      spokeOnArrival === (timing === 'beforeGuess'),
+      `clips started on arrival: ${spokeOnArrival}`);
+  }
+}
+
+// ---- every scored option grid, both outcomes ----------------------------
+// Rule B1a on the correct path and the item's own advanceClass on the wrong
+// one, for EVERY select drill in the three chapters — not a sample.
+//
+// The answer is read from the DATA rather than learned from a reveal, which
+// these chapters make possible: every item carries its own `answer`, and the
+// prompt plus its note identify the item on screen even where the Greek alone
+// repeats (chapter 6 drills διά twice, once per case, and tells them apart by
+// the gloss printed under it). Where a prompt is genuinely shared by items
+// with DIFFERENT answers the item is skipped and the drill is retried, so a
+// data ambiguity can never be reported as a broken advance.
+// Chapter 7 keeps the plain ten-lemma vocabulary shape, so its two vocabulary
+// drills carry no items at all — the pool IS the lexicon. Reconstruct the same
+// {prompt, answer} pairs the app builds from it, so those two drills are swept
+// like every other rather than skipped.
+function fiveFItems(chapterId, activity) {
+  if (Array.isArray(activity.items) && activity.items.length) return activity.items;
+  if (!activity.promptFrom) return [];
+  const lexicon = LEXICON(chapterId);
+  const bucket = lexicon[activity.promptFrom.lexicon] || lexicon.lemmas || {};
+  const chapter = CHAPTERS[chapterId];
+  const gloss = lemma => lemma.glossShort || lemma.gloss;
+  return (chapter.vocab || []).map(ref => bucket[ref]).filter(Boolean).map(lemma =>
+    activity.promptFrom.show === 'greek'
+      ? { prompt: lemma.greek, answer: gloss(lemma) }
+      : { prompt: gloss(lemma), answer: lemma.greek });
+}
+async function fiveFItemOnScreen(chapterId, activity) {
+  const prompt = await promptOnScreen();
+  const note = await page.locator('.prompt-note').count()
+    ? normalizeText(await page.locator('.prompt-note').innerText()) : null;
+  const rendered = item => normalizeText([item.greek ?? item.prompt, item.greek2].filter(Boolean).join(' '));
+  const hits = fiveFItems(chapterId, activity).filter(item =>
+    rendered(item) === prompt && (note == null || normalizeText(item.note) === note));
+  if (!hits.length) return null;
+  const answers = new Set(hits.map(item => normalizeText(item.answer)));
+  return answers.size === 1 ? { prompt, note, answer: hits[0].answer, options: hits[0].options } : null;
+}
+async function fiveFFreshItem(hash, chapterId, activity, tries = 12) {
+  for (let attempt = 0; attempt < tries; attempt++) {
+    await go(hash);
+    const item = await fiveFItemOnScreen(chapterId, activity);
+    if (item) return item;
+  }
+  return null;
+}
+for (const [chapterId, chapter] of Object.entries(CH_5F)) {
+  for (const activity of activitiesOf(chapter).filter(a => a && a.type === 'select' && a.mode !== 'twoStageGrid')) {
+    const hash = `#/activity/${chapterId}/${activity.id}`;
+    const advanceClass = (activity.answerPolicy || {}).advanceClass;
+    const tiles = () => page.locator(OPTION_TILES);
+
+    // ---- correct -> auto-advances (B1a), never waits for Next
+    {
+      const item = await fiveFFreshItem(hash, chapterId, activity);
+      if (!item) { check(`5F ${chapterId} ${activity.id}: correct auto-advances`, false, 'no unambiguously identified item in 12 passes'); continue; }
+      const labels = (await tiles().allInnerTexts()).map(normalizeText);
+      const at = labels.indexOf(normalizeText(item.answer));
+      const before = await itemNumber();
+      const answeredAt = Date.now();
+      await tiles().nth(at).click();
+      await page.waitForTimeout(180);
+      const kind = await feedbackKind();
+      const said = await awaitNextShown();
+      let late = await itemNumber();
+      while (late === before && Date.now() - answeredAt < CORRECT_MS * 3.5) {
+        await page.waitForTimeout(50);
+        late = await itemNumber();
+      }
+      const elapsed = Date.now() - answeredAt;
+      check(`5F ${chapterId} ${activity.id} (${advanceClass}): a CORRECT answer auto-advances on max(2000ms, clip) and never waits`,
+        at >= 0 && kind === 'ok' && !said && late !== before && elapsed >= CORRECT_MS * 0.8,
+        `${JSON.stringify(item.prompt)} -> ${JSON.stringify(item.answer)}, feedback ${kind}, wait message ${said}, item ${before} -> ${late} at ${elapsed}ms`);
+    }
+
+    // ---- incorrect -> exactly what the class says
+    {
+      const item = await fiveFFreshItem(hash, chapterId, activity);
+      if (!item) { check(`5F ${chapterId} ${activity.id}: incorrect behaves per its class`, false, 'no unambiguously identified item in 12 passes'); continue; }
+      const labels = (await tiles().allInnerTexts()).map(normalizeText);
+      const wrongAt = labels.findIndex(text => text !== normalizeText(item.answer));
+      const before = await itemNumber();
+      const answeredAt = Date.now();
+      await tiles().nth(wrongAt).click();
+      await page.waitForTimeout(200);
+      const kind = await feedbackKind();
+      const said = await awaitNextShown();
+      // The paradigm grids repeat a form legitimately (nominative and vocative
+      // plural are homographs), so assert WHAT is revealed, not how many.
+      const revealed = (await page.locator('.grid.options .tile.correct, .option-group .tile.correct').allInnerTexts()).map(normalizeText);
+      if (advanceClass === 'manualOnIncorrect') {
+        await page.waitForTimeout(INCORRECT_MS * 1.3);
+        check(`5F ${chapterId} ${activity.id} (manualOnIncorrect): an INCORRECT answer reveals, waits and says so`,
+          wrongAt >= 0 && kind === 'bad' && said && revealed.length >= 1
+            && revealed.every(text => text === normalizeText(item.answer))
+            && await itemNumber() === before,
+          `revealed ${JSON.stringify(revealed)} for ${JSON.stringify(item.answer)}, waiting ${said}, item ${before} -> ${await itemNumber()}`);
+      } else if (advanceClass === 'autoBoth') {
+        let late = await itemNumber();
+        while (late === before && Date.now() - answeredAt < INCORRECT_MS * 2) {
+          await page.waitForTimeout(60);
+          late = await itemNumber();
+        }
+        const elapsed = Date.now() - answeredAt;
+        check(`5F ${chapterId} ${activity.id} (autoBoth): an INCORRECT answer reveals and auto-advances on 4000ms`,
+          wrongAt >= 0 && kind === 'bad' && !said && revealed.length >= 1
+            && late !== before && elapsed >= INCORRECT_MS * 0.8,
+          `revealed ${JSON.stringify(revealed)}, wait message ${said}, item ${before} -> ${late} at ${elapsed}ms`);
+      } else {
+        await page.waitForTimeout(INCORRECT_MS * 1.3);
+        check(`5F ${chapterId} ${activity.id} (${advanceClass}): an INCORRECT answer reveals nothing and stays open`,
+          wrongAt >= 0 && kind === 'bad' && !said && revealed.length === 0 && await itemNumber() === before,
+          `revealed ${revealed.length}, waiting ${said}, item ${before} -> ${await itemNumber()}`);
+      }
+    }
+  }
+}
+
+// ---- §2.9 the two-stage case drill --------------------------------------
+{
+  const activity = activityById(ch8, 'c8_drill_case');
+  const HASH = '#/activity/chapt_8/c8_drill_case';
+  const stage = index => page.locator(`.grid.options[data-stage="${index}"]`);
+  const stageTiles = index => stage(index).locator('.tile');
+  // The item on screen, identified by its Greek prompt. Several forms repeat
+  // across items (αὐτῶν is genitive plural in all three genders) but they
+  // repeat with the SAME answer, so the prompt identifies the answer even
+  // where it does not identify the item.
+  const answersFor = async () => {
+    const prompt = await promptOnScreen();
+    const hits = activity.items.filter(i => normalizeText(i.greek) === prompt);
+    return { prompt, pairs: hits.length ? [hits[0].answer, ...(hits[0].answerAlt || [])] : [] };
+  };
+
+  await go(HASH);
+  check('5F §2.9 the instruction line asks for two clicks',
+    normalizeText(await page.locator('.instructions').first().innerText()) === 'Click on the person then the case',
+    JSON.stringify(await page.locator('.instructions').first().innerText()));
+  check('5F §2.9 both stages are on screen, person first',
+    await stage(0).count() === 1 && await stage(1).count() === 1
+      && await stage(0).getAttribute('data-stage-label') === 'person'
+      && await stage(1).getAttribute('data-stage-label') === 'caseNumber',
+    `stages ${await page.locator('.grid.options[data-stage]').count()}`);
+  check('5F §2.9 the case grid is inert until a person is chosen',
+    await stageTiles(1).first().isDisabled(),
+    `case tile disabled ${await stageTiles(1).first().isDisabled()}`);
+
+  // NOTHING is judged on the person click, however many times it is changed.
+  await page.locator('.card').getByRole('button', { name: 'Score', exact: true }).click();
+  const scoreBefore = normalizeText(await page.locator('.live-score').innerText());
+  await stageTiles(0).nth(0).click();
+  await page.waitForTimeout(120);
+  const afterFirst = { kind: await feedbackKind(), score: normalizeText(await page.locator('.live-score').innerText()) };
+  await stageTiles(0).nth(1).click();
+  await page.waitForTimeout(120);
+  await stageTiles(0).nth(2).click();
+  await page.waitForTimeout(120);
+  const afterThird = { kind: await feedbackKind(), score: normalizeText(await page.locator('.live-score').innerText()) };
+  await shot('5F two-stage: three person clicks, nothing judged');
+  check('5F §2.9 a person click is NOT judged — the learner may change their mind freely (VERIFY-5F item 7)',
+    afterFirst.kind === 'none' && afterThird.kind === 'none'
+      && afterFirst.score === scoreBefore && afterThird.score === scoreBefore,
+    `feedback after 1 click ${afterFirst.kind}, after 3 ${afterThird.kind}; score ${scoreBefore} -> ${afterThird.score}`);
+  check('5F §2.9 only the LAST person clicked is selected',
+    await stageTiles(0).nth(2).getAttribute('class') === (await stageTiles(0).nth(2).getAttribute('class'))
+      && await stage(0).locator('.tile.selected').count() === 1
+      && normalizeText(await stage(0).locator('.tile.selected').innerText()) === normalizeText(await stageTiles(0).nth(2).innerText()),
+    `${await stage(0).locator('.tile.selected').count()} selected`);
+  check('5F §2.9 choosing a person opens the case grid',
+    !await stageTiles(1).first().isDisabled());
+
+  // BOTH RIGHT: the pair is scored once, correct, and auto-advances (B1a).
+  {
+    await go(HASH);
+    const { prompt, pairs } = await answersFor();
+    const [person, caseNumber] = pairs[0] || [];
+    const before = await itemNumber();
+    await stage(0).locator('.tile', { hasText: person }).first().click();
+    const answeredAt = Date.now();
+    await stage(1).locator('.tile', { hasText: caseNumber }).first().click();
+    await page.waitForTimeout(180);
+    const kind = await feedbackKind();
+    const said = await awaitNextShown();
+    await shot('5F two-stage: both right');
+    let late = await itemNumber();
+    while (late === before && Date.now() - answeredAt < CORRECT_MS * 3) {
+      await page.waitForTimeout(50);
+      late = await itemNumber();
+    }
+    check('5F §2.9 both stages right: scored correct and auto-advances (B1a)',
+      kind === 'ok' && !said && late !== before,
+      `${JSON.stringify(prompt)} -> ${JSON.stringify([person, caseNumber])}, feedback ${kind}, item ${before} -> ${late} at ${Date.now() - answeredAt}ms`);
+  }
+
+  // WRONG SECOND STAGE: one attempt, manualOnIncorrect — reveals, waits, stays.
+  {
+    await go(HASH);
+    const { prompt, pairs } = await answersFor();
+    const [person, caseNumber] = pairs[0] || [];
+    const before = await itemNumber();
+    await stage(0).locator('.tile', { hasText: person }).first().click();
+    const labels = (await stageTiles(1).allInnerTexts()).map(normalizeText);
+    const wrongAt = labels.findIndex(text => !pairs.some(pair => normalizeText(pair[1]) === text));
+    await stageTiles(1).nth(wrongAt).click();
+    await page.waitForTimeout(200);
+    const kind = await feedbackKind();
+    const said = await awaitNextShown();
+    const revealed = (await stage(1).locator('.tile.correct').allInnerTexts()).map(normalizeText);
+    await shot('5F two-stage: wrong case');
+    await page.waitForTimeout(INCORRECT_MS * 1.4);
+    check('5F §2.9 wrong SECOND stage: one attempt, reveals the case, waits for Next (manualOnIncorrect)',
+      kind === 'bad' && said && revealed.includes(normalizeText(caseNumber)) && await itemNumber() === before,
+      `${JSON.stringify(prompt)} wrong case ${JSON.stringify(labels[wrongAt])}, revealed ${JSON.stringify(revealed)}, waiting ${said}, item ${before} -> ${await itemNumber()}`);
+    check('5F §2.9 a judged item locks BOTH grids',
+      await stageTiles(0).first().isDisabled() && await stageTiles(1).first().isDisabled());
+  }
+
+  // WRONG FIRST STAGE, right second: the pair is wrong, and it is the PAIR
+  // that was judged — the person click on its own never was.
+  {
+    await go(HASH);
+    const { prompt, pairs } = await answersFor();
+    const [person, caseNumber] = pairs[0] || [];
+    const people = (await stageTiles(0).allInnerTexts()).map(normalizeText);
+    const wrongPerson = people.find(text => text !== normalizeText(person));
+    await stage(0).locator('.tile', { hasText: wrongPerson }).first().click();
+    await page.waitForTimeout(120);
+    const midKind = await feedbackKind();
+    await stage(1).locator('.tile', { hasText: caseNumber }).first().click();
+    await page.waitForTimeout(200);
+    await shot('5F two-stage: wrong person, right case');
+    check('5F §2.9 wrong FIRST stage is judged only once the pair is complete',
+      midKind === 'none' && await feedbackKind() === 'bad'
+      && (await stage(0).locator('.tile.correct').allInnerTexts()).map(normalizeText).includes(normalizeText(person)),
+      `${JSON.stringify(prompt)}: feedback after the wrong person alone ${midKind}, after the pair ${await feedbackKind()}`);
+  }
+
+  // §2.10 αὐτά: the chart prints it in the neuter nominative plural AND the
+  // neuter accusative plural, and the original grades BOTH right.
+  {
+    const item = activity.items.find(i => (i.answerAlt || []).length);
+    const alt = item.answerAlt[0];
+    let found = false;
+    for (let i = 0; i < 40 && !found; i++) {
+      await go(HASH);
+      for (let step = 0; step < activity.items.length; step++) {
+        if (await promptOnScreen() === normalizeText(item.greek)) { found = true; break; }
+        await stepper('Next').click();
+        await page.waitForTimeout(40);
+      }
+    }
+    if (!found) {
+      check('5F §2.10 αὐτά accepts the ACCUSATIVE plural reading too (VERIFY-5F item 8)', false, 'never reached the item');
+    } else {
+      await stage(0).locator('.tile', { hasText: alt[0] }).first().click();
+      await stage(1).locator('.tile', { hasText: alt[1] }).first().click();
+      await page.waitForTimeout(200);
+      await shot('5F answerAlt: the second reading of αὐτά');
+      check('5F §2.10 αὐτά accepts the ACCUSATIVE plural reading too, on the CORRECT path (VERIFY-5F item 8)',
+        await feedbackKind() === 'ok' && !await awaitNextShown(),
+        `answered ${JSON.stringify(alt)} against authored ${JSON.stringify(item.answer)}, feedback ${await feedbackKind()}`);
+    }
+  }
+}
+
+// ---- §2.10 answerAlt on the εἰμί speller --------------------------------
+// The third singular and plural print a moveable nu in parentheses. `answer`
+// is the bare form, `answerAlt` the printed one, and BOTH are accepted. This
+// is not general movable-nu leniency (D-16 stays withdrawn): the item next
+// door, whose answerAlt is its own answer, still rejects a stray nu.
+{
+  const activity = activityById(ch7, 'c7_ex_speller_eimi');
+  const HASH = '#/activity/chapt_7/c7_ex_speller_eimi';
+  const at = index => (async () => { await go(HASH); await gotoItem(index); await setAccents(false); })();
+  const parenIndex = activity.items.findIndex(i => (i.answerAlt || '').includes('('));
+  const paren = activity.items[parenIndex];
+  const bare = stripAccents(paren.answer);                       // ἐστίν  -> εστιν
+  const noNu = bare.replace(/ν$/, '');                           // εστι
+
+  await at(parenIndex);
+  await typeAccented(bare);
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(150);
+  check(`5F §2.10 εἰμί speller: the bare form ${JSON.stringify(paren.answer)} is accepted`,
+    await feedbackKind() === 'ok', `typed ${JSON.stringify(await typed())}`);
+
+  await at(parenIndex);
+  await typeAccented(noNu);
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(150);
+  check(`5F §2.10 εἰμί speller: the printed form ${JSON.stringify(paren.answerAlt)} is accepted without its parentheses`,
+    await feedbackKind() === 'ok', `typed ${JSON.stringify(await typed())}`);
+
+  // The leniency is THIS FIELD, not a rule. An item whose answerAlt equals its
+  // answer gets no movable nu.
+  const plainIndex = activity.items.findIndex(i => i.answerAlt === i.answer && !/\(/.test(i.answerAlt) && !/ν$/.test(i.answer));
+  const plain = activity.items[plainIndex];
+  await at(plainIndex);
+  await typeAccented(stripAccents(plain.answer) + 'ν');
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(150);
+  check(`5F §2.10 the leniency is the FIELD, not a rule: ${JSON.stringify(plain.answer)} + ν is still wrong (D-16 stays withdrawn)`,
+    await feedbackKind() === 'bad', `typed ${JSON.stringify(await typed())}`);
+}
+
+// ---- §3 the elision apostrophe round-trips through the checker -----------
+// U+0027 is REQUIRED and is not interchangeable with a smooth breathing (C9 /
+// D-29). Chapter 6 item 12 is ἐπ' ἀληθείας; chapters 7 and 8 elide in their
+// verses. The tile has to exist in all three chapters' spellers and the
+// checker has to insist on it.
+{
+  for (const [chapterId, chapter] of Object.entries(CH_5F)) {
+    const activity = activitiesOf(chapter).find(a => a && a.type === 'spell');
+    await go(`#/activity/${chapterId}/${activity.id}`);
+    await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();
+    await page.waitForTimeout(120);
+    const key = page.locator('.tk-key.punct[title="apostrophe"]');
+    check(`5F §3 ${chapterId}: the U+0027 apostrophe tile is reachable on this chapter's speller keyboard`,
+      await key.count() === 1, `${await key.count()} apostrophe tiles`);
+  }
+
+  const activity = activityById(ch6, 'c6_ex_speller');
+  const index = activity.items.findIndex(i => i.answer.includes("'"));
+  const answer = activity.items[index].answer;                   // ἐπ' ἀληθείας
+  const HASH = '#/activity/chapt_6/c6_ex_speller';
+  for (const [label, input, expect] of [
+    ['typed WITH the apostrophe', stripAccents(answer), 'ok'],
+    ['typed with the apostrophe DROPPED', stripAccents(answer).replace(/'/g, ''), 'bad']
+  ]) {
+    await go(HASH);
+    await gotoItem(index);
+    await setAccents(false);
+    await typeAccented(input);
+    await stepper('Check Answer').click();
+    await page.waitForTimeout(150);
+    check(`5F §3 ch6 ${JSON.stringify(answer)} ${label}: ${expect}`,
+      await feedbackKind() === expect, `typed ${JSON.stringify(await typed())}`);
+  }
+  // The other half of C9, and the reason the "type a breathing instead" case
+  // cannot be driven through the UI at all: NO tile produces any of the curled
+  // alternates. The learner reaching for the elision mark can only find the
+  // one spelling the app uses, which is what makes the two marks impossible to
+  // confuse on the way in rather than merely unequal on the way out.
+  const ALTERNATES = ['᾽', '’', 'ʼ', '‘'];
+  const producible = new Set([
+    ...(TILES.punctuation || []).map(t => t.insert),
+    ...(TILES.letters || []), ...(TILES.composites || [])
+  ]);
+  check('5F §3 / C9 no speller tile can produce an elision-mark alternate — only U+0027 is reachable',
+    ALTERNATES.every(mark => !producible.has(mark)) && producible.has("'"),
+    `reachable alternates: ${ALTERNATES.filter(m => producible.has(m)).map(m => `U+${m.codePointAt(0).toString(16).toUpperCase()}`).join(', ') || 'none'}`);
+}
+
+// ---- §2.6 per-item options ----------------------------------------------
+// The three translation drills carry their three options ON THE ITEM, not as a
+// shared pool. Without that the drill would silently build its grid from the
+// chapter's lemma list — ten plausible options, none of them the item's.
+for (const [chapterId, id] of [
+  ['chapt_6', 'c6_drill_translation'],
+  ['chapt_7', 'c7_drill_translation'],
+  ['chapt_7', 'c7_drill_translation_eimi'],
+  ['chapt_8', 'c8_drill_translation'],
+  ['chapt_8', 'c8_drill_translation_autos']
+]) {
+  const activity = activityById(CH_5F[chapterId], id);
+  await go(`#/activity/${chapterId}/${id}`);
+  const shown = (await page.locator('.grid.options .tile').allInnerTexts()).map(normalizeText);
+  const prompt = await promptOnScreen();
+  // The prompt may be set over two lines, so match on the first line.
+  const item = activity.items.find(i => prompt.startsWith(normalizeText(i.greek)));
+  check(`5F §2.6 ${chapterId} ${id}: the grid shows THIS ITEM's three options`,
+    !!item && shown.length === item.options.length
+      && item.options.every(option => shown.includes(normalizeText(option))),
+    `prompt ${JSON.stringify(prompt)}; on screen ${JSON.stringify(shown)}; authored ${JSON.stringify(item ? item.options : null)}`);
+  check(`5F §2.6 ${chapterId} ${id}: they stack one to a row (stack1col)`,
+    await page.locator('.grid.options').first()
+      .evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length) === 1);
+}
+
+// ---- §2.7 two-line Greek prompts ----------------------------------------
+// greek2 is a LINE BREAK in one prompt, not a second prompt: one tap target,
+// one clip. Null on the items that are one line only.
+for (const [chapterId, id] of [['chapt_7', 'c7_drill_translation'], ['chapt_8', 'c8_drill_translation']]) {
+  const activity = activityById(CH_5F[chapterId], id);
+  let seenTwoLine = false;
+  for (let i = 0; i < 25 && !seenTwoLine; i++) {
+    await go(`#/activity/${chapterId}/${id}`);
+    for (let step = 0; step < activity.items.length; step++) {
+      const lines = await page.locator('.prompt .prompt-line2').count();
+      if (lines === 1) {
+        const prompt = await promptOnScreen();
+        const item = activity.items.find(x => x.greek2 && prompt.startsWith(normalizeText(x.greek)));
+        check(`5F §2.7 ${chapterId} ${id}: a two-line prompt is ONE tap target with one clip`,
+          !!item && await page.locator('.prompt.greek-say').count() === 1
+            && normalizeText(await page.locator('.prompt').first().innerText())
+               === normalizeText(`${item.greek} ${item.greek2}`),
+          `on screen ${JSON.stringify(await page.locator('.prompt').first().innerText())}`);
+        seenTwoLine = true;
+        break;
+      }
+      await stepper('Next').click();
+      await page.waitForTimeout(40);
+    }
+  }
+  if (!seenTwoLine) check(`5F §2.7 ${chapterId} ${id}: a two-line prompt is ONE tap target with one clip`, false, 'never met a two-line item');
+}
+
+// ---- §2.5 the note beside a prompt is INK, never a tap ------------------
+// The "(not ἐκ)" disambiguator holds Greek and is still not tappable: the
+// logged exception to directive 9.
+{
+  const activity = activityById(ch6, 'c6_ex_speller');
+  const index = activity.items.findIndex(i => (i.note || '').includes('ἐκ'));
+  await go('#/activity/chapt_6/c6_ex_speller');
+  await gotoItem(index);
+  const note = page.locator('.spell-prompt-note');
+  check('5F §2.5 the "(not ἐκ)" note prints beside the prompt',
+    await note.count() === 1 && normalizeText(await note.innerText()) === normalizeText(activity.items[index].note),
+    JSON.stringify(await note.innerText().catch(() => null)));
+  check('5F §2.5 it is INK, not a tap target, even though it holds Greek',
+    await note.locator('button').count() === 0
+      && await note.evaluate(el => getComputedStyle(el).cursor) !== 'pointer');
+}
+// ...and on a select prompt (chapter 6's case drill prints the gloss, chapter
+// 8's speller the parse tag).
+{
+  await go('#/activity/chapt_6/c6_drill_case');
+  const note = page.locator('.prompt-note');
+  check('5F §2.5 a select prompt prints its case tag as ink beside the prompt',
+    await note.count() === 1 && await note.locator('button').count() === 0,
+    JSON.stringify(await note.innerText().catch(() => null)));
+}
+
+// ---- §3 a null ref renders NOTHING, not an empty chip -------------------
+{
+  const activity = activityById(ch8, 'c8_ex_speller');
+  const index = activity.items.findIndex(i => i.ref == null);
+  await go('#/activity/chapt_8/c8_ex_speller');
+  await gotoItem(index);
+  check('5F §3 chapter 8\'s blank-reference speller item renders no citation at all',
+    index >= 0 && await page.locator('.spell-prompt-ref').count() === 0,
+    `item ${index} (${JSON.stringify(activity.items[index] && activity.items[index].prompt)}), refs on screen ${await page.locator('.spell-prompt-ref').count()}`);
+  // The item either side of it DOES carry one, so the assertion above is not
+  // passing because the surface never prints a reference.
+  await go('#/activity/chapt_8/c8_ex_speller');
+  await gotoItem(0);
+  check('5F §3 ...while an item that HAS a reference still prints it',
+    await page.locator('.spell-prompt-ref').count() === 1);
+}
+
+// ---- §2.1 the Prepositions Chart, on both of its surfaces ---------------
+for (const [label, hash, topicIndex] of [
+  ['the Learn topic', '#/activity/chapt_6/c6_learn_prepositions', 4],
+  ['Review Prepositions Chart', '#/activity/chapt_6/c6_qr_prepositions', null]
+]) {
+  const block = ch6.learn.find(a => a.id === 'c6_learn_prepositions')
+    .topics.find(t => t.id === 'prepositionsChart').content[0];
+  await go(hash);
+  if (topicIndex != null) await gotoTopic(topicIndex);
+  const nodes = page.locator('.prep-svg .prep-node');
+  check(`5F §2.1 ${label}: all ten prepositions are drawn, ἐν at the centre`,
+    await nodes.count() === block.nodes.length && await page.locator('.prep-centre').count() === 1
+      // textContent, not innerText: these are SVG <text> nodes.
+      && normalizeText(await page.locator('.prep-centre .prep-greek').textContent()) === 'ἐν',
+    `${await nodes.count()} nodes of ${block.nodes.length}`);
+  check(`5F §2.1 ${label}: every arrow the data declares is drawn`,
+    await page.locator('.prep-svg .prep-arrow').count() === block.nodes.filter(n => n.arrow).length,
+    `${await page.locator('.prep-svg .prep-arrow').count()} arrows of ${block.nodes.filter(n => n.arrow).length}`);
+  // Directive 9, on a diagram: every Greek label plays its own clip.
+  await page.evaluate(() => { window.__clips.length = 0; });
+  await nodes.first().click();
+  await page.waitForTimeout(200);
+  check(`5F §2.1 ${label}: a Greek label plays its clip`,
+    (await clips()).length === 1, `${(await clips()).length} clips`);
+  check(`5F §2.1 ${label}: it fits the 380px viewport without panning`,
+    await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
+}
+
+// ---- §2.2 the popup pages ----------------------------------------------
+// Every popup a chapter ships has to be REACHABLE — an unreachable one is a
+// missing page in the rail, and nothing else in the app would say so.
+for (const [chapterId, activityId, opener] of [
+  ['chapt_6', 'c6_learn_prepositions', '.rc-sense-link'],
+  ['chapt_7', 'c7_learn_eimi', '.popup-link'],
+  ['chapt_8', 'c8_learn_third_person', '.popup-link']
+]) {
+  const activity = activityById(CH_5F[chapterId], activityId);
+  const reached = new Set();
+  const topics = activity.topics.length;
+  for (let topicIndex = 0; topicIndex < topics; topicIndex++) {
+    await go(`#/activity/${chapterId}/${activityId}`);
+    await gotoTopic(topicIndex);
+    const links = page.locator(opener);
+    const count = await links.count();
+    for (let i = 0; i < count; i++) {
+      await go(`#/activity/${chapterId}/${activityId}`);
+      await gotoTopic(topicIndex);
+      await page.locator(opener).nth(i).click();
+      await page.waitForTimeout(120);
+      const id = await page.locator('.popup-sheet').getAttribute('data-popup-id').catch(() => null);
+      if (id) reached.add(id);
+    }
+  }
+  const declared = (activity.popups || []).map(p => p.id);
+  check(`5F §2.2 ${chapterId} ${activityId}: every one of its ${declared.length} popups is reachable from the page`,
+    declared.every(id => reached.has(id)),
+    `reached ${[...reached].join(', ') || 'none'}; missing ${declared.filter(id => !reached.has(id)).join(', ') || 'none'}`);
+}
+// The sheet's own behaviour: Cancel closes it, every Greek phrase on it plays,
+// and it stops what it started on the way out (rule A4).
+{
+  await go('#/activity/chapt_6/c6_learn_prepositions');
+  await gotoTopic(1);
+  await page.locator('.rc-sense-link').first().click();
+  await page.waitForTimeout(120);
+  const examples = page.locator('.popup-example-greek');
+  await page.evaluate(() => { window.__clips.length = 0; });
+  await page.locator('.popup-head').click();
+  await page.waitForTimeout(150);
+  const headClips = (await clips()).length;
+  await examples.first().click();
+  await page.waitForTimeout(150);
+  check('5F §2.2 the popup headword and every example phrase are tappable',
+    headClips === 1 && (await clips()).length === 2 && await examples.count() >= 1,
+    `${await examples.count()} examples, ${(await clips()).length} clips`);
+  await shot('5F popup at rest');
+  await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await page.waitForTimeout(150);
+  check('5F §2.2 Cancel closes the sheet and stops its audio (A4)',
+    await page.locator('.popup-sheet').count() === 0 && await clipsPlaying() === 0,
+    `sheets ${await page.locator('.popup-sheet').count()}, still playing ${await clipsPlaying()}`);
+}
+
+// ---- §2.8 the pronoun paradigm stack (More / Back) ----------------------
+{
+  await go('#/activity/chapt_8/c8_qr_third');
+  const chart = page.locator('.pronoun-paradigm');
+  const genders = [];
+  genders.push(await chart.getAttribute('data-gender'));
+  check('5F §2.8 the third-person chart opens on Masculine and offers More, not Back',
+    genders[0] === 'Masculine' && await page.locator('[data-paradigm-switch="more"]').count() === 1
+      && await page.locator('[data-paradigm-switch="back"]').count() === 0);
+  await page.locator('[data-paradigm-switch="more"]').click();
+  await page.waitForTimeout(100);
+  genders.push(await chart.getAttribute('data-gender'));
+  check('5F §2.8 More steps to Feminine, and Back appears',
+    genders[1] === 'Feminine' && await page.locator('[data-paradigm-switch="back"]').count() === 1);
+  await page.locator('[data-paradigm-switch="more"]').click();
+  await page.waitForTimeout(100);
+  genders.push(await chart.getAttribute('data-gender'));
+  check('5F §2.8 More again steps to Neuter, where More runs out',
+    genders[2] === 'Neuter' && await page.locator('[data-paradigm-switch="more"]').count() === 0
+      && await page.locator('[data-paradigm-switch="back"]').count() === 1,
+    genders.join(' -> '));
+  await page.locator('[data-paradigm-switch="back"]').click();
+  await page.waitForTimeout(100);
+  check('5F §2.8 Back steps down again', await chart.getAttribute('data-gender') === 'Feminine');
+  // Four case rows over two columns, on every one of the three charts.
+  check('5F §2.8 four case rows over a Singular and a Plural column',
+    await chart.locator('.pg-row').count() === 4 && await chart.locator('.pg-row').first().locator('.pg-cell').count() === 2,
+    `${await chart.locator('.pg-row').count()} rows`);
+  // Directive 9: a cell whose form has a clip plays it.
+  await page.evaluate(() => { window.__clips.length = 0; });
+  await chart.locator('.pg-cell').first().click();
+  await page.waitForTimeout(200);
+  check('5F §2.8 a paradigm cell plays its own clip', (await clips()).length === 1);
+}
+
+// ---- every Quick Review chart offers its Say Whole action EXACTLY once ---
+// A chart may carry the action itself or the activity may carry it beside the
+// chart, and both routes drawing it printed "Say Whole List" twice on the εἰμί
+// chart before this was asserted.
+for (const [chapterId, chapter] of Object.entries(CH_5F)) {
+  for (const activity of activitiesOf(chapter).filter(a => a && a.mode === 'paradigmChart')) {
+    const charts = activity.paradigms || (activity.paradigm ? [activity.paradigm] : []);
+    for (const [index, chart] of charts.entries()) {
+      await go(`#/activity/${chapterId}/${activity.id}`);
+      for (let step = 0; step < index; step++) {
+        await page.locator('[data-paradigm-switch="more"]').click();
+        await page.waitForTimeout(80);
+      }
+      const wants = !!(chart.sayWhole || activity.sayWhole);
+      const count = await page.locator('.card').getByRole('button', { name: /^Say Whole/ }).count();
+      check(`5F ${chapterId} ${activity.id} chart ${index + 1}: the Say Whole action is drawn ${wants ? 'exactly once' : 'not at all'}`,
+        count === (wants ? 1 : 0), `${count} on screen`);
+    }
+  }
+}
+
+// ---- §2.4 underlining is DATA ------------------------------------------
+// The [[u]] runs come from the TBK's own run tables. Assert the count on
+// screen equals the count in the data, chapter by chapter: an underline the
+// renderer invented, or dropped, shows up here as a mismatch.
+for (const [chapterId, chapter] of Object.entries(CH_5F)) {
+  const marked = [];
+  (function scan(node) {
+    if (Array.isArray(node)) return node.forEach(scan);
+    if (node && typeof node === 'object') {
+      for (const [key, value] of Object.entries(node)) if (!key.startsWith('_')) scan(value);
+      return;
+    }
+    if (typeof node === 'string') for (const m of node.matchAll(/\[\[u\]\]([\s\S]*?)\[\[\/u\]\]/g)) marked.push(m[1]);
+  })(chapter);
+  // Walk the teaching activities the runs live in and count what renders.
+  const seen = [];
+  for (const activity of activitiesOf(chapter).filter(a => a && a.type === 'contentAudio')) {
+    const topics = (activity.topics || []).length || 1;
+    for (let topicIndex = 0; topicIndex < topics; topicIndex++) {
+      await go(`#/activity/${chapterId}/${activity.id}`);
+      if (activity.topics) await gotoTopic(topicIndex);
+      // `.underline-link` is an authored [[u]] run that ALSO names a popup
+      // (chapter 8's Three Uses labels), so it counts as a rendered underline.
+      // The other popup links do not: chapter 6's are gloss links declared by
+      // popupRef and chapter 7's are Greek headwords, neither of which the run
+      // tables underline.
+      for (const text of await page.locator('.card u, .card .underline-link').allInnerTexts()) seen.push(normalizeText(text));
+    }
+  }
+  const missing = marked.map(normalizeText).filter(text => !seen.includes(text));
+  check(`5F §2.4 ${chapterId}: every authored [[u]] run renders (underlined, or as the popup link it names)`,
+    missing.length === 0,
+    `${marked.length} authored, ${seen.length} on screen; missing ${JSON.stringify(missing.slice(0, 4))}`);
+  check(`5F §2.4 ${chapterId}: the renderer invents no underline the data does not carry`,
+    seen.every(text => marked.map(normalizeText).includes(text)),
+    `unexpected ${JSON.stringify(seen.filter(t => !marked.map(normalizeText).includes(t)).slice(0, 4))}`);
+}
+
+// ---- §1/§2 the case-split vocabulary pool ------------------------------
+// Chapter 6 presents SIXTEEN cards over ten lemmas and chapter 8 THIRTEEN over
+// ten; neither is the ten-card lemma pool chapters 1-5 use. Counted through
+// the flashcard's own stepper.
+for (const [chapterId, activityId, expected] of [
+  ['chapt_6', 'c6_learn_vocab', 16],
+  ['chapt_7', 'c7_learn_vocab', 10],
+  ['chapt_8', 'c8_learn_vocab', 13]
+]) {
+  await go(`#/activity/${chapterId}/${activityId}`);
+  let cards = 0;
+  const next = page.locator('.card').getByRole('button', { name: 'Next', exact: true });
+  while (!await next.isDisabled() && cards < 40) { await next.click(); cards += 1; }
+  check(`5F §3 ${chapterId} Learn Vocabulary steps through ${expected} cards, not ten`,
+    cards === expected, `${cards} cards`);
+}
+
 // ------------------------------------------------------ §6.8 option grids
 // A CENSUS, not a list: every select activity in chapters 1-5, measured at both
 // widths. The responsive pool must be 2-up at 320 and 4-up at 768 whatever
@@ -2030,9 +2738,28 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
   }
   await page.setViewportSize({ width: 390, height: 900 });
 
-  // The lexicon-derived vocabulary pools, in BOTH directions, are the grids
+  // The LEXICON-DERIVED vocabulary pools, in BOTH directions, are the grids
   // D-19 is about: 2-up on a phone, 4-up once the iPad has room.
-  const vocabulary = census.filter(row => /_vocab_(gk_en|en_gk)$/.test(row.id));
+  //
+  // 5F: chapters 6 and 8 present their vocabulary CASE-SPLIT (sixteen entries
+  // over ten lemmas, fifteen over ten), and two of chapter 6's option captions
+  // differ from its gloss pool outright, so those four drills ship AUTHORED
+  // option grids rather than naming a lexicon pool. The renderer has no way to
+  // tell an authored vocabulary grid from any other authored grid — nothing in
+  // the data says so, and keying it to an activity id is exactly what rule B1
+  // forbids — so they render 2-up at both widths, like every other authored
+  // grid. That is a real, small divergence from D-19's intent and it is
+  // asserted here as what it is rather than dropped from the census.
+  // See 5F-SPEC1-RESULTS §5 and DIVERGENCE-LOG D-32.
+  const AUTHORED_VOCAB = new Set([
+    'c6_drill_vocab_gk_en', 'c6_drill_vocab_en_gk',
+    'c8_drill_vocab_gk_en', 'c8_drill_vocab_en_gk'
+  ]);
+  const vocabulary = census.filter(row => /_vocab_(gk_en|en_gk)$/.test(row.id) && !AUTHORED_VOCAB.has(row.id));
+  for (const row of census.filter(row => AUTHORED_VOCAB.has(row.id))) {
+    check(`5F §5 ${row.chapterId} ${row.id}: case-split vocabulary is an AUTHORED grid and stays 2-up at both widths`,
+      row.cols[320] === 2 && row.cols[768] === 2, `${row.cols[320]} / ${row.cols[768]} columns`);
+  }
   const paradigm = census.filter(row => row.layout === 'paradigm2col');
   const declared = census.filter(row => row.layout === 'single' || row.layout === 'grouped');
 

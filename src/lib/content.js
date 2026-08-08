@@ -139,17 +139,44 @@ export function getLemma(ref, chapterId, pool) {
 // this is a synchronous in-memory lookup, never an app-load store scan. Longer
 // forms come first so a phrase (for example "ὁ λόγος") claims its full
 // standalone match before either word can claim only part of it.
+//
+// 5F: a chapter may also declare INFLECTED forms that are not lemmas. Chapter
+// 8's pronoun paradigms are set as running prose lines (μου, μοι, με …) with no
+// lexicon entry of their own, so the activities that print them carry an
+// `audioMap` of form -> clip. Those maps are folded in here so the Quick Review
+// charts get the same taps as the Learn pages without either surface owning a
+// private copy — the map is chapter data, not activity data, in everything but
+// where the pipeline chose to write it.
 export function getGreekTapMap(chapterId) {
-  const lex = registry[chapterId] && registry[chapterId].lexicon;
-  if (!lex) return {};
+  const entry = registry[chapterId];
+  if (!entry) return {};
   const entries = [];
-  for (const bucket of LEMMA_BUCKETS) {
-    for (const lemma of Object.values(lex[bucket] || {})) {
-      if (lemma && lemma.greek && lemma.audio) entries.push([lemma.greek, lemma.audio]);
+  const lex = entry.lexicon;
+  if (lex) {
+    for (const bucket of LEMMA_BUCKETS) {
+      for (const lemma of Object.values(lex[bucket] || {})) {
+        if (lemma && lemma.greek && lemma.audio) entries.push([lemma.greek, lemma.audio]);
+      }
     }
   }
+  for (const [form, audio] of Object.entries(chapterAudioMap(entry.chapter))) entries.push([form, audio]);
   entries.sort((a, b) => b[0].length - a[0].length);
   return Object.fromEntries(entries);
+}
+
+// Every activity-level `audioMap` in a chapter, merged. First declaration wins,
+// so a form declared once cannot mean two clips on two pages.
+export function chapterAudioMap(chapter) {
+  const map = {};
+  if (!chapter) return map;
+  for (const section of SECTIONS) {
+    for (const activity of chapter[section] || []) {
+      for (const [form, audio] of Object.entries(activity.audioMap || {})) {
+        if (form && audio && !map[form]) map[form] = audio;
+      }
+    }
+  }
+  return map;
 }
 
 // Reading People, Places and Letters pools (personalNames/placeNames/letterNames)
@@ -290,6 +317,13 @@ export function resolveItems(chapter, activity) {
                audio: item.audio || null, meta: item };
     });
   }
+  // 5F convention: pool "senses" is the CASE-SPLIT vocabulary surface. See
+  // sensePool() for why it is not simply "one card per sense".
+  if (activity.pool === 'senses') {
+    return sensePool(chapter).map(card => ({
+      display: card.display, secondary: stripMarkup(card.gloss), audio: card.audio, meta: card
+    }));
+  }
   // 5D convention: instead of spelling out ten {ref} items, an activity names
   // a lexicon BUCKET (pool: "lemmas") and the chapter's own vocab list
   // supplies the refs. Same resolved shape, so flashcard and reviewVocab are
@@ -317,6 +351,58 @@ function lemmaPool(chapter, activity) {
   return (chapter.vocab || []).map(ref => ({ ref, ...(getLemma(ref, chapter.id, bucket) || {}) }));
 }
 
+// THE CASE-SPLIT VOCABULARY POOL (5F). Chapters 6 and 8 present more cards
+// than they have lemmas, and they do it in two different ways which the
+// lexicon records in one field, `senses[]`:
+//
+//   caseTag SET      the lemma is split BY CASE and each sense is its own card
+//                    (chapter 6's διά/κατά/μετά/περί twice and ἐπί three times;
+//                    chapter 8's παρά three ways and ὑπό two).
+//   caseTag NULL     the senses are the lemma's own paired FORMS, printed on
+//                    ONE card (chapter 8's ἐγώ/ἡμεῖς and σύ/ὑμεῖς, whose
+//                    lexicalForm is already "ἐγώ / ἡμεῖς").
+//
+// So the rule is "one card per caseTag, plus one card for the untagged
+// remainder", not "one card per sense" — which is what makes chapter 6 sixteen
+// cards over ten lemmas and chapter 8 thirteen over ten while both drills
+// legitimately list fifteen entries from their own authored items.
+function sensePool(chapter) {
+  const cards = [];
+  for (const ref of chapter.vocab || []) {
+    const lemma = getLemma(ref, chapter.id, 'lemmas');
+    if (!lemma) continue;
+    const senses = Array.isArray(lemma.senses) && lemma.senses.length ? lemma.senses : [null];
+    let untaggedTaken = false;
+    for (const sense of senses) {
+      if (!sense || !sense.caseTag) {
+        if (untaggedTaken) continue;          // the paired forms share one card
+        untaggedTaken = true;
+        cards.push({
+          ref, lemma, sense,
+          display: lemma.lexicalForm || lemma.greek,
+          greek: lemma.greek,
+          gloss: lemma.gloss || lemma.glossShort || '',
+          audio: (sense && sense.audio) || lemma.audio || null
+        });
+        continue;
+      }
+      const gloss = sense.gloss || sense.glossShort || '';
+      cards.push({
+        ref, lemma, sense,
+        // The case tag lives in the GLOSS, never in the headword: the split
+        // card's Greek is the bare form the learner has to recognize, and
+        // lexicalForm already carries one case's tag baked in (chapter 8's
+        // παρά is "παρά (with gen.)"), which would be wrong on the other two.
+        display: sense.greek || lemma.greek,
+        greek: sense.greek || lemma.greek,
+        gloss: sense.caseTag ? `${gloss} ${sense.caseTag}` : gloss,
+        audio: sense.audio || lemma.audio || null
+      });
+    }
+  }
+  return cards;
+}
+
 function pickDisplay(letter, mode) {
   switch (mode) {
     case 'upper': return letter.upper;
@@ -340,6 +426,52 @@ function pickAudioField(mode) {
     case 'audioShort':
     default: return 'audioShort';
   }
+}
+
+// TWO-STAGE SELECT (5F §2.9, chapter 8's Personal Pronoun Case Drill). The
+// item asks for a PAIR — the person column, then the case-and-number grid —
+// and the answer is a two-element list in the same order as `optionStages`.
+//
+// Nothing here decides when an attempt is judged; that is the surface's job
+// and rule B1a's (VERIFY-5F item 7: the learner may change their mind on the
+// person as often as they like and only the LAST stage commits). This builder
+// only says what the stages are, what is acceptable, and what the item plays.
+//
+// `answerAlt` is a list of ADDITIONAL acceptable pairs, not a near miss:
+// αὐτά prints in both the neuter nominative plural and the neuter accusative
+// plural and the original grades both right (VERIFY-5F item 8), so the
+// accepted set is answer + answerAlt and the feedback is the correct path.
+export function buildTwoStageQuestions(chapter, activity) {
+  const stages = (activity.optionStages || []).map(stage => ({
+    label: stage.label || '',
+    // A stage that declares no layout is a plain COLUMN of its values — which
+    // is what the original draws and what the instruction line calls it ("click
+    // on the person then the case"). Left to the density heuristic, "Second
+    // Person" would come out two-up and the person stage would read as part of
+    // the 2x4 case grid under it rather than as the click before it.
+    optionClass: stage.layout ? optionClassForLayout(stage.layout, activity, [], []) : 'single',
+    options: (stage.values || []).map(value => ({ id: String(value), label: String(value) }))
+  }));
+  const pairKey = list => (list || []).map(value => String(value)).join(' ');
+  const questions = shuffle((activity.items || []).map(item => {
+    const answer = Array.isArray(item.answer) ? item.answer.map(String) : null;
+    // Every acceptable pair, the authored one first. `accepted` is the same
+    // set keyed for a single lookup on the commit.
+    const pairs = [];
+    if (answer) pairs.push(answer);
+    for (const alt of item.answerAlt || []) if (Array.isArray(alt)) pairs.push(alt.map(String));
+    return {
+      prompt: stripMarkup(item.greek) || '',
+      note: stripMarkup(item.note) || null,
+      promptAudio: item.audio || null,
+      citation: item.ref || null,
+      answer,
+      pairs,
+      accepted: new Set(pairs.map(pairKey)),
+      pending: !item.greek || !answer || answer.length !== stages.length
+    };
+  }));
+  return { stages, questions, promptIsGreek: activity.promptIsGreek !== false, pairKey };
 }
 
 // Build question list for a select activity (generator- or items-based).
@@ -372,7 +504,13 @@ export function buildSelectQuestions(chapter, activity) {
   // optionValues/options win; the activity-level set is the fallback, so a
   // drill may mix the two. Missing prompt/answer fields remain in the sequence
   // as visible pending-verification questions instead of becoming bad answers.
-  if (activity.optionsPerItem || Array.isArray(activity.optionValues)) {
+  // 5F: `options` is the pipeline's own name for where the option set comes
+  // from — "static" (the activity's optionValues) or "perItem" (each item's
+  // own options[]). Both land in this branch; treating "perItem" as anything
+  // else drops the drill into the lexicon-vocabulary path below, which for the
+  // three translation drills would silently build ten Greek options out of the
+  // chapter's lemma list instead of the three the item ships.
+  if (authoredOptionSource(activity)) {
     // Chapters 4 and 5 carry the prompt inline on the item with no
     // promptFrom. Without this fallback every item resolves to
     // pending:true and the whole drill renders as a pending placeholder --
@@ -408,6 +546,15 @@ export function buildSelectQuestions(chapter, activity) {
       }
       return {
         prompt: stripMarkup(prompt) || '',
+        // 5F §2.7: a translation-drill prompt may be set over TWO lines, with
+        // the second null on the items that are one line only. It is a line
+        // break in the authored prompt, not a second prompt — one clip, one
+        // tap target — so it travels beside `prompt` and the surface joins them.
+        prompt2: stripMarkup(item.greek2) || null,
+        // 5F §2.5: the case tag / parse tag / disambiguator printed beside the
+        // prompt in plain ink. Never a tap target even when it holds Greek —
+        // the `(not ἐκ)` case is the logged exception to directive 9.
+        note: stripMarkup(item.note) || null,
         promptAudio: promptIsGreek ? (item.promptAudio || item.audio || (lemma && lemma.audio) || null) : null,
         // The answer's OWN clip, for surfaces where Pronounce speaks the
         // answer rather than the prompt (Greek Verb Drill: English prompt,
@@ -461,6 +608,18 @@ export function buildSelectQuestions(chapter, activity) {
   return { options, questions, optionClass: '', promptIsGreek: promptSide === 'greek' };
 }
 
+// True when the option set is AUTHORED rather than derived from a lexicon
+// pool: an activity-level optionValues grid, per-item options, or the
+// pipeline's own `options` declaration ("static" / "perItem"). Exported so the
+// surface can ask the same question the builder did instead of re-deriving it.
+export function authoredOptionSource(activity) {
+  return !!activity.optionsPerItem
+    || Array.isArray(activity.optionValues)
+    || activity.options === 'perItem'
+    || activity.options === 'static'
+    || (Array.isArray(activity.items) && activity.items.some(item => item && Array.isArray(item.options)));
+}
+
 // Option-grid density, from the data — never from the activity id.
 //   grouped  the drill declares optionGroups ([3,3]); the component lays the
 //            groups out as separate stacks (ch3 Parsing).
@@ -471,8 +630,16 @@ export function buildSelectQuestions(chapter, activity) {
 //   ''       the two-column default: ch2's mark and part-of-speech grids,
 //            ch3's 2x3 verb translations and 2x5 Scripture Memory grid.
 function optionClassFor(activity, activityOptions, questions) {
-  if (activity.optionLayout === 'single') return 'single';
-  if (activity.optionLayout === 'paradigm2col') return 'paradigm2col';
+  return optionClassForLayout(activity.optionLayout, activity, activityOptions, questions);
+}
+
+// 5F: `stack1col` is the pipeline's name for the one-column stack the port
+// already calls `single` — the three translation drills' full-sentence options.
+// Named here rather than aliased in the data so the data keeps the pipeline's
+// own vocabulary and the renderer keeps its own.
+function optionClassForLayout(layout, activity, activityOptions, questions) {
+  if (layout === 'single' || layout === 'stack1col') return 'single';
+  if (layout === 'paradigm2col') return 'paradigm2col';
   if (Array.isArray(activity.optionGroups) && activity.optionGroups.length) return 'grouped';
   if (activity.optionsPerItem && activity.optionsAreGreek) return 'single';
   const all = activityOptions.length
@@ -497,11 +664,30 @@ export function resolveHintRef(chapter, ref) {
       if (chart || !value) return;
       if (Array.isArray(value)) { value.forEach(scan); return; }
       if (typeof value !== 'object') return;
-      if (value.type === 'paradigm') { chart = value; return; }
+      if (value.type === 'paradigm' || value.type === 'pronounParadigm') { chart = value; return; }
       for (const child of Object.values(value)) scan(child);
     };
     scan(node);
     return chart;
+  };
+  // 5F: a hintRef may name the chart by its TITLE rather than by a block type
+  // or a topic id — chapter 7's Adjective Case Drill points at
+  // "adjectiveParadigm", which is the slug of the Review page's own
+  // "Adjective Paradigm". Same slug convention resolveHintBlocks already uses
+  // for headings, and it is tried only after the exact-id search below fails,
+  // so no chapter that already resolves can change.
+  const byTitle = () => {
+    for (const section of SECTIONS) {
+      for (const candidate of chapter[section] || []) {
+        const charts = candidate.paradigm ? [candidate.paradigm] : (candidate.paradigms || []);
+        for (const chart of charts) {
+          for (const title of [candidate.chartTitle, chart && chart.title]) {
+            if (title && slugOf(title) === ref) return chart;
+          }
+        }
+      }
+    }
+    return null;
   };
   const walk = node => {
     if (found || !node) return;
@@ -518,7 +704,18 @@ export function resolveHintRef(chapter, ref) {
     for (const key of Object.keys(node)) walk(node[key]);
   };
   for (const section of SECTIONS) walk(chapter[section]);
-  return found;
+  return found || byTitle();
+}
+
+// The camelCase slug the data uses to name a page from elsewhere: hint refs,
+// and the popup ids chapter 8's Three Uses page links to from its own
+// underlined labels. Trailing punctuation is dropped so a label that ends in a
+// quote ('Adjective meaning "same"') keys the same as its id.
+export function slugOf(text) {
+  return String(text || '')
+    .replace(/[^A-Za-z0-9]+$/, '')
+    .replace(/[^A-Za-z0-9]+(.)/g, (_, c) => c.toUpperCase())
+    .replace(/^[A-Z]/, c => c.toLowerCase());
 }
 
 // An activity's Hint either carries its own blocks or REFERS to a chart that

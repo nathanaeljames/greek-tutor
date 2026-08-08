@@ -186,6 +186,53 @@ D-30 | ch3,4,5 | THE WHOLE-VERSE SPELLERS USE `Show Answer`, NOT
      verse is still available at any time, which the original does not
      allow. | Nathanael, 2026-08-07; 5E-SPEC3-PATCH item 12.
 
+D-31 | ch7 | THE οὐ / οὐκ / οὐχ POPUPS ARE OPENED FROM THE GREEK
+     WORDS THEMSELVES. Chapter 6 declares each popup link explicitly
+     (`popupRef` on a greekRows row, the gloss being the link) and
+     chapter 8 declares its three by underlining the label whose slug
+     is the popup id. Chapter 7 declares NEITHER: `c7_learn_eimi`
+     ships three popups (οὐ, οὐκ, οὐχ) and its "οὐ, οὐκ and οὐχ" page
+     ships eleven flat paragraphs with no popupRef and no underline
+     run anywhere on it. Rather than leave three authored pages
+     unreachable — an unreachable popup is a missing page in the rail
+     — the renderer opens a popup from standalone occurrences of its
+     own `greek` headword in the page's prose, longest headword
+     first, so οὐχ is never claimed by οὐ. Those words are therefore
+     popup links rather than audio taps on that page, which is a
+     departure from directive 9 (the popup's own headword plays the
+     clip instead). If the pipeline later ships anchors for chapter 7
+     the rule costs nothing: an explicit popupRef or underline
+     already wins, and a chapter that ships no `greek` on its popups
+     never enters this path. | Implementer, 5F-SPEC1 §2.2; data gap
+     reported in 5F-SPEC1-RESULTS §2.2.
+D-32 | ch6,8 | THE CASE-SPLIT VOCABULARY DRILLS DO NOT FOLLOW D-19.
+     D-19 puts a lexicon-derived vocabulary option pool two-up on a
+     phone and four-up from 768px, in both directions. Chapters 6 and
+     8 present their vocabulary CASE-SPLIT (sixteen entries over ten
+     lemmas, fifteen over ten) and two of chapter 6's option captions
+     differ from its gloss pool outright, so all four of those drills
+     ship AUTHORED option grids instead of naming a lexicon pool.
+     Nothing in the delivered data distinguishes an authored
+     vocabulary grid from any other authored grid, and keying the
+     layout to an activity id is what rule B1 forbids, so they render
+     two-up at BOTH widths like every other authored grid. Asserted
+     as such in the harness rather than dropped from the census. If
+     the pipeline later marks these drills as vocabulary pools, the
+     existing responsive class picks them up with no renderer change.
+     | Implementer, 5F-SPEC1 §5.
+D-33 | ch7 | THE εἰμί SPELLER'S PARENTHESISED ALTERNATE MAKES THE
+     PARENTHESISED SEGMENT OPTIONAL. `answerAlt` is "ἐστί(ν)" against
+     an `answer` of "ἐστίν". Punctuation is already optional under
+     D-18, so the alternate folds onto the answer and the field would
+     do nothing at all; the notation is the chapter's own way of
+     saying the nu is moveable, so the renderer expands a
+     parenthesised alternate into both readings and accepts ἐστί as
+     well as ἐστίν. This is NOT a movable-nu rule — D-16 stays
+     withdrawn — it is this field, on these two items: the four items
+     beside them, whose answerAlt is their own answer, still reject a
+     stray nu, and the harness asserts that. | Implementer, 5F-SPEC1
+     §2.10.
+
 ## Auto-progress / advance rule matrix
 
 MOVED. The full exercise-by-exercise, chapter-by-chapter matrix —

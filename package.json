@@ -12,7 +12,10 @@
     "check:shapes": "node scripts/check-content-shapes.mjs",
     "verify": "npm run check:shapes && npm run build && npm run check:lazy-chunk",
     "ui:walk": "node scripts/ui-walk.mjs",
-    "ui:behavior": "node scripts/ui-behavior.mjs"
+    "ui:behavior": "node scripts/ui-behavior.mjs",
+    "ui:modals": "node scripts/ui-modals.mjs",
+    "ui:smoke5f": "node scripts/ui-smoke-5f.mjs",
+    "ui:shots5f": "node scripts/ui-shots-5f.mjs"
   },
   "dependencies": {
     "idb": "^7.1.1"

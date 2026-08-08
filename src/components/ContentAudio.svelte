@@ -8,14 +8,29 @@
   // panels; their per-mode data contracts are documented in HANDOFF-4 §5 (B1).
   import { onDestroy } from 'svelte';
   import { slide } from 'svelte/transition';
-  import { getGreekTapMap, resolveItems, shuffle } from '../lib/content.js';
+  import { chapterAudioMap, getGreekTapMap, resolveItems, shuffle } from '../lib/content.js';
   import { play, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
+  import { providePopups } from '../lib/popups.js';
   import RichContent from './RichContent.svelte';
   import ArrowCue from './ArrowCue.svelte';
   import Paradigm from './Paradigm.svelte';
+  import PronounParadigm from './PronounParadigm.svelte';
+  import PopupSheet from './PopupSheet.svelte';
   export let chapter;
   export let activity;
+
+  // FULL-PAGE POPUPS (5F §2.2). The register goes down by context so a link
+  // nested anywhere in the topic content can open one; the SHEET is rendered
+  // here, over the whole activity, because that is what the original does.
+  // Opening one stops whatever the page underneath was saying (rule A4).
+  let openPopupPage = null;
+  providePopups(activity.popups, popup => { stopAudio(); openPopupPage = popup; });
+
+  // Form -> clip for the chapter's non-lemma inflected forms (chapter 8's
+  // pronoun charts). Chapter-wide, so a Quick Review chart taps the same clips
+  // the Learn page does.
+  $: formAudio = chapterAudioMap(chapter);
 
   // Items resolve from the data; activities flagged order:"shuffled"
   // (Pronounce Letters Exercise) get a fresh Fisher-Yates shuffle each visit.
@@ -66,6 +81,20 @@
   $: activityGreekTaps = activity.greekTaps === true
     ? getGreekTapMap(chapter.id)
     : activity.greekTaps;
+
+  // paradigmChart: one chart, or a More/Back stack of them (5F §2.8). Same
+  // exit rule as a topic switch — stepping between charts stops whatever the
+  // last one started (rule A4).
+  let paradigmIndex = 0;
+  $: paradigmPages = Array.isArray(activity.paradigms) && activity.paradigms.length
+    ? activity.paradigms
+    : (activity.paradigm ? [activity.paradigm] : []);
+  function goToParadigm(index) {
+    const next = Math.max(0, Math.min(paradigmPages.length - 1, index));
+    if (next === paradigmIndex) return;
+    stopAudio();
+    paradigmIndex = next;
+  }
 
   // Learn Vocabulary flashcard visibility (A15). Segmented radio: Show Both /
   // Hide Greek / Hide English. A hidden pane blanks until tapped (per-card
@@ -176,6 +205,7 @@
       <RichContent
         blocks={currentTopic.content || []}
         suppressTitle={currentTopic.title}
+        audioMap={formAudio}
         greekTaps={currentTopic.greekTaps === true
           ? getGreekTapMap(chapter.id)
           : (currentTopic.greekTaps || activityGreekTaps)} />
@@ -194,9 +224,44 @@
 {:else if mode === 'paradigmChart'}
   <!-- Quick Review's full-page paradigm: the same chart the Learn topic and
        the drill Hint render, with the chart title above it. The Endings button
-       simply isn't there when the data omits the endings block. -->
+       simply isn't there when the data omits the endings block.
+       5F: an activity may ship SEVERAL charts as `paradigms[]` (chapter 8's
+       third person: Masculine, then More to Feminine, then More to Neuter,
+       with Back stepping down) and may carry its Say Whole action beside the
+       chart rather than inside it. -->
   <div class="card">
-    <Paradigm paradigm={activity.paradigm || {}} title={activity.chartTitle} />
+    {#if paradigmPages.length}
+      {@const page = paradigmPages[paradigmIndex] || paradigmPages[0]}
+      {#if page.type === 'pronounParadigm'}
+        <PronounParadigm paradigm={page} audioMap={formAudio}
+                         title={activity.chartTitle || page.title} />
+      {:else}
+        <Paradigm paradigm={page} title={activity.chartTitle || null} />
+      {/if}
+      <!-- Paradigm draws its OWN sayWhole; PronounParadigm does not. Adding
+           one here unconditionally printed "Say Whole List" twice on the εἰμί
+           chart, whose action lives inside the chart. -->
+      {@const sayWhole = page.type === 'pronounParadigm'
+        ? (page.sayWhole || activity.sayWhole)
+        : (page.sayWhole ? null : activity.sayWhole)}
+      {#if sayWhole || paradigmPages.length > 1}
+        <div class="controls pg-actions">
+          {#if sayWhole}
+            <button class="btn secondary pg-say-whole" on:click={() => play(sayWhole.audio)}>{sayWhole.label || 'Say Whole Paradigm'}</button>
+          {/if}
+          {#if paradigmIndex > 0}
+            <button class="btn secondary pg-switch pg-switch-back" data-paradigm-switch="back"
+                    on:click={() => goToParadigm(paradigmIndex - 1)}>Back</button>
+          {/if}
+          {#if paradigmIndex < paradigmPages.length - 1}
+            <button class="btn secondary pg-switch pg-switch-more" data-paradigm-switch="more"
+                    on:click={() => goToParadigm(paradigmIndex + 1)}>More</button>
+          {/if}
+        </div>
+      {/if}
+    {:else}
+      <div class="pending-verification">Chart content pending verification.</div>
+    {/if}
   </div>
 
 {:else if mode === 'interlinearVerse'}
@@ -225,7 +290,7 @@
 {:else if mode === 'textPage'}
   {#if activity.content}
     <div class="card">
-      <RichContent blocks={activity.content} greekTaps={activityGreekTaps} />
+      <RichContent blocks={activity.content} greekTaps={activityGreekTaps} audioMap={formAudio} />
       {#if activity.playButton}
         <div class="controls">
           <button class="btn" on:click={() => play(activity.playButton.audio)}>▶ {activity.playButton.label}</button>
@@ -482,4 +547,11 @@
     {#if activity.note}<div class="note">{activity.note}</div>{/if}
     {#if activity.content}<div class="rc-below"><RichContent blocks={activity.content} /></div>{/if}
   </div>
+{/if}
+
+{#if openPopupPage}
+  <!-- The original's full-screen green reference page, over whatever teaching
+       surface opened it. Cancel comes back; nothing about the page underneath
+       moves while it is open. -->
+  <PopupSheet popup={openPopupPage} on:close={() => (openPopupPage = null)} />
 {/if}

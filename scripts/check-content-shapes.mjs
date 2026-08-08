@@ -16,7 +16,10 @@ const problems = [];
 // (5B-SPEC3 D4). Add the type here in the same change that adds its branch.
 const BLOCK_TYPES = new Set([
   'heading', 'subheading', 'para', 'numbered', 'defList',
-  'biblist', 'refs', 'note', 'greekRows', 'expander', 'paradigm'
+  'biblist', 'refs', 'note', 'greekRows', 'expander', 'paradigm',
+  // 5F: chapter 6's preposition DIAGRAM and chapter 8's pronoun chart, whose
+  // rows are set as one line of text rather than as {greek, gloss} cells.
+  'prepositionsChart', 'pronounParadigm'
 ]);
 // "type" is also the ACTIVITY discriminator, so the activity types are listed
 // here as the known non-block use of the key. Anything else carrying a "type"
@@ -76,13 +79,18 @@ function validateParadigmTable(table, path, { allowExtras = true } = {}) {
 
   const rows = Array.isArray(table.rows) ? table.rows : [];
   if (!rows.length) problems.push(`${path}: paradigm has no rows.`);
+  const labelled = rows.some(row => row && String(row.label ?? row.person ?? '').trim());
   rows.forEach((row, index) => {
     if (!row || typeof row !== 'object' || Array.isArray(row)) {
       problems.push(`${path}.rows[${index}]: paradigm row is not an object.`);
       return;
     }
-    if (!String(row.label ?? row.person ?? '').trim()) {
-      problems.push(`${path}.rows[${index}]: paradigm row has no label or person.`);
+    // A row label is REQUIRED only where the chart has them. Chapter 7's εἰμί
+    // paradigm has none — its three rows are first, second and third person
+    // and the original prints no case column at all — so "some rows are
+    // labelled and some are not" is the real defect, not "no row is labelled".
+    if (labelled && !String(row.label ?? row.person ?? '').trim()) {
+      problems.push(`${path}.rows[${index}]: paradigm row has no label or person while its siblings do.`);
     }
     if (!Array.isArray(row.cells) || row.cells.length !== columns.length) {
       problems.push(`${path}.rows[${index}]: paradigm row has ${(row.cells || []).length} cells, expected ${columns.length}.`);
@@ -178,11 +186,43 @@ function validateMeanings(meanings, path) {
   }
 }
 
+// 5F: chapter 8's pronoun chart. Its rows carry ONE LINE of set text
+// ("ἐγώ I ἡμεῖς we"), not a cells[] array, so it has its own contract:
+// PronounParadigm.svelte splits the line at the start of the last Greek run.
+// The check that matters is that the line HAS that run — a row with no Greek
+// at all cannot be split into a Singular and a Plural cell and would print as
+// one undifferentiated string, which is exactly the shape of the delivered
+// defect this file exists to make loud.
+const GREEK_RUN = /[Ͱ-Ͽἀ-῿]/u;
+function validatePronounParadigm(chart, path) {
+  const columns = Array.isArray(chart.columns) ? chart.columns : [];
+  if (columns.length !== 2) {
+    problems.push(`${path}.columns: pronounParadigm expects a Singular and a Plural column, got ${columns.length}.`);
+  }
+  const rows = Array.isArray(chart.rows) ? chart.rows : [];
+  if (!rows.length) problems.push(`${path}: pronounParadigm has no rows.`);
+  rows.forEach((row, index) => {
+    const text = row && typeof row.text === 'string' ? row.text.trim() : '';
+    if (!text) {
+      problems.push(`${path}.rows[${index}]: pronounParadigm row has no text line.`);
+      return;
+    }
+    if (!GREEK_RUN.test(text)) {
+      problems.push(`${path}.rows[${index}]: pronounParadigm row "${text}" contains no Greek — it cannot be split into Singular and Plural cells.`);
+    }
+    if (!String(row.label ?? '').trim()) {
+      problems.push(`${path}.rows[${index}]: pronounParadigm row has no case label.`);
+    }
+  });
+}
+
 function validateParadigm(paradigm, path) {
   if (!paradigm || typeof paradigm !== 'object' || Array.isArray(paradigm)) {
     problems.push(`${path}: paradigm is not an object.`);
     return;
   }
+
+  if (paradigm.type === 'pronounParadigm') { validatePronounParadigm(paradigm, path); return; }
 
   if (paradigm.charts != null) {
     if (!Array.isArray(paradigm.charts) || paradigm.charts.length < 2) {
@@ -270,9 +310,16 @@ for (const file of files) {
     // A paradigm chart's rows must line up with its declared columns, or cells
     // land under the wrong number heading. Chapter 4/5 may wrap multiple full
     // charts in charts[]; validate each chart and each nested Meanings table.
-    if (block.type === 'paradigm' || (block.paradigm && block.mode === 'paradigmChart')) {
-      const chart = block.type === 'paradigm' ? block : block.paradigm;
-      validateParadigm(chart, block.type === 'paradigm' ? path : `${path}.paradigm`);
+    if (block.type === 'paradigm' || block.type === 'pronounParadigm'
+        || (block.paradigm && block.mode === 'paradigmChart')) {
+      const own = block.type === 'paradigm' || block.type === 'pronounParadigm';
+      validateParadigm(own ? block : block.paradigm, own ? path : `${path}.paradigm`);
+    }
+    // 5F: a paradigmChart may ship SEVERAL charts as paradigms[] (chapter 8's
+    // third person, reached by More/Back). Validate each.
+    if (block.mode === 'paradigmChart' && Array.isArray(block.paradigms)) {
+      if (!block.paradigms.length) problems.push(`${path}.paradigms: expected at least one chart.`);
+      block.paradigms.forEach((chart, index) => validateParadigm(chart, `${path}.paradigms[${index}]`));
     }
     // spellVerse grades word by word, so the answer must actually be words.
     if (block.type === 'spellVerse') {
@@ -438,12 +485,30 @@ for (const file of files) {
   walk(data, file, (activity, path) => {
     if (activity.type !== 'spell' && activity.type !== 'spellVerse') return;
     const answers = [...(activity.answerWords || [])];
+    // answerAlt spellings are ALSO accepted, so they must be enterable — but
+    // they are not what the surface asks the learner to type, so they are
+    // exempt from the displayed-punctuation rule below. Chapter 7's εἰμί
+    // speller prints ἐστί(ν) to show that the nu is moveable; the parentheses
+    // are typography, not a mark the chapter teaches and the learner reaches
+    // for, and the bare ἐστίν the item actually answers with is fully typeable.
+    const alternates = [];
     for (const item of activity.items || []) {
-      const greek = item.greek || (item.ref ? lemmaGreek(item.ref) : null);
+      // 5F: a speller item may carry its Greek as `answer` (the phrase and
+      // parse spellers) as well as `greek` (chapter 3's verb speller) or by
+      // lexicon ref (the vocabulary spellers), and may carry a SECOND
+      // acceptable spelling in answerAlt. Every form the checker will accept
+      // has to be typeable, which is what makes this the check that proves the
+      // elision apostrophe on ἐπ' ἀληθείας has a key (C9 / D-29). Without this
+      // branch the whole of chapters 6-8's spellers were invisible here.
+      const greek = item.greek || item.answer || (item.ref ? lemmaGreek(item.ref) : null);
       if (greek) answers.push(greek);
+      const alt = item.answerAlt;
+      for (const value of Array.isArray(alt) ? alt : (alt ? [alt] : [])) {
+        if (typeof value === 'string') alternates.push(value);
+      }
     }
     const punctuationOptional = activity.punctuationOptional !== false;
-    for (const answer of answers) {
+    for (const answer of [...answers, ...alternates]) {
       // The checker lowercases under both toggle settings (no shift layer),
       // and drops punctuation unless the surface requires it.
       let folded = answer.toLowerCase();
@@ -456,6 +521,7 @@ for (const file of files) {
           problems.push(`${path}: "${answer}" needs "${cluster}" (U+${[...cluster].map(c => c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')).join('+')}), which no speller tile can produce.`);
         }
       }
+      if (alternates.includes(answer)) continue;   // see `alternates` above
       // AND THE PUNCTUATION ITSELF MUST BE TYPEABLE (5E-SPEC3-PATCH, D-29).
       // The loop above deletes punctuation before checking, which is right for
       // "can this answer be entered at all" — D-18 makes it optional — but it

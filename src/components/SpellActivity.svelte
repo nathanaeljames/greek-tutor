@@ -32,16 +32,78 @@
   export let chapter;
   export let activity;
 
-  // Two item shapes. {ref} looks the word up in the chapter's lexicon (the
-  // vocabulary spellers); {gloss, greek, audio} carries it inline (chapter 3's
-  // verb speller, whose 27 inflected forms are not lexicon lemmas).
+  // THREE item shapes, all reduced to one record here.
+  //
+  //   {ref}                    looks the word up in the chapter's lexicon (the
+  //                            vocabulary spellers). `ref` is a LEXICON KEY.
+  //   {gloss, greek, audio}    carries it inline (chapter 3's verb speller,
+  //                            whose 27 inflected forms are not lemmas).
+  //   {prompt, answer, ref}    5F. The prompt is an English phrase or a parse
+  //                            label, the ANSWER is the Greek, and `ref` is a
+  //                            scripture citation printed beside the prompt —
+  //                            the same field name carrying a different thing,
+  //                            which is why a ref that resolves to no lemma is
+  //                            treated as a citation rather than a lookup.
+  //
+  // §3: `ref` may legitimately be NULL (chapter 8's "they (fem nom 3 pl)" — the
+  // original shows a blank there), and a blank must render as nothing, not as
+  // an empty chip.
+  //
+  // §2.10: `answerAlt` is a SECOND ACCEPTABLE SPELLING, not a hint. Chapter 7's
+  // εἰμί speller prints the moveable nu in parentheses — ἐστί(ν) — and accepts
+  // both that and the bare ἐστίν. This is not general movable-nu leniency
+  // (D-16 stays withdrawn); it is this field, on these six items.
   const words = (activity.items || []).map(it => {
-    if (it.greek) return {
-      ref: it.ref || null, greek: it.greek, gloss: it.gloss || '', audio: it.audio || null
-    };
+    const inline = it.greek || it.answer;
+    if (inline) {
+      const lemma = it.ref ? getLemma(it.ref, chapter.id, it.pool) : null;
+      return {
+        ref: lemma ? null : (it.ref || null),
+        greek: inline,
+        alts: altSpellings(it),
+        gloss: it.prompt != null ? it.prompt : (it.gloss || ''),
+        note: it.note || null,
+        audio: it.audio || (lemma && lemma.audio) || null
+      };
+    }
     const l = getLemma(it.ref, chapter.id, it.pool) || {};
-    return { ref: null, greek: l.greek || '', gloss: l.gloss || '', audio: l.audio || null };
+    return {
+      ref: null,
+      greek: l.greek || '',
+      alts: altSpellings(it),
+      // A 5F vocabulary speller authors its own prompt ("from") rather than
+      // taking the lemma's full gloss ("from (with gen.)"), and carries the
+      // case tag beside it as a note.
+      gloss: it.prompt != null ? it.prompt : (l.gloss || ''),
+      note: it.note || null,
+      audio: l.audio || null
+    };
   });
+
+  // answerAlt is one string or a list of them; the printed form is often the
+  // same as the answer, in which case it adds nothing and costs nothing.
+  //
+  // A PARENTHESISED SEGMENT IS OPTIONAL, which is the whole reason the field
+  // exists here. ἐστί(ν) is the chapter's own notation for "the nu may or may
+  // not be there", so it is expanded into ἐστί(ν) — which the shared checker
+  // already folds to ἐστίν, punctuation being optional — AND ἐστί. Without the
+  // expansion the alternate collapses onto the answer and the field does
+  // nothing at all, which is how it first shipped.
+  //
+  // This is NOT general movable-nu leniency (D-16 stays withdrawn). It fires
+  // only on an authored parenthesised alternate, so the item next door — whose
+  // answerAlt is its own answer — still rejects a stray nu.
+  function altSpellings(item) {
+    const alt = item.answerAlt;
+    if (!alt) return [];
+    const out = [];
+    for (const value of Array.isArray(alt) ? alt : [alt]) {
+      if (typeof value !== 'string' || !value.trim()) continue;
+      out.push(value);
+      if (value.includes('(')) out.push(value.replace(/\([^()]*\)/g, ''));
+    }
+    return out;
+  }
 
   // The tile keyboard is a shared component reading the shared
   // speller-tiles.json contract. Chapter 1's inline copy is handed over only
@@ -110,10 +172,12 @@
     // requires every accent to be right; final forms and breathings are
     // required at BOTH settings; case and punctuation stay lenient either way.
     // A final nu is compared like any other letter (D-16 withdrawn).
-    const ok = spellingMatches(built, word.greek, {
-      withAccents,
-      punctuationOptional: activity.punctuationOptional !== false
-    });
+    const options = { withAccents, punctuationOptional: activity.punctuationOptional !== false };
+    // §2.10: any of the authored spellings is right. The parenthesised form is
+    // compared like any other answer — the parentheses are punctuation, which
+    // the shared policy already treats as optional, so ἐστίν, ἐστί(ν) and
+    // ἐστι(ν) all land on the same key without a movable-nu rule anywhere.
+    const ok = [word.greek, ...word.alts].some(answer => spellingMatches(built, answer, options));
     totalAttempts += 1;
     if (ok) {
       totalCorrect += 1;
@@ -204,15 +268,26 @@
   onDestroy(() => { window.removeEventListener('keydown', onKey); cancelAdvance(); stopAudio(); });
 </script>
 
-<div class="card speller">
+<!-- data-word-index is the item the surface is ON. Chapter 7's adjective
+     speller prints the SAME English prompt ("good") on six consecutive items
+     and distinguishes them by their parse note, so "has the prompt changed"
+     is not a sound way to observe an advance — the harness reads this. -->
+<div class="card speller" data-word-index={wordIndex} data-word-count={words.length}>
   <div class="spell-panes">
     <div class="flash-pane"><div class="label">{activity.promptLabel || 'English Meaning'}</div>
       <div class="value" style="font-size:1.2rem">{word ? word.gloss : ''}</div>
+      <!-- §2.5: the case or parse tag beside the prompt, plain ink, smaller.
+           Never tappable even when it holds Greek. -->
+      {#if word && word.note}<div class="spell-prompt-note">{word.note}</div>{/if}
+      <!-- §3: a null ref renders NOTHING, not an empty chip. -->
       {#if word && word.ref}<div class="spell-prompt-ref">{word.ref}</div>{/if}
     </div>
+    <!-- The answer field's caption is the original's, from the data: chapters
+         6-8 spell PHRASES ("Spell Greek Phrase") where chapters 1-5 spell
+         words. ui.fields is [prompt caption, answer caption]. -->
     <SpellerField
       state={buffer}
-      label="Spell Greek Word"
+      label={(activity.ui?.fields && activity.ui.fields[1]) || 'Spell Greek Word'}
       locked={solved}
       on:caret={e => { if (!solved) buffer = input.placeCaret(buffer, e.detail.index, e.detail.after); }}
       on:caretEnd={() => { if (!solved) buffer = input.caretToEnd(buffer); }} />
@@ -252,7 +327,10 @@
     on:clear={clearInput} />
 
   {#if showAnswer}
-    <div class="spell-answer"><span class="label">Answer</span> <span class="greek">{word ? word.greek : ''}</span></div>
+    <!-- §2.10: Show Answer prints the form the chapter PRINTS. Where the two
+         differ that is the parenthesised one (ἐστί(ν)); the bare spelling is
+         accepted just the same. -->
+    <div class="spell-answer"><span class="label">Answer</span> <span class="greek">{word ? (word.alts[0] || word.greek) : ''}</span></div>
   {/if}
 
   {#if showScore}

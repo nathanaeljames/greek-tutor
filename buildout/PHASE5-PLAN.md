@@ -1,7 +1,8 @@
 # PHASE5-PLAN.md — vertical buildout roadmap (LIVING DOCUMENT)
 
-Status date: 2026-08-07 (5E closed, 5F open). Roadmap only; per-cohort
-detail lives in the numbered specs. Updated at every cohort boundary.
+Status date: 2026-08-08 (5E closed, 5F BUILT — implementation complete,
+awaiting VERIFY-5F closure). Roadmap only; per-cohort detail lives in
+the numbered specs. Updated at every cohort boundary.
 
 ## Principles (unchanged)
 
@@ -100,6 +101,29 @@ COHORT 5F — Chapters 6 + 7 + 8 (Prepositions, Adjectives and the verb
   no Case Drill, only Translation — confirmed by exhaustive TBK title
   search, not assumed; do not add one.
 
+  **BUILT 2026-08-08 (5F-SPEC1, one round, one implementer).** All 70
+  activities ship: ch6 20 rail stops, ch7 25, ch8 25, all lazily
+  chunked and offline. `npm run verify` passes; the behaviour harness
+  is 575/575 (388 before the round), the new 70-stop smoke walk is
+  73/73 and the modal pass 85/85. Records: `5F-SPEC1.md`,
+  `5F-SPEC1-RESULTS.md`, `5F-SPEC1-BUILD.md`, `5F-EXTRACTION-MAP.md`,
+  `VERIFY-5F.md`.
+  Renderer novelty delivered: `prepositionsChart` (an SVG DIAGRAM, on
+  two surfaces), full-page `popups[]` with three declaration routes,
+  `pronounParadigm` plus a `paradigms[]` More/Back stack,
+  `twoStageGrid` (the cohort's one new interaction — nothing judged
+  until BOTH stages are chosen, VERIFY-5F item 7), `answerAlt` in two
+  shapes, `options: "perItem"`, `greek2`, `note`, and the case-split
+  `pool: "senses"` vocabulary. New divergences D-31, D-32, D-33.
+  NOT closed: the delivered data is missing the teaching paradigms for
+  chapters 7 and 8 and every Hint chart in the cohort (5 of 6 hintRefs
+  dangle, 8 drills show no Hint button), chapter 7's popups ship with
+  no anchors, and chapter 8's two Quick Review pronoun charts carry
+  six rows of untransliterated Latin. All are pipeline-side and are
+  itemised in `5F-SPEC1-RESULTS.md` §8; no data file was edited.
+  The rail-walk PDFs were never in the repo, so the spec's
+  screenshot-by-screenshot comparison pass is still owed.
+
 COHORT 5G+ (INFERENCE, pending each cohort's extraction pass) —
   chapters 9-28 grouped by grammatical family, expecting the first
   chapter of each family to carry the novelty and the rest to reuse:
@@ -147,8 +171,25 @@ paradigm block; `meanings` on a chart; `note` on a chart;
 on `spell`; an explicit layout flag marking paradigm-shaped option
 grids (D-26).
 
-Expected later: whatever 5F needs for the ch8 two-step drill and the
-phrase speller. match/audioPlayer from the original seven-type plan
+Added in 5F (shipped): content blocks `prepositionsChart` (an SVG
+diagram — nodes carry `greek`/`gloss`/`slot`/`arrow`) and
+`pronounParadigm` (four case rows over Singular/Plural, each row ONE
+line of set text rather than cells); `paradigms[]` on a `paradigmChart`
+activity (a More/Back stack) and a `sayWhole` beside the chart;
+activity-level `popups[]` reached three ways (`popupRef` on a greekRows
+row, an `[[u]]` run whose slug is a popup id, or the popup's own
+`greek` headword — D-31); `senses[]`, `partAudio[]`, `bracket`, `ref`
+and `greek2` on greekRows rows; `note` on select and speller items
+(ink, never a tap); `options: "static" | "perItem"` and
+`optionLayout: "stack1col"`; `mode: "twoStageGrid"` with
+`optionStages[]` and a two-element `answer`; `answerAlt` on a speller
+item (a second acceptable spelling, parentheses meaning optional —
+D-33) and on a two-stage item (a list of extra acceptable pairs);
+`pool: "senses"` (one card per caseTag plus one for the untagged
+remainder); `audioMap` on an activity (inflected form -> clip, folded
+chapter-wide).
+
+Expected later: match/audioPlayer from the original seven-type plan
 have NOT yet been witnessed in chapters 3-8; parse/translate resolve
 to select variants.
 

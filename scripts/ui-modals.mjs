@@ -105,6 +105,42 @@ const SURFACES = [
     await page.locator('.card .pg-endings-open').first().click();
     await page.waitForTimeout(180);
   }],
+  // 5F: the full-page popups. Three shapes — a preposition with three sense
+  // lines and three worked examples (the tallest thing in the cohort), a
+  // three-sense preposition, and a use-of-αὐτός page with no headword. Each is
+  // a modal with a Cancel control, so each has to show both borders and that
+  // control at rest at every height, like every other modal in the app.
+  ['ch6-popup-apo', async () => {
+    await go('#/activity/chapt_6/c6_learn_prepositions');
+    await page.getByRole('button', { name: 'Next Topic', exact: true }).click();
+    await page.waitForTimeout(100);
+    await page.locator('.rc-sense-link').first().click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch6-popup-epi-three-senses', async () => {
+    await go('#/activity/chapt_6/c6_learn_prepositions');
+    for (let i = 0; i < 3; i++) { await page.getByRole('button', { name: 'Next Topic', exact: true }).click(); await page.waitForTimeout(80); }
+    await page.locator('.rc-sense-link').first().click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch7-popup-ou', async () => {
+    await go('#/activity/chapt_7/c7_learn_eimi');
+    for (let i = 0; i < 3; i++) { await page.getByRole('button', { name: 'Next Topic', exact: true }).click(); await page.waitForTimeout(80); }
+    await page.locator('.popup-link').first().click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch8-popup-autos-as-a-pronoun', async () => {
+    await go('#/activity/chapt_8/c8_learn_third_person');
+    for (let i = 0; i < 2; i++) { await page.getByRole('button', { name: 'Next Topic', exact: true }).click(); await page.waitForTimeout(80); }
+    await page.locator('.popup-link').first().click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch6-speller-greek-keyboard', async () => {
+    await go('#/activity/chapt_6/c6_ex_speller');
+    await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch7-adjective-case-hint', hint('chapt_7', 'c7_drill_case', false)],
   ['ch1-speller-greek-keyboard', async () => {
     await go('#/activity/chapt_1/c1_ex_speller');
     await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();

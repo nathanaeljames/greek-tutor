@@ -15,7 +15,65 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
 internet. Full license from the author. Secondary goal: portfolio
 piece. Nathanael goes by "Fable" when addressing Claude (chat).
 
-## Live state (2026-08-07)
+## Live state (2026-08-08)
+
+**COHORT 5F IS BUILT, NOT CLOSED.** Chapters 6, 7 and 8 — all 70
+activities — are implemented, rail-ordered, lazily chunked and offline.
+One round, one implementer, `5F-SPEC1.md`. Records:
+`5F-SPEC1-RESULTS.md` (prose, section by section) and
+`5F-SPEC1-BUILD.md` (the full diff). `npm run verify` passes; the
+behaviour harness is **575/575** (388 before the round), a new 70-stop
+smoke walk at 380px is 73/73 and the modal pass is 85/85 over five
+device heights. Screenshot corpora: `buildout/screenshots/5f-walk`
+(70 rail stops), `5f-detail` (21 sub-pages the rail walk cannot
+reach — topics, popups, the paradigm stack, the two-stage drill
+mid-answer), `5f-modals` (85).
+
+New this cohort, all registered in PHASE5-PLAN's mode/type registry:
+`prepositionsChart` (chapter 6's ten prepositions as an SVG DIAGRAM
+rather than a table, on two surfaces), full-page `popups[]`,
+`pronounParadigm` + a `paradigms[]` More/Back stack, `twoStageGrid`,
+`answerAlt` in two shapes, `options: "perItem"`, `greek2`, `note`,
+`pool: "senses"`, `audioMap`. Three new divergences: **D-31** (chapter
+7's popups are opened from their Greek headwords, because the data
+ships no anchors), **D-32** (the case-split vocabulary grids do not
+follow D-19) and **D-33** (a parenthesised `answerAlt` makes the
+parenthesised segment optional).
+
+**The two-stage drill is built exactly as Nathanael specified**
+(VERIFY-5F item 7): nothing is judged until BOTH stages are chosen, the
+person may be changed as often as the learner likes, and only the case
+click commits the pair.
+
+**WHAT 5F STILL NEEDS, all pipeline-side.** No data file was edited
+(ground rule 2); these are itemised with offsets in
+`5F-SPEC1-RESULTS.md` §8 and are the gate on closing the cohort:
+
+1. **Chapter 8's two Quick Review pronoun charts carry six rows of
+   untransliterated Latin** (`mou`, `moi`, `me`, `sou`, `soi`, `se`)
+   where the Learn pages carry proper μου, μοι, με, σου, σοι, σε. Those
+   cells print their Latin as ink and are not tappable; the clips
+   already exist in the chapter's `audioMap` and would light up the
+   moment the data carries Greek.
+2. **The teaching paradigms for chapters 7 and 8 were not emitted** —
+   `c7_learn_adjectives`, `c8_learn_pronouns` and
+   `c8_learn_third_person` are entirely flat `para` blocks. Downstream,
+   **5 of the cohort's 6 `hintRef`s dangle** and 8 drills that declare
+   a Hint in `ui.buttons` show none. The extraction map lists offsets
+   for every one of those charts, so they were found and not shipped.
+3. **Chapter 7's three popups (οὐ/οὐκ/οὐχ) ship with no anchors** — no
+   `popupRef` anywhere in `chapt-07.json`, no `[[u]]` run on the page.
+   D-31 is the workaround; anchors would retire it.
+4. **`c8_learn_pronouns` → Examples, Jn 16:7** loses the elision on
+   `ἀλλ'` (a space, not U+0027) and carries a trailing combining
+   breathing on the ε of ἐγώ.
+
+**THE RAIL WALKS WERE NEVER IN THE REPO.** `ch6railwalk.pdf`,
+`ch7railwalk.pdf` and `ch8railwalk.pdf` do not exist here (no PDF does),
+so 5F-SPEC1 §4's screenshot-by-screenshot comparison is **still owed**.
+Every page was walked and photographed at 380px and judged against the
+spec, the extraction map and the data — but nothing was compared
+against DOSBox. Drop the three PDFs in and that pass can be done.
 
 **COHORT 5E IS CLOSED.** Chapters 1 through 5 are shipped, verified on
 device, and behaviorally corrected. Full round history:
@@ -56,8 +114,12 @@ device, and behaviorally corrected. Full round history:
   an iPhone). Behavior suite: 203 → 322 checks.
 
 **All 78 rows of `DRILLBEHAVIORLEDGER.csv` are CONFIRMED — chapters 1-8,
-zero open rows.** Chapters 6-8 aren't built yet, but their BEHAVIOR is
-already verified against DOSBox, ahead of the build. This inverts the
+zero open rows.** The ledger-first process worked: chapters 6-8 were
+built against already-confirmed behavior and the harness now reads the
+ledger back off the shipped surfaces activity by activity — Previous/
+Next presence, the Pronounce-Each default and `audioTiming` on arrival,
+per scored activity, plus correct-and-incorrect per drill against each
+drill's own `advanceClass`. Nothing needed restamping. This inverts the
 5E process on purpose: 5E's data was wrong 23/50 rows because behavior
 was inferred from screenshots after the fact. 5F's data goes in
 correct the first time because the ledger already has the answers.
@@ -74,11 +136,12 @@ Fable made before Nathanael's pass corrected them: a same-chapter
 precedent is not enough when the chapter offers more than one candidate
 shape (chapter 3 has two verb drills with opposite timing).
 
-**REPO IS AHEAD OF PROJECT FILES** as of this writing on four files —
-`DIVERGENCE-LOG.md`, `DRILL-BEHAVIOR-RULES.md`, `DRILLBEHAVIORLEDGER.csv`,
-`chapt-04.json`, `chapt-05.json` — all correctly committed from the
-SPEC3-PATCH round, just not yet re-uploaded to project files. See the
-Immediate queue.
+**REPO IS AHEAD OF PROJECT FILES** on `DIVERGENCE-LOG.md` (now through
+D-33), `PHASE5-PLAN.md`, `DRILL-BEHAVIOR-RULES.md`,
+`DRILLBEHAVIORLEDGER.csv`, `chapt-04.json`, `chapt-05.json`, plus this
+file and the two 5F round documents. All committed locally from the
+SPEC3-PATCH and 5F-SPEC1 rounds, just not yet re-uploaded to project
+files. See the Immediate queue.
 
 **Superseded state below, kept for context (5D closure onward):**
 
