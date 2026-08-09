@@ -386,16 +386,20 @@ function sensePool(chapter) {
         });
         continue;
       }
-      const gloss = sense.gloss || sense.glossShort || '';
       cards.push({
         ref, lemma, sense,
-        // The case tag lives in the GLOSS, never in the headword: the split
-        // card's Greek is the bare form the learner has to recognize, and
-        // lexicalForm already carries one case's tag baked in (chapter 8's
-        // παρά is "παρά (with gen.)"), which would be wrong on the other two.
-        display: sense.greek || lemma.greek,
+        // THE CASE TAG GOES WITH THE GREEK, not with the gloss. The rail walk
+        // settles it: chapter 6's Learn Vocabulary card reads
+        // "Greek Word: ἀπό (with gen.)" over "Word Meaning: from", and the
+        // Greek-to-English drill prints "ἐπί (with dat.)" as its prompt
+        // (ch6railwalk p10). Chapter 8's lexicalForm for παρά is already
+        // "παρά (with gen.)", which is the same convention written out.
+        // The bare form is kept in `greek` so a surface that wants the
+        // headword alone still has it.
+        display: [sense.greek || lemma.greek, sense.caseTag].filter(Boolean).join(' '),
         greek: sense.greek || lemma.greek,
-        gloss: sense.caseTag ? `${gloss} ${sense.caseTag}` : gloss,
+        caseTag: sense.caseTag || null,
+        gloss: sense.gloss || sense.glossShort || '',
         audio: sense.audio || lemma.audio || null
       });
     }

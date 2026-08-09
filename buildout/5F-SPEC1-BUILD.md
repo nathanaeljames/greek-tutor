@@ -4,7 +4,9 @@ Cohort 5F, one round, one implementer. Chapters 6, 7 and 8.
 Prose lives in `5F-SPEC1-RESULTS.md`; this document is the evidence
 the assessment pipeline audits.
 
-Nothing was pushed. The round is committed locally on `main`.
+Nothing was pushed. The round is committed locally on `main`, in two
+commits: the build, and then the page-by-page rail-walk comparison the
+three walk PDFs made possible once they were supplied.
 
 **No data file was edited.** `src/data/chapt-06.json`,
 `chapt-07.json`, `chapt-08.json` and their three lexicons do not
@@ -12,49 +14,51 @@ appear in the diff below, which is the check ground rule 2 asks for.
 
 ## Scope of this diff
 
-`git diff` for the round, over every text file it touched. Binary
-additions — the 176 PNG screenshots under `buildout/screenshots/5f-walk`
-(70 rail stops at 380px), `5f-detail` (21 sub-pages) and `5f-modals`
-(85 modal states over five device heights), plus the two `walk-*` and
-`modals-*` corpora the existing harnesses wrote — are committed but not
-inlined here; they are listed under "Screenshot corpora" at the end.
+`git diff` for the WHOLE round — every text file it touched, against
+the commit the round started from (`b3775a9`). Binary additions — the
+PNG screenshots under `buildout/screenshots/5f-walk` (70 rail stops at
+380px), `5f-detail` (24 sub-pages) and `5f-modals` (85 modal states
+over five device heights), plus the `walk-*` and `modals-*` corpora the
+existing harnesses wrote — are committed but not inlined here; they are
+listed at the end.
 
 ## Summary
 
- buildout/5F-SPEC1-RESULTS.md            | 644 +++++++++++++++++++++++++++
- buildout/CHAT-HANDOFF.md                |  79 +++-
- buildout/DIVERGENCE-LOG.md              |  47 ++
- buildout/PHASE5-PLAN.md                 |  49 ++-
+ buildout/5F-SPEC1-RESULTS.md            | 850 ++++++++++++++++++++++++++++++++
+ buildout/CHAT-HANDOFF.md                |  93 +++-
+ buildout/DIVERGENCE-LOG.md              |  53 ++
+ buildout/PHASE5-PLAN.md                 |  54 +-
  package.json                            |   5 +-
- scripts/check-content-shapes.mjs        |  82 +++-
+ scripts/check-content-shapes.mjs        |  82 ++-
  scripts/check-lazy-chunk.mjs            |   5 +-
- scripts/ui-behavior.mjs                 | 743 +++++++++++++++++++++++++++++++-
+ scripts/ui-behavior.mjs                 | 811 +++++++++++++++++++++++++++++-
  scripts/ui-modals.mjs                   |  36 ++
  scripts/ui-shots-5f.mjs                 | 113 +++++
- scripts/ui-smoke-5f.mjs                 | 108 +++++
- src/app.css                             |  88 ++++
- src/components/ContentAudio.svelte      |  80 +++-
+ scripts/ui-smoke-5f.mjs                 | 108 ++++
+ src/app.css                             | 104 ++++
+ src/components/ContentAudio.svelte      |  80 ++-
  src/components/Marked.svelte            |  13 +-
+ src/components/Paradigm.svelte          |  50 +-
  src/components/PopupSheet.svelte        |  68 +++
- src/components/PrepositionsChart.svelte | 127 ++++++
+ src/components/PrepositionsChart.svelte | 127 +++++
  src/components/PronounParadigm.svelte   |  89 ++++
- src/components/RichContent.svelte       | 123 +++++-
- src/components/SelectActivity.svelte    | 115 ++++-
- src/components/SpellActivity.svelte     | 106 ++++-
- src/lib/content.js                      | 217 +++++++++-
+ src/components/RichContent.svelte       | 131 ++++-
+ src/components/SelectActivity.svelte    | 122 ++++-
+ src/components/SpellActivity.svelte     | 110 ++++-
+ src/lib/content.js                      | 221 ++++++++-
  src/lib/popups.js                       |  61 +++
- 22 files changed, 2921 insertions(+), 77 deletions(-)
+ 23 files changed, 3302 insertions(+), 84 deletions(-)
 
 ## Checks at the end of the round
 
 ```
-npm run check:shapes    PASS  (8 chapters)
-npm run build           PASS
-npm run check:lazy-chunk PASS (8 chapter chunks + 8 lexicon chunks)
-npm run ui:smoke5f      73/73  over 70 rail stops at 380px
-npm run ui:behavior     575/575 behavior checks
-npm run ui:walk         PASS  (no console errors, no overflow)
-npm run ui:modals       85/85 modal states clean
+npm run check:shapes     PASS   (8 chapters)
+npm run build            PASS
+npm run check:lazy-chunk PASS   (8 chapter chunks + 8 lexicon chunks)
+npm run ui:smoke5f       73/73  over 70 rail stops at 380px
+npm run ui:behavior      586/586 behavior checks
+npm run ui:walk          PASS   (no console errors, no overflow)
+npm run ui:modals        85/85  modal states clean
 ```
 
 ## The diff
@@ -62,10 +66,10 @@ npm run ui:modals       85/85 modal states clean
 ```diff
 diff --git a/buildout/5F-SPEC1-RESULTS.md b/buildout/5F-SPEC1-RESULTS.md
 new file mode 100644
-index 0000000..957cbc8
+index 0000000..0e68267
 --- /dev/null
 +++ b/buildout/5F-SPEC1-RESULTS.md
-@@ -0,0 +1,644 @@
+@@ -0,0 +1,850 @@
 +# 5F-SPEC1-RESULTS.md — chapters 6, 7 and 8
 +
 +Implementer round, cohort 5F. One round, one implementer. Written
@@ -79,19 +83,30 @@ index 0000000..957cbc8
 +All 70 activities across chapters 6, 7 and 8 are reachable, correct
 +and rail-ordered. `npm run verify` passes (shapes, build, lazy-chunk
 +split for all eight chapters). The Playwright behaviour harness passes
-+575/575, up from 388 at the start of the round; 184 of those
++586/586, up from 388 at the start of the round; 195 of those
 +assertions are new 5F ones and a further 24 are old sweeps that now
 +cover the three new chapters. A 70-stop smoke walk at 380px passes
 +73/73 with no placeholder, no console error and no horizontal
 +overflow. The modal pass is 85/85 clean across five device heights,
 +including the four new popup surfaces.
 +
++**The page-by-page comparison against the three rail walks is done**
++(§6). It changed eight things, four of which I would not have found
++any other way — the case tag was on the wrong side of the vocabulary
++card, the adjective paradigm was printing `undefined` for its lemma,
++its three-column cells were breaking mid-word at 380px, and its
++Singular / Plural bands were missing entirely. Two more were my own
++inventions that the original does not do: a greyed-out case grid and a
++popup-link rule that claimed too many words. All eight are listed in
++§6.1 with the sheet each came from.
++
 +Six of the delivered data files' contracts were not what the spec
 +describes, and four of those are, in my reading, defects on the
 +pipeline side. Per ground rule 2 I have not touched a byte of the data
 +and have not "fixed" any of them. They are listed in §8 with what the
-+port does instead. **§8.1 and §8.2 are the two I would want looked at
-+before this cohort is called done.**
++port does instead, and the rail walks now **confirm** every one of
++them rather than leaving them as my reading. **§8.1 and §8.2 are the
++two I would want looked at before this cohort is called done.**
 +
 +Three new divergences are logged: **D-31** (how chapter 7's popups are
 +opened), **D-32** (the case-split vocabulary grids and D-19) and
@@ -174,7 +189,7 @@ index 0000000..957cbc8
 +| --- | --- | --- |
 +| `popupRef` on a `greekRows` row | 6 | the **gloss** is the link, the case tag is ink |
 +| an `[[u]]` run whose slug is a popup id | 8 | "As a pronoun" opens `asAPronoun` |
-+| the popup's own `greek` headword | 7 | see below and **D-31** |
++| the popup's own `greek` headword, on a numbered line | 7 | see below and **D-31** |
 +
 +The chapter-8 route falls out of the data cleanly: the three popup ids
 +are exactly the camelCase slugs of the three underlined labels on the
@@ -190,11 +205,19 @@ index 0000000..957cbc8
 +anywhere in the chapter (`grep popupRef chapt-07.json` → 0) and no
 +`[[u]]` run on that page. Leaving it alone would have left three
 +authored pages unreachable, which the spec counts as rail stops, so the
-+renderer opens a popup from standalone occurrences of its own `greek`
-+headword in the page's prose, longest headword first so οὐχ is never
-+claimed by οὐ. Logged as **D-31**. If the pipeline later ships anchors,
-+an explicit `popupRef` or underline already wins and the rule costs
-+nothing.
++renderer opens a popup from its own `greek` headword where that
++headword stands on a NUMBERED line — longest headword first, so οὐχ is
++never claimed by οὐ. Logged as **D-31**. If the pipeline later ships
++anchors, an explicit `popupRef` or underline already wins and the rule
++costs nothing.
++
++The numbered-line restriction came out of the rail walk (§6.1 item 7):
++ch7railwalk p7 makes `1) οὐ before a consonant;` the hot line and
++leaves the οὐ in the opening sentence as ordinary ink. My first pass
++claimed every occurrence, which also turned chapter 6's
++"ἐν, εἰς and ἐκ are proclitics" into three links the original does not
++have (ch6railwalk p6). Off the hot lines those words are ordinary
++audio taps, so directive 9 is untouched.
 +
 +The harness walks every topic of all three teaching activities and
 +asserts **every declared popup is reachable** — 11 for chapter 6, 3 for
@@ -241,11 +264,19 @@ index 0000000..957cbc8
 +
 +### 2.5 `note` on prompts — done
 +
-+Carried through the question builder and drawn beside the prompt in
-+plain ink at a smaller size, on both surfaces: `.prompt-note` under a
-+select prompt, `.spell-prompt-note` under a speller prompt. It is never
-+a tap target — asserted specifically on chapter 6's `(not ἐκ)` items,
-+which contain Greek and are the logged exception to directive 9.
++Carried through the question builder and drawn **on the prompt's own
++line**, to its right, in plain ink at a smaller size, on both surfaces:
++`πρός (to)`, `ἐπί (with dat.)`, `from God (not ἐκ)`,
++`good (acc. pl. masc.)`, `I (nom sg)`. My first pass put it on its own
++line below the prompt; every rail-walk sheet that carries a note sets
++it inline, so it is inline now (§6.1 item 2).
++
++It is never a tap target. Structurally it is a SIBLING of the prompt's
++button rather than a child, so the Greek inside it cannot acquire the
++prompt's clip either — asserted on chapter 6's `(not ἐκ)` items, which
++contain Greek and are the logged exception to directive 9, plus a
++geometric assertion that it really is on the same line and to the
++right.
 +
 +### 2.6 `options: "perItem"` — done
 +
@@ -272,8 +303,13 @@ index 0000000..957cbc8
 +### 2.8 `paradigmChart` and `pronounParadigm` — mostly done; two gaps
 +
 +**Chapter 7's adjective paradigm** (`c7_qr_adjectives`) — three gender
-+columns by nine rows, every cell its own clip, plus `sayWhole`. Worked
-+on the existing `Paradigm` component with no change.
++columns by nine rows, every cell its own clip, plus `sayWhole`. This
++needed three fixes the rail-walk comparison found and nothing else
++would have (§6.1 items 4-6): its lemma ships as a bare STRING with the
++gloss beside it, so the existing renderer printed "undefined" under the
++chart title; its three-column cells broke mid-word at 380px; and its
++`"number"` field, which legends the Singular and Plural blocks in the
++original, was authored on every row and rendered nowhere.
 +
 +**Chapter 7's εἰμί chart** (`c7_qr_eimi`) — two columns by three rows
 +with a gloss under each cell. This needed one **build-check** change,
@@ -339,11 +375,15 @@ index 0000000..957cbc8
 +- **the case click commits.** The pair is then scored under
 +  `manualOnIncorrect`, one attempt, from the ledger — reveal, wait,
 +  say so — and both grids lock.
-+- **stage 2 opens only once stage 1 has a pick**, which is what the
-+  instruction line ("Click on the person then the case") describes and
-+  what keeps the case click the committing one however many times the
-+  person is changed first. The case grid is visibly inert until then
-+  rather than hidden.
++- **both grids are live from the start.** An earlier pass greyed the
++  case grid out until a person was chosen, to make the instruction
++  line's order visible. ch8railwalk p8 draws it identically before and
++  after the person click, so that invention is gone: what holds the
++  pair together is the commit rule, not a disabled control. The pair
++  therefore commits in EITHER order — filling the case first and the
++  person second commits on the person click — which is the literal
++  reading of "nothing is judged until BOTH are chosen", and is
++  asserted as such.
 +
 +The person stage renders as a single column. The data declares
 +`paradigm2col` for stage 2 and no layout for stage 1; left to the
@@ -352,9 +392,10 @@ index 0000000..957cbc8
 +layout is drawn as a plain column — which is the word both the spec and
 +the original use for it.
 +
-+Five harness assertions cover it: the instruction line, both stages
-+present in order, the case grid inert, three person clicks judged
-+nothing, both-right auto-advancing (B1a), a wrong second stage
++Nine harness assertions cover it: the instruction line, both stages
++present in order, both grids live from the start, three person clicks
++judged nothing, only the last person selected, the pair committing in
++either order, both-right auto-advancing (B1a), a wrong second stage
 +revealing and waiting, both grids locking, and a wrong FIRST stage
 +being judged only once the pair is complete.
 +
@@ -441,10 +482,13 @@ index 0000000..957cbc8
 +
 +So the rule is "one card per caseTag, plus one for the untagged
 +remainder", which gives 16 and 13 from the delivered lexicons with no
-+count hard-coded anywhere. A split card shows the bare Greek form with
-+the case tag in the gloss, never `lexicalForm` — chapter 8's παρά has
-+`"παρά (with gen.)"` as its lexical form, which would be wrong on two
-+of its three cards.
++count hard-coded anywhere.
++
++A split card shows the Greek form **with its case tag** and the bare
++gloss beside it — `ἀπό (with gen.)` over `from`, which is what
++ch6railwalk p10 prints (§6.1 item 1). It is never `lexicalForm`:
++chapter 8's παρά has `"παρά (with gen.)"` as its lexical form, which
++would be wrong on two of its three cards.
 +
 +The vocabulary DRILLS were unaffected: both chapters author their
 +fifteen/sixteen drill entries as explicit items.
@@ -453,7 +497,7 @@ index 0000000..957cbc8
 +
 +## 5. Automated harness
 +
-+`npm run ui:behavior` — **575/575**, from 388 at the start of the
++`npm run ui:behavior` — **586/586**, from 388 at the start of the
 +round. New scripts `npm run ui:smoke5f` (the 70-stop rail walk) and
 +`npm run ui:shots5f` (the sub-page screenshots the rail walk cannot
 +reach); `npm run ui:modals` registered as a script and extended with
@@ -503,42 +547,168 @@ index 0000000..957cbc8
 +   widths, with the reason, instead of being dropped from the census.
 +   See §8.4 and **D-32**.
 +
++The rail-walk pass added eleven more, all of them about what is on the
++screen rather than what it does: the note's geometry on both surfaces
++and on three drills, the case tag riding with the Greek, the Singular
++and Plural bands present on chapter 7's chart and absent from every
++chart that authors no `number`, both stage grids live from the start,
++and the pair committing in either order.
++
 +---
 +
-+## 6. Visual walkthrough
++## 6. Visual walkthrough — page by page against the rail walks
 +
 +Walked all 70 activities at 380px and photographed every one:
 +`buildout/screenshots/5f-walk/` (70 images, rail order, named
 +`ch6-01-…` through `ch8-25-…`). Sub-pages the rail walk cannot reach —
 +every topic of chapter 6's eight-topic Learn Prepositions rail, the
-+popups, the paradigm stack, the two-stage drill mid-answer — are in
-+`buildout/screenshots/5f-detail/` (21 images). Modals at five device
-+heights in `buildout/screenshots/5f-modals/` (85 images).
++popups, the paradigm stack, the two-stage drill mid-answer, the
++vocabulary cards — are in `buildout/screenshots/5f-detail/` (24
++images). Modals at five device heights in
++`buildout/screenshots/5f-modals/` (85 states).
 +
 +Machine-checked on every one of the 70 stops: a card rendered, no
 +placeholder text reached the screen, no console error, and **no
 +horizontal overflow** (A3).
 +
-+**I could not do the comparison the spec asks for.** `ch6railwalk.pdf`,
-+`ch7railwalk.pdf` and `ch8railwalk.pdf` are not in this repo — there
-+are no PDFs anywhere in it and `buildout/screenshots/` holds only
-+previous rounds' captures. So I have walked every page and judged it
-+against the spec, the extraction map and the data, but I have **not**
-+compared any page against a DOSBox screenshot. Everything in §8 below
-+was found by reading the data against the spec, not by looking at the
-+original. If the rail walks can be dropped into the repo I will do the
-+comparison pass properly.
++Then compared page by page against `ch6railwalk.pdf` (16 sheets),
++`ch7railwalk.pdf` (16) and `ch8railwalk.pdf` (15). Everything not
++listed below matched: titles, instruction lines, prompts, option text
++and order, button sets, checkbox sets, feedback strings, menu contents
++and counts, and which elements carry the hand cursor.
 +
-+Things I changed as a result of looking at the pages, all listed above
-+in their sections: the doubled chart title (§2.1), the sense links
-+rendering with default button chrome, the doubled Say Whole (§5), the
-+person stage's column (§2.9), and one more not yet mentioned — the
-+speller's answer-field caption was hard-coded to "Spell Greek Word"
-+while chapters 6-8 declare "Spell Greek Phrase" in `ui.fields`. It now
-+comes from the data; chapters 1-5 all declare "Spell Greek Word", so
-+nothing there moves.
++### 6.1 What the comparison changed (eight fixes)
 +
-+---
++**1. The case tag belongs with the GREEK, not the gloss.**
++ch6railwalk p10 sets the Learn Vocabulary card as
++`Greek Word: ἀπό (with gen.)` over `Word Meaning: from`, and the
++Greek-to-English drill prompts `ἐπί (with dat.)`; ch8railwalk p10
++prompts `παρά (with dat.)`. The port had been putting the tag in the
++gloss (`ἀπό` over `from (with gen.)`). Chapter 8's own lexicalForm for
++παρά — `"παρά (with gen.)"` — is the same convention written out, which
++is the corroboration. Fixed in `sensePool()`; the bare headword is
++still available as `greek` for any surface that wants it.
++
++**2. `note` prints on the prompt's line, not below it.** Every
++screenshot that carries one sets it inline and smaller: `πρός (to)`
++(ch6 p8), `from God (not ἐκ)` (ch6 p10), `from (gen.)` (ch6 p12),
++`good (acc. pl. masc.)` (ch7 p6), `I (nom sg)` (ch8 p9). The port had
++it on its own line under the prompt. Fixed on both surfaces. The note
++is a SIBLING of the prompt's button, never inside it, so it still
++cannot speak — §2.5's rule is intact and now has a geometric assertion
++behind it (same line, to the right) as well as a structural one.
++
++**3. The two-stage case grid is live from the start.** ch8railwalk p8
++draws the case grid identically before and after the person click —
++same yellow on black, not greyed. I had disabled it until a person was
++chosen, to make the instruction line's order visible; that was my
++invention, so it is gone. What holds the pair together is the commit
++rule, not a disabled control, and the harness now asserts the pair
++commits in EITHER order and is still one attempt.
++
++**4. The adjective paradigm printed `undefined` for its lemma.**
++`c7_qr_adjectives` ships `"lemma": "ἀγαθός"` as a bare STRING with
++`"gloss": "good"` beside it, where chapters 4 and 5 ship an object;
++`Paradigm.svelte` read `lemma.greek` off a string and rendered
++"undefined" in link blue under the chart title. Caught only by holding
++the page next to ch7railwalk p14. Both shapes now normalize, and
++chapter 7's is set as the equation the original prints —
++`ἀγαθός = good`. Chapters 4 and 5 keep the object form and their
++device-verified lemma line is untouched. A lemma with no clip of its
++own now renders in ink rather than link blue (directive 8).
++
++**5. Three-column paradigm cells wrapped mid-word at 380px.**
++`ἀγαθῶν`, `ἀγαθοῖς` and `ἀγαθούς` each broke across two lines, three
++abreast. The shrink rule only fired above seven letters, which suits
++two columns and not three. The threshold is now column-aware — five
++letters from three columns up — and chapter 5's three-column article
++chart, whose forms are three and four letters, does not move.
++
++**6. The Singular / Plural bands were missing.** ch7railwalk p14
++legends the combined chart "Singular" beside its N. row and "Plural"
++beside its N.V. row. The data authors `"number": "s"` / `"p"` on every
++row and nothing rendered it. Now drawn wherever the number changes.
++Only chapter 7 authors `number`, and the harness asserts no earlier
++chart grows a band.
++
++**7. The popup headword rule was over-claiming.** D-31's rule made
++EVERY standalone occurrence of a popup's Greek headword a link. The
++walk shows the original hangs the link on the numbered line only:
++ch7railwalk p7 makes `1) οὐ before a consonant;` hot and leaves the οὐ
++in the opening sentence as ink, and ch6railwalk p6's Proclitics page
++does not link `ἐν, εἰς and ἐκ are proclitics` at all — which the old
++rule had turned into three links. Restricted to numbered lines. Those
++words are still ordinary audio taps off the hot lines, so directive 9
++is unaffected. D-31 is amended accordingly.
++
++**8. The speller's answer-field caption was hard-coded** to "Spell
++Greek Word" while chapters 6-8 declare "Spell Greek Phrase" in
++`ui.fields` (ch6 p10, ch7 p6, ch8 p9). It now comes from the data;
++chapters 1-5 all declare "Spell Greek Word", so nothing there moves.
++
++### 6.2 Confirmed correct against the walk
++
++- **The Prepositions Chart** (ch6 p6, p14). The slot arrangement and
++  every arrow direction match: περί sweeping in from the top left, ἐπί
++  arcing over, μετά in from the top right, πρός and εἰς in from the
++  left, ἀπό and ἐκ out to the right, διά running across through the
++  circle, κατά down into it, ἐν circled at the centre. Both surfaces
++  render from the one component.
++- **The Elision page** (ch6 p6), line for line, including
++  `δι' ἐμοῦ = through me (Jn 14:6)` over the bracketed `(διά + ἐμοῦ)`,
++  and `μεθ' ἡμέρας after days (Mat 17:1)` over `(μετά + ἡμέρας)`.
++- **The Compounds page** (ch6 p7): the hand cursor sits on διά, βλέπω
++  and διαβλέπω across the four captures — three tap targets, which is
++  exactly what the data wires (`f_voc2`, `f_comp1`, `f_comp2`) and
++  corroborates that `f_comp3` has no surface.
++- **ἐπί prints without its breathing** on the Three Case panel and the
++  ἐπί popup (ch6 p5) while its examples carry `ἐπὶ` — VERIFY-5F item 1,
++  shipped verbatim.
++- **The three uses of αὐτός** (ch8 p6): "As a pronoun" and "Reflexive
++  Intensifier" are blue underlined links; "himself" on the same page is
++  underlined and BLACK. That is precisely the port's rule — an
++  underlined run that matches no popup id stays a plain underline — and
++  it now has the original behind it rather than my reading of it.
++- **The Personal Pronoun Case Drill's shape** (ch8 p8-p9): a person
++  column of three stacked, a case grid two across by four down, and the
++  instruction line "Click on the person then the case".
++- **Every popup**, all seventeen: three worked examples for each of
++  chapter 6's eleven prepositions, two each for οὐ / οὐκ / οὐχ, and
++  three, two and two for the uses of αὐτός, each with Cancel.
++- **Menu contents and counts**: ch6 Drill 5 / Exercise 3 / Quick Review
++  6; ch7 7 / 4 / 7; ch8 6 / 3 / 9, in the authored order.
++- **Underlining** on every English-concepts and Greek page, in both
++  directions — nothing authored missing, nothing invented.
++- The Scripture Memory Spelling Exercises show `Show Answer`, not the
++  `Major Hint` button the rail walks carry (ch6 p13, ch7 p13, ch8 p11).
++  The spec explicitly overrides the walk here (C8 / D-30).
++
++### 6.3 Differences left standing, and why
++
++- **Layout is portrait, the original is landscape.** Every drill in the
++  original sets the prompt on the left and the option grid on the
++  right; the port stacks them. Established since chapter 1.
++- **Topic navigation.** The original lists a page's topics as radio
++  buttons down the left and swaps the yellow panel; the port uses the
++  Previous Topic / Next Topic stepper it has used since chapter 2.
++- **Learn Vocabulary controls.** The original has Previous / Next /
++  Hide Greek / Hide English / Show Both / Pronounce / Start Over; the
++  port uses its segmented Show Both / Hide Greek / Hide English control
++  plus Previous / Next / Pronounce, and has no Start Over. Established
++  in 5B.
++- **Popup headword layout.** The original sets the headword and its
++  first sense on one line (`ἀπό  from, because of, by, of (with the
++  genitive)`); the port stacks them, which is what fits 380px.
++- **The εἰμί chart's glosses** sit under each cell rather than beside
++  it, for the same reason (ch7 p14).
++- **Feedback colouring.** The original reddens the tile clicked wrong
++  and blues the one clicked right; the port keeps the selected/correct
++  palette established across chapters 1-5.
++- **Three pages the original splits with More/Back, the delivered data
++  merges into one topic**: chapter 8's Types of Pronouns (ch8 p1-p2),
++  Enclitics (p3-p4) and Three Uses (p6-p7). The port renders each as
++  one scrolling page. That is a data shape, not a renderer choice, and
++  it reads better on a phone than a two-page split would.
 +
 +## 7. Definition of done
 +
@@ -548,7 +718,7 @@ index 0000000..957cbc8
 +| All three chapters lazy and offline; audio from IDB, no store scan on load/mount | yes — `check:lazy-chunk` now proves all eight; no new store reader, no new IDB writer |
 +| `npm run check:shapes` passes | yes |
 +| Full Playwright harness passes, including the new cases | yes — 575/575 |
-+| Visual walkthrough complete for all three rails | walked and photographed; **not compared against the rail walks** — see §6 |
++| Visual walkthrough complete for all three rails | yes — 70 stops photographed at 380px AND compared page by page against all three rail walks; eight fixes came out of it (§6.1) |
 +| Both documents produced, BUILD containing the diff | yes |
 +
 +---
@@ -560,6 +730,7 @@ index 0000000..957cbc8
 +their lexicons; `git status` shows them untouched.
 +
 +### 8.1 Chapter 8's Quick Review pronoun charts carry untransliterated Latin
++(confirmed by ch8railwalk p12)
 +
 +Six rows across `c8_qr_first` and `c8_qr_second` print the enclitic
 +forms as **Latin letters**:
@@ -574,8 +745,15 @@ index 0000000..957cbc8
 +| `c8_qr_second` | A. | `se you ὑμᾶς us` |
 +
 +The **Learn** pages for the same paradigms carry proper μου, μοι, με,
-+σοι — so this is a conversion miss confined to the two Quick Review
-+charts, not a source problem. This is exactly the accentless-Greek case
++σοι, and **ch8railwalk p12 prints all six in Greek** on the Review
++pages too — so this is a conversion miss confined to the two Quick
++Review charts, not a source problem.
++
++The same sheet shows both charts carrying a trailing note the data also
++drops ("Emphatic first person pronouns are formed by adding an initial
++epsilon…", "The emphatic form is made by adding an accent to the
++singulars (σοῦ, σοί, σέ)"). `pronounParadigm` renders a `note` when one
++is authored; neither chart authors one. This is exactly the accentless-Greek case
 +`5F-EXTRACTION-MAP.md` §1.2 says `underline.py` was written to solve.
 +
 +Effect on screen: those six singular cells print their Latin verbatim
@@ -590,7 +768,7 @@ index 0000000..957cbc8
 +its plural half; making it stricter would fail the build on delivered
 +data I have been told not to fix.
 +
-+### 8.2 The chapter-8 Examples page loses an elision mark
++### 8.2 The chapter-8 Examples page loses an elision mark, and its underlines
 +
 +`c8_learn_pronouns` → Examples, third verse (Jn 16:7) ships as
 +`"ἀλλ ἐ̓γὼ τὴν ἀλήθειαν"`. Two things: the elision on ἀλλ' is a
@@ -598,14 +776,41 @@ index 0000000..957cbc8
 +combining smooth breathing (U+0395 U+0313 in that order) rather than
 +being ἐ. The spec's §3 lists `ἀλλ'` among the elisions chapters 7 and 8
 +carry, so I believe the apostrophe is missing rather than absent from
-+the original. Rendered as delivered in
++the original. **ch8railwalk p3 confirms it**: the original prints
++`ἀλλ᾽ ἐγὼ τὴν ἀλήθειαν λέγω ὑμῖν`. Rendered as delivered in
 +`5f-detail/ch8-learn-pronouns-4-examples.png`. It is displayed text
 +only — nothing scores against it — so it costs correctness nowhere, but
 +it teaches the wrong spelling on a page about pronouns.
 +
++The same sheet shows the **pronouns underlined** in all three verses —
++`Ἐγώ`, `Σὺ`, `ἐγὼ` and `ὑμῖν` — which is what spec §3 means by "three
++tappable verses with underlined pronouns". The delivered rows carry no
++`[[u]]` run at all, so the port prints them unemphasised. The verses
++are tappable and play, including `h_exx2`; only the emphasis is
++missing.
++
 +### 8.3 The teaching paradigms and every Hint chart are missing
 +
-+Covered in §2.8. Concretely: `c7_learn_adjectives` (7 topics),
++**The rail walks confirm this outright.** ch7railwalk p2 shows the
++Adjective Paradigm topic as a real chart with `Say Whole List` and a
++`More` to the Plural chart; p3 shows the same for the 2nd Adjective
++Paradigm (δίκαιος), which reaches the port nowhere at all; p7 shows the
++Present Indicative of εἰμί as a chart with its two "Things to Note"
++lines. ch8railwalk p3 shows the First and Second Person Paradigms as
++charts with `Say Whole Paradigm` and a trailing note on the emphatic
++forms, and p5-p6 the three Third Person Paradigm charts with
++`Say Whole Paradigm` / `More` / `Back`. Every one of those is flat
++`para` text in the delivered data.
++
++The Hint charts likewise exist and are photographed: ch6railwalk p8-p9
++(the two-column preposition/case chart both chapter 6 drills point at),
++ch7railwalk p5 (the full ἀγαθός chart) and p6 (`Attributive & Predicate
++Positions`, and the ἀγαθός chart again with a `More` to δίκαιος),
++ch7railwalk p9-p10 (the `"εἰμί" Paradigm` popup), ch8railwalk p5 (First
++Person Paradigm) and p7 (Third Person Paradigm, Masculine and Feminine
++with `More`).
++
++Concretely: `c7_learn_adjectives` (7 topics),
 +`c8_learn_pronouns` (6) and `c8_learn_third_person` (3) are entirely
 +`para` blocks — the paradigms the extraction map lists offsets for
 +(`0x015ce6`, `0x01a4aa`, `0x01375a`, `0x124088`, …) are printed as
@@ -663,24 +868,25 @@ index 0000000..957cbc8
 +
 +## 9. Where I was unsure
 +
-+- **Chapter 7's popup anchors (D-31).** I am confident the popups
-+  should be reachable and reasonably confident the Greek words are the
-+  original's blue links, because that is what chapter 6 does with its
-+  glosses and what the pages have to offer. I am not confident that
-+  *every* occurrence should be a link rather than only the three in the
-+  numbered list — the first paragraph's οὐ becomes one too. A rail walk
-+  would settle it in seconds.
++- **Chapter 7's popup anchors (D-31).** The rail walk settled the
++  scope: the link is on the numbered line and nowhere else, which is
++  now what the port does. What it did not settle at this resolution is
++  whether the hot text is the Greek word or the `1)` `2)` `3)` marker
++  in front of it — the two are adjacent on one line and the colouring
++  is too small to call. Chapter 8's Three Uses page sets the number in
++  black and the label in blue, which is why I read the Greek as the
++  link here. If it is the marker, the fix is one selector.
 +- **The pronoun row split.** Splitting at the last Greek run is exact
 +  on all twelve delivered rows, and I could not construct a
 +  counter-example from this data. It would break on a row whose plural
 +  gloss contained Greek. If chapter 9's pronouns are shipped the same
 +  way, this is the thing to re-check rather than assume.
-+- **The prepositions diagram's arrow geometry.** The spatial
-+  arrangement follows the slot names and the arrow kinds, and it reads
-+  correctly to me — into, out of, over, through — but "matches the
-+  original's spatial arrangement" is a claim I cannot make without the
-+  rail walk. περί's `curveIn` in particular is my reading of an
-+  encircling sweep.
++- **The prepositions diagram.** Settled: ch6railwalk p6 and p14 confirm
++  every slot and every arrow direction, including περί's curved sweep
++  in from the top left and διά's long line straight through the circle.
++  What differs is proportion, not arrangement — the original's circle
++  is wider than tall and its labels sit closer in. That is the "no
++  pixel copy" latitude the spec grants.
 +- **`answerAlt` expansion (D-33).** I am confident the field must do
 +  something and that "the nu is optional" is what `ἐστί(ν)` means. I am
 +  less sure whether the original also accepts ἐστί, or only prints it
@@ -706,15 +912,19 @@ index 0000000..957cbc8
 +`buildout/DIVERGENCE-LOG.md`, `buildout/CHAT-HANDOFF.md`,
 +`buildout/PHASE5-PLAN.md`.
 +
++Changed in the rail-walk pass, on top of the above:
++`src/components/Paradigm.svelte` (the string-form lemma, the
++column-aware cell shrink, the Singular/Plural band).
++
 +**Untouched, as required:** `src/data/chapt-0{6,7,8}.json` and
 +`src/data/lexicon-chapt0{6,7,8}.json`.
 +
 +The full diff is in `5F-SPEC1-BUILD.md`.
 diff --git a/buildout/CHAT-HANDOFF.md b/buildout/CHAT-HANDOFF.md
-index 926edbb..a2efe18 100644
+index 926edbb..4ee9b42 100644
 --- a/buildout/CHAT-HANDOFF.md
 +++ b/buildout/CHAT-HANDOFF.md
-@@ -15,7 +15,65 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
+@@ -15,7 +15,79 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
  internet. Full license from the author. Secondary goal: portfolio
  piece. Nathanael goes by "Fable" when addressing Claude (chat).
  
@@ -726,7 +936,7 @@ index 926edbb..a2efe18 100644
 +One round, one implementer, `5F-SPEC1.md`. Records:
 +`5F-SPEC1-RESULTS.md` (prose, section by section) and
 +`5F-SPEC1-BUILD.md` (the full diff). `npm run verify` passes; the
-+behaviour harness is **575/575** (388 before the round), a new 70-stop
++behaviour harness is **586/586** (388 before the round), a new 70-stop
 +smoke walk at 380px is 73/73 and the modal pass is 85/85 over five
 +device heights. Screenshot corpora: `buildout/screenshots/5f-walk`
 +(70 rail stops), `5f-detail` (21 sub-pages the rail walk cannot
@@ -772,16 +982,30 @@ index 926edbb..a2efe18 100644
 +   `ἀλλ'` (a space, not U+0027) and carries a trailing combining
 +   breathing on the ε of ἐγώ.
 +
-+**THE RAIL WALKS WERE NEVER IN THE REPO.** `ch6railwalk.pdf`,
-+`ch7railwalk.pdf` and `ch8railwalk.pdf` do not exist here (no PDF does),
-+so 5F-SPEC1 §4's screenshot-by-screenshot comparison is **still owed**.
-+Every page was walked and photographed at 380px and judged against the
-+spec, the extraction map and the data — but nothing was compared
-+against DOSBox. Drop the three PDFs in and that pass can be done.
++**THE RAIL-WALK COMPARISON IS DONE.** `ch6railwalk.pdf` (16 sheets),
++`ch7railwalk.pdf` (16) and `ch8railwalk.pdf` (15) were supplied after
++the first pass and every page of all three rails was then held against
++them. Eight fixes came out of it, listed with their source sheet in
++`5F-SPEC1-RESULTS.md` §6.1 — four defects nothing else would have
++caught (the case tag on the wrong side of the vocabulary card, the
++adjective paradigm printing `undefined` for its lemma, its
++three-column cells breaking mid-word at 380px, its Singular/Plural
++bands missing), two inventions of mine the original does not do (a
++greyed-out case grid, a popup-link rule that claimed too many words),
++and two smaller ones. §6.2 lists what the walk confirmed correct and
++§6.3 the differences left standing with their reasons.
++
++**PROCESS NOTE, worth keeping.** The first pass ran to completion
++WITHOUT the rail walks because they were not attached and I did not
++ask. Everything the harness can settle was right; everything only a
++screenshot can settle was not, and four of those eight defects were
++invisible to a 73/73 smoke walk and a 575-assertion harness because
++they render perfectly plausibly. Standing rule from this round: **do
++not start a spec until every file it names is in hand.**
  
  **COHORT 5E IS CLOSED.** Chapters 1 through 5 are shipped, verified on
  device, and behaviorally corrected. Full round history:
-@@ -56,8 +114,12 @@ device, and behaviorally corrected. Full round history:
+@@ -56,8 +128,12 @@ device, and behaviorally corrected. Full round history:
    an iPhone). Behavior suite: 203 → 322 checks.
  
  **All 78 rows of `DRILLBEHAVIORLEDGER.csv` are CONFIRMED — chapters 1-8,
@@ -796,7 +1020,7 @@ index 926edbb..a2efe18 100644
  5E process on purpose: 5E's data was wrong 23/50 rows because behavior
  was inferred from screenshots after the fact. 5F's data goes in
  correct the first time because the ledger already has the answers.
-@@ -74,11 +136,12 @@ Fable made before Nathanael's pass corrected them: a same-chapter
+@@ -74,11 +150,12 @@ Fable made before Nathanael's pass corrected them: a same-chapter
  precedent is not enough when the chapter offers more than one candidate
  shape (chapter 3 has two verb drills with opposite timing).
  
@@ -815,29 +1039,35 @@ index 926edbb..a2efe18 100644
  **Superseded state below, kept for context (5D closure onward):**
  
 diff --git a/buildout/DIVERGENCE-LOG.md b/buildout/DIVERGENCE-LOG.md
-index babc965..fb21a0e 100644
+index babc965..a863d3c 100644
 --- a/buildout/DIVERGENCE-LOG.md
 +++ b/buildout/DIVERGENCE-LOG.md
-@@ -186,6 +186,53 @@ D-30 | ch3,4,5 | THE WHOLE-VERSE SPELLERS USE `Show Answer`, NOT
+@@ -186,6 +186,59 @@ D-30 | ch3,4,5 | THE WHOLE-VERSE SPELLERS USE `Show Answer`, NOT
       verse is still available at any time, which the original does not
       allow. | Nathanael, 2026-08-07; 5E-SPEC3-PATCH item 12.
  
 +D-31 | ch7 | THE οὐ / οὐκ / οὐχ POPUPS ARE OPENED FROM THE GREEK
-+     WORDS THEMSELVES. Chapter 6 declares each popup link explicitly
-+     (`popupRef` on a greekRows row, the gloss being the link) and
-+     chapter 8 declares its three by underlining the label whose slug
-+     is the popup id. Chapter 7 declares NEITHER: `c7_learn_eimi`
-+     ships three popups (οὐ, οὐκ, οὐχ) and its "οὐ, οὐκ and οὐχ" page
-+     ships eleven flat paragraphs with no popupRef and no underline
-+     run anywhere on it. Rather than leave three authored pages
-+     unreachable — an unreachable popup is a missing page in the rail
-+     — the renderer opens a popup from standalone occurrences of its
-+     own `greek` headword in the page's prose, longest headword
-+     first, so οὐχ is never claimed by οὐ. Those words are therefore
-+     popup links rather than audio taps on that page, which is a
-+     departure from directive 9 (the popup's own headword plays the
-+     clip instead). If the pipeline later ships anchors for chapter 7
-+     the rule costs nothing: an explicit popupRef or underline
++     WORD ON THEIR OWN NUMBERED LINE. Chapter 6 declares each popup
++     link explicitly (`popupRef` on a greekRows row, the gloss being
++     the link) and chapter 8 declares its three by underlining the
++     label whose slug is the popup id. Chapter 7 declares NEITHER:
++     `c7_learn_eimi` ships three popups (οὐ, οὐκ, οὐχ) and its
++     "οὐ, οὐκ and οὐχ" page ships eleven flat paragraphs with no
++     popupRef and no underline run anywhere on it. Rather than leave
++     three authored pages unreachable — an unreachable popup is a
++     missing page in the rail — the renderer opens a popup from its
++     own `greek` headword where that headword stands on a NUMBERED
++     line, longest headword first so οὐχ is never claimed by οὐ.
++     The numbered-line restriction is the rail walk's: ch7railwalk p7
++     makes "1) οὐ before a consonant;" the hot line and leaves the οὐ
++     in the opening sentence as ordinary ink, and the same rule keeps
++     chapter 6's Proclitics page from turning "ἐν, εἰς and ἐκ are
++     proclitics" into three links the original does not have
++     (ch6railwalk p6). Everywhere else the Greek stays an ordinary
++     audio tap, so directive 9 is untouched off the three hot lines;
++     on them the word opens the page and the popup's own headword
++     plays the clip. If the pipeline later ships anchors for chapter
++     7 the rule costs nothing: an explicit popupRef or underline
 +     already wins, and a chapter that ships no `greek` on its popups
 +     never enters this path. | Implementer, 5F-SPEC1 §2.2; data gap
 +     reported in 5F-SPEC1-RESULTS §2.2.
@@ -873,7 +1103,7 @@ index babc965..fb21a0e 100644
  
  MOVED. The full exercise-by-exercise, chapter-by-chapter matrix —
 diff --git a/buildout/PHASE5-PLAN.md b/buildout/PHASE5-PLAN.md
-index cc31614..f20f913 100644
+index cc31614..7f00e03 100644
 --- a/buildout/PHASE5-PLAN.md
 +++ b/buildout/PHASE5-PLAN.md
 @@ -1,7 +1,8 @@
@@ -887,14 +1117,14 @@ index cc31614..f20f913 100644
  
  ## Principles (unchanged)
  
-@@ -100,6 +101,29 @@ COHORT 5F — Chapters 6 + 7 + 8 (Prepositions, Adjectives and the verb
+@@ -100,6 +101,34 @@ COHORT 5F — Chapters 6 + 7 + 8 (Prepositions, Adjectives and the verb
    no Case Drill, only Translation — confirmed by exhaustive TBK title
    search, not assumed; do not add one.
  
 +  **BUILT 2026-08-08 (5F-SPEC1, one round, one implementer).** All 70
 +  activities ship: ch6 20 rail stops, ch7 25, ch8 25, all lazily
 +  chunked and offline. `npm run verify` passes; the behaviour harness
-+  is 575/575 (388 before the round), the new 70-stop smoke walk is
++  is 586/586 (388 before the round), the new 70-stop smoke walk is
 +  73/73 and the modal pass 85/85. Records: `5F-SPEC1.md`,
 +  `5F-SPEC1-RESULTS.md`, `5F-SPEC1-BUILD.md`, `5F-EXTRACTION-MAP.md`,
 +  `VERIFY-5F.md`.
@@ -910,14 +1140,19 @@ index cc31614..f20f913 100644
 +  dangle, 8 drills show no Hint button), chapter 7's popups ship with
 +  no anchors, and chapter 8's two Quick Review pronoun charts carry
 +  six rows of untransliterated Latin. All are pipeline-side and are
-+  itemised in `5F-SPEC1-RESULTS.md` §8; no data file was edited.
-+  The rail-walk PDFs were never in the repo, so the spec's
-+  screenshot-by-screenshot comparison pass is still owed.
++  itemised in `5F-SPEC1-RESULTS.md` §8; no data file was edited, and
++  the rail walks CONFIRM every one of them.
++  The page-by-page rail-walk comparison is DONE (§6) and produced eight
++  further fixes — half of them defects no harness could see, half of
++  them my own inventions the original does not make. PROCESS LESSON,
++  now standing: do not start a spec until every file it names is in
++  hand; this round ran once without the rail walks and had to be redone
++  against them.
 +
  COHORT 5G+ (INFERENCE, pending each cohort's extraction pass) —
    chapters 9-28 grouped by grammatical family, expecting the first
    chapter of each family to carry the novelty and the rest to reuse:
-@@ -147,8 +171,25 @@ paradigm block; `meanings` on a chart; `note` on a chart;
+@@ -147,8 +176,25 @@ paradigm block; `meanings` on a chart; `note` on a chart;
  on `spell`; an explicit layout flag marking paradigm-shaped option
  grids (D-26).
  
@@ -1121,7 +1356,7 @@ index be3c318..dc4ebe2 100644
  
  // 2. Chapter DATA must be ABSENT from the main bundle and PRESENT in its chunk.
 diff --git a/scripts/ui-behavior.mjs b/scripts/ui-behavior.mjs
-index 5aaf2cf..f9600bd 100644
+index 5aaf2cf..9ed546d 100644
 --- a/scripts/ui-behavior.mjs
 +++ b/scripts/ui-behavior.mjs
 @@ -44,6 +44,9 @@ const ch4 = JSON.parse(readFileSync('src/data/chapt-04.json', 'utf8'));
@@ -1194,7 +1429,7 @@ index 5aaf2cf..f9600bd 100644
  }
  for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
    for (const activity of activitiesOf(chapter).filter(a => a && a.type === 'spell')) {
-@@ -2004,6 +2018,700 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+@@ -2004,6 +2018,768 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
      alternates.length === 0, alternates.join('; '));
  }
  
@@ -1391,9 +1626,12 @@ index 5aaf2cf..f9600bd 100644
 +      && await stage(0).getAttribute('data-stage-label') === 'person'
 +      && await stage(1).getAttribute('data-stage-label') === 'caseNumber',
 +    `stages ${await page.locator('.grid.options[data-stage]').count()}`);
-+  check('5F §2.9 the case grid is inert until a person is chosen',
-+    await stageTiles(1).first().isDisabled(),
-+    `case tile disabled ${await stageTiles(1).first().isDisabled()}`);
++  // ch8railwalk p8: the case grid is drawn in exactly the same state before
++  // and after the person click. An earlier pass greyed it out to make the
++  // instruction line's order visible; the original does not, so neither do we.
++  check('5F §2.9 BOTH grids are live from the start (ch8railwalk p8)',
++    !await stageTiles(0).first().isDisabled() && !await stageTiles(1).first().isDisabled(),
++    `person disabled ${await stageTiles(0).first().isDisabled()}, case disabled ${await stageTiles(1).first().isDisabled()}`);
 +
 +  // NOTHING is judged on the person click, however many times it is changed.
 +  await page.locator('.card').getByRole('button', { name: 'Score', exact: true }).click();
@@ -1412,12 +1650,25 @@ index 5aaf2cf..f9600bd 100644
 +      && afterFirst.score === scoreBefore && afterThird.score === scoreBefore,
 +    `feedback after 1 click ${afterFirst.kind}, after 3 ${afterThird.kind}; score ${scoreBefore} -> ${afterThird.score}`);
 +  check('5F §2.9 only the LAST person clicked is selected',
-+    await stageTiles(0).nth(2).getAttribute('class') === (await stageTiles(0).nth(2).getAttribute('class'))
-+      && await stage(0).locator('.tile.selected').count() === 1
++    await stage(0).locator('.tile.selected').count() === 1
 +      && normalizeText(await stage(0).locator('.tile.selected').innerText()) === normalizeText(await stageTiles(0).nth(2).innerText()),
 +    `${await stage(0).locator('.tile.selected').count()} selected`);
-+  check('5F §2.9 choosing a person opens the case grid',
-+    !await stageTiles(1).first().isDisabled());
++
++  // The pair is what is judged, in EITHER order: filling the case first and
++  // the person second commits on the person click, and is still one attempt.
++  {
++    await go(HASH);
++    const { pairs } = await answersFor();
++    const [person, caseNumber] = pairs[0] || [];
++    await stage(1).locator('.tile', { hasText: caseNumber }).first().click();
++    await page.waitForTimeout(120);
++    const midKind = await feedbackKind();
++    await stage(0).locator('.tile', { hasText: person }).first().click();
++    await page.waitForTimeout(180);
++    check('5F §2.9 the pair commits in either order — case first is not judged on its own',
++      midKind === 'none' && await feedbackKind() === 'ok',
++      `after the case alone ${midKind}, after the pair ${await feedbackKind()}`);
++  }
 +
 +  // BOTH RIGHT: the pair is scored once, correct, and auto-advances (B1a).
 +  {
@@ -1670,15 +1921,67 @@ index 5aaf2cf..f9600bd 100644
 +  check('5F §2.5 it is INK, not a tap target, even though it holds Greek',
 +    await note.locator('button').count() === 0
 +      && await note.evaluate(el => getComputedStyle(el).cursor) !== 'pointer');
++  // ON THE PROMPT'S LINE (ch6railwalk p10 sets "from God (not ἐκ)" as one
++  // line). Same baseline, to the right, and never inside the prompt's own
++  // element.
++  const promptBox = await page.locator('.card.speller .flash-pane .value').first().boundingBox();
++  const noteBox = await note.boundingBox();
++  check('5F §2.5 the speller note sits ON the prompt line, to its right (ch6railwalk p10)',
++    noteBox.y < promptBox.y + promptBox.height && noteBox.x > promptBox.x,
++    `prompt y ${Math.round(promptBox.y)}..${Math.round(promptBox.y + promptBox.height)}, note y ${Math.round(noteBox.y)}`);
 +}
 +// ...and on a select prompt (chapter 6's case drill prints the gloss, chapter
-+// 8's speller the parse tag).
-+{
-+  await go('#/activity/chapt_6/c6_drill_case');
++// 8's vocabulary drill the case tag).
++for (const [chapterId, id] of [['chapt_6', 'c6_drill_case'], ['chapt_6', 'c6_drill_vocab_gk_en'], ['chapt_8', 'c8_drill_vocab_gk_en']]) {
++  // Not every item carries a note — chapter 8 tags only παρά and ὑπό — and
++  // these pools are shuffled with no stepper, so reload until one comes up.
 +  const note = page.locator('.prompt-note');
-+  check('5F §2.5 a select prompt prints its case tag as ink beside the prompt',
-+    await note.count() === 1 && await note.locator('button').count() === 0,
++  for (let attempt = 0; attempt < 30; attempt++) {
++    await go(`#/activity/${chapterId}/${id}`);
++    if (await note.count()) break;
++  }
++  const prompt = page.locator('.prompt').first();
++  check(`5F §2.5 ${chapterId} ${id}: the case tag is ink beside the prompt, never inside its tap target`,
++    await note.count() === 1 && await note.locator('button').count() === 0
++      && await prompt.locator('.prompt-note').count() === 0,
 +    JSON.stringify(await note.innerText().catch(() => null)));
++  const promptBox = await prompt.boundingBox();
++  const noteBox = await note.boundingBox();
++  check(`5F §2.5 ${chapterId} ${id}: it sits ON the prompt's line (ch6railwalk p8/p10)`,
++    noteBox.y < promptBox.y + promptBox.height && noteBox.x > promptBox.x,
++    `prompt y ${Math.round(promptBox.y)}..${Math.round(promptBox.y + promptBox.height)}, note y ${Math.round(noteBox.y)}`);
++}
++
++// ---- the case tag goes with the GREEK on a vocabulary card --------------
++// ch6railwalk p10: "Greek Word: ἀπό (with gen.)" over "Word Meaning: from".
++// The tag is part of the headword, not part of the gloss.
++{
++  await go('#/activity/chapt_6/c6_learn_vocab');
++  await page.locator('.card').getByRole('button', { name: 'Next', exact: true }).click();
++  await page.waitForTimeout(120);
++  const greek = normalizeText(await page.locator('.flash-pane .value.greek').first().innerText());
++  const meaning = normalizeText(await page.locator('.flash-pane').nth(1).locator('.value').first().innerText());
++  check('5F ch6 Learn Vocabulary: the case tag rides with the GREEK, not the gloss (ch6railwalk p10)',
++    /\(with \w+\.\)$/.test(greek) && !/\(with/.test(meaning),
++    `Greek Word ${JSON.stringify(greek)}, Word Meaning ${JSON.stringify(meaning)}`);
++}
++
++// ---- a paradigm that runs singular then plural legends both -------------
++// ch7railwalk p14: the Review Adjectives Paradigm prints "Singular" beside its
++// N. row and "Plural" beside its N.V. row.
++{
++  await go('#/activity/chapt_7/c7_qr_adjectives');
++  const bands = (await page.locator('.pg-numberband').allInnerTexts()).map(normalizeText);
++  check('5F ch7 Review Adjectives Paradigm legends its Singular and Plural blocks (ch7railwalk p14)',
++    bands.length === 2 && bands[0] === 'Singular' && bands[1] === 'Plural',
++    JSON.stringify(bands));
++  // No earlier chart authors `number`, so none of them may grow a band.
++  for (const [chapterId, id] of [['chapt_4', 'c4_qr_nouns'], ['chapt_7', 'c7_qr_eimi'], ['chapt_8', 'c8_qr_first']]) {
++    await go(`#/activity/${chapterId}/${id}`);
++    if (!await page.locator('.card').count()) continue;
++    check(`5F ${chapterId} ${id}: no number band where the data authors no number`,
++      await page.locator('.pg-numberband').count() === 0);
++  }
 +}
 +
 +// ---- §3 a null ref renders NOTHING, not an empty chip -------------------
@@ -1895,7 +2198,7 @@ index 5aaf2cf..f9600bd 100644
  // ------------------------------------------------------ §6.8 option grids
  // A CENSUS, not a list: every select activity in chapters 1-5, measured at both
  // widths. The responsive pool must be 2-up at 320 and 4-up at 768 whatever
-@@ -2030,9 +2738,28 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+@@ -2030,9 +2806,28 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
    }
    await page.setViewportSize({ width: 390, height: 900 });
  
@@ -2207,10 +2510,21 @@ index 0000000..95f01b4
 +console.log(`\n${results.length - failed.length}/${results.length} smoke checks passed over ${stops} rail stops`);
 +if (failed.length) { console.log(failed.map(f => ` FAIL ${f.name} — ${f.detail}`).join('\n')); process.exit(1); }
 diff --git a/src/app.css b/src/app.css
-index 1a3c99e..16f47ac 100644
+index 1a3c99e..0abf0ec 100644
 --- a/src/app.css
 +++ b/src/app.css
-@@ -1154,3 +1154,91 @@ button, a, input, select, textarea, label,
+@@ -810,6 +810,10 @@ button { font: inherit; cursor: pointer; }
+   gap: 4px 12px; width: 100%; background: transparent; border: none; padding: 2px 0 10px; }
+ .pg-lemma-greek { font-size: 1.7rem; color: var(--link); }
+ .pg-lemma-gloss { color: var(--teal-dark); font-size: 0.95rem; }
++/* Chapter 7 sets its headword as an equation, "ἀγαθός = good". */
++.pg-lemma-eq { color: var(--teal-dark); font-size: 0.95rem; }
++/* Directive 8: a lemma with no clip of its own is ink, not link blue. */
++.pg-lemma.silent .pg-lemma-greek { color: var(--ink); }
+ .pg-grid { display: flex; flex-direction: column; }
+ .paradigm { --pg-label-col: 1.6em; --pg-gap: 6px; }
+ .paradigm.pg-case-labels { --pg-label-col: 3.25em; }
+@@ -1154,3 +1158,103 @@ button, a, input, select, textarea, label,
  .app, .app-main { overflow-x: hidden; }
  .scroll-area { overflow-x: hidden; }
  .sidebar { overflow-x: hidden; min-width: 0; }
@@ -2280,11 +2594,19 @@ index 1a3c99e..16f47ac 100644
 +.rc-verse-line { display: block; overflow-wrap: anywhere; }
 +
 +/* ---- §2.5 the note beside a prompt ----
-+   Plain ink, smaller, and NEVER blue: it is not tappable even when it holds
-+   Greek (the logged exception to directive 9). */
-+.prompt-note { text-align: center; color: var(--ink); font-size: 0.85rem;
-+  margin: -8px 0 2px; opacity: 0.85; }
-+.spell-prompt-note { color: var(--ink); font-size: 0.8rem; opacity: 0.85; margin-top: 2px; }
++   ON THE PROMPT'S LINE, plain ink, smaller, and NEVER blue: it is not tappable
++   even when it holds Greek (the logged exception to directive 9). The original
++   sets "pros (to)", "epi (with dat.)", "good (acc. pl. masc.)" and
++   "I (nom sg)" as one line, so the port does too; the note is a SIBLING of the
++   prompt's button, never inside it, so it can never speak. */
++.prompt-row { display: flex; flex-wrap: wrap; align-items: baseline;
++  justify-content: center; gap: 8px; }
++.prompt-row .prompt { width: auto; padding-right: 0; }
++.prompt-row.with-note .prompt { padding-left: 0; }
++.prompt-note { color: var(--ink); font-size: 0.85rem; opacity: 0.85; }
++.prompt-note.standalone { display: block; text-align: center; margin: -8px 0 2px; }
++.spell-prompt-note { color: var(--ink); font-size: 0.8rem; opacity: 0.85;
++  margin-left: 0.4em; white-space: nowrap; }
 +
 +/* ---- §2.7 two-line Greek prompts ---- */
 +.prompt.two-line { font-size: 1.7rem; line-height: 1.3; padding: 12px 10px; }
@@ -2296,12 +2618,16 @@ index 1a3c99e..16f47ac 100644
 +.pronoun-paradigm .pg-cell { align-items: flex-start; text-align: left; }
 +
 +/* ---- §2.9 the two-stage case drill ----
-+   One grid per stage. A stage that is not open yet is visibly inert: the
-+   instruction line says "Click on the person then the case", so the second
-+   grid has to LOOK like the second click rather than disappear. */
++   One grid per stage, BOTH live from the start: the original draws the case
++   grid identically before and after the person click (ch8railwalk p8). What
++   holds the pair together is the commit rule, not a disabled control. */
 +.stage-grid { margin-bottom: 10px; }
-+.stage-grid.stage-locked { opacity: 0.45; }
 +.stage-grid .tile:disabled { cursor: default; }
++
++/* ---- the Singular / Plural band inside a paradigm that runs both down one
++   column (chapter 7's Review Adjectives Paradigm) ---- */
++.pg-numberband { grid-column: 1 / -1; text-align: right; padding: 6px 6px 2px;
++  color: var(--accent-ink); font-weight: 700; font-size: 0.85rem; }
 diff --git a/src/components/ContentAudio.svelte b/src/components/ContentAudio.svelte
 index a2b7e19..919f3e5 100644
 --- a/src/components/ContentAudio.svelte
@@ -2466,6 +2792,97 @@ index a46dd35..d611401 100644
  
 -{#each splitUnderline(text) as seg}{#if seg.u}<u>{seg.t}</u>{:else if seg.g}<span class="term-green">{seg.t}</span>{:else if seg.i}<em>{seg.t}</em>{:else}{#each splitMarkGroups(seg.t) as part}{#if part.group != null}<span class="mark-group">(&thinsp;<span class="isolated-mark" class:as-mark={kindOf(part.group) === 'mark'} class:greek={kindOf(part.group) === 'greek'}>{spacingMarks(part.group)}</span>&thinsp;)</span>{:else}{part.t}{/if}{/each}{/if}{/each}
 +{#each splitUnderline(text) as seg}{#if seg.u}{@const popup = linked(seg.t)}{#if popup}<button class="popup-link underline-link" on:click={() => popups.open(popup)}>{seg.t}</button>{:else}<u>{seg.t}</u>{/if}{:else if seg.g}<span class="term-green">{seg.t}</span>{:else if seg.i}<em>{seg.t}</em>{:else}{#each splitMarkGroups(seg.t) as part}{#if part.group != null}<span class="mark-group">(&thinsp;<span class="isolated-mark" class:as-mark={kindOf(part.group) === 'mark'} class:greek={kindOf(part.group) === 'greek'}>{spacingMarks(part.group)}</span>&thinsp;)</span>{:else}{part.t}{/if}{/each}{/if}{/each}
+diff --git a/src/components/Paradigm.svelte b/src/components/Paradigm.svelte
+index 0022ab2..3635b69 100644
+--- a/src/components/Paradigm.svelte
++++ b/src/components/Paradigm.svelte
+@@ -35,6 +35,15 @@
+     ? paradigm.charts
+     : [paradigm || {}];
+   $: chart = charts[chartIndex] || charts[0] || {};
++  // TWO LEMMA SHAPES. Chapters 4 and 5 ship an object ({greek, gloss, audio});
++  // chapter 7 ships the headword as a bare STRING with the gloss beside it on
++  // the chart ("lemma": "ἀγαθός", "gloss": "good"), which printed the lemma
++  // line as "undefined" until the rail-walk comparison caught it. Normalized
++  // here so the template has one shape, and the data stays as delivered.
++  $: lemmaIsEquation = typeof chart.lemma === 'string';
++  $: lemma = lemmaIsEquation
++    ? { greek: chart.lemma, gloss: chart.gloss || null, audio: null }
++    : chart.lemma;
+   $: columns = chart.columns || [];
+   $: columnAudio = chart.columnAudio || [];
+   $: columnGroups = chart.columnGroups || [];
+@@ -42,8 +51,15 @@
+   $: showGlosses = chart.showGlosses !== false;
+   $: hasCaseLabels = rows.some(row => row.label != null);
+   $: hasLongCaseLabels = rows.some(row => String(row.label || '').length > 5);
++  // How long a form has to be before the cells need shrinking depends on how
++  // many columns share the width. Two columns tolerate a nine-letter form;
++  // THREE do not — chapter 7's adjective paradigm sets ἀγαθῶν, ἀγαθοῖς and
++  // ἀγαθούς three abreast and broke each of them across two lines at 380px
++  // (rail-walk comparison against ch7railwalk p14). Chapter 5's three-column
++  // article chart holds forms of three and four letters and is untouched.
++  $: formLimit = columns.length >= 3 ? 5 : 7;
+   $: hasLongForms = hasCaseLabels && rows.some(row => (row.cells || [])
+-    .some(cell => [...String(cell.greek || '')].length > 7));
++    .some(cell => [...String(cell.greek || '')].length > formLimit));
+   // Endings rows are flat [ending, gloss, ending, gloss] tuples -- one pair per
+   // number column, so the popup lines up with the chart above it.
+   $: endingRows = (chart.endings && chart.endings.rows) || [];
+@@ -66,6 +82,11 @@
+   }
+ 
+   function onKeydown(e) { if (e.key === 'Escape') endingsOpen = false; }
++
++  // The authored number code spelled the way the original prints it. Anything
++  // else is printed as authored rather than guessed at.
++  const NUMBER_LABELS = { s: 'Singular', p: 'Plural' };
++  const numberLabel = value => NUMBER_LABELS[value] || value;
+ </script>
+ 
+ <svelte:window on:keydown={endingsOpen ? onKeydown : null} />
+@@ -82,12 +103,20 @@
+   {#key chart}
+     {#if title}<div class="pg-title">{title}</div>{/if}
+ 
+-    {#if chart.lemma}
+-      <button class="pg-lemma" on:click={() => chart.lemma.audio && play(chart.lemma.audio)}>
+-        <span class="greek pg-lemma-greek">{chart.lemma.greek}</span>
++    {#if lemma}
++      <!-- Blue means tappable and only tappable (directive 8): a lemma with no
++           clip of its own renders in ink, not in link blue. -->
++      <button class="pg-lemma" class:silent={!lemma.audio}
++              disabled={!lemma.audio}
++              on:click={() => lemma.audio && play(lemma.audio)}>
++        <span class="greek pg-lemma-greek">{lemma.greek}</span>
+         <!-- showGlosses controls the inflected row cells. The original keeps
+-             the lemma's identifying gloss in both Learn and Review charts. -->
+-        {#if chart.lemma.gloss}<span class="pg-lemma-gloss">{chart.lemma.gloss}</span>{/if}
++             the lemma's identifying gloss in both Learn and Review charts, and
++             sets it as "ἀγαθός = good". -->
++        <!-- The "=" is chapter 7's own typography and rides on chapter 7's own
++             data shape. Chapters 4 and 5 ship the object form and their lemma
++             line is device-verified as it stands; nothing there moves. -->
++        {#if lemma.gloss}{#if lemmaIsEquation}<span class="pg-lemma-eq">=</span>{/if}<span class="pg-lemma-gloss">{lemma.gloss}</span>{/if}
+       </button>
+     {/if}
+ 
+@@ -124,6 +153,15 @@
+         </div>
+       {/if}
+       {#each rows as row, rowIndex}
++        <!-- 5F: a chart whose rows run singular THEN plural down one column
++             legends each block with its number, exactly where the number
++             changes — chapter 7's Review Adjectives Paradigm prints
++             "Singular" beside its N. row and "Plural" beside its N.V. row
++             (ch7railwalk p14). Only chapter 7 authors `number`, so no earlier
++             chart moves. -->
++        {#if row.number != null && row.number !== rows[rowIndex - 1]?.number}
++          <div class="pg-numberband" data-number={row.number}>{numberLabel(row.number)}</div>
++        {/if}
+         <div class="pg-row" data-row-index={rowIndex}>
+           <span class="pg-person pg-row-label">{row.label ?? row.person ?? ''}</span>
+           {#each row.cells || [] as cell, cellIndex}
 diff --git a/src/components/PopupSheet.svelte b/src/components/PopupSheet.svelte
 new file mode 100644
 index 0000000..570e28c
@@ -2769,7 +3186,7 @@ index 0000000..e94cafe
 +  {#if paradigm.note}<div class="pg-note">{paradigm.note}</div>{/if}
 +</div>
 diff --git a/src/components/RichContent.svelte b/src/components/RichContent.svelte
-index c980269..556b3b1 100644
+index c980269..b2b3891 100644
 --- a/src/components/RichContent.svelte
 +++ b/src/components/RichContent.svelte
 @@ -12,10 +12,21 @@
@@ -2809,19 +3226,27 @@ index c980269..556b3b1 100644
          // EVERY standalone occurrence, not just the first: two identical Greek
          // words on one page must behave the same way. The Parsing Format topic
          // prints λύω twice, and marking only the first left one blue-and-
-@@ -159,6 +170,44 @@
+@@ -159,6 +170,52 @@
      }
      return parts;
    }
 +
-+  // A popup whose entry carries a GREEK headword claims every standalone
-+  // occurrence of that word in the prose, exactly as a greekTaps key does.
-+  // This is what makes chapter 7's οὐ / οὐκ / οὐχ pages reach their three
-+  // popups: unlike chapter 6, that page ships no popupRef and no underlined
-+  // anchor of its own. Longest headword first, so οὐχ is never split by οὐ.
-+  // See DIVERGENCE-LOG D-31.
++  // A popup whose entry carries a GREEK headword is opened from the NUMBERED
++  // LINE that introduces it. This is what makes chapter 7's οὐ / οὐκ / οὐχ
++  // page reach its three popups: unlike chapter 6, that page ships no popupRef
++  // and no underlined anchor of its own, so there is nothing else to hang the
++  // link on. Longest headword first, so οὐχ is never split by οὐ.
++  //
++  // ONLY the numbered lines, because that is where the original puts the link:
++  // ch7railwalk p7 sets "1) οὐ before a consonant;" as the hot line and leaves
++  // the οὐ in the opening sentence ("οὐ is placed before the word it
++  // negates") as ordinary ink. The same restriction keeps chapter 6's
++  // Proclitics page from turning "ἐν, εἰς and ἐκ are proclitics" into three
++  // links the original does not have. Everywhere else the Greek stays an
++  // ordinary greekTaps audio tap. See DIVERGENCE-LOG D-31.
++  const NUMBERED_LINE = /^\s*\(?\d+[.)]/;
 +  function splitPopupHeadwords(text) {
-+    if (!popups || !popups.byGreek.length) return [{ t: text }];
++    if (!popups || !popups.byGreek.length || !NUMBERED_LINE.test(text)) return [{ t: text }];
 +    let parts = [{ t: text }];
 +    for (const [greek, popup] of popups.byGreek) {
 +      const next = [];
@@ -2854,7 +3279,7 @@ index c980269..556b3b1 100644
  </script>
  
  <div class="rich">
-@@ -180,10 +229,10 @@
+@@ -180,10 +237,10 @@
             named Greek words in the line tappable; anything not named stays
             plain ink, which is how the λύ and ω MORPHEMES on that same line stay
             untappable — they are fragments with no clip of their own. -->
@@ -2867,7 +3292,7 @@ index c980269..556b3b1 100644
        {#if b.example}
          <button class="rc-example" class:tappable={b.example.audio} on:click={() => playAudio(b.example.audio)}>
            <span class="greek">{b.example.greek}</span>
-@@ -199,7 +248,7 @@
+@@ -199,7 +256,7 @@
          {#each items as it}
            {@const itemTaps = it.greekTaps || greekTaps}
            <li>
@@ -2876,7 +3301,7 @@ index c980269..556b3b1 100644
              {#if it.example}
                <button class="rc-example" class:tappable={it.example.audio} on:click={() => playAudio(it.example.audio)}>
                  <span class="greek">{it.example.greek}</span>
-@@ -306,13 +355,42 @@
+@@ -306,13 +363,42 @@
              <div class="rc-greekrow rc-english-pair" style={`--greek-cols:${row.parts.length}`}>
                {#each row.parts as part}<span class="rc-english-cell">{part}</span>{/each}
              </div>
@@ -2922,7 +3347,7 @@ index c980269..556b3b1 100644
                    {#if part.greek}
                      {#if part.audio}
                        <button class="rc-part greek greek-say" on:click={() => playAudio(part.audio)}>{part.greek}</button>
-@@ -324,7 +402,22 @@
+@@ -324,7 +410,22 @@
                    {/if}
                  {/each}
                  {#if row.gloss != null && row.gloss !== ''}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
@@ -2945,7 +3370,7 @@ index c980269..556b3b1 100644
              </div>
            {:else}
              {@const cellCount = (row.label ? 1 : 0) + (row.greek ? 1 : 0) + (row.gloss != null && row.gloss !== '' ? 1 : 0)}
-@@ -346,6 +439,7 @@
+@@ -346,6 +447,7 @@
                  {/if}
                {/if}
                {#if row.gloss != null && row.gloss !== ''}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
@@ -2953,7 +3378,7 @@ index c980269..556b3b1 100644
              </div>
            {/if}
          {/each}
-@@ -358,12 +452,23 @@
+@@ -358,12 +460,23 @@
             Hint popup on three chapter-3 drills — one renderer, three hosts. -->
        <Paradigm paradigm={b} title={sameTitle(b.title) ? null : b.title} />
  
@@ -2979,7 +3404,7 @@ index c980269..556b3b1 100644
              <div class="pending-verification compact">Content pending verification.</div>
            {/if}
 diff --git a/src/components/SelectActivity.svelte b/src/components/SelectActivity.svelte
-index 41f7240..dae54cc 100644
+index 41f7240..714986f 100644
 --- a/src/components/SelectActivity.svelte
 +++ b/src/components/SelectActivity.svelte
 @@ -24,17 +24,31 @@
@@ -3040,15 +3465,17 @@ index 41f7240..dae54cc 100644
      questions = built.questions;
      promptIsGreek = !!built.promptIsGreek;
      optionClass = built.optionClass || '';
-@@ -83,11 +109,29 @@
+@@ -83,11 +109,31 @@
    }
  
    $: current = questions[qIndex];
-+  // A stage opens only once the stage before it has a pick — the instruction
-+  // line reads "Click on the person then the case", and that order is what
-+  // makes the CASE click the committing one however many times the person is
-+  // changed first.
-+  const stageOpen = (index, picks) => picks.slice(0, index).every(pick => pick != null);
++  // EVERY STAGE IS LIVE FROM THE START. An earlier pass greyed the case grid
++  // out until a person was chosen, to make the instruction line's order
++  // ("Click on the person then the case") visible. The rail walk says no:
++  // ch8railwalk p8 shows the case grid in exactly the same state before and
++  // after the person click. What holds the pair together is the COMMIT rule,
++  // not a disabled control — nothing is judged until both stages are filled,
++  // whichever order they are filled in (VERIFY-5F item 7).
 +  // Every value acceptable at a stage, over answer + answerAlt. BOTH neuter
 +  // plural cells of αὐτά light up, because the original grades both right
 +  // (VERIFY-5F item 8) — showing only the first would call one of them a miss.
@@ -3071,7 +3498,7 @@ index 41f7240..dae54cc 100644
    // Only explicitly wide grids stay four-up at phone width. Vocabulary pools
    // in BOTH directions follow D-19 (two-up below 768px, four-up from 768px):
    // long English glosses can split just as badly as long Greek forms. The
-@@ -256,12 +300,27 @@
+@@ -256,12 +302,26 @@
      Promise.all([minimum, spoken]).then(() => { if (token === advanceToken) advance(); });
    }
  
@@ -3081,9 +3508,8 @@ index 41f7240..dae54cc 100644
 +  // where the ordinary scoring path below takes over.
 +  function chooseStage(index, opt) {
 +    if (answered || finished || current.pending) return;
-+    if (!stageOpen(index, stagePicks)) return;
-+    stagePicks = stagePicks.map((pick, at) => (at === index ? opt.id : (at > index ? null : pick)));
-+    if (stagePicks.some(pick => pick == null)) return;
++    stagePicks = stagePicks.map((pick, at) => (at === index ? opt.id : pick));
++    if (stagePicks.some(pick => pick == null)) return;   // pair incomplete: record only
 +    commit(current.accepted.has(pairKey(stagePicks)));
 +  }
 +
@@ -3100,7 +3526,7 @@ index 41f7240..dae54cc 100644
      if (right) correct += 1;
      feedback = randomFeedback(chapter, right ? 'correct' : 'incorrect');
      feedbackKind = right ? 'ok' : 'bad';
-@@ -318,6 +377,7 @@
+@@ -318,6 +378,7 @@
    function restore() {
      shownReveals = [];
      picked = null; answered = false; answeredCorrect = false;
@@ -3108,7 +3534,7 @@ index 41f7240..dae54cc 100644
      feedback = ''; feedbackKind = '';
    }
  
-@@ -388,14 +448,21 @@
+@@ -388,14 +449,31 @@
      {:else if promptIsGreek && current.promptAudio}
        <!-- The red-mark branch above deliberately does NOT take this class: its
             mark offsets are em-relative and correct, and nothing about mark
@@ -3117,46 +3543,52 @@ index 41f7240..dae54cc 100644
 +           geometry moves in this round.
 +           5F §2.7: a two-line Greek prompt is ONE phrase and one clip, so the
 +           second line lives inside the same tap target. -->
-+      <button class="prompt greek greek-say" class:long={longPrompt} class:two-line={current.prompt2}
-+              on:click={() => play(current.promptAudio)}>{current.prompt}{#if current.prompt2}<span class="prompt-line2">{current.prompt2}</span>{/if}</button>
++      <!-- The note sits on the prompt's line but OUTSIDE its button, so it is
++           not part of the tap target and can never speak. -->
++      <div class="prompt-row" class:with-note={current.note}>
++        <button class="prompt greek greek-say" class:long={longPrompt} class:two-line={current.prompt2}
++                on:click={() => play(current.promptAudio)}>{current.prompt}{#if current.prompt2}<span class="prompt-line2">{current.prompt2}</span>{/if}</button>
++        {#if current.note}<span class="prompt-note">{current.note}</span>{/if}
++      </div>
      {:else if current.underline && sentenceParts(current.prompt, current.underline)}
        {@const parts = sentenceParts(current.prompt, current.underline)}
        <div class="prompt select-sentence">{parts[0]}<u>{parts[1]}</u>{parts[2]}</div>
      {:else}
        <div class="prompt" class:greek={promptIsGreek}>{current.prompt}</div>
      {/if}
-+    <!-- 5F §2.5: the case tag / parse tag / disambiguator beside the prompt,
-+         in plain ink at a smaller size. NEVER tappable, even when it holds
-+         Greek — the "(not ἐκ)" pair is the logged exception to directive 9. -->
-+    {#if current.note}<div class="prompt-note">{current.note}</div>{/if}
++    <!-- 5F §2.5: the case tag / parse tag / disambiguator sits BESIDE the
++         prompt, on the same line, in plain ink at a smaller size — "πρός (to)",
++         "ἐπί (with dat.)" (ch6railwalk p8/p10), "παρά (with dat.)"
++         (ch8railwalk p10). It is never tappable even when it holds Greek: the
++         "(not ἐκ)" pair is the logged exception to directive 9, and it stays
++         inert inside the prompt's tap target below. -->
++    {#if current.note && !(promptIsGreek && current.promptAudio)}
++      <div class="prompt-note standalone">{current.note}</div>
++    {/if}
      <!-- The scripture citation the original prints beside the drill word. -->
      {#if current.citation}<div class="prompt-citation">{current.citation}</div>{/if}
      {#if current.pending}
-@@ -416,7 +483,33 @@
+@@ -416,7 +494,29 @@
          </div>
        {/if}
        <div class="feedback {feedbackKind}">{feedback}</div>
 -      {#if optionGroups}
 +      {#if twoStage}
-+        <!-- §2.9: one grid per stage, in authored order. A stage that is not
-+             open yet is visibly inert rather than hidden — the learner has to
-+             see that the case grid is the SECOND click, which is what the
-+             instruction line says. Nothing here is judged until the last
-+             stage is filled; see chooseStage(). -->
++        <!-- §2.9: one grid per stage, in authored order, BOTH live from the
++             start (ch8railwalk p8). Nothing here is judged until the last
++             empty stage is filled; see chooseStage(). -->
 +        {#each stages as stage, stageIndex}
-+          {@const open = stageOpen(stageIndex, stagePicks) && !answered}
 +          {@const correctIds = showAnswerReveal ? stageCorrectIds(stageIndex, current) : null}
 +          <div class="grid options stage-grid"
 +               class:paradigm2col={stage.optionClass === 'paradigm2col'}
 +               class:single={stage.optionClass === 'single'}
-+               class:stage-locked={!open}
 +               data-stage={stageIndex} data-stage-label={stage.label}>
 +            {#each stage.options as opt}
 +              <button
 +                class="tile small"
 +                class:selected={stagePicks[stageIndex] === opt.id}
 +                class:correct={correctIds && correctIds.has(opt.id)}
-+                disabled={!open}
++                disabled={answered}
 +                on:click={() => chooseStage(stageIndex, opt)}>
 +                {opt.label}
 +              </button>
@@ -3167,7 +3599,7 @@ index 41f7240..dae54cc 100644
          <!-- Parsing drill: two separated stacks, as the original draws them. -->
          <div class="option-groups">
            {#each optionGroups as group}
-@@ -504,7 +597,11 @@
+@@ -504,7 +604,11 @@
    <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
      <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
        <div class="modal-scroll">
@@ -3181,7 +3613,7 @@ index 41f7240..dae54cc 100644
        <div class="modal-actions">
          <!-- svelte-ignore a11y-autofocus -->
 diff --git a/src/components/SpellActivity.svelte b/src/components/SpellActivity.svelte
-index 973a561..10b06b6 100644
+index 973a561..81785d1 100644
 --- a/src/components/SpellActivity.svelte
 +++ b/src/components/SpellActivity.svelte
 @@ -32,17 +32,79 @@
@@ -3288,7 +3720,7 @@ index 973a561..10b06b6 100644
      totalAttempts += 1;
      if (ok) {
        totalCorrect += 1;
-@@ -204,15 +268,26 @@
+@@ -204,15 +268,28 @@
    onDestroy(() => { window.removeEventListener('keydown', onKey); cancelAdvance(); stopAudio(); });
  </script>
  
@@ -3300,10 +3732,13 @@ index 973a561..10b06b6 100644
 +<div class="card speller" data-word-index={wordIndex} data-word-count={words.length}>
    <div class="spell-panes">
      <div class="flash-pane"><div class="label">{activity.promptLabel || 'English Meaning'}</div>
-       <div class="value" style="font-size:1.2rem">{word ? word.gloss : ''}</div>
-+      <!-- §2.5: the case or parse tag beside the prompt, plain ink, smaller.
-+           Never tappable even when it holds Greek. -->
-+      {#if word && word.note}<div class="spell-prompt-note">{word.note}</div>{/if}
+-      <div class="value" style="font-size:1.2rem">{word ? word.gloss : ''}</div>
++      <!-- §2.5: the case or parse tag sits BESIDE the prompt on the same line,
++           plain ink and smaller — "from God (not ἐκ)" (ch6railwalk p10),
++           "from (gen.)" (p12), "good (acc. pl. masc.)" (ch7railwalk p6),
++           "I (nom sg)" (ch8railwalk p9). Never tappable; nothing on this pane
++           is. -->
++      <div class="value" style="font-size:1.2rem">{word ? word.gloss : ''}{#if word && word.note}<span class="spell-prompt-note">{word.note}</span>{/if}</div>
 +      <!-- §3: a null ref renders NOTHING, not an empty chip. -->
        {#if word && word.ref}<div class="spell-prompt-ref">{word.ref}</div>{/if}
      </div>
@@ -3317,7 +3752,7 @@ index 973a561..10b06b6 100644
        locked={solved}
        on:caret={e => { if (!solved) buffer = input.placeCaret(buffer, e.detail.index, e.detail.after); }}
        on:caretEnd={() => { if (!solved) buffer = input.caretToEnd(buffer); }} />
-@@ -252,7 +327,10 @@
+@@ -252,7 +329,10 @@
      on:clear={clearInput} />
  
    {#if showAnswer}
@@ -3330,7 +3765,7 @@ index 973a561..10b06b6 100644
  
    {#if showScore}
 diff --git a/src/lib/content.js b/src/lib/content.js
-index fb474d4..85fe29c 100644
+index fb474d4..e2621ba 100644
 --- a/src/lib/content.js
 +++ b/src/lib/content.js
 @@ -139,19 +139,46 @@ export function getLemma(ref, chapterId, pool) {
@@ -3399,7 +3834,7 @@ index fb474d4..85fe29c 100644
    // 5D convention: instead of spelling out ten {ref} items, an activity names
    // a lexicon BUCKET (pool: "lemmas") and the chapter's own vocab list
    // supplies the refs. Same resolved shape, so flashcard and reviewVocab are
-@@ -317,6 +351,58 @@ function lemmaPool(chapter, activity) {
+@@ -317,6 +351,62 @@ function lemmaPool(chapter, activity) {
    return (chapter.vocab || []).map(ref => ({ ref, ...(getLemma(ref, chapter.id, bucket) || {}) }));
  }
  
@@ -3438,16 +3873,20 @@ index fb474d4..85fe29c 100644
 +        });
 +        continue;
 +      }
-+      const gloss = sense.gloss || sense.glossShort || '';
 +      cards.push({
 +        ref, lemma, sense,
-+        // The case tag lives in the GLOSS, never in the headword: the split
-+        // card's Greek is the bare form the learner has to recognize, and
-+        // lexicalForm already carries one case's tag baked in (chapter 8's
-+        // παρά is "παρά (with gen.)"), which would be wrong on the other two.
-+        display: sense.greek || lemma.greek,
++        // THE CASE TAG GOES WITH THE GREEK, not with the gloss. The rail walk
++        // settles it: chapter 6's Learn Vocabulary card reads
++        // "Greek Word: ἀπό (with gen.)" over "Word Meaning: from", and the
++        // Greek-to-English drill prints "ἐπί (with dat.)" as its prompt
++        // (ch6railwalk p10). Chapter 8's lexicalForm for παρά is already
++        // "παρά (with gen.)", which is the same convention written out.
++        // The bare form is kept in `greek` so a surface that wants the
++        // headword alone still has it.
++        display: [sense.greek || lemma.greek, sense.caseTag].filter(Boolean).join(' '),
 +        greek: sense.greek || lemma.greek,
-+        gloss: sense.caseTag ? `${gloss} ${sense.caseTag}` : gloss,
++        caseTag: sense.caseTag || null,
++        gloss: sense.gloss || sense.glossShort || '',
 +        audio: sense.audio || lemma.audio || null
 +      });
 +    }
@@ -3458,7 +3897,7 @@ index fb474d4..85fe29c 100644
  function pickDisplay(letter, mode) {
    switch (mode) {
      case 'upper': return letter.upper;
-@@ -342,6 +428,52 @@ function pickAudioField(mode) {
+@@ -342,6 +432,52 @@ function pickAudioField(mode) {
    }
  }
  
@@ -3511,7 +3950,7 @@ index fb474d4..85fe29c 100644
  // Build question list for a select activity (generator- or items-based).
  export function buildSelectQuestions(chapter, activity) {
    if (activity.generator) {
-@@ -372,7 +504,13 @@ export function buildSelectQuestions(chapter, activity) {
+@@ -372,7 +508,13 @@ export function buildSelectQuestions(chapter, activity) {
    // optionValues/options win; the activity-level set is the fallback, so a
    // drill may mix the two. Missing prompt/answer fields remain in the sequence
    // as visible pending-verification questions instead of becoming bad answers.
@@ -3526,7 +3965,7 @@ index fb474d4..85fe29c 100644
      // Chapters 4 and 5 carry the prompt inline on the item with no
      // promptFrom. Without this fallback every item resolves to
      // pending:true and the whole drill renders as a pending placeholder --
-@@ -408,6 +546,15 @@ export function buildSelectQuestions(chapter, activity) {
+@@ -408,6 +550,15 @@ export function buildSelectQuestions(chapter, activity) {
        }
        return {
          prompt: stripMarkup(prompt) || '',
@@ -3542,7 +3981,7 @@ index fb474d4..85fe29c 100644
          promptAudio: promptIsGreek ? (item.promptAudio || item.audio || (lemma && lemma.audio) || null) : null,
          // The answer's OWN clip, for surfaces where Pronounce speaks the
          // answer rather than the prompt (Greek Verb Drill: English prompt,
-@@ -461,6 +608,18 @@ export function buildSelectQuestions(chapter, activity) {
+@@ -461,6 +612,18 @@ export function buildSelectQuestions(chapter, activity) {
    return { options, questions, optionClass: '', promptIsGreek: promptSide === 'greek' };
  }
  
@@ -3561,7 +4000,7 @@ index fb474d4..85fe29c 100644
  // Option-grid density, from the data — never from the activity id.
  //   grouped  the drill declares optionGroups ([3,3]); the component lays the
  //            groups out as separate stacks (ch3 Parsing).
-@@ -471,8 +630,16 @@ export function buildSelectQuestions(chapter, activity) {
+@@ -471,8 +634,16 @@ export function buildSelectQuestions(chapter, activity) {
  //   ''       the two-column default: ch2's mark and part-of-speech grids,
  //            ch3's 2x3 verb translations and 2x5 Scripture Memory grid.
  function optionClassFor(activity, activityOptions, questions) {
@@ -3580,7 +4019,7 @@ index fb474d4..85fe29c 100644
    if (Array.isArray(activity.optionGroups) && activity.optionGroups.length) return 'grouped';
    if (activity.optionsPerItem && activity.optionsAreGreek) return 'single';
    const all = activityOptions.length
-@@ -497,12 +664,31 @@ export function resolveHintRef(chapter, ref) {
+@@ -497,12 +668,31 @@ export function resolveHintRef(chapter, ref) {
        if (chart || !value) return;
        if (Array.isArray(value)) { value.forEach(scan); return; }
        if (typeof value !== 'object') return;
@@ -3613,7 +4052,7 @@ index fb474d4..85fe29c 100644
    const walk = node => {
      if (found || !node) return;
      if (Array.isArray(node)) { node.forEach(walk); return; }
-@@ -518,7 +704,18 @@ export function resolveHintRef(chapter, ref) {
+@@ -518,7 +708,18 @@ export function resolveHintRef(chapter, ref) {
      for (const key of Object.keys(node)) walk(node[key]);
    };
    for (const section of SECTIONS) walk(chapter[section]);
@@ -3705,7 +4144,7 @@ index 0000000..c516a2e
 ## Screenshot corpora (binary, committed, not inlined)
 
 - `buildout/screenshots/5f-walk/` — 70 files
-- `buildout/screenshots/5f-detail/` — 21 files
+- `buildout/screenshots/5f-detail/` — 24 files
 - `buildout/screenshots/5f-modals/` — 171 files
 
- 1323 files changed, 87280 insertions(+)
+ 1801 files changed, 128955 insertions(+)

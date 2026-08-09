@@ -109,11 +109,13 @@
   }
 
   $: current = questions[qIndex];
-  // A stage opens only once the stage before it has a pick — the instruction
-  // line reads "Click on the person then the case", and that order is what
-  // makes the CASE click the committing one however many times the person is
-  // changed first.
-  const stageOpen = (index, picks) => picks.slice(0, index).every(pick => pick != null);
+  // EVERY STAGE IS LIVE FROM THE START. An earlier pass greyed the case grid
+  // out until a person was chosen, to make the instruction line's order
+  // ("Click on the person then the case") visible. The rail walk says no:
+  // ch8railwalk p8 shows the case grid in exactly the same state before and
+  // after the person click. What holds the pair together is the COMMIT rule,
+  // not a disabled control — nothing is judged until both stages are filled,
+  // whichever order they are filled in (VERIFY-5F item 7).
   // Every value acceptable at a stage, over answer + answerAlt. BOTH neuter
   // plural cells of αὐτά light up, because the original grades both right
   // (VERIFY-5F item 8) — showing only the first would call one of them a miss.
@@ -306,9 +308,8 @@
   // where the ordinary scoring path below takes over.
   function chooseStage(index, opt) {
     if (answered || finished || current.pending) return;
-    if (!stageOpen(index, stagePicks)) return;
-    stagePicks = stagePicks.map((pick, at) => (at === index ? opt.id : (at > index ? null : pick)));
-    if (stagePicks.some(pick => pick == null)) return;
+    stagePicks = stagePicks.map((pick, at) => (at === index ? opt.id : pick));
+    if (stagePicks.some(pick => pick == null)) return;   // pair incomplete: record only
     commit(current.accepted.has(pairKey(stagePicks)));
   }
 
@@ -451,18 +452,28 @@
            geometry moves in this round.
            5F §2.7: a two-line Greek prompt is ONE phrase and one clip, so the
            second line lives inside the same tap target. -->
-      <button class="prompt greek greek-say" class:long={longPrompt} class:two-line={current.prompt2}
-              on:click={() => play(current.promptAudio)}>{current.prompt}{#if current.prompt2}<span class="prompt-line2">{current.prompt2}</span>{/if}</button>
+      <!-- The note sits on the prompt's line but OUTSIDE its button, so it is
+           not part of the tap target and can never speak. -->
+      <div class="prompt-row" class:with-note={current.note}>
+        <button class="prompt greek greek-say" class:long={longPrompt} class:two-line={current.prompt2}
+                on:click={() => play(current.promptAudio)}>{current.prompt}{#if current.prompt2}<span class="prompt-line2">{current.prompt2}</span>{/if}</button>
+        {#if current.note}<span class="prompt-note">{current.note}</span>{/if}
+      </div>
     {:else if current.underline && sentenceParts(current.prompt, current.underline)}
       {@const parts = sentenceParts(current.prompt, current.underline)}
       <div class="prompt select-sentence">{parts[0]}<u>{parts[1]}</u>{parts[2]}</div>
     {:else}
       <div class="prompt" class:greek={promptIsGreek}>{current.prompt}</div>
     {/if}
-    <!-- 5F §2.5: the case tag / parse tag / disambiguator beside the prompt,
-         in plain ink at a smaller size. NEVER tappable, even when it holds
-         Greek — the "(not ἐκ)" pair is the logged exception to directive 9. -->
-    {#if current.note}<div class="prompt-note">{current.note}</div>{/if}
+    <!-- 5F §2.5: the case tag / parse tag / disambiguator sits BESIDE the
+         prompt, on the same line, in plain ink at a smaller size — "πρός (to)",
+         "ἐπί (with dat.)" (ch6railwalk p8/p10), "παρά (with dat.)"
+         (ch8railwalk p10). It is never tappable even when it holds Greek: the
+         "(not ἐκ)" pair is the logged exception to directive 9, and it stays
+         inert inside the prompt's tap target below. -->
+    {#if current.note && !(promptIsGreek && current.promptAudio)}
+      <div class="prompt-note standalone">{current.note}</div>
+    {/if}
     <!-- The scripture citation the original prints beside the drill word. -->
     {#if current.citation}<div class="prompt-citation">{current.citation}</div>{/if}
     {#if current.pending}
@@ -484,25 +495,21 @@
       {/if}
       <div class="feedback {feedbackKind}">{feedback}</div>
       {#if twoStage}
-        <!-- §2.9: one grid per stage, in authored order. A stage that is not
-             open yet is visibly inert rather than hidden — the learner has to
-             see that the case grid is the SECOND click, which is what the
-             instruction line says. Nothing here is judged until the last
-             stage is filled; see chooseStage(). -->
+        <!-- §2.9: one grid per stage, in authored order, BOTH live from the
+             start (ch8railwalk p8). Nothing here is judged until the last
+             empty stage is filled; see chooseStage(). -->
         {#each stages as stage, stageIndex}
-          {@const open = stageOpen(stageIndex, stagePicks) && !answered}
           {@const correctIds = showAnswerReveal ? stageCorrectIds(stageIndex, current) : null}
           <div class="grid options stage-grid"
                class:paradigm2col={stage.optionClass === 'paradigm2col'}
                class:single={stage.optionClass === 'single'}
-               class:stage-locked={!open}
                data-stage={stageIndex} data-stage-label={stage.label}>
             {#each stage.options as opt}
               <button
                 class="tile small"
                 class:selected={stagePicks[stageIndex] === opt.id}
                 class:correct={correctIds && correctIds.has(opt.id)}
-                disabled={!open}
+                disabled={answered}
                 on:click={() => chooseStage(stageIndex, opt)}>
                 {opt.label}
               </button>

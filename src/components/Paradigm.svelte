@@ -35,6 +35,15 @@
     ? paradigm.charts
     : [paradigm || {}];
   $: chart = charts[chartIndex] || charts[0] || {};
+  // TWO LEMMA SHAPES. Chapters 4 and 5 ship an object ({greek, gloss, audio});
+  // chapter 7 ships the headword as a bare STRING with the gloss beside it on
+  // the chart ("lemma": "ἀγαθός", "gloss": "good"), which printed the lemma
+  // line as "undefined" until the rail-walk comparison caught it. Normalized
+  // here so the template has one shape, and the data stays as delivered.
+  $: lemmaIsEquation = typeof chart.lemma === 'string';
+  $: lemma = lemmaIsEquation
+    ? { greek: chart.lemma, gloss: chart.gloss || null, audio: null }
+    : chart.lemma;
   $: columns = chart.columns || [];
   $: columnAudio = chart.columnAudio || [];
   $: columnGroups = chart.columnGroups || [];
@@ -42,8 +51,15 @@
   $: showGlosses = chart.showGlosses !== false;
   $: hasCaseLabels = rows.some(row => row.label != null);
   $: hasLongCaseLabels = rows.some(row => String(row.label || '').length > 5);
+  // How long a form has to be before the cells need shrinking depends on how
+  // many columns share the width. Two columns tolerate a nine-letter form;
+  // THREE do not — chapter 7's adjective paradigm sets ἀγαθῶν, ἀγαθοῖς and
+  // ἀγαθούς three abreast and broke each of them across two lines at 380px
+  // (rail-walk comparison against ch7railwalk p14). Chapter 5's three-column
+  // article chart holds forms of three and four letters and is untouched.
+  $: formLimit = columns.length >= 3 ? 5 : 7;
   $: hasLongForms = hasCaseLabels && rows.some(row => (row.cells || [])
-    .some(cell => [...String(cell.greek || '')].length > 7));
+    .some(cell => [...String(cell.greek || '')].length > formLimit));
   // Endings rows are flat [ending, gloss, ending, gloss] tuples -- one pair per
   // number column, so the popup lines up with the chart above it.
   $: endingRows = (chart.endings && chart.endings.rows) || [];
@@ -66,6 +82,11 @@
   }
 
   function onKeydown(e) { if (e.key === 'Escape') endingsOpen = false; }
+
+  // The authored number code spelled the way the original prints it. Anything
+  // else is printed as authored rather than guessed at.
+  const NUMBER_LABELS = { s: 'Singular', p: 'Plural' };
+  const numberLabel = value => NUMBER_LABELS[value] || value;
 </script>
 
 <svelte:window on:keydown={endingsOpen ? onKeydown : null} />
@@ -82,12 +103,20 @@
   {#key chart}
     {#if title}<div class="pg-title">{title}</div>{/if}
 
-    {#if chart.lemma}
-      <button class="pg-lemma" on:click={() => chart.lemma.audio && play(chart.lemma.audio)}>
-        <span class="greek pg-lemma-greek">{chart.lemma.greek}</span>
+    {#if lemma}
+      <!-- Blue means tappable and only tappable (directive 8): a lemma with no
+           clip of its own renders in ink, not in link blue. -->
+      <button class="pg-lemma" class:silent={!lemma.audio}
+              disabled={!lemma.audio}
+              on:click={() => lemma.audio && play(lemma.audio)}>
+        <span class="greek pg-lemma-greek">{lemma.greek}</span>
         <!-- showGlosses controls the inflected row cells. The original keeps
-             the lemma's identifying gloss in both Learn and Review charts. -->
-        {#if chart.lemma.gloss}<span class="pg-lemma-gloss">{chart.lemma.gloss}</span>{/if}
+             the lemma's identifying gloss in both Learn and Review charts, and
+             sets it as "ἀγαθός = good". -->
+        <!-- The "=" is chapter 7's own typography and rides on chapter 7's own
+             data shape. Chapters 4 and 5 ship the object form and their lemma
+             line is device-verified as it stands; nothing there moves. -->
+        {#if lemma.gloss}{#if lemmaIsEquation}<span class="pg-lemma-eq">=</span>{/if}<span class="pg-lemma-gloss">{lemma.gloss}</span>{/if}
       </button>
     {/if}
 
@@ -124,6 +153,15 @@
         </div>
       {/if}
       {#each rows as row, rowIndex}
+        <!-- 5F: a chart whose rows run singular THEN plural down one column
+             legends each block with its number, exactly where the number
+             changes — chapter 7's Review Adjectives Paradigm prints
+             "Singular" beside its N. row and "Plural" beside its N.V. row
+             (ch7railwalk p14). Only chapter 7 authors `number`, so no earlier
+             chart moves. -->
+        {#if row.number != null && row.number !== rows[rowIndex - 1]?.number}
+          <div class="pg-numberband" data-number={row.number}>{numberLabel(row.number)}</div>
+        {/if}
         <div class="pg-row" data-row-index={rowIndex}>
           <span class="pg-person pg-row-label">{row.label ?? row.person ?? ''}</span>
           {#each row.cells || [] as cell, cellIndex}

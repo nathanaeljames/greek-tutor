@@ -187,21 +187,27 @@ D-30 | ch3,4,5 | THE WHOLE-VERSE SPELLERS USE `Show Answer`, NOT
      allow. | Nathanael, 2026-08-07; 5E-SPEC3-PATCH item 12.
 
 D-31 | ch7 | THE οὐ / οὐκ / οὐχ POPUPS ARE OPENED FROM THE GREEK
-     WORDS THEMSELVES. Chapter 6 declares each popup link explicitly
-     (`popupRef` on a greekRows row, the gloss being the link) and
-     chapter 8 declares its three by underlining the label whose slug
-     is the popup id. Chapter 7 declares NEITHER: `c7_learn_eimi`
-     ships three popups (οὐ, οὐκ, οὐχ) and its "οὐ, οὐκ and οὐχ" page
-     ships eleven flat paragraphs with no popupRef and no underline
-     run anywhere on it. Rather than leave three authored pages
-     unreachable — an unreachable popup is a missing page in the rail
-     — the renderer opens a popup from standalone occurrences of its
-     own `greek` headword in the page's prose, longest headword
-     first, so οὐχ is never claimed by οὐ. Those words are therefore
-     popup links rather than audio taps on that page, which is a
-     departure from directive 9 (the popup's own headword plays the
-     clip instead). If the pipeline later ships anchors for chapter 7
-     the rule costs nothing: an explicit popupRef or underline
+     WORD ON THEIR OWN NUMBERED LINE. Chapter 6 declares each popup
+     link explicitly (`popupRef` on a greekRows row, the gloss being
+     the link) and chapter 8 declares its three by underlining the
+     label whose slug is the popup id. Chapter 7 declares NEITHER:
+     `c7_learn_eimi` ships three popups (οὐ, οὐκ, οὐχ) and its
+     "οὐ, οὐκ and οὐχ" page ships eleven flat paragraphs with no
+     popupRef and no underline run anywhere on it. Rather than leave
+     three authored pages unreachable — an unreachable popup is a
+     missing page in the rail — the renderer opens a popup from its
+     own `greek` headword where that headword stands on a NUMBERED
+     line, longest headword first so οὐχ is never claimed by οὐ.
+     The numbered-line restriction is the rail walk's: ch7railwalk p7
+     makes "1) οὐ before a consonant;" the hot line and leaves the οὐ
+     in the opening sentence as ordinary ink, and the same rule keeps
+     chapter 6's Proclitics page from turning "ἐν, εἰς and ἐκ are
+     proclitics" into three links the original does not have
+     (ch6railwalk p6). Everywhere else the Greek stays an ordinary
+     audio tap, so directive 9 is untouched off the three hot lines;
+     on them the word opens the page and the popup's own headword
+     plays the clip. If the pipeline later ships anchors for chapter
+     7 the rule costs nothing: an explicit popupRef or underline
      already wins, and a chapter that ships no `greek` on its popups
      never enters this path. | Implementer, 5F-SPEC1 §2.2; data gap
      reported in 5F-SPEC1-RESULTS §2.2.

@@ -22,7 +22,7 @@ activities — are implemented, rail-ordered, lazily chunked and offline.
 One round, one implementer, `5F-SPEC1.md`. Records:
 `5F-SPEC1-RESULTS.md` (prose, section by section) and
 `5F-SPEC1-BUILD.md` (the full diff). `npm run verify` passes; the
-behaviour harness is **575/575** (388 before the round), a new 70-stop
+behaviour harness is **586/586** (388 before the round), a new 70-stop
 smoke walk at 380px is 73/73 and the modal pass is 85/85 over five
 device heights. Screenshot corpora: `buildout/screenshots/5f-walk`
 (70 rail stops), `5f-detail` (21 sub-pages the rail walk cannot
@@ -68,12 +68,26 @@ click commits the pair.
    `ἀλλ'` (a space, not U+0027) and carries a trailing combining
    breathing on the ε of ἐγώ.
 
-**THE RAIL WALKS WERE NEVER IN THE REPO.** `ch6railwalk.pdf`,
-`ch7railwalk.pdf` and `ch8railwalk.pdf` do not exist here (no PDF does),
-so 5F-SPEC1 §4's screenshot-by-screenshot comparison is **still owed**.
-Every page was walked and photographed at 380px and judged against the
-spec, the extraction map and the data — but nothing was compared
-against DOSBox. Drop the three PDFs in and that pass can be done.
+**THE RAIL-WALK COMPARISON IS DONE.** `ch6railwalk.pdf` (16 sheets),
+`ch7railwalk.pdf` (16) and `ch8railwalk.pdf` (15) were supplied after
+the first pass and every page of all three rails was then held against
+them. Eight fixes came out of it, listed with their source sheet in
+`5F-SPEC1-RESULTS.md` §6.1 — four defects nothing else would have
+caught (the case tag on the wrong side of the vocabulary card, the
+adjective paradigm printing `undefined` for its lemma, its
+three-column cells breaking mid-word at 380px, its Singular/Plural
+bands missing), two inventions of mine the original does not do (a
+greyed-out case grid, a popup-link rule that claimed too many words),
+and two smaller ones. §6.2 lists what the walk confirmed correct and
+§6.3 the differences left standing with their reasons.
+
+**PROCESS NOTE, worth keeping.** The first pass ran to completion
+WITHOUT the rail walks because they were not attached and I did not
+ask. Everything the harness can settle was right; everything only a
+screenshot can settle was not, and four of those eight defects were
+invisible to a 73/73 smoke walk and a 575-assertion harness because
+they render perfectly plausibly. Standing rule from this round: **do
+not start a spec until every file it names is in hand.**
 
 **COHORT 5E IS CLOSED.** Chapters 1 through 5 are shipped, verified on
 device, and behaviorally corrected. Full round history:

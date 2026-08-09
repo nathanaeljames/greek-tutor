@@ -2211,9 +2211,12 @@ for (const [chapterId, chapter] of Object.entries(CH_5F)) {
       && await stage(0).getAttribute('data-stage-label') === 'person'
       && await stage(1).getAttribute('data-stage-label') === 'caseNumber',
     `stages ${await page.locator('.grid.options[data-stage]').count()}`);
-  check('5F §2.9 the case grid is inert until a person is chosen',
-    await stageTiles(1).first().isDisabled(),
-    `case tile disabled ${await stageTiles(1).first().isDisabled()}`);
+  // ch8railwalk p8: the case grid is drawn in exactly the same state before
+  // and after the person click. An earlier pass greyed it out to make the
+  // instruction line's order visible; the original does not, so neither do we.
+  check('5F §2.9 BOTH grids are live from the start (ch8railwalk p8)',
+    !await stageTiles(0).first().isDisabled() && !await stageTiles(1).first().isDisabled(),
+    `person disabled ${await stageTiles(0).first().isDisabled()}, case disabled ${await stageTiles(1).first().isDisabled()}`);
 
   // NOTHING is judged on the person click, however many times it is changed.
   await page.locator('.card').getByRole('button', { name: 'Score', exact: true }).click();
@@ -2232,12 +2235,25 @@ for (const [chapterId, chapter] of Object.entries(CH_5F)) {
       && afterFirst.score === scoreBefore && afterThird.score === scoreBefore,
     `feedback after 1 click ${afterFirst.kind}, after 3 ${afterThird.kind}; score ${scoreBefore} -> ${afterThird.score}`);
   check('5F §2.9 only the LAST person clicked is selected',
-    await stageTiles(0).nth(2).getAttribute('class') === (await stageTiles(0).nth(2).getAttribute('class'))
-      && await stage(0).locator('.tile.selected').count() === 1
+    await stage(0).locator('.tile.selected').count() === 1
       && normalizeText(await stage(0).locator('.tile.selected').innerText()) === normalizeText(await stageTiles(0).nth(2).innerText()),
     `${await stage(0).locator('.tile.selected').count()} selected`);
-  check('5F §2.9 choosing a person opens the case grid',
-    !await stageTiles(1).first().isDisabled());
+
+  // The pair is what is judged, in EITHER order: filling the case first and
+  // the person second commits on the person click, and is still one attempt.
+  {
+    await go(HASH);
+    const { pairs } = await answersFor();
+    const [person, caseNumber] = pairs[0] || [];
+    await stage(1).locator('.tile', { hasText: caseNumber }).first().click();
+    await page.waitForTimeout(120);
+    const midKind = await feedbackKind();
+    await stage(0).locator('.tile', { hasText: person }).first().click();
+    await page.waitForTimeout(180);
+    check('5F §2.9 the pair commits in either order — case first is not judged on its own',
+      midKind === 'none' && await feedbackKind() === 'ok',
+      `after the case alone ${midKind}, after the pair ${await feedbackKind()}`);
+  }
 
   // BOTH RIGHT: the pair is scored once, correct, and auto-advances (B1a).
   {
@@ -2490,15 +2506,67 @@ for (const [chapterId, id] of [['chapt_7', 'c7_drill_translation'], ['chapt_8', 
   check('5F §2.5 it is INK, not a tap target, even though it holds Greek',
     await note.locator('button').count() === 0
       && await note.evaluate(el => getComputedStyle(el).cursor) !== 'pointer');
+  // ON THE PROMPT'S LINE (ch6railwalk p10 sets "from God (not ἐκ)" as one
+  // line). Same baseline, to the right, and never inside the prompt's own
+  // element.
+  const promptBox = await page.locator('.card.speller .flash-pane .value').first().boundingBox();
+  const noteBox = await note.boundingBox();
+  check('5F §2.5 the speller note sits ON the prompt line, to its right (ch6railwalk p10)',
+    noteBox.y < promptBox.y + promptBox.height && noteBox.x > promptBox.x,
+    `prompt y ${Math.round(promptBox.y)}..${Math.round(promptBox.y + promptBox.height)}, note y ${Math.round(noteBox.y)}`);
 }
 // ...and on a select prompt (chapter 6's case drill prints the gloss, chapter
-// 8's speller the parse tag).
-{
-  await go('#/activity/chapt_6/c6_drill_case');
+// 8's vocabulary drill the case tag).
+for (const [chapterId, id] of [['chapt_6', 'c6_drill_case'], ['chapt_6', 'c6_drill_vocab_gk_en'], ['chapt_8', 'c8_drill_vocab_gk_en']]) {
+  // Not every item carries a note — chapter 8 tags only παρά and ὑπό — and
+  // these pools are shuffled with no stepper, so reload until one comes up.
   const note = page.locator('.prompt-note');
-  check('5F §2.5 a select prompt prints its case tag as ink beside the prompt',
-    await note.count() === 1 && await note.locator('button').count() === 0,
+  for (let attempt = 0; attempt < 30; attempt++) {
+    await go(`#/activity/${chapterId}/${id}`);
+    if (await note.count()) break;
+  }
+  const prompt = page.locator('.prompt').first();
+  check(`5F §2.5 ${chapterId} ${id}: the case tag is ink beside the prompt, never inside its tap target`,
+    await note.count() === 1 && await note.locator('button').count() === 0
+      && await prompt.locator('.prompt-note').count() === 0,
     JSON.stringify(await note.innerText().catch(() => null)));
+  const promptBox = await prompt.boundingBox();
+  const noteBox = await note.boundingBox();
+  check(`5F §2.5 ${chapterId} ${id}: it sits ON the prompt's line (ch6railwalk p8/p10)`,
+    noteBox.y < promptBox.y + promptBox.height && noteBox.x > promptBox.x,
+    `prompt y ${Math.round(promptBox.y)}..${Math.round(promptBox.y + promptBox.height)}, note y ${Math.round(noteBox.y)}`);
+}
+
+// ---- the case tag goes with the GREEK on a vocabulary card --------------
+// ch6railwalk p10: "Greek Word: ἀπό (with gen.)" over "Word Meaning: from".
+// The tag is part of the headword, not part of the gloss.
+{
+  await go('#/activity/chapt_6/c6_learn_vocab');
+  await page.locator('.card').getByRole('button', { name: 'Next', exact: true }).click();
+  await page.waitForTimeout(120);
+  const greek = normalizeText(await page.locator('.flash-pane .value.greek').first().innerText());
+  const meaning = normalizeText(await page.locator('.flash-pane').nth(1).locator('.value').first().innerText());
+  check('5F ch6 Learn Vocabulary: the case tag rides with the GREEK, not the gloss (ch6railwalk p10)',
+    /\(with \w+\.\)$/.test(greek) && !/\(with/.test(meaning),
+    `Greek Word ${JSON.stringify(greek)}, Word Meaning ${JSON.stringify(meaning)}`);
+}
+
+// ---- a paradigm that runs singular then plural legends both -------------
+// ch7railwalk p14: the Review Adjectives Paradigm prints "Singular" beside its
+// N. row and "Plural" beside its N.V. row.
+{
+  await go('#/activity/chapt_7/c7_qr_adjectives');
+  const bands = (await page.locator('.pg-numberband').allInnerTexts()).map(normalizeText);
+  check('5F ch7 Review Adjectives Paradigm legends its Singular and Plural blocks (ch7railwalk p14)',
+    bands.length === 2 && bands[0] === 'Singular' && bands[1] === 'Plural',
+    JSON.stringify(bands));
+  // No earlier chart authors `number`, so none of them may grow a band.
+  for (const [chapterId, id] of [['chapt_4', 'c4_qr_nouns'], ['chapt_7', 'c7_qr_eimi'], ['chapt_8', 'c8_qr_first']]) {
+    await go(`#/activity/${chapterId}/${id}`);
+    if (!await page.locator('.card').count()) continue;
+    check(`5F ${chapterId} ${id}: no number band where the data authors no number`,
+      await page.locator('.pg-numberband').count() === 0);
+  }
 }
 
 // ---- §3 a null ref renders NOTHING, not an empty chip -------------------

@@ -171,14 +171,22 @@
     return parts;
   }
 
-  // A popup whose entry carries a GREEK headword claims every standalone
-  // occurrence of that word in the prose, exactly as a greekTaps key does.
-  // This is what makes chapter 7's οὐ / οὐκ / οὐχ pages reach their three
-  // popups: unlike chapter 6, that page ships no popupRef and no underlined
-  // anchor of its own. Longest headword first, so οὐχ is never split by οὐ.
-  // See DIVERGENCE-LOG D-31.
+  // A popup whose entry carries a GREEK headword is opened from the NUMBERED
+  // LINE that introduces it. This is what makes chapter 7's οὐ / οὐκ / οὐχ
+  // page reach its three popups: unlike chapter 6, that page ships no popupRef
+  // and no underlined anchor of its own, so there is nothing else to hang the
+  // link on. Longest headword first, so οὐχ is never split by οὐ.
+  //
+  // ONLY the numbered lines, because that is where the original puts the link:
+  // ch7railwalk p7 sets "1) οὐ before a consonant;" as the hot line and leaves
+  // the οὐ in the opening sentence ("οὐ is placed before the word it
+  // negates") as ordinary ink. The same restriction keeps chapter 6's
+  // Proclitics page from turning "ἐν, εἰς and ἐκ are proclitics" into three
+  // links the original does not have. Everywhere else the Greek stays an
+  // ordinary greekTaps audio tap. See DIVERGENCE-LOG D-31.
+  const NUMBERED_LINE = /^\s*\(?\d+[.)]/;
   function splitPopupHeadwords(text) {
-    if (!popups || !popups.byGreek.length) return [{ t: text }];
+    if (!popups || !popups.byGreek.length || !NUMBERED_LINE.test(text)) return [{ t: text }];
     let parts = [{ t: text }];
     for (const [greek, popup] of popups.byGreek) {
       const next = [];

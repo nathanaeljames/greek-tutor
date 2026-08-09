@@ -275,10 +275,12 @@
 <div class="card speller" data-word-index={wordIndex} data-word-count={words.length}>
   <div class="spell-panes">
     <div class="flash-pane"><div class="label">{activity.promptLabel || 'English Meaning'}</div>
-      <div class="value" style="font-size:1.2rem">{word ? word.gloss : ''}</div>
-      <!-- §2.5: the case or parse tag beside the prompt, plain ink, smaller.
-           Never tappable even when it holds Greek. -->
-      {#if word && word.note}<div class="spell-prompt-note">{word.note}</div>{/if}
+      <!-- §2.5: the case or parse tag sits BESIDE the prompt on the same line,
+           plain ink and smaller — "from God (not ἐκ)" (ch6railwalk p10),
+           "from (gen.)" (p12), "good (acc. pl. masc.)" (ch7railwalk p6),
+           "I (nom sg)" (ch8railwalk p9). Never tappable; nothing on this pane
+           is. -->
+      <div class="value" style="font-size:1.2rem">{word ? word.gloss : ''}{#if word && word.note}<span class="spell-prompt-note">{word.note}</span>{/if}</div>
       <!-- §3: a null ref renders NOTHING, not an empty chip. -->
       {#if word && word.ref}<div class="spell-prompt-ref">{word.ref}</div>{/if}
     </div>

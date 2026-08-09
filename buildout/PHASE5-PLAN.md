@@ -104,7 +104,7 @@ COHORT 5F — Chapters 6 + 7 + 8 (Prepositions, Adjectives and the verb
   **BUILT 2026-08-08 (5F-SPEC1, one round, one implementer).** All 70
   activities ship: ch6 20 rail stops, ch7 25, ch8 25, all lazily
   chunked and offline. `npm run verify` passes; the behaviour harness
-  is 575/575 (388 before the round), the new 70-stop smoke walk is
+  is 586/586 (388 before the round), the new 70-stop smoke walk is
   73/73 and the modal pass 85/85. Records: `5F-SPEC1.md`,
   `5F-SPEC1-RESULTS.md`, `5F-SPEC1-BUILD.md`, `5F-EXTRACTION-MAP.md`,
   `VERIFY-5F.md`.
@@ -120,9 +120,14 @@ COHORT 5F — Chapters 6 + 7 + 8 (Prepositions, Adjectives and the verb
   dangle, 8 drills show no Hint button), chapter 7's popups ship with
   no anchors, and chapter 8's two Quick Review pronoun charts carry
   six rows of untransliterated Latin. All are pipeline-side and are
-  itemised in `5F-SPEC1-RESULTS.md` §8; no data file was edited.
-  The rail-walk PDFs were never in the repo, so the spec's
-  screenshot-by-screenshot comparison pass is still owed.
+  itemised in `5F-SPEC1-RESULTS.md` §8; no data file was edited, and
+  the rail walks CONFIRM every one of them.
+  The page-by-page rail-walk comparison is DONE (§6) and produced eight
+  further fixes — half of them defects no harness could see, half of
+  them my own inventions the original does not make. PROCESS LESSON,
+  now standing: do not start a spec until every file it names is in
+  hand; this round ran once without the rail walks and had to be redone
+  against them.
 
 COHORT 5G+ (INFERENCE, pending each cohort's extraction pass) —
   chapters 9-28 grouped by grammatical family, expecting the first
