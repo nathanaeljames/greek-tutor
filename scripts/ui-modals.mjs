@@ -124,9 +124,12 @@ const SURFACES = [
     await page.waitForTimeout(180);
   }],
   ['ch7-popup-ou', async () => {
+    // 5F-FEEDBACK.pdf item 15 (Nathanael, 2026-08-09): the popup opens from
+    // the NUMBER marker now, not the Greek headword -- D-31r supersedes
+    // D-31's original reading. See RichContent.svelte / DIVERGENCE-LOG.
     await go('#/activity/chapt_7/c7_learn_eimi');
     for (let i = 0; i < 3; i++) { await page.getByRole('button', { name: 'Next Topic', exact: true }).click(); await page.waitForTimeout(80); }
-    await page.locator('.popup-link').first().click();
+    await page.locator('.rc-num-popup').first().click();
     await page.waitForTimeout(180);
   }],
   ['ch8-popup-autos-as-a-pronoun', async () => {

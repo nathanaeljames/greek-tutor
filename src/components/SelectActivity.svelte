@@ -34,20 +34,15 @@
   // policy machinery as a one-stage item, so no timing or advance rule below
   // has a special case for it.
   import { onDestroy } from 'svelte';
-  import { authoredOptionSource, buildSelectQuestions, buildTwoStageQuestions, chapterAudioMap, randomFeedback, resolveHintBlocks, resolveHintRef } from '../lib/content.js';
+  import { authoredOptionSource, buildSelectQuestions, buildTwoStageQuestions, randomFeedback, resolveHintBlocks, resolveHintRef } from '../lib/content.js';
   import { combiningForMarkName, firstAccentCluster, markOverlayParts } from '../lib/greek.js';
   import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import { resolveAdvance, waitsForNext } from '../lib/timing.js';
   import RichContent from './RichContent.svelte';
   import Paradigm from './Paradigm.svelte';
-  import PronounParadigm from './PronounParadigm.svelte';
   export let chapter;
   export let activity;
-
-  // Form -> clip for chart cells that are not lexicon lemmas (chapter 8's
-  // pronoun charts), for the Hint popup.
-  $: formAudio = chapterAudioMap(chapter);
 
   let options = [];
   let questions = [];
@@ -604,11 +599,10 @@
   <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
     <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
       <div class="modal-scroll">
-      {#if hintChart.type === 'pronounParadigm'}
-        <PronounParadigm paradigm={hintChart} audioMap={formAudio} title={hintChart.title || null} />
-      {:else}
-        <Paradigm paradigm={hintChart} title={hintChart.title || hintChart.charts?.[0]?.title || null} />
-      {/if}
+      <!-- 5F-FEEDBACK.pdf §8.1 root-cause fix: every paradigm the Hint route
+           can resolve now ships in the one standard cell-audio shape, so
+           there is no second renderer to keep in sync. -->
+      <Paradigm paradigm={hintChart} title={hintChart.title || hintChart.charts?.[0]?.title || null} />
       </div>
       <div class="modal-actions">
         <!-- svelte-ignore a11y-autofocus -->
@@ -617,7 +611,22 @@
     </div>
   </div>
 {:else if showHint && hintBlocks.length}
-  <div class="card">
-    <RichContent blocks={hintBlocks} />
+  <!-- 5F-FEEDBACK.pdf item 15/16 root cause: this branch used to render a
+       bare .card stacked under the drill -- no dim overlay, no Close, easy
+       to mistake for a broken "half screen" fragment rather than the
+       original's full-screen Hint popup. It now shares the identical modal
+       shell as the chart-hint branch above so every Hint route behaves the
+       same way regardless of whether the underlying content is a chart or
+       prose. -->
+  <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
+    <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
+      <div class="modal-scroll">
+        <RichContent blocks={hintBlocks} />
+      </div>
+      <div class="modal-actions">
+        <!-- svelte-ignore a11y-autofocus -->
+        <button class="btn" autofocus on:click={() => (showHint = false)}>Close</button>
+      </div>
+    </div>
   </div>
 {/if}

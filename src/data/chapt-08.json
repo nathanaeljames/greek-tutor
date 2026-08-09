@@ -82,76 +82,34 @@
        "text": "There are various types of Pronouns:"
       },
       {
-       "type": "para",
-       "text": "1) [[u]]Personal pronouns:[[/u]] stand in for a"
-      },
-      {
-       "type": "para",
-       "text": "person—\"Bill did it. [[u]]He[[/u]] was there.\""
-      },
-      {
-       "type": "para",
-       "text": "2) [[u]]Demonstrative pronouns:[[/u]] point to"
-      },
-      {
-       "type": "para",
-       "text": "a person or object which is near"
-      },
-      {
-       "type": "para",
-       "text": "(this/these) or far (that/those)."
-      },
-      {
-       "type": "para",
-       "text": "3) [[u]]Relative pronouns:[[/u]] relate a"
-      },
-      {
-       "type": "para",
-       "text": "subordinate clause to a noun—\"It is"
-      },
-      {
-       "type": "para",
-       "text": "a great person [[u]]who[[/u]] attempts to"
-      },
-      {
-       "type": "para",
-       "text": "master Greek.\""
-      },
-      {
-       "type": "para",
-       "text": "4) [[u]]Reciprocal pronouns:[[/u]] state an"
-      },
-      {
-       "type": "para",
-       "text": "interchange between two"
-      },
-      {
-       "type": "para",
-       "text": "things/persons—They loved [[u]]one[[/u]]"
-      },
-      {
-       "type": "para",
-       "text": "[[u]]another[[/u]]."
-      },
-      {
-       "type": "para",
-       "text": "5) [[u]]Reflexive pronouns:[[/u]] direct the action"
-      },
-      {
-       "type": "para",
-       "text": "of the verb back to the subject—"
-      },
-      {
-       "type": "para",
-       "text": "\"She hid [[u]]herself[[/u]] behind the door.\""
-      },
-      {
-       "type": "para",
-       "text": "6) [[u]]Interrogative pronouns:[[/u]] ask a"
-      },
-      {
-       "type": "para",
-       "text": "question—[[u]]Who[[/u]] broke the ξηαιρ͂"
+       "type": "numbered",
+       "labelStyle": "plain",
+       "items": [
+        {
+         "label": "Personal pronouns:",
+         "text": "stand in for a person—\"Bill did it. [[u]]He[[/u]] was there.\""
+        },
+        {
+         "label": "Demonstrative pronouns:",
+         "text": "point to a person or object which is near (this/these) or far (that/those)."
+        },
+        {
+         "label": "Relative pronouns:",
+         "text": "relate a subordinate clause to a noun—\"It is a great person [[u]]who[[/u]] attempts to master Greek.\""
+        },
+        {
+         "label": "Reciprocal pronouns:",
+         "text": "state an interchange between two things/persons—They loved [[u]]one another[[/u]]."
+        },
+        {
+         "label": "Reflexive pronouns:",
+         "text": "direct the action of the verb back to the subject—\"She hid [[u]]herself[[/u]] behind the door.\""
+        },
+        {
+         "label": "Interrogative pronouns:",
+         "text": "ask a question—[[u]]Who[[/u]] broke the chair?"
+        }
+       ]
       }
      ]
     },
@@ -164,40 +122,22 @@
        "text": "In English, pronouns have three cases:"
       },
       {
-       "type": "para",
-       "text": "1) [[u]]Subjective[[/u]]—which are used when a"
-      },
-      {
-       "type": "para",
-       "text": "pronoun is the subject of a sentence"
-      },
-      {
-       "type": "para",
-       "text": "([[u]]He[[/u]] turned left)."
-      },
-      {
-       "type": "para",
-       "text": "2) [[u]]Possessive[[/u]]—which are used to"
-      },
-      {
-       "type": "para",
-       "text": "indicate ownership"
-      },
-      {
-       "type": "para",
-       "text": "(He gave [[u]]his[[/u]] best)."
-      },
-      {
-       "type": "para",
-       "text": "3) [[u]]Objective[[/u]]—which are used when a"
-      },
-      {
-       "type": "para",
-       "text": "pronoun is the object of a sentence"
-      },
-      {
-       "type": "para",
-       "text": "(He left [[u]]him[[/u]])."
+       "type": "numbered",
+       "labelStyle": "plain",
+       "items": [
+        {
+         "label": "Subjective",
+         "text": "—which are used when a pronoun is the subject of a sentence ([[u]]He[[/u]] turned left)."
+        },
+        {
+         "label": "Possessive",
+         "text": "—which are used to indicate ownership (He gave [[u]]his[[/u]] best)."
+        },
+        {
+         "label": "Objective",
+         "text": "—which are used when a pronoun is the object of a sentence (He left [[u]]him[[/u]])."
+        }
+       ]
       }
      ]
     },
@@ -306,40 +246,80 @@
      "title": "First Person Paradigm",
      "content": [
       {
-       "type": "para",
-       "text": "Singular Plural"
-      },
-      {
-       "type": "para",
-       "text": "N. ἐγώ I ἡμεῖς we"
-      },
-      {
-       "type": "para",
-       "text": "G. μου of me\\my ἡμῶν of us\\our"
-      },
-      {
-       "type": "para",
-       "text": "D. μοι to me\\for me ἡμῖν to us\\for us"
-      },
-      {
-       "type": "para",
-       "text": "A. με me ἡμᾶς us"
-      },
-      {
-       "type": "para",
-       "text": "Emphatic first person forms are made by"
-      },
-      {
-       "type": "para",
-       "text": "prefixing an epsilon and adding an accent"
-      },
-      {
-       "type": "para",
-       "text": "to the genitive, dative and accusative"
-      },
-      {
-       "type": "para",
-       "text": "singular forms ( ἐμοῦ, ἐμοί, ἐμέ)."
+       "type": "paradigm",
+       "id": "firstPersonParadigm",
+       "title": "First Person Paradigm",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "N.",
+         "cells": [
+          {
+           "greek": "ἐγώ",
+           "gloss": "I",
+           "audio": "chapt_8_h_1ns"
+          },
+          {
+           "greek": "ἡμεῖς",
+           "gloss": "we",
+           "audio": "chapt_8_h_1np"
+          }
+         ]
+        },
+        {
+         "label": "G.",
+         "cells": [
+          {
+           "greek": "μου",
+           "gloss": "of me\\my",
+           "audio": "chapt_8_h_gs1"
+          },
+          {
+           "greek": "ἡμῶν",
+           "gloss": "of us\\our",
+           "audio": "chapt_8_h_1gp"
+          }
+         ]
+        },
+        {
+         "label": "D.",
+         "cells": [
+          {
+           "greek": "μοι",
+           "gloss": "to me\\for me",
+           "audio": "chapt_8_h_1ds"
+          },
+          {
+           "greek": "ἡμῖν",
+           "gloss": "to us\\for us",
+           "audio": "chapt_8_h_1dp"
+          }
+         ]
+        },
+        {
+         "label": "A.",
+         "cells": [
+          {
+           "greek": "με",
+           "gloss": "me",
+           "audio": "chapt_8_h_1as"
+          },
+          {
+           "greek": "ἡμᾶς",
+           "gloss": "us",
+           "audio": "chapt_8_h_1ap"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Whole Paradigm",
+        "audio": "chapt_8_h_1par"
+       },
+       "note": "Emphatic first person forms are made by prefixing an epsilon and adding an accent to the genitive, dative and accusative singular forms ( ἐμοῦ, ἐμοί, ἐμέ)."
       }
      ]
     },
@@ -348,36 +328,80 @@
      "title": "Second Person Paradigm",
      "content": [
       {
-       "type": "para",
-       "text": "Singular Plural"
-      },
-      {
-       "type": "para",
-       "text": "N. σύ you ὑμεῖς you"
-      },
-      {
-       "type": "para",
-       "text": "G. σου of you\\your ὑμῶν your"
-      },
-      {
-       "type": "para",
-       "text": "D. σοι to you\\ ὑμῖν to you\\"
-      },
-      {
-       "type": "para",
-       "text": "for you for you"
-      },
-      {
-       "type": "para",
-       "text": "A. σε you ὑμᾶς you"
-      },
-      {
-       "type": "para",
-       "text": "The emphatic form is made by adding an"
-      },
-      {
-       "type": "para",
-       "text": "accent to the singulars ( σοῦ, σοί, σέ )."
+       "type": "paradigm",
+       "id": "secondPersonParadigm",
+       "title": "Second Person Paradigm",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "N.",
+         "cells": [
+          {
+           "greek": "σύ",
+           "gloss": "you",
+           "audio": "chapt_8_h_2ns"
+          },
+          {
+           "greek": "ὑμεῖς",
+           "gloss": "you",
+           "audio": "chapt_8_h_2np"
+          }
+         ]
+        },
+        {
+         "label": "G.",
+         "cells": [
+          {
+           "greek": "σου",
+           "gloss": "of you\\your",
+           "audio": "chapt_8_h_2gs"
+          },
+          {
+           "greek": "ὑμῶν",
+           "gloss": "your",
+           "audio": "chapt_8_h_2gp"
+          }
+         ]
+        },
+        {
+         "label": "D.",
+         "cells": [
+          {
+           "greek": "σοι",
+           "gloss": "to you\\for you",
+           "audio": "chapt_8_h_2ds"
+          },
+          {
+           "greek": "ὑμῖν",
+           "gloss": "to you\\for you",
+           "audio": "chapt_8_h_2dp"
+          }
+         ]
+        },
+        {
+         "label": "A.",
+         "cells": [
+          {
+           "greek": "σε",
+           "gloss": "you",
+           "audio": "chapt_8_h_2as"
+          },
+          {
+           "greek": "ὑμᾶς",
+           "gloss": "you",
+           "audio": "chapt_8_h_2ap"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Whole Paradigm",
+        "audio": "chapt_8_h_2par"
+       },
+       "note": "The emphatic form is made by adding an accent to the singulars ( σοῦ, σοί, σέ )."
       }
      ]
     },
@@ -404,7 +428,7 @@
          "audio": "chapt_8_h_exx2"
         },
         {
-         "greek": "ἀλλ ἐ̓γὼ τὴν ἀλήθειαν",
+         "greek": "ἀλλ' ἐγὼ τὴν ἀλήθειαν",
          "greek2": "λέγω ὑμῖν",
          "gloss": "but I speak the truth to you",
          "ref": "Jn 16:7",
@@ -443,16 +467,11 @@
        "text": "Enclitics are sometimes accented:"
       },
       {
-       "type": "para",
-       "text": "1) for emphasis"
-      },
-      {
-       "type": "para",
-       "text": "2) when the first word in a"
-      },
-      {
-       "type": "para",
-       "text": "sentence."
+       "type": "numbered",
+       "items": [
+        "for emphasis",
+        "when the first word in a sentence."
+       ]
       },
       {
        "type": "para",
@@ -479,12 +498,20 @@
        "text": "accented."
       },
       {
-       "type": "para",
-       "text": "ἄνθρωπός μου my man"
-      },
-      {
-       "type": "para",
-       "text": "δῶρόν σου your gift"
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "greek": "ἄνθρωπός μου",
+         "gloss": "my man",
+         "audio": "chapt_8_h_en1"
+        },
+        {
+         "greek": "δῶρόν σου",
+         "gloss": "your gift",
+         "audio": "chapt_8_h_en2"
+        }
+       ]
       },
       {
        "type": "para",
@@ -505,16 +532,25 @@
        "text": "Person + Case + Number"
       },
       {
-       "type": "para",
-       "text": "ἐγώ 1st nominative singular (I)"
-      },
-      {
-       "type": "para",
-       "text": "σοί 2nd dative singular (you)"
-      },
-      {
-       "type": "para",
-       "text": "ὑμῶν 2nd genitive plural (you)"
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "greek": "ἐγώ",
+         "gloss": "1st nominative singular (I)",
+         "audio": "chapt_8_h_1ns"
+        },
+        {
+         "greek": "σοί",
+         "gloss": "2nd dative singular (you)",
+         "audio": "chapt_8_h_2ds"
+        },
+        {
+         "greek": "ὑμῶν",
+         "gloss": "2nd genitive plural (you)",
+         "audio": "chapt_8_h_2gp"
+        }
+       ]
       }
      ]
     }
@@ -612,88 +648,237 @@
      "title": "Third Person Paradigm",
      "content": [
       {
-       "type": "para",
-       "text": "Masculine"
-      },
-      {
-       "type": "para",
-       "text": "Singular Plural"
-      },
-      {
-       "type": "para",
-       "text": "N. αὐτός he αὐτοί they"
-      },
-      {
-       "type": "para",
-       "text": "G. αὐτοῦ his αὐτῶν their"
-      },
-      {
-       "type": "para",
-       "text": "D. αὐτῷ to him/ αὐτοῖς to them/"
-      },
-      {
-       "type": "para",
-       "text": "for him for them"
-      },
-      {
-       "type": "para",
-       "text": "A. αὐτόν him αὐτούς them"
-      },
-      {
-       "type": "para",
-       "text": "Feminine"
-      },
-      {
-       "type": "para",
-       "text": "Singular Plural"
-      },
-      {
-       "type": "para",
-       "text": "N. αὐτή she αὐταί they"
-      },
-      {
-       "type": "para",
-       "text": "G. αὐτῆς hers αὐτῶν their"
-      },
-      {
-       "type": "para",
-       "text": "D. αὐτῇ to her/ αὐταῖς to them/"
-      },
-      {
-       "type": "para",
-       "text": "for her for them"
-      },
-      {
-       "type": "para",
-       "text": "A. αὐτήν her αὐτάς them"
-      },
-      {
-       "type": "para",
-       "text": "Neuter"
-      },
-      {
-       "type": "para",
-       "text": "Singular Plural"
-      },
-      {
-       "type": "para",
-       "text": "N. αὐτό it αὐτά they"
-      },
-      {
-       "type": "para",
-       "text": "G. αὐτοῦ its αὐτῶν their"
-      },
-      {
-       "type": "para",
-       "text": "D. αὐτῷ to it/ αὐτοῖς to them/"
-      },
-      {
-       "type": "para",
-       "text": "for it for them"
-      },
-      {
-       "type": "para",
-       "text": "A. αὐτό it αὐτά them"
+       "type": "paradigm",
+       "id": "thirdPersonParadigm",
+       "title": "Third Person Paradigm",
+       "charts": [
+        {
+         "type": "paradigm",
+         "subtitle": "Masculine",
+         "columns": [
+          "Singular",
+          "Plural"
+         ],
+         "rows": [
+          {
+           "label": "N.",
+           "cells": [
+            {
+             "greek": "αὐτός",
+             "gloss": "he",
+             "audio": "chapt_8_h_3mns"
+            },
+            {
+             "greek": "αὐτοί",
+             "gloss": "they",
+             "audio": "chapt_8_h_3mnp"
+            }
+           ]
+          },
+          {
+           "label": "G.",
+           "cells": [
+            {
+             "greek": "αὐτοῦ",
+             "gloss": "his",
+             "audio": "chapt_8_h_3mgs"
+            },
+            {
+             "greek": "αὐτῶν",
+             "gloss": "their",
+             "audio": "chapt_8_h_3mgp"
+            }
+           ]
+          },
+          {
+           "label": "D.",
+           "cells": [
+            {
+             "greek": "αὐτῷ",
+             "gloss": "to him/for him",
+             "audio": "chapt_8_h_3mds"
+            },
+            {
+             "greek": "αὐτοῖς",
+             "gloss": "to them/for them",
+             "audio": "chapt_8_h_3mdp"
+            }
+           ]
+          },
+          {
+           "label": "A.",
+           "cells": [
+            {
+             "greek": "αὐτόν",
+             "gloss": "him",
+             "audio": "chapt_8_h_3mas"
+            },
+            {
+             "greek": "αὐτούς",
+             "gloss": "them",
+             "audio": "chapt_8_h_3map"
+            }
+           ]
+          }
+         ],
+         "sayWhole": {
+          "label": "Say Whole Paradigm",
+          "audio": "chapt_8_h_3mpar"
+         },
+         "name": "Masculine"
+        },
+        {
+         "type": "paradigm",
+         "subtitle": "Feminine",
+         "columns": [
+          "Singular",
+          "Plural"
+         ],
+         "rows": [
+          {
+           "label": "N.",
+           "cells": [
+            {
+             "greek": "αὐτή",
+             "gloss": "she",
+             "audio": "chapt_8_h_3fns"
+            },
+            {
+             "greek": "αὐταί",
+             "gloss": "they",
+             "audio": "chapt_8_h_3fnp"
+            }
+           ]
+          },
+          {
+           "label": "G.",
+           "cells": [
+            {
+             "greek": "αὐτῆς",
+             "gloss": "her",
+             "audio": "chapt_8_h_3fgs"
+            },
+            {
+             "greek": "αὐτῶν",
+             "gloss": "their",
+             "audio": "chapt_8_h_3fgp"
+            }
+           ]
+          },
+          {
+           "label": "D.",
+           "cells": [
+            {
+             "greek": "αὐτῇ",
+             "gloss": "to her/for her",
+             "audio": "chapt_8_h_3fds"
+            },
+            {
+             "greek": "αὐταῖς",
+             "gloss": "to them/for them",
+             "audio": "chapt_8_h_3fdp"
+            }
+           ]
+          },
+          {
+           "label": "A.",
+           "cells": [
+            {
+             "greek": "αὐτήν",
+             "gloss": "her",
+             "audio": "chapt_8_h_3fas"
+            },
+            {
+             "greek": "αὐτάς",
+             "gloss": "them",
+             "audio": "chapt_8_h_3fap"
+            }
+           ]
+          }
+         ],
+         "sayWhole": {
+          "label": "Say Whole Paradigm",
+          "audio": "chapt_8_h_3fpar"
+         },
+         "name": "Feminine"
+        },
+        {
+         "type": "paradigm",
+         "subtitle": "Neuter",
+         "columns": [
+          "Singular",
+          "Plural"
+         ],
+         "rows": [
+          {
+           "label": "N.",
+           "cells": [
+            {
+             "greek": "αὐτό",
+             "gloss": "it",
+             "audio": "chapt_8_h_3nns"
+            },
+            {
+             "greek": "αὐτά",
+             "gloss": "they",
+             "audio": "chapt_8_h_3nnp"
+            }
+           ]
+          },
+          {
+           "label": "G.",
+           "cells": [
+            {
+             "greek": "αὐτοῦ",
+             "gloss": "its",
+             "audio": "chapt_8_h_3ngs"
+            },
+            {
+             "greek": "αὐτῶν",
+             "gloss": "their",
+             "audio": "chapt_8_h_3ngp"
+            }
+           ]
+          },
+          {
+           "label": "D.",
+           "cells": [
+            {
+             "greek": "αὐτῷ",
+             "gloss": "to it/for it",
+             "audio": "chapt_8_h_3nds"
+            },
+            {
+             "greek": "αὐτοῖς",
+             "gloss": "to them/for them",
+             "audio": "chapt_8_h_3ndp"
+            }
+           ]
+          },
+          {
+           "label": "A.",
+           "cells": [
+            {
+             "greek": "αὐτό",
+             "gloss": "it",
+             "audio": "chapt_8_h_3nas"
+            },
+            {
+             "greek": "αὐτά",
+             "gloss": "them",
+             "audio": "chapt_8_h_3nap"
+            }
+           ]
+          }
+         ],
+         "sayWhole": {
+          "label": "Say Whole Paradigm",
+          "audio": "chapt_8_h_3npar"
+         },
+         "name": "Neuter"
+        }
+       ],
+       "switch": "moreBack"
       }
      ]
     },
@@ -706,56 +891,18 @@
        "text": "αὐτός can be used in three ways:"
       },
       {
-       "type": "para",
-       "text": "1) [[u]]As a pronoun[[/u]]—matching its"
-      },
-      {
-       "type": "para",
-       "text": "antecedent in number and gender"
-      },
-      {
-       "type": "para",
-       "text": "and translated as \"he,\" \"she,\" \"it,\""
-      },
-      {
-       "type": "para",
-       "text": "or \"they.\""
-      },
-      {
-       "type": "para",
-       "text": "2) [[u]]Reflexive Intensifier[[/u]]—when it is"
-      },
-      {
-       "type": "para",
-       "text": "used as an adjective in the predicate"
-      },
-      {
-       "type": "para",
-       "text": "position (usually in the nominative"
-      },
-      {
-       "type": "para",
-       "text": "case) it is translated reflexively"
-      },
-      {
-       "type": "para",
-       "text": "(e.g. he [[u]]himself[[/u]] will get the car)."
-      },
-      {
-       "type": "para",
-       "text": "3) [[u]]Adjective meaning \"same\"[[/u]]—"
-      },
-      {
-       "type": "para",
-       "text": "when it is used as an adjective in"
-      },
-      {
-       "type": "para",
-       "text": "the attributive position, it is"
-      },
-      {
-       "type": "para",
-       "text": "translated as \"same.\""
+       "type": "numbered",
+       "items": [
+        {
+         "text": "[[u]]As a pronoun[[/u]]—matching its antecedent in number and gender and translated as \"he,\" \"she,\" \"it,\" or \"they.\""
+        },
+        {
+         "text": "[[u]]Reflexive Intensifier[[/u]]—when it is used as an adjective in the predicate position (usually in the nominative case) it is translated reflexively (e.g. he [[u]]himself[[/u]] will get the car)."
+        },
+        {
+         "text": "[[u]]Adjective meaning \"same\"[[/u]]—when it is used as an adjective in the attributive position, it is translated as \"same.\""
+        }
+       ]
       }
      ]
     }
@@ -2630,8 +2777,6 @@
    "mode": "paradigmChart",
    "title": "Review Personal Pronouns:  1st Person",
    "paradigm": {
-    "type": "pronounParadigm",
-    "title": "First Person Personal Pronouns",
     "columns": [
      "Singular",
      "Plural"
@@ -2639,26 +2784,72 @@
     "rows": [
      {
       "label": "N.",
-      "text": "ἐγώ I ἡμεῖς we"
+      "cells": [
+       {
+        "greek": "ἐγώ",
+        "gloss": "I",
+        "audio": "chapt_8_h_1ns"
+       },
+       {
+        "greek": "ἡμεῖς",
+        "gloss": "we",
+        "audio": "chapt_8_h_1np"
+       }
+      ]
      },
      {
       "label": "G.",
-      "text": "mou of me\\my ἡμῶν of us\\our"
+      "cells": [
+       {
+        "greek": "μου",
+        "gloss": "of me\\my",
+        "audio": "chapt_8_h_gs1"
+       },
+       {
+        "greek": "ἡμῶν",
+        "gloss": "of us\\our",
+        "audio": "chapt_8_h_1gp"
+       }
+      ]
      },
      {
       "label": "D.",
-      "text": "moi to me\\for me ἡμῖν to us\\for us"
+      "cells": [
+       {
+        "greek": "μοι",
+        "gloss": "to me\\for me",
+        "audio": "chapt_8_h_1ds"
+       },
+       {
+        "greek": "ἡμῖν",
+        "gloss": "to us\\for us",
+        "audio": "chapt_8_h_1dp"
+       }
+      ]
      },
      {
       "label": "A.",
-      "text": "me me ἡμᾶς us"
+      "cells": [
+       {
+        "greek": "με",
+        "gloss": "me",
+        "audio": "chapt_8_h_1as"
+       },
+       {
+        "greek": "ἡμᾶς",
+        "gloss": "us",
+        "audio": "chapt_8_h_1ap"
+       }
+      ]
      }
-    ]
+    ],
+    "sayWhole": {
+     "label": "Say Whole Paradigm",
+     "audio": "chapt_8_h_1par"
+    },
+    "note": "Emphatic first person pronouns are formed by adding an initial epsilon and an accent in the genitive, dative, and accusative singular forms (ἐμοῦ, ἐμοί, ἐμέ) singular."
    },
-   "sayWhole": {
-    "label": "Say Whole Paradigm",
-    "audio": "chapt_8_h_1par"
-   }
+   "chartTitle": "First Person Personal Pronouns"
   },
   {
    "id": "c8_qr_second",
@@ -2666,8 +2857,6 @@
    "mode": "paradigmChart",
    "title": "Review Personal Pronouns:  2nd Person",
    "paradigm": {
-    "type": "pronounParadigm",
-    "title": "Second Person Personal Pronouns",
     "columns": [
      "Singular",
      "Plural"
@@ -2675,26 +2864,72 @@
     "rows": [
      {
       "label": "N.",
-      "text": "σύ you ὑμεῖς you"
+      "cells": [
+       {
+        "greek": "σύ",
+        "gloss": "you",
+        "audio": "chapt_8_h_2ns"
+       },
+       {
+        "greek": "ὑμεῖς",
+        "gloss": "you",
+        "audio": "chapt_8_h_2np"
+       }
+      ]
      },
      {
       "label": "G.",
-      "text": "sou of you\\your ὑμῶν your"
+      "cells": [
+       {
+        "greek": "σου",
+        "gloss": "of you\\your",
+        "audio": "chapt_8_h_2gs"
+       },
+       {
+        "greek": "ὑμῶν",
+        "gloss": "your",
+        "audio": "chapt_8_h_2gp"
+       }
+      ]
      },
      {
       "label": "D.",
-      "text": "soi to you\\for you ὑμῖν to you\\for you"
+      "cells": [
+       {
+        "greek": "σοι",
+        "gloss": "to you\\for you",
+        "audio": "chapt_8_h_2ds"
+       },
+       {
+        "greek": "ὑμῖν",
+        "gloss": "to you\\for you",
+        "audio": "chapt_8_h_2dp"
+       }
+      ]
      },
      {
       "label": "A.",
-      "text": "se you ὑμᾶς you"
+      "cells": [
+       {
+        "greek": "σε",
+        "gloss": "you",
+        "audio": "chapt_8_h_2as"
+       },
+       {
+        "greek": "ὑμᾶς",
+        "gloss": "you",
+        "audio": "chapt_8_h_2ap"
+       }
+      ]
      }
-    ]
+    ],
+    "sayWhole": {
+     "label": "Say Whole Paradigm",
+     "audio": "chapt_8_h_2par"
+    },
+    "note": "The emphatic form is made by adding an accent to the singulars ( σοῦ, σοί, σέ )."
    },
-   "sayWhole": {
-    "label": "Say Whole Paradigm",
-    "audio": "chapt_8_h_2par"
-   }
+   "chartTitle": "Second Person Personal Pronouns"
   },
   {
    "id": "c8_qr_third",
@@ -2703,8 +2938,9 @@
    "title": "Review Pronouns:  Personal 3rd Person",
    "paradigms": [
     {
-     "type": "pronounParadigm",
-     "title": "Third Person Personal Pronouns",
+     "type": "paradigm",
+     "name": "Masculine",
+     "subtitle": "Masculine",
      "columns": [
       "Singular",
       "Plural"
@@ -2712,30 +2948,75 @@
      "rows": [
       {
        "label": "N.",
-       "text": "αὐτός he αὐτοί they"
+       "cells": [
+        {
+         "greek": "αὐτός",
+         "gloss": "he",
+         "audio": "chapt_8_h_3mns"
+        },
+        {
+         "greek": "αὐτοί",
+         "gloss": "they",
+         "audio": "chapt_8_h_3mnp"
+        }
+       ]
       },
       {
        "label": "G.",
-       "text": "αὐτοῦ his αὐτῶν their"
+       "cells": [
+        {
+         "greek": "αὐτοῦ",
+         "gloss": "his",
+         "audio": "chapt_8_h_3mgs"
+        },
+        {
+         "greek": "αὐτῶν",
+         "gloss": "their",
+         "audio": "chapt_8_h_3mgp"
+        }
+       ]
       },
       {
        "label": "D.",
-       "text": "αὐτῷ to him/ αὐτοῖς to them/"
+       "cells": [
+        {
+         "greek": "αὐτῷ",
+         "gloss": "to him/for him",
+         "audio": "chapt_8_h_3mds"
+        },
+        {
+         "greek": "αὐτοῖς",
+         "gloss": "to them/for them",
+         "audio": "chapt_8_h_3mdp"
+        }
+       ]
       },
       {
        "label": "A.",
-       "text": "αὐτόν him αὐτούς them"
+       "cells": [
+        {
+         "greek": "αὐτόν",
+         "gloss": "him",
+         "audio": "chapt_8_h_3mas"
+        },
+        {
+         "greek": "αὐτούς",
+         "gloss": "them",
+         "audio": "chapt_8_h_3map"
+        }
+       ]
       }
      ],
-     "gender": "Masculine",
      "sayWhole": {
       "label": "Say Whole Paradigm",
       "audio": "chapt_8_h_3mpar"
-     }
+     },
+     "title": "Third Person Personal Pronouns"
     },
     {
-     "type": "pronounParadigm",
-     "title": "Third Person Pronouns",
+     "type": "paradigm",
+     "name": "Feminine",
+     "subtitle": "Feminine",
      "columns": [
       "Singular",
       "Plural"
@@ -2743,30 +3024,75 @@
      "rows": [
       {
        "label": "N.",
-       "text": "αὐτή she αὐταί they"
+       "cells": [
+        {
+         "greek": "αὐτή",
+         "gloss": "she",
+         "audio": "chapt_8_h_3fns"
+        },
+        {
+         "greek": "αὐταί",
+         "gloss": "they",
+         "audio": "chapt_8_h_3fnp"
+        }
+       ]
       },
       {
        "label": "G.",
-       "text": "αὐτῆς her αὐτῶν their"
+       "cells": [
+        {
+         "greek": "αὐτῆς",
+         "gloss": "her",
+         "audio": "chapt_8_h_3fgs"
+        },
+        {
+         "greek": "αὐτῶν",
+         "gloss": "their",
+         "audio": "chapt_8_h_3fgp"
+        }
+       ]
       },
       {
        "label": "D.",
-       "text": "αὐτῇ to her/ αὐταῖς to them/"
+       "cells": [
+        {
+         "greek": "αὐτῇ",
+         "gloss": "to her/for her",
+         "audio": "chapt_8_h_3fds"
+        },
+        {
+         "greek": "αὐταῖς",
+         "gloss": "to them/for them",
+         "audio": "chapt_8_h_3fdp"
+        }
+       ]
       },
       {
        "label": "A.",
-       "text": "αὐτήν her αὐτάς them"
+       "cells": [
+        {
+         "greek": "αὐτήν",
+         "gloss": "her",
+         "audio": "chapt_8_h_3fas"
+        },
+        {
+         "greek": "αὐτάς",
+         "gloss": "them",
+         "audio": "chapt_8_h_3fap"
+        }
+       ]
       }
      ],
-     "gender": "Feminine",
      "sayWhole": {
       "label": "Say Whole Paradigm",
       "audio": "chapt_8_h_3fpar"
-     }
+     },
+     "title": "Third Person Pronouns"
     },
     {
-     "type": "pronounParadigm",
-     "title": "Third Person Pronouns",
+     "type": "paradigm",
+     "name": "Neuter",
+     "subtitle": "Neuter",
      "columns": [
       "Singular",
       "Plural"
@@ -2774,26 +3100,70 @@
      "rows": [
       {
        "label": "N.",
-       "text": "αὐτό it αὐτά they"
+       "cells": [
+        {
+         "greek": "αὐτό",
+         "gloss": "it",
+         "audio": "chapt_8_h_3nns"
+        },
+        {
+         "greek": "αὐτά",
+         "gloss": "they",
+         "audio": "chapt_8_h_3nnp"
+        }
+       ]
       },
       {
        "label": "G.",
-       "text": "αὐτοῦ its αὐτῶν their"
+       "cells": [
+        {
+         "greek": "αὐτοῦ",
+         "gloss": "its",
+         "audio": "chapt_8_h_3ngs"
+        },
+        {
+         "greek": "αὐτῶν",
+         "gloss": "their",
+         "audio": "chapt_8_h_3ngp"
+        }
+       ]
       },
       {
        "label": "D.",
-       "text": "αὐτῷ to it/ αὐτοῖς to them/"
+       "cells": [
+        {
+         "greek": "αὐτῷ",
+         "gloss": "to it/for it",
+         "audio": "chapt_8_h_3nds"
+        },
+        {
+         "greek": "αὐτοῖς",
+         "gloss": "to them/for them",
+         "audio": "chapt_8_h_3ndp"
+        }
+       ]
       },
       {
        "label": "A.",
-       "text": "αὐτό it αὐτά them"
+       "cells": [
+        {
+         "greek": "αὐτό",
+         "gloss": "it",
+         "audio": "chapt_8_h_3nas"
+        },
+        {
+         "greek": "αὐτά",
+         "gloss": "them",
+         "audio": "chapt_8_h_3nap"
+        }
+       ]
       }
      ],
-     "gender": "Neuter",
      "sayWhole": {
       "label": "Say Whole Paradigm",
       "audio": "chapt_8_h_3npar"
-     }
+     },
+     "title": "Third Person Pronouns"
     }
    ],
    "_more_note": "Masculine, then More to Feminine, then More to Neuter, Back stepping down."

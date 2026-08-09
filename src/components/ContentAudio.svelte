@@ -8,14 +8,13 @@
   // panels; their per-mode data contracts are documented in HANDOFF-4 §5 (B1).
   import { onDestroy } from 'svelte';
   import { slide } from 'svelte/transition';
-  import { chapterAudioMap, getGreekTapMap, resolveItems, shuffle } from '../lib/content.js';
+  import { getGreekTapMap, resolveItems, shuffle } from '../lib/content.js';
   import { play, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import { providePopups } from '../lib/popups.js';
   import RichContent from './RichContent.svelte';
   import ArrowCue from './ArrowCue.svelte';
   import Paradigm from './Paradigm.svelte';
-  import PronounParadigm from './PronounParadigm.svelte';
   import PopupSheet from './PopupSheet.svelte';
   export let chapter;
   export let activity;
@@ -26,11 +25,6 @@
   // Opening one stops whatever the page underneath was saying (rule A4).
   let openPopupPage = null;
   providePopups(activity.popups, popup => { stopAudio(); openPopupPage = popup; });
-
-  // Form -> clip for the chapter's non-lemma inflected forms (chapter 8's
-  // pronoun charts). Chapter-wide, so a Quick Review chart taps the same clips
-  // the Learn page does.
-  $: formAudio = chapterAudioMap(chapter);
 
   // Items resolve from the data; activities flagged order:"shuffled"
   // (Pronounce Letters Exercise) get a fresh Fisher-Yates shuffle each visit.
@@ -205,7 +199,6 @@
       <RichContent
         blocks={currentTopic.content || []}
         suppressTitle={currentTopic.title}
-        audioMap={formAudio}
         greekTaps={currentTopic.greekTaps === true
           ? getGreekTapMap(chapter.id)
           : (currentTopic.greekTaps || activityGreekTaps)} />
@@ -232,22 +225,23 @@
   <div class="card">
     {#if paradigmPages.length}
       {@const page = paradigmPages[paradigmIndex] || paradigmPages[0]}
-      {#if page.type === 'pronounParadigm'}
-        <PronounParadigm paradigm={page} audioMap={formAudio}
-                         title={activity.chartTitle || page.title} />
-      {:else}
-        <Paradigm paradigm={page} title={activity.chartTitle || null} />
-      {/if}
-      <!-- Paradigm draws its OWN sayWhole; PronounParadigm does not. Adding
-           one here unconditionally printed "Say Whole List" twice on the εἰμί
-           chart, whose action lives inside the chart. -->
-      {@const sayWhole = page.type === 'pronounParadigm'
-        ? (page.sayWhole || activity.sayWhole)
-        : (page.sayWhole ? null : activity.sayWhole)}
-      {#if sayWhole || paradigmPages.length > 1}
+      <!-- 5F-FEEDBACK.pdf §8.1 root-cause fix: every pronoun paradigm now
+           ships in the SAME cell-audio shape every other chapter's paradigm
+           does (chapt-08.json no longer carries a `pronounParadigm` block
+           anywhere), so this reads title off the PAGE the same way every
+           other paradigmChart activity does -- no per-shape branch left to
+           drift out of sync with the data. -->
+      <Paradigm paradigm={page} title={activity.chartTitle || page.title || null} />
+      <!-- Paradigm.svelte already draws chart.sayWhole INSIDE the card when
+           the chart carries one (every chart here does). This block adds
+           only the More/Back stepper beside it -- an EXTERNAL sayWhole is
+           for the rare page whose chart has none, so it can never double up
+           with the one Paradigm just drew. -->
+      {@const externalSayWhole = page.sayWhole ? null : activity.sayWhole}
+      {#if externalSayWhole || paradigmPages.length > 1}
         <div class="controls pg-actions">
-          {#if sayWhole}
-            <button class="btn secondary pg-say-whole" on:click={() => play(sayWhole.audio)}>{sayWhole.label || 'Say Whole Paradigm'}</button>
+          {#if externalSayWhole}
+            <button class="btn secondary pg-say-whole" on:click={() => play(externalSayWhole.audio)}>{externalSayWhole.label || 'Say Whole Paradigm'}</button>
           {/if}
           {#if paradigmIndex > 0}
             <button class="btn secondary pg-switch pg-switch-back" data-paradigm-switch="back"
@@ -290,7 +284,7 @@
 {:else if mode === 'textPage'}
   {#if activity.content}
     <div class="card">
-      <RichContent blocks={activity.content} greekTaps={activityGreekTaps} audioMap={formAudio} />
+      <RichContent blocks={activity.content} greekTaps={activityGreekTaps} />
       {#if activity.playButton}
         <div class="controls">
           <button class="btn" on:click={() => play(activity.playButton.audio)}>▶ {activity.playButton.label}</button>

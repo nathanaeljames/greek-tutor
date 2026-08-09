@@ -16,12 +16,8 @@
   import Marked from './Marked.svelte';
   import Paradigm from './Paradigm.svelte';
   import PrepositionsChart from './PrepositionsChart.svelte';
-  import PronounParadigm from './PronounParadigm.svelte';
 
   export let blocks = [];
-  // Chapter-wide form -> clip map, for the block types whose cells are not
-  // lexicon lemmas (chapter 8's pronoun charts). Inherited by nested content.
-  export let audioMap = {};
 
   // The activity's popup register, if its host provided one (5F §2.2).
   const popups = usePopups();
@@ -147,7 +143,7 @@
   }
 
   function splitTaps(text, taps) {
-    let parts = splitPopupHeadwords(text || '');
+    let parts = [{ t: text || '' }];
     if (!taps) return parts;
     for (const [sub, audio] of Object.entries(taps)) {
       const next = [];
@@ -171,39 +167,13 @@
     return parts;
   }
 
-  // A popup whose entry carries a GREEK headword is opened from the NUMBERED
-  // LINE that introduces it. This is what makes chapter 7's οὐ / οὐκ / οὐχ
-  // page reach its three popups: unlike chapter 6, that page ships no popupRef
-  // and no underlined anchor of its own, so there is nothing else to hang the
-  // link on. Longest headword first, so οὐχ is never split by οὐ.
-  //
-  // ONLY the numbered lines, because that is where the original puts the link:
-  // ch7railwalk p7 sets "1) οὐ before a consonant;" as the hot line and leaves
-  // the οὐ in the opening sentence ("οὐ is placed before the word it
-  // negates") as ordinary ink. The same restriction keeps chapter 6's
-  // Proclitics page from turning "ἐν, εἰς and ἐκ are proclitics" into three
-  // links the original does not have. Everywhere else the Greek stays an
-  // ordinary greekTaps audio tap. See DIVERGENCE-LOG D-31.
-  const NUMBERED_LINE = /^\s*\(?\d+[.)]/;
-  function splitPopupHeadwords(text) {
-    if (!popups || !popups.byGreek.length || !NUMBERED_LINE.test(text)) return [{ t: text }];
-    let parts = [{ t: text }];
-    for (const [greek, popup] of popups.byGreek) {
-      const next = [];
-      for (const p of parts) {
-        if (p.popup) { next.push(p); continue; }
-        let rest = p.t;
-        for (let i = standaloneIndexOf(rest, greek); i !== -1; i = standaloneIndexOf(rest, greek)) {
-          if (i > 0) next.push({ t: rest.slice(0, i) });
-          next.push({ t: greek, popup });
-          rest = rest.slice(i + greek.length);
-        }
-        if (rest) next.push({ t: rest });
-      }
-      parts = next;
-    }
-    return parts;
-  }
+  // 5F-FEEDBACK.pdf item 15 (Nathanael, 2026-08-09): a popup is opened from
+  // the NUMBER in front of the line that introduces it, never from the Greek
+  // word itself -- the Greek stays an ordinary audio tap, like everywhere
+  // else on the page (directive 9). This supersedes D-31's original reading
+  // (the headword itself was the link); the numbered-item marker route lives
+  // in the `numbered` block branch below (`it.numberPopupRef`). See
+  // DIVERGENCE-LOG D-31r.
 
   // A greekRows row may carry parts[] in TWO shapes. Chapters 4/5 ship objects
   // ({greek, audio} / {text}); chapter 6 ships plain strings with a parallel
@@ -237,7 +207,7 @@
            named Greek words in the line tappable; anything not named stays
            plain ink, which is how the λύ and ω MORPHEMES on that same line stay
            untappable — they are fragments with no clip of their own. -->
-      {@const taps = (b.greekTaps || greekTaps) || (popups && popups.byGreek.length ? {} : null)}
+      {@const taps = b.greekTaps || greekTaps}
       <p class="rc-para" class:example-block={isExampleBlock(b)}
          class:rc-strong={b.emphasis === 'strong'} class:rc-indent={b.indent}
       >{#if taps}{#each splitTaps(b.text, taps) as seg}{#if seg.popup}<button class="greek-tap popup-link greek" on:click={() => openPopup(seg.popup)}>{seg.t}</button>{:else if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={b.text} />{/if}</p>
@@ -253,9 +223,17 @@
       {@const items = listItems(b)}
       {@const selfNum = (() => { const re = /^\(?\d+[.)]/; return items.length > 0 && items.every(it => it.label && re.test(it.label)); })()}
       <ol class="rc-list" class:authored-labels={selfNum} class:unnumbered={b.numbered === false}>
-        {#each items as it}
-          {@const itemTaps = it.greekTaps || greekTaps}
-          <li>
+        {#each items as it, idx}
+          <!-- 5F-FEEDBACK.pdf item 15: the NUMBER opens the popup; the Greek
+               word inside the item plays its own audio, like any other
+               displayed Greek. Superseded from D-31's original reading (the
+               Greek word itself was the link) -- see DIVERGENCE-LOG D-31r. -->
+          {@const markerPopup = it.numberPopupRef ? linkedPopup(it.numberPopupRef) : null}
+          {@const itemTaps = it.greekTaps || (markerPopup && markerPopup.greek ? { [markerPopup.greek]: markerPopup.audio } : null) || greekTaps}
+          <li class:no-marker={!!markerPopup}>
+            {#if markerPopup}
+              <button class="rc-num rc-num-popup" on:click={() => openPopup(markerPopup)}>{idx + 1})</button>
+            {/if}
             {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else if b.labelStyle === 'underline'}<u class="rc-lead-u">{it.label}</u>{joiner(it.text)}{:else if b.labelStyle === 'plain'}<span class="rc-lead-plain">{it.label}</span>{joiner(it.text)}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#if itemTaps}{#each splitTaps(it.text, itemTaps) as seg}{#if seg.popup}<button class="greek-tap popup-link greek" on:click={() => openPopup(seg.popup)}>{seg.t}</button>{:else if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={it.text || ''} />{/if}
             {#if it.example}
               <button class="rc-example" class:tappable={it.example.audio} on:click={() => playAudio(it.example.audio)}>
@@ -287,6 +265,22 @@
                     </div>
                   {/if}
                 {/each}
+              </div>
+            {/if}
+            {#if it.below && it.below.length}
+              <!-- 5F-FEEDBACK.pdf items 5/6/7/13 (Nathanael, 2026-08-09): a
+                   numbered teaching point that introduces one or two worked
+                   examples (Attributive/Predicate adjective position, etc.)
+                   used to ship as a literal "1) ..." STRING inside a plain
+                   para, which put the marker outside the hanging-indent
+                   system entirely -- long items wrapped flush left instead of
+                   under their own text. it.below nests ordinary content
+                   blocks (typically a glossOnly greekRows table) INSIDE the
+                   <li>, so they inherit the list's own 1.9em text column for
+                   free and recurse through the same renderer as everywhere
+                   else, the same mechanism `expander` already uses. -->
+              <div class="rc-item-below">
+                <svelte:self blocks={it.below} greekTaps={itemTaps} />
               </div>
             {/if}
             {#if it.note}<div class="rc-inlinenote"><Marked text={it.note} /></div>{/if}
@@ -460,12 +454,6 @@
            Hint popup on three chapter-3 drills — one renderer, three hosts. -->
       <Paradigm paradigm={b} title={sameTitle(b.title) ? null : b.title} />
 
-    {:else if b.type === 'pronounParadigm'}
-      <!-- 5F §2.8: chapter 8's four-case Singular/Plural pronoun chart. Its
-           own component because its rows are set as one line of text, not as
-           {greek, gloss} cells. -->
-      <PronounParadigm paradigm={b} {audioMap} title={sameTitle(b.title) ? null : b.title} />
-
     {:else if b.type === 'prepositionsChart'}
       <!-- 5F §2.1: chapter 6's ten prepositions as a DIAGRAM. The same block
            renders here (a Learn topic) and as the Review Prepositions Chart. -->
@@ -476,7 +464,7 @@
         <summary><Marked text={b.label} /></summary>
         <div class="rc-expander-body">
           {#if b.content && b.content.length}
-            <svelte:self blocks={b.content} greekTaps={b.greekTaps || greekTaps} {audioMap} />
+            <svelte:self blocks={b.content} greekTaps={b.greekTaps || greekTaps} />
           {:else}
             <div class="pending-verification compact">Content pending verification.</div>
           {/if}

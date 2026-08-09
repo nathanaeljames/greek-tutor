@@ -221,6 +221,42 @@ against:
   is silent data loss.
 - Computed-style spot checks for the color rule (tappable = rgb
   22,99,199).
+- **A screenshot at rest is not a verification pass (5F-FEEDBACK
+  regression, 2026-08-09; full account in 5F-SPEC1-PATCH1.md).**
+  Chapter 7 shipped with collapsed text formatting, missing paradigm
+  charts, a broken popup mechanism and a non-modal "Hint" surface, and
+  it had been through BOTH a rail walk and a screenshot pass first.
+  Every one of those defects was invisible in a single static capture
+  and only showed up on interaction: a wrapped line (the hanging
+  indent bug only shows on a multi-line item), a second chart reached
+  via More (the duplicate Say Whole and missing subtitle bugs), a
+  popup actually opened (the modal-shell and garbled-content bugs), a
+  drill's Hint button actually clicked (the bare-`.card` non-modal
+  bug). **A pass counts as verification only if it interacts with
+  everything a learner can interact with** — every More/Back step,
+  every popup, every Hint, every wrapped line at 320px — not only the
+  state a page loads in. `scripts/ui-walk.mjs` and `scripts/
+  ui-behavior.mjs` exist specifically to make this mechanical rather
+  than a squint; run BOTH, do not sample a subset of activities by eye
+  and call it a rail walk.
+- **When a component's DOM shape changes, grep the harness for the
+  OLD shape before calling the change done.** Retiring
+  `PronounParadigm.svelte` this round left `ui-behavior.mjs`,
+  `ui-modals.mjs` and `ui-shots-5f.mjs` all still asserting against
+  its deleted `.pronoun-paradigm` / `data-gender` markup and a
+  superseded `.popup-link` selector — three separate scripts, found
+  only by grepping for the dead class names after the fact. A harness
+  that still passes after testing markup that no longer exists is
+  worse than no harness: it reports green while proving nothing. Grep
+  every `scripts/ui-*.mjs` for a class, attribute or id before deleting
+  or renaming it in a component.
+- **A build-time shape check only catches what someone thought to
+  assert.** `check-content-shapes.mjs` had no rule against a
+  hand-numbered "1) ..." string inside a plain `para` block — a real
+  shape, renders something, passes every existing check — and it
+  silently defeated the numbered-list hanging-indent CSS the SAME
+  round shipped elsewhere. When a new defect class is found and fixed,
+  add the check that would have caught it, not just the fix.
 
 ## 8. Known footguns (each cost a debugging round once)
 
@@ -307,6 +343,18 @@ flagged exception already known for 5F: chapter 8's Personal Pronoun
 Case Drill uses a two-step person-then-case selection, not the single
 grouped option grid every other Case Drill uses — a genuinely new
 layout, not covered by any existing mode.
+
+**5F-SPEC1's first build regressed on device (2026-08-09,
+5F-FEEDBACK.pdf) — 17 items, chapter 7 worst.** Root causes, fixes and
+new harness rules are recorded in full in **5F-SPEC1-PATCH1.md**; read
+it before touching chapters 6-8 again. In short: a bespoke
+`PronounParadigm.svelte` (chapter 8's own paradigm renderer, parallel
+to the app-wide `Paradigm.svelte`) is now DELETED — every chart in the
+app renders through the one component — and several teaching topics
+that were flattened into plain paragraphs in the first pass are
+rebuilt as `paradigm`, `numbered` and `greekRows` blocks. The three
+`ui-*.mjs` harness scripts were themselves out of date against the
+fix (see the new §7 rule above) and are now current.
 
 ## 10. When in doubt
 

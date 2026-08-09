@@ -71,10 +71,12 @@ await page.waitForTimeout(150);
 await shot('ch6-popup-epi');
 
 // ---- chapter 7: the οὐ / οὐκ / οὐχ popups ---------------------------------
+// 5F-FEEDBACK.pdf item 15: the popup opens from the NUMBER marker, not the
+// Greek headword -- D-31r supersedes D-31's original reading.
 await go('#/activity/chapt_7/c7_learn_eimi');
 await nextTopic(3);
 await shot('ch7-learn-eimi-4-ouOukOuch');
-await page.locator('.popup-link').first().click();
+await page.locator('.rc-num-popup').first().click();
 await page.waitForTimeout(150);
 await shot('ch7-popup-ou');
 

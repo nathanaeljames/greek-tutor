@@ -150,6 +150,8 @@
   onDestroy(() => { cancelAdvance(); stopAudio(); });     // §3.1
 </script>
 
+<svelte:window on:keydown={showHint ? (e) => { if (e.key === 'Escape') showHint = false; } : null} />
+
 <div class="card accent-activity">
   <!-- The header shows the ROOT an inflected form derives from (Βαπτίζω ->
        βάπτισαι), plus its gloss. Where the root IS the answer form it is
@@ -225,7 +227,19 @@
 </div>
 
 {#if showHint && hintBlocks.length}
-  <div class="card">
-    <RichContent blocks={hintBlocks} />
+  <!-- 5F-FEEDBACK.pdf item 15/16 root cause: this used to be a bare .card
+       stacked under the activity -- no dim overlay, no Close, indistinguishable
+       from a broken layout fragment. Every Hint route now shares the one
+       modal shell (SelectActivity, this, DivideActivity). -->
+  <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
+    <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
+      <div class="modal-scroll">
+        <RichContent blocks={hintBlocks} />
+      </div>
+      <div class="modal-actions">
+        <!-- svelte-ignore a11y-autofocus -->
+        <button class="btn" autofocus on:click={() => (showHint = false)}>Close</button>
+      </div>
+    </div>
   </div>
 {/if}

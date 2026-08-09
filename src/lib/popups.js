@@ -13,17 +13,21 @@
 //
 // THREE WAYS A LINK IS DECLARED, all of them data:
 //
-//   popupRef      an explicit id on a greekRows row (chapter 6's One/Two/Three
-//                 Case panels — the GLOSS is the link, the case tag is ink).
-//   underline     an [[u]]…[[/u]] run whose slug matches a popup id (chapter
-//                 8's Three Uses page: "As a pronoun" -> asAPronoun). An
-//                 underlined run that matches nothing stays a plain underline,
-//                 which is what keeps "he [[u]]himself[[/u]] will get the car"
-//                 from becoming a link.
-//   greek         a popup carrying a `greek` headword links every standalone
-//                 occurrence of that word in the page's prose (chapter 7's
-//                 οὐ / οὐκ / οὐχ, whose page ships no anchors of its own).
-//                 See DIVERGENCE-LOG D-31.
+//   popupRef        an explicit id on a greekRows row (chapter 6's One/Two/
+//                   Three Case panels — the GLOSS is the link, the case tag
+//                   is ink).
+//   underline       an [[u]]…[[/u]] run whose slug matches a popup id
+//                   (chapter 8's Three Uses page: "As a pronoun" ->
+//                   asAPronoun). An underlined run that matches nothing stays
+//                   a plain underline, which is what keeps
+//                   "he [[u]]himself[[/u]] will get the car" from becoming a
+//                   link.
+//   numberPopupRef  a numbered-list item's MARKER opens the popup; the Greek
+//                   word inside the item plays its own audio like any other
+//                   displayed Greek (chapter 7's οὐ / οὐκ / οὐχ page —
+//                   Nathanael, 5F-FEEDBACK.pdf item 15). This superseded an
+//                   earlier reading where the Greek word itself was the
+//                   link; see DIVERGENCE-LOG D-31 / D-31r.
 import { getContext, setContext } from 'svelte';
 import { slugOf } from './content.js';
 
@@ -34,21 +38,13 @@ const KEY = Symbol('popups');
 export function providePopups(popups, open) {
   const byId = {};
   for (const popup of popups || []) if (popup && popup.id) byId[popup.id] = popup;
-  const register = { byId, open, byGreek: greekIndex(popups) };
+  const register = { byId, open };
   setContext(KEY, register);
   return register;
 }
 
 export function usePopups() {
   return getContext(KEY) || null;
-}
-
-// Longest headword first, so οὐχ claims its own match before οὐ could.
-function greekIndex(popups) {
-  return (popups || [])
-    .filter(popup => popup && popup.greek)
-    .sort((a, b) => b.greek.length - a.greek.length)
-    .map(popup => [popup.greek, popup]);
 }
 
 // The popup an id names, or null. Ids are matched exactly first, then by slug,

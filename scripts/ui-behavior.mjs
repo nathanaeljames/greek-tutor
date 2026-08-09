@@ -2619,7 +2619,10 @@ for (const [label, hash, topicIndex] of [
 // missing page in the rail, and nothing else in the app would say so.
 for (const [chapterId, activityId, opener] of [
   ['chapt_6', 'c6_learn_prepositions', '.rc-sense-link'],
-  ['chapt_7', 'c7_learn_eimi', '.popup-link'],
+  // 5F-FEEDBACK.pdf item 15 (Nathanael, 2026-08-09): the popup opens from the
+  // NUMBER marker now, not the Greek headword -- D-31r supersedes D-31's
+  // original reading. See RichContent.svelte's numbered branch / DIVERGENCE-LOG.
+  ['chapt_7', 'c7_learn_eimi', '.rc-num-popup'],
   ['chapt_8', 'c8_learn_third_person', '.popup-link']
 ]) {
   const activity = activityById(CH_5F[chapterId], activityId);
@@ -2670,29 +2673,36 @@ for (const [chapterId, activityId, opener] of [
 }
 
 // ---- §2.8 the pronoun paradigm stack (More / Back) ----------------------
+// 5F-FEEDBACK.pdf item 8/9 root-cause fix: chapter 8's third-person pronoun
+// retired the bespoke PronounParadigm component (and its .pronoun-paradigm /
+// data-gender markup) in favour of the SAME standard `paradigm` shape every
+// other chapter's charts use -- one cell-audio table renderer, not two to
+// keep in sync. The chart's own `subtitle` field ("Masculine" / "Feminine" /
+// "Neuter") is what Paradigm.svelte stamps onto data-chart-name, so this
+// asserts against the generic .paradigm host instead of the deleted one.
 {
   await go('#/activity/chapt_8/c8_qr_third');
-  const chart = page.locator('.pronoun-paradigm');
+  const chart = page.locator('.paradigm');
   const genders = [];
-  genders.push(await chart.getAttribute('data-gender'));
+  genders.push(await chart.getAttribute('data-chart-name'));
   check('5F §2.8 the third-person chart opens on Masculine and offers More, not Back',
     genders[0] === 'Masculine' && await page.locator('[data-paradigm-switch="more"]').count() === 1
       && await page.locator('[data-paradigm-switch="back"]').count() === 0);
   await page.locator('[data-paradigm-switch="more"]').click();
   await page.waitForTimeout(100);
-  genders.push(await chart.getAttribute('data-gender'));
+  genders.push(await chart.getAttribute('data-chart-name'));
   check('5F §2.8 More steps to Feminine, and Back appears',
     genders[1] === 'Feminine' && await page.locator('[data-paradigm-switch="back"]').count() === 1);
   await page.locator('[data-paradigm-switch="more"]').click();
   await page.waitForTimeout(100);
-  genders.push(await chart.getAttribute('data-gender'));
+  genders.push(await chart.getAttribute('data-chart-name'));
   check('5F §2.8 More again steps to Neuter, where More runs out',
     genders[2] === 'Neuter' && await page.locator('[data-paradigm-switch="more"]').count() === 0
       && await page.locator('[data-paradigm-switch="back"]').count() === 1,
     genders.join(' -> '));
   await page.locator('[data-paradigm-switch="back"]').click();
   await page.waitForTimeout(100);
-  check('5F §2.8 Back steps down again', await chart.getAttribute('data-gender') === 'Feminine');
+  check('5F §2.8 Back steps down again', await chart.getAttribute('data-chart-name') === 'Feminine');
   // Four case rows over two columns, on every one of the three charts.
   check('5F §2.8 four case rows over a Singular and a Plural column',
     await chart.locator('.pg-row').count() === 4 && await chart.locator('.pg-row').first().locator('.pg-cell').count() === 2,
@@ -2702,6 +2712,21 @@ for (const [chapterId, activityId, opener] of [
   await chart.locator('.pg-cell').first().click();
   await page.waitForTimeout(200);
   check('5F §2.8 a paradigm cell plays its own clip', (await clips()).length === 1);
+
+  // Rule A4, on the cohort's NEW exit. §6.4 covers a topic switch, rail
+  // navigation and a route change; stepping between the charts of a
+  // paradigms[] stack is a fourth way out of a surface that is playing, and
+  // it changes neither the route nor the topic — which is exactly the shape
+  // of the defect 5E-SPEC2 §3.1 reported.
+  await go('#/activity/chapt_8/c8_qr_third');
+  await page.locator('.card .pg-actions .btn', { hasText: 'Say Whole' }).first().click();
+  await page.waitForTimeout(250);
+  const playingBefore = await clipsPlaying();
+  await page.locator('[data-paradigm-switch="more"]').click();
+  await page.waitForTimeout(200);
+  check('5F §2.8 audio stops on a CHART SWITCH inside a paradigms[] stack (A4)',
+    playingBefore === 1 && await clipsPlaying() === 0,
+    `playing ${playingBefore} -> ${await clipsPlaying()}`);
 }
 
 // ---- every Quick Review chart offers its Say Whole action EXACTLY once ---

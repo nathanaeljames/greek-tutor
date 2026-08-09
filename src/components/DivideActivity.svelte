@@ -352,6 +352,8 @@
   });
 </script>
 
+<svelte:window on:keydown={showHint ? (e) => { if (e.key === 'Escape') showHint = false; } : null} />
+
 <div class="card divide-activity">
   <!-- Off-screen probe: EVERY word at a known size. The widest sets the type
        size for the whole pool, so stepping never resizes the row (C1). -->
@@ -432,11 +434,23 @@
 </div>
 
 {#if showHint}
-  <div class="card">
-    {#if hintBlocks.length}
-      <RichContent blocks={hintBlocks} />
-    {:else}
-      <div class="pending-verification">Hint content pending verification.</div>
-    {/if}
+  <!-- 5F-FEEDBACK.pdf item 15/16 root cause: this used to be a bare .card
+       stacked under the activity -- no dim overlay, no Close, indistinguishable
+       from a broken layout fragment. Every Hint route now shares the one
+       modal shell (SelectActivity, PlaceAccentActivity, this). -->
+  <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
+    <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
+      <div class="modal-scroll">
+        {#if hintBlocks.length}
+          <RichContent blocks={hintBlocks} />
+        {:else}
+          <div class="pending-verification">Hint content pending verification.</div>
+        {/if}
+      </div>
+      <div class="modal-actions">
+        <!-- svelte-ignore a11y-autofocus -->
+        <button class="btn" autofocus on:click={() => (showHint = false)}>Close</button>
+      </div>
+    </div>
   </div>
 {/if}

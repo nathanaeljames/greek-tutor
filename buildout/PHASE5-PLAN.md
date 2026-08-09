@@ -129,6 +129,23 @@ COHORT 5F — Chapters 6 + 7 + 8 (Prepositions, Adjectives and the verb
   hand; this round ran once without the rail walks and had to be redone
   against them.
 
+  **REGRESSED on device 2026-08-09 (`5F-FEEDBACK.pdf`, 17 items,
+  chapter 7 worst) and PATCHED same day — full account in
+  `5F-SPEC1-PATCH1.md`.** `pronounParadigm` is now DELETED: chapter 8's
+  three pronoun families ship in the same `{columns, rows, charts[]}`
+  shape every other chapter's paradigms use — there is exactly one
+  paradigm renderer in the app again, which is the round's central
+  lesson (two components drawing the same concept is two places for the
+  same bug to be present in one and absent in the other). Chapter 7's
+  teaching topics (adjective paradigms, εἰμί, the οὐ/οὐκ/οὐχ popups) and
+  chapter 8's pronoun-type lists were rebuilt from flat `para` sequences
+  into `numbered`/`greekRows` blocks. Harness re-verified in full after
+  the fix, not sampled: `ui-behavior.mjs` 587/587, `ui-modals.mjs`
+  85/85, `ui-walk.mjs` 70/70 stops x 2 widths, 0 interaction errors.
+  `PrepositionsChart.svelte` rebuilt on polar geometry per item 1 (D-34:
+  a reconstruction from the rail-walk image, not a pixel trace — flagged
+  as a known tooling limit, not claimed as exact).
+
 COHORT 5G+ (INFERENCE, pending each cohort's extraction pass) —
   chapters 9-28 grouped by grammatical family, expecting the first
   chapter of each family to carry the novelty and the rest to reuse:

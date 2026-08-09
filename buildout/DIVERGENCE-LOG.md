@@ -186,31 +186,28 @@ D-30 | ch3,4,5 | THE WHOLE-VERSE SPELLERS USE `Show Answer`, NOT
      verse is still available at any time, which the original does not
      allow. | Nathanael, 2026-08-07; 5E-SPEC3-PATCH item 12.
 
-D-31 | ch7 | THE οὐ / οὐκ / οὐχ POPUPS ARE OPENED FROM THE GREEK
-     WORD ON THEIR OWN NUMBERED LINE. Chapter 6 declares each popup
-     link explicitly (`popupRef` on a greekRows row, the gloss being
-     the link) and chapter 8 declares its three by underlining the
-     label whose slug is the popup id. Chapter 7 declares NEITHER:
-     `c7_learn_eimi` ships three popups (οὐ, οὐκ, οὐχ) and its
-     "οὐ, οὐκ and οὐχ" page ships eleven flat paragraphs with no
-     popupRef and no underline run anywhere on it. Rather than leave
-     three authored pages unreachable — an unreachable popup is a
-     missing page in the rail — the renderer opens a popup from its
-     own `greek` headword where that headword stands on a NUMBERED
-     line, longest headword first so οὐχ is never claimed by οὐ.
-     The numbered-line restriction is the rail walk's: ch7railwalk p7
-     makes "1) οὐ before a consonant;" the hot line and leaves the οὐ
-     in the opening sentence as ordinary ink, and the same rule keeps
-     chapter 6's Proclitics page from turning "ἐν, εἰς and ἐκ are
-     proclitics" into three links the original does not have
-     (ch6railwalk p6). Everywhere else the Greek stays an ordinary
-     audio tap, so directive 9 is untouched off the three hot lines;
-     on them the word opens the page and the popup's own headword
-     plays the clip. If the pipeline later ships anchors for chapter
-     7 the rule costs nothing: an explicit popupRef or underline
-     already wins, and a chapter that ships no `greek` on its popups
-     never enters this path. | Implementer, 5F-SPEC1 §2.2; data gap
-     reported in 5F-SPEC1-RESULTS §2.2.
+D-31 | ch7 | **REVISED 2026-08-09 (5F-FEEDBACK.pdf item 15).** Was:
+     the οὐ / οὐκ / οὐχ popups open from the Greek HEADWORD itself,
+     where that headword stands on its own numbered line (longest
+     headword first so οὐχ is never claimed by οὐ). Nathanael's live
+     correction on the rail walk: "Ou, ouk, oux should be clickable to
+     play their audio, the NUMBERS should be clickable to bring up the
+     menus" — the word is an ordinary audio tap like every other
+     displayed Greek word (directive 9), and the NUMBER marker in
+     front of the line is what opens the popup. `c7_learn_eimi` still
+     ships three popups (οὐ, οὐκ, οὐχ) with no `popupRef` and no
+     underline run naming them, so the gap this entry was written to
+     close is the same one; only the trigger element moved. The
+     `numbered` block's item objects carry a `numberPopupRef` naming
+     the popup id, RichContent renders that marker as a real button
+     (`.rc-num-popup`) in place of the generated "N)" counter, and the
+     Greek word inside the item gets an ordinary `greekTaps` entry
+     pointing at the popup's own audio clip — two independent tap
+     targets on one line, matching the corrected reading exactly.
+     Chapters 6 and 8 are untouched (their popups are already declared
+     by `popupRef` / underline and never used the word-based route).
+     | Nathanael, 5F-FEEDBACK.pdf item 15, live rail-walk correction
+     superseding 5F-SPEC1 §2.2's original reading.
 D-32 | ch6,8 | THE CASE-SPLIT VOCABULARY DRILLS DO NOT FOLLOW D-19.
      D-19 puts a lexicon-derived vocabulary option pool two-up on a
      phone and four-up from 768px, in both directions. Chapters 6 and
@@ -238,6 +235,28 @@ D-33 | ch7 | THE εἰμί SPELLER'S PARENTHESISED ALTERNATE MAKES THE
      beside them, whose answerAlt is their own answer, still reject a
      stray nu, and the harness asserts that. | Implementer, 5F-SPEC1
      §2.10.
+D-34 | ch6 | THE PREPOSITIONS CHART IS A GEOMETRIC RECONSTRUCTION, NOT
+     A TRACED COPY. 5F-FEEDBACK.pdf item 1 (Nathanael, 2026-08-09):
+     "copy the chart exactly and match it visually down to every
+     intersection, copying the exact angle of each line, copying
+     positioning." The component's first pass (5F-SPEC1) hand-placed
+     each label and arrow independently and said so in its own header
+     comment ("NOT a pixel copy... the spec says so explicitly") —
+     that latitude was never actually ratified against this chart
+     specifically and item 1 revokes it outright. The rebuild places
+     all nine outer prepositions on a shared ellipse by clock-angle
+     (read off ch6railwalk p6/p14's own layout: three cluster at the
+     top, four run the sides, two anchor the bottom corners) and
+     computes every straight in/out arrow from that SAME angle, so it
+     always meets the ellipse boundary exactly under its own label
+     instead of at a hand-guessed point. This closes the actual defect
+     (arrows that didn't consistently intersect the circle) but is
+     still a RECONSTRUCTION from the rail-walk image's visible layout,
+     not a pixel-coordinate trace — this environment has no tool that
+     extracts exact vector coordinates from a scanned/photographed
+     page. Flagged rather than claimed as exact; a pixel-diff against
+     the original bitmap is the only way to close this fully. |
+     Implementer, 5F-FEEDBACK.pdf item 1; known tooling limit.
 
 ## Auto-progress / advance rule matrix
 

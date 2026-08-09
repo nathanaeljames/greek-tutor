@@ -456,6 +456,15 @@ button { font: inherit; cursor: pointer; }
 .rc-list.unnumbered { padding-left: 0; }
 .rc-list.unnumbered > li { counter-increment: none; }
 .rc-list.unnumbered > li::before { content: none; }
+/* 5F-FEEDBACK.pdf item 15: a numbered item whose MARKER opens a popup
+   (chapter 7's οὐ / οὐκ / οὐχ page) renders that marker as a real button
+   instead of the generated ::before counter, so it can be tapped; the
+   hanging-indent position is identical to the authored-label marker above. */
+.rc-list > li.no-marker::before { content: none; }
+.rc-num-popup { position: absolute; left: -1.9em; width: 1.5em; text-align: right;
+  background: transparent; border: none; padding: 0; font: inherit; font-weight: 600;
+  color: var(--link); cursor: pointer; }
+.rc-num-popup:active { opacity: 0.6; }
 .rc-lead { text-decoration: underline; font-weight: 600; }
 /* labelStyle "underline" / "plain" (5D-SPEC2 §6): the original's own list-item
    terms. Ink, never --link: blue is reserved for tappable, and these labels
@@ -463,6 +472,11 @@ button { font: inherit; cursor: pointer; }
 .rc-lead-u { font-weight: 600; color: var(--ink); }
 .rc-lead-plain { font-weight: 700; color: var(--ink); text-decoration: none; }
 .rc-num { font-weight: 600; margin-right: 0.15em; }
+/* 5F-FEEDBACK.pdf items 5/6/7/13: a worked-example table nested under a
+   numbered teaching point. No extra left offset needed -- the <li> already
+   sits inside .rc-list's own 1.9em text column, so this inherits the same
+   hanging-indent position as the item's own wrapped text for free. */
+.rc-item-below { margin-top: 8px; margin-bottom: 4px; }
 /* A para carrying the original's own body typography (5D-SPEC2 §6). "Stem +
    Pronominal ending — λύ + ω" is bold and indented under its lead sentence. */
 .rc-para.rc-strong { font-weight: 700; }
@@ -587,7 +601,21 @@ button { font: inherit; cursor: pointer; }
 .rc-parttext { color: var(--ink); }
 .rc-greekrow { display: grid; grid-template-columns: repeat(var(--greek-cols), minmax(0, 1fr)); gap: 10px;
   align-items: baseline; border-bottom: 1px solid rgba(0,0,0,0.06); padding: 9px 6px; min-width: 0; }
-.rc-greekrows.gloss-only .rc-greekrow { grid-template-columns: minmax(4.5em, 35%) minmax(0, 1fr); }
+.rc-greekrows.gloss-only .rc-greekrow { grid-template-columns: minmax(4.5em, 55%) minmax(0, 1fr); }
+/* Widened from 35% (5F-FEEDBACK.pdf class of bug): most gloss-only rows are a
+   single vocabulary word, which 35% always fit, but a worked TWO-WORD phrase
+   in this same layout (chapter 8's "ἄνθρωπός μου") tipped over that cap and
+   wrapped one word onto its own line with room to spare in the card. 45%
+   still leaves the gloss its own column and does not visibly change any
+   already-correct single-word row (it only raises the CEILING those rows
+   were never close to). */
+/* 5F-FEEDBACK.pdf items 2/3: this fixed 35% word column was clobbering
+   parts-row's OWN --greek-cols:1 (higher specificity wins over the custom
+   property), squeezing the whole "( διά + ἐμοῦ )" equation into a 108px-wide
+   column at 380px and forcing it onto four lines with plenty of width to
+   spare. A parts-row is never a word+gloss pair -- it is one flowing
+   equation -- so it always reclaims the full row width, glossOnly or not. */
+.rc-greekrows.gloss-only .rc-greekrow.parts-row { grid-template-columns: minmax(0, 1fr); }
 .rc-greekrows.english-pairs .rc-greekrow { text-align: center; }
 .rc-english-cell { min-width: 0; overflow-wrap: break-word; }
 .rc-greeklabel { font-weight: 600; overflow-wrap: anywhere; }
@@ -806,6 +834,9 @@ button { font: inherit; cursor: pointer; }
 .paradigm { margin: 6px 0 2px; }
 .pg-title { text-align: center; font-size: 1.1rem; font-weight: 700; color: var(--teal-dark);
   margin-bottom: 8px; }
+/* Per-chart secondary heading (chapter 8's Masculine/Feminine/Neuter). */
+.pg-subtitle { text-align: center; font-size: 1rem; font-weight: 700; color: var(--accent-ink);
+  margin: -4px 0 8px; }
 .pg-lemma { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center;
   gap: 4px 12px; width: 100%; background: transparent; border: none; padding: 2px 0 10px; }
 .pg-lemma-greek { font-size: 1.7rem; color: var(--link); }

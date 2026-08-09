@@ -102,6 +102,12 @@
   data-chart-name={chart.name || ''}>
   {#key chart}
     {#if title}<div class="pg-title">{title}</div>{/if}
+    <!-- 5F-FEEDBACK.pdf item 8/9: a per-chart secondary heading, changing as
+         chartIndex changes -- unlike `title` (an outer, static prop), this
+         reads off the CURRENT chart, which is what makes "Masculine" become
+         "Feminine" then "Neuter" as More/Back step through chapter 8's
+         third-person stack while "Third Person Paradigm" stays put above it. -->
+    {#if chart.subtitle}<div class="pg-subtitle">{chart.subtitle}</div>{/if}
 
     {#if lemma}
       <!-- Blue means tappable and only tappable (directive 8): a lemma with no

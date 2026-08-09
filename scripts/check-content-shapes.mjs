@@ -17,9 +17,15 @@ const problems = [];
 const BLOCK_TYPES = new Set([
   'heading', 'subheading', 'para', 'numbered', 'defList',
   'biblist', 'refs', 'note', 'greekRows', 'expander', 'paradigm',
-  // 5F: chapter 6's preposition DIAGRAM and chapter 8's pronoun chart, whose
-  // rows are set as one line of text rather than as {greek, gloss} cells.
-  'prepositionsChart', 'pronounParadigm'
+  // 5F: chapter 6's preposition DIAGRAM.
+  'prepositionsChart'
+  // 'pronounParadigm' (chapter 8's free-text pronoun-row shape) was RETIRED
+  // in the 5F-FEEDBACK.pdf patch round: every pronoun paradigm now ships as a
+  // standard `paradigm` block with real cells and real per-cell audio, which
+  // is what fixed the untransliterated-Latin defect (§8.1) at the root —
+  // there is no longer a text-splitting step to fail. Deliberately absent
+  // from this set, not merely unused: a stray 'pronounParadigm' block in a
+  // future data drop should fail the BUILD, not silently degrade.
 ]);
 // "type" is also the ACTIVITY discriminator, so the activity types are listed
 // here as the known non-block use of the key. Anything else carrying a "type"
@@ -186,43 +192,11 @@ function validateMeanings(meanings, path) {
   }
 }
 
-// 5F: chapter 8's pronoun chart. Its rows carry ONE LINE of set text
-// ("ἐγώ I ἡμεῖς we"), not a cells[] array, so it has its own contract:
-// PronounParadigm.svelte splits the line at the start of the last Greek run.
-// The check that matters is that the line HAS that run — a row with no Greek
-// at all cannot be split into a Singular and a Plural cell and would print as
-// one undifferentiated string, which is exactly the shape of the delivered
-// defect this file exists to make loud.
-const GREEK_RUN = /[Ͱ-Ͽἀ-῿]/u;
-function validatePronounParadigm(chart, path) {
-  const columns = Array.isArray(chart.columns) ? chart.columns : [];
-  if (columns.length !== 2) {
-    problems.push(`${path}.columns: pronounParadigm expects a Singular and a Plural column, got ${columns.length}.`);
-  }
-  const rows = Array.isArray(chart.rows) ? chart.rows : [];
-  if (!rows.length) problems.push(`${path}: pronounParadigm has no rows.`);
-  rows.forEach((row, index) => {
-    const text = row && typeof row.text === 'string' ? row.text.trim() : '';
-    if (!text) {
-      problems.push(`${path}.rows[${index}]: pronounParadigm row has no text line.`);
-      return;
-    }
-    if (!GREEK_RUN.test(text)) {
-      problems.push(`${path}.rows[${index}]: pronounParadigm row "${text}" contains no Greek — it cannot be split into Singular and Plural cells.`);
-    }
-    if (!String(row.label ?? '').trim()) {
-      problems.push(`${path}.rows[${index}]: pronounParadigm row has no case label.`);
-    }
-  });
-}
-
 function validateParadigm(paradigm, path) {
   if (!paradigm || typeof paradigm !== 'object' || Array.isArray(paradigm)) {
     problems.push(`${path}: paradigm is not an object.`);
     return;
   }
-
-  if (paradigm.type === 'pronounParadigm') { validatePronounParadigm(paradigm, path); return; }
 
   if (paradigm.charts != null) {
     if (!Array.isArray(paradigm.charts) || paradigm.charts.length < 2) {
@@ -302,6 +276,18 @@ for (const file of files) {
         }
       });
     }
+    // 5F-FEEDBACK.pdf items 5/6/7/13 (Nathanael, 2026-08-09): a teaching point
+    // hand-numbered into a PLAIN para's own text ("1) Attributive adjectives
+    // have...") renders as ordinary prose -- the marker never enters the
+    // hanging-indent system a real `numbered` block gives for free, so a
+    // multi-line item wraps flush left instead of under its own text. This
+    // shipped once (chapter 7's Adjective Translation Drill hint) and passed
+    // visual verification because the FIRST line of a short item looks
+    // identical either way; only a wrapped line exposes it. Catch it at the
+    // source instead of relying on a screenshot to catch the wrap.
+    if (block.type === 'para' && typeof block.text === 'string' && /^\s*\(?\d{1,2}[.)]\s/.test(block.text)) {
+      problems.push(`${path}: para text starts with a hand-authored number ("${block.text.slice(0, 24)}...") — use a numbered block instead so wrapped lines hang under their own text.`);
+    }
     // Every contentAudio mode must have a branch in ContentAudio.svelte; an
     // unknown one silently falls through to the generic chart layout.
     if (block.type === 'contentAudio' && block.mode && !CONTENT_MODES.has(block.mode)) {
@@ -310,9 +296,8 @@ for (const file of files) {
     // A paradigm chart's rows must line up with its declared columns, or cells
     // land under the wrong number heading. Chapter 4/5 may wrap multiple full
     // charts in charts[]; validate each chart and each nested Meanings table.
-    if (block.type === 'paradigm' || block.type === 'pronounParadigm'
-        || (block.paradigm && block.mode === 'paradigmChart')) {
-      const own = block.type === 'paradigm' || block.type === 'pronounParadigm';
+    if (block.type === 'paradigm' || (block.paradigm && block.mode === 'paradigmChart')) {
+      const own = block.type === 'paradigm';
       validateParadigm(own ? block : block.paradigm, own ? path : `${path}.paradigm`);
     }
     // 5F: a paradigmChart may ship SEVERAL charts as paradigms[] (chapter 8's
@@ -320,6 +305,21 @@ for (const file of files) {
     if (block.mode === 'paradigmChart' && Array.isArray(block.paradigms)) {
       if (!block.paradigms.length) problems.push(`${path}.paradigms: expected at least one chart.`);
       block.paradigms.forEach((chart, index) => validateParadigm(chart, `${path}.paradigms[${index}]`));
+      // 5F-FEEDBACK.pdf item 8/9 aftermath: a paradigms[] stack of more than
+      // one page is a More/Back sequence, and Paradigm.svelte stamps each
+      // page's own `name` onto data-chart-name for the harness (and anyone
+      // else) to read which chart is on screen. c8_qr_third shipped its three
+      // pages with `subtitle` set ("Masculine"/"Feminine"/"Neuter") but no
+      // `name`, so the attribute rendered empty and the behavior harness could
+      // not tell which chart it was looking at -- caught by ui-behavior.mjs
+      // §2.8, not by this build-time check, because nothing here had asked.
+      if (block.paradigms.length > 1) {
+        block.paradigms.forEach((chart, index) => {
+          if (!chart || typeof chart.name !== 'string' || !chart.name.trim()) {
+            problems.push(`${path}.paradigms[${index}].name: expected a non-empty chart name (a paradigms[] stack of more than one page is a More/Back sequence).`);
+          }
+        });
+      }
     }
     // spellVerse grades word by word, so the answer must actually be words.
     if (block.type === 'spellVerse') {
@@ -576,4 +576,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para).`);

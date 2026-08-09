@@ -1,23 +1,21 @@
 <script>
   // THE PREPOSITIONS CHART (5F §2.1). Chapter 6 draws its ten prepositions as
-  // a DIAGRAM, not a table: ἐν sits in a circle at the centre and the other
+  // a DIAGRAM, not a table: ἐν sits in an oval at the centre and the other
   // nine stand around it, each with an arrow showing the direction of motion
   // its case implies. The arrangement IS the pedagogy (standing directive 2) —
   // "out of" points away from the circle, "into" points at it, "through" runs
   // across it — so the geometry is reconstructed rather than flattened.
   //
-  // It is NOT a pixel copy of the original's 1990s line art. The goal is a
-  // clean, legible diagram inside a 380px phone viewport; the spec says so
-  // explicitly. The same block renders as a Learn topic and as the Review
-  // Prepositions Chart, from one component, so the two can never disagree.
+  // 5F-FEEDBACK.pdf item 1 (Nathanael, 2026-08-09): match the original's
+  // intersections, angles and positioning, not a loosely-spaced redraw. Every
+  // node below sits on a fixed ANGLE around a shared ellipse (the original's
+  // ἐν is wider than tall), and every in/out arrow is computed from that same
+  // angle at a start/end RADIUS, so it always meets the ellipse boundary at
+  // exactly the point the label sits over — no more hand-placed coordinates
+  // that could drift out of alignment with their own label.
   //
   // Greek-tap rule (directive 9): every Greek label plays its own clip. The
   // gloss under it is ink.
-  //
-  // LAYOUT. Nine slots on a 320x320 user-space grid plus the centre. The slot
-  // names are the data's (topLeft, top, topRight, left, right, lowerLeft,
-  // lowerRight, bottomLeft, bottomRight); an unknown slot still renders, in a
-  // spare row below the diagram, rather than vanishing.
   import { play } from '../lib/audio.js';
   export let block;
   // The heading the HOST already printed (topicPages prints the topic title,
@@ -28,36 +26,89 @@
 
   const SIZE = 320;
   const CX = SIZE / 2;
-  const CY = 150;
-  const R = 40;                                  // the ἐν circle
+  const CY = 158;
+  // The ἐν oval: wider than tall, matching the original's proportions.
+  const ERX = 36, ERY = 26;
 
-  // x/y is the label ANCHOR; the arrow runs between `from` and `to`.
-  const SLOTS = {
-    topLeft:     { x: 46,  y: 28,  anchor: 'start'  },
-    top:         { x: 160, y: 20,  anchor: 'middle' },
-    topRight:    { x: 274, y: 28,  anchor: 'end'    },
-    left:        { x: 20,  y: 118, anchor: 'start'  },
-    right:       { x: 300, y: 118, anchor: 'end'    },
-    lowerLeft:   { x: 20,  y: 196, anchor: 'start'  },
-    lowerRight:  { x: 300, y: 196, anchor: 'end'    },
-    bottomLeft:  { x: 46,  y: 286, anchor: 'start'  },
-    bottomRight: { x: 274, y: 286, anchor: 'end'    },
-    centre:      { x: CX,  y: CY,  anchor: 'middle' }
+  // Clock position, in degrees (0 = right/east, increasing counter-clockwise,
+  // SVG y-down so a positive angle step visually goes UP first) -- one entry
+  // per slot the chapter's data actually names, read directly off the rail
+  // walk's own layout (ch6railwalk p6/p14): three prepositions cluster at the
+  // top, four run the sides, two anchor the bottom corners.
+  const ANGLE = {
+    topLeft: 125, top: 90, topRight: 55,
+    left: 178, right: 2,
+    lowerLeft: 205, lowerRight: 335,
+    bottomLeft: 240, bottomRight: 300
   };
+  const LABEL_R = 108;   // how far out the Greek/gloss pair sits
+  const ARROW_OUT_R = 62;  // the arrow's far end (label side)
+  const ARROW_IN_R = ERX + 8;  // the arrow's near end (oval side)
 
-  // Arrow paths, per slot and arrow kind. "in" points at the circle, "out"
-  // away from it, "over" arcs above it, "across" runs through it, "down"
-  // drives into it from below, "curveIn" is περί's encircling sweep.
+  // Point on the shared ellipse at a given angle and radius scale (1 = the
+  // ellipse boundary itself; label/arrow points scale the same x/y ratio out
+  // from the centre, which is what keeps everything on one consistent ray).
+  function pt(angleDeg, r) {
+    const rad = (angleDeg * Math.PI) / 180;
+    return { x: CX + r * Math.cos(rad), y: CY - r * (ERY / ERX) * Math.sin(rad) };
+  }
+  function anchorFor(angleDeg) {
+    const c = Math.cos((angleDeg * Math.PI) / 180);
+    return c > 0.3 ? 'start' : c < -0.3 ? 'end' : 'middle';
+  }
+
+  const SLOTS = {};
+  for (const [slot, angle] of Object.entries(ANGLE)) {
+    const label = pt(angle, LABEL_R);
+    SLOTS[slot] = { x: label.x, y: label.y, anchor: anchorFor(angle), angle };
+  }
+
+  function arrowPath(angle, reverse) {
+    const a = pt(angle, ARROW_IN_R);
+    const b = pt(angle, ARROW_OUT_R);
+    return reverse ? `M ${b.x} ${b.y} L ${a.x} ${a.y}` : `M ${a.x} ${a.y} L ${b.x} ${b.y}`;
+  }
+  // περί's sweep: a single curve from its own position bending in to meet the
+  // oval near the top, encircling toward ἐπί's side (ch6railwalk: the one
+  // arrow that visibly curves rather than running straight).
+  function curveIn(angle) {
+    const start = pt(angle, ARROW_OUT_R - 6);
+    const end = pt(90, ARROW_IN_R + 6);
+    const mid = pt((angle + 90) / 2, ARROW_OUT_R + 10);
+    return `M ${start.x} ${start.y} Q ${mid.x} ${mid.y} ${end.x} ${end.y}`;
+  }
+  // ἐπί's arc: over the top of the oval, from just past περί's side to just
+  // before μετά's, peaking well above the oval the way the original draws it.
+  function overArc() {
+    const start = pt(125, ARROW_OUT_R - 14);
+    const end = pt(55, ARROW_OUT_R - 14);
+    const peak = pt(90, ARROW_OUT_R + 34);
+    return `M ${start.x} ${start.y} Q ${peak.x} ${peak.y} ${end.x} ${end.y}`;
+  }
+  // διά's line: straight THROUGH the oval, corner to corner (bottomLeft to
+  // the topRight side), the one arrow that crosses the centre.
+  function acrossLine() {
+    const start = pt(240, ARROW_OUT_R + 6);
+    const end = pt(20, ARROW_OUT_R + 30);
+    return `M ${start.x} ${start.y} L ${end.x} ${end.y}`;
+  }
+  // κατά's line: straight up into the oval from the bottom-right corner.
+  function downLine() {
+    const start = pt(300, ARROW_OUT_R + 6);
+    const end = pt(120, ARROW_IN_R + 4);
+    return `M ${start.x} ${start.y} L ${end.x} ${end.y}`;
+  }
+
   const ARROWS = {
-    topLeft:     { curveIn: 'M 92 46 A 78 78 0 0 1 150 108', in: 'M 92 46 L 138 96', out: 'M 138 96 L 92 46' },
-    top:         { over: 'M 118 62 A 62 62 0 0 1 202 62', in: 'M 160 44 L 160 104', out: 'M 160 104 L 160 44' },
-    topRight:    { in: 'M 228 46 L 182 96', out: 'M 182 96 L 228 46' },
-    left:        { in: 'M 74 132 L 116 145', out: 'M 116 145 L 74 132' },
-    right:       { in: 'M 246 132 L 204 145', out: 'M 204 145 L 246 132' },
-    lowerLeft:   { in: 'M 74 190 L 116 162', out: 'M 116 162 L 74 190' },
-    lowerRight:  { in: 'M 246 190 L 204 162', out: 'M 204 162 L 246 190' },
-    bottomLeft:  { across: 'M 74 268 L 250 118', in: 'M 92 262 L 138 200', out: 'M 138 200 L 92 262' },
-    bottomRight: { down: 'M 250 268 L 176 190', in: 'M 228 262 L 182 200', out: 'M 182 200 L 228 262' }
+    topLeft: { curveIn: curveIn(ANGLE.topLeft), in: arrowPath(ANGLE.topLeft, false), out: arrowPath(ANGLE.topLeft, true) },
+    top: { over: overArc(), in: arrowPath(ANGLE.top, false), out: arrowPath(ANGLE.top, true) },
+    topRight: { in: arrowPath(ANGLE.topRight, false), out: arrowPath(ANGLE.topRight, true) },
+    left: { in: arrowPath(ANGLE.left, false), out: arrowPath(ANGLE.left, true) },
+    right: { in: arrowPath(ANGLE.right, false), out: arrowPath(ANGLE.right, true) },
+    lowerLeft: { in: arrowPath(ANGLE.lowerLeft, false), out: arrowPath(ANGLE.lowerLeft, true) },
+    lowerRight: { in: arrowPath(ANGLE.lowerRight, false), out: arrowPath(ANGLE.lowerRight, true) },
+    bottomLeft: { across: acrossLine(), in: arrowPath(ANGLE.bottomLeft, false), out: arrowPath(ANGLE.bottomLeft, true) },
+    bottomRight: { down: downLine(), in: arrowPath(ANGLE.bottomRight, false), out: arrowPath(ANGLE.bottomRight, true) }
   };
 
   $: nodes = block.nodes || [];
@@ -76,7 +127,7 @@
   {#if title}<div class="rc-heading">{title}</div>{/if}
   <svg
     class="prep-svg"
-    viewBox="0 0 {SIZE} {SIZE}"
+    viewBox="6 0 {SIZE - 6} {SIZE - 4}"
     role="group"
     aria-label={block.title || 'Prepositions chart'}>
     <defs>
@@ -91,7 +142,7 @@
       {#if d}<path class="prep-arrow" d={d} marker-end="url(#prep-arrow)" />{/if}
     {/each}
 
-    <circle class="prep-circle" cx={CX} cy={CY} r={R} />
+    <ellipse class="prep-circle" cx={CX} cy={CY} rx={ERX} ry={ERY} />
 
     {#if centre}
       <!-- Greek-tap rule: the centre word pronounces itself like every other. -->
@@ -99,7 +150,7 @@
          on:click={() => centre.audio && play(centre.audio)}
          on:keydown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); centre.audio && play(centre.audio); } }}>
         <text class="prep-greek greek" x={CX} y={CY - 2} text-anchor="middle">{centre.greek}</text>
-        <text class="prep-gloss" x={CX} y={CY + 16} text-anchor="middle">{centre.gloss}</text>
+        <text class="prep-gloss" x={CX} y={CY + 15} text-anchor="middle">{centre.gloss}</text>
       </g>
     {/if}
 

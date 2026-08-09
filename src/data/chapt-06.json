@@ -1057,13 +1057,146 @@
     "defaults": {
      "pronounceEach": true
     },
-    "liveScore": true,
-    "hintRef": "prepositionsCaseChart"
+    "liveScore": true
    },
    "audioTiming": "beforeGuess",
    "answerPolicy": {
     "advanceClass": "manualOnIncorrect",
     "attemptsPerItem": 1
+   },
+   "hint": {
+    "content": [
+     {
+      "type": "greekRows",
+      "layout": "prepositionSenses",
+      "rows": [
+       {
+        "greek": "ἀπό",
+        "audio": "chapt_6_f_voc1",
+        "senses": [
+         {
+          "gloss": "from",
+          "caseTag": "(with gen.)"
+         }
+        ]
+       },
+       {
+        "greek": "διά",
+        "audio": "chapt_6_f_voc2",
+        "senses": [
+         {
+          "gloss": "through",
+          "caseTag": "(with gen.)"
+         },
+         {
+          "gloss": "on account of",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "εἰς",
+        "audio": "chapt_6_f_voc3",
+        "senses": [
+         {
+          "gloss": "into",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "ἐκ",
+        "audio": "chapt_6_f_voc4",
+        "senses": [
+         {
+          "gloss": "out of, from",
+          "caseTag": "(with gen.)"
+         }
+        ]
+       },
+       {
+        "greek": "ἐν",
+        "audio": "chapt_6_f_voc5",
+        "senses": [
+         {
+          "gloss": "in",
+          "caseTag": "(with dat.)"
+         }
+        ]
+       },
+       {
+        "greek": "ἐπί",
+        "audio": "chapt_6_f_voc6",
+        "senses": [
+         {
+          "gloss": "on, over",
+          "caseTag": "(with gen.)"
+         },
+         {
+          "gloss": "on, at, in",
+          "caseTag": "(with dat.)"
+         },
+         {
+          "gloss": "on, to, for",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "κατά",
+        "audio": "chapt_6_f_voc7",
+        "senses": [
+         {
+          "gloss": "down, against",
+          "caseTag": "(with gen.)"
+         },
+         {
+          "gloss": "according to",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "μετά",
+        "audio": "chapt_6_f_voc8",
+        "senses": [
+         {
+          "gloss": "with",
+          "caseTag": "(with gen.)"
+         },
+         {
+          "gloss": "after",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "περί",
+        "audio": "chapt_6_f_voc9",
+        "senses": [
+         {
+          "gloss": "about, concerning",
+          "caseTag": "(with gen.)"
+         },
+         {
+          "gloss": "around, near",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "πρός",
+        "audio": "chapt_6_f_voc10",
+        "senses": [
+         {
+          "gloss": "to",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       }
+      ]
+     }
+    ]
    }
   },
   {
@@ -1532,13 +1665,146 @@
     "defaults": {
      "pronounceEach": true
     },
-    "liveScore": true,
-    "hintRef": "prepositionsCaseChart"
+    "liveScore": true
    },
    "audioTiming": "afterGuess",
    "answerPolicy": {
     "advanceClass": "manualOnIncorrect",
     "attemptsPerItem": 1
+   },
+   "hint": {
+    "content": [
+     {
+      "type": "greekRows",
+      "layout": "prepositionSenses",
+      "rows": [
+       {
+        "greek": "ἀπό",
+        "audio": "chapt_6_f_voc1",
+        "senses": [
+         {
+          "gloss": "from",
+          "caseTag": "(with gen.)"
+         }
+        ]
+       },
+       {
+        "greek": "διά",
+        "audio": "chapt_6_f_voc2",
+        "senses": [
+         {
+          "gloss": "through",
+          "caseTag": "(with gen.)"
+         },
+         {
+          "gloss": "on account of",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "εἰς",
+        "audio": "chapt_6_f_voc3",
+        "senses": [
+         {
+          "gloss": "into",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "ἐκ",
+        "audio": "chapt_6_f_voc4",
+        "senses": [
+         {
+          "gloss": "out of, from",
+          "caseTag": "(with gen.)"
+         }
+        ]
+       },
+       {
+        "greek": "ἐν",
+        "audio": "chapt_6_f_voc5",
+        "senses": [
+         {
+          "gloss": "in",
+          "caseTag": "(with dat.)"
+         }
+        ]
+       },
+       {
+        "greek": "ἐπί",
+        "audio": "chapt_6_f_voc6",
+        "senses": [
+         {
+          "gloss": "on, over",
+          "caseTag": "(with gen.)"
+         },
+         {
+          "gloss": "on, at, in",
+          "caseTag": "(with dat.)"
+         },
+         {
+          "gloss": "on, to, for",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "κατά",
+        "audio": "chapt_6_f_voc7",
+        "senses": [
+         {
+          "gloss": "down, against",
+          "caseTag": "(with gen.)"
+         },
+         {
+          "gloss": "according to",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "μετά",
+        "audio": "chapt_6_f_voc8",
+        "senses": [
+         {
+          "gloss": "with",
+          "caseTag": "(with gen.)"
+         },
+         {
+          "gloss": "after",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "περί",
+        "audio": "chapt_6_f_voc9",
+        "senses": [
+         {
+          "gloss": "about, concerning",
+          "caseTag": "(with gen.)"
+         },
+         {
+          "gloss": "around, near",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       },
+       {
+        "greek": "πρός",
+        "audio": "chapt_6_f_voc10",
+        "senses": [
+         {
+          "gloss": "to",
+          "caseTag": "(with acc.)"
+         }
+        ]
+       }
+      ]
+     }
+    ]
    }
   },
   {
