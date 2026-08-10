@@ -20,6 +20,26 @@ answer disagrees with the chapter's own chart, the assembly STOPS
 
 Usage:  python3 assemble_ch7.py 7_ADJS.TBK font-map.json outdir
 """
+# --------------------------------------------------------------------
+# FROZEN AT 5F CLOSE -- PIPELINE-INSIGHTS-v3 Stage 8.7.
+#
+# The committed chapt-07.json carries THREE rounds of device-verified
+# hand repair (5F-SPEC1-PATCH1/2/3: paragraph restructures, chart
+# emissions, audio re-keys, popup re-keys) that this script does NOT
+# reproduce. Re-running it would silently regress the approved state.
+# The committed JSON is the source of truth; this script is provenance
+# only -- it documents how the FIRST cut was derived.
+# --------------------------------------------------------------------
+import os as _os
+if _os.environ.get('ALLOW_REGRESSIVE_REBUILD') != '1':
+    raise SystemExit(
+        'REFUSING TO RUN: assemble_ch7.py is provenance only '
+        '(Stage 8.7). The committed chapt-07.json carries PATCH1-3 '
+        'hand repairs this script does not reproduce. Set '
+        'ALLOW_REGRESSIVE_REBUILD=1 only after back-porting every patch '
+        'change, and diff the output against the committed file before '
+        'trusting it.')
+
 import json
 import re
 import struct

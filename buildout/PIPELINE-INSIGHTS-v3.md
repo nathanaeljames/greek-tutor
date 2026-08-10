@@ -751,7 +751,10 @@ patch rounds. The committed repo JSON is the single source of truth for
 chapters 6-8; the assemblers document how the first cut was derived.
 Do not re-run them against these chapters without first back-porting
 every PATCH1-3 data change, and say so wherever regeneration is
-discussed. For future chapters, Stage 8.1-8.5 exist precisely so the
+discussed. This is now MECHANICALLY enforced: all three scripts refuse
+to run with a message citing this rule unless `ALLOW_REGRESSIVE_REBUILD=1`
+is set, which should only ever happen after a full back-port with the
+output diffed against the committed file. For future chapters, Stage 8.1-8.5 exist precisely so the
 first cut does not need hand repair.
 
 **8.8 D-32 CLOSURE ITEM for the next data delivery.** Chapters 6 and
