@@ -232,11 +232,7 @@
       {
        "type": "para",
        "text": "Since the nominative is indicated in the personal ending of the verb (e.g. λέγω = I say) when the personal pronoun is used it is for emphasis (e.g. ἐγὼ λέγω = [[u]]I[[/u]] say).",
-       "gapBefore": true,
-       "greekTaps": {
-        "λέγω": "chapt_8_h_legw",
-        "ἐγὼ": "chapt_8_h_1nse"
-       }
+       "gapBefore": true
       },
       {
        "type": "para",

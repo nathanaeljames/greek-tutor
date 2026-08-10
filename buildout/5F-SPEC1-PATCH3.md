@@ -250,3 +250,56 @@ log; the listener now attaches before the first navigation.
 (`i1-adj-paradigm-singular.png` shows page 1's greyed-out Back beside a
 live More, centred; `i6-qr-third-p2-justified.png` shows the Review
 pager's centred pair mid-stack).
+
+---
+
+## Second addendum (2026-08-10, device testing): item 4 reversed, and why every audio pack said "Update audio"
+
+Two findings from Nathanael's on-device pass, one correction and one
+explanation — and they turn out to be the same event.
+
+**Item 4 reversed — λέγω / ἐγὼ λέγω are plain ink again.** Nathanael:
+*"I misled you on one point ... legw and egw legw were never clickable,
+and that is why you didn't find the audio to map."* The TBK evidence had
+in fact said exactly this (no WordSelection handler on that page, no
+phrase recording anywhere on the ISO), and this patch had noted it in
+D-39 while building the borrowed-clip workaround anyway. Reverted in
+full: the `greekTaps` removed from the Introduction paragraph, the
+copied `h_legw.m4a` deleted from the chapter-8 pack, its manifest entry
+removed, and ui-behavior P3.5's tap assertion replaced with its inverse
+— a pin that both phrases render as plain ink with zero tap targets, so
+a future pass cannot re-invent the taps. D-39 is rewritten around the
+reversal (its second-person half — enclitic clips speaking for the
+σοῦ/σοί/σέ emphatics — still stands). The lesson is now in the log
+verbatim: when the original wires no handler and ships no clip, that IS
+the original's answer; say so before building a workaround from
+borrowed audio.
+
+**Why every pack said "Update audio."** Pack versioning is one SHA-256
+hash of the raw `audio-manifest.json` text (packs.js — "coarse
+pack-versioning" is literal). Adding the single `chapt_8_h_legw` entry
+changed that global hash, which flipped ALL eight downloaded packs to
+"Update audio" and left chapter 8 at "179 of 180 saved" (the device's
+pack predated the added file). **No audio bytes were touched, moved or
+corrupted at any point** — one line in the index changed and the coarse
+versioning did the rest. The revert restores the manifest
+**byte-identical** to its pre-PATCH3 state (SHA-256 verified equal to
+the committed 766dcc3 blob), so once this deploys, the hash the app
+computes matches the one the device's packs were downloaded under and
+the prompts disappear on their own. If the partial chapter-8 re-download
+was resumed in the meantime, the fetched extra file sits as a harmless
+orphan row in the audio store; nothing reads it.
+
+**Process consequence**, written into ONBOARD-SOL §8 as a named footgun:
+the audio corpus is complete and frozen, and the manifest must be
+treated as frozen with it — ANY manifest edit is a full "Update audio"
+prompt on every device, not a per-pack delta. A future change that
+genuinely must touch it should say so in the handoff, in those terms.
+
+**Verification of this addendum:** `npm run verify` PASS (shapes guard
+confirms no dangling `chapt_8_h_legw` reference survives);
+`ui-behavior.mjs` **683/683** including the new plain-ink pin;
+`ui-walk.mjs` chapter 8 clean; manifest hash equality with the
+pre-PATCH3 commit verified directly; the restored page captured as
+`i4-intro-plain-ink-restored.png` (the superseded tap screenshot is
+removed so the evidence folder cannot mislead a later reviewer).

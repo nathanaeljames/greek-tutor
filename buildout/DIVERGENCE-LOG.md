@@ -329,22 +329,31 @@ D-38 | ch7,ch8 | HINT POPUPS PAGE More/Back AT THE MODAL LEVEL, IN
      items 12, 13, 27, 28, 29; 5F-FEEDBACK3 items 1, 6; addendum
      2026-08-10.
 
-D-39 | ch8 | THE INTRODUCTION'S λέγω / ἐγὼ λέγω EXAMPLES ARE PER-WORD
-     TAPS ON BORROWED CLIPS. 5F-FEEDBACK3 item 4 asks for both to be
-     clickable. The original wires NO WordSelection handler to either
-     phrase on that page (8_PRONS.TBK, page record at 0x179c9 —
-     checked directly) and ships no "ἐγὼ λέγω" phrase recording
-     anywhere on the ISO. So: ἐγὼ plays the original's own emphatic
-     first-nominative clip H_1NSE (recorded for exactly this
-     emphatic-ἐγώ teaching point), and λέγω plays the chapter-1
-     vocabulary recording of the same word, COPIED into the chapter-8
-     pack as `h_legw.m4a` so chapter 8 stays offline-complete (packs
-     are per-directory). In "ἐγὼ λέγω" the two words are two adjacent
-     taps, not one phrase tap — there is no phrase clip to honour.
-     Similarly (item 5): the second-person emphatic triad σοῦ/σοί/σέ
-     has no dedicated recordings (no H_2GSE/H_2DSE/H_2ASE on the
-     ISO); the enclitic clips H_2GS/H_2DS/H_2AS speak for both forms
-     — same phonemes, accent is prosodic only. | Implementer,
+D-39 | ch8 | **REVERSED for λέγω / ἐγὼ λέγω (2026-08-10, Nathanael's
+     correction after device testing): the Introduction's examples
+     are PLAIN INK, exactly as the original has them.** Item 4 of
+     5F-FEEDBACK3 had asked for taps; Nathanael then confirmed "legw
+     and egw legw were never clickable, and that is why you didn't
+     find the audio to map." The TBK evidence had already said so
+     (8_PRONS.TBK wires NO WordSelection handler to either phrase on
+     that page, page record at 0x179c9, and no "ἐγὼ λέγω" phrase
+     recording exists anywhere on the ISO) — the borrowed-clip taps
+     built to satisfy item 4 (chapter-1 λέγω copied into the
+     chapter-8 pack as h_legw.m4a, plus H_1NSE for ἐγὼ) are REMOVED:
+     the greekTaps, the copied file, and its audio-manifest entry,
+     which restores the manifest byte-identical to its pre-PATCH3
+     state (see the PATCH3 appendix: the manifest's hash versions
+     EVERY pack, so the added entry had flipped every downloaded pack
+     to "Update audio" on device). ui-behavior P3.5 now pins the
+     plain-ink reading. LESSON, paired with the TBK rule in
+     ONBOARD-SOL §7: when the original wires no handler and ships no
+     clip, that IS the original's answer — say so before building a
+     workaround from borrowed audio.
+     STILL IN FORCE from the original entry (item 5): the
+     second-person emphatic triad σοῦ/σοί/σέ has no dedicated
+     recordings (no H_2GSE/H_2DSE/H_2ASE on the ISO); the enclitic
+     clips H_2GS/H_2DS/H_2AS speak for both forms — same phonemes,
+     accent is prosodic only. | Nathanael correction + implementer,
      5F-FEEDBACK3 items 4, 5; ISO verified 2026-08-10.
 
 ## Auto-progress / advance rule matrix

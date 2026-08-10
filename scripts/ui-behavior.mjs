@@ -3091,17 +3091,17 @@ for (const [chapterId, activityId, expected] of [
       await taps.count() === expectedTaps && playedCount === 1 && everFetched.includes(expectFile),
       `${await taps.count()} taps, ${playedCount} clips, file fetched: ${everFetched.includes(expectFile)}`);
   }
+  // ch8 Introduction: λέγω / ἐγὼ λέγω are PLAIN INK — Nathanael's 2026-08-10
+  // correction reversing his own item 4 ("legw and egw legw were never
+  // clickable, and that is why you didn't find the audio to map"). This
+  // matches the original (8_PRONS.TBK wires no WordSelection to that page)
+  // and is pinned here so a future pass doesn't re-add invented taps; the
+  // borrowed-clip mechanism this briefly used is gone (D-39).
   await go('#/activity/chapt_8/c8_learn_pronouns');
-  const introTaps = page.locator('.rc-para .greek-tap');
-  const mark = audioRequests.length;
-  await page.evaluate(() => { window.__clips.length = 0; });
-  const count = await introTaps.count();
-  for (let i = 0; i < count; i++) { await introTaps.nth(i).click(); await page.waitForTimeout(250); }
-  const fetched = audioRequests.slice(mark).join(' ');
-  check('P3.5 ch8 Introduction: λέγω (twice) and ἐγὼ are tappable and play their clips',
-    count === 3 && (await clips()).length === 3
-      && fetched.includes('h_legw.m4a') && fetched.includes('h_1nse.m4a'),
-    `${count} taps, ${(await clips()).length} clips, fetched ${fetched || 'none'}`);
+  check('P3.5 ch8 Introduction: λέγω / ἐγὼ λέγω are plain ink, not tap targets (D-39)',
+    await page.locator('.rc-para .greek-tap').count() === 0
+      && await page.locator('.rc-para .popup-link').count() === 0,
+    `${await page.locator('.rc-para .greek-tap').count()} taps found`);
 }
 
 await browser.close();

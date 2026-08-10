@@ -298,6 +298,16 @@ against:
 
 ## 8. Known footguns (each cost a debugging round once)
 
+- ANY edit to public/audio/audio-manifest.json invalidates EVERY
+  downloaded audio pack on EVERY device. Pack versioning is one
+  SHA-256 of the raw manifest text (packs.js — "coarse
+  pack-versioning" is literal): adding a single entry flipped all
+  eight packs to "Update audio" on Nathanael's phone mid-testing
+  (5F-PATCH3 appendix, 2026-08-10). The audio corpus is complete and
+  frozen; treat the manifest as frozen with it. If an entry ever
+  truly must change, say so in the handoff — the on-device effect is
+  a full re-verify prompt for everything, not just the changed pack.
+
 - TREE-SHAKE TRAP: an import.meta.glob map not reachable from
   executed code is silently tree-shaken — NO chunk is emitted and
   nothing errors. 5A's acceptance includes a build assertion for the

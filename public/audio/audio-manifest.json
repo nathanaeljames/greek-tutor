@@ -18131,10 +18131,6 @@
     "orig": "CHAPT_8/H_KAI.WAV",
     "src": "audio/chapt_8/h_kai.m4a"
   },
-  "chapt_8_h_legw": {
-    "orig": "CHAPT_1/A_VOC8.WAV (copied into the chapt_8 pack, 5F-SPEC1-PATCH3 item 4)",
-    "src": "audio/chapt_8/h_legw.m4a"
-  },
   "chapt_8_h_rm623a": {
     "orig": "CHAPT_8/H_RM623A.WAV",
     "src": "audio/chapt_8/h_rm623a.m4a"
