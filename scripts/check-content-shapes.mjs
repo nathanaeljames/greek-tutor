@@ -60,12 +60,44 @@ const CONTENT_MODES = new Set([
 // expander.content, hint.content, ...) without hard-coding the nesting.
 function walk(node, path, visit) {
   if (Array.isArray(node)) {
+    checkParaRuns(node, path);
     node.forEach((child, index) => walk(child, `${path}[${index}]`, visit));
     return;
   }
   if (!node || typeof node !== 'object') return;
   visit(node, path);
   for (const [key, value] of Object.entries(node)) walk(value, `${path}.${key}`, visit);
+}
+
+// 5F-FEEDBACK2 (Nathanael, 2026-08-09): the "double line spacing" class of
+// defect. The extraction pipeline had copied the ORIGINAL PANELS' hard line
+// breaks as one `para` block per line — each line then carried a paragraph
+// margin, which faked double spacing, collapsed the ch8 Number chart into
+// prose, and made every affected page's rhythm differ from its neighbours.
+// A para that ends mid-sentence (no terminal punctuation) directly followed
+// by another para is that authoring error's signature; a REAL paragraph ends
+// in punctuation. Example blocks (multi-line text) keep their authored line
+// breaks inside ONE block and are exempt on both sides.
+const PARA_TERMINAL = /[.!?:;,"”’)\]]\s*$/;
+// The continuation signature needs BOTH halves: the first para ends without
+// terminal punctuation AND the next one opens lowercase (or with a fill-in
+// blank), the way the middle of a sentence does. Requiring both keeps a
+// deliberate standalone display line (chapter 3's "Tense, voice, mood, ..."
+// format line, which simply has no full stop) from being mistaken for a
+// split — that line's successor starts with a capital.
+const CONTINUATION_START = /^[\sαβγδεζηθικλμνξοπρστυφχψω_a-z]/u;
+function checkParaRuns(list, path) {
+  for (let i = 0; i + 1 < list.length; i++) {
+    const a = list[i];
+    const b = list[i + 1];
+    if (!a || !b || a.type !== 'para' || b.type !== 'para') continue;
+    if (typeof a.text !== 'string' || a.text.includes('\n')) continue;
+    if (typeof b.text !== 'string') continue;
+    const plain = text => text.replace(/\[\[\/?[a-z]+\]\]/g, '');
+    if (!PARA_TERMINAL.test(plain(a.text).trim()) && CONTINUATION_START.test(plain(b.text))) {
+      problems.push(`${path}[${i}]: para ends mid-sentence ("...${a.text.trim().slice(-30)}") and the next para continues it — the original's LINE breaks must not become separate para blocks; merge into one flowing paragraph (line spacing is uniform app-wide, 5F-FEEDBACK2).`);
+    }
+  }
 }
 
 // Paradigms may be a single chart (chapter 3 and the simple chapter 4/5
@@ -576,4 +608,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras).`);

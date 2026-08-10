@@ -11,7 +11,7 @@
   // font and play their clip on tap. defList rows [term, value, audio?] play
   // the row's clip when present.
   import { play } from '../lib/audio.js';
-  import { splitMarkRun } from '../lib/greek.js';
+  import { splitMarkRun, splitTaps } from '../lib/greek.js';
   import { usePopups, popupFor } from '../lib/popups.js';
   import Marked from './Marked.svelte';
   import Paradigm from './Paradigm.svelte';
@@ -121,51 +121,10 @@
     && block.rows.every(row => Array.isArray(row.syllables) && row.syllables.length === block.columns.length && !row.gloss);
   const hasRowLabels = block => block.rows.some(row => row.label);
 
-  // greekTaps: split an item's text on STANDALONE substring matches (first
-  // standalone occurrence per key) and render those substrings as tappable
-  // spans. Greek NOT listed here stays plain (e.g. the red-highlighted π stays
-  // untappable). Data contract (chat-side pipeline, chapters 2+): a greekTaps
-  // key marks EVERY occurrence of that exact string whose neighbors are not
-  // Greek letters — a single-letter key like "ζ" can never turn part of a
-  // longer Greek word in the same paragraph into a tap target. Matches render
-  // as plain text nodes inside a <button> (never {@html}).
-  const GREEK_LETTER = /[Ͱ-Ͽἀ-῿]/; // Greek + Greek Extended
-
-  // First occurrence of sub in text where the adjacent characters are not
-  // Greek letters; -1 if none.
-  function standaloneIndexOf(text, sub) {
-    for (let i = text.indexOf(sub); i !== -1; i = text.indexOf(sub, i + 1)) {
-      const before = i > 0 ? text[i - 1] : '';
-      const after = text[i + sub.length] || '';
-      if (!GREEK_LETTER.test(before) && !GREEK_LETTER.test(after)) return i;
-    }
-    return -1;
-  }
-
-  function splitTaps(text, taps) {
-    let parts = [{ t: text || '' }];
-    if (!taps) return parts;
-    for (const [sub, audio] of Object.entries(taps)) {
-      const next = [];
-      for (const p of parts) {
-        if (p.audio || p.popup) { next.push(p); continue; }   // already claimed
-        // EVERY standalone occurrence, not just the first: two identical Greek
-        // words on one page must behave the same way. The Parsing Format topic
-        // prints λύω twice, and marking only the first left one blue-and-
-        // speaking and the other black-and-silent — which reads as "that one
-        // is not tappable" (directive 8) when it is the same word.
-        let rest = p.t;
-        for (let i = standaloneIndexOf(rest, sub); i !== -1; i = standaloneIndexOf(rest, sub)) {
-          if (i > 0) next.push({ t: rest.slice(0, i) });
-          next.push({ t: sub, audio });
-          rest = rest.slice(i + sub.length);
-        }
-        if (rest) next.push({ t: rest });
-      }
-      parts = next;
-    }
-    return parts;
-  }
+  // greekTaps splitting lives in lib/greek.js (splitTaps) since 5F-FEEDBACK2
+  // item 25 — Paradigm's note line needs the identical contract, and two
+  // copies would be two places for it to disagree. Matches render as plain
+  // text nodes inside a <button> (never {@html}).
 
   // 5F-FEEDBACK.pdf item 15 (Nathanael, 2026-08-09): a popup is opened from
   // the NUMBER in front of the line that introduces it, never from the Greek
@@ -207,9 +166,18 @@
            named Greek words in the line tappable; anything not named stays
            plain ink, which is how the λύ and ω MORPHEMES on that same line stay
            untappable — they are fragments with no clip of their own. -->
+      <!-- 5F-FEEDBACK2 (Nathanael, 2026-08-09): three per-block layout flags,
+           all carrying the ORIGINAL's own arrangement rather than a style
+           choice. gapBefore = the original sets a full blank line before this
+           block (its paragraph gap, distinct from line spacing). flush = an
+           example block the original does NOT indent (chapter 8's pronoun
+           Definition). align:"center" = the original centres the line
+           (chapter 7's "Adjective has definite article" banner). -->
       {@const taps = b.greekTaps || greekTaps}
       <p class="rc-para" class:example-block={isExampleBlock(b)}
          class:rc-strong={b.emphasis === 'strong'} class:rc-indent={b.indent}
+         class:rc-flush={b.flush} class:rc-center={b.align === 'center'}
+         class:rc-gap-before={b.gapBefore}
       >{#if taps}{#each splitTaps(b.text, taps) as seg}{#if seg.popup}<button class="greek-tap popup-link greek" on:click={() => openPopup(seg.popup)}>{seg.t}</button>{:else if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={b.text} />{/if}</p>
       {#if b.example}
         <button class="rc-example" class:tappable={b.example.audio} on:click={() => playAudio(b.example.audio)}>
@@ -219,10 +187,11 @@
       {/if}
 
     {:else if b.type === 'numbered'}
-      {#if b.preamble}<p class="rc-preamble"><Marked text={b.preamble} /></p>{/if}
+      {#if b.preamble}<p class="rc-preamble" class:rc-gap-before={b.gapBefore}><Marked text={b.preamble} /></p>{/if}
       {@const items = listItems(b)}
       {@const selfNum = (() => { const re = /^\(?\d+[.)]/; return items.length > 0 && items.every(it => it.label && re.test(it.label)); })()}
-      <ol class="rc-list" class:authored-labels={selfNum} class:unnumbered={b.numbered === false}>
+      <ol class="rc-list" class:authored-labels={selfNum} class:unnumbered={b.numbered === false}
+          class:item-gap={b.itemGap} class:rc-gap-before={b.gapBefore && !b.preamble}>
         {#each items as it, idx}
           <!-- 5F-FEEDBACK.pdf item 15: the NUMBER opens the popup; the Greek
                word inside the item plays its own audio, like any other
@@ -240,6 +209,17 @@
                 <span class="greek">{it.example.greek}</span>
                 {#if it.example.caption}<span class="rc-caption">{it.example.caption}</span>{/if}
               </button>
+            {/if}
+            {#if it.exampleLines}
+              <!-- 5F-FEEDBACK2 items 5/6 (Nathanael, 2026-08-09): the original
+                   sets a teaching point's worked example on its OWN line,
+                   indented deeper than the item text, with wrapped lines
+                   hanging under the example's first word ("The good book"
+                   under "Attributive: ..."). English examples, so plain ink —
+                   never a tap target. -->
+              <div class="rc-example-lines">
+                {#each it.exampleLines as line}<div class="rc-example-line"><Marked text={line} /></div>{/each}
+              </div>
             {/if}
             {#if it.defList}
               <div class="rc-deflist nested">
@@ -321,7 +301,8 @@
       {@const gridVars = `--greek-cols:${syllableMatrix ? matrixCols : (b.columns || []).length};--greek-datacols:${(b.columns || []).length}`}
       <div class="rc-greekrows" class:syllable-matrix={syllableMatrix} class:row-labels={rowLabels}
            class:gloss-only={b.layout === 'glossOnly'} class:english-pairs={b.layout === 'englishPairs'}
-           class:titled={b.title}>
+           class:titled={b.title} class:centered={b.centered} class:rc-gap-before={b.gapBefore}
+           class:head-underline={b.headerUnderline} class:paired-gutter={b.pairedGutter}>
         <!-- B5: Review Marks groups its rows under a title ("Breathing:",
              "Punctuation:", "Apostrophe:  ( ᾽ )  elided letters"). The title
              owns its line in the heading green; the rows hang beneath it. -->
@@ -389,7 +370,15 @@
                  words are inert ink.
                  5F \u00a72.3: `bracket` parenthesises the whole row \u2014 the Elision
                  page sets its derivations that way. -->
-            <div class="rc-greekrow parts-row" class:rc-bracket={row.bracket} style="--greek-cols:1">
+            <!-- 5F-FEEDBACK2 items 2/3 (Nathanael, 2026-08-09): a parts row
+                 WITH a gloss keeps the table's two columns — the equation in
+                 column one, its translation in column two, aligned with the
+                 gloss column of every other row ("διά + βλέπω | through +
+                 I see" sits directly over "διαβλέπω | I see clearly"). Only
+                 the gloss-less bracket derivations reclaim the full width. -->
+            {@const partsGloss = row.gloss != null && row.gloss !== ''}
+            <div class="rc-greekrow parts-row" class:rc-bracket={row.bracket} class:has-gloss={partsGloss}
+                 style={partsGloss ? '--greek-cols:2' : '--greek-cols:1'}>
               <span class="rc-parts">
                 {#if row.bracket}<span class="rc-bracket-mark">(</span>{/if}
                 {#each equationParts(row) as part}
@@ -403,21 +392,35 @@
                     <span class="rc-parttext">{part.text}</span>
                   {/if}
                 {/each}
-                {#if row.gloss != null && row.gloss !== ''}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
                 {#if row.bracket}<span class="rc-bracket-mark">)</span>{/if}
               </span>
+              {#if partsGloss}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
               {#if row.ref}<span class="rc-greekref">{row.ref}</span>{/if}
             </div>
-          {:else if row.greek2 !== undefined && (b.layout === 'verseExamples' || row.greek2)}
+          {:else if b.layout === 'verseExamples' || row.greek2}
             <!-- 5F: a worked verse example set over up to two lines, with its
                  gloss and citation under it. One tap target: the two lines are
                  one phrase and one clip (chapter 8's Examples page). -->
             <div class="rc-greekrow rc-verse-example" style="--greek-cols:1">
-              <button class="rc-verse-greek greek greek-say" disabled={!row.audio}
-                      on:click={() => playAudio(row.audio)}>
-                <span class="rc-verse-line">{row.greek}</span>
-                {#if row.greek2}<span class="rc-verse-line">{row.greek2}</span>{/if}
-              </button>
+              {#if row.greek2 && row.audio2}
+                <!-- 5F-FEEDBACK2 item 9: chapter 7's Predicate Position sets
+                     each verse over two lines with a SEPARATE clip per line
+                     (chapt_7_g_pp2 / pp2a) — two stacked tap targets, so
+                     neither clip is orphaned and every displayed Greek line
+                     still speaks (directive 9). -->
+                <button class="rc-verse-greek greek greek-say" on:click={() => playAudio(row.audio)}>
+                  <span class="rc-verse-line">{row.greek}</span>
+                </button>
+                <button class="rc-verse-greek greek greek-say" on:click={() => playAudio(row.audio2)}>
+                  <span class="rc-verse-line">{row.greek2}</span>
+                </button>
+              {:else}
+                <button class="rc-verse-greek greek greek-say" disabled={!row.audio}
+                        on:click={() => playAudio(row.audio)}>
+                  <span class="rc-verse-line">{row.greek}</span>
+                  {#if row.greek2}<span class="rc-verse-line">{row.greek2}</span>{/if}
+                </button>
+              {/if}
               {#if row.gloss}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
               {#if row.ref}<span class="rc-greekref">{row.ref}</span>{/if}
             </div>

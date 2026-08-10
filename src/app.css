@@ -615,7 +615,11 @@ button { font: inherit; cursor: pointer; }
    column at 380px and forcing it onto four lines with plenty of width to
    spare. A parts-row is never a word+gloss pair -- it is one flowing
    equation -- so it always reclaims the full row width, glossOnly or not. */
-.rc-greekrows.gloss-only .rc-greekrow.parts-row { grid-template-columns: minmax(0, 1fr); }
+/* 5F-FEEDBACK2 items 2/3 narrow that rule: only a GLOSS-LESS parts row (the
+   bracket derivations) reclaims the full width. A parts row carrying a
+   translation keeps the table's two columns so its gloss aligns with the
+   gloss column of the rows around it. */
+.rc-greekrows.gloss-only .rc-greekrow.parts-row:not(.has-gloss) { grid-template-columns: minmax(0, 1fr); }
 .rc-greekrows.english-pairs .rc-greekrow { text-align: center; }
 .rc-english-cell { min-width: 0; overflow-wrap: break-word; }
 .rc-greeklabel { font-weight: 600; overflow-wrap: anywhere; }
@@ -1197,20 +1201,73 @@ button, a, input, select, textarea, label,
    without panning (A3). The arrangement is pedagogy: arrows point into, out of,
    over and through the circle that ἐν sits in. */
 .prep-chart { margin: 6px 0 2px; }
-.prep-svg { display: block; width: 100%; max-width: 340px; height: auto; margin: 0 auto; }
-.prep-circle { fill: none; stroke: var(--teal-dark); stroke-width: 2; }
-.prep-arrow { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+.prep-svg { display: block; width: 100%; max-width: 380px; height: auto; margin: 0 auto; }
+/* Traced from ch6railwalk p6 at 300 dpi (5F-FEEDBACK2 item 1): the viewBox is
+   the original panel's own pixel space, so the stroke widths and font sizes
+   below are the original's own measurements, not style choices. */
+.prep-circle { fill: none; stroke: var(--ink); stroke-width: 5; }
+.prep-arrow { fill: none; stroke: var(--ink); stroke-width: 5; }
 .prep-svg #prep-arrow path, .prep-svg marker path { fill: var(--ink); stroke: none; }
 /* Greek-tap rule (directive 9): every label plays its own clip, so every label
    is blue. The gloss under it is ink. */
 .prep-node { cursor: pointer; }
 .prep-node:active { opacity: 0.6; }
-.prep-greek { font-size: 17px; fill: var(--link); }
-.prep-gloss { font-size: 10.5px; fill: var(--teal-dark); }
-.prep-centre .prep-greek { font-size: 19px; }
+.prep-greek { font-size: 40px; fill: var(--link); }
+.prep-gloss { font-size: 30px; font-weight: 700; fill: var(--teal-dark); }
+.prep-centre .prep-greek { font-size: 40px; }
 .prep-extra { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 8px; }
 .prep-extra-node { background: transparent; border: none; color: var(--link);
   display: flex; flex-direction: column; align-items: center; gap: 2px; }
+
+/* ---- 5F-FEEDBACK2: the original's own paragraph rhythm ----
+   LINE spacing is uniform app-wide (a paragraph is ONE flowing para block —
+   the line-per-para authoring that faked double spacing is now a build
+   failure, see check-content-shapes.mjs). PARAGRAPH gaps are authored:
+   gapBefore marks exactly the blocks the original precedes with a blank
+   line, and adds one line-height's worth of air on top of the standard
+   10px paragraph margin. */
+.rich .rc-gap-before { margin-top: 18px; }
+/* An example block the original sets flush with the body text (ch8's pronoun
+   Definition) rather than indented (the chapters-1/2 panels). */
+.rc-para.rc-flush { padding-left: 0; }
+/* A line the original centres ("Adjective has definite article"). */
+.rc-para.rc-center { text-align: center; padding-left: 0; }
+/* Items 5/6: a worked example on its OWN line under a numbered teaching
+   point, indented deeper than the item text, wrapped lines hanging under the
+   example's first word — the original's arrangement, and pedagogy (standing
+   directive 2). */
+.rc-example-lines { margin-top: 3px; padding-left: 1.2em; }
+.rc-example-line { padding-left: 1.1em; text-indent: -1.1em; }
+/* Item 6: the Examples page separates its three numbered uses with a blank
+   line; the 3-Uses page runs them contiguously. Authored per block. */
+.rc-list.item-gap > li { margin-bottom: 12px; }
+.rc-list.item-gap > li:last-child { margin-bottom: 0; }
+/* Items 8-11/15/23: the original centres its Greek/English example blocks.
+   The rows keep their internal column layout; the BLOCK narrows to its
+   content and sits centred in the card. */
+.rc-greekrows.centered { max-width: 26em; margin-left: auto; margin-right: auto; }
+.rc-greekrows.centered .rc-verse-greek,
+.rc-greekrows.centered .rc-greekgloss,
+.rc-greekrows.centered .rc-greekref { text-align: center; }
+/* Item 21: chapter 8's Number chart underlines its Singular/Plural headers,
+   exactly as the original prints them. Scoped to the authored flag so the
+   device-verified ch4/ch5 englishPairs tables do not move. */
+.rc-greekrows.head-underline .rc-greekhead span { text-decoration: underline; }
+/* The Number chart is TWO two-column tables side by side (first person, third
+   person) — a narrow gutter column keeps the pairing readable, exactly as the
+   original separates them. The gutter is an authored empty column. */
+.rc-greekrows.paired-gutter .rc-greekhead,
+.rc-greekrows.paired-gutter .rc-greekrow { grid-template-columns: 1fr 1fr 0.25fr 1fr 1fr; }
+/* Item 27: the More/Back pair lives in its own two-slot row — Back always
+   the left cell, More always the right — so paging a stack never moves a
+   button. Shared by Paradigm's chart switch and the modal-level hint pager
+   (items 13/28). */
+.pg-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.pg-nav-slot { display: flex; min-width: 0; }
+.pg-nav-back-slot { justify-content: flex-start; }
+.pg-nav-more-slot { justify-content: flex-end; }
+.pg-nav .btn { min-width: 96px; }
+.hint-page-nav { flex: 0 0 auto; margin-top: 12px; }
 
 /* ---- §2.2 full-page popups ----
    The link is blue because it is tappable (directive 8) and underlined because

@@ -2601,9 +2601,14 @@ for (const [label, hash, topicIndex] of [
       // textContent, not innerText: these are SVG <text> nodes.
       && normalizeText(await page.locator('.prep-centre .prep-greek').textContent()) === 'ἐν',
     `${await nodes.count()} nodes of ${block.nodes.length}`);
-  check(`5F §2.1 ${label}: every arrow the data declares is drawn`,
-    await page.locator('.prep-svg .prep-arrow').count() === block.nodes.filter(n => n.arrow).length,
-    `${await page.locator('.prep-svg .prep-arrow').count()} arrows of ${block.nodes.filter(n => n.arrow).length}`);
+  // 5F-FEEDBACK2 item 1: the chart is a TRACE of ch6railwalk p6 now, and its
+  // linework is fixed in the component rather than derived from the data's
+  // arrow field (which the original contradicts — μετά has no arrow at all).
+  // Nine strokes: πρός, εἰς, ἐκ, ἀπό, διά, κατά's diagonal, κατά's drop,
+  // περί's hook, and the ἐπί/upon underline.
+  check(`5F §2.1 ${label}: the traced linework is drawn in full (9 strokes)`,
+    await page.locator('.prep-svg .prep-arrow').count() === 9,
+    `${await page.locator('.prep-svg .prep-arrow').count()} strokes of 9`);
   // Directive 9, on a diagram: every Greek label plays its own clip.
   await page.evaluate(() => { window.__clips.length = 0; });
   await nodes.first().click();

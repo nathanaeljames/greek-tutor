@@ -645,7 +645,7 @@
          "greek": "μετά",
          "gloss": "with",
          "slot": "topRight",
-         "arrow": "in",
+         "arrow": null,
          "audio": "chapt_6_f_voc8"
         },
         {
@@ -722,7 +722,7 @@
        "rows": [
         {
          "greek": "δι' ἐμοῦ",
-         "gloss": "= through me",
+         "gloss": "through me",
          "ref": "Jn 14:6",
          "audio": "chapt_6_f_elis1"
         },
@@ -778,19 +778,17 @@
      "content": [
       {
        "type": "para",
-       "text": "A proclitic is a word that has no accent because it is joined so closely with the accented word that follows it."
+       "text": "A proclitic is a word that has no accent because it is joined so closely with the accented word that follows it. ἐν, εἰς and ἐκ are proclitics."
       },
       {
        "type": "para",
-       "text": "ἐν, εἰς and ἐκ are proclitics."
+       "text": "They come before (pro) the word with the accent.",
+       "gapBefore": true
       },
       {
        "type": "para",
-       "text": "They come before (pro) the word with the accent."
-      },
-      {
-       "type": "para",
-       "text": "Enclitics are accentless words that follow the word with the accent. Personal pronouns are often enclitics."
+       "text": "Enclitics are accentless words that follow the word with the accent. Personal pronouns are often enclitics.",
+       "gapBefore": true
       }
      ]
     },
@@ -2133,17 +2131,17 @@
     {
      "greek": "πρός",
      "answer": "with",
-     "audio": "chapt_6_f_sm7"
+     "audio": "chapt_6_f_sm10"
     },
     {
      "greek": "τόν",
      "answer": "the (acc)",
-     "audio": "chapt_6_f_sm8"
+     "audio": "chapt_6_f_sm11"
     },
     {
      "greek": "θεόν",
      "answer": "God",
-     "audio": "chapt_6_f_sm9"
+     "audio": "chapt_6_f_sm12"
     }
    ],
    "scored": true,
@@ -2466,7 +2464,7 @@
        "greek": "μετά",
        "gloss": "with",
        "slot": "topRight",
-       "arrow": "in",
+       "arrow": null,
        "audio": "chapt_6_f_voc8"
       },
       {

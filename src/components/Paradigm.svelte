@@ -14,9 +14,16 @@
   // audio clip. Endings rows are bare morphemes with no clips of their own, so
   // they render in ink rather than tappable blue.
   import { play } from '../lib/audio.js';
+  import { splitTaps } from '../lib/greek.js';
   import MeaningsCard from './MeaningsCard.svelte';
   export let paradigm;
   export let title = null;
+  // 5F-FEEDBACK2 item 12 (Nathanael, 2026-08-09): a HOST may rename the
+  // More/Back pair per chart index — the Adjective Case Drill's Hint reads
+  // "Plural"/"Singular" while the Learn topic showing the SAME chart stack
+  // keeps the original's own More/Back (ch7railwalk p2). The label always
+  // names the TARGET chart, same idea as the 'named' switch kind.
+  export let switchLabels = null;
 
   let chartIndex = 0;
   let endingsOpen = false;
@@ -67,7 +74,17 @@
   $: switchKind = paradigm?.switch || null;
   $: hasSwitch = charts.length > 1 && (switchKind === 'moreBack' || switchKind === 'named');
   $: namedTarget = charts.length > 1 ? (chartIndex + 1) % charts.length : -1;
-  $: hasActions = !!chart.sayWhole || !!chart.endings || sayWholeEach.length > 0 || hasSwitch;
+  // 5F-FEEDBACK2 item 27 (Nathanael, 2026-08-09): the More/Back pair lives in
+  // its OWN row under the action buttons — Back always in the left slot, More
+  // always in the right — so stepping through a stack never makes a button
+  // jump. The say/endings row above it no longer counts the switch.
+  $: hasActions = !!chart.sayWhole || !!chart.endings || sayWholeEach.length > 0
+    || (hasSwitch && switchKind === 'named');
+  $: hasMoreBackNav = hasSwitch && switchKind === 'moreBack';
+  $: moreLabel = (switchLabels && switchLabels[chartIndex + 1])
+    || (charts[chartIndex + 1] && charts[chartIndex + 1].switchLabel) || 'More';
+  $: backLabel = (switchLabels && switchLabels[chartIndex - 1])
+    || (charts[chartIndex - 1] && charts[chartIndex - 1].switchLabel) || 'Back';
 
   function switchChart(nextIndex) {
     chartIndex = Math.max(0, Math.min(charts.length - 1, nextIndex));
@@ -204,7 +221,13 @@
       </div>
     {/if}
     {#if chart.closing}<div class="pg-closing">{chart.closing}</div>{/if}
-    {#if chart.note}<div class="pg-note">{chart.note}</div>{/if}
+    {#if chart.note}
+      <!-- 5F-FEEDBACK2 item 25 (Nathanael, 2026-08-09): Greek named in
+           chart.noteTaps is tappable inside the note, same contract as
+           RichContent's greekTaps — chapter 8's emphatic forms ἐμοῦ, ἐμοί,
+           ἐμέ each play their own clip. Unlisted text stays ink. -->
+      <div class="pg-note">{#each splitTaps(chart.note, chart.noteTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => play(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}</div>
+    {/if}
 
     {#if hasActions}
       <div class="pg-actions" class:pg-actions-each={sayWholeEach.length > 0} style={`--pg-action-count:${sayWholeEach.length || 1}`}>
@@ -222,22 +245,7 @@
         {#if chart.endings}
           <button class="btn secondary pg-endings-open" on:click={openEndings}>{chart.endings.label || 'Endings'}</button>
         {/if}
-        {#if hasSwitch && switchKind === 'moreBack'}
-          {#if chartIndex > 0}
-            <button
-              class="btn secondary pg-switch pg-switch-back"
-              data-paradigm-switch="back"
-              data-target-index={chartIndex - 1}
-              on:click={() => switchChart(chartIndex - 1)}>Back</button>
-          {/if}
-          {#if chartIndex < charts.length - 1}
-            <button
-              class="btn secondary pg-switch pg-switch-more"
-              data-paradigm-switch="more"
-              data-target-index={chartIndex + 1}
-              on:click={() => switchChart(chartIndex + 1)}>More</button>
-          {/if}
-        {:else if hasSwitch && switchKind === 'named'}
+        {#if hasSwitch && switchKind === 'named'}
           <button
             class="btn secondary pg-switch pg-switch-named"
             data-paradigm-switch="named"
@@ -246,6 +254,32 @@
             {charts[namedTarget]?.name || `Chart ${namedTarget + 1}`}
           </button>
         {/if}
+      </div>
+    {/if}
+    {#if hasMoreBackNav}
+      <!-- Item 27's fixed-slot model: two grid cells that exist on every page
+           of the stack. Page 1 shows only More (right), middle pages Back and
+           More, the last page only Back — and neither button ever changes
+           position, because the empty slot still occupies its cell. -->
+      <div class="pg-nav">
+        <span class="pg-nav-slot pg-nav-back-slot">
+          {#if chartIndex > 0}
+            <button
+              class="btn secondary pg-switch pg-switch-back"
+              data-paradigm-switch="back"
+              data-target-index={chartIndex - 1}
+              on:click={() => switchChart(chartIndex - 1)}>{backLabel}</button>
+          {/if}
+        </span>
+        <span class="pg-nav-slot pg-nav-more-slot">
+          {#if chartIndex < charts.length - 1}
+            <button
+              class="btn secondary pg-switch pg-switch-more"
+              data-paradigm-switch="more"
+              data-target-index={chartIndex + 1}
+              on:click={() => switchChart(chartIndex + 1)}>{moreLabel}</button>
+          {/if}
+        </span>
       </div>
     {/if}
   {/key}

@@ -257,6 +257,31 @@ against:
   silently defeated the numbered-list hanging-indent CSS the SAME
   round shipped elsewhere. When a new defect class is found and fixed,
   add the check that would have caught it, not just the fix.
+- **"Renders and interacts" is still not the bar — FIDELITY TO THE
+  ORIGINAL is (5F-FEEDBACK2, 2026-08-09; full account in
+  5F-SPEC1-PATCH2.md).** A second feedback round landed 29 items on
+  pages that all rendered, all interacted, and all diverged from the
+  original: line spacing faked double by line-per-para authoring,
+  missing blank lines between blocks, collapsed columns (the ch8
+  Number chart shipped as ten prose lines), uncentered example
+  blocks, a diagram that traced nothing. Verification of a ported
+  page means holding it NEXT TO the original panel: render the rail
+  walk PDF (pymupdf is installed for exactly this), crop the panel,
+  and compare arrangement — paragraph gaps, indents, columns,
+  centering — line by line. For diagrams the bar is a stencil: 50%
+  overlay of the original crop on a screenshot of the rebuild
+  (buildout/screenshots/5f-patch2/prep-overlay.png is the reference
+  example). "It looks reasonable" has now failed twice; only "it
+  matches" passes.
+- **The original's LINE BREAKS are not paragraph breaks.** The
+  extraction pipeline had emitted one `para` block per panel LINE
+  across chapters 6-8 — each line then carried a paragraph margin,
+  which read as double spacing and destroyed the app-wide uniform
+  line-spacing rule. A paragraph is ONE flowing para block; a blank
+  line in the original is `gapBefore: true` on the next block; hard
+  line breaks inside an example block are `\n` inside ONE block.
+  `check-content-shapes.mjs` now fails a para that ends mid-sentence
+  when the next para continues it lowercase.
 
 ## 8. Known footguns (each cost a debugging round once)
 

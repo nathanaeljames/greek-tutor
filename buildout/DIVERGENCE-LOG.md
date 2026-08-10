@@ -235,28 +235,74 @@ D-33 | ch7 | THE εἰμί SPELLER'S PARENTHESISED ALTERNATE MAKES THE
      beside them, whose answerAlt is their own answer, still reject a
      stray nu, and the harness asserts that. | Implementer, 5F-SPEC1
      §2.10.
-D-34 | ch6 | THE PREPOSITIONS CHART IS A GEOMETRIC RECONSTRUCTION, NOT
-     A TRACED COPY. 5F-FEEDBACK.pdf item 1 (Nathanael, 2026-08-09):
-     "copy the chart exactly and match it visually down to every
-     intersection, copying the exact angle of each line, copying
-     positioning." The component's first pass (5F-SPEC1) hand-placed
-     each label and arrow independently and said so in its own header
-     comment ("NOT a pixel copy... the spec says so explicitly") —
-     that latitude was never actually ratified against this chart
-     specifically and item 1 revokes it outright. The rebuild places
-     all nine outer prepositions on a shared ellipse by clock-angle
-     (read off ch6railwalk p6/p14's own layout: three cluster at the
-     top, four run the sides, two anchor the bottom corners) and
-     computes every straight in/out arrow from that SAME angle, so it
-     always meets the ellipse boundary exactly under its own label
-     instead of at a hand-guessed point. This closes the actual defect
-     (arrows that didn't consistently intersect the circle) but is
-     still a RECONSTRUCTION from the rail-walk image's visible layout,
-     not a pixel-coordinate trace — this environment has no tool that
-     extracts exact vector coordinates from a scanned/photographed
-     page. Flagged rather than claimed as exact; a pixel-diff against
-     the original bitmap is the only way to close this fully. |
-     Implementer, 5F-FEEDBACK.pdf item 1; known tooling limit.
+D-34 | ch6 | **RESOLVED 2026-08-09 (5F-FEEDBACK2 item 1).** THE
+     PREPOSITIONS CHART IS NOW A TRACE. The "no tool to extract
+     coordinates" claim below was wrong: rendering ch6railwalk.pdf p6
+     at 300 dpi (pymupdf), cropping the chart panel and reading
+     every label/arrow endpoint off a drawn coordinate grid IS the
+     pixel-coordinate trace the entry said was impossible. The
+     component's geometry is that trace verbatim (viewBox = the
+     original panel's own pixel space), and the acceptance test the
+     feedback names — overlay the original crop on a screenshot of
+     the rebuilt SVG at 50% opacity and match as a stencil — ran and
+     passed (buildout/screenshots/5f-patch2/prep-overlay.png). Facts
+     of the original the two reconstructions had invented away, now
+     traced: μετά has NO arrow; εἰς's arrow lands INSIDE the circle;
+     ἐκ's starts inside and exits; πρός's stops at the boundary;
+     ἀπό's lies wholly outside; διά crosses corner-to-corner; κατά is
+     a short diagonal parallel to διά plus a separate downward
+     arrowhead; ἐπί/upon carries one thick underline with the gloss
+     BESIDE the word (as do μετά and διά). Historical text of the
+     superseded entry retained in git history. | Implementer,
+     5F-FEEDBACK2 item 1.
+
+D-35 | ch6,7 | DITTO MARKS AND '=' SIGNS REPLACED BY THE WORDS THEY
+     STAND FOR. 5F-FEEDBACK2 items 2/8/9 (Nathanael, 2026-08-09): the
+     original prints '= through me' on the Elision page and repeats a
+     translation with a ditto mark (") under 'the good word' / 'the
+     word is good' on the Attributive/Predicate Position pages. The
+     port drops the '=' and DUPLICATES the translation in place of
+     the ditto. Deliberate departures, requested in feedback — future
+     passes must not "restore" the '=' or the ditto marks. |
+     Nathanael, 5F-FEEDBACK2 items 2, 8, 9.
+
+D-36 | ch7,8 | LEAD-IN TERMS THE ORIGINAL UNDERLINES ARE SET BOLD,
+     NOT UNDERLINED. 5F-FEEDBACK2 items 5/19/20 (Nathanael,
+     2026-08-09): the original underlines 'Attributive:', 'Predicate:',
+     'Substantive:' (ch7 3 Uses of Adjectives), all six pronoun-type
+     labels (ch8 Types of Pronouns) and 'Subjective', 'Possessive',
+     'Objective' (ch8 Case). The port sets these labels bold with no
+     underline (labelStyle: "plain") because underlining is reserved
+     for [[u]]-authored emphasis and popup links; Nathanael ratified
+     the departure and asked that it be recorded so future passes
+     don't "correct" it back to underlines. | Nathanael, 5F-FEEDBACK2
+     items 5, 19, 20.
+
+D-37 | ch8 | THE PERSONAL PRONOUNS INTRODUCTION SHOWS ITS SECOND PAGE
+     PERMANENTLY. The original's Introduction has a More button whose
+     second page ("Since the nominative is indicated in the personal
+     ending of the verb...") only appears intermittently — the
+     original is broken (5F-FEEDBACK2 item 22: "there is evidently a
+     'More' menu here that only shows up half the time"). Per the
+     feedback ("please add the data or More button here (permanently,
+     the original is broken)") the port appends both of that page's
+     paragraphs to the Introduction topic with the standard blank-line
+     gaps, rather than reproducing the broken pager. | Nathanael,
+     5F-FEEDBACK2 item 22.
+
+D-38 | ch7,ch8 | HINT POPUPS PAGE More/Back AT THE MODAL LEVEL, IN
+     FIXED SLOTS. 5F-FEEDBACK2 items 12/13/27/28/29: (a) the
+     More/Back pair everywhere sits in its own row — Back always the
+     left slot, More always the right — so paging never moves a
+     button (item 27's model, adopted app-wide); (b) the Adjective
+     Translation Drill's Hint gained the original's FIRST page (the
+     full adjective paradigm) ahead of the positions summary; (c) the
+     Aὐτός Translation Drill's Hint gained the original's missing
+     'Three Uses' page after the three gender charts; (d) the
+     Adjective Case Drill's Hint labels the pair 'Plural'/'Singular'
+     (drill hint only — the Learn topic showing the same charts keeps
+     the original's own More/Back, ch7railwalk p2). | Nathanael,
+     5F-FEEDBACK2 items 12, 13, 27, 28, 29.
 
 ## Auto-progress / advance rule matrix
 

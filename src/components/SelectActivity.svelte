@@ -34,7 +34,7 @@
   // policy machinery as a one-stage item, so no timing or advance rule below
   // has a special case for it.
   import { onDestroy } from 'svelte';
-  import { authoredOptionSource, buildSelectQuestions, buildTwoStageQuestions, randomFeedback, resolveHintBlocks, resolveHintRef } from '../lib/content.js';
+  import { authoredOptionSource, buildSelectQuestions, buildTwoStageQuestions, randomFeedback, resolveContentById, resolveHintBlocks, resolveHintRef } from '../lib/content.js';
   import { combiningForMarkName, firstAccentCluster, markOverlayParts } from '../lib/greek.js';
   import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
@@ -174,7 +174,40 @@
   // popup, so a hintRef opens a modal.
   $: hintBlocks = resolveHintBlocks(chapter, activity.hint);
   $: hintChart = activity.ui?.hintRef ? resolveHintRef(chapter, activity.ui.hintRef) : null;
-  $: showHintButton = hintBlocks.length > 0 || !!hintChart;
+  // 5F-FEEDBACK2 items 13/28 (Nathanael, 2026-08-09): a MULTI-PAGE hint, the
+  // original's More/Back-paged popup. ui.hintPages lists pages by reference —
+  // { hintRef } (a chart; a stack of N charts flattens to N pages, one chart
+  // per page, so the MODAL owns all the paging), { contentRef } (a Learn
+  // topic's whole content array, by topic id) or inline { content } — plus an
+  // optional title. Nav uses item 27's fixed-slot model: Back always left,
+  // More always right, neither ever moves between pages.
+  $: hintPages = buildHintPages(chapter, activity.ui?.hintPages);
+  let hintPageIndex = 0;
+  function buildHintPages(chapterData, defs) {
+    if (!Array.isArray(defs) || !defs.length) return [];
+    const pages = [];
+    for (const def of defs) {
+      if (def.hintRef) {
+        const target = resolveHintRef(chapterData, def.hintRef);
+        if (!target) continue;
+        const charts = Array.isArray(target.charts) && target.charts.length ? target.charts : [target];
+        for (const chart of charts) {
+          pages.push({ chart: { ...target, charts: [chart] }, title: def.title || target.title || null });
+        }
+      } else if (def.contentRef) {
+        const blocks = resolveContentById(chapterData, def.contentRef);
+        if (blocks.length) pages.push({ blocks, title: def.title || null });
+      } else if (Array.isArray(def.content)) {
+        pages.push({ blocks: def.content, title: def.title || null });
+      }
+    }
+    return pages;
+  }
+  function toggleHint() {
+    showHint = !showHint;
+    hintPageIndex = 0;   // a reopened hint starts back at page 1
+  }
+  $: showHintButton = hintPages.length > 0 || hintBlocks.length > 0 || !!hintChart;
   $: orderedRevealControls = orderControls([
     ...revealButtons.map(reveal => ({ kind: 'reveal', label: reveal.label, reveal })),
     ...(showHintButton ? [{ kind: 'hint', label: 'Hint' }] : [])
@@ -575,7 +608,7 @@
       {/if}
       {#each orderedRevealControls as control}
         {#if control.kind === 'hint'}
-          <button class="btn secondary" on:click={() => (showHint = !showHint)}>Hint</button>
+          <button class="btn secondary" on:click={toggleHint}>Hint</button>
         {:else}
           <button class="btn secondary" disabled={!revealValue(control.reveal.field)} on:click={() => toggleReveal(control.reveal.field)}>{control.reveal.label}</button>
         {/if}
@@ -594,7 +627,43 @@
   {/if}
 </div>
 
-{#if showHint && hintChart}
+{#if showHint && hintPages.length}
+  <!-- The original's PAGED Hint popup (More/Back inside the modal). Same
+       shell as the single-page routes below; only the page body swaps. -->
+  {@const hintPage = hintPages[Math.min(hintPageIndex, hintPages.length - 1)]}
+  <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
+    <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
+      <div class="modal-scroll">
+        {#if hintPage.chart}
+          <Paradigm paradigm={hintPage.chart} title={hintPage.title} />
+        {:else}
+          {#if hintPage.title}<div class="rc-heading">{hintPage.title}</div>{/if}
+          <RichContent blocks={hintPage.blocks} />
+        {/if}
+      </div>
+      {#if hintPages.length > 1}
+        <div class="pg-nav hint-page-nav">
+          <span class="pg-nav-slot pg-nav-back-slot">
+            {#if hintPageIndex > 0}
+              <button class="btn secondary" data-hint-page-nav="back"
+                      on:click={() => (hintPageIndex -= 1)}>Back</button>
+            {/if}
+          </span>
+          <span class="pg-nav-slot pg-nav-more-slot">
+            {#if hintPageIndex < hintPages.length - 1}
+              <button class="btn secondary" data-hint-page-nav="more"
+                      on:click={() => (hintPageIndex += 1)}>More</button>
+            {/if}
+          </span>
+        </div>
+      {/if}
+      <div class="modal-actions">
+        <!-- svelte-ignore a11y-autofocus -->
+        <button class="btn" autofocus on:click={() => (showHint = false)}>Close</button>
+      </div>
+    </div>
+  </div>
+{:else if showHint && hintChart}
   <!-- The original's Hint POPUP: the chapter's paradigm chart over the drill. -->
   <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
     <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
@@ -602,7 +671,8 @@
       <!-- 5F-FEEDBACK.pdf §8.1 root-cause fix: every paradigm the Hint route
            can resolve now ships in the one standard cell-audio shape, so
            there is no second renderer to keep in sync. -->
-      <Paradigm paradigm={hintChart} title={hintChart.title || hintChart.charts?.[0]?.title || null} />
+      <Paradigm paradigm={hintChart} title={hintChart.title || hintChart.charts?.[0]?.title || null}
+                switchLabels={activity.ui?.hintSwitchLabels || null} />
       </div>
       <div class="modal-actions">
         <!-- svelte-ignore a11y-autofocus -->

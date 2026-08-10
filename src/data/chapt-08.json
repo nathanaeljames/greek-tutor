@@ -45,31 +45,13 @@
      "content": [
       {
        "type": "para",
-       "text": "A pronoun is a word that stands in place"
+       "text": "A pronoun is a word that stands in place of a noun usually for brevity or to avoid repetition. The person or object to which the pronoun refers is called its \"antecedent.\""
       },
       {
        "type": "para",
-       "text": "of a noun usually for brevity or to avoid"
-      },
-      {
-       "type": "para",
-       "text": "repetition. The person or object to which"
-      },
-      {
-       "type": "para",
-       "text": "the pronoun refers is called its"
-      },
-      {
-       "type": "para",
-       "text": "\"antecedent.\""
-      },
-      {
-       "type": "para",
-       "text": "Zach threw the ball to Elliott."
-      },
-      {
-       "type": "para",
-       "text": "[[u]]It[[/u]] (the ball) hit [[u]]him[[/u]] (Elliott) in the head."
+       "text": "Zach threw the ball to Elliott.\n[[u]]It[[/u]] (the ball) hit [[u]]him[[/u]] (Elliott) in the head.",
+       "gapBefore": true,
+       "flush": true
       }
      ]
     },
@@ -147,43 +129,77 @@
      "content": [
       {
        "type": "para",
-       "text": "In English there are singular and plural"
+       "text": "In English there are singular and plural pronouns. Pronouns agree with their antecedents in number and person."
       },
       {
-       "type": "para",
-       "text": "pronouns. Pronouns agree with their"
-      },
-      {
-       "type": "para",
-       "text": "antecedents in number and person."
-      },
-      {
-       "type": "para",
-       "text": "[[u]]Singular[[/u]] [[u]]Plural[[/u]] [[u]]Singular[[/u]] [[u]]Plural[[/u]]"
-      },
-      {
-       "type": "para",
-       "text": "I we he they"
-      },
-      {
-       "type": "para",
-       "text": "my our his theirs"
-      },
-      {
-       "type": "para",
-       "text": "me us him them"
-      },
-      {
-       "type": "para",
-       "text": "you you she they"
-      },
-      {
-       "type": "para",
-       "text": "your your hers theirs"
-      },
-      {
-       "type": "para",
-       "text": "her them"
+       "type": "greekRows",
+       "layout": "englishPairs",
+       "headerUnderline": true,
+       "pairedGutter": true,
+       "gapBefore": true,
+       "columns": [
+        "Singular",
+        "Plural",
+        "",
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "parts": [
+          "I",
+          "we",
+          "",
+          "he",
+          "they"
+         ]
+        },
+        {
+         "parts": [
+          "my",
+          "our",
+          "",
+          "his",
+          "theirs"
+         ]
+        },
+        {
+         "parts": [
+          "me",
+          "us",
+          "",
+          "him",
+          "them"
+         ]
+        },
+        {
+         "parts": [
+          "you",
+          "you",
+          "",
+          "she",
+          "they"
+         ]
+        },
+        {
+         "parts": [
+          "your",
+          "your",
+          "",
+          "hers",
+          "theirs"
+         ]
+        },
+        {
+         "parts": [
+          "",
+          "",
+          "",
+          "her",
+          "them"
+         ]
+        }
+       ]
       }
      ]
     }
@@ -201,43 +217,27 @@
      "content": [
       {
        "type": "para",
-       "text": "Personal pronouns in Greek will match"
+       "text": "Personal pronouns in Greek will match their antecedent in person, gender, and number. The case will be determined by the role the pronoun plays in the sentence."
       },
       {
        "type": "para",
-       "text": "their antecedent in person, gender, and"
+       "text": "Personal pronouns will be either first person (I, we), second person (you), or third person (he/she/it/they).",
+       "gapBefore": true
       },
       {
        "type": "para",
-       "text": "number. The case will be determined by"
+       "text": "Greek will use the genitive where we would normally use a possessive pronoun (e.g. his, her).",
+       "gapBefore": true
       },
       {
        "type": "para",
-       "text": "the role the pronoun plays in the sentence."
+       "text": "Since the nominative is indicated in the personal ending of the verb (e.g. λέγω = I say) when the personal pronoun is used it is for emphasis (e.g. ἐγὼ λέγω = [[u]]I[[/u]] say).",
+       "gapBefore": true
       },
       {
        "type": "para",
-       "text": "Personal pronouns will be either first"
-      },
-      {
-       "type": "para",
-       "text": "person (I, we), second person (you), or"
-      },
-      {
-       "type": "para",
-       "text": "third person (he/she/it/they)."
-      },
-      {
-       "type": "para",
-       "text": "Greek will use the genitive where we"
-      },
-      {
-       "type": "para",
-       "text": "would normally use a possessive pronoun"
-      },
-      {
-       "type": "para",
-       "text": "(e.g. his, her)."
+       "text": "In the first and second person there are emphatic forms. These are usually the forms used in prepositional phrases.",
+       "gapBefore": true
       }
      ]
     },
@@ -319,7 +319,12 @@
         "label": "Say Whole Paradigm",
         "audio": "chapt_8_h_1par"
        },
-       "note": "Emphatic first person forms are made by prefixing an epsilon and adding an accent to the genitive, dative and accusative singular forms ( ἐμοῦ, ἐμοί, ἐμέ)."
+       "note": "Emphatic first person forms are made by prefixing an epsilon and adding an accent to the genitive, dative and accusative singular forms ( ἐμοῦ, ἐμοί, ἐμέ).",
+       "noteTaps": {
+        "ἐμοῦ": "chapt_8_h_1gse",
+        "ἐμοί": "chapt_8_h_1dse",
+        "ἐμέ": "chapt_8_h_1ase"
+       }
       }
      ]
     },
@@ -434,7 +439,8 @@
          "ref": "Jn 16:7",
          "audio": "chapt_8_h_ex3"
         }
-       ]
+       ],
+       "centered": true
       }
      ]
     },
@@ -444,27 +450,12 @@
      "content": [
       {
        "type": "para",
-       "text": "An enclitic is a word that is phonetically"
+       "text": "An enclitic is a word that is phonetically attached so closely with the word that precedes it that it has no accent of its own. Many personal pronouns are enclitics (e.g. μου, μοι, με, σου, σοι, σε)."
       },
       {
        "type": "para",
-       "text": "attached so closely with the word that"
-      },
-      {
-       "type": "para",
-       "text": "precedes it that it has no accent of its own."
-      },
-      {
-       "type": "para",
-       "text": "Many personal pronouns are enclitics"
-      },
-      {
-       "type": "para",
-       "text": "(e.g. μου, μοι, με, σου, σοι, σε)."
-      },
-      {
-       "type": "para",
-       "text": "Enclitics are sometimes accented:"
+       "text": "Enclitics are sometimes accented:",
+       "gapBefore": true
       },
       {
        "type": "numbered",
@@ -475,27 +466,8 @@
       },
       {
        "type": "para",
-       "text": "If the preceding word has an acute on"
-      },
-      {
-       "type": "para",
-       "text": "the antepenult or a circumflex on the"
-      },
-      {
-       "type": "para",
-       "text": "penult, a second accent will be added"
-      },
-      {
-       "type": "para",
-       "text": "on the ultima. This results in the word"
-      },
-      {
-       "type": "para",
-       "text": "preceding the enclitic being double"
-      },
-      {
-       "type": "para",
-       "text": "accented."
+       "text": "If the preceding word has an acute on the antepenult or a circumflex on the penult, a second accent will be added on the ultima. This results in the word preceding the enclitic being double accented.",
+       "gapBefore": true
       },
       {
        "type": "greekRows",
@@ -511,15 +483,13 @@
          "gloss": "your gift",
          "audio": "chapt_8_h_en2"
         }
-       ]
+       ],
+       "gapBefore": true
       },
       {
        "type": "para",
-       "text": "Finally, an acute on the ultima is not"
-      },
-      {
-       "type": "para",
-       "text": "changed to a grave before an enclitic."
+       "text": "Finally, an acute on the ultima is not changed to a grave before an enclitic.",
+       "gapBefore": true
       }
      ]
     },
@@ -607,39 +577,12 @@
      "content": [
       {
        "type": "para",
-       "text": "The third person pronoun αὐτός differs"
+       "text": "The third person pronoun αὐτός differs from the first and second person pronouns in that it is marked for gender. With first and second person pronouns, there is no need to specify gender because it is understood as the one speaking or one being spoken to."
       },
       {
        "type": "para",
-       "text": "from the first and second person"
-      },
-      {
-       "type": "para",
-       "text": "pronouns in that it is marked for gender."
-      },
-      {
-       "type": "para",
-       "text": "With first and second person pronouns,"
-      },
-      {
-       "type": "para",
-       "text": "there is no need to specify gender"
-      },
-      {
-       "type": "para",
-       "text": "because it is understood as the one"
-      },
-      {
-       "type": "para",
-       "text": "speaking or one being spoken to."
-      },
-      {
-       "type": "para",
-       "text": "αὐτός also has some other special"
-      },
-      {
-       "type": "para",
-       "text": "features which we will examine here."
+       "text": "αὐτός also has some other special features which we will examine here.",
+       "gapBefore": true
       }
      ]
     },
@@ -1632,7 +1575,15 @@
      "pronounceEach": true
     },
     "liveScore": true,
-    "hintRef": "thirdPersonParadigm"
+    "hintPages": [
+     {
+      "hintRef": "thirdPersonParadigm"
+     },
+     {
+      "contentRef": "threeUses",
+      "title": "Three Uses"
+     }
+    ]
    },
    "audioTiming": "afterGuess",
    "answerPolicy": {

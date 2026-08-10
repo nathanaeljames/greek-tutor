@@ -290,3 +290,48 @@ export function markOverlayParts(text, redIndex, preferredMark) {
   });
   return parts;
 }
+
+// ---- Greek-tap text splitting (shared by RichContent and Paradigm) ---------
+// greekTaps: split a text on STANDALONE substring matches and render those
+// substrings as tappable spans. Greek NOT listed stays plain. Data contract
+// (chat-side pipeline, chapters 2+): a greekTaps key marks EVERY occurrence of
+// that exact string whose neighbors are not Greek letters — a single-letter
+// key like "ζ" can never turn part of a longer Greek word in the same
+// paragraph into a tap target. Lived in RichContent.svelte until 5F-FEEDBACK2
+// item 25 needed the same split inside Paradigm's note line (the emphatic
+// forms ἐμοῦ, ἐμοί, ἐμέ), at which point two copies would have been two
+// places for the contract to disagree.
+const GREEK_LETTER = /[Ͱ-Ͽἀ-῿]/; // Greek + Greek Extended
+
+// First occurrence of sub in text where the adjacent characters are not
+// Greek letters; -1 if none.
+function standaloneIndexOf(text, sub) {
+  for (let i = text.indexOf(sub); i !== -1; i = text.indexOf(sub, i + 1)) {
+    const before = i > 0 ? text[i - 1] : '';
+    const after = text[i + sub.length] || '';
+    if (!GREEK_LETTER.test(before) && !GREEK_LETTER.test(after)) return i;
+  }
+  return -1;
+}
+
+export function splitTaps(text, taps) {
+  let parts = [{ t: text || '' }];
+  if (!taps) return parts;
+  for (const [sub, audio] of Object.entries(taps)) {
+    const next = [];
+    for (const p of parts) {
+      if (p.audio || p.popup) { next.push(p); continue; }   // already claimed
+      // EVERY standalone occurrence, not just the first: two identical Greek
+      // words on one page must behave the same way (directive 8).
+      let rest = p.t;
+      for (let i = standaloneIndexOf(rest, sub); i !== -1; i = standaloneIndexOf(rest, sub)) {
+        if (i > 0) next.push({ t: rest.slice(0, i) });
+        next.push({ t: sub, audio });
+        rest = rest.slice(i + sub.length);
+      }
+      if (rest) next.push({ t: rest });
+    }
+    parts = next;
+  }
+  return parts;
+}

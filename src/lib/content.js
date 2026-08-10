@@ -702,7 +702,12 @@ export function resolveHintRef(chapter, ref) {
     // not at a globally unique block type. Resolve the topic generically and
     // return its nested paradigm; no activity id enters the renderer contract.
     if (node.id === ref) {
-      found = nestedParadigm(node);
+      // A Review page carries its chart as a bare `paradigm` OBJECT with no
+      // block type of its own (mode: paradigmChart) — 5F-FEEDBACK2 item 13
+      // points a hint page at c7_qr_adjectives, so an id match falls through
+      // to that field when no typed block is nested.
+      found = nestedParadigm(node)
+        || (node.paradigm && typeof node.paradigm === 'object' ? node.paradigm : null);
       if (found) return;
     }
     for (const key of Object.keys(node)) walk(node[key]);
@@ -738,6 +743,24 @@ export function resolveHintBlocks(chapter, hint) {
     }
   }
   return [];
+}
+
+// A hint PAGE may reuse a Learn topic's whole content array by that topic's id
+// (5F-FEEDBACK2 item 28: the Aὐτός Translation Drill's last hint page is the
+// Three Uses teaching page). Resolving by id keeps the hint from duplicating —
+// or drifting from — the authored page, same principle as resolveHintBlocks.
+export function resolveContentById(chapter, ref) {
+  if (!chapter || !ref) return [];
+  let found = null;
+  const walk = node => {
+    if (found || !node) return;
+    if (Array.isArray(node)) { node.forEach(walk); return; }
+    if (typeof node !== 'object') return;
+    if (node.id === ref && Array.isArray(node.content)) { found = node.content; return; }
+    for (const key of Object.keys(node)) walk(node[key]);
+  };
+  for (const section of SECTIONS) walk(chapter[section]);
+  return found || [];
 }
 
 export function shuffle(arr) {

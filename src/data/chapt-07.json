@@ -45,32 +45,13 @@
      "content": [
       {
        "type": "para",
-       "text": "An adjective is a word used to modify"
+       "text": "An adjective is a word used to modify a noun or pronoun. The adjective often specifies more clearly what the noun or pronoun actually means. It often answers the question \"What kind of ______ is it?\""
       },
       {
        "type": "para",
-       "text": "a noun or pronoun. The adjective often"
-      },
-      {
-       "type": "para",
-       "text": "specifies more clearly what the noun"
-      },
-      {
-       "type": "para",
-       "text": "or pronoun actually means. It often"
-      },
-      {
-       "type": "para",
-       "text": "answers the question \"What kind of"
-      },
-      {
-       "type": "para",
-       "text": "______ is it?\""
-      },
-      {
-       "type": "para",
-       "text": "The [[u]]soft[[/u]] snow hit the windshield.\nAnswers: what kind of snow?  soft\nThe snow was [[u]]soft[[/u]].",
-       "indent": true
+       "text": "The [[u]]soft[[/u]] snow hit the windshield.\n    Answers:  what kind of snow?  soft\nThe snow was [[u]]soft[[/u]].",
+       "gapBefore": true,
+       "flush": true
       }
      ]
     },
@@ -88,15 +69,24 @@
        "items": [
         {
          "label": "Attributive:",
-         "text": "the adjective attributes a characteristic to the noun it modifies. The [[u]]good[[/u]] book"
+         "text": "the adjective attributes a characteristic to the noun it modifies.",
+         "exampleLines": [
+          "The [[u]]good[[/u]] book"
+         ]
         },
         {
          "label": "Predicate:",
-         "text": "the adjective assigns a characteristic to the subject of the sentence. The book is [[u]]good[[/u]]."
+         "text": "the adjective assigns a characteristic to the subject of the sentence.",
+         "exampleLines": [
+          "The book is [[u]]good[[/u]]."
+         ]
         },
         {
          "label": "Substantive:",
-         "text": "the adjective acts independently as a noun itself. The [[u]]good[[/u]] die young."
+         "text": "the adjective acts independently as a noun itself.",
+         "exampleLines": [
+          "The [[u]]good[[/u]] die young."
+         ]
         }
        ]
       }
@@ -112,17 +102,28 @@
        "items": [
         {
          "label": "Attributive use:",
-         "text": "The [[u]]red[[/u]] car hit the [[u]]big[[/u]] truck behind the [[u]]rear[[/u]] tire."
+         "text": "",
+         "exampleLines": [
+          "The [[u]]red[[/u]] car hit the [[u]]big[[/u]] truck behind the [[u]]rear[[/u]] tire."
+         ]
         },
         {
          "label": "Predicate use:",
-         "text": "Roses are [[u]]red[[/u]] and violets are [[u]]blue[[/u]]."
+         "text": "",
+         "exampleLines": [
+          "Roses are [[u]]red[[/u]] and violets are [[u]]blue[[/u]]."
+         ]
         },
         {
          "label": "Substantive use:",
-         "text": "The [[u]]kind[[/u]] receive their rewards but the [[u]]unjust[[/u]] are often surprised. (i.e. the kind person; the unjust person)"
+         "text": "",
+         "exampleLines": [
+          "The [[u]]kind[[/u]] receive their rewards but the [[u]]unjust[[/u]] are often surprised.",
+          "(i.e. the kind person; the unjust person)"
+         ]
         }
-       ]
+       ],
+       "itemGap": true
       }
      ]
     }
@@ -141,43 +142,22 @@
      "content": [
       {
        "type": "para",
-       "text": "Adjectives modify nouns and pronouns."
+       "text": "Adjectives modify nouns and pronouns. They will match the nouns they modify in number, gender and case."
       },
       {
        "type": "para",
-       "text": "They will match the nouns they modify"
+       "text": "Adjectives frequently use a 2-1-2 paradigm:",
+       "gapBefore": true
       },
       {
        "type": "para",
-       "text": "in number, gender and case."
+       "text": "masculine = 2nd declension forms,\nfeminine = 1st declension forms, and\nneuter = 2nd declension forms.",
+       "indent": true
       },
       {
        "type": "para",
-       "text": "Adjectives frequently use a 2-1-2 paradigm:"
-      },
-      {
-       "type": "para",
-       "text": "masculine = 2nd declension forms,"
-      },
-      {
-       "type": "para",
-       "text": "feminine = 1st declension forms, and"
-      },
-      {
-       "type": "para",
-       "text": "neuter = 2nd declension forms."
-      },
-      {
-       "type": "para",
-       "text": "When an adjective's root ends in an"
-      },
-      {
-       "type": "para",
-       "text": "epsilon, iota, or rho, the \"a\" 1st declension"
-      },
-      {
-       "type": "para",
-       "text": "form will be used."
+       "text": "When an adjective's root ends in an epsilon, iota, or rho, the \"a\" 1st declension form will be used.",
+       "gapBefore": true
       }
      ]
     },
@@ -585,51 +565,54 @@
      "content": [
       {
        "type": "para",
-       "text": "Adjective has definite article"
+       "text": "Adjective has definite article",
+       "emphasis": "strong",
+       "align": "center"
       },
       {
-       "type": "para",
-       "text": "ὁ ἀγαθὸς λόγος",
-       "greekTaps": {
-        "ὁ ἀγαθὸς λόγος": "chapt_7_g_ap1"
-       }
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "centered": true,
+       "rows": [
+        {
+         "greek": "ὁ ἀγαθὸς λόγος",
+         "gloss": "the good word",
+         "audio": "chapt_7_g_ap1"
+        },
+        {
+         "greek": "ὁ λόγος ὁ ἀγαθός",
+         "gloss": "the good word",
+         "audio": "chapt_7_g_ap2"
+        }
+       ]
       },
       {
-       "type": "para",
-       "text": "the good word"
+       "type": "greekRows",
+       "layout": "verseExamples",
+       "centered": true,
+       "gapBefore": true,
+       "rows": [
+        {
+         "greek": "ἐγώ εἰμι ὁ ποιμὴν ὁ καλός",
+         "gloss": "I am the [[u]]good[[/u]] shepherd",
+         "ref": "Jn 10:11",
+         "audio": "chapt_7_g_ap3"
+        }
+       ]
       },
       {
-       "type": "para",
-       "text": "ὁ λόγος ὁ ἀγαθός",
-       "greekTaps": {
-        "ὁ λόγος ὁ ἀγαθός": "chapt_7_g_ap2"
-       }
-      },
-      {
-       "type": "para",
-       "text": "\""
-      },
-      {
-       "type": "para",
-       "text": "ἐγώ εἰμι ὁ ποιμὴν ὁ καλός",
-       "greekTaps": {
-        "ἐγώ εἰμι ὁ ποιμὴν ὁ καλός": "chapt_7_g_ap3"
-       }
-      },
-      {
-       "type": "para",
-       "text": "I am the [[u]]good[[/u]] shepherd (Jn 10:11)"
-      },
-      {
-       "type": "para",
-       "text": "ἐν τῇ ἐσχάτῃ ἡμέρᾳ",
-       "greekTaps": {
-        "ἐν τῇ ἐσχάτῃ ἡμέρᾳ": "chapt_7_g_ap4"
-       }
-      },
-      {
-       "type": "para",
-       "text": "in the [[u]]last[[/u]] day (Jn 6:39)"
+       "type": "greekRows",
+       "layout": "verseExamples",
+       "centered": true,
+       "gapBefore": true,
+       "rows": [
+        {
+         "greek": "ἐν τῇ ἐσχάτῃ ἡμέρᾳ",
+         "gloss": "in the [[u]]last[[/u]] day",
+         "ref": "Jn 6:39",
+         "audio": "chapt_7_g_ap4"
+        }
+       ]
       }
      ]
     },
@@ -639,65 +622,58 @@
      "content": [
       {
        "type": "para",
-       "text": "Adjective has no definite article"
+       "text": "Adjective has no definite article",
+       "emphasis": "strong",
+       "align": "center"
       },
       {
-       "type": "para",
-       "text": "ἀγαθὸς ὁ λόγος",
-       "greekTaps": {
-        "ἀγαθὸς ὁ λόγος": "chapt_7_g_pp1"
-       }
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "centered": true,
+       "rows": [
+        {
+         "greek": "ἀγαθὸς ὁ λόγος",
+         "gloss": "the word is good",
+         "audio": "chapt_7_g_pp1"
+        },
+        {
+         "greek": "ὁ λόγος ἀγαθός",
+         "gloss": "the word is good",
+         "audio": "chapt_7_g_pp1a"
+        }
+       ]
       },
       {
-       "type": "para",
-       "text": "the word is good"
+       "type": "greekRows",
+       "layout": "verseExamples",
+       "centered": true,
+       "gapBefore": true,
+       "rows": [
+        {
+         "greek": "καὶ ὁ ἄνθρωπος οὗτος",
+         "greek2": "δίκαιος",
+         "audio": "chapt_7_g_pp2",
+         "audio2": "chapt_7_g_pp2a",
+         "gloss": "and this man was [[u]]righteous[[/u]]",
+         "ref": "Lk 2:25"
+        }
+       ]
       },
       {
-       "type": "para",
-       "text": "ὁ λόγος ἀγαθός",
-       "greekTaps": {
-        "ὁ λόγος ἀγαθός": "chapt_7_g_pp1a"
-       }
-      },
-      {
-       "type": "para",
-       "text": "\""
-      },
-      {
-       "type": "para",
-       "text": "καὶ ὁ ἄνθρωπος οὗτος",
-       "greekTaps": {
-        "καὶ ὁ ἄνθρωπος οὗτος": "chapt_7_g_pp2"
-       }
-      },
-      {
-       "type": "para",
-       "text": "δίκαιος",
-       "greekTaps": {
-        "δίκαιος": "chapt_7_g_pp2a"
-       }
-      },
-      {
-       "type": "para",
-       "text": "and this man was [[u]]righteous[[/u]] (Lk 2:25)"
-      },
-      {
-       "type": "para",
-       "text": "φαίνεσθε τοῖς ἀνθρώποις",
-       "greekTaps": {
-        "φαίνεσθε τοῖς ἀνθρώποις": "chapt_7_g_pp3"
-       }
-      },
-      {
-       "type": "para",
-       "text": "δίκαιοι",
-       "greekTaps": {
-        "δίκαιοι": "chapt_7_g_pp4"
-       }
-      },
-      {
-       "type": "para",
-       "text": "you appear to men to be [[u]]righteous[[/u]] (Mat 23:28)"
+       "type": "greekRows",
+       "layout": "verseExamples",
+       "centered": true,
+       "gapBefore": true,
+       "rows": [
+        {
+         "greek": "φαίνεσθε τοῖς ἀνθρώποις",
+         "greek2": "δίκαιοι",
+         "audio": "chapt_7_g_pp3",
+         "audio2": "chapt_7_g_pp4",
+         "gloss": "you appear to men to be [[u]]righteous[[/u]]",
+         "ref": "Mat 23:28"
+        }
+       ]
       }
      ]
     },
@@ -707,37 +683,35 @@
      "content": [
       {
        "type": "para",
-       "text": "The substantive use of the adjective is"
+       "text": "The substantive use of the adjective is when the adjective is used as a noun. The substantive use often has the article."
       },
       {
-       "type": "para",
-       "text": "when the adjective is used as a noun."
+       "type": "greekRows",
+       "layout": "verseExamples",
+       "centered": true,
+       "gapBefore": true,
+       "rows": [
+        {
+         "greek": "οἱ δὲ δίκαιοι εἰς ζωὴν αἰώνιον",
+         "gloss": "and the [[u]]righteous[[/u]] unto eternal life",
+         "ref": "Mat 25:46",
+         "audio": "chapt_7_g_su1"
+        }
+       ]
       },
       {
-       "type": "para",
-       "text": "The substantive use often has the article."
-      },
-      {
-       "type": "para",
-       "text": "οἱ δὲ δίκαιοι εἰς ζωὴν αἰώνιον",
-       "greekTaps": {
-        "οἱ δὲ δίκαιοι εἰς ζωὴν αἰώνιον": "chapt_7_g_su1"
-       }
-      },
-      {
-       "type": "para",
-       "text": "and the [[u]]righteous[[/u]] unto eternal life (Mat 25:46)"
-      },
-      {
-       "type": "para",
-       "text": "Ὁ δὲ δίκαιος ἐκ πίστεως ζήσεται",
-       "greekTaps": {
-        "Ὁ δὲ δίκαιος ἐκ πίστεως ζήσεται": "chapt_7_g_su2"
-       }
-      },
-      {
-       "type": "para",
-       "text": "and the [[u]]righteous[[/u]] will live by faith (Rom 1:17)"
+       "type": "greekRows",
+       "layout": "verseExamples",
+       "centered": true,
+       "gapBefore": true,
+       "rows": [
+        {
+         "greek": "Ὁ δὲ δίκαιος ἐκ πίστεως ζήσεται",
+         "gloss": "and the [[u]]righteous[[/u]] will live by faith",
+         "ref": "Rom 1:17",
+         "audio": "chapt_7_g_su2"
+        }
+       ]
       }
      ]
     },
@@ -747,30 +721,21 @@
      "content": [
       {
        "type": "para",
-       "text": "Sometimes neither the adjective nor the"
+       "text": "Sometimes neither the adjective nor the noun has the article in which case context must determine whether to translate it attributively or predicatively."
       },
       {
-       "type": "para",
-       "text": "noun has the article in which case context"
-      },
-      {
-       "type": "para",
-       "text": "must determine whether to translate it"
-      },
-      {
-       "type": "para",
-       "text": "attributively or predicatively."
-      },
-      {
-       "type": "para",
-       "text": "καὶ ἀνὴρ ἀγαθὸς καὶ δίκαιος",
-       "greekTaps": {
-        "καὶ ἀνὴρ ἀγαθὸς καὶ δίκαιος": "chapt_7_g_pa1"
-       }
-      },
-      {
-       "type": "para",
-       "text": "and a [[u]]good and righteous[[/u]] man (Lk 23:50)"
+       "type": "greekRows",
+       "layout": "verseExamples",
+       "centered": true,
+       "gapBefore": true,
+       "rows": [
+        {
+         "greek": "καὶ ἀνὴρ ἀγαθὸς καὶ δίκαιος",
+         "gloss": "and a [[u]]good and righteous[[/u]] man",
+         "ref": "Lk 23:50",
+         "audio": "chapt_7_g_pa1"
+        }
+       ]
       }
      ]
     }
@@ -790,39 +755,12 @@
      "content": [
       {
        "type": "para",
-       "text": "εἰμί is a stative verb (it indicates a state"
+       "text": "εἰμί is a stative verb (it indicates a state of being) and so has no voice (active, middle, passive)."
       },
       {
        "type": "para",
-       "text": "of being) and so has no voice (active,"
-      },
-      {
-       "type": "para",
-       "text": "middle, passive)."
-      },
-      {
-       "type": "para",
-       "text": "In English \"is\" takes a [[u]]predicate[[/u]]"
-      },
-      {
-       "type": "para",
-       "text": "[[u]]nominative[[/u]] rather than the normal"
-      },
-      {
-       "type": "para",
-       "text": "accusative. It is correct to say \"This is"
-      },
-      {
-       "type": "para",
-       "text": "he\" and incorrect to say \"This is him.\""
-      },
-      {
-       "type": "para",
-       "text": "Similarly in Greek a noun or pronoun in"
-      },
-      {
-       "type": "para",
-       "text": "the nominative follows the verb εἰμί."
+       "text": "In English \"is\" takes a [[u]]predicate nominative[[/u]] rather than the normal accusative. It is correct to say \"This is he\" and incorrect to say \"This is him.\" Similarly in Greek a noun or pronoun in the nominative follows the verb εἰμί.",
+       "gapBefore": true
       }
      ]
     },
@@ -901,26 +839,31 @@
      "title": "Examples",
      "content": [
       {
-       "type": "para",
-       "text": "ὅτι ὁ θεὸς ἀληθής ἐστιν",
-       "greekTaps": {
-        "ὅτι ὁ θεὸς ἀληθής ἐστιν": "chapt_7_g_ex1"
-       }
+       "type": "greekRows",
+       "layout": "verseExamples",
+       "centered": true,
+       "rows": [
+        {
+         "greek": "ὅτι ὁ θεὸς ἀληθής ἐστιν",
+         "gloss": "that God is true",
+         "ref": "Jn 3:33",
+         "audio": "chapt_7_g_ex1"
+        }
+       ]
       },
       {
-       "type": "para",
-       "text": "that God is true (Jn 3:33)"
-      },
-      {
-       "type": "para",
-       "text": "Ἠλίας εἶ; καὶ λέγει, Οὐκ εἰμί. Ὁ προφήτης εἶ σύ;",
-       "greekTaps": {
-        "Ἠλίας εἶ; καὶ λέγει, Οὐκ εἰμί. Ὁ προφήτης εἶ σύ;": "chapt_7_g_ex2"
-       }
-      },
-      {
-       "type": "para",
-       "text": "Are you Elijah? and he said, \"I am not.\" Are you the prophet? (Jn 1:21)"
+       "type": "greekRows",
+       "layout": "verseExamples",
+       "centered": true,
+       "gapBefore": true,
+       "rows": [
+        {
+         "greek": "Ἠλίας εἶ; καὶ λέγει, Οὐκ εἰμί. Ὁ προφήτης εἶ σύ;",
+         "gloss": "Are you Elijah? and he said, \"I am not.\" Are you the prophet?",
+         "ref": "Jn 1:21",
+         "audio": "chapt_7_g_ex2"
+        }
+       ]
       }
      ]
     },
@@ -930,23 +873,7 @@
      "content": [
       {
        "type": "para",
-       "text": "οὐ is placed before the word it negates"
-      },
-      {
-       "type": "para",
-       "text": "which is usually the verb."
-      },
-      {
-       "type": "para",
-       "text": "There are three forms of this word"
-      },
-      {
-       "type": "para",
-       "text": "depending on the initial letter of the word"
-      },
-      {
-       "type": "para",
-       "text": "that follows it:"
+       "text": "οὐ is placed before the word it negates which is usually the verb. There are three forms of this word depending on the initial letter of the word that follows it:"
       },
       {
        "type": "numbered",
@@ -1318,7 +1245,11 @@
      "pronounceEach": true
     },
     "liveScore": true,
-    "hintRef": "adjectiveParadigm"
+    "hintRef": "adjectiveParadigm",
+    "hintSwitchLabels": [
+     "Singular",
+     "Plural"
+    ]
    },
    "_answer_note": "Derived from the Adjective Spelling Exercise, which is the same twenty items in the same order with the parse spelled out; the two pools are asserted to cite the same twenty references.",
    "audioTiming": "beforeGuess",
@@ -1533,66 +1464,73 @@
     "defaults": {
      "pronounceEach": true
     },
-    "liveScore": true
+    "liveScore": true,
+    "hintPages": [
+     {
+      "hintRef": "c7_qr_adjectives",
+      "title": "Adjective Paradigm"
+     },
+     {
+      "title": "Attributive & Predicate Positions",
+      "content": [
+       {
+        "type": "numbered",
+        "items": [
+         {
+          "text": "Attributive adjectives have a definite article",
+          "below": [
+           {
+            "type": "greekRows",
+            "layout": "glossOnly",
+            "rows": [
+             {
+              "greek": "ὁ ἀγαθὸς λόγος",
+              "gloss": "the good word",
+              "audio": "chapt_7_g_ap1"
+             },
+             {
+              "greek": "ὁ λόγος ὁ ἀγαθός",
+              "gloss": "\"",
+              "audio": "chapt_7_g_ap2"
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "text": "Predicate adjectives do not have a definite article",
+          "below": [
+           {
+            "type": "greekRows",
+            "layout": "glossOnly",
+            "rows": [
+             {
+              "greek": "ἀγαθὸς ὁ λόγος",
+              "gloss": "the word is good",
+              "audio": "chapt_7_g_pp1"
+             },
+             {
+              "greek": "ὁ λόγος ἀγαθός",
+              "gloss": "\"",
+              "audio": "chapt_7_g_pp1a"
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "text": "Substantive use: The substantive use of the adjective is when the adjective is used as a noun. The substantive use often has the article."
+         }
+        ]
+       }
+      ]
+     }
+    ]
    },
    "audioTiming": "afterGuess",
    "answerPolicy": {
     "advanceClass": "manualOnIncorrect",
     "attemptsPerItem": 1
-   },
-   "hint": {
-    "content": [
-     {
-      "type": "numbered",
-      "items": [
-       {
-        "text": "Attributive adjectives have a definite article",
-        "below": [
-         {
-          "type": "greekRows",
-          "layout": "glossOnly",
-          "rows": [
-           {
-            "greek": "ὁ ἀγαθὸς λόγος",
-            "gloss": "the good word",
-            "audio": "chapt_7_g_ap1"
-           },
-           {
-            "greek": "ὁ λόγος ὁ ἀγαθός",
-            "gloss": "\"",
-            "audio": "chapt_7_g_ap2"
-           }
-          ]
-         }
-        ]
-       },
-       {
-        "text": "Predicate adjectives do not have a definite article",
-        "below": [
-         {
-          "type": "greekRows",
-          "layout": "glossOnly",
-          "rows": [
-           {
-            "greek": "ἀγαθὸς ὁ λόγος",
-            "gloss": "the word is good",
-            "audio": "chapt_7_g_pp1"
-           },
-           {
-            "greek": "ὁ λόγος ἀγαθός",
-            "gloss": "\"",
-            "audio": "chapt_7_g_pp1a"
-           }
-          ]
-         }
-        ]
-       },
-       {
-        "text": "Substantive use: The substantive use of the adjective is when the adjective is used as a noun. The substantive use often has the article."
-       }
-      ]
-     }
-    ]
    }
   },
   {
