@@ -3,7 +3,9 @@
 Supersedes PIPELINE-INSIGHTS-v2.md (chapter-1 pilot, 2026-07-12/19 + the
 phase-4 closeout audit + the punch-list session). Revised 2026-07-27 at
 chapter-2 closeout; AMENDED 2026-07-28 at 5C closeout (Stage 3 status,
-Stage 4 Hebrew model, NEW Stage 4b rich-text parsing, §VIII ceiling).
+Stage 4 Hebrew model, NEW Stage 4b rich-text parsing, §VIII ceiling);
+AMENDED 2026-08-10 at 5F closeout (NEW Stage 8: assembly rules from the
+5F device regressions — read it before assembling any chapter).
 
 **What changed from v2, in one paragraph.** v2 carried both the extraction
 mechanics AND the data contract the app consumes. CHAT-HANDOFF.md now owns the
@@ -651,3 +653,110 @@ derives the bundled Greek face, and `scripts/make-mark-geometry.py` generates
 regenerate the other in the same commit. See CHAT-HANDOFF's typography canon.
 `scripts/tbk_richtext.py` is extraction-side only (chat pipeline provenance);
 it has no build or runtime role.
+
+---
+
+### Stage 8: What the 5F device rounds proved about ASSEMBLY (added 2026-08-10)
+
+5F was the project's worst regression round, and the majority of its 52
+feedback items trace to the PIPELINE, not the implementer. Three patch
+rounds (`5F-SPEC1-PATCH{1,2,3}.md`) repaired shipped data by hand. These
+rules exist so no future chapter ships the same classes. Where a rule
+contradicts an earlier Stage, this one wins.
+
+**8.1 A PARAGRAPH IS ONE BLOCK. The original's line breaks are NEVER
+block boundaries.** The single worst 5F defect: chapters 7 and 8's
+teaching prose was emitted one `para` per printed LINE ("An adjective is
+a word used to modify" / "a noun or pronoun. The adjective often" / …).
+Seventeen broken runs across the cohort; every "double spacing" and
+"missing paragraph gap" complaint traces here. Correct authoring:
+
+- one flowing `para` per PARAGRAPH;
+- a blank line in the original = `gapBefore: true` on the next block;
+- hard line breaks inside a worked example = `\n` inside ONE block,
+  `flush: true` where the original does not indent it.
+
+The implementer's `check:shapes` now fails a para ending mid-sentence
+whose successor continues lowercase — but that guard fires at BUILD
+time, after delivery. The assembler must not produce the shape at all:
+join lines to sentence flow at extraction, and treat the original's
+VISIBLE blank lines (screenshot) as the only paragraph boundaries.
+
+**8.2 AUDIO WIRING COMES FROM THE TBK DISPATCH HANDLERS. Filename
+sequence is never evidence.** Two shipped defects, same cause:
+
+- ch6 Scripture Memory Drill: nine deduplicated prompts keyed
+  `f_sm1..9` by POSITION, so πρός/τόν/θεόν played ὁ/λόγος/ἦν's clips.
+  The right ids (`f_sm10/11/12`) were the words' own clips.
+- ch7 Predicate Position: `g_pp1/g_pp2` sit in the page's preload table
+  wired to NOTHING; the real hotspots are `pp1a/pp2a/pp3/pp4`.
+
+The TBK's WordSelection/alias tables state exactly which word plays
+which WAV, and 5F itself proved they are readable (`assemble_ch7.py`'s
+paradigm-cell derivation asserted dispatch before shipping — the
+surfaces that did that were all correct; the surfaces keyed by sequence
+were the ones that failed). Rule: EVERY emitted audio id is either read
+from a dispatch table or asserted present in one; a clip in a preload
+list with no handler is NOT wired. "SCRIPT-VERIFIED" must mean the
+whole chapter, not the surfaces where it was convenient.
+
+**8.3 STRUCTURE IS EMITTED AS STRUCTURE.** Teaching paradigm charts,
+numbered lists, worked-example tables and hint charts are emitted as
+`paradigm` / `numbered` / `greekRows` blocks — never as flat `para`
+text that happens to read like a chart. 5F shipped `c7_learn_adjectives`
+(7 topics), `c8_learn_pronouns` (6) and `c8_learn_third_person` (3)
+entirely as prose although the extraction map had every chart's offset;
+the ch8 Number chart collapsed to ten lines of "I we he they". A
+hand-numbered `"N) "` inside a `para` is now a build failure; the
+assembler equivalent: if a field renders as a table or list in the
+rail walk, it ships as one.
+
+**8.4 EVERY `hintRef` MUST RESOLVE AT ASSEMBLY.** 5F emitted six hint
+references and five dangled — eight drills declared a Hint button that
+never rendered. The Hint charts' offsets were all in the extraction
+map; they were found and not shipped. `assemble_chNN.py` must fail if
+any `ui.hintRef` names no emitted chart or topic, the same way it fails
+on a missing pool.
+
+**8.5 EVERY TEXT PATH GOES THROUGH THE FULL CONVERSION.** Two 5F
+escapes, both from side paths that bypassed the run-table machinery:
+
+- ch8's two Quick Review pronoun charts shipped six cells of LATIN
+  (`mou`, `moi`, `me`, `sou`, `soi`, `se`) — the accentless-enclitic
+  case `underline.py` was built for, unapplied to the `paradigm_block`
+  path;
+- ch8 Examples (Jn 16:7) shipped `ἀλλ ἐ̓γὼ` — elision as a SPACE and a
+  trailing combining breathing — because that field skipped the
+  ELISION sentinel.
+
+Rule: `conv` (with the elision sentinel) and the chapter-wide Greek
+format vote run on EVERY emitted string, and assembly ends with a
+self-audit over the emitted JSON: no bare-Latin token in a Greek
+position, no space-before-breathing, no combining mark following a
+non-vowel. Cheap, mechanical, and either check would have caught both.
+
+**8.6 THE AUDIO MANIFEST IS FROZEN.** Pack versioning is one SHA-256 of
+the whole `audio-manifest.json`; ANY edit flips every installed device
+to "Update audio". A 5F patch added one entry and every pack on
+Nathanael's device prompted. The corpus is complete; the pipeline never
+adds manifest entries casually, and any change that genuinely must
+touch it is called out in the handoff in exactly those terms.
+
+**8.7 ASSEMBLERS ARE PROVENANCE, NOT REGENERATORS (5F amendment to the
+regeneration rule).** The three 5F patch rounds edited
+`chapt-06/07/08.json` IN THE REPO — paragraph restructures, audio
+remaps, popup re-keys, all device-verified. `assemble_ch{6,7,8}.py` do
+NOT reproduce those edits: re-running them would silently regress three
+patch rounds. The committed repo JSON is the single source of truth for
+chapters 6-8; the assemblers document how the first cut was derived.
+Do not re-run them against these chapters without first back-porting
+every PATCH1-3 data change, and say so wherever regeneration is
+discussed. For future chapters, Stage 8.1-8.5 exist precisely so the
+first cut does not need hand repair.
+
+**8.8 D-32 CLOSURE ITEM for the next data delivery.** Chapters 6 and
+8's four case-split vocabulary drills ship as authored grids with
+nothing marking them as vocabulary, so they miss D-19's 4-up iPad
+layout. When those files are next open for any reason, add the pool
+marker the implementer named (`pool` or `promptFrom.lexicon`); the
+renderer already handles it. Not worth its own round.

@@ -15,79 +15,69 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
 internet. Full license from the author. Secondary goal: portfolio
 piece. Nathanael goes by "Fable" when addressing Claude (chat).
 
-## Live state (2026-08-08)
+## Live state (2026-08-10)
 
-**COHORT 5F IS BUILT, NOT CLOSED.** Chapters 6, 7 and 8 — all 70
-activities — are implemented, rail-ordered, lazily chunked and offline.
-One round, one implementer, `5F-SPEC1.md`. Records:
-`5F-SPEC1-RESULTS.md` (prose, section by section) and
-`5F-SPEC1-BUILD.md` (the full diff). `npm run verify` passes; the
-behaviour harness is **586/586** (388 before the round), a new 70-stop
-smoke walk at 380px is 73/73 and the modal pass is 85/85 over five
-device heights. Screenshot corpora: `buildout/screenshots/5f-walk`
-(70 rail stops), `5f-detail` (21 sub-pages the rail walk cannot
-reach — topics, popups, the paradigm stack, the two-stage drill
-mid-answer), `5f-modals` (85).
+**COHORT 5F IS CLOSED. COHORT 5G (chapters 9-10) IS OPENING.**
 
-New this cohort, all registered in PHASE5-PLAN's mode/type registry:
-`prepositionsChart` (chapter 6's ten prepositions as an SVG DIAGRAM
-rather than a table, on two surfaces), full-page `popups[]`,
-`pronounParadigm` + a `paradigms[]` More/Back stack, `twoStageGrid`,
-`answerAlt` in two shapes, `options: "perItem"`, `greek2`, `note`,
-`pool: "senses"`, `audioMap`. Three new divergences: **D-31** (chapter
-7's popups are opened from their Greek headwords, because the data
-ships no anchors), **D-32** (the case-split vocabulary grids do not
-follow D-19) and **D-33** (a parenthesised `answerAlt` makes the
-parenthesised segment optional).
+Chapters 1-8 are shipped, device-verified, and behaviorally correct.
+5F took FOUR implementer rounds — the build (`5F-SPEC1.md` /
+`-RESULTS.md` / `-BUILD.md`) and three patch rounds against 52 device
+feedback items (`5F-SPEC1-PATCH1/2/3.md`) — the project's worst
+regression round. The harness ended at **683/683**, modals 85/85, and
+the full record of every root cause is in the three patch documents.
+Divergence log runs through **D-39**.
 
-**The two-stage drill is built exactly as Nathanael specified**
-(VERIFY-5F item 7): nothing is judged until BOTH stages are chosen, the
-person may be changed as often as the learner likes, and only the case
-click commits the pair.
+**READ BEFORE ASSEMBLING ANYTHING: PIPELINE-INSIGHTS-v3 Stage 8.** The
+majority of 5F's feedback items were PIPELINE defects, and Stage 8 is
+their distilled prevention: (8.1) a paragraph is ONE block — the
+original's line breaks are never block boundaries (the single worst 5F
+defect, 17 broken runs); (8.2) audio wiring comes from the TBK's own
+WordSelection/dispatch handlers, never filename sequence (two shipped
+mis-keyings); (8.3) charts/lists are emitted as structure, never prose;
+(8.4) every `hintRef` must resolve at assembly (five of six dangled);
+(8.5) every text path goes through the full conversion + elision
+sentinel, with a post-assembly self-audit (Latin leaked into two QR
+charts; one elision shipped as a space); (8.6) the audio manifest is
+FROZEN — any edit flips every device to "Update audio"; (8.7)
+**`assemble_ch{6,7,8}.py` are provenance only** — the repo's
+chapt-06/07/08.json carry three rounds of hand repair the assemblers
+do not reproduce, so re-running them would regress the patches. The
+repo JSON is the source of truth for chapters 6-8, full stop.
 
-**WHAT 5F STILL NEEDS, all pipeline-side.** No data file was edited
-(ground rule 2); these are itemised with offsets in
-`5F-SPEC1-RESULTS.md` §8 and are the gate on closing the cohort:
+**THE 5G LEDGER IS ALREADY DONE.** `DRILLBEHAVIORLEDGER.csv` carries
+**95 rows, all CONFIRMED** — chapters 1-8 (78) plus chapters 9-10 (17),
+the latter confirmed by Nathanael's manual recon 2026-08-09 BEFORE any
+spec exists (rule E2, honoured for the first time ahead of schedule).
+Fable's blind extrapolation from DRILL-BEHAVIOR-RULES scored 153/153
+behavior cells against that recon — the method works — but only after
+an anchored title-sweep bug hid TWO activities entirely. The rules
+that came out of that near-miss are **TITLE-SWEEP-RULES.md** (§F: never
+anchor a title search at end-of-run; validate any claimed ABSENCE
+against a confirmed chapter; cross-check the count against the
+chapter's own Drill/Exercise/Quick Review menus; §G: ground every
+audioTiming in a prompt pool actually READ, offset recorded). They
+bind every future inventory pass.
 
-1. **Chapter 8's two Quick Review pronoun charts carry six rows of
-   untransliterated Latin** (`mou`, `moi`, `me`, `sou`, `soi`, `se`)
-   where the Learn pages carry proper μου, μοι, με, σου, σοι, σε. Those
-   cells print their Latin as ink and are not tappable; the clips
-   already exist in the chapter's `audioMap` and would light up the
-   moment the data carries Greek.
-2. **The teaching paradigms for chapters 7 and 8 were not emitted** —
-   `c7_learn_adjectives`, `c8_learn_pronouns` and
-   `c8_learn_third_person` are entirely flat `para` blocks. Downstream,
-   **5 of the cohort's 6 `hintRef`s dangle** and 8 drills that declare
-   a Hint in `ui.buttons` show none. The extraction map lists offsets
-   for every one of those charts, so they were found and not shipped.
-3. **Chapter 7's three popups (οὐ/οὐκ/οὐχ) ship with no anchors** — no
-   `popupRef` anywhere in `chapt-07.json`, no `[[u]]` run on the page.
-   D-31 is the workaround; anchors would retire it.
-4. **`c8_learn_pronouns` → Examples, Jn 16:7** loses the elision on
-   `ἀλλ'` (a space, not U+0027) and carries a trailing combining
-   breathing on the ε of ἐγώ.
+**CHAPTER 9-10 SHAPE, confirmed:** ch9 = 8 activities (Parsing,
+Translation, 2x Vocabulary, Scripture Memory drills; M/P Speller,
+Vocabulary Speller, Scripture Speller), 125 WAVs — smallest chapter
+since 3. ch10 = 9 activities, 183 WAVs, including the cohort's two
+flagged novelties: **TWO chapter-specific spellers** (Future Indicative
+Forms + Future Indicative ROOTS — no earlier chapter has two; the
+Roots pool is English present/future pairs, "I have" / "I will have")
+and a **"Repeat This Exercise" checkbox** appearing from chapter 9
+onward that the port has never built. One shape question is parked in
+ledger row 87's note: ch10's "Parsing" drill sits next to an
+English-gloss pool at `0xe8fb8`, so it may match form-to-gloss despite
+its title — settle at extraction, not by name.
 
-**THE RAIL-WALK COMPARISON IS DONE.** `ch6railwalk.pdf` (16 sheets),
-`ch7railwalk.pdf` (16) and `ch8railwalk.pdf` (15) were supplied after
-the first pass and every page of all three rails was then held against
-them. Eight fixes came out of it, listed with their source sheet in
-`5F-SPEC1-RESULTS.md` §6.1 — four defects nothing else would have
-caught (the case tag on the wrong side of the vocabulary card, the
-adjective paradigm printing `undefined` for its lemma, its
-three-column cells breaking mid-word at 380px, its Singular/Plural
-bands missing), two inventions of mine the original does not do (a
-greyed-out case grid, a popup-link rule that claimed too many words),
-and two smaller ones. §6.2 lists what the walk confirmed correct and
-§6.3 the differences left standing with their reasons.
-
-**PROCESS NOTE, worth keeping.** The first pass ran to completion
-WITHOUT the rail walks because they were not attached and I did not
-ask. Everything the harness can settle was right; everything only a
-screenshot can settle was not, and four of those eight defects were
-invisible to a 73/73 smoke walk and a 575-assertion harness because
-they render perfectly plausibly. Standing rule from this round: **do
-not start a spec until every file it names is in hand.**
+**5F residual items, small, carried not blocking:** VERIFY-5F-2 items
+2 (does the original accept bare ἐστί — D-33 stands until answered),
+3 (case-before-person commit order), 4 (three ch8 clips: do
+h_voc3/h_voc9 say both paired words; what is h_1nse), 10 (D-32 iPad
+layout — pipeline pool-marker fix queued as Stage 8.8); plus the three
+unlabeled pre-5F chart stacks listed at the end of PATCH3 awaiting
+Nathanael's call, and `h_kai`/`h_kagw` still surfaceless.
 
 **COHORT 5E IS CLOSED.** Chapters 1 through 5 are shipped, verified on
 device, and behaviorally corrected. Full round history:
@@ -581,47 +571,42 @@ files carry only what a new chat needs.
   i_rm623b pre-ships in CHAPT_8). Full taxonomy:
   buildout/5C-RECON-FINDINGS.md §3.
 
-## Immediate queue (as of 2026-08-07 — cohort 5E closed, 5F opening)
+## Immediate queue (as of 2026-08-10 — 5F closed, 5G opening)
 
-1. **Nathanael: re-upload four files to project files from the repo**
-   (repo already has them; project files are stale) —
-   `DIVERGENCE-LOG.md`, `DRILL-BEHAVIOR-RULES.md`,
-   `DRILLBEHAVIORLEDGER.csv`, `chapt-04.json`, `chapt-05.json`. Also
-   upload the refreshed `CHAT-HANDOFF.md`, `PHASE5-PLAN.md` and
-   `ONBOARD-SOL.md` this turn produced.
-2. **Duplicate file flag**: the project's file list shows TWO uploads
-   named `ONBOARD-SOL.md` (300 lines and 275 lines). Only one is
-   reachable from this side (299 lines, matches the repo). Delete
-   whichever the Claude.ai file manager shows as the older/orphaned
-   one — Fable cannot tell from here which upload is which.
-3. **Cohort 5F opens: chapters 6, 7, 8 (Prepositions; Adjectives and
-   the verb εἰμί; Pronouns), rail-walk-then-build, one chapter at a
-   time.** Confirmed sane process (see below). Nathanael supplies
-   `ch6railwalk.pdf`; Fable extracts `6_PREPS.TBK` from a re-uploaded
-   `GreekTutor.iso` (chat-scoped, does not persist across sessions),
-   assembles `chapt-06.json` + `lexicon-chapt06.json` via a new
-   `scripts/assemble_ch6.py`, runs `apply-behavior-matrix.py` against
-   the already-CONFIRMED chapter-6 ledger rows, and delivers both files
-   plus updated `DIVERGENCE-LOG.md`/`5F-EXTRACTION-MAP.md` entries for
-   review — repeat for ch7, ch8. **Only after all three chapters' data
-   is assembled and reviewed does Fable draft `5F-SPEC1.md`** — one
-   spec covering all three chapters, matching the 5E precedent of
-   batching same-cohort chapters into one implementation round.
-   The chapter-6/7/8 activity names and predicted behavior are ALREADY
-   in `DRILLBEHAVIORLEDGER.csv` (28 CONFIRMED rows) — the rail walks are
-   for page content, layout and prose, not for behavior discovery.
-4. Registry debt carried from 5E: `attemptsPerItem` on `retryUntilRight`
-   activities is confirmed dead weight (5E-SPEC3-RESULTS §6.1) — the
-   class alone drives behavior. Safe removal order: make
-   `answerPolicy` without `advanceClass` a `check:shapes` failure
-   FIRST, then delete the field and the fallback branch in
-   `timing.js::classOf` together. Not done; do it opportunistically
-   during 5F if the file is already open, not as a dedicated round.
-5. `scripts/ui-walk.mjs`'s `--out` default still points at a fixed
-   directory rather than being round-scoped — flagged during 5E-SPEC2
-   and never fixed; it overwrote 475 of Sol's screenshots once already.
-   Low priority since chapters are no longer built in parallel, but
-   worth a one-line fix before any future dual round.
+1. **Nathanael: sync project files from the repo.** The full audited
+   add/drop/update list is in the 2026-08-10 chat turn that produced
+   this handoff; headline: replace `DIVERGENCE-LOG.md`,
+   `DRILLBEHAVIORLEDGER.csv`, `chapt-06/07/08.json` (repo carries the
+   patched, device-verified versions), take the refreshed
+   `CHAT-HANDOFF.md` / `PHASE5-PLAN.md` / `PIPELINE-INSIGHTS-v3.md`
+   from this turn, add `TITLE-SWEEP-RULES.md`, and drop the closed 5F
+   round documents from project files (they stay in the repo archive).
+   Note: `chapt-04.json`, `intro.json`, `lexicon-chapt01.json` were
+   never actually divergent — CRLF line endings only; replace with the
+   repo LF copies so the comparison stops flagging them, and compare
+   CONTENT (not size) in all future audits.
+2. **Cohort 5G opens: chapters 9 + 10, rail-walk-then-build.**
+   Nathanael supplies `ch9railwalk.pdf` + `ch10railwalk.pdf` and
+   re-uploads `GreekTutor.iso` (chat-scoped). Fable: extract
+   `9_MIDDLE.TBK` / `10_FUTUR.TBK`, validate the title sweep against a
+   CONFIRMED chapter first (TITLE-SWEEP-RULES F2 — not yet done),
+   cross-check inventories against the chapters' own menus (F3), then
+   assemble one chapter at a time under Stage 8 discipline:
+   `assemble_ch9.py` / `assemble_ch10.py` (start from
+   `assemble_ch8.py`'s conversion machinery + `underline.py`), stamp
+   with `apply-behavior-matrix.py` against ledger rows 79-95, deliver
+   data + extraction-map section per chapter for review. Only then
+   `5G-SPEC1.md` for both chapters. The spec must carry the new
+   "Repeat This Exercise" checkbox and the two-speller shape.
+3. **Before 5G data ships, implement the Stage 8.5 self-audit** as a
+   small script the assembler runs on its own output (no bare Latin in
+   Greek positions, no space-elision, no stray combining marks) —
+   written as a rule, not yet as code.
+4. Registry debt carried: `attemptsPerItem` removal (5E-SPEC3 §6.1)
+   and `ui-walk.mjs --out` round-scoping — opportunistic, not rounds.
+5. **D-32 / Stage 8.8**: when chapt-06/08.json are next open, add the
+   vocabulary pool marker so the four case-split drills go 4-up on
+   iPad.
 
 ## Known open questions
 

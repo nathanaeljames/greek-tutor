@@ -1,7 +1,8 @@
 # PHASE5-PLAN.md — vertical buildout roadmap (LIVING DOCUMENT)
 
-Status date: 2026-08-08 (5E closed, 5F BUILT — implementation complete,
-awaiting VERIFY-5F closure). Roadmap only; per-cohort detail lives in
+Status date: 2026-08-10 (5F CLOSED after three patch rounds +
+device pass; 5G opening — chapters 9-10, ledger already CONFIRMED).
+Roadmap only; per-cohort detail lives in
 the numbered specs. Updated at every cohort boundary.
 
 ## Principles (unchanged)
@@ -146,10 +147,46 @@ COHORT 5F — Chapters 6 + 7 + 8 (Prepositions, Adjectives and the verb
   a reconstruction from the rail-walk image, not a pixel trace — flagged
   as a known tooling limit, not claimed as exact).
 
-COHORT 5G+ (INFERENCE, pending each cohort's extraction pass) —
-  chapters 9-28 grouped by grammatical family, expecting the first
-  chapter of each family to carry the novelty and the rest to reuse:
-  * 5G: 9-10 (Middle/Passive, Future) — first non-active paradigms.
+  **CLOSED 2026-08-10** after two further patch rounds and a device
+  pass. `5F-SPEC1-PATCH2.md` (29 items): the extraction had authored
+  one `para` per printed LINE — 17 broken runs, every "double spacing"
+  item — and the Prepositions Chart was rebuilt as a 300-dpi TRACE of
+  the rail walk after two failed reconstructions. `5F-SPEC1-PATCH3.md`
+  (6 items + 2 addenda): audio re-keyed from the TBK's own
+  WordSelection handlers (never filename sequence), More/Back settled
+  as a centred always-visible pair (D-38 final), item 4 reversed on
+  device evidence, and the frozen-audio-manifest footgun recorded.
+  Harness ended at **683/683**; D-31..D-39 logged. The majority of the
+  52 feedback items were PIPELINE defects; the assembly rules they
+  produced are PIPELINE-INSIGHTS-v3 **Stage 8** — read before
+  assembling any chapter. Chapters 6-8's repo JSON now carries three
+  rounds of hand repair: the assemblers are provenance only and MUST
+  NOT be re-run against them (Stage 8.7).
+
+COHORT 5G — Chapters 9 + 10 (Present Middle/Passive; Future), OPENING.
+  No longer inference: full activity inventories confirmed by
+  Nathanael's manual recon (2026-08-09) and all 17 ledger rows
+  CONFIRMED before any spec exists — rows 79-95 of
+  DRILLBEHAVIORLEDGER.csv. Fable's blind extrapolation from
+  DRILL-BEHAVIOR-RULES scored 153/153 behavior cells against that
+  recon, but only after an un-anchored title sweep corrected TWO
+  missed activities (ch9's Present Middle/Passive Spelling Exercise,
+  ch10's Future Indicative Translation Drill) — the search rules that
+  came out of that are TITLE-SWEEP-RULES.md §F/§G and bind every
+  future inventory pass. Ch9: 8 activities, 125 WAVs (smallest since
+  ch3). Ch10: 9 activities, 183 WAVs, and the cohort's flagged
+  novelties: TWO chapter-specific spellers (Forms + ROOTS — no earlier
+  chapter has two) and a "Repeat This Exercise" checkbox appearing
+  from ch9 onward that the port has never built. Process per 5F
+  precedent AND its lessons: rail walks first, one chapter's data at a
+  time under PIPELINE-INSIGHTS Stage 8, then one spec (5G-SPEC1.md)
+  for both chapters.
+
+COHORT 5H+ (INFERENCE, pending each cohort's extraction pass) —
+  chapters 11-28 grouped by grammatical family. An early "9-28 are
+  uniform, consider consolidating" reading was RETRACTED when the
+  corrected title sweep surfaced extra activities in chapters 11, 13
+  and 18; keep the split below until each cohort's own pass:
   * 5H: 11-12 (Demonstratives, Imperfect).
   * 5I: 13-14-15-16 (3rd Declension, Aorists, Passives) — volume run.
   * 5J: 17-18 (Contract, Perfect).
