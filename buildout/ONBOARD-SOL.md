@@ -273,6 +273,19 @@ against:
   (buildout/screenshots/5f-patch2/prep-overlay.png is the reference
   example). "It looks reasonable" has now failed twice; only "it
   matches" passes.
+- **Word→clip wiring comes from the TBK's own handlers, never from
+  filename sequence (5F-FEEDBACK2 item 17, 5F-FEEDBACK3 item 2).** Twice
+  now, audio was keyed by assuming clip filenames run in display order,
+  and twice the original disagreed (de-duplicated scripture words;
+  predicate-position clips where g_pp1/g_pp2 are wired to NOTHING). The
+  ground truth is on the ISO: pycdlib extracts any chapter's .TBK, and
+  its WordSelection/alias records state which word plays which WAV —
+  that is how PATCH3 settled the predicate clips without listening.
+  Build-time, every audio id in chapter data must exist in
+  audio-manifest.json (check-content-shapes.mjs enforces this); mappings
+  that have been verified by ear or by TBK are PINNED in ui-behavior
+  §P3.1 — add every newly-verified mapping to that pin list in the same
+  change.
 - **The original's LINE BREAKS are not paragraph breaks.** The
   extraction pipeline had emitted one `para` block per panel LINE
   across chapters 6-8 — each line then carried a paragraph margin,

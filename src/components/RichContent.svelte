@@ -193,17 +193,19 @@
       <ol class="rc-list" class:authored-labels={selfNum} class:unnumbered={b.numbered === false}
           class:item-gap={b.itemGap} class:rc-gap-before={b.gapBefore && !b.preamble}>
         {#each items as it, idx}
-          <!-- 5F-FEEDBACK.pdf item 15: the NUMBER opens the popup; the Greek
-               word inside the item plays its own audio, like any other
-               displayed Greek. Superseded from D-31's original reading (the
-               Greek word itself was the link) -- see DIVERGENCE-LOG D-31r. -->
+          <!-- 5F-FEEDBACK3 item 3 (Nathanael, 2026-08-10): the NUMBER and the
+               Greek WORD are the SAME link — both open the popup. To hear the
+               word spoken, tap the popup's own title. This re-revises D-31
+               (first: word was the link; then item 15 of 5F-FEEDBACK2 moved
+               the link to the number and made the word an audio tap; now both
+               are the link) — see DIVERGENCE-LOG D-31r2. -->
           {@const markerPopup = it.numberPopupRef ? linkedPopup(it.numberPopupRef) : null}
           {@const itemTaps = it.greekTaps || (markerPopup && markerPopup.greek ? { [markerPopup.greek]: markerPopup.audio } : null) || greekTaps}
           <li class:no-marker={!!markerPopup}>
             {#if markerPopup}
               <button class="rc-num rc-num-popup" on:click={() => openPopup(markerPopup)}>{idx + 1})</button>
             {/if}
-            {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else if b.labelStyle === 'underline'}<u class="rc-lead-u">{it.label}</u>{joiner(it.text)}{:else if b.labelStyle === 'plain'}<span class="rc-lead-plain">{it.label}</span>{joiner(it.text)}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#if itemTaps}{#each splitTaps(it.text, itemTaps) as seg}{#if seg.popup}<button class="greek-tap popup-link greek" on:click={() => openPopup(seg.popup)}>{seg.t}</button>{:else if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={it.text || ''} />{/if}
+            {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else if b.labelStyle === 'underline'}<u class="rc-lead-u">{it.label}</u>{joiner(it.text)}{:else if b.labelStyle === 'plain'}<span class="rc-lead-plain">{it.label}</span>{joiner(it.text)}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#if itemTaps}{#each splitTaps(it.text, itemTaps) as seg}{#if seg.popup}<button class="greek-tap popup-link greek" on:click={() => openPopup(seg.popup)}>{seg.t}</button>{:else if markerPopup && seg.t === markerPopup.greek}<button class="greek-tap popup-link greek rc-word-popup" on:click={() => openPopup(markerPopup)}>{seg.t}</button>{:else if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={it.text || ''} />{/if}
             {#if it.example}
               <button class="rc-example" class:tappable={it.example.audio} on:click={() => playAudio(it.example.audio)}>
                 <span class="greek">{it.example.greek}</span>
@@ -401,26 +403,18 @@
             <!-- 5F: a worked verse example set over up to two lines, with its
                  gloss and citation under it. One tap target: the two lines are
                  one phrase and one clip (chapter 8's Examples page). -->
+            <!-- One tap target, one clip: the original wires BOTH displayed
+                 lines of a two-line verse to the SAME full-verse clip
+                 (7_ADJS.TBK WordSelection handlers: pp3 for the whole Lk 2:25
+                 verse, pp4 twice for both Mat 23:28 lines). The audio2
+                 per-line split PATCH2 invented here was wrong and is removed
+                 — 5F-FEEDBACK3 item 2 / 5F-SPEC1-PATCH3.md. -->
             <div class="rc-greekrow rc-verse-example" style="--greek-cols:1">
-              {#if row.greek2 && row.audio2}
-                <!-- 5F-FEEDBACK2 item 9: chapter 7's Predicate Position sets
-                     each verse over two lines with a SEPARATE clip per line
-                     (chapt_7_g_pp2 / pp2a) — two stacked tap targets, so
-                     neither clip is orphaned and every displayed Greek line
-                     still speaks (directive 9). -->
-                <button class="rc-verse-greek greek greek-say" on:click={() => playAudio(row.audio)}>
-                  <span class="rc-verse-line">{row.greek}</span>
-                </button>
-                <button class="rc-verse-greek greek greek-say" on:click={() => playAudio(row.audio2)}>
-                  <span class="rc-verse-line">{row.greek2}</span>
-                </button>
-              {:else}
-                <button class="rc-verse-greek greek greek-say" disabled={!row.audio}
-                        on:click={() => playAudio(row.audio)}>
-                  <span class="rc-verse-line">{row.greek}</span>
-                  {#if row.greek2}<span class="rc-verse-line">{row.greek2}</span>{/if}
-                </button>
-              {/if}
+              <button class="rc-verse-greek greek greek-say" disabled={!row.audio}
+                      on:click={() => playAudio(row.audio)}>
+                <span class="rc-verse-line">{row.greek}</span>
+                {#if row.greek2}<span class="rc-verse-line">{row.greek2}</span>{/if}
+              </button>
               {#if row.gloss}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
               {#if row.ref}<span class="rc-greekref">{row.ref}</span>{/if}
             </div>

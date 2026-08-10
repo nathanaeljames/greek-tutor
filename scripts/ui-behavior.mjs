@@ -109,6 +109,13 @@ await context.addInitScript(() => {
   window.Audio = Wrapped;
 });
 const page = await context.newPage();
+// Every /audio/ request the whole run makes, in order. audio.js plays blob:
+// object URLs (the element src never names the file), but any clip's FIRST
+// play fetches its m4a — so this log is how P3.1/P3.5 prove a tap resolved
+// to the right FILE. Attached here, before the first navigation, so a clip
+// cached early in the run is still on the record.
+const audioRequests = [];
+page.on('request', r => { const u = r.url(); if (u.includes('/audio/')) audioRequests.push(u); });
 
 const clips = () => page.evaluate(() => window.__clips.map(c => ({ ...c })));
 const lastClip = async () => (await clips()).slice(-1)[0] || null;
@@ -2689,21 +2696,24 @@ for (const [chapterId, activityId, opener] of [
   await go('#/activity/chapt_8/c8_qr_third');
   const chart = page.locator('.paradigm');
   const genders = [];
+  const switchDisabled = dir => page.locator(`[data-paradigm-switch="${dir}"]`).isDisabled();
+  // 5F-PATCH3 addendum: BOTH buttons render on every page — the invalid
+  // direction is greyed out (disabled), never removed.
   genders.push(await chart.getAttribute('data-chart-name'));
-  check('5F §2.8 the third-person chart opens on Masculine and offers More, not Back',
+  check('5F §2.8 the third-person chart opens on Masculine: More live, Back greyed out (both visible)',
     genders[0] === 'Masculine' && await page.locator('[data-paradigm-switch="more"]').count() === 1
-      && await page.locator('[data-paradigm-switch="back"]').count() === 0);
+      && await page.locator('[data-paradigm-switch="back"]').count() === 1
+      && await switchDisabled('back') && !await switchDisabled('more'));
   await page.locator('[data-paradigm-switch="more"]').click();
   await page.waitForTimeout(100);
   genders.push(await chart.getAttribute('data-chart-name'));
-  check('5F §2.8 More steps to Feminine, and Back appears',
-    genders[1] === 'Feminine' && await page.locator('[data-paradigm-switch="back"]').count() === 1);
+  check('5F §2.8 More steps to Feminine, and Back comes live',
+    genders[1] === 'Feminine' && !await switchDisabled('back'));
   await page.locator('[data-paradigm-switch="more"]').click();
   await page.waitForTimeout(100);
   genders.push(await chart.getAttribute('data-chart-name'));
-  check('5F §2.8 More again steps to Neuter, where More runs out',
-    genders[2] === 'Neuter' && await page.locator('[data-paradigm-switch="more"]').count() === 0
-      && await page.locator('[data-paradigm-switch="back"]').count() === 1,
+  check('5F §2.8 More again steps to Neuter, where More greys out but stays visible',
+    genders[2] === 'Neuter' && await switchDisabled('more') && !await switchDisabled('back'),
     genders.join(' -> '));
   await page.locator('[data-paradigm-switch="back"]').click();
   await page.waitForTimeout(100);
@@ -2894,6 +2904,204 @@ for (const [chapterId, activityId, expected] of [
   check('5E §6.8 no option grid is denser at 320px than at 768px',
     shrinking.length === 0, shrinking.map(r => `${r.id}=${r.cols[320]}/${r.cols[768]}`).join(', ') || 'none');
   console.log(`      option-grid census (320/768): ${census.map(r => `${r.id}=${r.cols[320]}/${r.cols[768]}`).join('  ')}`);
+}
+
+// ==== 5F-PATCH3: regression pins for the defect classes of 5F-FEEDBACK2/3 ====
+// (Nathanael, 2026-08-09/10.) Chapters 6-8 were "the worst regressions since
+// the beginning of the project"; each block below pins one of the classes
+// that got through so that its RECURRENCE is mechanical to catch. What
+// remains beyond the harness's reach is stated in 5F-SPEC1-PATCH3.md rather
+// than implied.
+
+// ---- P3.1 word→clip mappings verified by EAR are pinned in the data -------
+// A clip's CONTENT cannot be asserted mechanically. These exact pairs were
+// verified by Nathanael listening (scripture drill, 5F-FEEDBACK2 item 17) or
+// against the original's own TBK WordSelection wiring (predicate position,
+// 5F-FEEDBACK3 item 2 — see 5F-SPEC1-PATCH3.md for the extraction method).
+// If any re-keying, re-extraction or refactor moves one of them again, this
+// fails with the word in hand instead of waiting for a listener.
+{
+  const pins = [];
+  const drill = activityById(ch6, 'c6_drill_scripture_memory');
+  for (const [greek, audio] of [['πρός', 'chapt_6_f_sm10'], ['τόν', 'chapt_6_f_sm11'], ['θεόν', 'chapt_6_f_sm12']]) {
+    const item = drill.items.find(i => i.greek === greek);
+    pins.push([`ch6 scripture drill ${greek}`, item && item.audio, audio]);
+  }
+  const pp = ch7.learn[2].topics.find(t => t.id === 'predicatePosition').content;
+  pins.push(['ch7 predicate pair 1 (ἀγαθὸς ὁ λόγος)', pp[1].rows[0].audio, 'chapt_7_g_pp1a']);
+  pins.push(['ch7 predicate pair 2 (ὁ λόγος ἀγαθός)', pp[1].rows[1].audio, 'chapt_7_g_pp2a']);
+  pins.push(['ch7 predicate verse Lk 2:25 (whole verse, one clip)', `${pp[2].rows[0].audio}|${pp[2].rows[0].audio2 || ''}`, 'chapt_7_g_pp3|']);
+  pins.push(['ch7 predicate verse Mat 23:28 (whole verse, one clip)', `${pp[3].rows[0].audio}|${pp[3].rows[0].audio2 || ''}`, 'chapt_7_g_pp4|']);
+  const hintRows = activityById(ch7, 'c7_drill_translation').ui.hintPages[1].content[0].items[1].below[0].rows;
+  pins.push(['ch7 translation hint predicate pair 1', hintRows[0].audio, 'chapt_7_g_pp1a']);
+  pins.push(['ch7 translation hint predicate pair 2', hintRows[1].audio, 'chapt_7_g_pp2a']);
+  for (const [label, actual, expected] of pins) {
+    check(`P3.1 pinned clip mapping: ${label}`, actual === expected, `${actual} (want ${expected})`);
+  }
+  // ...and the tap actually reaches the pinned FILE end-to-end, via the
+  // run-long audio request log (see its declaration at the top of the file).
+  await go('#/activity/chapt_7/c7_learn_adjectives');
+  await gotoTopic(4);
+  const mark = audioRequests.length;
+  await page.locator('.rc-greekword.greek-say').first().click();
+  await page.waitForTimeout(300);
+  const fetched = audioRequests.slice(mark).join(' ');
+  check('P3.1 the predicate pair tap plays the pinned clip end-to-end',
+    fetched.includes('g_pp1a.m4a'),
+    `${fetched || 'no audio request after tap (already IDB-cached earlier in the run?)'}`);
+}
+
+// ---- P3.2 the More/Back pair: centred, BOTH always visible, on EVERY ------
+// surface. 5F-FEEDBACK3 item 6 caught ContentAudio carrying a second,
+// drifted copy of this layout; the PATCH3 addendum (Nathanael, 2026-08-10,
+// after user testing) then settled the model itself: the pair is CENTRED,
+// both buttons render on every page of a stack, and the invalid direction is
+// greyed out (disabled) rather than removed — nothing ever jumps or
+// disappears while paging. This measures all of that on every paging surface,
+// whichever component drew it: both buttons present, Back disabled exactly on
+// page 1, More disabled exactly on the last page, the pair's centre on the
+// nav row's centre within 2px, and the buttons' positions IDENTICAL from
+// page to page.
+{
+  const navSurfaces = [
+    ['ch7 Learn Adjective Paradigm', '#/activity/chapt_7/c7_learn_adjectives', { topic: 1 }],
+    ['ch7 Learn 2nd Adjective Paradigm', '#/activity/chapt_7/c7_learn_adjectives', { topic: 2 }],
+    ['ch8 Learn Third Person Paradigm', '#/activity/chapt_8/c8_learn_third_person', { topic: 1 }],
+    ['ch8 Review Third Person (ContentAudio pager)', '#/activity/chapt_8/c8_qr_third', {}],
+    ['ch7 Adjective Case Drill Hint', '#/activity/chapt_7/c7_drill_case', { hint: true }],
+    ['ch7 Adjective Translation Drill Hint (modal pager)', '#/activity/chapt_7/c7_drill_translation', { hint: true }],
+    ['ch8 Aὐτός Translation Drill Hint (modal pager)', '#/activity/chapt_8/c8_drill_translation_autos', { hint: true }]
+  ];
+  for (const [label, hash, opts] of navSurfaces) {
+    await go(hash);
+    if (opts.topic) await gotoTopic(opts.topic);
+    if (opts.hint) {
+      await page.getByRole('button', { name: 'Hint', exact: true }).click();
+      await page.waitForTimeout(200);
+    }
+    let previousBackX = null;
+    for (let pageIndex = 0; ; pageIndex++) {
+      const nav = page.locator('.pg-nav').first();
+      if (!await nav.count()) { check(`P3.2 ${label}: has a .pg-nav`, false, 'no .pg-nav found'); break; }
+      const back = nav.locator('.pg-switch-back, [data-hint-page-nav="back"]');
+      const more = nav.locator('.pg-switch-more, [data-hint-page-nav="more"]');
+      check(`P3.2 ${label} p${pageIndex + 1}: both buttons visible`,
+        await back.count() === 1 && await more.count() === 1 && await back.isVisible() && await more.isVisible(),
+        `back ${await back.count()}, more ${await more.count()}`);
+      const backDisabled = await back.isDisabled();
+      const moreDisabled = await more.isDisabled();
+      check(`P3.2 ${label} p${pageIndex + 1}: Back ${pageIndex === 0 ? 'greyed out on the first page' : 'live'}`,
+        backDisabled === (pageIndex === 0), `disabled=${backDisabled}`);
+      const navBox = await nav.boundingBox();
+      const b = await back.boundingBox();
+      const m = await more.boundingBox();
+      const pairCentre = (b.x + (m.x + m.width)) / 2;
+      const navCentre = navBox.x + navBox.width / 2;
+      check(`P3.2 ${label} p${pageIndex + 1}: the pair is centred`,
+        Math.abs(pairCentre - navCentre) <= 2,
+        `pair centre ${Math.round(pairCentre)} vs nav centre ${Math.round(navCentre)}`);
+      if (previousBackX != null) {
+        check(`P3.2 ${label} p${pageIndex + 1}: buttons have not moved since the previous page`,
+          Math.abs(b.x - previousBackX) <= 1, `back x ${Math.round(b.x)} was ${Math.round(previousBackX)}`);
+      }
+      previousBackX = b.x;
+      if (moreDisabled) {
+        // Every stack on this list has at least two pages, so More greyed out
+        // on page 1 would mean the stack failed to page at all.
+        check(`P3.2 ${label}: More greys out only once past the first page`, pageIndex > 0,
+          `More already disabled on page ${pageIndex + 1}`);
+        break;
+      }
+      await more.click();
+      await page.waitForTimeout(150);
+    }
+  }
+}
+
+// ---- P3.3 a labeled stack shows its own green label on EVERY page ---------
+// 5F-FEEDBACK3 item 1: the ch7 adjective stacks page Singular/Plural with no
+// on-screen label saying which page is showing. Every chart that authors a
+// subtitle must show it, and it must CHANGE when More steps.
+{
+  for (const [label, hash, topic, expected] of [
+    ['ch7 Adjective Paradigm', '#/activity/chapt_7/c7_learn_adjectives', 1, ['Singular', 'Plural']],
+    ['ch7 2nd Adjective Paradigm', '#/activity/chapt_7/c7_learn_adjectives', 2, ['Singular', 'Plural']],
+    ['ch8 Third Person Paradigm', '#/activity/chapt_8/c8_learn_third_person', 1, ['Masculine', 'Feminine', 'Neuter']]
+  ]) {
+    await go(hash);
+    await gotoTopic(topic);
+    const seen = [];
+    for (let i = 0; i < expected.length; i++) {
+      seen.push(normalizeText(await page.locator('.pg-subtitle').first().innerText().catch(() => '')));
+      if (i < expected.length - 1) { await page.locator('[data-paradigm-switch="more"]').click(); await page.waitForTimeout(120); }
+    }
+    check(`P3.3 ${label}: every page shows its own green label`,
+      JSON.stringify(seen) === JSON.stringify(expected), seen.join(' -> ') || 'none');
+  }
+}
+
+// ---- P3.4 the οὐ/οὐκ/οὐχ WORD is a popup link, same as its number ---------
+// 5F-FEEDBACK3 item 3 (D-31r2): both the number marker AND the Greek word
+// open the popup; hearing the word is the popup title's job.
+{
+  await go('#/activity/chapt_7/c7_learn_eimi');
+  await gotoTopic(3);
+  const words = page.locator('.rc-word-popup');
+  check('P3.4 all three ου-form words render as popup links', await words.count() === 3,
+    `${await words.count()} word links`);
+  await words.first().click();
+  await page.waitForTimeout(150);
+  check('P3.4 tapping the WORD opens its popup',
+    await page.locator('.popup-sheet').count() === 1
+      && await page.locator('.popup-sheet').getAttribute('data-popup-id') === 'ou');
+}
+
+// ---- P3.5 the emphatic triads and the intro examples are tappable ---------
+// 5F-FEEDBACK3 items 4/5: every parenthesised emphatic form beside its
+// description plays, on all four surfaces it appears on; λέγω / ἐγὼ λέγω in
+// the ch8 Introduction play their word clips.
+{
+  // The word→clip mapping is pinned in the DATA (noteTaps), the tap-target
+  // count and the played-one-clip behavior on the page, and the FILE against
+  // the whole run's network log — any clip ever played was fetched exactly
+  // once (first play), so "the file appears in the run's audio requests"
+  // holds whether this tap or an earlier surface was the first to touch it.
+  const FIRST_TAPS = { 'ἐμοῦ': 'chapt_8_h_1gse', 'ἐμοί': 'chapt_8_h_1dse', 'ἐμέ': 'chapt_8_h_1ase' };
+  const SECOND_TAPS = { 'σοῦ': 'chapt_8_h_2gs', 'σοί': 'chapt_8_h_2ds', 'σέ': 'chapt_8_h_2as' };
+  const pinNote = (label, actual, expected) => check(`P3.5 pinned noteTaps: ${label}`,
+    JSON.stringify(actual) === JSON.stringify(expected), JSON.stringify(actual));
+  pinNote('ch8 Learn First Person', ch8.learn[2].topics[1].content[0].noteTaps, FIRST_TAPS);
+  pinNote('ch8 Learn Second Person', ch8.learn[2].topics[2].content[0].noteTaps, SECOND_TAPS);
+  pinNote('ch8 Review 1st Person', activityById(ch8, 'c8_qr_first').paradigm.noteTaps, FIRST_TAPS);
+  pinNote('ch8 Review 2nd Person', activityById(ch8, 'c8_qr_second').paradigm.noteTaps, SECOND_TAPS);
+  for (const [label, hash, topic, expectedTaps, expectFile] of [
+    ['ch8 Learn First Person note', '#/activity/chapt_8/c8_learn_pronouns', 1, 3, 'h_1gse.m4a'],
+    ['ch8 Learn Second Person note', '#/activity/chapt_8/c8_learn_pronouns', 2, 3, 'h_2gs.m4a'],
+    ['ch8 Review 1st Person note', '#/activity/chapt_8/c8_qr_first', null, 3, 'h_1gse.m4a'],
+    ['ch8 Review 2nd Person note', '#/activity/chapt_8/c8_qr_second', null, 3, 'h_2gs.m4a']
+  ]) {
+    await go(hash);
+    if (topic != null) await gotoTopic(topic);
+    const taps = page.locator('.pg-note .greek-tap');
+    await page.evaluate(() => { window.__clips.length = 0; });
+    if (await taps.count()) { await taps.first().click(); await page.waitForTimeout(300); }
+    const playedCount = (await clips()).length;
+    const everFetched = audioRequests.join(' ');
+    check(`P3.5 ${label}: three tappable emphatic forms, the tap plays one clip, ${expectFile} reached the wire this run`,
+      await taps.count() === expectedTaps && playedCount === 1 && everFetched.includes(expectFile),
+      `${await taps.count()} taps, ${playedCount} clips, file fetched: ${everFetched.includes(expectFile)}`);
+  }
+  await go('#/activity/chapt_8/c8_learn_pronouns');
+  const introTaps = page.locator('.rc-para .greek-tap');
+  const mark = audioRequests.length;
+  await page.evaluate(() => { window.__clips.length = 0; });
+  const count = await introTaps.count();
+  for (let i = 0; i < count; i++) { await introTaps.nth(i).click(); await page.waitForTimeout(250); }
+  const fetched = audioRequests.slice(mark).join(' ');
+  check('P3.5 ch8 Introduction: λέγω (twice) and ἐγὼ are tappable and play their clips',
+    count === 3 && (await clips()).length === 3
+      && fetched.includes('h_legw.m4a') && fetched.includes('h_1nse.m4a'),
+    `${count} taps, ${(await clips()).length} clips, fetched ${fetched || 'none'}`);
 }
 
 await browser.close();

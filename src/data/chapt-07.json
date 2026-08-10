@@ -267,7 +267,8 @@
           "audio": "chapt_7_g_agpars"
          },
          "lemma": "ἀγαθός",
-         "gloss": "good"
+         "gloss": "good",
+         "subtitle": "Singular"
         },
         {
          "name": "Plural",
@@ -351,7 +352,8 @@
           "audio": "chapt_7_g_agparp"
          },
          "lemma": "ἀγαθός",
-         "gloss": "good"
+         "gloss": "good",
+         "subtitle": "Plural"
         }
        ],
        "switch": "moreBack"
@@ -468,7 +470,8 @@
           "audio": "chapt_7_g_dkpars"
          },
          "lemma": "δίκαιος",
-         "gloss": "righteous"
+         "gloss": "righteous",
+         "subtitle": "Singular"
         },
         {
          "name": "Plural",
@@ -552,7 +555,8 @@
           "audio": "chapt_7_g_dkparp"
          },
          "lemma": "δίκαιος",
-         "gloss": "righteous"
+         "gloss": "righteous",
+         "subtitle": "Plural"
         }
        ],
        "switch": "moreBack"
@@ -634,12 +638,12 @@
         {
          "greek": "ἀγαθὸς ὁ λόγος",
          "gloss": "the word is good",
-         "audio": "chapt_7_g_pp1"
+         "audio": "chapt_7_g_pp1a"
         },
         {
          "greek": "ὁ λόγος ἀγαθός",
          "gloss": "the word is good",
-         "audio": "chapt_7_g_pp1a"
+         "audio": "chapt_7_g_pp2a"
         }
        ]
       },
@@ -652,8 +656,7 @@
         {
          "greek": "καὶ ὁ ἄνθρωπος οὗτος",
          "greek2": "δίκαιος",
-         "audio": "chapt_7_g_pp2",
-         "audio2": "chapt_7_g_pp2a",
+         "audio": "chapt_7_g_pp3",
          "gloss": "and this man was [[u]]righteous[[/u]]",
          "ref": "Lk 2:25"
         }
@@ -668,8 +671,7 @@
         {
          "greek": "φαίνεσθε τοῖς ἀνθρώποις",
          "greek2": "δίκαιοι",
-         "audio": "chapt_7_g_pp3",
-         "audio2": "chapt_7_g_pp4",
+         "audio": "chapt_7_g_pp4",
          "gloss": "you appear to men to be [[u]]righteous[[/u]]",
          "ref": "Mat 23:28"
         }
@@ -1245,11 +1247,7 @@
      "pronounceEach": true
     },
     "liveScore": true,
-    "hintRef": "adjectiveParadigm",
-    "hintSwitchLabels": [
-     "Singular",
-     "Plural"
-    ]
+    "hintRef": "adjectiveParadigm"
    },
    "_answer_note": "Derived from the Adjective Spelling Exercise, which is the same twenty items in the same order with the parse spelled out; the two pools are asserted to cite the same twenty references.",
    "audioTiming": "beforeGuess",
@@ -1507,12 +1505,12 @@
              {
               "greek": "ἀγαθὸς ὁ λόγος",
               "gloss": "the word is good",
-              "audio": "chapt_7_g_pp1"
+              "audio": "chapt_7_g_pp1a"
              },
              {
               "greek": "ὁ λόγος ἀγαθός",
               "gloss": "\"",
-              "audio": "chapt_7_g_pp1a"
+              "audio": "chapt_7_g_pp2a"
              }
             ]
            }

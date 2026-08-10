@@ -238,19 +238,25 @@
            for the rare page whose chart has none, so it can never double up
            with the one Paradigm just drew. -->
       {@const externalSayWhole = page.sayWhole ? null : activity.sayWhole}
-      {#if externalSayWhole || paradigmPages.length > 1}
+      {#if externalSayWhole}
         <div class="controls pg-actions">
-          {#if externalSayWhole}
-            <button class="btn secondary pg-say-whole" on:click={() => play(externalSayWhole.audio)}>{externalSayWhole.label || 'Say Whole Paradigm'}</button>
-          {/if}
-          {#if paradigmIndex > 0}
-            <button class="btn secondary pg-switch pg-switch-back" data-paradigm-switch="back"
-                    on:click={() => goToParadigm(paradigmIndex - 1)}>Back</button>
-          {/if}
-          {#if paradigmIndex < paradigmPages.length - 1}
-            <button class="btn secondary pg-switch pg-switch-more" data-paradigm-switch="more"
-                    on:click={() => goToParadigm(paradigmIndex + 1)}>More</button>
-          {/if}
+          <button class="btn secondary pg-say-whole" on:click={() => play(externalSayWhole.audio)}>{externalSayWhole.label || 'Say Whole Paradigm'}</button>
+        </div>
+      {/if}
+      {#if paradigmPages.length > 1}
+        <!-- The one shared More/Back layout (.pg-nav): both buttons on every
+             page, centred pair, invalid direction greyed out — identical to
+             Paradigm.svelte's, per the 5F-PATCH3 addendum. This block exists
+             only because the Review pager's index lives here (goToParadigm
+             stops audio on the way); the MARKUP must never drift from
+             Paradigm's — ui-behavior P3.2 measures both. -->
+        <div class="pg-nav">
+          <button class="btn secondary pg-switch pg-switch-back" data-paradigm-switch="back"
+                  disabled={paradigmIndex <= 0}
+                  on:click={() => goToParadigm(paradigmIndex - 1)}>Back</button>
+          <button class="btn secondary pg-switch pg-switch-more" data-paradigm-switch="more"
+                  disabled={paradigmIndex >= paradigmPages.length - 1}
+                  on:click={() => goToParadigm(paradigmIndex + 1)}>More</button>
         </div>
       {/if}
     {:else}

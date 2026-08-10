@@ -257,29 +257,24 @@
       </div>
     {/if}
     {#if hasMoreBackNav}
-      <!-- Item 27's fixed-slot model: two grid cells that exist on every page
-           of the stack. Page 1 shows only More (right), middle pages Back and
-           More, the last page only Back — and neither button ever changes
-           position, because the empty slot still occupies its cell. -->
+      <!-- 5F-PATCH3 addendum (Nathanael, 2026-08-10, after user testing):
+           BOTH buttons render on EVERY page of the stack, as a centred pair —
+           the invalid direction is greyed out (disabled), never removed, so
+           nothing ever jumps or disappears while paging. This supersedes the
+           item-27 left/right fixed-slot model. -->
       <div class="pg-nav">
-        <span class="pg-nav-slot pg-nav-back-slot">
-          {#if chartIndex > 0}
-            <button
-              class="btn secondary pg-switch pg-switch-back"
-              data-paradigm-switch="back"
-              data-target-index={chartIndex - 1}
-              on:click={() => switchChart(chartIndex - 1)}>{backLabel}</button>
-          {/if}
-        </span>
-        <span class="pg-nav-slot pg-nav-more-slot">
-          {#if chartIndex < charts.length - 1}
-            <button
-              class="btn secondary pg-switch pg-switch-more"
-              data-paradigm-switch="more"
-              data-target-index={chartIndex + 1}
-              on:click={() => switchChart(chartIndex + 1)}>{moreLabel}</button>
-          {/if}
-        </span>
+        <button
+          class="btn secondary pg-switch pg-switch-back"
+          data-paradigm-switch="back"
+          data-target-index={chartIndex - 1}
+          disabled={chartIndex <= 0}
+          on:click={() => switchChart(chartIndex - 1)}>{backLabel}</button>
+        <button
+          class="btn secondary pg-switch pg-switch-more"
+          data-paradigm-switch="more"
+          data-target-index={chartIndex + 1}
+          disabled={chartIndex >= charts.length - 1}
+          on:click={() => switchChart(chartIndex + 1)}>{moreLabel}</button>
       </div>
     {/if}
   {/key}

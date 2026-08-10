@@ -603,9 +603,36 @@ for (const file of readdirSync(DATA)) {
 
 function segment_(text) { return new Intl.Segmenter('el', { granularity: 'grapheme' }).segment(text); }
 
+// ---- every audio id the data names must exist in the audio manifest ----
+// 5F-FEEDBACK2 item 17 / 5F-FEEDBACK3 item 2 (Nathanael, 2026-08): two rounds
+// of wrong word→clip keying. A clip's CONTENT cannot be asserted at build
+// time (that takes ears, or the original's TBK wiring), but a clip's
+// EXISTENCE can: any string anywhere in a chapter file that is shaped like an
+// audio id (the DIR_PATTERN contract in src/lib/audio.js) must be a key in
+// public/audio/audio-manifest.json. This catches dangling ids, typos and
+// ids invented during a re-keying — the failure mode where a tap silently
+// toasts "Audio not found" on device and nothing in the build ever said so.
+{
+  const manifest = JSON.parse(readFileSync('public/audio/audio-manifest.json', 'utf-8'));
+  const AUDIO_ID = /^(chapt_\d+|vocab\d*|john\d*|rev_par|rev_voc|intro)_.+$/;
+  for (const file of files) {
+    const data = JSON.parse(readFileSync(join(DATA, file), 'utf-8'));
+    (function walkIds(node, path) {
+      if (Array.isArray(node)) { node.forEach((v, i) => walkIds(v, `${path}[${i}]`)); return; }
+      if (node && typeof node === 'object') {
+        for (const [key, value] of Object.entries(node)) walkIds(value, `${path}.${key}`);
+        return;
+      }
+      if (typeof node === 'string' && AUDIO_ID.test(node) && !(node in manifest)) {
+        problems.push(`${file}${path}: audio id "${node}" is not in audio-manifest.json — the tap would toast "Audio not found" at runtime.`);
+      }
+    })(data, '');
+  }
+}
+
 if (problems.length) {
   for (const problem of problems) console.error(`FAIL: ${problem}`);
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras; every audio id the data names exists in the audio manifest).`);

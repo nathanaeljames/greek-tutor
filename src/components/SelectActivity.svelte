@@ -642,19 +642,16 @@
         {/if}
       </div>
       {#if hintPages.length > 1}
+        <!-- Same centred always-both-visible pair as every other .pg-nav
+             (5F-PATCH3 addendum): the invalid direction greys out, never
+             disappears. -->
         <div class="pg-nav hint-page-nav">
-          <span class="pg-nav-slot pg-nav-back-slot">
-            {#if hintPageIndex > 0}
-              <button class="btn secondary" data-hint-page-nav="back"
-                      on:click={() => (hintPageIndex -= 1)}>Back</button>
-            {/if}
-          </span>
-          <span class="pg-nav-slot pg-nav-more-slot">
-            {#if hintPageIndex < hintPages.length - 1}
-              <button class="btn secondary" data-hint-page-nav="more"
-                      on:click={() => (hintPageIndex += 1)}>More</button>
-            {/if}
-          </span>
+          <button class="btn secondary" data-hint-page-nav="back"
+                  disabled={hintPageIndex <= 0}
+                  on:click={() => (hintPageIndex -= 1)}>Back</button>
+          <button class="btn secondary" data-hint-page-nav="more"
+                  disabled={hintPageIndex >= hintPages.length - 1}
+                  on:click={() => (hintPageIndex += 1)}>More</button>
         </div>
       {/if}
       <div class="modal-actions">

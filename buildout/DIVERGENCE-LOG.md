@@ -186,7 +186,19 @@ D-30 | ch3,4,5 | THE WHOLE-VERSE SPELLERS USE `Show Answer`, NOT
      verse is still available at any time, which the original does not
      allow. | Nathanael, 2026-08-07; 5E-SPEC3-PATCH item 12.
 
-D-31 | ch7 | **REVISED 2026-08-09 (5F-FEEDBACK.pdf item 15).** Was:
+D-31 | ch7 | **RE-REVISED 2026-08-10 (5F-FEEDBACK3 item 3, D-31r2).**
+     Nathanael reversed the item-15 reading below: "I want the number
+     AND the word to be the same link and to bring up the menus. If
+     they want to hear the word they can click the menu title." Both
+     the `.rc-num-popup` marker and the Greek word (now
+     `.rc-word-popup`, a popup link, no longer an audio tap) open the
+     popup; the word's clip is heard from the popup's own title. This
+     is the third reading of this trigger — original (word only), r1
+     (number opens / word speaks), r2 (both open) — so future passes
+     should treat r2 as final unless Nathanael says otherwise. The
+     r1 text below is retained for the mechanism's history. |
+     Nathanael, 5F-FEEDBACK3 item 3.
+     **[r1, superseded]** Was, as of 2026-08-09 (5F-FEEDBACK.pdf item 15):
      the οὐ / οὐκ / οὐχ popups open from the Greek HEADWORD itself,
      where that headword stands on its own numbered line (longest
      headword first so οὐχ is never claimed by οὐ). Nathanael's live
@@ -298,11 +310,42 @@ D-38 | ch7,ch8 | HINT POPUPS PAGE More/Back AT THE MODAL LEVEL, IN
      Translation Drill's Hint gained the original's FIRST page (the
      full adjective paradigm) ahead of the positions summary; (c) the
      Aὐτός Translation Drill's Hint gained the original's missing
-     'Three Uses' page after the three gender charts; (d) the
-     Adjective Case Drill's Hint labels the pair 'Plural'/'Singular'
-     (drill hint only — the Learn topic showing the same charts keeps
-     the original's own More/Back, ch7railwalk p2). | Nathanael,
-     5F-FEEDBACK2 items 12, 13, 27, 28, 29.
+     'Three Uses' page after the three gender charts; (d) [REVERSED
+     2026-08-10, 5F-FEEDBACK3 item 1: the Adjective Case Drill's Hint
+     buttons are plain More/Back again — the charts are TITLED with a
+     green Singular/Plural subtitle instead, matching the ch8
+     third-person stacks. The `hintSwitchLabels` override is gone
+     from the data; the mechanism remains in Paradigm.svelte unused.]
+     Also as of 5F-FEEDBACK3 item 6: the Review pager in
+     ContentAudio.svelte uses the same `.pg-nav` row as everything
+     else, and ui-behavior P3.2 measures the geometry on every paging
+     surface. **[FINAL LAYOUT, 2026-08-10 addendum after user
+     testing: the pair is CENTRED, and BOTH buttons render on every
+     page with the invalid direction greyed out (disabled) — never
+     removed, so nothing jumps or disappears. This supersedes the
+     fixed-slot left/right model above; the layout has now been
+     wrapped-inline → left/right slots → centred always-visible pair,
+     so treat this reading as settled.]** | Nathanael, 5F-FEEDBACK2
+     items 12, 13, 27, 28, 29; 5F-FEEDBACK3 items 1, 6; addendum
+     2026-08-10.
+
+D-39 | ch8 | THE INTRODUCTION'S λέγω / ἐγὼ λέγω EXAMPLES ARE PER-WORD
+     TAPS ON BORROWED CLIPS. 5F-FEEDBACK3 item 4 asks for both to be
+     clickable. The original wires NO WordSelection handler to either
+     phrase on that page (8_PRONS.TBK, page record at 0x179c9 —
+     checked directly) and ships no "ἐγὼ λέγω" phrase recording
+     anywhere on the ISO. So: ἐγὼ plays the original's own emphatic
+     first-nominative clip H_1NSE (recorded for exactly this
+     emphatic-ἐγώ teaching point), and λέγω plays the chapter-1
+     vocabulary recording of the same word, COPIED into the chapter-8
+     pack as `h_legw.m4a` so chapter 8 stays offline-complete (packs
+     are per-directory). In "ἐγὼ λέγω" the two words are two adjacent
+     taps, not one phrase tap — there is no phrase clip to honour.
+     Similarly (item 5): the second-person emphatic triad σοῦ/σοί/σέ
+     has no dedicated recordings (no H_2GSE/H_2DSE/H_2ASE on the
+     ISO); the enclitic clips H_2GS/H_2DS/H_2AS speak for both forms
+     — same phonemes, accent is prosodic only. | Implementer,
+     5F-FEEDBACK3 items 4, 5; ISO verified 2026-08-10.
 
 ## Auto-progress / advance rule matrix
 

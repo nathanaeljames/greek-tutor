@@ -232,7 +232,11 @@
       {
        "type": "para",
        "text": "Since the nominative is indicated in the personal ending of the verb (e.g. λέγω = I say) when the personal pronoun is used it is for emphasis (e.g. ἐγὼ λέγω = [[u]]I[[/u]] say).",
-       "gapBefore": true
+       "gapBefore": true,
+       "greekTaps": {
+        "λέγω": "chapt_8_h_legw",
+        "ἐγὼ": "chapt_8_h_1nse"
+       }
       },
       {
        "type": "para",
@@ -406,7 +410,12 @@
         "label": "Say Whole Paradigm",
         "audio": "chapt_8_h_2par"
        },
-       "note": "The emphatic form is made by adding an accent to the singulars ( σοῦ, σοί, σέ )."
+       "note": "The emphatic form is made by adding an accent to the singulars ( σοῦ, σοί, σέ ).",
+       "noteTaps": {
+        "σοῦ": "chapt_8_h_2gs",
+        "σοί": "chapt_8_h_2ds",
+        "σέ": "chapt_8_h_2as"
+       }
       }
      ]
     },
@@ -2798,7 +2807,12 @@
      "label": "Say Whole Paradigm",
      "audio": "chapt_8_h_1par"
     },
-    "note": "Emphatic first person pronouns are formed by adding an initial epsilon and an accent in the genitive, dative, and accusative singular forms (ἐμοῦ, ἐμοί, ἐμέ) singular."
+    "note": "Emphatic first person pronouns are formed by adding an initial epsilon and an accent in the genitive, dative, and accusative singular forms (ἐμοῦ, ἐμοί, ἐμέ) singular.",
+    "noteTaps": {
+     "ἐμοῦ": "chapt_8_h_1gse",
+     "ἐμοί": "chapt_8_h_1dse",
+     "ἐμέ": "chapt_8_h_1ase"
+    }
    },
    "chartTitle": "First Person Personal Pronouns"
   },
@@ -2878,7 +2892,12 @@
      "label": "Say Whole Paradigm",
      "audio": "chapt_8_h_2par"
     },
-    "note": "The emphatic form is made by adding an accent to the singulars ( σοῦ, σοί, σέ )."
+    "note": "The emphatic form is made by adding an accent to the singulars ( σοῦ, σοί, σέ ).",
+    "noteTaps": {
+     "σοῦ": "chapt_8_h_2gs",
+     "σοί": "chapt_8_h_2ds",
+     "σέ": "chapt_8_h_2as"
+    }
    },
    "chartTitle": "Second Person Personal Pronouns"
   },
