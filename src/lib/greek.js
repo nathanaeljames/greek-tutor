@@ -335,3 +335,22 @@ export function splitTaps(text, taps) {
   }
   return parts;
 }
+
+// [{ t, greek }] runs of a mixed Greek/English line. Used where a heading is
+// PART Greek and the Greek part alone is the tap target — chapter 10's
+// "Future of εἰμί" topic title, whose εἰμί taps to its own clip (5G-SPEC1
+// §3.2). splitTaps cannot serve here: it needs to be told the exact form, and
+// a title's Greek is whatever the title happens to say.
+export function splitGreekRuns(text) {
+  const runs = [];
+  for (const char of String(text || '')) {
+    // Combining marks carry no script of their own; keep them with the run
+    // they belong to so a mark never starts an English run of its own.
+    const greek = GREEK_LETTER.test(char)
+      || (/\p{M}/u.test(char) && runs.length && runs[runs.length - 1].greek);
+    const last = runs[runs.length - 1];
+    if (last && last.greek === greek) last.t += char;
+    else runs.push({ t: char, greek });
+  }
+  return runs;
+}

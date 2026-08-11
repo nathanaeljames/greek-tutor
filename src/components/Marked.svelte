@@ -15,13 +15,22 @@
   // whose popup ids are exactly those slugs. A run that matches nothing stays
   // an ordinary underline, which is what keeps the "he himself will get the
   // car" emphasis on the same page from turning into a dead link.
+  //
+  // 5G: a [[link:id]] run names its popup outright (chapters 9 and 10 link
+  // words whose text is nothing like the popup's title). A link run whose id
+  // resolves to nothing renders as PLAIN TEXT, not as a dead blue word —
+  // directive 8: blue means tappable and only tappable.
   import { splitUnderline, splitMarkGroups } from '../lib/markup.js';
   import { ISOLATED_MARKS, spacingMarks } from '../lib/greek.js';
-  import { usePopups, popupFor } from '../lib/popups.js';
+  import { usePopups, popupFor, popupForRun } from '../lib/popups.js';
   export let text = '';
 
   const popups = usePopups();
-  const linked = run => (popups ? popupFor(popups, run) : null);
+  // An UNDERLINED run resolves by slug and only into a chapters 6-8 shaped
+  // popup (see popupForRun): chapter 9 underlines "deponent:" as an ordinary
+  // lead-in and ships a "deponent" popup opened from its topic title, and the
+  // original prints that lead-in in plain black.
+  const linked = run => (popups ? popupForRun(popups, run) : null);
 
   const GREEK_LETTER = /[Ͱ-Ͽἀ-῿]/;
   // A group's inner text is a MARK (enlarge, keyboard font), a Greek letter
@@ -33,4 +42,4 @@
   }
 </script>
 
-{#each splitUnderline(text) as seg}{#if seg.u}{@const popup = linked(seg.t)}{#if popup}<button class="popup-link underline-link" on:click={() => popups.open(popup)}>{seg.t}</button>{:else}<u>{seg.t}</u>{/if}{:else if seg.g}<span class="term-green">{seg.t}</span>{:else if seg.i}<em>{seg.t}</em>{:else}{#each splitMarkGroups(seg.t) as part}{#if part.group != null}<span class="mark-group">(&thinsp;<span class="isolated-mark" class:as-mark={kindOf(part.group) === 'mark'} class:greek={kindOf(part.group) === 'greek'}>{spacingMarks(part.group)}</span>&thinsp;)</span>{:else}{part.t}{/if}{/each}{/if}{/each}
+{#each splitUnderline(text) as seg}{#if seg.link}{@const popup = popups ? popupFor(popups, seg.link) : null}{#if popup}<button class="popup-link named-link" on:click={() => popups.open(popup)}>{seg.t}</button>{:else}{seg.t}{/if}{:else if seg.u}{@const popup = linked(seg.t)}{#if popup}<button class="popup-link underline-link" on:click={() => popups.open(popup)}>{seg.t}</button>{:else}<u>{seg.t}</u>{/if}{:else if seg.g}<span class="term-green">{seg.t}</span>{:else if seg.i}<em>{seg.t}</em>{:else}{#each splitMarkGroups(seg.t) as part}{#if part.group != null}<span class="mark-group">(&thinsp;<span class="isolated-mark" class:as-mark={kindOf(part.group) === 'mark'} class:greek={kindOf(part.group) === 'greek'}>{spacingMarks(part.group)}</span>&thinsp;)</span>{:else}{part.t}{/if}{/each}{/if}{/each}

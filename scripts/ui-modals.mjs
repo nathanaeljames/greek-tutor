@@ -138,6 +138,35 @@ const SURFACES = [
     await page.locator('.popup-link').first().click();
     await page.waitForTimeout(180);
   }],
+  // 5G: the cohort's new modals. The COMPOSITE hint is the tallest thing in
+  // the app now — two full paradigm charts with glosses in one dialog — so it
+  // is exactly the surface the modal-sizing rule exists for, and it is
+  // captured on both chapters. The popups are the content[] shape: a one-line
+  // aside, a six-row Greek list, and the arrow-form derivation chart.
+  ['ch9-composite-hint-middle-passive', hint('chapt_9', 'c9_drill_parsing', false)],
+  ['ch10-composite-hint-future-active-middle', hint('chapt_10', 'c10_drill_parsing', false)],
+  ['ch9-popup-punctiliar', async () => {
+    await go('#/activity/chapt_9/c9_learn_mp_verbs');
+    await page.locator('.rc-para .popup-link').first().click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch9-popup-frequent-verbs', async () => {
+    await go('#/activity/chapt_9/c9_learn_mp_verbs');
+    for (let i = 0; i < 3; i++) { await page.getByRole('button', { name: 'Next Topic', exact: true }).click(); await page.waitForTimeout(80); }
+    await page.locator('.rc-para .popup-link').first().click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch10-popup-palatal', async () => {
+    await go('#/activity/chapt_10/c10_learn_future_verbs');
+    for (let i = 0; i < 3; i++) { await page.getByRole('button', { name: 'Next Topic', exact: true }).click(); await page.waitForTimeout(80); }
+    await page.locator('.rc-list .popup-link').first().click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch10-verse-speller-greek-keyboard', async () => {
+    await go('#/activity/chapt_10/c10_ex_scripture_speller');
+    await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();
+    await page.waitForTimeout(180);
+  }],
   ['ch6-speller-greek-keyboard', async () => {
     await go('#/activity/chapt_6/c6_ex_speller');
     await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();

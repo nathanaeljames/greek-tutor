@@ -432,9 +432,13 @@ function pickAudioField(mode) {
   }
 }
 
-// TWO-STAGE SELECT (5F §2.9, chapter 8's Personal Pronoun Case Drill). The
-// item asks for a PAIR — the person column, then the case-and-number grid —
-// and the answer is a two-element list in the same order as `optionStages`.
+// N-STAGE SELECT (5F §2.9, chapter 8's Personal Pronoun Case Drill; generalized
+// to any number of stages by 5G-SPEC1 §4.1). The item asks for a TUPLE — the
+// person column then the case-and-number grid in chapter 8; tense, then voice,
+// then person-and-number in chapter 10 — and the answer is a list in the same
+// order as `optionStages`. Nothing below counts the stages: the builder maps
+// whatever `optionStages` holds, and the surface commits when the last empty
+// stage is filled, so the three-stage drill needed no new commit rule.
 //
 // Nothing here decides when an attempt is judged; that is the surface's job
 // and rule B1a's (VERIFY-5F item 7: the learner may change their mind on the
@@ -453,7 +457,14 @@ export function buildTwoStageQuestions(chapter, activity) {
     // on the person then the case"). Left to the density heuristic, "Second
     // Person" would come out two-up and the person stage would read as part of
     // the 2x4 case grid under it rather than as the click before it.
-    optionClass: stage.layout ? optionClassForLayout(stage.layout, activity, [], []) : 'single',
+    optionClass: stage.layout
+      ? optionClassForLayout(stage.layout, activity, [], [])
+      : (Array.isArray(stage.optionGroups) && stage.optionGroups.length ? 'grouped' : 'single'),
+    // 5G-SPEC1 §4.1: a stage may split its own values into separated groups,
+    // exactly as an activity-level optionGroups does. Chapter 10's person /
+    // number stage declares [2, 2, 2] and the original draws it as three
+    // paired rows (First Singular | First Plural, and so on).
+    optionGroups: Array.isArray(stage.optionGroups) ? stage.optionGroups : null,
     options: (stage.values || []).map(value => ({ id: String(value), label: String(value) }))
   }));
   const pairKey = list => (list || []).map(value => String(value)).join(' ');
@@ -469,6 +480,12 @@ export function buildTwoStageQuestions(chapter, activity) {
       note: stripMarkup(item.note) || null,
       promptAudio: item.audio || null,
       citation: item.ref || null,
+      // What the Translate button reveals. Chapter 8's case drill carries no
+      // translations and shows no Translate control; chapter 10's parsing
+      // drill carries both, and without this the button rendered permanently
+      // disabled — a control the original has, that does nothing.
+      translate: stripMarkup(item.translate) || null,
+      gloss: stripMarkup(item.gloss) || null,
       answer,
       pairs,
       accepted: new Set(pairs.map(pairKey)),
@@ -661,6 +678,23 @@ function optionClassForLayout(layout, activity, activityOptions, questions) {
 // chapter whose drills point at their own paradigm gets this for free.
 export function resolveHintRef(chapter, ref) {
   if (!chapter || !ref) return null;
+  // 5G-SPEC1 §4.8: a chapter-level `hintCharts` register may name a COMPOSITE
+  // hint — one popup holding several of the chapter's charts, referenced by
+  // id (`paradigmRefs`). Both chapter-9 drills open the Middle and Passive
+  // paradigms together and both chapter-10 drills open Future Active and
+  // Future Middle together; the original draws them stacked under one Cancel
+  // (ch10railwalk p7), so the composite resolves to a `paradigms[]` bundle the
+  // surface renders as a stack. Checked FIRST, so a composite id can never be
+  // shadowed by an activity or topic that happens to share its name.
+  const composite = chapter.hintCharts && chapter.hintCharts[ref];
+  if (composite) {
+    const paradigms = (composite.paradigmRefs || [])
+      .map(chartRef => resolveHintRef(chapter, chartRef))
+      .filter(Boolean);
+    if (!paradigms.length) return null;
+    if (paradigms.length === 1) return paradigms[0];
+    return { paradigms, title: composite.title || null };
+  }
   let found = null;
   const nestedParadigm = node => {
     let chart = null;
@@ -714,6 +748,49 @@ export function resolveHintRef(chapter, ref) {
   };
   for (const section of SECTIONS) walk(chapter[section]);
   return found || byTitle();
+}
+
+// ---- HEADING DEDUPLICATION (5E-R1, generalized in 5G) ----
+//
+// A teaching page prints its TOPIC title and, under it, the chart's own title.
+// In the original those two live in different places — the radio rail at the
+// left and the yellow panel's heading — and the port stacks them, so where
+// they say the same thing it must print one heading, not two.
+//
+// TWO relationships, both of them the same heading said at two lengths:
+//   EQUAL after folding    chapter 5's "First Declension—Masc" over
+//                          "First Declension—Masculine". The chart's title is
+//                          dropped and the topic's stands (device-verified,
+//                          unchanged since 5E).
+//   COVERED               chapters 9 and 10's "Present Middle Paradigm" over
+//                          "Present Middle Indicative Paradigm". The chart's
+//                          title is the FULLER one and it is the one the
+//                          original prints in its panel, so the HOST drops its
+//                          heading and the chart's stands.
+// Both live here because two hosts need them and two copies of a fold rule is
+// exactly how the em-dash regression happened (5E-SPEC3-RESPONSE item 1).
+export function headingKey(text) {
+  return String(text || '').trim().toLowerCase()
+    .replace(/—|–|--/g, '-')
+    .replace(/\s+/g, ' ')
+    .replace(/\bmasc\b/, 'masculine');
+}
+
+// True when `outer` says everything `inner` says, in order, and more of it.
+// Word-subsequence rather than prefix: the extra word lands in the MIDDLE
+// ("Present Middle [Indicative] Paradigm"), which is where the original's
+// panel headings put it.
+export function headingCovers(outer, inner) {
+  if (!outer || !inner) return false;
+  const outerWords = headingKey(outer).split(' ').filter(Boolean);
+  const innerWords = headingKey(inner).split(' ').filter(Boolean);
+  if (outerWords.length <= innerWords.length) return false;
+  let at = 0;
+  for (const word of innerWords) {
+    at = outerWords.indexOf(word, at) + 1;
+    if (at === 0) return false;
+  }
+  return true;
 }
 
 // The camelCase slug the data uses to name a page from elsewhere: hint refs,

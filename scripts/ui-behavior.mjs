@@ -47,6 +47,8 @@ const ch2 = JSON.parse(readFileSync('src/data/chapt-02.json', 'utf8'));
 const ch6 = JSON.parse(readFileSync('src/data/chapt-06.json', 'utf8'));
 const ch7 = JSON.parse(readFileSync('src/data/chapt-07.json', 'utf8'));
 const ch8 = JSON.parse(readFileSync('src/data/chapt-08.json', 'utf8'));
+const ch9 = JSON.parse(readFileSync('src/data/chapt-09.json', 'utf8'));
+const ch10 = JSON.parse(readFileSync('src/data/chapt-10.json', 'utf8'));
 const verse = (ch3.exercise.find(a => a.type === 'spellVerse').answerWords || []).join(' ');
 // UNACCENTED, not unmarked (5E-SPEC2 §4.2). "With Accents" OFF forgives the
 // acute, the grave and the circumflex and NOTHING else, so a fixture that
@@ -697,8 +699,12 @@ check('§5 Parsing Drill divider is dark green',
   divider.top === GREEN || divider.left === GREEN, JSON.stringify(divider));
 
 // ---------------------------------------------------------------- §5 objectives
+// Data files are zero-PADDED to two digits: chapter 10 is chapt-10.json, not
+// chapt-010.json. The old `chapt-0${n}` concatenation was right for exactly
+// the nine chapters that existed when it was written.
+const chapterFile = id => `src/data/chapt-${String(id.split('_')[1]).padStart(2, '0')}.json`;
 for (const chapterId of ['chapt_1', 'chapt_2', 'chapt_3', 'chapt_4', 'chapt_5']) {
-  const data = JSON.parse(readFileSync(`src/data/chapt-0${chapterId.split('_')[1]}.json`, 'utf8'));
+  const data = JSON.parse(readFileSync(chapterFile(chapterId), 'utf8'));
   const objectives = (data.learn || []).find(a => a.mode === 'objectivesPage');
   if (!objectives) { check(`§5 ${chapterId} objectives use "1. 2. 3."`, false, 'no objectivesPage'); continue; }
   await go(`#/activity/${chapterId}/${objectives.id}`);
@@ -716,9 +722,10 @@ await page.setViewportSize({ width: 390, height: 900 });
 // 5F: chapters 6, 7 and 8 join the swept set, so every census, every ledger
 // assertion and every spelling rule below covers them without being restated.
 // That is the point of writing them as sweeps rather than as lists.
+// 5G: chapters 9 and 10 join it in turn, for the same reason.
 const CHAPTERS = { chapt_1: ch1, chapt_2: ch2, chapt_3: ch3, chapt_4: ch4, chapt_5: ch5,
-                   chapt_6: ch6, chapt_7: ch7, chapt_8: ch8 };
-const LEXICON = id => JSON.parse(readFileSync(`src/data/lexicon-chapt0${id.split('_')[1]}.json`, 'utf8'));
+                   chapt_6: ch6, chapt_7: ch7, chapt_8: ch8, chapt_9: ch9, chapt_10: ch10 };
+const LEXICON = id => JSON.parse(readFileSync(`src/data/lexicon-chapt${String(id.split('_')[1]).padStart(2, '0')}.json`, 'utf8'));
 const promptGloss = () => page.locator('.card.speller .flash-pane .value').first().innerText();
 // WHICH ITEM the word speller is on. Not the prompt: chapter 7's adjective
 // speller prints "good" on six consecutive items and tells them apart by their
@@ -1699,26 +1706,64 @@ await page.setViewportSize({ width: 390, height: 900 });
 // key has to know about. A second one would silently double a heading again.
 {
   const ABBREVIATIONS = /\b(masc|fem|neut|sing|plur|pl|nom|gen|dat|acc|voc)\b/i;
+  // The renderer's own fold and cover rules (src/lib/content.js headingKey /
+  // headingCovers). Copied, not imported, because content.js reaches for
+  // import.meta.glob and cannot load outside Vite -- if the two ever disagree
+  // this check is what says so, by flagging a pair the app quietly handles.
+  const headingKey = t => String(t || '').trim().toLowerCase()
+    .replace(/\u2014|\u2013|--/g, '-').replace(/\s+/g, ' ').replace(/\bmasc\b/, 'masculine');
+  const headingCovers = (outer, inner) => {
+    const o = headingKey(outer).split(' ').filter(Boolean);
+    const i = headingKey(inner).split(' ').filter(Boolean);
+    if (o.length <= i.length) return false;
+    let at = 0;
+    for (const word of i) { at = o.indexOf(word, at) + 1; if (at === 0) return false; }
+    return true;
+  };
   const mismatches = [];
+  const covered = [];
   for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
     for (const activity of activitiesOf(chapter)) {
       for (const topic of (activity && activity.topics) || []) {
         for (const block of topic.content || []) {
           const titles = [block.title, ...((block.charts || []).map(c => c.title))].filter(Boolean);
           for (const title of titles) {
-            if (topic.title && normalizeText(title) !== normalizeText(topic.title)) {
-              mismatches.push(`${chapterId} ${JSON.stringify(topic.title)} vs ${JSON.stringify(title)}`);
+            if (!topic.title || normalizeText(title) === normalizeText(topic.title)) continue;
+            // 5G: the chart title may say the topic's heading AND MORE of it
+            // ("Present Middle Paradigm" -> "Present Middle Indicative
+            // Paradigm"). That is the same heading at two lengths, like the
+            // Masc/Masculine pair, and the host drops its own so one prints.
+            if (headingCovers(title, topic.title)) {
+              covered.push([chapterId, activity.id, topic.title, title]);
+              continue;
             }
+            mismatches.push(`${chapterId} ${JSON.stringify(topic.title)} vs ${JSON.stringify(title)}`);
           }
         }
       }
     }
   }
-  // Every mismatch must be an abbreviation of the same heading, and the only
-  // one the renderer's key expands is "masc".
+  // Every remaining mismatch must be an abbreviation of the same heading, and
+  // the only one the renderer's key expands is "masc".
   const unhandled = mismatches.filter(m => !/masc/i.test(m) || !ABBREVIATIONS.test(m));
   check('5E-R1 the only topic/chart title mismatch in chapters 1-5 is the one the dedup key handles',
     unhandled.length === 0, mismatches.length ? mismatches.join('; ') : 'no mismatches at all');
+
+  // ...and on the SURFACE: a covered pair prints ONE heading, the fuller one,
+  // which is the heading the original prints in its panel. Two stacked
+  // headings that differ by a single word is exactly the 5E-R1 defect.
+  for (const [chapterId, activityId, topicTitle, chartTitle] of covered) {
+    const chapter = CHAPTERS[chapterId];
+    const activity = activityById(chapter, activityId);
+    const index = (activity.topics || []).findIndex(t => t.title === topicTitle);
+    await go(`#/activity/${chapterId}/${activityId}`);
+    await gotoTopic(index);
+    const headings = await page.evaluate(() => [...document.querySelectorAll('.card .topic-heading, .card .pg-title')]
+      .map(el => el.textContent.replace(/\s+/g, ' ').trim()));
+    check(`5E-R1 ${chapterId} ${activityId} "${topicTitle}" prints ONE heading: the chart's fuller "${chartTitle}"`,
+      headings.length === 1 && normalizeText(headings[0]) === normalizeText(chartTitle),
+      JSON.stringify(headings));
+  }
 }
 
 // ---- item 3: the beforeGuess clip speaks on ARRIVAL ----------------------
@@ -2034,7 +2079,10 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
 // in both of its shapes, per-item option rendering, the elision apostrophe
 // round-tripping through the checker, and the popup pages.
 
-const CH_5F = { chapt_6: ch6, chapt_7: ch7, chapt_8: ch8 };
+// 5G: the ledger read-back sweep covers chapters 9 and 10 too — rows 79-95 of
+// DRILLBEHAVIORLEDGER.csv were CONFIRMED before either chapter was built, so
+// this is the assertion that the shipped surfaces agree with the stamp.
+const CH_5F = { chapt_6: ch6, chapt_7: ch7, chapt_8: ch8, chapt_9: ch9, chapt_10: ch10 };
 
 // ---- the ledger, read off the SURFACE, activity by activity --------------
 // `audioTiming`, the Pronounce-Each default and the Previous/Next pair are
@@ -2748,9 +2796,30 @@ for (const [chapterId, activityId, opener] of [
 // A chart may carry the action itself or the activity may carry it beside the
 // chart, and both routes drawing it printed "Say Whole List" twice on the εἰμί
 // chart before this was asserted.
+//
+// TWO ways a multi-chart page is drawn, since 5G: a NAMED stack is a More/Back
+// sequence with one chart on screen at a time, an UNNAMED one is both charts
+// stacked on a single page. The check counts controls against whatever is
+// actually on screen rather than assuming the pager exists.
+//
+// It also matches the CONTROL, not the label. It used to match a button named
+// /^Say Whole/, which silently assumed every chapter calls the button the same
+// thing; chapters 9 and 10 print the original's own "Say Paradigm" and the
+// check read that as a missing control. The class is what the renderer
+// guarantees; the wording is the original's business, chapter by chapter.
 for (const [chapterId, chapter] of Object.entries(CH_5F)) {
   for (const activity of activitiesOf(chapter).filter(a => a && a.mode === 'paradigmChart')) {
     const charts = activity.paradigms || (activity.paradigm ? [activity.paradigm] : []);
+    const stacked = charts.length > 1 && charts.every(chart => !chart.name);
+    const sayWholeCount = () => page.locator('.card .pg-say-whole').count();
+    if (stacked) {
+      await go(`#/activity/${chapterId}/${activity.id}`);
+      const wants = charts.filter(chart => !!(chart.sayWhole || activity.sayWhole)).length;
+      const count = await sayWholeCount();
+      check(`5F ${chapterId} ${activity.id}: ${wants} Say-Whole action${wants === 1 ? '' : 's'} on the stacked page, one per chart that carries one`,
+        count === wants, `${count} on screen`);
+      continue;
+    }
     for (const [index, chart] of charts.entries()) {
       await go(`#/activity/${chapterId}/${activity.id}`);
       for (let step = 0; step < index; step++) {
@@ -2758,7 +2827,7 @@ for (const [chapterId, chapter] of Object.entries(CH_5F)) {
         await page.waitForTimeout(80);
       }
       const wants = !!(chart.sayWhole || activity.sayWhole);
-      const count = await page.locator('.card').getByRole('button', { name: /^Say Whole/ }).count();
+      const count = await sayWholeCount();
       check(`5F ${chapterId} ${activity.id} chart ${index + 1}: the Say Whole action is drawn ${wants ? 'exactly once' : 'not at all'}`,
         count === (wants ? 1 : 0), `${count} on screen`);
     }
@@ -2859,17 +2928,32 @@ for (const [chapterId, activityId, expected] of [
   // grid. That is a real, small divergence from D-19's intent and it is
   // asserted here as what it is rather than dropped from the census.
   // See 5F-SPEC1-RESULTS §5 and DIVERGENCE-LOG D-32.
+  // 5G: chapters 9 and 10 ship their vocabulary drills as AUTHORED grids too
+  // -- not because the vocabulary is case-split (it is not; ten lemmas, ten
+  // options) but because the pipeline authored optionValues rather than naming
+  // a lexicon pool. Same renderer consequence, same divergence, same fix
+  // pending: the vocabulary-pool marker Stage 8.8 already owes chapters 6 and
+  // 8 (D-32). Listed here as what it is rather than dropped from the census.
   const AUTHORED_VOCAB = new Set([
     'c6_drill_vocab_gk_en', 'c6_drill_vocab_en_gk',
-    'c8_drill_vocab_gk_en', 'c8_drill_vocab_en_gk'
+    'c8_drill_vocab_gk_en', 'c8_drill_vocab_en_gk',
+    'c9_drill_vocab_gk_en', 'c9_drill_vocab_en_gk',
+    'c10_drill_vocab_gk_en', 'c10_drill_vocab_en_gk'
   ]);
   const vocabulary = census.filter(row => /_vocab_(gk_en|en_gk)$/.test(row.id) && !AUTHORED_VOCAB.has(row.id));
   for (const row of census.filter(row => AUTHORED_VOCAB.has(row.id))) {
-    check(`5F §5 ${row.chapterId} ${row.id}: case-split vocabulary is an AUTHORED grid and stays 2-up at both widths`,
+    check(`5F §5 ${row.chapterId} ${row.id}: authored vocabulary grid stays 2-up at both widths (D-32)`,
       row.cols[320] === 2 && row.cols[768] === 2, `${row.cols[320]} / ${row.cols[768]} columns`);
   }
   const paradigm = census.filter(row => row.layout === 'paradigm2col');
-  const declared = census.filter(row => row.layout === 'single' || row.layout === 'grouped');
+  const declared = census.filter(row => row.layout === 'single');
+  // 5G: a GROUPED layout is not automatically one option per line. Chapter 3's
+  // six full parsings are 48 characters and stack; chapters 9 and 10 group
+  // SHORT labels in pairs ("First Singular | First Plural"), which is how the
+  // original draws them. The label length decides, so the census asks the
+  // question the renderer asks rather than pinning one chapter's answer.
+  const longestOption = a => (a.optionValues || []).reduce((n, v) => Math.max(n, String(v).length), 0);
+  const grouped = census.filter(row => row.layout === 'grouped');
 
   for (const row of vocabulary) {
     check(`5E §6.8 ${row.chapterId} ${row.id}: option grid is 2-up at 320px and 4-up at 768px`,
@@ -2882,6 +2966,12 @@ for (const [chapterId, activityId, expected] of [
   for (const row of declared) {
     check(`5E §6.8 ${row.chapterId} ${row.id}: declared "${row.layout}" layout is single-column at both widths`,
       row.cols[320] === 1 && row.cols[768] === 1, `${row.cols[320]} / ${row.cols[768]} columns`);
+  }
+  for (const row of grouped) {
+    const longest = longestOption(activityById(CHAPTERS[row.chapterId], row.id));
+    const want = longest > 24 ? 1 : 2;
+    check(`5E §6.8 ${row.chapterId} ${row.id}: grouped layout is ${want}-up at both widths (longest option ${longest} chars)`,
+      row.cols[320] === want && row.cols[768] === want, `${row.cols[320]} / ${row.cols[768]} columns`);
   }
 
   // THE PHONE-WIDTH GUARD, which is the half of D-19 that protects reading.
@@ -3103,6 +3193,397 @@ for (const [chapterId, activityId, expected] of [
       && await page.locator('.rc-para .popup-link').count() === 0,
     `${await page.locator('.rc-para .greek-tap').count()} taps found`);
 }
+
+
+// ===================================================================
+// 5G: chapters 9 and 10
+// ===================================================================
+// Everything above already sweeps them (they are in CHAPTERS and in the
+// ledger read-back). What follows is what only they have: the parsing drill
+// generalized to THREE stages, the single-topic page with no topic rail, the
+// popup written as content blocks, the present/future chart in both of its
+// printed forms, the composite Hint, the compound-verb suffix, and the
+// "Repeat This Exercise" checkbox.
+
+// ---- G1 the THREE-stage parsing drill (5G-SPEC1 §4.1) --------------------
+{
+  const activity = activityById(ch10, 'c10_drill_parsing');
+  const HASH = '#/activity/chapt_10/c10_drill_parsing';
+  const stage = index => page.locator(`[data-stage="${index}"]`);
+  const stageTiles = index => stage(index).locator('.tile');
+  // The tuple the item on screen wants. Four forms repeat in the pool
+  // (λύσομαι is items 5 and 18) but they repeat with the SAME parse, so the
+  // prompt identifies the answer even where it does not identify the item.
+  // A prompt whose matches DISAGREE returns null rather than a guess.
+  const answerFor = async () => {
+    const prompt = await promptOnScreen();
+    const hits = activity.items.filter(i => normalizeText(i.greek) === prompt);
+    const unique = new Set(hits.map(i => i.answer.join('|')));
+    return { prompt, answer: unique.size === 1 ? hits[0].answer : null };
+  };
+  const clickStage = async (index, label) => {
+    await stage(index).locator('.tile', { hasText: label }).first().click();
+    await page.waitForTimeout(120);
+  };
+
+  await go(HASH);
+  check('5G G1 the instruction line asks for three clicks, tense first',
+    normalizeText(await page.locator('.instructions').first().innerText())
+      === 'Click first on the tense, voice and person last',
+    JSON.stringify(await page.locator('.instructions').first().innerText()));
+  check('5G G1 THREE stages are on screen, in authored order',
+    await page.locator('[data-stage]').count() === 3
+      && await stage(0).getAttribute('data-stage-label') === 'Tense'
+      && await stage(1).getAttribute('data-stage-label') === 'Voice'
+      && await stage(2).getAttribute('data-stage-label') === 'Person / Number',
+    `${await page.locator('[data-stage]').count()} stages`);
+  check('5G G1 all three stages are LIVE from the start (the commit rule holds the tuple, not a disabled control)',
+    !await stageTiles(0).first().isDisabled() && !await stageTiles(1).first().isDisabled()
+      && !await stageTiles(2).first().isDisabled());
+  // §4.1: optionGroups [2, 2, 2] on the person/number stage reproduces the
+  // original's three paired rows.
+  check('5G G1 the person/number stage is drawn as three paired groups (optionGroups [2,2,2])',
+    await stage(2).locator('.option-group').count() === 3
+      && await stage(2).locator('.option-group').first().locator('.tile').count() === 2
+      && await stage(2).evaluate(el => el.classList.contains('paired-groups')),
+    `${await stage(2).locator('.option-group').count()} groups`);
+
+  // NOTHING commits until the LAST empty stage is filled, however often the
+  // earlier ones are changed — the c8_drill_case rule, unchanged by the third
+  // stage (VERIFY-5F item 7 resolution).
+  await page.locator('.card').getByRole('button', { name: 'Score', exact: true }).click();
+  const scoreBefore = normalizeText(await page.locator('.live-score').innerText());
+  await clickStage(0, 'Present');
+  const afterOne = await feedbackKind();
+  await clickStage(1, 'Middle');
+  const afterTwo = await feedbackKind();
+  await clickStage(0, 'Future');           // an earlier stage stays re-clickable
+  const afterChange = await feedbackKind();
+  await shot('5G three-stage: two stages filled, nothing judged');
+  check('5G G1 filling two of three stages judges NOTHING, and stage 1 stays re-clickable',
+    afterOne === 'none' && afterTwo === 'none' && afterChange === 'none'
+      && normalizeText(await page.locator('.live-score').innerText()) === scoreBefore
+      && normalizeText(await stage(0).locator('.tile.selected').innerText()) === 'Future',
+    `feedback ${afterOne}/${afterTwo}/${afterChange}, score ${scoreBefore}`);
+
+  // ALL THREE RIGHT: one attempt, correct, auto-advances (B1a).
+  {
+    await go(HASH);
+    const { prompt, answer } = await answerFor();
+    if (!answer) {
+      check('5G G1 all three stages right: scored correct and auto-advances (B1a)', false, `ambiguous prompt ${prompt}`);
+    } else {
+      const before = await itemNumber();
+      await clickStage(0, answer[0]);
+      await clickStage(1, answer[1]);
+      const answeredAt = Date.now();
+      await stage(2).locator('.tile', { hasText: answer[2] }).first().click();
+      await page.waitForTimeout(180);
+      const kind = await feedbackKind();
+      const said = await awaitNextShown();
+      await shot('5G three-stage: all three right');
+      let late = await itemNumber();
+      while (late === before && Date.now() - answeredAt < CORRECT_MS * 3) {
+        await page.waitForTimeout(50);
+        late = await itemNumber();
+      }
+      check('5G G1 all three stages right: scored correct and auto-advances (B1a)',
+        kind === 'ok' && !said && late !== before,
+        `${JSON.stringify(prompt)} -> ${JSON.stringify(answer)}, feedback ${kind}, item ${before} -> ${late}`);
+    }
+  }
+
+  // THE TUPLE COMMITS ON THE LAST EMPTY STAGE, IN ANY ORDER. Filling person
+  // first and tense last commits on the TENSE click.
+  {
+    await go(HASH);
+    const { prompt, answer } = await answerFor();
+    if (!answer) {
+      check('5G G1 the tuple commits on the last EMPTY stage, whatever order it is filled in', false, `ambiguous prompt ${prompt}`);
+    } else {
+      await clickStage(2, answer[2]);
+      await clickStage(1, answer[1]);
+      const midKind = await feedbackKind();
+      await clickStage(0, answer[0]);
+      await page.waitForTimeout(180);
+      check('5G G1 the tuple commits on the last EMPTY stage, whatever order it is filled in',
+        midKind === 'none' && await feedbackKind() === 'ok',
+        `after two stages ${midKind}, after the third ${await feedbackKind()}`);
+    }
+  }
+
+  // A WRONG TUPLE: one attempt, manualOnIncorrect — reveals, waits, stays.
+  {
+    await go(HASH);
+    const { prompt, answer } = await answerFor();
+    if (!answer) {
+      check('5G G1 a wrong tuple reveals the answer, waits for Next and stays (manualOnIncorrect)', false, `ambiguous prompt ${prompt}`);
+    } else {
+      const before = await itemNumber();
+      await clickStage(0, answer[0]);
+      await clickStage(1, answer[1]);
+      const wrongPerson = ['First Singular', 'Third Plural'].find(value => value !== answer[2]);
+      await stage(2).locator('.tile', { hasText: wrongPerson }).first().click();
+      await page.waitForTimeout(INCORRECT_MS * 1.3);
+      await shot('5G three-stage: wrong person');
+      const revealed = (await stage(2).locator('.tile.correct').allInnerTexts()).map(normalizeText);
+      check('5G G1 a wrong tuple reveals the answer, waits for Next and stays (manualOnIncorrect)',
+        await feedbackKind() === 'bad' && await awaitNextShown()
+          && revealed.includes(normalizeText(answer[2]))
+          && await itemNumber() === before,
+        `revealed ${JSON.stringify(revealed)}, item ${before} -> ${await itemNumber()}`);
+    }
+  }
+
+  // §3.3: the Translate control the original prints on this drill. It was
+  // dead until buildTwoStageQuestions carried `translate` through — a button
+  // present and permanently disabled, which reads as a broken control.
+  {
+    await go(HASH);
+    const { prompt } = await answerFor();
+    const expected = activity.items.find(i => normalizeText(i.greek) === prompt);
+    const translate = page.locator('.card').getByRole('button', { name: 'Translate', exact: true });
+    const enabled = await translate.count() === 1 && !await translate.isDisabled();
+    if (enabled) { await translate.click(); await page.waitForTimeout(80); }
+    check('5G G1 Translate reveals the item translation (the two-stage builder now carries it)',
+      enabled && normalizeText(await page.locator('[data-reveal="translate"]').innerText())
+        === normalizeText(expected && expected.translate),
+      `enabled ${enabled}, expected ${JSON.stringify(expected && expected.translate)}`);
+  }
+}
+
+// ---- G2 the ch9 parsing grid is drawn in paired groups ------------------
+{
+  await go('#/activity/chapt_9/c9_drill_parsing');
+  const groups = page.locator('.option-groups .option-group');
+  check('5G G2 ch9 parsing: six options in three paired rows, as the original draws them',
+    await page.locator('.option-groups').first().evaluate(el => el.classList.contains('paired-groups'))
+      && await groups.count() === 3 && await groups.first().locator('.tile').count() === 2,
+    `${await groups.count()} groups`);
+  // ch3's parsing labels are 48 characters and MUST stay one per line: the
+  // paired layout is chosen by label length, so this is what proves the
+  // device-verified chapter-3 drill did not move under it.
+  await go('#/activity/chapt_3/c3_drill_parsing');
+  check('5G G2 ch3 parsing keeps one long option per line (paired grouping is by label length)',
+    !await page.locator('.option-groups').first().evaluate(el => el.classList.contains('paired-groups'))
+      && await page.locator('.option-groups .option-group.single').count() === 2);
+}
+
+// ---- G3 the single-topic page shows no topic rail (5G-SPEC1 §4.2) --------
+{
+  await go('#/activity/chapt_10/c10_learn_english_concepts');
+  const activity = activityById(ch10, 'c10_learn_english_concepts');
+  check('5G G3 a one-topic page shows NO topic navigation, and still shows its content',
+    activity.topics.length === 1 && await page.locator('.topic-controls').count() === 0
+      && await page.locator('.topic-count').count() === 0
+      && (await page.locator('.card .rich').innerText()).includes('We will go to college'),
+    `${await page.locator('.topic-controls').count()} topic controls`);
+  check('5G G3 the sequential rail is untouched by that (no dead-end Next, directive 7)',
+    !await page.locator('.rail-next').isDisabled());
+  // The multi-topic page next door still steps, so the rule is scoped to
+  // topics.length === 1 and not to topicPages as a whole.
+  await go('#/activity/chapt_10/c10_learn_future_verbs');
+  check('5G G3 a seven-topic page still shows its topic stepper',
+    await page.locator('.topic-controls').count() === 1
+      && normalizeText(await page.locator('.topic-count').innerText()) === '1 of 7');
+}
+
+// ---- G4 popups written as content blocks (5G-SPEC1 §4.3) -----------------
+{
+  // ch9: an ordinary word in running prose is the link, named outright by
+  // [[link:punctiliar]] — the popup's title is nothing like the run text, so
+  // the 5F slug route could not have found it.
+  await go('#/activity/chapt_9/c9_learn_mp_verbs');
+  const links = page.locator('.rc-para .popup-link');
+  check('5G G4 ch9 Introduction carries its two named popup links',
+    await links.count() === 2
+      && normalizeText(await links.first().innerText()) === 'punctiliar',
+    `${await links.count()} links`);
+  await links.first().click();
+  await page.waitForTimeout(150);
+  check('5G G4 the link opens the popup, whose body is rendered from content blocks',
+    await page.locator('.popup-sheet').getAttribute('data-popup-id') === 'punctiliar'
+      && await page.locator('.popup-sheet .popup-content .rc-para').count() === 1
+      && normalizeText(await page.locator('.popup-sheet .popup-content').innerText())
+        === 'Zach is hit by the ball.',
+    normalizeText(await page.locator('.popup-sheet').innerText()));
+  await page.locator('.popup-sheet').getByRole('button', { name: 'Cancel', exact: true }).click();
+  await page.waitForTimeout(80);
+  check('5G G4 Cancel closes it', await page.locator('.popup-sheet').count() === 0);
+
+  // ch9's Deponent Verbs TOPIC TITLE is itself the link (titleLink).
+  await gotoTopic(3);
+  check('5G G4 the Deponent Verbs topic TITLE is the link to its popup',
+    await page.locator('.topic-heading .popup-link').count() === 1
+      && normalizeText(await page.locator('.topic-heading').innerText()) === 'Deponent Verbs');
+  await page.locator('.topic-heading .popup-link').click();
+  await page.waitForTimeout(150);
+  check('5G G4 the title link opens the Deponent popup',
+    await page.locator('.popup-sheet').getAttribute('data-popup-id') === 'deponent');
+  await page.locator('.popup-sheet').getByRole('button', { name: 'Cancel', exact: true }).click();
+  await page.waitForTimeout(80);
+
+  // ch10: five stem-variation popups whose bodies are presentFutureRows in
+  // the ARROW form the original prints inside a popup.
+  await go('#/activity/chapt_10/c10_learn_future_verbs');
+  await gotoTopic(3);
+  const stemLinks = page.locator('.rc-list .popup-link');
+  check('5G G4 all five stem variations carry a popup link on their own line',
+    await stemLinks.count() === 5, `${await stemLinks.count()} links`);
+  await stemLinks.first().click();
+  await page.waitForTimeout(150);
+  const sheet = page.locator('.popup-sheet');
+  check('5G G4 the palatal popup is a presentFutureRows chart in ARROW form, Greek tappable on both sides',
+    await sheet.getAttribute('data-popup-id') === 'palatal'
+      && await sheet.locator('.rc-pfrows.arrow-form').count() === 1
+      && await sheet.locator('.rc-pfrow').count() === 2
+      && await sheet.locator('.rc-pfgreek:not([disabled])').count() === 4,
+    normalizeText(await sheet.innerText()));
+  await page.evaluate(() => { window.__clips.length = 0; });
+  await sheet.locator('.rc-pfgreek').first().click();
+  await page.waitForTimeout(250);
+  check('5G G4 a Greek cell in a popup plays its own clip (directive 9)',
+    (await clips()).length === 1, JSON.stringify(await clips()));
+  await sheet.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await page.waitForTimeout(80);
+}
+
+// ---- G5 presentFutureRows in the HEADED form (5G-SPEC1 §4.4) -------------
+{
+  await go('#/activity/chapt_10/c10_learn_future_verbs');
+  await gotoTopic(5);
+  const chart = page.locator('.rc-pfrows');
+  check('5G G5 Deponent Futures is a two-column chart under underlined Present / Future headers',
+    await chart.count() === 1
+      && !await chart.evaluate(el => el.classList.contains('arrow-form'))
+      && await chart.locator('.rc-pfhead span').count() === 2
+      && normalizeText(await chart.locator('.rc-pfhead').innerText()) === 'Present Future'
+      && await chart.locator('.rc-pfrow').count() === 3,
+    normalizeText(await chart.innerText()));
+  check('5G G5 deponent rows gloss the FUTURE side only; the Greek on both sides is tappable',
+    await chart.locator('.rc-pfcell[data-side="future"] .rc-pfgloss').count() === 3
+      && await chart.locator('.rc-pfcell[data-side="present"] .rc-pfgloss').count() === 0
+      && await chart.locator('.rc-pfgreek:not([disabled])').count() === 6);
+  // gotoTopic steps FORWARD from wherever the page already is; the next topic
+  // is one click away, not six.
+  await gotoTopic(1);
+  check('5G G5 irregular rows gloss BOTH sides',
+    await page.locator('.rc-pfcell[data-side="future"] .rc-pfgloss').count() === 2
+      && await page.locator('.rc-pfcell[data-side="present"] .rc-pfgloss').count() === 2);
+  // §3.2: the topic title's Greek word is the tap target, the English is not.
+  await go('#/activity/chapt_10/c10_learn_future_verbs');
+  await gotoTopic(4);
+  check('5G G5 the Future of eimi topic title taps its Greek word only (titleAudio)',
+    await page.locator('.topic-heading .greek-tap').count() === 1
+      && normalizeText(await page.locator('.topic-heading .greek-tap').innerText()) === 'εἰμί');
+}
+
+// ---- G6 the compound-verb preposition suffix (5G-SPEC1 §2.3) -------------
+{
+  await go('#/activity/chapt_9/c9_learn_mp_verbs');
+  await gotoTopic(5);
+  const rows = page.locator('.rc-greekrows.compound-verbs .rc-greekrow');
+  check('5G G6 four compound verbs, three of them carrying a tappable preposition',
+    await rows.count() === 4
+      && await page.locator('.rc-greeksuffix').count() === 3
+      && normalizeText(await page.locator('.rc-greeksuffix').first().innerText()) === '(εἰς)');
+  // The suffix has its OWN clip, distinct from the headword's. Same standard
+  // as P3.5: the MAPPING is pinned in the data, the one-tap-one-clip behavior
+  // is measured on the page, and the FILE is proved against the whole run's
+  // audio request log. The element src is a blob: URL and never names the
+  // file, so two plays can only be told apart by what they fetched.
+  {
+    const compound = activityById(ch9, 'c9_learn_mp_verbs')
+      .topics.find(t => t.id === 'compoundVerbs')
+      .content.find(b => b.type === 'greekRows');
+    const eiserchomai = compound.rows[1];
+    check('5G G6 pinned: the headword and its preposition carry DIFFERENT clips',
+      eiserchomai.audio === 'chapt_9_i_voc5' && eiserchomai.suffix.audio === 'chapt_9_i_eis',
+      JSON.stringify([eiserchomai.audio, eiserchomai.suffix.audio]));
+    await page.evaluate(() => { window.__clips.length = 0; });
+    await page.locator('.rc-greeksuffix').first().click();
+    await page.waitForTimeout(300);
+    const suffixClips = (await clips()).length;
+    await page.evaluate(() => { window.__clips.length = 0; });
+    await rows.nth(1).locator('.rc-greekword').click();
+    await page.waitForTimeout(300);
+    const wordClips = (await clips()).length;
+    const everFetched = audioRequests.join(' ');
+    check('5G G6 each tap plays exactly one clip, and the preposition\u2019s file reached the wire this run',
+      suffixClips === 1 && wordClips === 1
+        && everFetched.includes('i_eis.m4a') && everFetched.includes('i_voc5.m4a'),
+      `${suffixClips} / ${wordClips} clips; i_eis fetched ${everFetched.includes('i_eis.m4a')}, i_voc5 fetched ${everFetched.includes('i_voc5.m4a')}`);
+  }
+}
+
+// ---- G7 the composite Hint: two charts, one popup (5G-SPEC1 §4.8) --------
+for (const [chapterId, activityId, first, second] of [
+  ['chapt_9', 'c9_drill_parsing', 'Present Middle Indicative Paradigm', 'Present Passive Indicative Paradigm'],
+  ['chapt_9', 'c9_drill_translation', 'Present Middle Indicative Paradigm', 'Present Passive Indicative Paradigm'],
+  ['chapt_10', 'c10_drill_parsing', 'Future Active Indicative Paradigm', 'Future Middle Indicative Paradigm'],
+  ['chapt_10', 'c10_drill_translation', 'Future Active Indicative Paradigm', 'Future Middle Indicative Paradigm']
+]) {
+  await go(`#/activity/${chapterId}/${activityId}`);
+  await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
+  await page.waitForTimeout(150);
+  const modal = page.locator('.hint-modal');
+  const titles = (await modal.locator('.pg-title').allInnerTexts()).map(normalizeText);
+  check(`5G G7 ${activityId}: Hint opens ONE popup holding BOTH charts, stacked`,
+    await modal.count() === 1 && await modal.locator('.paradigm').count() === 2
+      && titles[0] === first && titles[1] === second
+      && await modal.locator('[data-paradigm-switch]').count() === 0,
+    JSON.stringify(titles));
+  await modal.getByRole('button', { name: 'Close', exact: true }).click();
+  await page.waitForTimeout(80);
+  check(`5G G7 ${activityId}: the Hint closes`, await page.locator('.hint-modal').count() === 0);
+}
+
+// ---- G8 the Quick Review paradigm pair is stacked, not paged ------------
+for (const [chapterId, activityId] of [
+  ['chapt_9', 'c9_qr_paradigms'], ['chapt_10', 'c10_qr_paradigms']
+]) {
+  await go(`#/activity/${chapterId}/${activityId}`);
+  check(`5G G8 ${activityId}: both charts on one page, no More/Back pager`,
+    await page.locator('.paradigm-stack .paradigm').count() === 2
+      && await page.locator('.pg-nav').count() === 0,
+    `${await page.locator('.paradigm').count()} charts, ${await page.locator('.pg-nav').count()} pagers`);
+}
+// Chapter 8's three-chart stack is NAMED and stays a More/Back sequence: the
+// naming rule is what tells the two apart, so this is what proves the
+// device-verified pager did not become a stack.
+await go('#/activity/chapt_8/c8_qr_third');
+check('5G G8 ch8 third person stays a More/Back sequence (its charts are named)',
+  await page.locator('.paradigm-stack').count() === 0
+    && await page.locator('.paradigm').count() === 1
+    && await page.locator('[data-paradigm-switch="more"]').count() === 1);
+
+// ---- G9 "Repeat This Exercise" (5G-SPEC1 §4.5) ---------------------------
+// PRESENCE and DEFAULT only. The behavior behind the box is EXTRAPOLATED
+// (replay the verse, clear the slate, completion unaffected) and VERIFY-5G
+// item (d) is what settles it; asserting modelled semantics here would pin
+// down a guess as though it were the original. 5G-SPEC1 §7 says the same:
+// extend the harness for this path only after item (d) resolves.
+for (const [chapterId, activityId] of [
+  ['chapt_9', 'c9_ex_scripture_speller'], ['chapt_10', 'c10_ex_scripture_speller']
+]) {
+  await go(`#/activity/${chapterId}/${activityId}`);
+  const box = page.locator('.spell-checks [data-repeat-exercise] input');
+  check(`5G G9 ${activityId}: the Repeat This Exercise checkbox is present and OFF by default`,
+    await box.count() === 1 && !await box.isChecked()
+      && normalizeText(await page.locator('.spell-checks [data-repeat-exercise]').innerText()) === 'Repeat This Exercise');
+}
+// The whole-verse spellers of the earlier chapters have no such control in
+// the original and gain none here.
+for (const [chapterId, activityId] of [
+  ['chapt_3', 'c3_ex_scripture_speller'], ['chapt_8', 'c8_ex_scripture_speller']
+]) {
+  const activity = activityById(CHAPTERS[chapterId], activityId);
+  if (!activity) continue;
+  await go(`#/activity/${chapterId}/${activityId}`);
+  check(`5G G9 ${activityId} (pre-ch9): no Repeat checkbox`,
+    await page.locator('.spell-checks [data-repeat-exercise]').count() === 0);
+}
+
 
 await browser.close();
 const failed = results.filter(r => !r.ok);

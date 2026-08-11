@@ -5,12 +5,14 @@
   // rows and underlined list lead-ins are all load-bearing, not decoration.
   //
   // Block types: heading | subheading | para | numbered | defList | biblist |
-  // refs | note | greekRows | expander | paradigm. An unknown type renders LOUD
-  // (see the dispatch's final else) rather than vanishing.
+  // refs | note | greekRows | expander | paradigm | presentFutureRows. An
+  // unknown type renders LOUD (see the dispatch's final else) rather than
+  // vanishing.
   // Trailing { greek, caption?, audio? } "example" objects render in the Greek
   // font and play their clip on tap. defList rows [term, value, audio?] play
   // the row's clip when present.
   import { play } from '../lib/audio.js';
+  import { headingKey } from '../lib/content.js';
   import { splitMarkRun, splitTaps } from '../lib/greek.js';
   import { usePopups, popupFor } from '../lib/popups.js';
   import Marked from './Marked.svelte';
@@ -38,21 +40,11 @@
   // One delivered topic abbreviates Masculine to Masc while its chart spells
   // the word out ("First Declension—Masc" over "First Declension—Masculine",
   // chapter 5). They are the same heading in the original, not two stacked
-  // headings; normalize the authored abbreviation for deduplication only.
-  //
-  // This key used to match the literal `--Masc`, and the D2 em-dash rule
-  // silently broke it: once the stamper rewrote `--` as `—` the two titles no
-  // longer keyed the same and the heading came back doubled (5E-SPEC3-RESPONSE
-  // item 1). A dedup key must not depend on which dash the typographic pass
-  // last decided on, so every dash form folds to one and case and spacing fold
-  // with it. `masc` is the only abbreviation any delivered title uses; the
-  // sweep that established that is in ui-behavior.mjs, which now fails if a
-  // second one appears.
-  const titleKey = t => String(t || '').trim().toLowerCase()
-    .replace(/—|–|--/g, '-')
-    .replace(/\s+/g, ' ')
-    .replace(/\bmasc\b/, 'masculine');
-  const sameTitle = t => !!t && !!suppressTitle && titleKey(t) === titleKey(suppressTitle);
+  // headings; the fold that normalizes them lives in lib/content.js since 5G,
+  // because the topicPages HOST needs the identical rule for the other
+  // relationship (a chart title that says the topic's and more of it) and two
+  // copies of a fold rule is how the em-dash regression happened.
+  const sameTitle = t => !!t && !!suppressTitle && headingKey(t) === headingKey(suppressTitle);
 
   // The 6 Accent Rules topic ships the "Chart: Accent Possibilities" expander
   // TWICE, byte-identical (feedback 5: it renders twice on both devices). Data
@@ -85,6 +77,31 @@
   // Same lesson as biblist in chapter 2: normalize the shape at the renderer,
   // because the data is not ours to edit.
   const listItems = block => (block.items || []).map(it => (typeof it === 'string' ? { text: it } : (it || {})));
+  // A numbered item may carry its own hard line breaks, and the original means
+  // two different things by them:
+  //   \n    the next line is SET APART UNDER this one and indented further
+  //         than the item text — chapter 10's stem variations put the rule on
+  //         line one and its formula on line two; chapters 4 and 5 put the
+  //         case label on line one and its example sentence on line two
+  //         ("Subjective case (Gk: nominative):" / "He hit the ball.",
+  //         ch4railwalk p2).
+  //   \n\n  a new PARAGRAPH inside the item — a blank line, no indent
+  //         (chapter 1's Six Points pronunciation note).
+  // The lines are SPLIT rather than left to a pre-line white-space rule,
+  // because no white-space rule can indent one line inside a flow. Formula
+  // brackets and ==> arrows are the original's own LITERAL notation and pass
+  // through as text (5G-SPEC1 §3.2).
+  function itemLines(text) {
+    const raw = String(text || '').split('\n');
+    const lines = [];
+    let gap = false;
+    for (const line of raw) {
+      if (!line.trim() && lines.length) { gap = true; continue; }   // blank = paragraph break
+      lines.push({ text: line, gap });
+      gap = false;
+    }
+    return lines.length ? lines : [{ text: '', gap: false }];
+  }
   // LABEL STYLES on a numbered list (5D-SPEC2 §6). The original's chapter-3
   // teaching lists lead each item with a term set apart from the sentence that
   // follows — underlined (its blue hotwords: "Active voice", "Indicative mood",
@@ -205,7 +222,7 @@
             {#if markerPopup}
               <button class="rc-num rc-num-popup" on:click={() => openPopup(markerPopup)}>{idx + 1})</button>
             {/if}
-            {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else if b.labelStyle === 'underline'}<u class="rc-lead-u">{it.label}</u>{joiner(it.text)}{:else if b.labelStyle === 'plain'}<span class="rc-lead-plain">{it.label}</span>{joiner(it.text)}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#if itemTaps}{#each splitTaps(it.text, itemTaps) as seg}{#if seg.popup}<button class="greek-tap popup-link greek" on:click={() => openPopup(seg.popup)}>{seg.t}</button>{:else if markerPopup && seg.t === markerPopup.greek}<button class="greek-tap popup-link greek rc-word-popup" on:click={() => openPopup(markerPopup)}>{seg.t}</button>{:else if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={it.text || ''} />{/if}
+            {#if it.label}{#if selfNum}<span class="rc-num">{it.label}</span>{it.text ? ' ' : ''}{:else if b.labelStyle === 'underline'}<u class="rc-lead-u">{it.label}</u>{joiner(it.text)}{:else if b.labelStyle === 'plain'}<span class="rc-lead-plain">{it.label}</span>{joiner(it.text)}{:else}<span class="rc-lead">{it.label}</span>{it.text ? ' — ' : ''}{/if}{/if}{#each itemLines(it.text) as line, lineIndex}<span class="rc-item-line" class:continuation={lineIndex > 0 && !line.gap} class:new-para={line.gap}>{#if itemTaps}{#each splitTaps(line.text, itemTaps) as seg}{#if seg.popup}<button class="greek-tap popup-link greek" on:click={() => openPopup(seg.popup)}>{seg.t}</button>{:else if markerPopup && seg.t === markerPopup.greek}<button class="greek-tap popup-link greek rc-word-popup" on:click={() => openPopup(markerPopup)}>{seg.t}</button>{:else if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}{:else}<Marked text={line.text} />{/if}</span>{/each}
             {#if it.example}
               <button class="rc-example" class:tappable={it.example.audio} on:click={() => playAudio(it.example.audio)}>
                 <span class="greek">{it.example.greek}</span>
@@ -303,6 +320,7 @@
       {@const gridVars = `--greek-cols:${syllableMatrix ? matrixCols : (b.columns || []).length};--greek-datacols:${(b.columns || []).length}`}
       <div class="rc-greekrows" class:syllable-matrix={syllableMatrix} class:row-labels={rowLabels}
            class:gloss-only={b.layout === 'glossOnly'} class:english-pairs={b.layout === 'englishPairs'}
+           class:compound-verbs={b.layout === 'compoundVerbs'}
            class:titled={b.title} class:centered={b.centered} class:rc-gap-before={b.gapBefore}
            class:head-underline={b.headerUnderline} class:paired-gutter={b.pairedGutter}>
         <!-- B5: Review Marks groups its rows under a title ("Breathing:",
@@ -419,7 +437,8 @@
               {#if row.ref}<span class="rc-greekref">{row.ref}</span>{/if}
             </div>
           {:else}
-            {@const cellCount = (row.label ? 1 : 0) + (row.greek ? 1 : 0) + (row.gloss != null && row.gloss !== '' ? 1 : 0)}
+            {@const cellCount = (row.label ? 1 : 0) + (row.greek ? 1 : 0)
+              + ((row.gloss != null && row.gloss !== '') || row.suffix ? 1 : 0)}
             <div class="rc-greekrow" style={`--greek-cols:${Math.max(cellCount, 1)}`}>
               {#if row.label}<span class="rc-greeklabel"><Marked text={row.label} /></span>{/if}
               {#if row.greek}
@@ -437,12 +456,70 @@
                   </span>
                 {/if}
               {/if}
-              {#if row.gloss != null && row.gloss !== ''}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
+              {#if row.gloss != null && row.gloss !== ''}
+                <!-- 5G: chapter 9's Compound Verbs rows print the preposition
+                     the compound is built from AFTER the gloss, in its own
+                     parentheses ("I go in, enter (εἰς)"). It is displayed
+                     Greek with a clip of its own, so it is a tap target of its
+                     own (directive 9) — and separate from the headword's, so
+                     the two never speak over each other. -->
+                <span class="rc-greekgloss"><Marked text={row.gloss} />{#if row.suffix}{' '}<button class="rc-greeksuffix greek greek-say" disabled={!row.suffix.audio} on:click={() => playAudio(row.suffix.audio)}>{row.suffix.greek}</button>{/if}</span>
+              {:else if row.suffix}
+                <span class="rc-greekgloss"><button class="rc-greeksuffix greek greek-say" disabled={!row.suffix.audio} on:click={() => playAudio(row.suffix.audio)}>{row.suffix.greek}</button></span>
+              {/if}
               {#if row.ref}<span class="rc-greekref">{row.ref}</span>{/if}
             </div>
           {/if}
         {/each}
         {#if b._verify}<div class="pending-verification compact">Some chart details are pending verification.</div>{/if}
+      </div>
+
+    {:else if b.type === 'presentFutureRows'}
+      <!-- 5G-SPEC1 §4.4: a present form beside its future. The SAME data shape
+           serves the chapter's two teaching charts and its five stem-variation
+           popups, because the original prints them two ways and the difference
+           is exactly whether the chart is HEADED:
+             headers  a two-column chart under "Present" / "Future" headings,
+                      each form's gloss on its own line under it (the Deponent
+                      Futures and Irregular Futures topics).
+             none     one derivation per line, "ἔχω ==> ἕξω", with the gloss
+                      beside it (the palatal/labial/dental/liquid/sibilant
+                      popups). The arrow is the original's own notation.
+           A block may also say so outright with layout: "arrow" | "columns".
+           Greek cells are tap targets; glosses are not (directive 9). -->
+      {@const arrowForm = b.layout === 'arrow' || (b.layout !== 'columns' && !Array.isArray(b.headers))}
+      <div class="rc-pfrows" class:arrow-form={arrowForm} class:rc-gap-before={b.gapBefore}>
+        {#if Array.isArray(b.headers) && b.headers.length}
+          <div class="rc-pfhead">{#each b.headers as header}<span><Marked text={header} /></span>{/each}</div>
+        {/if}
+        {#each b.rows || [] as row}
+          {@const present = row.present || {}}
+          {@const future = row.future || {}}
+          {#if arrowForm}
+            <div class="rc-pfrow">
+              <span class="rc-pfcell" data-side="present">
+                <button class="rc-pfgreek greek greek-say" disabled={!present.audio}
+                        on:click={() => playAudio(present.audio)}>{present.greek || ''}</button>
+              </span>
+              <span class="rc-pfarrow" aria-hidden="true">==&gt;</span>
+              <span class="rc-pfcell" data-side="future">
+                <button class="rc-pfgreek greek greek-say" disabled={!future.audio}
+                        on:click={() => playAudio(future.audio)}>{future.greek || ''}</button>
+              </span>
+              <span class="rc-pfgloss">{#if future.gloss}<Marked text={future.gloss} />{/if}{#if present.gloss}<Marked text={present.gloss} />{/if}</span>
+            </div>
+          {:else}
+            <div class="rc-pfrow">
+              {#each [present, future] as cell, sideIndex}
+                <span class="rc-pfcell" data-side={sideIndex === 0 ? 'present' : 'future'}>
+                  <button class="rc-pfgreek greek greek-say" disabled={!cell.audio}
+                          on:click={() => playAudio(cell.audio)}>{cell.greek || ''}</button>
+                  {#if cell.gloss}<span class="rc-pfgloss"><Marked text={cell.gloss} /></span>{/if}
+                </span>
+              {/each}
+            </div>
+          {/if}
+        {/each}
       </div>
 
     {:else if b.type === 'paradigm'}

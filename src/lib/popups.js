@@ -48,10 +48,30 @@ export function usePopups() {
 }
 
 // The popup an id names, or null. Ids are matched exactly first, then by slug,
-// so a link may name the popup either way.
+// so a link may name the popup either way. Used where the data NAMES the
+// target: an explicit [[link:id]] run, a greekRows popupRef, a numbered item's
+// numberPopupRef, a topic's titleLink.
 export function popupFor(register, ref) {
   if (!register || !ref) return null;
   if (register.byId[ref]) return register.byId[ref];
   const slug = slugOf(ref);
   return register.byId[slug] || null;
+}
+
+// The popup an UNDERLINED RUN opens, or null — the chapters 6-8 convention,
+// where the run text is the popup's own title and its slug is the id ("As a
+// pronoun" -> asAPronoun). That route reads a coincidence as a link, and 5G
+// produced one: chapter 9 underlines the lead-in "deponent:" inside a numbered
+// teaching point AND ships a "deponent" popup opened from the topic title. The
+// original prints that lead-in in plain black underline, so the port must not
+// turn it blue — blue means tappable and only tappable (directive 8).
+//
+// The discriminator is the popup's own SHAPE, which is also the era it comes
+// from: chapters 6-8's popups are the flexible-dict form (greek / gloss /
+// senses / examples) and are reached by slug; a popup written as a `content[]`
+// block list (5G-SPEC1 4.3) is reached only by a link the data NAMES.
+export function popupForRun(register, run) {
+  const popup = popupFor(register, run);
+  if (!popup || Array.isArray(popup.content)) return null;
+  return popup;
 }

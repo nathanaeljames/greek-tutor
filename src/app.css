@@ -1345,3 +1345,114 @@ button, a, input, select, textarea, label,
    column (chapter 7's Review Adjectives Paradigm) ---- */
 .pg-numberband { grid-column: 1 / -1; text-align: right; padding: 6px 6px 2px;
   color: var(--accent-ink); font-weight: 700; font-size: 0.85rem; }
+
+/* ================================================================= COHORT 5G
+   Chapters 9 and 10. Five new surfaces, all of them the original's own
+   arrangement rather than a style choice: multi-line numbered items, the
+   present/future chart in its two printed forms, the compound-verb
+   preposition suffix, stacked paradigm pairs, and paired option groups. */
+
+/* ---- §4.6 a numbered item that carries its own line breaks ----
+   Line one stays INLINE so an item that also carries a label still reads as
+   one line. A single \n sets the next line APART UNDER it, indented further
+   than the item text — the rule then its formula ("if after a palatal
+   ( κ, γ, χ )" / "σ + [ κ, γ, χ] ==> ξ"), the case label then its example
+   ("Subjective case (Gk: nominative):" / "He hit the ball.", ch4railwalk p2).
+   A blank line is a PARAGRAPH break inside the item: air, no indent. */
+.rc-item-line { display: inline; }
+.rc-item-line.continuation { display: block; padding-left: 1.4em; }
+.rc-item-line.new-para { display: block; margin-top: 10px; }
+
+/* ---- §4.4 presentFutureRows ----
+   Two printed forms, one block. HEADED: a two-column chart, each form's gloss
+   on its own line under it (Deponent Futures, Irregular Futures). UNHEADED:
+   one derivation per line, "ἔχω ==> ἕξω", gloss beside it (the five stem
+   variation popups). Greek is tappable; glosses are ink (directive 9). */
+.rc-pfrows { display: flex; flex-direction: column; margin: 10px 0; min-width: 0; }
+.rc-pfhead { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+  padding: 7px 6px; border-bottom: 2px solid rgba(0,0,0,0.1); color: var(--teal-dark);
+  font-size: 0.85rem; font-weight: 700; text-align: center; }
+.rc-pfrow { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+  align-items: start; border-bottom: 1px solid rgba(0,0,0,0.06); padding: 9px 6px; min-width: 0; }
+.rc-pfcell { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.rc-pfgreek { background: transparent; border: none; padding: 0; font: inherit;
+  font-family: var(--greek-font); font-size: 1.3rem; color: var(--link);
+  text-align: left; cursor: pointer; }
+.rc-pfgreek:disabled { color: var(--ink); cursor: default; }
+.rc-pfgloss { color: var(--teal-dark); font-size: 0.95rem; overflow-wrap: anywhere; }
+/* The arrow form is one flowing derivation plus a gloss. THE WHOLE BLOCK is
+   one grid and the rows are `display: contents`, so the arrows and the future
+   forms line up in columns down the popup exactly as the original prints them
+   ("ἔχω ==> ἕξω" over "ἄγω ==> ἄξω"). A per-row grid sized each row to its own
+   content and left the second arrow under the first form. At 320px the gloss
+   takes its own full-width line rather than squeezing the derivation; from
+   560px it sits beside it, which is the original's single-line form. */
+.rc-pfrows.arrow-form { display: grid; grid-template-columns: auto auto auto;
+  justify-content: start; align-items: baseline; column-gap: 8px; row-gap: 2px; }
+.rc-pfrows.arrow-form .rc-pfrow { display: contents; }
+.rc-pfrows.arrow-form .rc-pfcell { flex-direction: row; align-items: baseline; }
+.rc-pfrows.arrow-form .rc-pfgloss { grid-column: 1 / -1; margin-bottom: 8px; }
+.rc-pfarrow { color: var(--ink); font-size: 0.95rem; }
+@media (min-width: 560px) {
+  .rc-pfrows.arrow-form { grid-template-columns: auto auto auto minmax(0, 1fr); }
+  .rc-pfrows.arrow-form .rc-pfgloss { grid-column: auto; margin-bottom: 0; }
+}
+
+/* ---- §2.3 the compound-verb preposition ----
+   "εἰσέρχομαι | I go in, enter (εἰς)". The suffix is displayed Greek with a
+   clip of its own, so it is its own tap target beside the gloss. */
+.rc-greekrows.compound-verbs .rc-greekrow { grid-template-columns: minmax(6em, 40%) minmax(0, 1fr); }
+/* `.greek-say` is `display: block` app-wide (it is normally a whole row or a
+   whole prompt); the suffix sits INSIDE the gloss line, so it reclaims inline
+   flow the same way `.rc-part.greek-say` does. Without this it took a line of
+   its own and the preposition parted company with the gloss it belongs to. */
+.rc-greeksuffix { display: inline; width: auto; background: transparent; border: none;
+  padding: 0; font: inherit; font-family: var(--greek-font); color: var(--link);
+  cursor: pointer; }
+.rc-greeksuffix:disabled { color: var(--ink); cursor: default; }
+
+/* ---- §2.8/§3.7/§4.8 two charts on one page ----
+   The Middle+Passive and Future Active+Middle pairs are printed together, in
+   the Quick Review page and in the drills' Hint popup alike. Not a pager: a
+   rule separates them and both are on screen at once. */
+.paradigm-stack { display: flex; flex-direction: column; gap: 4px; }
+.paradigm-stack-rule { height: 1px; background: rgba(0,0,0,0.12); margin: 14px 0 10px; }
+
+/* ---- §4.1/§2.4 paired option groups ----
+   Chapter 3's parsing groups are one 48-character option per line and stack;
+   chapters 9 and 10 group SHORT labels in pairs ("First Singular | First
+   Plural"), which is how the original draws them, so those groups keep two
+   columns and the groups themselves stay stacked at every width. */
+.option-groups.paired-groups { grid-template-columns: 1fr; }
+@media (min-width: 560px) {
+  .option-groups.paired-groups { grid-template-columns: 1fr; gap: 10px; }
+}
+.option-groups.paired-groups .option-group + .option-group { border-top: none;
+  border-left: none; padding-top: 0; padding-left: 0; }
+
+/* THREE stages need marking off from each other. The original lays tense,
+   voice and person as three side-by-side COLUMNS, which no phone width can
+   hold, so the port stacks them in the same reading order — and stacked, the
+   two-option tense and voice stages are the same shape and would read as one
+   list of four. The rule is the same dark-green separator the grouped option
+   stacks already use. Two-stage drills (chapter 8's person + case grid) are
+   two different shapes already and keep their unmarked layout. */
+.stage-grid.stage-separated { border-top: 2px solid var(--teal-dark); padding-top: 10px; }
+
+/* A standing note under a drill's controls (chapter 10's deponent reminder).
+   Parenthetical aside, so it takes the note banner and sits with the
+   controls — never above the prompt (directive 2). */
+.drill-note { text-align: left; }
+
+/* A popup body written as content blocks (§4.3). */
+.popup-content { text-align: left; margin-top: 4px; }
+.popup-content .rich { color: var(--ink); }
+
+/* A topic heading that IS the link to its popup (chapter 9's Deponent Verbs),
+   and one whose Greek word plays its own clip (chapter 10's Future of εἰμί).
+   Both inherit the heading's size; the link keeps the underline that marks a
+   popup link everywhere else. */
+.topic-title-link { font: inherit; color: var(--link); }
+.topic-heading .greek-tap { font-size: 1em; }
+/* A [[link:id]] run: a popup link named outright rather than by slug. */
+.named-link { display: inline; }

@@ -44,16 +44,19 @@
      "content": [
       {
        "type": "para",
-       "text": "In English we have several tenses. In the present tense we may say, \"We go to college.\""
+       "text": "In English we have several tenses. In the present tense we may say,\n     \"We go to college.\"",
+       "flush": true
       },
       {
        "type": "para",
-       "text": "In the past we say, \"We went to college.\"",
+       "text": "In the past we say,\n     \"We went to college.\"",
+       "flush": true,
        "gapBefore": true
       },
       {
        "type": "para",
-       "text": "In the future we say, \"We will go to college.\"",
+       "text": "In the future we say,\n     \"We will go to college.\"",
+       "flush": true,
        "gapBefore": true
       }
      ]
@@ -109,7 +112,7 @@
       {
        "type": "paradigm",
        "id": "futureActiveParadigm",
-       "title": "Future Active Indicative",
+       "title": "Future Active Indicative Paradigm",
        "columns": [
         "Singular",
         "Plural"
@@ -175,7 +178,7 @@
       {
        "type": "paradigm",
        "id": "futureMiddleParadigm",
-       "title": "Future Middle Indicative",
+       "title": "Future Middle Indicative Paradigm",
        "columns": [
         "Singular",
         "Plural"
@@ -363,7 +366,7 @@
          "future": {
           "greek": "γνώσομαι",
           "audio": "chapt_10_j_gnwsam",
-          "gloss": "I will"
+          "gloss": "I will know"
          }
         }
        ],
@@ -1040,7 +1043,7 @@
    "type": "select",
    "mode": "fullOptionGrid",
    "title": "Future Indicative Translation Drill",
-   "instructions": "Click on the correct English translation",
+   "instructions": "Click on the correct translation",
    "promptIsGreek": true,
    "options": "perItem",
    "optionLayout": "stack1col",
@@ -1055,7 +1058,7 @@
       "nor will they hear his voice"
      ],
      "answer": "nor will he hear his voice",
-     "audio": "chapt_10_j_TvD1"
+     "audio": "chapt_10_j_tvd1"
     },
     {
      "greek": "Ἀκουσόμεθά σου περὶ",
@@ -1067,7 +1070,7 @@
       "we will hear you concerning this"
      ],
      "answer": "we will hear you concerning this",
-     "audio": "chapt_10_j_TvD3"
+     "audio": "chapt_10_j_tvd3"
     },
     {
      "greek": "ὅτε οἱ νεκροὶ",
@@ -1079,7 +1082,7 @@
       "when we will hear death voices"
      ],
      "answer": "when the dead will hear the voice",
-     "audio": "chapt_10_j_TvD4"
+     "audio": "chapt_10_j_tvd4"
     },
     {
      "greek": "καὶ ἕξεις θησαυρὸν",
@@ -1091,7 +1094,7 @@
       "and you will have treasure in heaven"
      ],
      "answer": "and you will have treasure in heaven",
-     "audio": "chapt_10_j_TvD5"
+     "audio": "chapt_10_j_tvd5"
     },
     {
      "greek": "ἀλλ̓ ἕξει τὸ φῶς τῆς",
@@ -1103,7 +1106,7 @@
       "but they will have the light of life"
      ],
      "answer": "but he will have the light of life",
-     "audio": "chapt_10_j_TvD6"
+     "audio": "chapt_10_j_tvd6"
     },
     {
      "greek": "ἐν τούτῳ γνώσονται",
@@ -1115,7 +1118,7 @@
       "by this we all will know"
      ],
      "answer": "by this everyone will know",
-     "audio": "chapt_10_j_TvD7"
+     "audio": "chapt_10_j_tvd7"
     },
     {
      "greek": "τότε γνώσεσθε ὅτι",
@@ -1127,7 +1130,7 @@
       "then he will know that I am"
      ],
      "answer": "then you will know that I am",
-     "audio": "chapt_10_j_TvD8"
+     "audio": "chapt_10_j_tvd8"
     },
     {
      "greek": "καὶ τὸν πατέρα μου",
@@ -1139,7 +1142,7 @@
       "you will know my father also"
      ],
      "answer": "you will know my father also",
-     "audio": "chapt_10_j_TvD9"
+     "audio": "chapt_10_j_tvd9"
     },
     {
      "greek": "ἐν ἐκείνῃ τῇ ἡμέρᾳ",
@@ -1151,7 +1154,7 @@
       "in that day we will know you"
      ],
      "answer": "in that day you will know",
-     "audio": "chapt_10_j_TvD10"
+     "audio": "chapt_10_j_tvd10"
     },
     {
      "greek": "κ̓αὶ γνώσομαι οὐ τὸν",
@@ -1163,7 +1166,7 @@
       "and I will know not the word"
      ],
      "answer": "and I will know not the word",
-     "audio": "chapt_10_j_TvD11"
+     "audio": "chapt_10_j_tvd11"
     },
     {
      "greek": "καὶ λήμψεσθε τὴν",
@@ -1175,7 +1178,7 @@
       "and you will receive the gift"
      ],
      "answer": "and you will receive the gift",
-     "audio": "chapt_10_j_TvD12"
+     "audio": "chapt_10_j_tvd12"
     },
     {
      "greek": "ὅτι ἐκ τοῦ ἐμοῦ",
@@ -1187,7 +1190,7 @@
       "for you will take what is mine"
      ],
      "answer": "for he will take from what is mine",
-     "audio": "chapt_10_j_TvD13"
+     "audio": "chapt_10_j_tvd13"
     },
     {
      "greek": "καὶ ἐγερεῖ αὐτὸν ὁ",
@@ -1199,7 +1202,7 @@
       "and he will raise the Lord"
      ],
      "answer": "and the Lord will raise him",
-     "audio": "chapt_10_j_TvD14"
+     "audio": "chapt_10_j_tvd14"
     },
     {
      "greek": "Λύσατε τὸν ναὸν",
@@ -1211,7 +1214,7 @@
       "you will destroy this temple"
      ],
      "answer": "you will destroy this temple",
-     "audio": "chapt_10_j_TvD15"
+     "audio": "chapt_10_j_tvd15"
     },
     {
      "greek": "καὶ ἐν τρισὶν ἡμέραις",
@@ -1223,7 +1226,7 @@
       "and in three days I will raise it"
      ],
      "answer": "and in three days I will raise it",
-     "audio": "chapt_10_j_TvD16"
+     "audio": "chapt_10_j_tvd16"
     },
     {
      "greek": "Ἀποστελῶ εἰς αὐτοὺς",
@@ -1235,7 +1238,7 @@
       "he will send them prophets"
      ],
      "answer": "I will send them prophets",
-     "audio": "chapt_10_j_TvD17"
+     "audio": "chapt_10_j_tvd17"
     },
     {
      "greek": "καὶ γενήσεται ὑμῖν",
@@ -1247,7 +1250,7 @@
       "and we will do it for you"
      ],
      "answer": "and it will be done for you",
-     "audio": "chapt_10_j_TvD18"
+     "audio": "chapt_10_j_tvd18"
     },
     {
      "greek": "ἀλλ' ἡ λύπη ὑμῶν εἰς",
@@ -1259,7 +1262,7 @@
       "but your sorrow will become joy"
      ],
      "answer": "but your sorrow will become joy",
-     "audio": "chapt_10_j_TvD19"
+     "audio": "chapt_10_j_tvd19"
     },
     {
      "greek": "πορεύσομαι πρὸς τὸν",
@@ -1271,7 +1274,7 @@
       "you will go to my father"
      ],
      "answer": "I will go to my father",
-     "audio": "chapt_10_j_TvD20"
+     "audio": "chapt_10_j_tvd20"
     },
     {
      "greek": "σὺν ἐμοὶ πορεύσονται",
@@ -1283,7 +1286,7 @@
       "he will go with me"
      ],
      "answer": "they will go with me",
-     "audio": "chapt_10_j_TvD21"
+     "audio": "chapt_10_j_tvd21"
     },
     {
      "greek": "ἐλεύσομαι δὲ ταχέως",
@@ -1295,7 +1298,7 @@
       "but I will come quickly to you"
      ],
      "answer": "but I will come quickly to you",
-     "audio": "chapt_10_j_TvD22"
+     "audio": "chapt_10_j_tvd22"
     },
     {
      "greek": "καὶ πρὸς αὐτὸν",
@@ -1307,7 +1310,7 @@
       "and they will come to him"
      ],
      "answer": "and we will come to him",
-     "audio": "chapt_10_j_TvD23"
+     "audio": "chapt_10_j_tvd23"
     },
     {
      "greek": "γὰρ ἐλεύσονται ἐπὶ",
@@ -1319,7 +1322,7 @@
       "for you will come in my name"
      ],
      "answer": "for they will come in my name",
-     "audio": "chapt_10_j_TvD24"
+     "audio": "chapt_10_j_tvd24"
     },
     {
      "greek": "ὅτι ἐλεύσονται ἐπ'",
@@ -1331,7 +1334,7 @@
       "that in the last days I will come"
      ],
      "answer": "that in the last days they will come",
-     "audio": "chapt_10_j_TvD25"
+     "audio": "chapt_10_j_tvd25"
     },
     {
      "greek": "γὰρ σώσει τὸν λαὸν",
@@ -1343,7 +1346,7 @@
       "for you will save his people"
      ],
      "answer": "for he will save his people",
-     "audio": "chapt_10_j_TvD26"
+     "audio": "chapt_10_j_tvd26"
     },
     {
      "greek": "σώσει ψυχὴν αὐτοῦ",
@@ -1355,7 +1358,7 @@
       "you will save his soul from death"
      ],
      "answer": "he will save his soul from death",
-     "audio": "chapt_10_j_TvD27"
+     "audio": "chapt_10_j_tvd27"
     },
     {
      "greek": "ὅτι ἀγγέλους κρινοῦμεν",
@@ -1367,7 +1370,7 @@
       "that we will judge angels"
      ],
      "answer": "that we will judge angels",
-     "audio": "chapt_10_j_TvD28"
+     "audio": "chapt_10_j_tvd28"
     },
     {
      "greek": "ὅτι οἱ ἅγιοι τὸν κόσμον",
@@ -1379,7 +1382,7 @@
       "that the saints will judge the world"
      ],
      "answer": "that the saints will judge the world",
-     "audio": "chapt_10_j_TvD29"
+     "audio": "chapt_10_j_tvd29"
     },
     {
      "greek": "κρινεῖ ὁ θεὸς τὸν",
@@ -1391,7 +1394,7 @@
       "he will judge the god of the world"
      ],
      "answer": "God will judge the world",
-     "audio": "chapt_10_j_TvD30"
+     "audio": "chapt_10_j_tvd30"
     },
     {
      "greek": "Κρινεῖ κύριος τὸν",
@@ -1403,7 +1406,7 @@
       "we will judge the Lord of this people"
      ],
      "answer": "the Lord will judge his people",
-     "audio": "chapt_10_j_TvD31"
+     "audio": "chapt_10_j_tvd31"
     },
     {
      "greek": "καὶ ἀποστελεῖ τοὺς",
@@ -1415,7 +1418,7 @@
       "and I will send his angels"
      ],
      "answer": "and he will send his angels",
-     "audio": "chapt_10_j_TvD32"
+     "audio": "chapt_10_j_tvd32"
     }
    ],
    "scored": true,
@@ -2175,7 +2178,7 @@
     {
      "type": "paradigm",
      "id": "qrFutureActive",
-     "title": "Future Active Indicative",
+     "title": "Future Active Indicative Paradigm",
      "columns": [
       "Singular",
       "Plural"
@@ -2235,7 +2238,7 @@
     {
      "type": "paradigm",
      "id": "qrFutureMiddle",
-     "title": "Future Middle Indicative",
+     "title": "Future Middle Indicative Paradigm",
      "columns": [
       "Singular",
       "Plural"

@@ -26,7 +26,9 @@ const expected = [
   { chapterPattern: /^chapt-05-.*\.js$/, lexiconPattern: /^lexicon-chapt05-.*\.js$/, needle: 'This page is largely a repetition of what was done in chapter 4 except for the section on the definite article.' },
   { chapterPattern: /^chapt-06-.*\.js$/, lexiconPattern: /^lexicon-chapt06-.*\.js$/, needle: 'Prepositions are usually small words that link or relate two words together.' },
   { chapterPattern: /^chapt-07-.*\.js$/, lexiconPattern: /^lexicon-chapt07-.*\.js$/, needle: 'An adjective is a word used to modify' },
-  { chapterPattern: /^chapt-08-.*\.js$/, lexiconPattern: /^lexicon-chapt08-.*\.js$/, needle: 'A pronoun is a word that stands in place' }
+  { chapterPattern: /^chapt-08-.*\.js$/, lexiconPattern: /^lexicon-chapt08-.*\.js$/, needle: 'A pronoun is a word that stands in place' },
+  { chapterPattern: /^chapt-09-.*\.js$/, lexiconPattern: /^lexicon-chapt09-.*\.js$/, needle: 'There are two voices in English.' },
+  { chapterPattern: /^chapt-10-.*\.js$/, lexiconPattern: /^lexicon-chapt10-.*\.js$/, needle: 'In English we have several tenses.' }
 ];
 
 // 2. Chapter DATA must be ABSENT from the main bundle and PRESENT in its chunk.

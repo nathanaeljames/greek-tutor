@@ -18,7 +18,10 @@ const BLOCK_TYPES = new Set([
   'heading', 'subheading', 'para', 'numbered', 'defList',
   'biblist', 'refs', 'note', 'greekRows', 'expander', 'paradigm',
   // 5F: chapter 6's preposition DIAGRAM.
-  'prepositionsChart'
+  'prepositionsChart',
+  // 5G: chapter 10's present-beside-future chart (teaching topics and the
+  // five stem-variation popups share the one shape).
+  'presentFutureRows'
   // 'pronounParadigm' (chapter 8's free-text pronoun-row shape) was RETIRED
   // in the 5F-FEEDBACK.pdf patch round: every pronoun paradigm now ships as a
   // standard `paradigm` block with real cells and real per-cell audio, which
@@ -345,12 +348,20 @@ for (const file of files) {
       // `name`, so the attribute rendered empty and the behavior harness could
       // not tell which chart it was looking at -- caught by ui-behavior.mjs
       // §2.8, not by this build-time check, because nothing here had asked.
+      // 5G: a paradigms[] stack of more than one chart is drawn one of TWO
+      // ways, and the names are what say which. NAMED throughout: a More/Back
+      // sequence, one chart on screen at a time, each page reporting its own
+      // data-chart-name (chapter 8's Masculine/Feminine/Neuter). UNNAMED
+      // throughout: both charts stacked on ONE page under one title, which is
+      // how chapters 9 and 10 print their Middle+Passive and Future
+      // Active+Middle pairs (ch10railwalk p7). A MIXED stack is the real
+      // defect — the renderer has to choose, and either choice is wrong for
+      // half the data — so it is what fails here.
       if (block.paradigms.length > 1) {
-        block.paradigms.forEach((chart, index) => {
-          if (!chart || typeof chart.name !== 'string' || !chart.name.trim()) {
-            problems.push(`${path}.paradigms[${index}].name: expected a non-empty chart name (a paradigms[] stack of more than one page is a More/Back sequence).`);
-          }
-        });
+        const named = block.paradigms.filter(chart => chart && typeof chart.name === 'string' && chart.name.trim()).length;
+        if (named !== 0 && named !== block.paradigms.length) {
+          problems.push(`${path}.paradigms: ${named} of ${block.paradigms.length} charts are named. Name every chart (a More/Back sequence, whose pages report data-chart-name) or none of them (a stacked pair drawn on one page) — never some.`);
+        }
       }
     }
     // spellVerse grades word by word, so the answer must actually be words.
@@ -394,6 +405,26 @@ for (const file of files) {
     if (block.audioTiming != null && !AUDIO_TIMINGS.has(block.audioTiming)) {
       problems.push(`${path}.audioTiming: "${block.audioTiming}" is not one of ${[...AUDIO_TIMINGS].join(', ')}.`);
     }
+    // 5G: presentFutureRows is a two-sided chart. A row missing either side
+    // renders as an empty tap target with nothing in it -- visible only as a
+    // gap, which is the failure class this whole file exists for.
+    if (block.type === 'presentFutureRows') {
+      if (!Array.isArray(block.rows) || !block.rows.length) {
+        problems.push(`${path}: presentFutureRows has no rows array.`);
+        return;
+      }
+      block.rows.forEach((row, index) => {
+        for (const side of ['present', 'future']) {
+          const cell = row && row[side];
+          if (!cell || typeof cell !== 'object' || typeof cell.greek !== 'string' || !cell.greek.trim()) {
+            problems.push(`${path}.rows[${index}].${side}: expected an object with a non-empty greek form.`);
+          }
+        }
+      });
+      if (block.headers != null && (!Array.isArray(block.headers) || block.headers.length !== 2)) {
+        problems.push(`${path}.headers: expected exactly two headers (Present, Future) or none at all — the headed form is the two-column chart, the unheaded one the "==>" derivation.`);
+      }
+    }
     // greekRows rows carry a word, a positional-chart cell list, or an
     // alternating parts[] equation -- never nothing at all.
     if (block.type === 'greekRows') {
@@ -403,6 +434,95 @@ for (const file of files) {
       });
     }
   });
+}
+
+// ---- EVERY REFERENCE RESOLVES (PIPELINE-INSIGHTS Stage 8.4) ----
+// Five of chapter 6-8's six hintRefs dangled once, and a dangling reference
+// fails SILENTLY in both directions: a hintRef that resolves to nothing simply
+// removes the Hint button, and a [[link:id]] that names no popup renders as
+// plain text. Both look like a deliberate absence on screen. 5G adds two more
+// reference kinds — the chapter-level `hintCharts` register and its
+// `paradigmRefs`, and the explicit link markup — so the whole class is checked
+// here rather than one kind at a time.
+//
+// The resolver accepts an id, a block type, or the camelCase slug of a chart
+// title (src/lib/content.js resolveHintRef). That slug rule is copied rather
+// than imported because content.js reaches for import.meta.glob and cannot be
+// loaded outside Vite; if the two ever disagree, this check is the one that
+// says so by failing on a ref the app resolves fine.
+const slugOf = text => String(text || '')
+  .replace(/[^A-Za-z0-9]+$/, '')
+  .replace(/[^A-Za-z0-9]+(.)/g, (_, c) => c.toUpperCase())
+  .replace(/^[A-Z]/, c => c.toLowerCase());
+const SECTION_KEYS = ['learn', 'drill', 'exercise', 'quickReview'];
+
+for (const file of files) {
+  const data = JSON.parse(readFileSync(join(DATA, file), 'utf8'));
+  // Everything a hintRef may legally name.
+  const chartRefs = new Set(Object.keys(data.hintCharts || {}));
+  const collect = node => {
+    if (Array.isArray(node)) { node.forEach(collect); return; }
+    if (!node || typeof node !== 'object') return;
+    if (typeof node.id === 'string') chartRefs.add(node.id);
+    if (typeof node.type === 'string') chartRefs.add(node.type);
+    if (typeof node.title === 'string') chartRefs.add(slugOf(node.title));
+    if (typeof node.chartTitle === 'string') chartRefs.add(slugOf(node.chartTitle));
+    for (const value of Object.values(node)) collect(value);
+  };
+  for (const key of SECTION_KEYS) collect(data[key]);
+
+  for (const [name, composite] of Object.entries(data.hintCharts || {})) {
+    const refs = composite && composite.paradigmRefs;
+    if (!Array.isArray(refs) || !refs.length) {
+      problems.push(`${file}.hintCharts.${name}: expected a non-empty paradigmRefs array.`);
+      continue;
+    }
+    refs.forEach((ref, index) => {
+      if (!chartRefs.has(ref)) {
+        problems.push(`${file}.hintCharts.${name}.paradigmRefs[${index}]: "${ref}" names no chart, topic or block in this chapter — the Hint would open empty.`);
+      }
+    });
+  }
+
+  walk(data, file, (node, path) => {
+    const ref = node.ui && node.ui.hintRef;
+    if (typeof ref === 'string' && !chartRefs.has(ref)) {
+      problems.push(`${path}.ui.hintRef: "${ref}" resolves to nothing — the Hint control would silently not render.`);
+    }
+  });
+
+  // A [[link:id]] must name one of its OWN activity's popups: the register is
+  // per-activity (providePopups + Svelte context), so a link in one activity
+  // can never reach another's popup even when the id exists elsewhere.
+  const LINK = /\[\[link:([^\]]+)\]\]/g;
+  for (const key of SECTION_KEYS) {
+    for (const activity of data[key] || []) {
+      const popupIds = new Set();
+      for (const popup of activity.popups || []) {
+        if (popup && popup.id) { popupIds.add(popup.id); popupIds.add(slugOf(popup.id)); }
+      }
+      (function scanLinks(node, path) {
+        if (Array.isArray(node)) return node.forEach((child, i) => scanLinks(child, `${path}[${i}]`));
+        if (node && typeof node === 'object') {
+          for (const [k, v] of Object.entries(node)) if (!k.startsWith('_')) scanLinks(v, `${path}.${k}`);
+          return;
+        }
+        if (typeof node !== 'string') return;
+        LINK.lastIndex = 0;
+        for (let m = LINK.exec(node); m; m = LINK.exec(node)) {
+          if (!popupIds.has(m[1]) && !popupIds.has(slugOf(m[1]))) {
+            problems.push(`${file}.${key}[${activity.id}]${path}: [[link:${m[1]}]] names no popup on this activity — the run would render as plain text with nothing behind it.`);
+          }
+        }
+      })(activity, '');
+      // A topic title that IS a link resolves the same way.
+      for (const [index, topic] of (activity.topics || []).entries()) {
+        if (topic && topic.titleLink && !popupIds.has(topic.titleLink) && !popupIds.has(slugOf(topic.titleLink))) {
+          problems.push(`${file}.${key}[${activity.id}].topics[${index}].titleLink: "${topic.titleLink}" names no popup on this activity.`);
+        }
+      }
+    }
+  }
 }
 
 // ---- NO DISPLAYED DOUBLE HYPHEN (D2, 5E-SPEC2 §5.4) ----
@@ -624,7 +744,16 @@ function segment_(text) { return new Intl.Segmenter('el', { granularity: 'graphe
         return;
       }
       if (typeof node === 'string' && AUDIO_ID.test(node) && !(node in manifest)) {
-        problems.push(`${file}${path}: audio id "${node}" is not in audio-manifest.json — the tap would toast "Audio not found" at runtime.`);
+        // 5G: name the CASE fix when that is what it is. Audio ids are derived
+        // from the ISO path and are lowercase throughout (audio.js naming
+        // contract); chapter 10's translation drill shipped 31 ids spelled
+        // with the TBK dispatch key's own mixed case (j_TvD1), every one of
+        // which would have toasted on device. "Not in the manifest" was true
+        // but sent the reader looking for a missing clip that is right there.
+        const lower = node.toLowerCase();
+        problems.push(lower !== node && lower in manifest
+          ? `${file}${path}: audio id "${node}" is not in audio-manifest.json, but "${lower}" is — audio ids are lowercase everywhere (the ISO path contract in src/lib/audio.js). Fix the case.`
+          : `${file}${path}: audio id "${node}" is not in audio-manifest.json — the tap would toast "Audio not found" at runtime.`);
       }
     })(data, '');
   }
@@ -635,4 +764,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras; every audio id the data names exists in the audio manifest).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras; every presentFutureRows row has both sides; every hintRef, paradigmRef, [[link:id]] and topic titleLink resolves; every audio id the data names exists in the audio manifest).`);

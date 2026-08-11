@@ -234,7 +234,16 @@ D-32 | ch6,8 | THE CASE-SPLIT VOCABULARY DRILLS DO NOT FOLLOW D-19.
      as such in the harness rather than dropped from the census. If
      the pipeline later marks these drills as vocabulary pools, the
      existing responsive class picks them up with no renderer change.
-     | Implementer, 5F-SPEC1 §5.
+     **EXTENDED 2026-08-11 (5G-SPEC1): chapters 9 and 10's four
+     vocabulary drills join this entry.** Their vocabulary is NOT
+     case-split — ten lemmas, ten options — but the pipeline authored
+     `optionValues` rather than naming a lexicon pool, which reaches
+     the renderer as the same undistinguished authored grid and lands
+     two-up at both widths for the same reason. The fix is the same
+     one: the vocabulary-pool marker Stage 8.8 already owes chapters
+     6 and 8 should cover 9 and 10 as well, and the responsive class
+     picks all eight up with no renderer change.
+     | Implementer, 5F-SPEC1 §5; extended 5G-SPEC1.
 D-33 | ch7 | THE εἰμί SPELLER'S PARENTHESISED ALTERNATE MAKES THE
      PARENTHESISED SEGMENT OPTIONAL. `answerAlt` is "ἐστί(ν)" against
      an `answer` of "ἐστίν". Punctuation is already optional under
@@ -355,6 +364,52 @@ D-39 | ch8 | **REVERSED for λέγω / ἐγὼ λέγω (2026-08-10, Nathanael'
      clips H_2GS/H_2DS/H_2AS speak for both forms — same phonemes,
      accent is prosodic only. | Nathanael correction + implementer,
      5F-FEEDBACK3 items 4, 5; ISO verified 2026-08-10.
+
+D-40 | ch9,ch10 | A TOPIC HEADING ITS OWN CHART SAYS IN FULL IS
+     PRINTED ONCE, BY THE CHART. The original puts the topic label in
+     a radio RAIL down the left and the panel's own heading inside the
+     yellow box, so "Present Middle Paradigm" and "Present Middle
+     Indicative Paradigm" never appear together in one column. This
+     port draws no radio rail — the topic label is the page heading —
+     so the pair stacked, and two headings differing by one word is
+     the 5E-R1 defect verbatim. Where a chart's title says the topic's
+     heading AND MORE OF IT (word-subsequence, `headingCovers` in
+     lib/content.js), the HOST drops its heading and the chart's
+     fuller title stands, because the fuller one is what the original
+     prints in its panel. The reverse case — the chart's title is an
+     ABBREVIATION of the topic's (chapter 5's Masc/Masculine pair) —
+     keeps its existing 5E behaviour untouched: there the chart's
+     title is dropped and the topic's stands. Asserted both in the
+     data sweep and on the surface (ui-behavior 5E-R1).
+     | Implementer, 5G-SPEC1; ch9railwalk p3, ch10railwalk p2.
+
+D-41 | ch10 | THE THREE-STAGE PARSING DRILL IS STACKED, NOT COLUMNED.
+     The original draws tense, voice and person/number as three
+     side-by-side COLUMNS of tiles (ch10railwalk p6). Four columns of
+     tiles whose longest label is "Second Singular" cannot be read at
+     320px, so the port keeps the original's reading ORDER — tense,
+     then voice, then person — and stacks the three stages down the
+     card, marking them off with the same dark-green separator the
+     grouped option stacks already use. Within the third stage the
+     original's `optionGroups: [2, 2, 2]` pairing is preserved
+     exactly: three rows of two, reading across. Two-stage drills
+     (chapter 8's person + case grid) are two different shapes already
+     and keep their unmarked layout. | Implementer, 5G-SPEC1 §4.1.
+
+D-42 | ch9,ch10 | "REPEAT THIS EXERCISE" SEMANTICS ARE MODELLED,
+     PENDING VERIFY-5G (d). The checkbox is the original's, on the
+     Scripture Memory Spelling Exercise of both chapters, and it
+     ships default OFF. What it DOES here is 5G-SPEC1 §4.5's
+     extrapolation, not an observed behaviour: a successful Check
+     Answer plays the whole verse (rule C7, as always), and then —
+     only when the box is checked — clears the slate for another
+     pass. Completion is recorded on the FIRST success and the repeat
+     pass does not touch it. Nothing beyond replay-and-clear is
+     invented, and the harness asserts only the control's PRESENCE
+     and its default, deliberately not the behaviour, until item (d)
+     of VERIFY-5G says what the original does. If the DOSBox answer
+     differs, this entry is what to correct. | 5G-SPEC1 §4.5;
+     implementer, pending Nathanael.
 
 ## Auto-progress / advance rule matrix
 

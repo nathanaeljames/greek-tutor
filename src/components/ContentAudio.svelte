@@ -8,10 +8,11 @@
   // panels; their per-mode data contracts are documented in HANDOFF-4 §5 (B1).
   import { onDestroy } from 'svelte';
   import { slide } from 'svelte/transition';
-  import { getGreekTapMap, resolveItems, shuffle } from '../lib/content.js';
+  import { getGreekTapMap, headingCovers, resolveItems, shuffle } from '../lib/content.js';
+  import { splitGreekRuns } from '../lib/greek.js';
   import { play, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
-  import { providePopups } from '../lib/popups.js';
+  import { providePopups, popupFor } from '../lib/popups.js';
   import RichContent from './RichContent.svelte';
   import ArrowCue from './ArrowCue.svelte';
   import Paradigm from './Paradigm.svelte';
@@ -24,7 +25,8 @@
   // here, over the whole activity, because that is what the original does.
   // Opening one stops whatever the page underneath was saying (rule A4).
   let openPopupPage = null;
-  providePopups(activity.popups, popup => { stopAudio(); openPopupPage = popup; });
+  const popupRegister = providePopups(activity.popups, popup => { stopAudio(); openPopupPage = popup; });
+  const openPopup = popup => { if (popup) popupRegister.open(popup); };
 
   // Items resolve from the data; activities flagged order:"shuffled"
   // (Pronounce Letters Exercise) get a fresh Fisher-Yates shuffle each visit.
@@ -72,6 +74,30 @@
   let topicIndex = 0;
   $: topics = activity.topics || [];
   $: currentTopic = topics[topicIndex] || null;
+  // 5G-SPEC1 §4.2: a topicPages activity with ONE topic shows no topic
+  // navigation at all. The original draws no radio rail on chapter 10's
+  // English Concepts page, and the port's equivalent — the Previous
+  // Topic / "1 of 1" / Next Topic stepper — would be three dead controls
+  // under a page that has nowhere to go. The content fills the card instead.
+  $: showTopicControls = topics.length > 1;
+  // A topic TITLE may itself be a control: chapter 9's Deponent Verbs heading
+  // opens the "Deponent" popup (titleLink), and chapter 10's "Future of εἰμί"
+  // taps its Greek word to that word's own clip (titleAudio). Both are the
+  // original's own behavior on the panel heading, and both are declared by the
+  // data — never inferred from the words in the title.
+  $: topicTitlePopup = currentTopic && currentTopic.titleLink
+    ? popupFor(popupRegister, currentTopic.titleLink)
+    : null;
+  // ONE HEADING, NOT TWO (5E-R1, extended in 5G). Where a topic's chart is
+  // titled with the topic's own heading AND MORE OF IT — the rail label
+  // "Present Middle Paradigm" over the panel heading "Present Middle
+  // Indicative Paradigm" — the original prints the fuller one in its panel and
+  // the shorter one only in the radio rail, which this port does not draw. So
+  // the chart's title stands and this heading steps aside. The reverse case
+  // (the chart title is an abbreviation of the topic's, chapter 5) is handled
+  // the other way round inside RichContent and is untouched.
+  $: topicTitleCovered = !!currentTopic && (currentTopic.content || [])
+    .some(block => block && headingCovers(block.title, currentTopic.title));
   $: activityGreekTaps = activity.greekTaps === true
     ? getGreekTapMap(chapter.id)
     : activity.greekTaps;
@@ -83,6 +109,15 @@
   $: paradigmPages = Array.isArray(activity.paradigms) && activity.paradigms.length
     ? activity.paradigms
     : (activity.paradigm ? [activity.paradigm] : []);
+  // 5G-SPEC1 §2.8/§3.7: two charts on ONE page, not a More/Back sequence.
+  // Chapters 9 and 10 print their Middle+Passive and Future Active+Middle
+  // paradigms stacked in a single panel (ch10railwalk p7 shows both charts
+  // under one Cancel), where chapter 8's third-person stack is genuinely
+  // paged. The data says which: a paged stack NAMES each chart, because the
+  // name is what the More/Back control and data-chart-name report; a stacked
+  // pair has no names to report because nothing is being switched between.
+  // check-content-shapes enforces all-or-none so the two can never blur.
+  $: stackedParadigms = paradigmPages.length > 1 && paradigmPages.every(chart => !chart || !chart.name);
   function goToParadigm(index) {
     const next = Math.max(0, Math.min(paradigmPages.length - 1, index));
     if (next === paradigmIndex) return;
@@ -192,7 +227,17 @@
 {:else if mode === 'topicPages'}
   <div class="card topic-page">
     {#if currentTopic}
-      <div class="topic-heading">{currentTopic.title}</div>
+      {#if !topicTitleCovered}
+        <div class="topic-heading">
+          {#if topicTitlePopup}
+            <button class="popup-link topic-title-link" on:click={() => openPopup(topicTitlePopup)}>{currentTopic.title}</button>
+          {:else if currentTopic.titleAudio}
+            {#each splitGreekRuns(currentTopic.title) as run}{#if run.greek}<button class="greek-tap greek" on:click={() => play(currentTopic.titleAudio)}>{run.t}</button>{:else}{run.t}{/if}{/each}
+          {:else}
+            {currentTopic.title}
+          {/if}
+        </div>
+      {/if}
       <!-- greekTaps is declared once for the whole activity (chapter 3's Learn
            Verbs wires λύουσιν / λύουσι / λύω, which appear in prose across
            three different topics) and a topic may still override it. -->
@@ -206,11 +251,13 @@
     {:else}
       <div class="pending-verification">Topic content pending verification.</div>
     {/if}
-    <div class="controls topic-controls">
-      <button class="btn secondary" on:click={() => goToTopic(topicIndex - 1)} disabled={topicIndex <= 0}>Previous Topic</button>
-      <span class="topic-count">{topics.length ? topicIndex + 1 : 0} of {topics.length}</span>
-      <button class="btn" on:click={() => goToTopic(topicIndex + 1)} disabled={!topics.length || topicIndex >= topics.length - 1}>Next Topic</button>
-    </div>
+    {#if showTopicControls}
+      <div class="controls topic-controls">
+        <button class="btn secondary" on:click={() => goToTopic(topicIndex - 1)} disabled={topicIndex <= 0}>Previous Topic</button>
+        <span class="topic-count">{topics.length ? topicIndex + 1 : 0} of {topics.length}</span>
+        <button class="btn" on:click={() => goToTopic(topicIndex + 1)} disabled={!topics.length || topicIndex >= topics.length - 1}>Next Topic</button>
+      </div>
+    {/if}
     {#if activity._topic_verify}<div class="pending-verification compact">Topic order pending verification.</div>{/if}
   </div>
 
@@ -223,7 +270,14 @@
        with Back stepping down) and may carry its Say Whole action beside the
        chart rather than inside it. -->
   <div class="card">
-    {#if paradigmPages.length}
+    {#if stackedParadigms}
+      <div class="paradigm-stack">
+        {#each paradigmPages as chart, chartIndex}
+          <Paradigm paradigm={chart} title={chart.title || null} />
+          {#if chartIndex < paradigmPages.length - 1}<div class="paradigm-stack-rule" aria-hidden="true"></div>{/if}
+        {/each}
+      </div>
+    {:else if paradigmPages.length}
       {@const page = paradigmPages[paradigmIndex] || paradigmPages[0]}
       <!-- 5F-FEEDBACK.pdf §8.1 root-cause fix: every pronoun paradigm now
            ships in the SAME cell-audio shape every other chapter's paradigm

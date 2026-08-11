@@ -139,6 +139,17 @@
   // phone width and sit side by side once there is room (the six full parsing
   // labels are 46 characters — two columns inside 320px would be unreadable).
   $: optionGroups = optionClass === 'grouped' ? sliceGroups(currentOptions, activity.optionGroups) : null;
+  // How WIDE a group is. Chapter 3's six full parsings are 48 characters and
+  // stack one per line; chapter 9's "Second Singular" is fifteen and the
+  // original draws its six options as three PAIRED rows — same optionGroups
+  // mechanism, two different densities, decided by the labels rather than by
+  // the chapter. The threshold is the same 24 the ungrouped grids use, so a
+  // grouped drill and a plain one break to one column at the same width.
+  $: groupClass = groupClassFor(currentOptions);
+  function groupClassFor(list) {
+    const longest = (list || []).reduce((n, option) => Math.max(n, String(option.label).length), 0);
+    return longest > 24 ? 'single' : '';
+  }
   $: greekOptions = !!activity.optionsAreGreek || activity.options === 'greek' || activity.generator?.options === 'lower';
   // The responsive vocabulary pool (D-19), in either direction. A vocabulary
   // select is the non-generator, non-authored branch in buildSelectQuestions.
@@ -190,7 +201,13 @@
       if (def.hintRef) {
         const target = resolveHintRef(chapterData, def.hintRef);
         if (!target) continue;
-        const charts = Array.isArray(target.charts) && target.charts.length ? target.charts : [target];
+        // A COMPOSITE ref (5G §4.8) resolves to several charts. Reached from
+        // hintPages it means one chart per page, the same as a charts[] stack;
+        // reached from ui.hintRef it means one page with both charts stacked.
+        // Which one the data asked for is which field it used.
+        const charts = Array.isArray(target.paradigms) && target.paradigms.length
+          ? target.paradigms
+          : (Array.isArray(target.charts) && target.charts.length ? target.charts : [target]);
         for (const chart of charts) {
           pages.push({ chart: { ...target, charts: [chart] }, title: def.title || target.title || null });
         }
@@ -528,27 +545,54 @@
              empty stage is filled; see chooseStage(). -->
         {#each stages as stage, stageIndex}
           {@const correctIds = showAnswerReveal ? stageCorrectIds(stageIndex, current) : null}
-          <div class="grid options stage-grid"
-               class:paradigm2col={stage.optionClass === 'paradigm2col'}
-               class:single={stage.optionClass === 'single'}
-               data-stage={stageIndex} data-stage-label={stage.label}>
-            {#each stage.options as opt}
-              <button
-                class="tile small"
-                class:selected={stagePicks[stageIndex] === opt.id}
-                class:correct={correctIds && correctIds.has(opt.id)}
-                disabled={answered}
-                on:click={() => chooseStage(stageIndex, opt)}>
-                {opt.label}
-              </button>
-            {/each}
-          </div>
+          {#if stage.optionClass === 'grouped'}
+            <!-- 5G-SPEC1 §4.1: a stage that declares its own optionGroups is
+                 drawn in separated groups, the same way an activity-level
+                 optionGroups is — chapter 10's person/number stage is three
+                 paired rows in the original. Same commit rule: the stage is
+                 still one stage, however many groups it is drawn in. -->
+            <div class="option-groups stage-grid" class:paired-groups={groupClassFor(stage.options) !== 'single'}
+                 class:stage-separated={stages.length > 2 && stageIndex > 0}
+                 data-stage={stageIndex} data-stage-label={stage.label}>
+              {#each sliceGroups(stage.options, stage.optionGroups) as group}
+                <div class="grid options option-group" class:single={groupClassFor(stage.options) === 'single'}>
+                  {#each group as opt}
+                    <button
+                      class="tile small"
+                      class:selected={stagePicks[stageIndex] === opt.id}
+                      class:correct={correctIds && correctIds.has(opt.id)}
+                      disabled={answered}
+                      on:click={() => chooseStage(stageIndex, opt)}>
+                      {opt.label}
+                    </button>
+                  {/each}
+                </div>
+              {/each}
+            </div>
+          {:else}
+            <div class="grid options stage-grid"
+                 class:paradigm2col={stage.optionClass === 'paradigm2col'}
+                 class:single={stage.optionClass === 'single'}
+                 class:stage-separated={stages.length > 2 && stageIndex > 0}
+                 data-stage={stageIndex} data-stage-label={stage.label}>
+              {#each stage.options as opt}
+                <button
+                  class="tile small"
+                  class:selected={stagePicks[stageIndex] === opt.id}
+                  class:correct={correctIds && correctIds.has(opt.id)}
+                  disabled={answered}
+                  on:click={() => chooseStage(stageIndex, opt)}>
+                  {opt.label}
+                </button>
+              {/each}
+            </div>
+          {/if}
         {/each}
       {:else if optionGroups}
-        <!-- Parsing drill: two separated stacks, as the original draws them. -->
-        <div class="option-groups">
+        <!-- Parsing drill: separated stacks, as the original draws them. -->
+        <div class="option-groups" class:paired-groups={groupClass !== 'single'}>
           {#each optionGroups as group}
-            <div class="grid options single option-group">
+            <div class="grid options option-group" class:single={groupClass === 'single'}>
               {#each group as opt}
                 <button
                   class="tile small"
@@ -620,6 +664,13 @@
         <label><input type="checkbox" bind:checked={pronounceEach} /> Pronounce each</label>
       </div>
     {/if}
+    <!-- 5G-SPEC1 §3.3: a standing note the original prints under the drill's
+         controls, beside the Pronounce Each checkbox — chapter 10's parsing
+         drill reminds the learner that a middle ending is usually deponent.
+         It is a parenthetical aside about the whole drill, not about the item
+         on screen, so it sits with the controls and never above the prompt
+         (directive 2: core lesson text is what goes on top). -->
+    {#if activity.note}<div class="note drill-note">{activity.note}</div>{/if}
     {#if showScore}<div class="scorebox live-score">{scoreLine}</div>{/if}
     <div class="scorebox" style="font-weight:400; font-size:0.85rem; margin-top:8px">
       {qIndex + 1} of {questions.length}
@@ -668,8 +719,24 @@
       <!-- 5F-FEEDBACK.pdf §8.1 root-cause fix: every paradigm the Hint route
            can resolve now ships in the one standard cell-audio shape, so
            there is no second renderer to keep in sync. -->
-      <Paradigm paradigm={hintChart} title={hintChart.title || hintChart.charts?.[0]?.title || null}
-                switchLabels={activity.ui?.hintSwitchLabels || null} />
+      {#if Array.isArray(hintChart.paradigms)}
+        <!-- 5G-SPEC1 §4.8: a COMPOSITE hint — several of the chapter's charts
+             stacked in ONE popup under one Close, which is how the original
+             draws chapter 10's Future Active + Future Middle pair
+             (ch10railwalk p7) and chapter 9's Middle + Passive pair. Not a
+             pager: nothing here cycles, and item (h) of VERIFY-5G is what
+             would settle whether the original cycles further. -->
+        <div class="paradigm-stack">
+          {#if hintChart.title}<div class="rc-heading">{hintChart.title}</div>{/if}
+          {#each hintChart.paradigms as chart, chartIndex}
+            <Paradigm paradigm={chart} title={chart.title || null} />
+            {#if chartIndex < hintChart.paradigms.length - 1}<div class="paradigm-stack-rule" aria-hidden="true"></div>{/if}
+          {/each}
+        </div>
+      {:else}
+        <Paradigm paradigm={hintChart} title={hintChart.title || hintChart.charts?.[0]?.title || null}
+                  switchLabels={activity.ui?.hintSwitchLabels || null} />
+      {/if}
       </div>
       <div class="modal-actions">
         <!-- svelte-ignore a11y-autofocus -->

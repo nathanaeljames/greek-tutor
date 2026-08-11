@@ -39,8 +39,20 @@ const BASE = args.base || `http://localhost:${args.port || 4173}`;
 const OUT = args.out || `buildout/screenshots/walk-${RUN_ID}`;
 const WIDTHS = [{ name: '320', width: 320, height: 900 }, { name: '768', width: 768, height: 1100 }];
 const CHAPTERS = String(args.chapters || 'chapt_1,chapt_2,chapt_3,chapt_4,chapt_5').split(',');
+// WHICH chapters get checklist evidence and a 320px overflow line. This used
+// to be a literal /^chapt_[45]$/ -- the cohort that first needed it -- so
+// cohort 5F walked chapters 6-8 and reported overflow for neither. A cohort
+// gate written as a hard-coded chapter number rots silently at the next
+// cohort, and silence is the failure mode this whole script exists to break,
+// so the default is now every chapter WALKED. --focus= narrows it.
+const FOCUS = new Set(String(args.focus || CHAPTERS.join(',')).split(','));
 
-const dataFor = id => JSON.parse(readFileSync(`src/data/chapt-0${id.split('_')[1]}.json`, 'utf8'));
+// Data files are zero-PADDED to two digits, so chapter 10 is chapt-10.json,
+// not chapt-010.json. The old `chapt-0${n}` concatenation was correct for
+// exactly the nine chapters that existed when it was written and would have
+// thrown ENOENT on the first double-digit chapter walked.
+const fileNumber = id => String(id.split('_')[1]).padStart(2, '0');
+const dataFor = id => JSON.parse(readFileSync(`src/data/chapt-${fileNumber(id)}.json`, 'utf8'));
 
 // Stop BEFORE the browser launches, so a refusal costs nothing and cannot half-
 // write a corpus. An empty (or absent) directory is fine; anything else needs
@@ -129,7 +141,10 @@ const EXTRACT = () => {
   const structuralOverrun = structural.reduce((n, item) => Math.max(n, item.overrun), 0);
   const rail = document.querySelector('.rail');
   return {
-    heading: (card.querySelector('.topic-heading, .rc-heading') || {}).textContent || '',
+    // `.pg-title` is in the list since 5G: a topic whose chart title says the
+    // topic's heading AND MORE prints only the chart's, so on those pages the
+    // page heading IS the chart's title and the dump must still record it.
+    heading: (card.querySelector('.topic-heading, .rc-heading, .pg-title') || {}).textContent || '',
     text: card.innerText,
     marked, taps, lists, paras,
     buttons: [...card.querySelectorAll('button:not([hidden])')]
@@ -182,7 +197,7 @@ const chartGroupsIn = (node, found = []) => {
   }
   return found;
 };
-const expectedChecklistPageCount = CHAPTERS.filter(id => /^chapt_[45]$/.test(id))
+const expectedChecklistPageCount = CHAPTERS.filter(id => FOCUS.has(id))
   .reduce((total, chapterId) => {
     const data = dataFor(chapterId);
     return total + (data.sequence || []).reduce((pages, activityId) => {
@@ -228,7 +243,50 @@ async function captureInteractiveStates(page, source, prefix, record, context) {
     }
   }
 
+  // EVERY POPUP THE PAGE CAN OPEN, opened (ONBOARD §7: a pass counts as
+  // verification only if it interacts with everything a learner can interact
+  // with). ui-modals.mjs photographs a hand-listed set of popups at device
+  // heights to judge SIZING; this opens all of them, mechanically, as part of
+  // the rail walk, so a popup that renders garbled or empty cannot hide behind
+  // a list nobody remembered to extend. Every link route is covered: the
+  // underline-slug links of chapters 6-8, the numbered-marker links of chapter
+  // 7, the sense links of chapter 6, and 5G's named [[link:id]] runs and topic
+  // titles.
+  async function capturePopups(statePrefix) {
+    const links = page.locator('.card .popup-link, .card .rc-num-popup');
+    const count = await links.count();
+    const seen = new Set();
+    for (let i = 0; i < count; i++) {
+      const link = links.nth(i);
+      if (!await link.isVisible()) continue;
+      await link.click();
+      await page.waitForTimeout(120);
+      const sheet = page.locator('.popup-sheet');
+      if (!await sheet.count()) {
+        report.interactionErrors.push({ ...context, state: statePrefix, error: `popup link ${i + 1} opened nothing` });
+        continue;
+      }
+      const id = (await sheet.getAttribute('data-popup-id')) || String(i + 1);
+      if (!seen.has(id)) {
+        seen.add(id);
+        await record(`${statePrefix}--popup-${slug(id)}`, `popup: ${id}`);
+      }
+      const cancel = sheet.getByRole('button', { name: 'Cancel', exact: true });
+      if (!await cancel.count()) {
+        report.interactionErrors.push({ ...context, state: statePrefix, error: `popup "${id}" has no Cancel` });
+        break;
+      }
+      await cancel.click();
+      await page.waitForTimeout(60);
+      if (await page.locator('.popup-sheet').count()) {
+        report.interactionErrors.push({ ...context, state: statePrefix, error: `popup "${id}" did not close` });
+        break;
+      }
+    }
+  }
+
   await captureExpanders(prefix);
+  await capturePopups(prefix);
   const groups = chartGroupsIn(source);
   for (const group of groups) {
     for (let index = 1; index < group.charts.length; index++) {
@@ -333,7 +391,7 @@ for (const size of WIDTHS) {
           measured.push(topicShot);
           baseShot.topics.push(topicShot);
           baseShot.states.push(topicShot);
-          if (/^chapt_[45]$/.test(chapterId)) {
+          if (FOCUS.has(chapterId)) {
             report.checklistPages.push({
               ...evidence,
               topic: i + 1,
@@ -345,7 +403,7 @@ for (const size of WIDTHS) {
           await captureInteractiveStates(page, activity?.topics?.[i] || {}, name, recordExtra, evidence);
         }
       } else {
-        if (/^chapt_[45]$/.test(chapterId)) {
+        if (FOCUS.has(chapterId)) {
           report.checklistPages.push({
             ...evidence,
             title: activity?.title || activityId,
@@ -390,7 +448,7 @@ for (const size of WIDTHS) {
         }
       }
 
-      if (size.name === '320' && /^chapt_[45]$/.test(chapterId)) {
+      if (size.name === '320' && FOCUS.has(chapterId)) {
         const worst = measured.reduce((best, state) => state.overrunPx > best.overrunPx ? state : best, measured[0]);
         report.overflow320.push({
           chapterId,
@@ -415,11 +473,11 @@ const stops = Object.values(report.chapters).reduce((n, c) => n + Object.keys(c.
 const clipped = report.overflow320.filter(item => item.overrunPx > 0);
 console.log(`walked ${stops} stops x ${WIDTHS.length} widths -> ${OUT}`);
 console.log(`checklist evidence: ${report.checklistPages.length} width-specific shots (${expectedChecklistPageCount} pages x ${WIDTHS.length} expected)`);
-console.log('320px overflow by new-chapter rail stop:');
+console.log(`320px overflow by rail stop (${[...FOCUS].join(', ')}):`);
 for (const item of report.overflow320) {
   console.log(` ${item.chapterId}/${item.activityId}: ${item.overrunPx}px${item.overrunPx ? ` (${item.state})` : ''}`);
 }
-console.log(clipped.length ? `HORIZONTAL OVERFLOW: ${clipped.length} new-chapter stops` : 'no horizontal overflow in chapters 4 or 5');
+console.log(clipped.length ? `HORIZONTAL OVERFLOW: ${clipped.length} stops` : `no horizontal overflow in ${[...FOCUS].join(', ')}`);
 console.log(report.railErrors.length ? `RAIL ERRORS: ${report.railErrors.length}` : 'all rail counts and Next actions are live');
 console.log(report.interactionErrors.length ? `INTERACTION ERRORS: ${report.interactionErrors.length}` : 'all authored expanders and chart states opened');
 console.log(report.consoleErrors.length ? `CONSOLE ERRORS: ${report.consoleErrors.length}` : 'no console errors');

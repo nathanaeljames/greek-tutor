@@ -9,10 +9,18 @@
   //   chapter 8  the three uses of αὐτός: a title and three, two and two
   //              examples (no Greek headword of its own).
   //
+  // 5G-SPEC1 §4.3 adds a fourth, and it is the one later chapters should use:
+  // chapters 9 and 10 carry their popup bodies as a `content[]` BLOCK LIST —
+  // the same block vocabulary the teaching topics use (para, numbered,
+  // presentFutureRows, greekRows), rendered by the same RichContent. One
+  // component, one block renderer, no per-chapter popup shape. The three
+  // flexible-dict fields above stay for the chapters that already ship them.
+  //
   // Greek-tap rule (directive 9): the headword and EVERY example phrase play
   // their own clip. Glosses and references are ink.
   import { play, stop as stopAudio } from '../lib/audio.js';
   import Marked from './Marked.svelte';
+  import RichContent from './RichContent.svelte';
   import { createEventDispatcher, onDestroy } from 'svelte';
   export let popup;
 
@@ -44,6 +52,10 @@
             <div class="popup-sense"><Marked text={typeof sense === 'string' ? sense : (sense.gloss || '')} /></div>
           {/each}
         </div>
+      {/if}
+
+      {#if Array.isArray(popup.content) && popup.content.length}
+        <div class="popup-content"><RichContent blocks={popup.content} greekTaps={popup.greekTaps || null} /></div>
       {/if}
 
       {#if popup.examples && popup.examples.length}

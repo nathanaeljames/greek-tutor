@@ -14,6 +14,7 @@
     "ui:walk": "node scripts/ui-walk.mjs",
     "ui:behavior": "node scripts/ui-behavior.mjs",
     "ui:modals": "node scripts/ui-modals.mjs",
+    "ui:offline": "node scripts/ui-offline.mjs",
     "ui:smoke5f": "node scripts/ui-smoke-5f.mjs",
     "ui:shots5f": "node scripts/ui-shots-5f.mjs"
   },

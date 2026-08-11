@@ -23,9 +23,8 @@ everything else. Secondary purpose: portfolio piece, so code quality
 is visible product. Full license from the original author. Live at
 greektutorv1.netlify.app, deployed automatically from GitHub pushes.
 
-Chapter 1 plus an Introduction pseudo-chapter are shipped and
-device-verified. Phase 5 (chapters 2-28) is beginning: 5A converts
-chapter loading to lazy chunks; 5B wires chapter 2.
+Current project state lives in §9 of this document and, always more
+current, in CHAT-HANDOFF.md.
 
 ## 2. Roles and workflow protocol
 
@@ -33,8 +32,8 @@ chapter loading to lazy chunks; 5B wires chapter 2.
   files (chapt-XX.json, lexicons, font-map), specs, and REVIEW of
   your handoffs.
 - You (Sol, Codex): implement the current *-SPEC.md against the local
-  repo; iterate with npm run dev / npm run build; return a
-  HANDOFF-<spec-id>.md.
+  repo; iterate with npm run dev / npm run build; return the
+  SPEC#-RESULTS and SPEC#-BUILD pair described in the header.
 - Nathanael: DOSBox verification of content, iPhone device testing
   (the VERIFY-*.md documents), all deployment and product decisions.
 
@@ -54,13 +53,38 @@ Protocol rules that are load-bearing:
   model of the code in your handoff.
 - No mass refactoring of working code, ever. Match the existing code
   style and formatting closely. Patch surgically.
-- Data files (src/data/*.json) come FROM the chat pipeline. You wire
-  them; you do not edit their content except where a spec explicitly
-  says so. If a data file looks wrong, flag it — do not fix it
-  locally (the pipeline regenerates from committed copies, and a
-  local edit will be silently reverted by the next regeneration).
+- Data files: see §2b. That section is the ONE statement of the rule.
 - No emoji anywhere: code, comments, UI copy, commit messages,
   handoffs.
+
+## 2b. Data files: the ONE rule (supersedes any other statement anywhere)
+
+`src/data/*.json` is authored by the chat pipeline. Commit delivered
+files as-is. You may edit them in exactly TWO cases:
+
+1. **Visual verification** (CHAT-HANDOFF, amended 2026-07-28): the
+   rendered page, held against the DOSBox rail walk, shows obviously
+   missing or corrupted formatting or text — dropped words, converter
+   garbage, broken markup, an id that cannot resolve by CASE alone.
+   Fix it, and report every edit in RESULTS with before/after so the
+   pipeline can absorb it (a hand edit is lost at the next regen
+   unless the pipeline knows about it).
+2. **A spec section explicitly authorizes a named edit.**
+
+Everything else — behavior fields, answers, sequence, audio WIRING
+choices, anything requiring DOSBox or a listen to settle — routes to
+the chat pipeline: STOP on that item, note it in RESULTS, continue
+elsewhere.
+
+**Priority when documents disagree:** this section and CHAT-HANDOFF
+outrank any restatement in a SPEC. A spec that appears to forbid what
+rule 1 allows is quoting an obsolete rule — follow rule 1 and FLAG the
+spec's wording in RESULTS. A broken build shipped in obedience to a
+stale sentence is still a broken build; round 5G-SPEC1 proved it (one
+implementer obeyed a stale never-edit paragraph in the spec, left 31
+case-mismatched audio ids in place, and shipped a tree that failed
+`npm run verify` — while the paragraph it obeyed had been superseded
+ten rounds earlier).
 
 ## 3. The ten standing directives (user-set law, every phase)
 
@@ -285,7 +309,9 @@ against:
   audio-manifest.json (check-content-shapes.mjs enforces this); mappings
   that have been verified by ear or by TBK are PINNED in ui-behavior
   §P3.1 — add every newly-verified mapping to that pin list in the same
-  change.
+  change. Paired lesson (D-39): when the original wires no handler and
+  ships no clip, that IS the original's answer — say so before building
+  a workaround from borrowed audio.
 - **The original's LINE BREAKS are not paragraph breaks.** The
   extraction pipeline had emitted one `para` block per panel LINE
   across chapters 6-8 — each line then carried a paragraph margin,
@@ -335,7 +361,7 @@ against:
   Vary behavior — some WebKit behaviors are device-only observations;
   say so in handoffs rather than claiming Chrome proved them.
 
-## 9. Current state (updated 2026-08-07 — cohort 5E CLOSED, 5F opening)
+## 9. Current state (updated 2026-08-11 — cohort 5F CLOSED, 5G in flight)
 
 Chapters 1 through 5 are shipped, device-verified, and behaviorally
 correct. Cohort 5E ran four rounds — 5E-SPEC1 (dual build), 5E-SPEC2
@@ -403,6 +429,15 @@ that were flattened into plain paragraphs in the first pass are
 rebuilt as `paradigm`, `numbered` and `greekRows` blocks. The three
 `ui-*.mjs` harness scripts were themselves out of date against the
 fix (see the new §7 rule above) and are now current.
+
+**5F CLOSED 2026-08-10** after three patch rounds against 52 device
+feedback items; chapters 1-8 are shipped and device-verified. **5G
+(chapters 9-10) is in flight**: both chapters built, the round's
+XPATCH applied, VERIFY-5G pending Nathanael's device pass. The 5G
+round also produced §2b of this document — the unified data-file rule
+with its priority order — after the two implementers split on a stale
+never-edit sentence in the spec and one shipped a failing build by
+obeying it. When a spec and §2b disagree, §2b wins; flag the spec.
 
 ## 10. When in doubt
 
