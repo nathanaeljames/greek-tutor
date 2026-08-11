@@ -3585,6 +3585,194 @@ for (const [chapterId, activityId] of [
 }
 
 
+
+// ===================================================================
+// 5G-XPATCH1: the two cross-ported pieces
+// ===================================================================
+
+// ---- X1 the repeat lifecycle only fires on a clip that FINISHED ---------
+// D-42 clears what the learner typed once the verse has been spoken. "Spoken"
+// has to mean ENDED: a clip cut off by a route exit, a screen lock or a
+// superseding tap is not the learner hearing their verse, and wiping the slate
+// on the strength of one would be the worst possible reading of a checkbox
+// they ticked. playThrough now reports which happened; this pins all three
+// paths on chapter 9's SM speller (chapter 10 mounts the same component).
+{
+  const HASH = '#/activity/chapt_9/c9_ex_scripture_speller';
+  const activity = activityById(ch9, 'c9_ex_scripture_speller');
+  const verseWords = stripAccents((activity.answerWords || []).join(' '));
+  const repeatBox = () => page.locator('.spell-checks [data-repeat-exercise] input');
+  const completedIn = () => page.evaluate(() => {
+    try { return JSON.parse(localStorage.getItem('greek-tutor-progress-v1') || '{}').completed || {}; }
+    catch { return {}; }
+  });
+  // The preview ships no audio, so the verse clip is seeded into the store the
+  // app already reads (the same route §6.2's long-clip cases use). A SHORT one
+  // here: the point is a clip that reaches its own `ended` quickly.
+  const versePath = audioPath(activity.audio);
+  const solveIt = async () => {
+    await setAccents(false);
+    await typeAccented(verseWords);
+    await stepper('Check Answer').click();
+  };
+
+  // (c) REPEAT OFF is unchanged: the verse is spoken and what was typed STAYS.
+  await go(HASH);
+  await seedLongClip([versePath], 0.4);
+  await go(HASH);
+  await solveIt();
+  await page.waitForTimeout(1200);
+  check('5G-X1 repeat OFF: a solved verse plays and the slate is left alone',
+    await feedbackKind() === 'ok' && normalizeText(await typed()).length > 0
+      && !await repeatBox().isChecked(),
+    `feedback ${await feedbackKind()}, field ${JSON.stringify((await typed()).slice(0, 24))}`);
+
+  // (a) REPEAT ON, clip plays to its natural end -> the slate clears for
+  // another pass, and completion is recorded and STAYS recorded.
+  await go(HASH);
+  await repeatBox().check();
+  await solveIt();
+  await page.waitForTimeout(1600);
+  {
+    const completed = await completedIn();
+    check('5G-X1 repeat ON, clip reaches its end: the slate clears and completion stands',
+      normalizeText(await typed()) === '' && completed.c9_ex_scripture_speller === true
+        && await repeatBox().isChecked(),
+      `field ${JSON.stringify(await typed())}, completed ${completed.c9_ex_scripture_speller}`);
+  }
+
+  // (b) REPEAT ON, but the clip is CUT OFF. This is the assertion that
+  // discriminates: under the old contract playThrough resolved the same way
+  // whether a clip ended or was interrupted, so an interrupted verse cleared
+  // the slate exactly as a finished one did.
+  //
+  // The interruption used here is a SUPERSEDING TAP — Pronounce, mid-verse —
+  // because it leaves the component mounted and the field readable. A route
+  // exit and a screen lock reach the same pause; a route exit additionally
+  // unmounts, which the `destroyed` guard covers and which is checked below
+  // for the thing that IS observable across it, completion.
+  await go(HASH);
+  await seedLongClip([versePath], 5);          // long enough to interrupt
+  await go(HASH);
+  await repeatBox().check();
+  await solveIt();
+  await page.waitForTimeout(300);
+  const typedMidClip = normalizeText(await typed());
+  await stepper('Pronounce').click();          // supersedes the verse mid-play
+  await page.waitForTimeout(900);
+  check('5G-X1 repeat ON, verse INTERRUPTED mid-clip: the slate is NOT wiped',
+    typedMidClip.length > 0 && normalizeText(await typed()).length > 0,
+    `field mid-clip ${JSON.stringify(typedMidClip.slice(0, 24))}, field after the interruption ${JSON.stringify((await typed()).slice(0, 24))}`);
+
+  // ...and leaving the page mid-clip does not un-complete the exercise. The
+  // clear itself is unobservable across an unmount (the page comes back
+  // freshly mounted either way); completion is the state that survives, and
+  // it is what D-42 says the repeat pass must not touch.
+  await go(HASH);
+  await repeatBox().check();
+  await solveIt();
+  await page.waitForTimeout(250);
+  await go('#/activity/chapt_9/c9_learn_scripture');      // route exit mid-clip
+  await page.waitForTimeout(600);
+  const completedAfter = await completedIn();
+  check('5G-X1 repeat ON, page left mid-clip: completion still stands',
+    completedAfter.c9_ex_scripture_speller === true,
+    `completed ${completedAfter.c9_ex_scripture_speller}`);
+  await seedLongClip([versePath], 0.4);
+}
+
+// ---- X2 the N-stage commit order --------------------------------------
+// 5G-SPEC1 §4.1 says both "commits on the final stage's click" and "exactly as
+// the two-stage c8_drill_case behaves" (device-verified either-order,
+// VERIFY-5F item 7). XPATCH1 §2 asked whether N > 2 needs its own rule. It
+// does not, and this is what says so: the commit guard in chooseStage()
+// returns while any pick is null, so the only click that can reach `commit` is
+// the one that filled the last empty stage — which is also the click after
+// which every stage holds a value. The two readings name the same click. What
+// is durable is the FILL ORDER, pinned here in both of the orders XPATCH1's
+// acceptance criteria name.
+{
+  const activity = activityById(ch10, 'c10_drill_parsing');
+  const HASH = '#/activity/chapt_10/c10_drill_parsing';
+  const stage = index => page.locator(`[data-stage="${index}"]`);
+  const clickStage = async (index, label) => {
+    await stage(index).locator('.tile', { hasText: label }).first().click();
+    await page.waitForTimeout(120);
+  };
+  const answerFor = async () => {
+    const prompt = await promptOnScreen();
+    const hits = activity.items.filter(i => normalizeText(i.greek) === prompt);
+    const unique = new Set(hits.map(i => i.answer.join('|')));
+    return unique.size === 1 ? hits[0].answer : null;
+  };
+
+  // FILL ORDER 3 -> 1 -> 2. Neither the stage-3 click nor the stage-1 click
+  // may judge anything; the stage-2 click commits, because it filled the last
+  // empty stage.
+  {
+    await go(HASH);
+    const answer = await answerFor();
+    if (!answer) {
+      check('5G-X2 fill order 3->1->2 commits on the stage-2 click, and not before', false, 'ambiguous prompt');
+    } else {
+      await clickStage(2, answer[2]);
+      const afterThird = await feedbackKind();
+      await clickStage(0, answer[0]);
+      const afterFirst = await feedbackKind();
+      await clickStage(1, answer[1]);
+      await page.waitForTimeout(180);
+      check('5G-X2 fill order 3->1->2 commits on the stage-2 click, and not before',
+        afterThird === 'none' && afterFirst === 'none' && await feedbackKind() === 'ok',
+        `after stage 3 ${afterThird}, after stage 1 ${afterFirst}, after stage 2 ${await feedbackKind()}`);
+    }
+  }
+
+  // FILL ORDER 2 -> 3 -> 1. The stage-1 click commits even though it is not
+  // the last stage BY INDEX — the literal "final stage" reading that would
+  // refuse this is the one XPATCH1's acceptance criteria rule out.
+  {
+    await go(HASH);
+    const answer = await answerFor();
+    if (!answer) {
+      check('5G-X2 fill order 2->3->1 commits on the stage-1 click (last EMPTY, not last INDEX)', false, 'ambiguous prompt');
+    } else {
+      await clickStage(1, answer[1]);
+      await clickStage(2, answer[2]);
+      const beforeLast = await feedbackKind();
+      await clickStage(0, answer[0]);
+      await page.waitForTimeout(180);
+      check('5G-X2 fill order 2->3->1 commits on the stage-1 click (last EMPTY, not last INDEX)',
+        beforeLast === 'none' && await feedbackKind() === 'ok',
+        `after two stages ${beforeLast}, after stage 1 ${await feedbackKind()}`);
+    }
+  }
+
+  // And the two-stage drill keeps the device-verified either-order contract,
+  // which is the half of §4.1 a device pass has pinned. §2.9 above already
+  // asserts case-then-person; this is person-then-case on the same items, so
+  // the pair of orders is covered on the two-stage drill as well.
+  {
+    const caseDrill = activityById(ch8, 'c8_drill_case');
+    await go('#/activity/chapt_8/c8_drill_case');
+    const prompt = await promptOnScreen();
+    const hit = caseDrill.items.find(i => normalizeText(i.greek) === prompt);
+    const pair = hit && hit.answer;
+    if (!pair) {
+      check('5G-X2 ch8 two-stage: person-then-case still commits on the second value (VERIFY-5F item 7)', false, 'no item match');
+    } else {
+      await page.locator('[data-stage="0"]').locator('.tile', { hasText: pair[0] }).first().click();
+      await page.waitForTimeout(120);
+      const midKind = await feedbackKind();
+      await page.locator('[data-stage="1"]').locator('.tile', { hasText: pair[1] }).first().click();
+      await page.waitForTimeout(180);
+      check('5G-X2 ch8 two-stage: person-then-case still commits on the second value (VERIFY-5F item 7)',
+        midKind === 'none' && await feedbackKind() !== 'none',
+        `after the person ${midKind}, after the case ${await feedbackKind()}`);
+    }
+  }
+}
+
+
 await browser.close();
 const failed = results.filter(r => !r.ok);
 console.log(`\n${results.length - failed.length}/${results.length} behavior checks passed`);

@@ -134,22 +134,43 @@ export function stop() {
 // immediately instead of parking the caller for the length of a clip that is
 // no longer playing. It NEVER rejects — a caller's advance must not be lost to
 // a missing file.
+//
+// IT ALSO REPORTS HOW PLAYBACK ENDED (5G-XPATCH1 §1): `true` only when the
+// clip reached its own `ended`, `false` when it was paused, errored, failed to
+// start, or was superseded by a newer play. Every advance caller races this
+// against a minimum timer and ignores the value — an interrupted clip should
+// release the wait either way. The caller that needs the distinction is the
+// whole-verse speller's repeat pass (D-42): it clears what the learner typed
+// once the verse has been spoken, and a clip cut off by a route exit, a screen
+// lock or a superseding tap must NOT go on to wipe the slate.
+// WHICH EVENT FIRED IS NOT THE ANSWER — `audio.ended` IS. A clip that reaches
+// its end fires `pause` AND `ended` (the spec pauses the element on the way
+// out, and Chrome delivers them in that order), so a listener that resolved
+// false from `pause` would call every completed clip an interruption. The
+// `ended` ATTRIBUTE is positional: it is already true by the time that pause
+// arrives, and false when stop() pauses mid-clip. So both listeners settle on
+// the attribute, and only a real `error` is false on its own account.
 export async function playThrough(id) {
   const ok = await play(id);
   const audio = currentAudio;
-  if (!ok || !audio || audio.ended || audio.paused) return !!ok;
-  await new Promise(resolve => {
-    const done = () => {
-      audio.removeEventListener('ended', done);
-      audio.removeEventListener('pause', done);
-      audio.removeEventListener('error', done);
-      resolve();
+  // Already over before we could listen: `ended` is a natural finish; nothing
+  // to play, or superseded so `currentAudio` moved on, is not.
+  if (!ok || !audio) return false;
+  if (audio.ended || audio.paused) return audio.ended === true;
+  return await new Promise(resolve => {
+    const settle = value => () => {
+      audio.removeEventListener('ended', onEnded);
+      audio.removeEventListener('pause', onPause);
+      audio.removeEventListener('error', onError);
+      resolve(value === null ? audio.ended === true : value);
     };
-    audio.addEventListener('ended', done);
-    audio.addEventListener('pause', done);      // stop(), screen-off, new tap
-    audio.addEventListener('error', done);
+    const onEnded = settle(null);
+    const onPause = settle(null);               // stop(), screen-off, new tap
+    const onError = settle(false);
+    audio.addEventListener('ended', onEnded);
+    audio.addEventListener('pause', onPause);
+    audio.addEventListener('error', onError);
   });
-  return true;
 }
 
 // AUDIO STOPS WHEN THE SCREEN GOES OFF (5E-SPEC2 §3.2, rule A6) and does not

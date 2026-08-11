@@ -488,3 +488,135 @@ cohort.
 4. **§2.4 of the spec describes a drill the chapter does not have**
    (§5.1 above). Worth correcting in the next spec so the next reader
    does not go looking for the voice stage.
+
+---
+
+## 9. XPATCH1 (cross-patch from the parallel Sol run)
+
+Two ports requested, one taken as code and one taken as assertions. The
+rest of the Opus base stands as shipped, as the patch directs — the six
+§4 data fixes, D-40/D-41/D-42, `ui:offline`, the zero-padding and
+cohort-gate harness fixes and the popup-walk assertions are untouched.
+
+### 9.1 `playThrough()` reports HOW playback ended — TAKEN
+
+`src/lib/audio.js` now resolves `true` only when the clip reached its
+own end, and `false` when it was paused, errored, failed to start or was
+superseded. The never-reject contract is unchanged.
+
+**The obvious implementation of that sentence is wrong, and the
+assertion is what caught it.** Resolving `true` from the `ended`
+listener and `false` from the `pause` listener reads correctly and fails
+in practice: a clip that finishes fires `pause` AND `ended` — the spec
+pauses the element on the way out and Chrome delivers them in that
+order — so every completed clip resolved `false` from whichever landed
+first, and the repeat pass then never cleared anything. Written that
+way, shipped, and caught within the hour by the acceptance assertion the
+patch asked for; the probe that diagnosed it recorded one clip with
+`started`, `ended` AND `stopped` all true.
+
+What the listeners settle on now is the `ended` ATTRIBUTE, not which
+event arrived. It is positional rather than event-ordered: already true
+when that trailing pause fires, still false when `stop()` pauses
+mid-clip. Only a real `error` resolves false on its own account. The
+early-exit path (the clip was already over before we could listen)
+answers the same way.
+
+Every other caller races the promise against a minimum timer and ignores
+the value (`SelectActivity`, `SpellActivity`, `DivideActivity`,
+`PlaceAccentActivity`), so nothing else moves.
+
+`SpellVerseActivity`'s repeat pass now clears the slate only when all
+four hold: the clip finished, the checkbox is still ticked, the
+component is still mounted (`destroyed`), and no Restart or later
+attempt has bumped the token. Sol's stale-completion guard is included —
+`destroyed` is set in `onDestroy` alongside the existing token bump.
+
+The reasoning matters more than the diff: D-42 wipes what the learner
+typed, and it does that on the strength of a checkbox they ticked. A
+verse cut off by a route exit, a screen lock or a superseding tap is not
+the learner hearing their verse, and the old contract could not tell the
+two apart.
+
+**Assertions** (ui-behavior, "5G-X1", on chapter 9's SM speller; chapter
+10 mounts the same component):
+
+- repeat OFF: a solved verse plays and the slate is left alone.
+- repeat ON, clip reaches its own end: the slate clears AND completion
+  is recorded and stays recorded.
+- repeat ON, verse INTERRUPTED mid-clip: the slate is NOT wiped. The
+  interruption is a superseding Pronounce tap rather than a route exit,
+  deliberately — it leaves the component mounted so the field is still
+  readable, which is what makes this the assertion that discriminates.
+  Under the old contract it would have cleared.
+- repeat ON, page left mid-clip: completion still stands.
+
+The verse clip is seeded into the audio store the app already reads (the
+route §6.2's long-clip cases use), short for the natural-end case and
+five seconds for the interruption case, because the preview ships no
+audio.
+
+### 9.2 The N-stage commit order — INSPECTED, no code change, assertions added
+
+XPATCH1 §2 anticipated this outcome and asked for the code path if it
+held. It holds.
+
+`chooseStage()` in `SelectActivity.svelte` (the only place a staged
+guess commits) reads:
+
+```js
+    stagePicks = stagePicks.map((pick, at) => (at === index ? opt.id : pick));
+    if (stagePicks.some(pick => pick == null)) return;   // tuple incomplete
+    commit(current.accepted.has(pairKey(stagePicks)));
+```
+
+The guard returns while any pick is still null, so the only click that
+can reach `commit` is the one that filled the last empty stage — and
+that is also the click after which every stage holds a value. "Every
+stage now holds a value" and "this click filled the last empty stage"
+name the SAME click, at any stage count; once committed, `answered`
+closes the grid, so no later click can re-open a full tuple. A separate
+`stages.length <= 2` branch would be two code paths that cannot produce
+two answers.
+
+The reading that WOULD differ is "commit only when the last stage BY
+INDEX is clicked" — and XPATCH1's own acceptance criteria rule it out
+("a revision to stage 1 after stages 2+3 are filled still commits on the
+stage-1 click"). So the split is not needed and adding it would ship a
+distinction without a difference.
+
+What IS durable is the fill order, and it is asserted (ui-behavior,
+"5G-X2"), exactly as the patch asks:
+
+- ch10 parsing, fill order 3 -> 1 -> 2: neither the stage-3 nor the
+  stage-1 click judges anything; the stage-2 click commits.
+- ch10 parsing, fill order 2 -> 3 -> 1: the stage-1 click commits, even
+  though it is not the last stage by index.
+- ch8 case drill, person then case: still commits on the second value
+  (VERIFY-5F item 7). §2.9's existing case-then-person assertion is
+  unchanged and still passes, so the two-stage drill is pinned in both
+  orders.
+
+The commit site carries a comment recording why the two readings of
+§4.1 cannot diverge here, so the next reader of that sentence does not
+have to re-derive it.
+
+### 9.3 Acceptance
+
+Re-run in full after the patch:
+
+| check | result |
+|---|---|
+| `npm run check:shapes` | PASS, ten chapters |
+| `npm run build` | clean; 37 precache entries |
+| `npm run check:lazy-chunk` | PASS, ten chapter + ten lexicon chunks |
+| `npm run ui:behavior` | 856/856 behavior checks passed |
+| `npm run ui:walk` | walked 219 stops x 2 widths, all ten chapters: no overflow, no rail errors, no interaction errors, no console errors |
+| `npm run ui:modals` | 115/115 modal states clean |
+| `npm run ui:offline` | offline: 44 stops rendered, 0 missing, refresh OK |
+
+All four G1 paths re-run green, and so does every assertion the round
+already had.
+
+Diff: `5G-XPATCH1-DIFF.md` (this patch alone, against the 5G-SPEC1
+tree).

@@ -347,14 +347,30 @@
     Promise.all([minimum, spoken]).then(() => { if (token === advanceToken) advance(); });
   }
 
-  // §2.9: a stage click. Any stage but the last only RECORDS — no attempt is
-  // counted, no feedback appears, nothing advances — so changing the person is
-  // free. Filling the last stage completes the pair and commits it, which is
-  // where the ordinary scoring path below takes over.
+  // §2.9: a stage click. A click that leaves any stage empty only RECORDS — no
+  // attempt is counted, no feedback appears, nothing advances — so changing an
+  // earlier stage is free. The click that fills the LAST EMPTY stage completes
+  // the tuple and commits it, which is where the ordinary scoring path below
+  // takes over.
+  //
+  // 5G-XPATCH1 §2 asked whether N > 2 needs a separate rule, because
+  // 5G-SPEC1 §4.1 says both "commits on the final stage's click" and "exactly
+  // as the two-stage c8_drill_case behaves" (device-verified either-order,
+  // VERIFY-5F item 7). The two readings cannot diverge HERE, whatever the
+  // stage count: the guard below returns while any pick is still null, so the
+  // only click that can reach `commit` is the one that filled the last empty
+  // stage — "every stage now holds a value" and "this click filled the last
+  // empty one" are the same click, and once committed `answered` closes the
+  // grid so no later click can re-open a full tuple. A separate N > 2 branch
+  // would be two code paths that cannot produce two answers. The literal
+  // reading that WOULD differ — commit only when the last stage BY INDEX is
+  // clicked — is the one XPATCH1's own acceptance criteria rule out ("a
+  // revision to stage 1 after stages 2+3 are filled still commits on the
+  // stage-1 click"). ui-behavior G1 pins both fill orders.
   function chooseStage(index, opt) {
     if (answered || finished || current.pending) return;
     stagePicks = stagePicks.map((pick, at) => (at === index ? opt.id : pick));
-    if (stagePicks.some(pick => pick == null)) return;   // pair incomplete: record only
+    if (stagePicks.some(pick => pick == null)) return;   // tuple incomplete: record only
     commit(current.accepted.has(pairKey(stagePicks)));
   }
 

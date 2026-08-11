@@ -75,9 +75,13 @@
   // and gain none here. `repeatToken` cancels a pending replay-then-clear the
   // way advanceToken does in SelectActivity: Restart, a route change or an
   // unmount must not have the slate cleared out from under it a clip later.
+  // `destroyed` says the same thing for the unmount case in its own right,
+  // because clearing state on a dead component is worth refusing explicitly
+  // rather than by side effect (5G-XPATCH1 §1).
   $: repeatCheckbox = activity.repeatCheckbox === true;
   let repeatExercise = false;
   let repeatToken = 0;
+  let destroyed = false;
 
   $: audioTiming = activity.audioTiming || 'afterGuess';
 
@@ -119,8 +123,19 @@
           // The verse is spoken in FULL before the slate clears — clearing it
           // under the clip would leave the learner listening to a verse that
           // is no longer on screen.
+          //
+          // AND ONLY IF IT ACTUALLY FINISHED (5G-XPATCH1 §1). playThrough
+          // resolves false for a clip cut off by a route exit, a screen lock
+          // or a superseding tap, and none of those is the learner hearing
+          // their verse — wiping what they typed on the strength of a clip
+          // that never played would be the worst possible reading of a
+          // checkbox they ticked. The token and `destroyed` cover the other
+          // half: a Restart or an unmount BETWEEN the success and the clip's
+          // end, and the checkbox being unticked while it played.
           const token = ++repeatToken;
-          playThrough(activity.audio).then(() => { if (token === repeatToken) clearSlate(); });
+          playThrough(activity.audio).then(finished => {
+            if (finished && repeatExercise && !destroyed && token === repeatToken) clearSlate();
+          });
         } else {
           play(activity.audio);
         }
@@ -170,6 +185,7 @@
   onMount(() => window.addEventListener('keydown', onKey));
   onDestroy(() => {
     window.removeEventListener('keydown', onKey);
+    destroyed = true;
     repeatToken += 1;                              // no clear after unmount
     stopAudio();                                   // §3.1
   });
