@@ -1,0 +1,176 @@
+{
+ "_comment": "Chapter 10 lexicon, assembled from 10_FUTUR.TBK (cohort 5G). lexicalForm carries the flashcard's full lexical entry (the raw mo<<noj doubled-accent-code typo normalizes to monos). ntFreq from the Review Vocabulary Chart at 0xcaf76.",
+ "lemmas": {
+  "zoe": {
+   "greek": "ζωή",
+   "translit": "zoe",
+   "lexicalForm": "ζωή, -ῆς, ἡ",
+   "gloss": "life",
+   "glossShort": "life",
+   "audio": "chapt_10_j_voc1",
+   "ntFreq": 135,
+   "senses": [
+    {
+     "greek": "ζωή",
+     "caseTag": null,
+     "glossShort": "life",
+     "audio": "chapt_10_j_voc1"
+    }
+   ]
+  },
+  "thanatos": {
+   "greek": "θάνατος",
+   "translit": "thanatos",
+   "lexicalForm": "θάνατος, -ου, ὁ",
+   "gloss": "death",
+   "glossShort": "death",
+   "audio": "chapt_10_j_voc2",
+   "ntFreq": 120,
+   "senses": [
+    {
+     "greek": "θάνατος",
+     "caseTag": null,
+     "glossShort": "death",
+     "audio": "chapt_10_j_voc2"
+    }
+   ]
+  },
+  "krino": {
+   "greek": "κρίνω",
+   "translit": "krino",
+   "lexicalForm": "κρίνω",
+   "gloss": "I judge",
+   "glossShort": "I judge",
+   "audio": "chapt_10_j_voc3",
+   "ntFreq": 114,
+   "senses": [
+    {
+     "greek": "κρίνω",
+     "caseTag": null,
+     "glossShort": "I judge",
+     "audio": "chapt_10_j_voc3"
+    }
+   ]
+  },
+  "meno": {
+   "greek": "μένω",
+   "translit": "meno",
+   "lexicalForm": "μένω",
+   "gloss": "I remain, stay, live",
+   "glossShort": "I remain",
+   "audio": "chapt_10_j_voc4",
+   "ntFreq": 118,
+   "senses": [
+    {
+     "greek": "μένω",
+     "caseTag": null,
+     "glossShort": "I remain",
+     "audio": "chapt_10_j_voc4"
+    }
+   ]
+  },
+  "monos": {
+   "greek": "μόνος",
+   "translit": "monos",
+   "lexicalForm": "μόνος, -η, -ον",
+   "gloss": "only, alone",
+   "glossShort": "only, alone",
+   "audio": "chapt_10_j_voc5",
+   "ntFreq": 114,
+   "senses": [
+    {
+     "greek": "μόνος",
+     "caseTag": null,
+     "glossShort": "only, alone",
+     "audio": "chapt_10_j_voc5"
+    }
+   ]
+  },
+  "nyn": {
+   "greek": "νῦν",
+   "translit": "nyn",
+   "lexicalForm": "νῦν",
+   "gloss": "now",
+   "glossShort": "now",
+   "audio": "chapt_10_j_voc6",
+   "ntFreq": 147,
+   "senses": [
+    {
+     "greek": "νῦν",
+     "caseTag": null,
+     "glossShort": "now",
+     "audio": "chapt_10_j_voc6"
+    }
+   ]
+  },
+  "oude": {
+   "greek": "οὐδέ",
+   "translit": "oude",
+   "lexicalForm": "οὐδέ",
+   "gloss": "and not, nor",
+   "glossShort": "and not, nor",
+   "audio": "chapt_10_j_voc7",
+   "ntFreq": 143,
+   "senses": [
+    {
+     "greek": "οὐδέ",
+     "caseTag": null,
+     "glossShort": "and not, nor",
+     "audio": "chapt_10_j_voc7"
+    }
+   ]
+  },
+  "paulos": {
+   "greek": "Παῦλος",
+   "translit": "paulos",
+   "lexicalForm": "Παῦλος, -ου, ὁ",
+   "gloss": "Paul",
+   "glossShort": "Paul",
+   "audio": "chapt_10_j_voc8",
+   "ntFreq": 158,
+   "senses": [
+    {
+     "greek": "Παῦλος",
+     "caseTag": null,
+     "glossShort": "Paul",
+     "audio": "chapt_10_j_voc8"
+    }
+   ]
+  },
+  "sozo": {
+   "greek": "σῴζω",
+   "translit": "sozo",
+   "lexicalForm": "σῴζω",
+   "gloss": "I save",
+   "glossShort": "I save",
+   "audio": "chapt_10_j_voc9",
+   "ntFreq": 106,
+   "senses": [
+    {
+     "greek": "σῴζω",
+     "caseTag": null,
+     "glossShort": "I save",
+     "audio": "chapt_10_j_voc9"
+    }
+   ]
+  },
+  "tote": {
+   "greek": "τότε",
+   "translit": "tote",
+   "lexicalForm": "τότε",
+   "gloss": "then",
+   "glossShort": "then",
+   "audio": "chapt_10_j_voc10",
+   "ntFreq": 160,
+   "senses": [
+    {
+     "greek": "τότε",
+     "caseTag": null,
+     "glossShort": "then",
+     "audio": "chapt_10_j_voc10"
+    }
+   ]
+  }
+ },
+ "exampleWords": {}
+}

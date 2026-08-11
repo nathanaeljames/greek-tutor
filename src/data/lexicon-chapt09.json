@@ -1,0 +1,176 @@
+{
+ "_comment": "Chapter 9 lexicon, assembled from 9_MIDDLE.TBK (cohort 5G). TEN lemmas, no case splits (all verbs plus one adverb). ntFreq from the Review Vocabulary Chart at 0xb3498; note the chart prints poreuomai at 153 while the Frequently Used Deponent Verbs popup prints 132 -- each surface keeps its own printed number.",
+ "lemmas": {
+  "apokrinomai": {
+   "greek": "ἀποκρίνομαι",
+   "translit": "apokrinomai",
+   "lexicalForm": "ἀποκρίνομαι",
+   "gloss": "I answer",
+   "glossShort": "I answer",
+   "audio": "chapt_9_i_voc1",
+   "ntFreq": 231,
+   "senses": [
+    {
+     "greek": "ἀποκρίνομαι",
+     "caseTag": null,
+     "glossShort": "I answer",
+     "audio": "chapt_9_i_voc1"
+    }
+   ]
+  },
+  "apostello": {
+   "greek": "ἀποστέλλω",
+   "translit": "apostello",
+   "lexicalForm": "ἀποστέλλω",
+   "gloss": "I send",
+   "glossShort": "I send",
+   "audio": "chapt_9_i_voc2",
+   "ntFreq": 132,
+   "senses": [
+    {
+     "greek": "ἀποστέλλω",
+     "caseTag": null,
+     "glossShort": "I send",
+     "audio": "chapt_9_i_voc2"
+    }
+   ]
+  },
+  "ballo": {
+   "greek": "βάλλω",
+   "translit": "ballo",
+   "lexicalForm": "βάλλω",
+   "gloss": "I throw, put",
+   "glossShort": "I throw",
+   "audio": "chapt_9_i_voc3",
+   "ntFreq": 122,
+   "senses": [
+    {
+     "greek": "βάλλω",
+     "caseTag": null,
+     "glossShort": "I throw",
+     "audio": "chapt_9_i_voc3"
+    }
+   ]
+  },
+  "ginomai": {
+   "greek": "γίνομαι",
+   "translit": "ginomai",
+   "lexicalForm": "γίνομαι",
+   "gloss": "I become, happen",
+   "glossShort": "I become",
+   "audio": "chapt_9_i_voc4",
+   "ntFreq": 669,
+   "senses": [
+    {
+     "greek": "γίνομαι",
+     "caseTag": null,
+     "glossShort": "I become",
+     "audio": "chapt_9_i_voc4"
+    }
+   ]
+  },
+  "eiserchomai": {
+   "greek": "εἰσέρχομαι",
+   "translit": "eiserchomai",
+   "lexicalForm": "εἰσέρχομαι",
+   "gloss": "I come in, enter",
+   "glossShort": "I come in",
+   "audio": "chapt_9_i_voc5",
+   "ntFreq": 194,
+   "senses": [
+    {
+     "greek": "εἰσέρχομαι",
+     "caseTag": null,
+     "glossShort": "I come in",
+     "audio": "chapt_9_i_voc5"
+    }
+   ]
+  },
+  "exerchomai": {
+   "greek": "ἐξέρχομαι",
+   "translit": "exerchomai",
+   "lexicalForm": "ἐξέρχομαι",
+   "gloss": "I go out, leave",
+   "glossShort": "I go out",
+   "audio": "chapt_9_i_voc6",
+   "ntFreq": 218,
+   "senses": [
+    {
+     "greek": "ἐξέρχομαι",
+     "caseTag": null,
+     "glossShort": "I go out",
+     "audio": "chapt_9_i_voc6"
+    }
+   ]
+  },
+  "erchomai": {
+   "greek": "ἔρχομαι",
+   "translit": "erchomai",
+   "lexicalForm": "ἔρχομαι",
+   "gloss": "I come, go",
+   "glossShort": "I come, go",
+   "audio": "chapt_9_i_voc7",
+   "ntFreq": 634,
+   "senses": [
+    {
+     "greek": "ἔρχομαι",
+     "caseTag": null,
+     "glossShort": "I come, go",
+     "audio": "chapt_9_i_voc7"
+    }
+   ]
+  },
+  "thelo": {
+   "greek": "θέλω",
+   "translit": "thelo",
+   "lexicalForm": "θέλω",
+   "gloss": "I wish",
+   "glossShort": "I wish",
+   "audio": "chapt_9_i_voc8",
+   "ntFreq": 208,
+   "senses": [
+    {
+     "greek": "θέλω",
+     "caseTag": null,
+     "glossShort": "I wish",
+     "audio": "chapt_9_i_voc8"
+    }
+   ]
+  },
+  "houtos": {
+   "greek": "οὕτως",
+   "translit": "houtos",
+   "lexicalForm": "οὕτως",
+   "gloss": "thus, so",
+   "glossShort": "thus, so",
+   "audio": "chapt_9_i_voc9",
+   "ntFreq": 208,
+   "senses": [
+    {
+     "greek": "οὕτως",
+     "caseTag": null,
+     "glossShort": "thus, so",
+     "audio": "chapt_9_i_voc9"
+    }
+   ]
+  },
+  "poreuomai": {
+   "greek": "πορεύομαι",
+   "translit": "poreuomai",
+   "lexicalForm": "πορεύομαι",
+   "gloss": "I go",
+   "glossShort": "I go",
+   "audio": "chapt_9_i_voc10",
+   "ntFreq": 153,
+   "senses": [
+    {
+     "greek": "πορεύομαι",
+     "caseTag": null,
+     "glossShort": "I go",
+     "audio": "chapt_9_i_voc10"
+    }
+   ]
+  }
+ },
+ "exampleWords": {}
+}

@@ -1,0 +1,2063 @@
+{
+ "_comment": "Chapter 9 (Present Middle/Passive Verbs), assembled from 9_MIDDLE.TBK + CHAPT_9 audio + ch9railwalk.pdf under PIPELINE-INSIGHTS-v3 Stage 8. Every drill/exercise answer is derived from the chapter's own charts and pools and asserted before use. Behavior fields are stamped by apply-behavior-matrix.py from ledger rows 79-86.",
+ "id": "chapt_9",
+ "number": 9,
+ "title": "Present Middle/Passive Verbs",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "write the present passive and middle verb forms,",
+  "parse and translate passive and middle verbs,",
+  "recognize and translate deponent verbs,",
+  "recognize when the passive or middle verb is followed by a preposition or case which helps complete the verb's meaning,",
+  "master 10 more high frequency vocabulary words,",
+  "memorize Jn 6:23b in Greek."
+ ],
+ "_objectives_note": "Objective 6 prints \"memorize Jn 6:23b in Greek.\" in the ORIGINAL; the verse is Rom 6:23b. Kept verbatim pending VERIFY-5G decision.",
+ "vocab": [
+  "apokrinomai",
+  "apostello",
+  "ballo",
+  "ginomai",
+  "eiserchomai",
+  "exerchomai",
+  "erchomai",
+  "thelo",
+  "houtos",
+  "poreuomai"
+ ],
+ "learn": [
+  {
+   "id": "c9_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives",
+   "instructions": ""
+  },
+  {
+   "id": "c9_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "topics": [
+    {
+     "id": "definitions",
+     "title": "Definitions",
+     "content": [
+      {
+       "type": "para",
+       "text": "There are two voices in English. The [[u]]active voice[[/u]] is where the subject of the sentence does the action. \"Zach hits the ball.\""
+      },
+      {
+       "type": "para",
+       "text": "The [[u]]passive voice[[/u]] is where the subject is acted on by the verb. \"Zach was hit by the ball.\"",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "Greek adds a third voice, the [[u]]middle voice[[/u]], which we will look at shortly.",
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "identifyingTraits",
+     "title": "Identifying Traits",
+     "content": [
+      {
+       "type": "para",
+       "text": "A passive verb often can be identified by placing a \"by what\" after the verb."
+      },
+      {
+       "type": "para",
+       "text": "\"Zach is hit by the ball.\"",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "\"Zach is hit by ωηατ͂̔ — the ball.",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "Zach is the subject being acted on. The ball is the agent doing the action.",
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "translation",
+     "title": "Translation",
+     "content": [
+      {
+       "type": "para",
+       "text": "The present tense may describe punctiliar action (single point in time: He hit the ball) or continuous action (He is hitting the ball). When the passive is used a helping verb carries the tense of the verb."
+      },
+      {
+       "type": "para",
+       "text": "He [[u]]is[[/u]] hit by the ball. — present punctiliar\nHe [[u]]is being[[/u]] hit by the ball — present cont.\nHe [[u]]was[[/u]] hit by the ball. — past\nHe [[u]]will be[[/u]] hit by the ball. — future",
+       "gapBefore": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c9_learn_mp_verbs",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Present Middle/Passive Verbs",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "The present middle and passive have exactly the same form. The context must be examined to determine which is being used. There are approximately three times as many passive as middle verbs in the New Testament. A helping verb is used when translating passives. The helping verb indicates whether the verb is being taken in a [[link:punctiliar]]punctiliar[[/link]] or [[link:continuous]]continuous[[/link]] manner."
+      },
+      {
+       "type": "para",
+       "text": "The middle has several functions:",
+       "gapBefore": true
+      },
+      {
+       "type": "numbered",
+       "items": [
+        "[[u]]deponent:[[/u]] where the middle is translated as active. Most middles (75%) are deponent and should be translated as an active. \"Tanya splashed Rebekah.\"",
+        "the subject does an action on the object but it in turn impacts the subject. (Mounce, pp. 149, 224)",
+        "self-interest \"Tanya splashed herself.\""
+       ],
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "presentMiddleParadigm",
+     "title": "Present Middle Paradigm",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "presentMiddleParadigm",
+       "title": "Present Middle Indicative Paradigm",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1.",
+         "cells": [
+          {
+           "greek": "λύομαι",
+           "gloss": "I am loosing (for myself)",
+           "audio": "chapt_9_i_m1s"
+          },
+          {
+           "greek": "λυόμεθα",
+           "gloss": "We are loosing (for ourselves)",
+           "audio": "chapt_9_i_m1p"
+          }
+         ]
+        },
+        {
+         "label": "2.",
+         "cells": [
+          {
+           "greek": "λύῃ",
+           "gloss": "You are loosing (for yourself)",
+           "audio": "chapt_9_i_m2s"
+          },
+          {
+           "greek": "λύεσθε",
+           "gloss": "You are loosing (for yourselves)",
+           "audio": "chapt_9_i_m2p"
+          }
+         ]
+        },
+        {
+         "label": "3.",
+         "cells": [
+          {
+           "greek": "λύεται",
+           "gloss": "He/she/it is loosing (for himself/herself/itself)",
+           "audio": "chapt_9_i_m3s"
+          },
+          {
+           "greek": "λύονται",
+           "gloss": "They are loosing (for themselves)",
+           "audio": "chapt_9_i_m3p"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_9_i_midpar"
+       }
+      }
+     ]
+    },
+    {
+     "id": "presentPassiveParadigm",
+     "title": "Present Passive Paradigm",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "presentPassiveParadigm",
+       "title": "Present Passive Indicative Paradigm",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1.",
+         "cells": [
+          {
+           "greek": "λύομαι",
+           "gloss": "I am being loosed",
+           "audio": "chapt_9_i_m1s"
+          },
+          {
+           "greek": "λυόμεθα",
+           "gloss": "we are being loosed",
+           "audio": "chapt_9_i_m1p"
+          }
+         ]
+        },
+        {
+         "label": "2.",
+         "cells": [
+          {
+           "greek": "λύῃ",
+           "gloss": "you are being loosed",
+           "audio": "chapt_9_i_m2s"
+          },
+          {
+           "greek": "λύεσθε",
+           "gloss": "you are being loosed",
+           "audio": "chapt_9_i_m2p"
+          }
+         ]
+        },
+        {
+         "label": "3.",
+         "cells": [
+          {
+           "greek": "λύεται",
+           "gloss": "he/she/it is being loosed",
+           "audio": "chapt_9_i_m3s"
+          },
+          {
+           "greek": "λύονται",
+           "gloss": "they are being loosed",
+           "audio": "chapt_9_i_m3p"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_9_i_mpar",
+        "_verify": "i_mpar is UNREFERENCED in the TBK; listen before trusting."
+       }
+      }
+     ]
+    },
+    {
+     "id": "deponentVerbs",
+     "title": "Deponent Verbs",
+     "titleLink": "deponent",
+     "content": [
+      {
+       "type": "para",
+       "text": "Deponent verbs are verbs that are middle in form but translated as actives. They have no active form and are easy to tell in vocabulary lists because they have the middle ending -ομαι."
+      },
+      {
+       "type": "para",
+       "text": "Mounce notes that in the New Testament about 75% of the middle forms are deponent (p. 149).",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "Because of the deponent phenomena, middle forms may frequently be translated as actives (3 to 1). Many [[link:frequentVerbs]]frequent verbs[[/link]] are deponent.",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "When parsing a deponent verb, rather than listing the voice as active/middle/ passive, the verb is said to be deponent (e.g. present deponent indicative 1 sg).",
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "accompanyingCases",
+     "title": "Accompanying Cases",
+     "content": [
+      {
+       "type": "para",
+       "text": "Often with passives there is a need to express the agent, instrument, or means by which the subject is acted on."
+      },
+      {
+       "type": "para",
+       "text": "This is accomplished by:",
+       "gapBefore": true
+      },
+      {
+       "type": "numbered",
+       "items": [
+        "using ὑπό or διά with the genitive to expresses agency (e.g. Elliott was hit [[u]]by Zach.[[/u]]) or",
+        "using the dative case to indicate means or instrument. The translation will use \"with\" or \"by\" (e.g. Elliott was hit [[u]]by the ball[[/u]].)."
+       ],
+       "gapBefore": true
+      }
+     ],
+     "greekTaps": true
+    },
+    {
+     "id": "compoundVerbs",
+     "title": "Compound Verbs",
+     "content": [
+      {
+       "type": "para",
+       "text": "As with other verbs, prepositions are often prefixed to deponent verbs to form a compound."
+      },
+      {
+       "type": "greekRows",
+       "layout": "compoundVerbs",
+       "rows": [
+        {
+         "greek": "ἔρχομαι",
+         "gloss": "I go in, enter",
+         "audio": "chapt_9_i_voc7"
+        },
+        {
+         "greek": "εἰσέρχομαι",
+         "gloss": "I go in, enter",
+         "audio": "chapt_9_i_voc5",
+         "suffix": {
+          "greek": "(εἰς)",
+          "audio": "chapt_9_i_eis"
+         }
+        },
+        {
+         "greek": "ἐξέρχομαι",
+         "gloss": "I go out, leave",
+         "audio": "chapt_9_i_voc6",
+         "suffix": {
+          "greek": "(ἐκ)",
+          "audio": "chapt_9_i_ek"
+         }
+        },
+        {
+         "greek": "διέρχομαι",
+         "gloss": "I go through",
+         "audio": "chapt_9_i_voc11",
+         "suffix": {
+          "greek": "(διά)",
+          "audio": "chapt_9_i_dia"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "id": "punctiliar",
+     "title": "Punctiliar (single point in time)",
+     "content": [
+      {
+       "type": "para",
+       "text": "Zach is hit by the ball.",
+       "align": "center"
+      }
+     ]
+    },
+    {
+     "id": "continuous",
+     "title": "Continuous",
+     "content": [
+      {
+       "type": "para",
+       "text": "Zach is being hit by the ball.",
+       "align": "center"
+      }
+     ]
+    },
+    {
+     "id": "deponent",
+     "title": "Deponent",
+     "content": [
+      {
+       "type": "para",
+       "text": "Summers notes that the word \"deponent\" comes from the Latin root \"deponere\" meaning to \"lay aside.\"  It is used for these verbs because they have \"laid aside\" (dropped) their active verb forms (p. 51)."
+      }
+     ]
+    },
+    {
+     "id": "frequentVerbs",
+     "title": "Frequently Used Deponent Verbs",
+     "content": [
+      {
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "greek": "ἀποκρίνομαι",
+         "gloss": "I answer (231)",
+         "audio": "chapt_9_i_voc1"
+        },
+        {
+         "greek": "εἰσέρχομαι",
+         "gloss": "I come in (194)",
+         "audio": "chapt_9_i_voc5"
+        },
+        {
+         "greek": "ἔρχομαι",
+         "gloss": "I come, go (634)",
+         "audio": "chapt_9_i_voc7"
+        },
+        {
+         "greek": "ἐξέρχομαι",
+         "gloss": "I go out (218)",
+         "audio": "chapt_9_i_voc6"
+        },
+        {
+         "greek": "γίνομαι",
+         "gloss": "I become (669)",
+         "audio": "chapt_9_i_voc4"
+        },
+        {
+         "greek": "πορεύομαι",
+         "gloss": "I go (132)",
+         "audio": "chapt_9_i_voc10"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "greekTaps": true,
+   "audioMap": {
+    "ὑπό": "chapt_9_i_upo",
+    "διά": "chapt_9_i_dia",
+    "λύομαι": "chapt_9_i_m1s",
+    "λύῃ": "chapt_9_i_m2s",
+    "λύεται": "chapt_9_i_m3s",
+    "λυόμεθα": "chapt_9_i_m1p",
+    "λύεσθε": "chapt_9_i_m2p",
+    "λύονται": "chapt_9_i_m3p"
+   }
+  },
+  {
+   "id": "c9_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "senses"
+  },
+  {
+   "id": "c9_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory",
+   "reference": "Rom 6:23b",
+   "words": [
+    {
+     "greek": "τὸ",
+     "gloss": "the",
+     "audio": "chapt_9_i_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "gloss": "but",
+     "audio": "chapt_9_i_sm2"
+    },
+    {
+     "greek": "χάρισμα",
+     "gloss": "gift",
+     "audio": "chapt_9_i_sm3"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "the",
+     "audio": "chapt_9_i_sm4"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "of God",
+     "audio": "chapt_9_i_sm5"
+    },
+    {
+     "greek": "ζωὴ",
+     "gloss": "[is] life",
+     "audio": "chapt_9_i_sm6"
+    },
+    {
+     "greek": "αἰώνιος",
+     "gloss": "eternal",
+     "audio": "chapt_9_i_sm7"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_9_i_sm8"
+    },
+    {
+     "greek": "Χριστῷ",
+     "gloss": "Christ",
+     "audio": "chapt_9_i_sm9"
+    },
+    {
+     "greek": "Ἰησοῦ",
+     "gloss": "Jesus",
+     "audio": "chapt_9_i_sm10"
+    },
+    {
+     "greek": "τῷ",
+     "gloss": "the",
+     "audio": "chapt_9_i_sm11"
+    },
+    {
+     "greek": "κυρίῳ",
+     "gloss": "Lord",
+     "audio": "chapt_9_i_sm12"
+    },
+    {
+     "greek": "ἡμῶν.",
+     "gloss": "our",
+     "audio": "chapt_9_i_sm13"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_9_i_rm623b"
+   }
+  },
+  {
+   "id": "c9_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham. New Testament Greek for Beginners (Toronto: The Macmillan Company, 1923), pp. 57-63.",
+      "Mounce, William D. Basics of Biblical Greek: Grammar (Grand Rapids: Zondervan, 1993), pp. 144-151.",
+      "Summers, Ray and Thomas Sawyer. Essentials of New Testament Greek (Nashville: Broadman & Holman, 1995), pp. 49-53.",
+      "Wenham, J. W. The Elements of New Testament Greek (Cambridge: Cambridge University Press, 1965), pp. 68-71; 92-95."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c9_drill_parsing",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Parsing Present Middle/Passive Drill",
+   "instructions": "Click on the matching person and number",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "First Singular",
+    "First Plural",
+    "Second Singular",
+    "Second Plural",
+    "Third Singular",
+    "Third Plural"
+   ],
+   "optionGroups": [
+    2,
+    2,
+    2
+   ],
+   "items": [
+    {
+     "greek": "Ἐρχόμεθα",
+     "ref": "Jn 21:3",
+     "translate": "we are going",
+     "answer": "First Plural",
+     "audio": "chapt_9_i_pd1"
+    },
+    {
+     "greek": "ἔρχεται",
+     "ref": "Jn 1:30",
+     "translate": "he comes",
+     "answer": "Third Singular",
+     "audio": "chapt_9_i_pd2"
+    },
+    {
+     "greek": "ἔρχομαι",
+     "ref": "Jn 5:7",
+     "translate": "I am coming",
+     "answer": "First Singular",
+     "audio": "chapt_9_i_pd3"
+    },
+    {
+     "greek": "ἔρχῃ",
+     "ref": "Mat 3:14",
+     "translate": "you are coming",
+     "answer": "Second Singular",
+     "audio": "chapt_9_i_pd4"
+    },
+    {
+     "greek": "βάλλεται",
+     "ref": "Mat 3:10",
+     "translate": "it is thrown",
+     "answer": "Third Singular",
+     "audio": "chapt_9_i_pd5"
+    },
+    {
+     "greek": "ἔρχονται",
+     "ref": "Jn 3:26",
+     "translate": "they are going",
+     "answer": "Third Plural",
+     "audio": "chapt_9_i_pd6"
+    },
+    {
+     "greek": "πορεύομαι",
+     "ref": "Jn 14:2",
+     "translate": "I am going",
+     "answer": "First Singular",
+     "audio": "chapt_9_i_pd7"
+    },
+    {
+     "greek": "πορεύεται",
+     "ref": "Jn 10:4",
+     "translate": "he is going",
+     "answer": "Third Singular",
+     "audio": "chapt_9_i_pd8"
+    },
+    {
+     "greek": "ἀγαπῶμαι",
+     "ref": "2 Cor 12:15",
+     "translate": "I am being loved",
+     "answer": "First Singular",
+     "audio": "chapt_9_i_pd9"
+    },
+    {
+     "greek": "γίνεται",
+     "ref": "Mat 9:16",
+     "translate": "it is made",
+     "answer": "Third Singular",
+     "audio": "chapt_9_i_pd10"
+    },
+    {
+     "greek": "λέγεται",
+     "ref": "Mat 13:55",
+     "translate": "she is called",
+     "answer": "Third Singular",
+     "audio": "chapt_9_i_pd11"
+    },
+    {
+     "greek": "ἀποκρίνεται",
+     "ref": "Jn 12:23",
+     "translate": "he answers",
+     "answer": "Third Singular",
+     "audio": "chapt_9_i_pd12"
+    },
+    {
+     "greek": "ἀποκρίνῃ",
+     "ref": "Jn 18:22",
+     "translate": "you are answering",
+     "answer": "Second Singular",
+     "audio": "chapt_9_i_pd13"
+    },
+    {
+     "greek": "ἀκούεται",
+     "ref": "1 Cor 5:1",
+     "translate": "it is heard",
+     "answer": "Third Singular",
+     "audio": "chapt_9_i_pd14"
+    },
+    {
+     "greek": "εὑρισκόμεθα",
+     "ref": "1 Cor 15:15",
+     "translate": "we are found",
+     "answer": "First Plural",
+     "audio": "chapt_9_i_pd15"
+    },
+    {
+     "greek": "γινώσκεται",
+     "ref": "Mat 12:33",
+     "translate": "it is known",
+     "answer": "Third Singular",
+     "audio": "chapt_9_i_pd16"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Translate",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "middlePassiveParadigms"
+   },
+   "_answer_note": "Each answer is derived from the middle/passive personal ending AND independently re-derived from the subject of the Translate column; assembly stops on any disagreement. The dispatch table at 0xc662a maps items 1-16 to i_pd1-16 and the hint chart cells to i_m1s-i_m3p.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c9_drill_translation",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Present Middle/Passive Translation Drill",
+   "instructions": "Click on the correct English translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "καὶ ἔρχονται εἰς",
+     "greek2": "τὸν οἶκον",
+     "ref": "Mk 5:38",
+     "options": [
+      "and they came to the house",
+      "and he came to the house",
+      "and I came to the house"
+     ],
+     "answer": "and they came to the house",
+     "audio": "chapt_9_i_td1"
+    },
+    {
+     "greek": "ὅτι ἐγὼ πρὸς τὸν",
+     "greek2": "πατέρα πορεύομαι",
+     "ref": "Jn 14:12",
+     "options": [
+      "because we are going to the father",
+      "because they are going to the father",
+      "because I am going to the father"
+     ],
+     "answer": "because I am going to the father",
+     "audio": "chapt_9_i_td2"
+    },
+    {
+     "greek": "καὶ γίνεται τὰ ἔσχατα",
+     "greek2": "τοῦ ἀνθρώπου",
+     "ref": "Mat 12:45",
+     "options": [
+      "and the last state of the men is",
+      "and the last state of the man is",
+      "and the last state of the brother is"
+     ],
+     "answer": "and the last state of the man is",
+     "audio": "chapt_9_i_td3"
+    },
+    {
+     "greek": "ὁ υἱὸς τοῦ ἀνθρώπου",
+     "greek2": "ἔρχεται",
+     "ref": "Mat 24:44",
+     "options": [
+      "they come to the son of man",
+      "the son of man comes",
+      "the man comes to his son"
+     ],
+     "answer": "the son of man comes",
+     "audio": "chapt_9_i_td4"
+    },
+    {
+     "greek": "καὶ ἔρχομαι πρὸς ὑμᾶς",
+     "greek2": null,
+     "ref": "Jn 14:28",
+     "options": [
+      "and I am coming to you",
+      "and we are coming to you",
+      "and they are coming to you"
+     ],
+     "answer": "and I am coming to you",
+     "audio": "chapt_9_i_td5"
+    },
+    {
+     "greek": "Καὶ ἔρχονται",
+     "greek2": "Σαδδουκαῖοι πρὸς αὐτόν",
+     "ref": "Mk 12:18",
+     "options": [
+      "and he came to the Sadducees",
+      "and the Sadducees came to him",
+      "and they came to the Sadducees"
+     ],
+     "answer": "and the Sadducees came to him",
+     "audio": "chapt_9_i_td6"
+    },
+    {
+     "greek": "Ἠλίας μὲν ἔρχεται",
+     "greek2": null,
+     "ref": "Mat 17:11",
+     "options": [
+      "Elijah is indeed coming",
+      "indeed he is coming to Elijah",
+      "indeed they are coming to Elijah"
+     ],
+     "answer": "Elijah is indeed coming",
+     "audio": "chapt_9_i_td7"
+    },
+    {
+     "greek": "νυνὶ δὲ πορεύομαι εἰς",
+     "greek2": "Ἰερουσαλὴμ",
+     "ref": "Rom 15:25",
+     "options": [
+      "but now I am going to Jerusalem",
+      "but now we are going to Jerusalem",
+      "but now they are going to Jerusalem"
+     ],
+     "answer": "but now I am going to Jerusalem",
+     "audio": "chapt_9_i_td8"
+    },
+    {
+     "greek": "Ἐρχόμεθα καὶ ἡμεῖς",
+     "greek2": "σὺν σοί",
+     "ref": "Jn 21:3",
+     "options": [
+      "they are going with you also",
+      "he and I are going with you",
+      "we are going with you too"
+     ],
+     "answer": "we are going with you too",
+     "audio": "chapt_9_i_td9"
+    },
+    {
+     "greek": "Ἰδοὺ ἡμέραι ἔρχονται",
+     "greek2": null,
+     "ref": "Heb 8:8",
+     "options": [
+      "behold the day is coming",
+      "behold the days are coming",
+      "behold he is coming in a day"
+     ],
+     "answer": "behold the days are coming",
+     "audio": "chapt_9_i_td10"
+    },
+    {
+     "greek": "κἀγὼ πρὸς σὲ ἔρχομαι",
+     "greek2": null,
+     "ref": "Jn 17:11",
+     "options": [
+      "and I am coming to you",
+      "and he is coming to you",
+      "and they are coming to you"
+     ],
+     "answer": "and I am coming to you",
+     "audio": "chapt_9_i_td11"
+    },
+    {
+     "greek": "Ἰδοὺ ὁ βασιλεύς σου",
+     "greek2": "ἔρχεταί σοι",
+     "ref": "Mat 21:5",
+     "options": [
+      "behold our king comes to us",
+      "behold your king comes to you",
+      "behold their king comes to them"
+     ],
+     "answer": "behold your king comes to you",
+     "audio": "chapt_9_i_td12"
+    },
+    {
+     "greek": "Τότε ἔρχεται μετ' αὐτῶν",
+     "greek2": "ὁ Ἰησοῦς",
+     "ref": "Mat 26:36",
+     "options": [
+      "then he came with Jesus",
+      "then Jesus came with them",
+      "then they came with Jesus"
+     ],
+     "answer": "then Jesus came with them",
+     "audio": "chapt_9_i_td13"
+    },
+    {
+     "greek": "λέγω ὑμῖν, γίνεται",
+     "greek2": "χαρὰ",
+     "ref": "Luk 15:10",
+     "options": [
+      "they tell you, There is joy",
+      "we tell you, There is joy",
+      "I tell you, There is joy"
+     ],
+     "answer": "I tell you, There is joy",
+     "audio": "chapt_9_i_td14"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "middlePassiveParadigms"
+   },
+   "_answer_note": "The correct option is NOT a fixed column. Each answer is the option whose English subject matches the person/number of the Greek verb (plus explicit subject nouns): 1:erchontai 3pl; 2:poreuomai 1sg; 3:ta eschata tou anthropou (sg); 4:ho huios ... erchetai 3sg; 5:erchomai 1sg + pros humas; 6:Saddoukaioi ... 3pl subject; 7:Elias ... erchetai 3sg subject; 8:poreuomai 1sg; 9:Erchometha ... 1pl + syn soi; 10:hemerai erchontai 3pl subject; 11:kago ... erchomai 1sg; 12:ho basileus sou ... erchetai soi 3sg + sou/soi; 13:erchetai ... ho Iesous 3sg subject; 14:lego 1sg. Rail walk confirms items 1 and 2. Dispatch at 0xc7d23 maps items 1-14 to i_TD1-14.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c9_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "I answer",
+    "I send",
+    "I throw",
+    "I become",
+    "I come in",
+    "I go out",
+    "I come, go",
+    "I wish",
+    "thus, so",
+    "I go"
+   ],
+   "items": [
+    {
+     "greek": "ἀποκρίνομαι",
+     "note": null,
+     "answer": "I answer",
+     "audio": "chapt_9_i_voc1"
+    },
+    {
+     "greek": "ἀποστέλλω",
+     "note": null,
+     "answer": "I send",
+     "audio": "chapt_9_i_voc2"
+    },
+    {
+     "greek": "βάλλω",
+     "note": null,
+     "answer": "I throw",
+     "audio": "chapt_9_i_voc3"
+    },
+    {
+     "greek": "γίνομαι",
+     "note": null,
+     "answer": "I become",
+     "audio": "chapt_9_i_voc4"
+    },
+    {
+     "greek": "εἰσέρχομαι",
+     "note": null,
+     "answer": "I come in",
+     "audio": "chapt_9_i_voc5"
+    },
+    {
+     "greek": "ἐξέρχομαι",
+     "note": null,
+     "answer": "I go out",
+     "audio": "chapt_9_i_voc6"
+    },
+    {
+     "greek": "ἔρχομαι",
+     "note": null,
+     "answer": "I come, go",
+     "audio": "chapt_9_i_voc7"
+    },
+    {
+     "greek": "θέλω",
+     "note": null,
+     "answer": "I wish",
+     "audio": "chapt_9_i_voc8"
+    },
+    {
+     "greek": "οὕτως",
+     "note": null,
+     "answer": "thus, so",
+     "audio": "chapt_9_i_voc9"
+    },
+    {
+     "greek": "πορεύομαι",
+     "note": null,
+     "answer": "I go",
+     "audio": "chapt_9_i_voc10"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c9_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary: English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "options": "static",
+   "optionsAreGreek": true,
+   "optionValues": [
+    "ἀποκρίνομαι",
+    "ἀποστέλλω",
+    "βάλλω",
+    "γίνομαι",
+    "εἰσέρχομαι",
+    "ἐξέρχομαι",
+    "ἔρχομαι",
+    "θέλω",
+    "οὕτως",
+    "πορεύομαι"
+   ],
+   "items": [
+    {
+     "prompt": "I answer",
+     "answer": "ἀποκρίνομαι",
+     "audio": "chapt_9_i_voc1"
+    },
+    {
+     "prompt": "I send",
+     "answer": "ἀποστέλλω",
+     "audio": "chapt_9_i_voc2"
+    },
+    {
+     "prompt": "I throw",
+     "answer": "βάλλω",
+     "audio": "chapt_9_i_voc3"
+    },
+    {
+     "prompt": "I become",
+     "answer": "γίνομαι",
+     "audio": "chapt_9_i_voc4"
+    },
+    {
+     "prompt": "I come in",
+     "answer": "εἰσέρχομαι",
+     "audio": "chapt_9_i_voc5"
+    },
+    {
+     "prompt": "I go out",
+     "answer": "ἐξέρχομαι",
+     "audio": "chapt_9_i_voc6"
+    },
+    {
+     "prompt": "I come, go",
+     "answer": "ἔρχομαι",
+     "audio": "chapt_9_i_voc7"
+    },
+    {
+     "prompt": "I wish",
+     "answer": "θέλω",
+     "audio": "chapt_9_i_voc8"
+    },
+    {
+     "prompt": "thus, so",
+     "answer": "οὕτως",
+     "audio": "chapt_9_i_voc9"
+    },
+    {
+     "prompt": "I go",
+     "answer": "πορεύομαι",
+     "audio": "chapt_9_i_voc10"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c9_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "but",
+    "Jesus",
+    "Christ",
+    "life",
+    "eternal",
+    "Lord",
+    "gift",
+    "our",
+    "in",
+    "the"
+   ],
+   "items": [
+    {
+     "greek": "τὸ",
+     "answer": "the",
+     "audio": "chapt_9_i_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "answer": "but",
+     "audio": "chapt_9_i_sm2"
+    },
+    {
+     "greek": "χάρισμα",
+     "answer": "gift",
+     "audio": "chapt_9_i_sm3"
+    },
+    {
+     "greek": "ζωὴ",
+     "answer": "life",
+     "audio": "chapt_9_i_sm6"
+    },
+    {
+     "greek": "αἰώνιος",
+     "answer": "eternal",
+     "audio": "chapt_9_i_sm7"
+    },
+    {
+     "greek": "Χριστῷ",
+     "answer": "Christ",
+     "audio": "chapt_9_i_sm9"
+    },
+    {
+     "greek": "Ἰησοῦ",
+     "answer": "Jesus",
+     "audio": "chapt_9_i_sm10"
+    },
+    {
+     "greek": "κυρίῳ",
+     "answer": "Lord",
+     "audio": "chapt_9_i_sm12"
+    },
+    {
+     "greek": "ἡμῶν",
+     "answer": "our",
+     "audio": "chapt_9_i_sm13"
+    },
+    {
+     "greek": "ἐν",
+     "answer": "in",
+     "audio": "chapt_9_i_sm8"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "_audio_note": "Stage 8.2: each prompt plays its own verse word's clip; positions 1,2,3,6,7,9,10,12,13,8 read from the SayWord table (the ch6 f_sm defect class).",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c9_ex_speller",
+   "type": "spell",
+   "title": "Present Middle/Passive Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "I am being loosed",
+     "answer": "λύομαι",
+     "audio": "chapt_9_i_m1s"
+    },
+    {
+     "prompt": "you (sg) are being loosed",
+     "answer": "λύῃ",
+     "audio": "chapt_9_i_m2s"
+    },
+    {
+     "prompt": "she is being loosed",
+     "answer": "λύεται",
+     "audio": "chapt_9_i_m3s"
+    },
+    {
+     "prompt": "we are being loosed",
+     "answer": "λυόμεθα",
+     "audio": "chapt_9_i_m1p"
+    },
+    {
+     "prompt": "you (pl) are being loosed",
+     "answer": "λύεσθε",
+     "audio": "chapt_9_i_m2p"
+    },
+    {
+     "prompt": "they are being loosed",
+     "answer": "λύονται",
+     "audio": "chapt_9_i_m3p"
+    },
+    {
+     "prompt": "we are going/coming",
+     "answer": "ἐρχόμεθα",
+     "audio": "chapt_9_i_pd1"
+    },
+    {
+     "prompt": "he is going/coming",
+     "answer": "ἔρχεται",
+     "audio": "chapt_9_i_pd2"
+    },
+    {
+     "prompt": "I am going/coming",
+     "answer": "ἔρχομαι",
+     "audio": "chapt_9_i_pd3"
+    },
+    {
+     "prompt": "you (sg) are going/coming",
+     "answer": "ἔρχῃ",
+     "audio": "chapt_9_i_pd4"
+    },
+    {
+     "prompt": "they are coming/going",
+     "answer": "ἔρχονται",
+     "audio": "chapt_9_i_pd6"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English",
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "Items 1-6 are the shared middle/passive paradigm forms; items 7-11 are erchomai forms taken from the parsing pool via the dispatch table (i_pd1,2,3,4,6 -- pd5/balletai is NOT in this exercise), lowercased. Stage 8.2.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c9_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Meaning",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "I answer",
+     "answer": "ἀποκρίνομαι",
+     "audio": "chapt_9_i_voc1"
+    },
+    {
+     "prompt": "I send",
+     "answer": "ἀποστέλλω",
+     "audio": "chapt_9_i_voc2"
+    },
+    {
+     "prompt": "I throw",
+     "answer": "βάλλω",
+     "audio": "chapt_9_i_voc3"
+    },
+    {
+     "prompt": "I become",
+     "answer": "γίνομαι",
+     "audio": "chapt_9_i_voc4"
+    },
+    {
+     "prompt": "I come in",
+     "answer": "εἰσέρχομαι",
+     "audio": "chapt_9_i_voc5"
+    },
+    {
+     "prompt": "I go out",
+     "answer": "ἐξέρχομαι",
+     "audio": "chapt_9_i_voc6"
+    },
+    {
+     "prompt": "I come, go",
+     "answer": "ἔρχομαι",
+     "audio": "chapt_9_i_voc7"
+    },
+    {
+     "prompt": "I wish",
+     "answer": "θέλω",
+     "audio": "chapt_9_i_voc8"
+    },
+    {
+     "prompt": "thus, so",
+     "answer": "οὕτως",
+     "audio": "chapt_9_i_voc9"
+    },
+    {
+     "prompt": "I go",
+     "answer": "πορεύομαι",
+     "audio": "chapt_9_i_voc10"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c9_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of Rom 6:23b then click \"Check Answer\"",
+   "reference": "Rom 6:23b",
+   "answerWords": [
+    "τὸ",
+    "δὲ",
+    "χάρισμα",
+    "τοῦ",
+    "θεοῦ",
+    "ζωὴ",
+    "αἰώνιος",
+    "ἐν",
+    "Χριστῷ",
+    "Ἰησοῦ",
+    "τῷ",
+    "κυρίῳ",
+    "ἡμῶν."
+   ],
+   "translation": "but the gift of God is eternal life through Jesus Christ our Lord.",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "audio": "chapt_9_i_rm623b",
+   "spellerTilesRef": "chapt_1",
+   "repeatCheckbox": true,
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Repeat This Exercise"
+    ],
+    "_reveal_note": "RULES C8 / D-30.",
+    "_repeat_note": "NEW ch9+: \"Repeat This Exercise\" checkbox, default OFF. Found once in the TBK, on this page (0x64d0c). When ON, a successful check plays the verse (C7), then clears the slate for another pass; completion state is unaffected. Semantics EXTRAPOLATED -- VERIFY-5G item."
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c9_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "senses",
+   "columns": 2,
+   "showNtFreq": true,
+   "footnote": "The number after the translation is the number of times the word occurs in the New Testament.",
+   "playAll": {
+    "label": "Say Whole List",
+    "audio": "chapt_9_i_vocl9"
+   }
+  },
+  {
+   "id": "c9_qr_paradigms",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Middle/Passive Paradigms",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "id": "qrMiddle",
+     "title": "Present Middle Indicative Paradigm",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "λύομαι",
+         "gloss": "I am loosing (for myself)",
+         "audio": "chapt_9_i_m1s"
+        },
+        {
+         "greek": "λυόμεθα",
+         "gloss": "We are loosing (for ourselves)",
+         "audio": "chapt_9_i_m1p"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "λύῃ",
+         "gloss": "You are loosing (for yourself)",
+         "audio": "chapt_9_i_m2s"
+        },
+        {
+         "greek": "λύεσθε",
+         "gloss": "You are loosing (for yourselves)",
+         "audio": "chapt_9_i_m2p"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "λύεται",
+         "gloss": "He/she/it is loosing (for himself/herself/itself)",
+         "audio": "chapt_9_i_m3s"
+        },
+        {
+         "greek": "λύονται",
+         "gloss": "They are loosing (for themselves)",
+         "audio": "chapt_9_i_m3p"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_9_i_midpar"
+     }
+    },
+    {
+     "type": "paradigm",
+     "id": "qrPassive",
+     "title": "Present Passive Indicative Paradigm",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "λύομαι",
+         "gloss": "I am being loosed",
+         "audio": "chapt_9_i_m1s"
+        },
+        {
+         "greek": "λυόμεθα",
+         "gloss": "we are being loosed",
+         "audio": "chapt_9_i_m1p"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "λύῃ",
+         "gloss": "you are being loosed",
+         "audio": "chapt_9_i_m2s"
+        },
+        {
+         "greek": "λύεσθε",
+         "gloss": "you are being loosed",
+         "audio": "chapt_9_i_m2p"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "λύεται",
+         "gloss": "he/she/it is being loosed",
+         "audio": "chapt_9_i_m3s"
+        },
+        {
+         "greek": "λύονται",
+         "gloss": "they are being loosed",
+         "audio": "chapt_9_i_m3p"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_9_i_mpar",
+      "_verify": "i_mpar unreferenced in TBK; listen."
+     }
+    }
+   ]
+  },
+  {
+   "id": "c9_qr_scripture_146a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6a",
+   "reference": "John 14:6a",
+   "words": [
+    {
+     "greek": "λέγει",
+     "gloss": "he said",
+     "audio": "chapt_9_c_sm1"
+    },
+    {
+     "greek": "αὐτῷ",
+     "gloss": "to him",
+     "audio": "chapt_9_c_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": null,
+     "audio": "chapt_9_c_sm3"
+    },
+    {
+     "greek": "Ἰησοῦς,",
+     "gloss": "Jesus",
+     "audio": "chapt_9_c_sm4"
+    },
+    {
+     "greek": "Ἐγώ",
+     "gloss": "I",
+     "audio": "chapt_9_c_sm5"
+    },
+    {
+     "greek": "εἰμι",
+     "gloss": "I am",
+     "audio": "chapt_9_c_sm6"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_9_c_sm7"
+    },
+    {
+     "greek": "ὁδὸς",
+     "gloss": "way",
+     "audio": "chapt_9_c_sm8"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_9_c_sm9"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_9_c_sm10"
+    },
+    {
+     "greek": "ἀλήθεια",
+     "gloss": "truth",
+     "audio": "chapt_9_c_sm11"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_9_c_sm12"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_9_c_sm13"
+    },
+    {
+     "greek": "ζωή:",
+     "gloss": "life:",
+     "audio": "chapt_9_c_sm14"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_9_c_sm14_6"
+   }
+  },
+  {
+   "id": "c9_qr_scripture_146b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 14:6b",
+   "reference": "John 14:6b",
+   "words": [
+    {
+     "greek": "οὐδεὶς",
+     "gloss": "no one",
+     "audio": "chapt_9_d_sm1"
+    },
+    {
+     "greek": "ἔρχεται",
+     "gloss": "comes",
+     "audio": "chapt_9_d_sm2"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "to",
+     "audio": "chapt_9_d_sm3"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_9_d_sm4"
+    },
+    {
+     "greek": "πατέρα",
+     "gloss": "father",
+     "audio": "chapt_9_d_sm5"
+    },
+    {
+     "greek": "εἰ",
+     "gloss": "except",
+     "audio": "chapt_9_d_sm6"
+    },
+    {
+     "greek": "μὴ",
+     "gloss": null,
+     "audio": "chapt_9_d_sm7"
+    },
+    {
+     "greek": "δἰ",
+     "gloss": "through",
+     "audio": "chapt_9_d_sm8"
+    },
+    {
+     "greek": "ἐμοῦ.",
+     "gloss": "me",
+     "audio": "chapt_9_d_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_9_d_jn146b"
+   }
+  },
+  {
+   "id": "c9_qr_scripture_rom323",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 3:23",
+   "reference": "Rom 3:23",
+   "words": [
+    {
+     "greek": "πάντες",
+     "gloss": "all",
+     "audio": "chapt_9_e_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_9_e_sm2"
+    },
+    {
+     "greek": "ἥμαρτον",
+     "gloss": "have sinned",
+     "audio": "chapt_9_e_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_9_e_sm4"
+    },
+    {
+     "greek": "ὑστεροῦνται",
+     "gloss": "fall short",
+     "audio": "chapt_9_e_sm5"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "of the",
+     "audio": "chapt_9_e_sm6"
+    },
+    {
+     "greek": "δόξης",
+     "gloss": "glory",
+     "audio": "chapt_9_e_sm7"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of [the]",
+     "audio": "chapt_9_e_sm8"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_9_e_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_9_e_rom323"
+   }
+  },
+  {
+   "id": "c9_qr_scripture_jn11",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 1:1",
+   "reference": "Jn 1:1",
+   "words": [
+    {
+     "greek": "Ἐν",
+     "gloss": "in",
+     "audio": "chapt_9_f_sm1"
+    },
+    {
+     "greek": "ἀρχῇ",
+     "gloss": "beginning",
+     "audio": "chapt_9_f_sm2"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_9_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_9_f_sm4"
+    },
+    {
+     "greek": "λόγος,",
+     "gloss": "word",
+     "audio": "chapt_9_f_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_9_f_sm6"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_9_f_sm7"
+    },
+    {
+     "greek": "λόγος",
+     "gloss": "word",
+     "audio": "chapt_9_f_sm8"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_9_f_sm9"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "with",
+     "audio": "chapt_9_f_sm10"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_9_f_sm11"
+    },
+    {
+     "greek": "θεόν,",
+     "gloss": "God",
+     "audio": "chapt_9_f_sm12"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_9_f_sm6"
+    },
+    {
+     "greek": "θεὸς",
+     "gloss": "God",
+     "audio": "chapt_9_f_sm13"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_9_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_9_f_sm4"
+    },
+    {
+     "greek": "λόγος.",
+     "gloss": "word.",
+     "audio": "chapt_9_f_sm5"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_9_f_jn1_1"
+   }
+  },
+  {
+   "id": "c9_qr_scripture_rom623a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 6:23a",
+   "reference": "Rom 6:23a",
+   "words": [
+    {
+     "greek": "τὰ",
+     "gloss": "the",
+     "audio": "chapt_9_h_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_9_h_sm2"
+    },
+    {
+     "greek": "ὀψώνια",
+     "gloss": "wages",
+     "audio": "chapt_9_h_sm3"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "the",
+     "audio": "chapt_9_h_sm4"
+    },
+    {
+     "greek": "ἁμαρτίας",
+     "gloss": "of  sin",
+     "audio": "chapt_9_h_sm5"
+    },
+    {
+     "greek": "θάνατος,",
+     "gloss": "[is]      death",
+     "audio": "chapt_9_h_sm6"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_9_h_rm623a"
+   }
+  },
+  {
+   "id": "c9_qr_scripture_rom623b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 6:23b",
+   "reference": "Rom 6:23b",
+   "words": [
+    {
+     "greek": "τὸ",
+     "gloss": "the",
+     "audio": "chapt_9_i_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "gloss": "but",
+     "audio": "chapt_9_i_sm2"
+    },
+    {
+     "greek": "χάρισμα",
+     "gloss": "gift",
+     "audio": "chapt_9_i_sm3"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "the",
+     "audio": "chapt_9_i_sm4"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "of God",
+     "audio": "chapt_9_i_sm5"
+    },
+    {
+     "greek": "ζωὴ",
+     "gloss": "[is] life",
+     "audio": "chapt_9_i_sm6"
+    },
+    {
+     "greek": "αἰώνιος",
+     "gloss": "eternal",
+     "audio": "chapt_9_i_sm7"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_9_i_sm8"
+    },
+    {
+     "greek": "Χριστῷ",
+     "gloss": "Christ",
+     "audio": "chapt_9_i_sm9"
+    },
+    {
+     "greek": "Ἰησοῦ",
+     "gloss": "Jesus",
+     "audio": "chapt_9_i_sm10"
+    },
+    {
+     "greek": "τῷ",
+     "gloss": "the",
+     "audio": "chapt_9_i_sm11"
+    },
+    {
+     "greek": "κυρίῳ",
+     "gloss": "Lord",
+     "audio": "chapt_9_i_sm12"
+    },
+    {
+     "greek": "ἡμῶν.",
+     "gloss": "our",
+     "audio": "chapt_9_i_sm13"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_9_i_rm623b"
+   }
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Great!",
+   "Congratulations",
+   "Perfect!",
+   "Right On!",
+   "Fantastic!",
+   "Yes"
+  ],
+  "incorrect": [
+   "Try again",
+   "Swing and a miss",
+   "Repetition will get it",
+   "Never give up",
+   "Keep trying"
+  ]
+ },
+ "sequence": [
+  "c9_learn_objectives",
+  "c9_learn_english_concepts",
+  "c9_learn_mp_verbs",
+  "c9_drill_parsing",
+  "c9_drill_translation",
+  "c9_ex_speller",
+  "c9_learn_vocab",
+  "c9_drill_vocab_gk_en",
+  "c9_drill_vocab_en_gk",
+  "c9_ex_vocab_speller",
+  "c9_learn_scripture",
+  "c9_drill_scripture_memory",
+  "c9_ex_scripture_speller",
+  "c9_qr_vocab",
+  "c9_qr_paradigms",
+  "c9_qr_scripture_146a",
+  "c9_qr_scripture_146b",
+  "c9_qr_scripture_rom323",
+  "c9_qr_scripture_jn11",
+  "c9_qr_scripture_rom623a",
+  "c9_qr_scripture_rom623b",
+  "c9_learn_bibliography"
+ ],
+ "_audioVerify": "CHAPT_9 ships 125 WAVs. Flags: (1) i_mpar.wav is referenced NOWHERE in the TBK -- provisionally wired as the passive paradigm Say Paradigm, listen before trusting; (2) i_voc11 is a live dispatch key wired here to dierchomai (Compound Verbs) by elimination -- listen; (3) parsing item audio i_pd1..16 and translation i_td1..14 are table-read; (4) the M/P Speller items 7-11 play i_pd1/2/3/4/6 per the dispatch table.",
+ "_sequence_note": "Rail order from ch9railwalk.pdf (Nathanael, 2026-08-09).",
+ "hintCharts": {
+  "middlePassiveParadigms": {
+   "paradigmRefs": [
+    "presentMiddleParadigm",
+    "presentPassiveParadigm"
+   ],
+   "_note": "Hint on both ch9 drills opens the Middle and Passive paradigm charts (rail walk shows the Middle chart popup; both fields sit in each drill's page record)."
+  }
+ }
+}

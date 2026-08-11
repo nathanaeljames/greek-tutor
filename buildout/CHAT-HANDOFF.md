@@ -15,9 +15,62 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
 internet. Full license from the author. Secondary goal: portfolio
 piece. Nathanael goes by "Fable" when addressing Claude (chat).
 
-## Live state (2026-08-10)
+## Live state (2026-08-10, evening — 5G data layer COMPLETE)
 
-**COHORT 5F IS CLOSED. COHORT 5G (chapters 9-10) IS OPENING.**
+**COHORT 5G (chapters 9-10): DATA LAYER DONE, SPEC ISSUED, AWAITING
+IMPLEMENTATION ROUNDS.** `chapt-09.json`, `chapt-10.json`,
+`lexicon-chapt09.json`, `lexicon-chapt10.json` and `5G-SPEC1.md` were
+delivered 2026-08-10 (this session). Both chapters assembled under
+Stage 8 discipline from `9_MIDDLE.TBK` / `10_FUTUR.TBK` against
+`ch9railwalk.pdf` / `ch10railwalk.pdf`; every answer derived and
+asserted, every clip table-read from the TBK's own dispatch handlers,
+behavior stamped by `apply-behavior-matrix.py` from ledger rows 79-95
+(17/17 activities matched, zero hand-stamped fields). ch9: 22 rail
+pages, 123 distinct clips. ch10: 22 rail pages, 158 distinct clips.
+
+**5G extraction findings a future session must not re-derive** (full
+detail in the assemblers' docstrings and 5G-SPEC1 §5):
+
+- **assemble_ch9.py / assemble_ch10.py currently REPRODUCE the shipped
+  data exactly** — unlike ch6-8's provenance-only assemblers, these can
+  regenerate. That holds only until the first hand repair lands in an
+  implementation round; after that, the repo JSON becomes the source of
+  truth for 9-10 too, same as 6-8 (Stage 8.7).
+- ch10 dispatch-name TRAP: `j_epa*` clips are the PRESENT of εἰμί,
+  `j_eimi*` the FUTURE. Table-read, never name-guessed.
+- ch10 parsing item 18's dispatch entry is BLANK in the original
+  (broken); `j_luwm1s` wired (same form as item 5) as a fidelity
+  restoration. ch10 translation audio is a SHIFTED table (item 1 →
+  `j_TvD1`, item N → `j_TvD(N+1)`; `j_TvD2` orphaned BY DESIGN).
+- The ch10 parsing drill carries a 30/30 clip-family cross-assert
+  (dispatched clip prefix must agree with derived tense/voice) — a new
+  standing assertion pattern for parse-type drills.
+- `Tbk.marked()` (run-table Greek/underline extraction via
+  `underline.vote_greek_fmts` + `marked_greek`) now feeds teaching
+  prose in BOTH assemblers; ch9's EC underlines come from the TBK
+  itself with STOP assertions, no hand markers remain.
+- Formula-notation fields (ch10 stem variations, worked example) must
+  NEVER pass through prose conversion: literal brackets read as
+  breathing marks and English "go?" matches the circumflex byte
+  pattern. `formula_conv` (standalone-letter Greek map) + structured
+  blocks is the pattern; popup rows/glosses/titles are parsed from the
+  popup fields with per-form assertions.
+- Pool reads by u16 length prefix are now enforced in the shared
+  `Tbk.pool()` (the ch10 flashcard pool's stale tail forced it);
+  `has_clip` case-folds both sides.
+- Two original-content slips shipped VERBATIM pending keep-or-fix
+  decisions (VERIFY-5G items e/f): ch9 objective 6 says "Jn 6:23b"
+  (verse is Rom 6:23b); ch9 Compound Verbs glosses ἔρχομαι "I go in,
+  enter" (copy of εἰσέρχομαι's gloss).
+- Renderer novelties this cohort (5G-SPEC1 §4): twoStageGrid
+  generalized to THREE optionStages with commit-on-final-click; topic
+  rail hidden when `topics.length == 1`; popups as `content[]` block
+  lists; `presentFutureRows` block; `repeatCheckbox` on spellVerse
+  ("Repeat This Exercise", semantics EXTRAPOLATED pending VERIFY item
+  d); `numbered` block; centered formula para; `hintCharts` composite
+  via `paradigmRefs`.
+
+**COHORT 5F IS CLOSED.** (Historical detail below is unchanged.)
 
 Chapters 1-8 are shipped, device-verified, and behaviorally correct.
 5F took FOUR implementer rounds — the build (`5F-SPEC1.md` /
@@ -66,10 +119,12 @@ flagged novelties: **TWO chapter-specific spellers** (Future Indicative
 Forms + Future Indicative ROOTS — no earlier chapter has two; the
 Roots pool is English present/future pairs, "I have" / "I will have")
 and a **"Repeat This Exercise" checkbox** appearing from chapter 9
-onward that the port has never built. One shape question is parked in
-ledger row 87's note: ch10's "Parsing" drill sits next to an
-English-gloss pool at `0xe8fb8`, so it may match form-to-gloss despite
-its title — settle at extraction, not by name.
+onward that the port has never built. The shape question parked in
+ledger row 87's note is SETTLED at extraction (2026-08-10): ch10's
+Parsing drill is a genuine three-stage parse (Tense / Voice /
+Person-Number, commit on final click); the English pool at `0xe8fb8`
+is the per-item translations behind the Translate button, exactly the
+chapter-3 pattern — not a form-to-gloss matcher.
 
 **5F residual items, small, carried not blocking:** VERIFY-5F-2 items
 2 (does the original accept bare ἐστί — D-33 stands until answered),
@@ -571,42 +626,46 @@ files carry only what a new chat needs.
   i_rm623b pre-ships in CHAPT_8). Full taxonomy:
   buildout/5C-RECON-FINDINGS.md §3.
 
-## Immediate queue (as of 2026-08-10 — 5F closed, 5G opening)
+## Immediate queue (as of 2026-08-10 evening — 5G data delivered)
 
-1. **Nathanael: sync project files from the repo.** The full audited
-   add/drop/update list is in the 2026-08-10 chat turn that produced
-   this handoff; headline: replace `DIVERGENCE-LOG.md`,
-   `DRILLBEHAVIORLEDGER.csv`, `chapt-06/07/08.json` (repo carries the
-   patched, device-verified versions), take the refreshed
-   `CHAT-HANDOFF.md` / `PHASE5-PLAN.md` / `PIPELINE-INSIGHTS-v3.md`
-   from this turn, add `TITLE-SWEEP-RULES.md`, and drop the closed 5F
-   round documents from project files (they stay in the repo archive).
-   Note: `chapt-04.json`, `intro.json`, `lexicon-chapt01.json` were
-   never actually divergent — CRLF line endings only; replace with the
-   repo LF copies so the comparison stops flagging them, and compare
-   CONTENT (not size) in all future audits.
-2. **Cohort 5G opens: chapters 9 + 10, rail-walk-then-build.**
-   Nathanael supplies `ch9railwalk.pdf` + `ch10railwalk.pdf` and
-   re-uploads `GreekTutor.iso` (chat-scoped). Fable: extract
-   `9_MIDDLE.TBK` / `10_FUTUR.TBK`, validate the title sweep against a
-   CONFIRMED chapter first (TITLE-SWEEP-RULES F2 — not yet done),
-   cross-check inventories against the chapters' own menus (F3), then
-   assemble one chapter at a time under Stage 8 discipline:
-   `assemble_ch9.py` / `assemble_ch10.py` (start from
-   `assemble_ch8.py`'s conversion machinery + `underline.py`), stamp
-   with `apply-behavior-matrix.py` against ledger rows 79-95, deliver
-   data + extraction-map section per chapter for review. Only then
-   `5G-SPEC1.md` for both chapters. The spec must carry the new
-   "Repeat This Exercise" checkbox and the two-speller shape.
-3. **Before 5G data ships, implement the Stage 8.5 self-audit** as a
-   small script the assembler runs on its own output (no bare Latin in
-   Greek positions, no space-elision, no stray combining marks) —
-   written as a rule, not yet as code.
-4. Registry debt carried: `attemptsPerItem` removal (5E-SPEC3 §6.1)
+1. **Nathanael: commit + upload the 5G deliverables NOW.** Commit
+   `chapt-09.json`, `chapt-10.json`, `lexicon-chapt09.json`,
+   `lexicon-chapt10.json` to the repo (they are regenerable from the
+   assemblers TODAY, but the committed copy is still the canonical
+   source per the data-file rule); add the four data files plus
+   `5G-SPEC1.md` to project files; commit `assemble_ch9.py`,
+   `assemble_ch10.py` and the updated `underline.py`-consuming shared
+   machinery to the repo's scripts. Also take THIS refreshed
+   `CHAT-HANDOFF.md`. The repo-sync list from the 5F closeout turn
+   (previous queue item 1) still applies if not yet done.
+2. **Distribute the implementation round:** `5G-SPEC1.md` +
+   `ch9railwalk.pdf` + `ch10railwalk.pdf` + `RECON-RESULTS.pdf` to both
+   implementer repos (Sol and Opus, isolated copies, no-push). BUILD
+   doc must contain the exact git diff; RESULTS + visual checklist per
+   the standing mandate; audio manifest FROZEN.
+3. **Nathanael: DOSBox + listen pass for the nine VERIFY-5G items**
+   (5G-SPEC1 §6): (a) `i_mpar` vs the ch9 passive Say Paradigm,
+   (b) `i_voc11` = διέρχομαι, (c) `l_eimi` standalone word,
+   (d) "Repeat This Exercise" observed semantics — this GATES the
+   harness checks for repeatCheckbox, (e) Jn 6:23b typo keep-or-fix,
+   (f) ἔρχομαι gloss keep-or-fix, (g) present-εἰμί parsing voice,
+   (h) does ch10 Hint cycle past FA+FM, (i) `j_TvD2` / `j_palp`
+   orphan-status listens. Items e/f/g may force a data regen — do them
+   before or early in the implementation round if possible.
+4. **Grading round follows per GRADER-PROMPT.md** (running tally into
+   this round: Sol 2, Opus 7, Ties 0). Cross-patch spec if justified;
+   then VERIFY-5G authored by the winner; then Nathanael's device pass.
+5. Stage 8.5 self-audit: NOW IMPLEMENTED as the shared `audit()` in
+   `assemble_ch9.py` (both assemblers run it on their own output —
+   bare-Latin-in-Greek, space-elision, stray combining marks). The
+   prior queue item is closed; keep the audit in any future assembler.
+6. Registry debt carried: `attemptsPerItem` removal (5E-SPEC3 §6.1)
    and `ui-walk.mjs --out` round-scoping — opportunistic, not rounds.
-5. **D-32 / Stage 8.8**: when chapt-06/08.json are next open, add the
+7. **D-32 / Stage 8.8**: when chapt-06/08.json are next open, add the
    vocabulary pool marker so the four case-split drills go 4-up on
    iPad.
+8. Open cohort-planning question, not blocking: sizing/grouping for
+   chapters 11-28 (analysis exists; decision pending after 5G closes).
 
 ## Known open questions
 

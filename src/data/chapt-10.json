@@ -1,0 +1,2697 @@
+{
+ "_comment": "Chapter 10 (Future Indicative Verbs), assembled from 10_FUTUR.TBK + CHAPT_10 audio + ch10railwalk.pdf under PIPELINE-INSIGHTS-v3 Stage 8. All answers derived and asserted; all clips table-read. Behavior stamped by apply-behavior-matrix.py from ledger rows 87-95.",
+ "id": "chapt_10",
+ "number": 10,
+ "title": "Future Indicative Verbs",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "write the future active and middle verb forms,",
+  "parse and translate future active and middle verbs,",
+  "recognize and anticipate how the future endings will effect the root,",
+  "gain more practice in translating and working with Greek,",
+  "master 10 more high frequency vocabulary words,",
+  "memorize Mat 6:33a in Greek."
+ ],
+ "vocab": [
+  "zoe",
+  "thanatos",
+  "krino",
+  "meno",
+  "monos",
+  "nyn",
+  "oude",
+  "paulos",
+  "sozo",
+  "tote"
+ ],
+ "learn": [
+  {
+   "id": "c10_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives",
+   "instructions": ""
+  },
+  {
+   "id": "c10_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "In English we have several tenses. In the present tense we may say, \"We go to college.\""
+      },
+      {
+       "type": "para",
+       "text": "In the past we say, \"We went to college.\"",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "In the future we say, \"We will go to college.\"",
+       "gapBefore": true
+      }
+     ]
+    }
+   ],
+   "_single_topic_note": "ONE topic only -- the original shows no radio list on this page. Renderer must hide the topic rail when topics.length == 1 (5G-SPEC1 renderer novelty)."
+  },
+  {
+   "id": "c10_learn_future_verbs",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Future Indicative Verbs",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "In the present tense in Greek we have seen that aspect, rather than time, is the focus. The future tense in Greek specifies that the action of the verb takes place in the future. This is similar to the future tense in English. Summers notes three functions of the future tense in Greek (p. 67):"
+      },
+      {
+       "type": "numbered",
+       "items": [
+        "predictive (e.g. \"We will go.\")",
+        "imperative (e.g. \"You shall go.\") or",
+        "deliberative with rhetorical questions (e.g. \"to whom shall we go?\")."
+       ],
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "The future tense is easy to remember as the endings are the same as the present. The difference is a sigma which is usually added between the stem and the ending.",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "Stem + Sigma + Ending\nλύ + σ + ω\n(λύσω — I will loose)",
+       "align": "center",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "The future passive will be learned later as it is built off a different stem.",
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "futureActiveParadigm",
+     "title": "Future Active Paradigm",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "futureActiveParadigm",
+       "title": "Future Active Indicative",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1.",
+         "cells": [
+          {
+           "greek": "λύσω",
+           "gloss": "I will loose",
+           "audio": "chapt_10_j_luw1s"
+          },
+          {
+           "greek": "λύσομεν",
+           "gloss": "We will loose",
+           "audio": "chapt_10_j_luw1p"
+          }
+         ]
+        },
+        {
+         "label": "2.",
+         "cells": [
+          {
+           "greek": "λύσεις",
+           "gloss": "You will loose",
+           "audio": "chapt_10_j_luw2s"
+          },
+          {
+           "greek": "λύσετε",
+           "gloss": "You will loose",
+           "audio": "chapt_10_j_luw2p"
+          }
+         ]
+        },
+        {
+         "label": "3.",
+         "cells": [
+          {
+           "greek": "λύσει",
+           "gloss": "He/she/it will loose",
+           "audio": "chapt_10_j_luw3s"
+          },
+          {
+           "greek": "λύσουσι(ν)",
+           "gloss": "They will loose",
+           "audio": "chapt_10_j_luw3p"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_10_j_luwpar"
+       }
+      }
+     ]
+    },
+    {
+     "id": "futureMiddleParadigm",
+     "title": "Future Middle Paradigm",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "futureMiddleParadigm",
+       "title": "Future Middle Indicative",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1.",
+         "cells": [
+          {
+           "greek": "λύσομαι",
+           "gloss": "I will loose (for myself)",
+           "audio": "chapt_10_j_luwm1s"
+          },
+          {
+           "greek": "λυσόμεθα",
+           "gloss": "We will loose (for ourselves)",
+           "audio": "chapt_10_j_luwm1p"
+          }
+         ]
+        },
+        {
+         "label": "2.",
+         "cells": [
+          {
+           "greek": "λύσῃ",
+           "gloss": "You will loose (for yourself)",
+           "audio": "chapt_10_j_luwm2s"
+          },
+          {
+           "greek": "λύσεσθε",
+           "gloss": "You will loose (for yourselves)",
+           "audio": "chapt_10_j_luwm2p"
+          }
+         ]
+        },
+        {
+         "label": "3.",
+         "cells": [
+          {
+           "greek": "λύσεται",
+           "gloss": "He/she/it will loose (for himself/herself/itself)",
+           "audio": "chapt_10_j_luwm3s"
+          },
+          {
+           "greek": "λύσονται",
+           "gloss": "They will loose (for themselves)",
+           "audio": "chapt_10_j_luwm3p"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_10_j_lumpar"
+       }
+      }
+     ]
+    },
+    {
+     "id": "stemVariations",
+     "title": "5 Stem Variations",
+     "content": [
+      {
+       "type": "para",
+       "text": "The adding of the sigma may change the final consonant of the verb stem in the following three ways:"
+      },
+      {
+       "type": "numbered",
+       "items": [
+        "if after a [[link:palatal]]palatal[[/link]] ( κ, γ, χ )\nσ + [ κ, γ, χ] ==> ξ",
+        "if after a [[link:labial]]labial[[/link]] ( π, β, φ )\nσ + [ π, β, φ] ==> ψ",
+        "if after a [[link:dental]]dental[[/link]] ( τ, δ, θ )\nσ + [ τ, δ, θ ] ==> σ",
+        "if after a [[link:liquid]]liquid[[/link]] ( λ, μ, ν, ρ ) the sigma is dropped and the ω is accented with a circumflex. When a stem ends in a double liquid consonant, one of them is sometimes dropped.",
+        "if after a [[link:sibilant]]sibilant[[/link]] ( σ, ζ ) the sibilant is dropped and the sigma is kept."
+       ],
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "futureEimi",
+     "title": "Future of εἰμί",
+     "titleAudio": "chapt_10_l_eimi",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "futureEimiParadigm",
+       "title": "Future of εἰμί",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1.",
+         "cells": [
+          {
+           "greek": "ἔσομαι",
+           "gloss": "I will be",
+           "audio": "chapt_10_j_eimi1s"
+          },
+          {
+           "greek": "ἐσόμεθα",
+           "gloss": "We will be",
+           "audio": "chapt_10_j_eimi1p"
+          }
+         ]
+        },
+        {
+         "label": "2.",
+         "cells": [
+          {
+           "greek": "ἔσῃ",
+           "gloss": "You will be",
+           "audio": "chapt_10_j_eimi2s"
+          },
+          {
+           "greek": "ἔσεσθε",
+           "gloss": "You will be",
+           "audio": "chapt_10_j_eimi2p"
+          }
+         ]
+        },
+        {
+         "label": "3.",
+         "cells": [
+          {
+           "greek": "ἔσται",
+           "gloss": "He/she/it will be",
+           "audio": "chapt_10_j_eimi3s"
+          },
+          {
+           "greek": "ἔσονται",
+           "gloss": "They will be",
+           "audio": "chapt_10_j_eimi3p"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_10_j_eimpar"
+       }
+      }
+     ]
+    },
+    {
+     "id": "deponentFutures",
+     "title": "Deponent Futures",
+     "content": [
+      {
+       "type": "para",
+       "text": "Quite frequently there are verbs which in the present tense are not deponent but in the future they are:"
+      },
+      {
+       "type": "presentFutureRows",
+       "rows": [
+        {
+         "present": {
+          "greek": "ἀκούω",
+          "audio": "chapt_10_j_akouw"
+         },
+         "future": {
+          "greek": "ἀκούσομαι",
+          "audio": "chapt_10_j_akousa",
+          "gloss": "I will hear"
+         }
+        },
+        {
+         "present": {
+          "greek": "λαμβάνω",
+          "audio": "chapt_10_j_lamban"
+         },
+         "future": {
+          "greek": "λήμψομαι",
+          "audio": "chapt_10_j_lhmps",
+          "gloss": "I will take, receive"
+         }
+        },
+        {
+         "present": {
+          "greek": "γινώσκω",
+          "audio": "chapt_10_j_ginwsk"
+         },
+         "future": {
+          "greek": "γνώσομαι",
+          "audio": "chapt_10_j_gnwsam",
+          "gloss": "I will"
+         }
+        }
+       ],
+       "headers": [
+        "[[u]]Present[[/u]]",
+        "[[u]]Future[[/u]]"
+       ],
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "irregularFutures",
+     "title": "Irregular Futures",
+     "content": [
+      {
+       "type": "para",
+       "text": "Sometimes the future stem is totally different from the original present stem. Thus when you learn verbs in the future you should learn both stem roots."
+      },
+      {
+       "type": "presentFutureRows",
+       "rows": [
+        {
+         "present": {
+          "greek": "ἔρχομαι",
+          "audio": "chapt_10_j_erxoma",
+          "gloss": "I come"
+         },
+         "future": {
+          "greek": "ἐλεύσομαι",
+          "audio": "chapt_10_j_eleusa",
+          "gloss": "I will come, go"
+         }
+        },
+        {
+         "present": {
+          "greek": "γινώσκω",
+          "audio": "chapt_10_j_ginwsk",
+          "gloss": "I know"
+         },
+         "future": {
+          "greek": "γνώσομαι",
+          "audio": "chapt_10_j_gnwsam",
+          "gloss": "I will know"
+         }
+        }
+       ],
+       "headers": [
+        "[[u]]Present[[/u]]",
+        "[[u]]Future[[/u]]"
+       ],
+       "gapBefore": true
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "id": "palatal",
+     "title": "After a Palatal ( κ, γ, χ )",
+     "content": [
+      {
+       "type": "presentFutureRows",
+       "rows": [
+        {
+         "present": {
+          "greek": "ἔχω",
+          "audio": "chapt_10_j_exw"
+         },
+         "future": {
+          "greek": "ἕξω",
+          "audio": "chapt_10_j_ecw",
+          "gloss": "I will have (note breathing change)"
+         }
+        },
+        {
+         "present": {
+          "greek": "ἄγω",
+          "audio": "chapt_10_j_agw"
+         },
+         "future": {
+          "greek": "ἄξω",
+          "audio": "chapt_10_j_acw",
+          "gloss": "I will lead, bring"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "labial",
+     "title": "After a Labial ( π, β, φ )",
+     "content": [
+      {
+       "type": "presentFutureRows",
+       "rows": [
+        {
+         "present": {
+          "greek": "βλέπω",
+          "audio": "chapt_10_j_blepw"
+         },
+         "future": {
+          "greek": "βλέψω",
+          "audio": "chapt_10_j_blepsw",
+          "gloss": "I will see"
+         }
+        },
+        {
+         "present": {
+          "greek": "γράφω",
+          "audio": "chapt_10_j_grapw"
+         },
+         "future": {
+          "greek": "γράψω",
+          "audio": "chapt_10_j_grapsw",
+          "gloss": "I will write"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "dental",
+     "title": "After a Dental ( τ, δ, θ )",
+     "content": [
+      {
+       "type": "presentFutureRows",
+       "rows": [
+        {
+         "present": {
+          "greek": "πείθω",
+          "audio": "chapt_10_j_peithw"
+         },
+         "future": {
+          "greek": "πείσω",
+          "audio": "chapt_10_j_peisw",
+          "gloss": "I will persuade"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "liquid",
+     "title": "After a Liquid ( λ, μ, ν, ρ )",
+     "content": [
+      {
+       "type": "presentFutureRows",
+       "rows": [
+        {
+         "present": {
+          "greek": "μένω",
+          "audio": "chapt_10_j_menw"
+         },
+         "future": {
+          "greek": "μενῶ",
+          "audio": "chapt_10_j_menww",
+          "gloss": "I will remain"
+         }
+        },
+        {
+         "present": {
+          "greek": "ἀποστέλλω",
+          "audio": "chapt_10_j_apostw"
+         },
+         "future": {
+          "greek": "ἀποστελῶ",
+          "audio": "chapt_10_j_aposww",
+          "gloss": "I will send"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "sibilant",
+     "title": "After a Sibilant ( σ, ζ )",
+     "content": [
+      {
+       "type": "presentFutureRows",
+       "rows": [
+        {
+         "present": {
+          "greek": "σῴζω",
+          "audio": "chapt_10_j_swzw"
+         },
+         "future": {
+          "greek": "σώσω",
+          "audio": "chapt_10_j_swsw",
+          "gloss": "I will save"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "greekTaps": true,
+   "_eimi_note": "The topic title's standalone eimi taps to l_eimi, which the TBK dispatches from a blank-keyed entry; listen (VERIFY-5G). Present-eimi chart cells elsewhere use the ch7-forwarded g_eimi* clips.",
+   "_formula_note": "Stem-variation letters and worked-example letters are bare font-Greek in the TBK (k,g,x = kappa,gamma,chi); converted by standalone-letter rule with brackets and ==> arrows kept as LITERAL notation."
+  },
+  {
+   "id": "c10_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "senses",
+   "flashcardGreek": "lexicalForm"
+  },
+  {
+   "id": "c10_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory",
+   "reference": "Mat 6:33a",
+   "words": [
+    {
+     "greek": "ζητεῖτε",
+     "gloss": "Seek",
+     "audio": "chapt_10_j_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "gloss": "but",
+     "audio": "chapt_10_j_sm2"
+    },
+    {
+     "greek": "πρῶτον",
+     "gloss": "first",
+     "audio": "chapt_10_j_sm3"
+    },
+    {
+     "greek": "τὴν",
+     "gloss": "the",
+     "audio": "chapt_10_j_sm4"
+    },
+    {
+     "greek": "βασιλείαν",
+     "gloss": "kingdom",
+     "audio": "chapt_10_j_sm5"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of",
+     "audio": "chapt_10_j_sm6"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_10_j_sm7"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_10_j_sm8"
+    },
+    {
+     "greek": "τὴν",
+     "gloss": "the",
+     "audio": "chapt_10_j_sm9"
+    },
+    {
+     "greek": "δικαιοσύνην",
+     "gloss": "righteousness",
+     "audio": "chapt_10_j_sm10"
+    },
+    {
+     "greek": "αὐτοῦ,",
+     "gloss": "his",
+     "audio": "chapt_10_j_sm11"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_10_j_mt633a"
+   },
+   "_field_note": "Two interlinear copies exist; 0xc58fa is STALE (missing tou qeou). This page reads the live copy at 0x4c7fe, whose au]tou,? encoding artifact normalizes to the comma-after form."
+  },
+  {
+   "id": "c10_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham. New Testament Greek for Beginners (Toronto: The Macmillan Company, 1923), pp. 74-80.",
+      "Mounce, William D. Basics of Biblical Greek: Grammar (Grand Rapids: Zondervan, 1993), pp. 152-160.",
+      "Summers, Ray and Thomas Sawyer. Essentials of New Testament Greek (Nashville: Broadman & Holman, 1995), pp. 65-68.",
+      "Wenham, J. W. The Elements of New Testament Greek (Cambridge: Cambridge University Press, 1965), pp. 88-95."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c10_drill_parsing",
+   "type": "select",
+   "mode": "twoStageGrid",
+   "title": "Future Indicative Parsing Drill",
+   "instructions": "Click first on the tense, voice and person last",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionStages": [
+    {
+     "label": "Tense",
+     "values": [
+      "Present",
+      "Future"
+     ]
+    },
+    {
+     "label": "Voice",
+     "values": [
+      "Active",
+      "Middle"
+     ]
+    },
+    {
+     "label": "Person / Number",
+     "values": [
+      "First Singular",
+      "First Plural",
+      "Second Singular",
+      "Second Plural",
+      "Third Singular",
+      "Third Plural"
+     ],
+     "optionGroups": [
+      2,
+      2,
+      2
+     ]
+    }
+   ],
+   "note": "Remember that most verbs marked with a middle ending are deponent and so should be translated active.",
+   "items": [
+    {
+     "greek": "λύσεται",
+     "translate": "he will loose himself",
+     "answer": [
+      "Future",
+      "Middle",
+      "Third Singular"
+     ],
+     "audio": "chapt_10_j_luwm3s"
+    },
+    {
+     "greek": "λύομεν",
+     "translate": "we loose",
+     "answer": [
+      "Present",
+      "Active",
+      "First Plural"
+     ],
+     "audio": "chapt_10_j_pa1p"
+    },
+    {
+     "greek": "λύσεις",
+     "translate": "you will loose",
+     "answer": [
+      "Future",
+      "Active",
+      "Second Singular"
+     ],
+     "audio": "chapt_10_j_luw2s"
+    },
+    {
+     "greek": "λύῃ",
+     "translate": "you loose yourself",
+     "answer": [
+      "Present",
+      "Middle",
+      "Second Singular"
+     ],
+     "audio": "chapt_10_j_pm2s"
+    },
+    {
+     "greek": "λύσομαι",
+     "translate": "I will loose myself",
+     "answer": [
+      "Future",
+      "Middle",
+      "First Singular"
+     ],
+     "audio": "chapt_10_j_luwm1s"
+    },
+    {
+     "greek": "λύσετε",
+     "translate": "you will loose",
+     "answer": [
+      "Future",
+      "Active",
+      "Second Plural"
+     ],
+     "audio": "chapt_10_j_luw2p"
+    },
+    {
+     "greek": "λύσονται",
+     "translate": "they will loose themselves",
+     "answer": [
+      "Future",
+      "Middle",
+      "Third Plural"
+     ],
+     "audio": "chapt_10_j_luwm3p"
+    },
+    {
+     "greek": "λύεσθε",
+     "translate": "you loose yourselves",
+     "answer": [
+      "Present",
+      "Middle",
+      "Second Plural"
+     ],
+     "audio": "chapt_10_j_pm2p"
+    },
+    {
+     "greek": "λύσῃ",
+     "translate": "you will loose yourself",
+     "answer": [
+      "Future",
+      "Middle",
+      "Second Singular"
+     ],
+     "audio": "chapt_10_j_luwm2s"
+    },
+    {
+     "greek": "λύσουσι",
+     "translate": "they will loose",
+     "answer": [
+      "Future",
+      "Active",
+      "Third Plural"
+     ],
+     "audio": "chapt_10_j_luw3p"
+    },
+    {
+     "greek": "λυσόμεθα",
+     "translate": "we will loose ourselves",
+     "answer": [
+      "Future",
+      "Middle",
+      "First Plural"
+     ],
+     "audio": "chapt_10_j_luwm1p"
+    },
+    {
+     "greek": "λύονται",
+     "translate": "they loose themselves",
+     "answer": [
+      "Present",
+      "Middle",
+      "Third Plural"
+     ],
+     "audio": "chapt_10_j_pm3p"
+    },
+    {
+     "greek": "λύουσι",
+     "translate": "they loose",
+     "answer": [
+      "Present",
+      "Active",
+      "Third Plural"
+     ],
+     "audio": "chapt_10_j_pa3p"
+    },
+    {
+     "greek": "λύσω",
+     "translate": "I will loose",
+     "answer": [
+      "Future",
+      "Active",
+      "First Singular"
+     ],
+     "audio": "chapt_10_j_luw1s"
+    },
+    {
+     "greek": "λύσομεν",
+     "translate": "we will loose",
+     "answer": [
+      "Future",
+      "Active",
+      "First Plural"
+     ],
+     "audio": "chapt_10_j_luw1p"
+    },
+    {
+     "greek": "λύω",
+     "translate": "I loose",
+     "answer": [
+      "Present",
+      "Active",
+      "First Singular"
+     ],
+     "audio": "chapt_10_j_pa1s"
+    },
+    {
+     "greek": "λύσει",
+     "translate": "he will loose",
+     "answer": [
+      "Future",
+      "Active",
+      "Third Singular"
+     ],
+     "audio": "chapt_10_j_luw3s"
+    },
+    {
+     "greek": "λύσομαι",
+     "translate": "I will loose myself",
+     "answer": [
+      "Future",
+      "Middle",
+      "First Singular"
+     ],
+     "audio": "chapt_10_j_luwm1s"
+    },
+    {
+     "greek": "λύεις",
+     "translate": "you loose",
+     "answer": [
+      "Present",
+      "Active",
+      "Second Singular"
+     ],
+     "audio": "chapt_10_j_pa2s"
+    },
+    {
+     "greek": "λύεται",
+     "translate": "he looses himself",
+     "answer": [
+      "Present",
+      "Middle",
+      "Third Singular"
+     ],
+     "audio": "chapt_10_j_pm3s"
+    },
+    {
+     "greek": "εἰμί",
+     "translate": "I am",
+     "answer": [
+      "Present",
+      "Active",
+      "First Singular"
+     ],
+     "audio": "chapt_10_j_epa1s"
+    },
+    {
+     "greek": "ἐστέ",
+     "translate": "you are",
+     "answer": [
+      "Present",
+      "Active",
+      "Second Plural"
+     ],
+     "audio": "chapt_10_j_epa2p"
+    },
+    {
+     "greek": "ἔσῃ",
+     "translate": "you will be",
+     "answer": [
+      "Future",
+      "Middle",
+      "Second Singular"
+     ],
+     "audio": "chapt_10_j_eimi2s"
+    },
+    {
+     "greek": "ἔσεσθε",
+     "translate": "you will be",
+     "answer": [
+      "Future",
+      "Middle",
+      "Second Plural"
+     ],
+     "audio": "chapt_10_j_eimi2p"
+    },
+    {
+     "greek": "ἔσομαι",
+     "translate": "I will be",
+     "answer": [
+      "Future",
+      "Middle",
+      "First Singular"
+     ],
+     "audio": "chapt_10_j_eimi1s"
+    },
+    {
+     "greek": "ἔσται",
+     "translate": "he/she will be",
+     "answer": [
+      "Future",
+      "Middle",
+      "Third Singular"
+     ],
+     "audio": "chapt_10_j_eimi3s"
+    },
+    {
+     "greek": "ἐσόμεθα",
+     "translate": "we will be",
+     "answer": [
+      "Future",
+      "Middle",
+      "First Plural"
+     ],
+     "audio": "chapt_10_j_eimi1p"
+    },
+    {
+     "greek": "εἰσί",
+     "translate": "they are",
+     "answer": [
+      "Present",
+      "Active",
+      "Third Plural"
+     ],
+     "audio": "chapt_10_j_epa3p"
+    },
+    {
+     "greek": "ἔσονται",
+     "translate": "they will be",
+     "answer": [
+      "Future",
+      "Middle",
+      "Third Plural"
+     ],
+     "audio": "chapt_10_j_eimi3p"
+    },
+    {
+     "greek": "εἶ",
+     "translate": "you are",
+     "answer": [
+      "Present",
+      "Active",
+      "Second Singular"
+     ],
+     "audio": "chapt_10_j_epa2s"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Translate",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "futureParadigms"
+   },
+   "_stage_note": "THREE optionStages -- the twoStageGrid component generalizes to N stages; selections accumulate and the guess commits on the FINAL (person/number) click, per the original's own instruction line and the c8_drill_case semantics (VERIFY-5F item 7).",
+   "_answer_note": "answer is [tense, voice, personNumber], derived from the form. Present-tense eimi items parse Active; future eimi parse Middle (deponent future) -- form-keyed, one eimi item queued for DOSBox confirmation. Item 18's dispatch entry is blank in the original; j_luwm1s wired (same form as item 5).",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c10_drill_translation",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Future Indicative Translation Drill",
+   "instructions": "Click on the correct English translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "οὐδὲ ἀκούσει ... τὴν",
+     "greek2": "φωνὴν αὐτοῦ",
+     "ref": "Mat 12:19",
+     "options": [
+      "nor will you hear his voice",
+      "nor will he hear his voice",
+      "nor will they hear his voice"
+     ],
+     "answer": "nor will he hear his voice",
+     "audio": "chapt_10_j_TvD1"
+    },
+    {
+     "greek": "Ἀκουσόμεθά σου περὶ",
+     "greek2": "τούτου",
+     "ref": "Acts 17:32",
+     "options": [
+      "they will hear you concerning this",
+      "I will hear you concerning this",
+      "we will hear you concerning this"
+     ],
+     "answer": "we will hear you concerning this",
+     "audio": "chapt_10_j_TvD3"
+    },
+    {
+     "greek": "ὅτε οἱ νεκροὶ",
+     "greek2": "ἀκούσουσιν τῆς φωνῆς",
+     "ref": "Jn 5:25",
+     "options": [
+      "when the dead will hear the voice",
+      "when you will hear the voice of death",
+      "when we will hear death voices"
+     ],
+     "answer": "when the dead will hear the voice",
+     "audio": "chapt_10_j_TvD4"
+    },
+    {
+     "greek": "καὶ ἕξεις θησαυρὸν",
+     "greek2": "ἐν οὐρανοῖς",
+     "ref": "Mat 19:21",
+     "options": [
+      "and there will be treasure in heaven",
+      "and heaven will have treasure",
+      "and you will have treasure in heaven"
+     ],
+     "answer": "and you will have treasure in heaven",
+     "audio": "chapt_10_j_TvD5"
+    },
+    {
+     "greek": "ἀλλ̓ ἕξει τὸ φῶς τῆς",
+     "greek2": "ζωῆς",
+     "ref": "Jn 8:12",
+     "options": [
+      "but he will have the light of life",
+      "but you will have the light of life",
+      "but they will have the light of life"
+     ],
+     "answer": "but he will have the light of life",
+     "audio": "chapt_10_j_TvD6"
+    },
+    {
+     "greek": "ἐν τούτῳ γνώσονται",
+     "greek2": "πάντες",
+     "ref": "Jn 13:35",
+     "options": [
+      "by this everyone will know",
+      "by this you will know all things",
+      "by this we all will know"
+     ],
+     "answer": "by this everyone will know",
+     "audio": "chapt_10_j_TvD7"
+    },
+    {
+     "greek": "τότε γνώσεσθε ὅτι",
+     "greek2": "ἐγώ εἰμι",
+     "ref": "Jn 8:28",
+     "options": [
+      "then they will know that I am",
+      "then you will know that I am",
+      "then he will know that I am"
+     ],
+     "answer": "then you will know that I am",
+     "audio": "chapt_10_j_TvD8"
+    },
+    {
+     "greek": "καὶ τὸν πατέρα μου",
+     "greek2": "γνώσεσθε",
+     "ref": "Jn 14:7",
+     "options": [
+      "I myself will know the father also",
+      "they will know my father also",
+      "you will know my father also"
+     ],
+     "answer": "you will know my father also",
+     "audio": "chapt_10_j_TvD9"
+    },
+    {
+     "greek": "ἐν ἐκείνῃ τῇ ἡμέρᾳ",
+     "greek2": "γ̓νώσεσθε ὑμεῖς",
+     "ref": "Jn 14:20",
+     "options": [
+      "in that day you will know",
+      "in that day they will know you",
+      "in that day we will know you"
+     ],
+     "answer": "in that day you will know",
+     "audio": "chapt_10_j_TvD10"
+    },
+    {
+     "greek": "κ̓αὶ γνώσομαι οὐ τὸν",
+     "greek2": "λόγον",
+     "ref": "1 Cor 4:19",
+     "options": [
+      "and we will know not the word",
+      "and they will not know the word",
+      "and I will know not the word"
+     ],
+     "answer": "and I will know not the word",
+     "audio": "chapt_10_j_TvD11"
+    },
+    {
+     "greek": "καὶ λήμψεσθε τὴν",
+     "greek2": "δωρεὰν",
+     "ref": "Acts 2:38",
+     "options": [
+      "and they will receive the gift",
+      "and I will receive the gift",
+      "and you will receive the gift"
+     ],
+     "answer": "and you will receive the gift",
+     "audio": "chapt_10_j_TvD12"
+    },
+    {
+     "greek": "ὅτι ἐκ τοῦ ἐμοῦ",
+     "greek2": "λήμψεται",
+     "ref": "Jn 16:14",
+     "options": [
+      "for they will take from what is mine",
+      "for he will take from what is mine",
+      "for you will take what is mine"
+     ],
+     "answer": "for he will take from what is mine",
+     "audio": "chapt_10_j_TvD13"
+    },
+    {
+     "greek": "καὶ ἐγερεῖ αὐτὸν ὁ",
+     "greek2": "κύριος",
+     "ref": "Jam 5:15",
+     "options": [
+      "and the Lord will raise him",
+      "and you will be raised by the Lord",
+      "and he will raise the Lord"
+     ],
+     "answer": "and the Lord will raise him",
+     "audio": "chapt_10_j_TvD14"
+    },
+    {
+     "greek": "Λύσατε τὸν ναὸν",
+     "greek2": "τοῦτον",
+     "ref": "Jn 2:19",
+     "options": [
+      "he will destroy this temple",
+      "they will destroy this temple",
+      "you will destroy this temple"
+     ],
+     "answer": "you will destroy this temple",
+     "audio": "chapt_10_j_TvD15"
+    },
+    {
+     "greek": "καὶ ἐν τρισὶν ἡμέραις",
+     "greek2": "ἐγερῶ αὐτόν",
+     "ref": "Jn 2:19",
+     "options": [
+      "and in three days he will raise it",
+      "and in three days we will raise it",
+      "and in three days I will raise it"
+     ],
+     "answer": "and in three days I will raise it",
+     "audio": "chapt_10_j_TvD16"
+    },
+    {
+     "greek": "Ἀποστελῶ εἰς αὐτοὺς",
+     "greek2": "προφήτας",
+     "ref": "Luk 11:49",
+     "options": [
+      "I will send them prophets",
+      "the prophets will send them",
+      "he will send them prophets"
+     ],
+     "answer": "I will send them prophets",
+     "audio": "chapt_10_j_TvD17"
+    },
+    {
+     "greek": "καὶ γενήσεται ὑμῖν",
+     "greek2": null,
+     "ref": "Jn 15:7",
+     "options": [
+      "and it will be done for you",
+      "and I will do it for you",
+      "and we will do it for you"
+     ],
+     "answer": "and it will be done for you",
+     "audio": "chapt_10_j_TvD18"
+    },
+    {
+     "greek": "ἀλλ' ἡ λύπη ὑμῶν εἰς",
+     "greek2": "χαρὰν γενήσεται",
+     "ref": "Jn 16:20",
+     "options": [
+      "but I will make your sorrow into joy",
+      "but your sorrows will become joy",
+      "but your sorrow will become joy"
+     ],
+     "answer": "but your sorrow will become joy",
+     "audio": "chapt_10_j_TvD19"
+    },
+    {
+     "greek": "πορεύσομαι πρὸς τὸν",
+     "greek2": "πατέρα μου",
+     "ref": "Luk 15:18",
+     "options": [
+      "he will go to my father",
+      "I will go to my father",
+      "you will go to my father"
+     ],
+     "answer": "I will go to my father",
+     "audio": "chapt_10_j_TvD20"
+    },
+    {
+     "greek": "σὺν ἐμοὶ πορεύσονται",
+     "greek2": null,
+     "ref": "1 Cor 16:4",
+     "options": [
+      "you will go with me",
+      "they will go with me",
+      "he will go with me"
+     ],
+     "answer": "they will go with me",
+     "audio": "chapt_10_j_TvD21"
+    },
+    {
+     "greek": "ἐλεύσομαι δὲ ταχέως",
+     "greek2": "πρὸς ὑμᾶς",
+     "ref": "1 Cor 4:19",
+     "options": [
+      "but they will come quickly to you",
+      "but we will come quickly to you",
+      "but I will come quickly to you"
+     ],
+     "answer": "but I will come quickly to you",
+     "audio": "chapt_10_j_TvD22"
+    },
+    {
+     "greek": "καὶ πρὸς αὐτὸν",
+     "greek2": "ἐλευσόμεθα",
+     "ref": "Jn 14:23",
+     "options": [
+      "and you will come to him",
+      "and we will come to him",
+      "and they will come to him"
+     ],
+     "answer": "and we will come to him",
+     "audio": "chapt_10_j_TvD23"
+    },
+    {
+     "greek": "γὰρ ἐλεύσονται ἐπὶ",
+     "greek2": "τῷ ὀνόματί μου",
+     "ref": "Mat 24:5",
+     "options": [
+      "for they will come in my name",
+      "for he will come in my name",
+      "for you will come in my name"
+     ],
+     "answer": "for they will come in my name",
+     "audio": "chapt_10_j_TvD24"
+    },
+    {
+     "greek": "ὅτι ἐλεύσονται ἐπ'",
+     "greek2": "ἐσχάτων τῶν ἡμερῶν",
+     "ref": "2 Pet 3:3",
+     "options": [
+      "that in the last days he will come",
+      "that in the last days they will come",
+      "that in the last days I will come"
+     ],
+     "answer": "that in the last days they will come",
+     "audio": "chapt_10_j_TvD25"
+    },
+    {
+     "greek": "γὰρ σώσει τὸν λαὸν",
+     "greek2": "αὐτοῦ",
+     "ref": "Mat 1:21",
+     "options": [
+      "for he will save his people",
+      "for I will save his people",
+      "for you will save his people"
+     ],
+     "answer": "for he will save his people",
+     "audio": "chapt_10_j_TvD26"
+    },
+    {
+     "greek": "σώσει ψυχὴν αὐτοῦ",
+     "greek2": "ἐκ θανάτου",
+     "ref": "Jam 5:20",
+     "options": [
+      "he will save his soul from death",
+      "they will save his soul from death",
+      "you will save his soul from death"
+     ],
+     "answer": "he will save his soul from death",
+     "audio": "chapt_10_j_TvD27"
+    },
+    {
+     "greek": "ὅτι ἀγγέλους κρινοῦμεν",
+     "greek2": null,
+     "ref": "1 Cor 6:3",
+     "options": [
+      "that the angels will judge",
+      "that he will judge angels",
+      "that we will judge angels"
+     ],
+     "answer": "that we will judge angels",
+     "audio": "chapt_10_j_TvD28"
+    },
+    {
+     "greek": "ὅτι οἱ ἅγιοι τὸν κόσμον",
+     "greek2": "κρινοῦσιν",
+     "ref": "1 Cor 6:2",
+     "options": [
+      "that the world will judge the saints",
+      "that I will judge the saint's world",
+      "that the saints will judge the world"
+     ],
+     "answer": "that the saints will judge the world",
+     "audio": "chapt_10_j_TvD29"
+    },
+    {
+     "greek": "κρινεῖ ὁ θεὸς τὸν",
+     "greek2": "κόσμον",
+     "ref": "Rom 3:6",
+     "options": [
+      "God will judge the world",
+      "the world will judge God",
+      "he will judge the god of the world"
+     ],
+     "answer": "God will judge the world",
+     "audio": "chapt_10_j_TvD30"
+    },
+    {
+     "greek": "Κρινεῖ κύριος τὸν",
+     "greek2": "λαὸν αὐτοῦ",
+     "ref": "Heb 10:30",
+     "options": [
+      "his people will judge the Lord",
+      "the Lord will judge his people",
+      "we will judge the Lord of this people"
+     ],
+     "answer": "the Lord will judge his people",
+     "audio": "chapt_10_j_TvD31"
+    },
+    {
+     "greek": "καὶ ἀποστελεῖ τοὺς",
+     "greek2": "ἀγγέλους αὐτοῦ",
+     "ref": "Mat 24:31",
+     "options": [
+      "and he will send his angels",
+      "and his angels will send",
+      "and I will send his angels"
+     ],
+     "answer": "and he will send his angels",
+     "audio": "chapt_10_j_TvD32"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "futureParadigms"
+   },
+   "_answer_note": "Answer column derived per item from the future verb's person/number plus explicit subject/object nouns; rail walk confirms item 1. Audio mapping is the original's shifted table: item 1 -> j_TvD1, item N -> j_TvD(N+1); j_TvD2 was orphaned by a deleted item and is NOT referenced.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c10_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "life",
+    "death",
+    "I judge",
+    "I remain",
+    "only, alone",
+    "now",
+    "and not, nor",
+    "Paul",
+    "I save",
+    "then"
+   ],
+   "items": [
+    {
+     "greek": "ζωή",
+     "note": null,
+     "answer": "life",
+     "audio": "chapt_10_j_voc1"
+    },
+    {
+     "greek": "θάνατος",
+     "note": null,
+     "answer": "death",
+     "audio": "chapt_10_j_voc2"
+    },
+    {
+     "greek": "κρίνω",
+     "note": null,
+     "answer": "I judge",
+     "audio": "chapt_10_j_voc3"
+    },
+    {
+     "greek": "μένω",
+     "note": null,
+     "answer": "I remain",
+     "audio": "chapt_10_j_voc4"
+    },
+    {
+     "greek": "μόνος",
+     "note": null,
+     "answer": "only, alone",
+     "audio": "chapt_10_j_voc5"
+    },
+    {
+     "greek": "νῦν",
+     "note": null,
+     "answer": "now",
+     "audio": "chapt_10_j_voc6"
+    },
+    {
+     "greek": "οὐδέ",
+     "note": null,
+     "answer": "and not, nor",
+     "audio": "chapt_10_j_voc7"
+    },
+    {
+     "greek": "Παῦλος",
+     "note": null,
+     "answer": "Paul",
+     "audio": "chapt_10_j_voc8"
+    },
+    {
+     "greek": "σῴζω",
+     "note": null,
+     "answer": "I save",
+     "audio": "chapt_10_j_voc9"
+    },
+    {
+     "greek": "τότε",
+     "note": null,
+     "answer": "then",
+     "audio": "chapt_10_j_voc10"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c10_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary: English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "options": "static",
+   "optionsAreGreek": true,
+   "optionValues": [
+    "ζωή",
+    "θάνατος",
+    "κρίνω",
+    "μένω",
+    "μόνος",
+    "νῦν",
+    "οὐδέ",
+    "Παῦλος",
+    "σῴζω",
+    "τότε"
+   ],
+   "items": [
+    {
+     "prompt": "life",
+     "answer": "ζωή",
+     "audio": "chapt_10_j_voc1"
+    },
+    {
+     "prompt": "death",
+     "answer": "θάνατος",
+     "audio": "chapt_10_j_voc2"
+    },
+    {
+     "prompt": "I judge",
+     "answer": "κρίνω",
+     "audio": "chapt_10_j_voc3"
+    },
+    {
+     "prompt": "I remain",
+     "answer": "μένω",
+     "audio": "chapt_10_j_voc4"
+    },
+    {
+     "prompt": "only, alone",
+     "answer": "μόνος",
+     "audio": "chapt_10_j_voc5"
+    },
+    {
+     "prompt": "now",
+     "answer": "νῦν",
+     "audio": "chapt_10_j_voc6"
+    },
+    {
+     "prompt": "and not, nor",
+     "answer": "οὐδέ",
+     "audio": "chapt_10_j_voc7"
+    },
+    {
+     "prompt": "Paul",
+     "answer": "Παῦλος",
+     "audio": "chapt_10_j_voc8"
+    },
+    {
+     "prompt": "I save",
+     "answer": "σῴζω",
+     "audio": "chapt_10_j_voc9"
+    },
+    {
+     "prompt": "then",
+     "answer": "τότε",
+     "audio": "chapt_10_j_voc10"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c10_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "and",
+    "kingdom",
+    "but",
+    "righteousness",
+    "first",
+    "the (acc.)",
+    "God",
+    "the (gen.)",
+    "his",
+    "you seek"
+   ],
+   "items": [
+    {
+     "greek": "ζητεῖτε",
+     "answer": "you seek",
+     "audio": "chapt_10_j_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "answer": "but",
+     "audio": "chapt_10_j_sm2"
+    },
+    {
+     "greek": "πρῶτον",
+     "answer": "first",
+     "audio": "chapt_10_j_sm3"
+    },
+    {
+     "greek": "τὴν",
+     "answer": "the (acc.)",
+     "audio": "chapt_10_j_sm4"
+    },
+    {
+     "greek": "βασιλείαν",
+     "answer": "kingdom",
+     "audio": "chapt_10_j_sm5"
+    },
+    {
+     "greek": "τοῦ",
+     "answer": "the (gen.)",
+     "audio": "chapt_10_j_sm6"
+    },
+    {
+     "greek": "θεοῦ",
+     "answer": "God",
+     "audio": "chapt_10_j_sm7"
+    },
+    {
+     "greek": "καὶ",
+     "answer": "and",
+     "audio": "chapt_10_j_sm8"
+    },
+    {
+     "greek": "δικαιοσύνην",
+     "answer": "righteousness",
+     "audio": "chapt_10_j_sm10"
+    },
+    {
+     "greek": "αὐτοῦ",
+     "answer": "his",
+     "audio": "chapt_10_j_sm11"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "_audio_note": "Verse-position clips j_sm1..11 read from the SayWord table; the table's sm12-14 entries reference clips that never shipped (stale buffer from a 14-word verse) and are ignored. The duplicated article uses position 4.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c10_ex_speller",
+   "type": "spell",
+   "title": "Future Indicative Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "I will loose",
+     "answer": "λύσω",
+     "audio": "chapt_10_j_luw1s"
+    },
+    {
+     "prompt": "you (sg) will loose",
+     "answer": "λύσεις",
+     "audio": "chapt_10_j_luw2s"
+    },
+    {
+     "prompt": "he/she/it will loose",
+     "answer": "λύσει",
+     "audio": "chapt_10_j_luw3s"
+    },
+    {
+     "prompt": "we will loose",
+     "answer": "λύσομεν",
+     "audio": "chapt_10_j_luw1p"
+    },
+    {
+     "prompt": "you (pl) will loose",
+     "answer": "λύσετε",
+     "audio": "chapt_10_j_luw2p"
+    },
+    {
+     "prompt": "they will loose",
+     "answer": "λύσουσι",
+     "audio": "chapt_10_j_luw3p"
+    },
+    {
+     "prompt": "I will loose (for myself)",
+     "answer": "λύσομαι",
+     "audio": "chapt_10_j_luwm1s"
+    },
+    {
+     "prompt": "you (sg) will loose (for yourself)",
+     "answer": "λύσῃ",
+     "audio": "chapt_10_j_luwm2s"
+    },
+    {
+     "prompt": "he will loose (for himself)",
+     "answer": "λύσεται",
+     "audio": "chapt_10_j_luwm3s"
+    },
+    {
+     "prompt": "we will loose (for ourselves)",
+     "answer": "λυσόμεθα",
+     "audio": "chapt_10_j_luwm1p"
+    },
+    {
+     "prompt": "you (pl) will loose (for yourself)",
+     "answer": "λύσεσθε",
+     "audio": "chapt_10_j_luwm2p"
+    },
+    {
+     "prompt": "they will loose (for themselves)",
+     "answer": "λύσονται",
+     "audio": "chapt_10_j_luwm3p"
+    },
+    {
+     "prompt": "I will be",
+     "answer": "ἔσομαι",
+     "audio": "chapt_10_j_eimi1s"
+    },
+    {
+     "prompt": "you (sg) will be",
+     "answer": "ἔσῃ",
+     "audio": "chapt_10_j_eimi2s"
+    },
+    {
+     "prompt": "he/she/it will be",
+     "answer": "ἔσται",
+     "audio": "chapt_10_j_eimi3s"
+    },
+    {
+     "prompt": "we will be",
+     "answer": "ἐσόμεθα",
+     "audio": "chapt_10_j_eimi1p"
+    },
+    {
+     "prompt": "you (pl) will be",
+     "answer": "ἔσεσθε",
+     "audio": "chapt_10_j_eimi2p"
+    },
+    {
+     "prompt": "they will be",
+     "answer": "ἔσονται",
+     "audio": "chapt_10_j_eimi3p"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English",
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "Items 1-6/7-12/13-18 are the Future Active, Future Middle and future-of-eimi paradigm forms, each asserted against its chart field; lusousi is spelled WITHOUT the movable nu, matching the parsing pool (movable-nu leniency is withdrawn, D-16 revoked).",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c10_ex_speller_roots",
+   "type": "spell",
+   "title": "Future Indicative Roots Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "I have",
+     "answer": "ἔχω",
+     "audio": "chapt_10_j_exw"
+    },
+    {
+     "prompt": "I will have",
+     "answer": "ἕξω",
+     "audio": "chapt_10_j_ecw"
+    },
+    {
+     "prompt": "I see",
+     "answer": "βλέπω",
+     "audio": "chapt_10_j_blepw"
+    },
+    {
+     "prompt": "I will see",
+     "answer": "βλέψω",
+     "audio": "chapt_10_j_blepsw"
+    },
+    {
+     "prompt": "I write",
+     "answer": "γράφω",
+     "audio": "chapt_10_j_grapw"
+    },
+    {
+     "prompt": "I will write",
+     "answer": "γράψω",
+     "audio": "chapt_10_j_grapsw"
+    },
+    {
+     "prompt": "I remain",
+     "answer": "μένω",
+     "audio": "chapt_10_j_menw"
+    },
+    {
+     "prompt": "I will remain",
+     "answer": "μενῶ",
+     "audio": "chapt_10_j_menww"
+    },
+    {
+     "prompt": "I send",
+     "answer": "ἀποστέλλω",
+     "audio": "chapt_10_j_apostw"
+    },
+    {
+     "prompt": "I will send",
+     "answer": "ἀποστελῶ",
+     "audio": "chapt_10_j_aposww"
+    },
+    {
+     "prompt": "I save",
+     "answer": "σῴζω",
+     "audio": "chapt_10_j_swzw"
+    },
+    {
+     "prompt": "I will save",
+     "answer": "σώσω",
+     "audio": "chapt_10_j_swsw"
+    },
+    {
+     "prompt": "I hear",
+     "answer": "ἀκούω",
+     "audio": "chapt_10_j_akouw"
+    },
+    {
+     "prompt": "I will hear",
+     "answer": "ἀκούσομαι",
+     "audio": "chapt_10_j_akousa"
+    },
+    {
+     "prompt": "I take",
+     "answer": "λαμβάνω",
+     "audio": "chapt_10_j_lamban"
+    },
+    {
+     "prompt": "I will take",
+     "answer": "λήμψομαι",
+     "audio": "chapt_10_j_lhmps"
+    },
+    {
+     "prompt": "I know",
+     "answer": "γινώσκω",
+     "audio": "chapt_10_j_ginwsk"
+    },
+    {
+     "prompt": "I will know",
+     "answer": "γνώσομαι",
+     "audio": "chapt_10_j_gnwsam"
+    },
+    {
+     "prompt": "I come",
+     "answer": "ἔρχομαι",
+     "audio": "chapt_10_j_erxoma"
+    },
+    {
+     "prompt": "I will come",
+     "answer": "ἐλεύσομαι",
+     "audio": "chapt_10_j_eleusa"
+    },
+    {
+     "prompt": "I go",
+     "answer": "πορεύομαι",
+     "audio": "chapt_10_j_poreuo"
+    },
+    {
+     "prompt": "I will go",
+     "answer": "πορεύσομαι",
+     "audio": "chapt_10_j_poreus"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English",
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "22 items = 11 present/future pairs; every form is asserted against a chart, stem-variation popup or drill pool in this TBK, and every clip is table-read from the dispatch at 0xd6c65/0xd7090. Prompt 22 carries a stale-tail overflow in the raw pool (\"I will gooo...\") trimmed to the evident \"I will go\".",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c10_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Meaning",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "life",
+     "answer": "ζωή",
+     "audio": "chapt_10_j_voc1"
+    },
+    {
+     "prompt": "death",
+     "answer": "θάνατος",
+     "audio": "chapt_10_j_voc2"
+    },
+    {
+     "prompt": "I judge",
+     "answer": "κρίνω",
+     "audio": "chapt_10_j_voc3"
+    },
+    {
+     "prompt": "I remain",
+     "answer": "μένω",
+     "audio": "chapt_10_j_voc4"
+    },
+    {
+     "prompt": "only, alone",
+     "answer": "μόνος",
+     "audio": "chapt_10_j_voc5"
+    },
+    {
+     "prompt": "now",
+     "answer": "νῦν",
+     "audio": "chapt_10_j_voc6"
+    },
+    {
+     "prompt": "and not, nor",
+     "answer": "οὐδέ",
+     "audio": "chapt_10_j_voc7"
+    },
+    {
+     "prompt": "Paul",
+     "answer": "Παῦλος",
+     "audio": "chapt_10_j_voc8"
+    },
+    {
+     "prompt": "I save",
+     "answer": "σῴζω",
+     "audio": "chapt_10_j_voc9"
+    },
+    {
+     "prompt": "then",
+     "answer": "τότε",
+     "audio": "chapt_10_j_voc10"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c10_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of Mat 6:33a then click \"Check Answer\"",
+   "reference": "Mat 6:33a",
+   "answerWords": [
+    "ζητεῖτε",
+    "δὲ",
+    "πρῶτον",
+    "τὴν",
+    "βασιλείαν",
+    "τοῦ",
+    "θεοῦ",
+    "καὶ",
+    "τὴν",
+    "δικαιοσύνην",
+    "αὐτοῦ,"
+   ],
+   "translation": "but seek first the kingdom of God and his righteousness",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "audio": "chapt_10_j_mt633a",
+   "spellerTilesRef": "chapt_1",
+   "repeatCheckbox": true,
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Repeat This Exercise"
+    ],
+    "_reveal_note": "RULES C8 / D-30.",
+    "_repeat_note": "\"Repeat This Exercise\" checkbox as in chapter 9 (label at 0xba6ec, this page). Same modeling, same VERIFY-5G item."
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c10_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "senses",
+   "columns": 2,
+   "showNtFreq": true,
+   "footnote": "The number after the translation is the number of times the word occurs in the New Testament.",
+   "playAll": {
+    "label": "Say Whole List",
+    "audio": "chapt_10_j_vocl10"
+   }
+  },
+  {
+   "id": "c10_qr_paradigms",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Future Paradigms",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "id": "qrFutureActive",
+     "title": "Future Active Indicative",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "λύσω",
+         "gloss": "I will loose",
+         "audio": "chapt_10_j_luw1s"
+        },
+        {
+         "greek": "λύσομεν",
+         "gloss": "We will loose",
+         "audio": "chapt_10_j_luw1p"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "λύσεις",
+         "gloss": "You will loose",
+         "audio": "chapt_10_j_luw2s"
+        },
+        {
+         "greek": "λύσετε",
+         "gloss": "You will loose",
+         "audio": "chapt_10_j_luw2p"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "λύσει",
+         "gloss": "He/she/it will loose",
+         "audio": "chapt_10_j_luw3s"
+        },
+        {
+         "greek": "λύσουσι(ν)",
+         "gloss": "They will loose",
+         "audio": "chapt_10_j_luw3p"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_10_j_luwpar"
+     }
+    },
+    {
+     "type": "paradigm",
+     "id": "qrFutureMiddle",
+     "title": "Future Middle Indicative",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "λύσομαι",
+         "gloss": "I will loose (for myself)",
+         "audio": "chapt_10_j_luwm1s"
+        },
+        {
+         "greek": "λυσόμεθα",
+         "gloss": "We will loose (for ourselves)",
+         "audio": "chapt_10_j_luwm1p"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "λύσῃ",
+         "gloss": "You will loose (for yourself)",
+         "audio": "chapt_10_j_luwm2s"
+        },
+        {
+         "greek": "λύσεσθε",
+         "gloss": "You will loose (for yourselves)",
+         "audio": "chapt_10_j_luwm2p"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "λύσεται",
+         "gloss": "He/she/it will loose (for himself/herself/itself)",
+         "audio": "chapt_10_j_luwm3s"
+        },
+        {
+         "greek": "λύσονται",
+         "gloss": "They will loose (for themselves)",
+         "audio": "chapt_10_j_luwm3p"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_10_j_lumpar"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c10_qr_scripture_rom323",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 3:23",
+   "reference": "Rom 3:23",
+   "words": [
+    {
+     "greek": "πάντες",
+     "gloss": "all",
+     "audio": "chapt_10_e_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_10_e_sm2"
+    },
+    {
+     "greek": "ἥμαρτον",
+     "gloss": "have sinned",
+     "audio": "chapt_10_e_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_10_e_sm4"
+    },
+    {
+     "greek": "ὑστεροῦνται",
+     "gloss": "fall short",
+     "audio": "chapt_10_e_sm5"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "of the",
+     "audio": "chapt_10_e_sm6"
+    },
+    {
+     "greek": "δόξης",
+     "gloss": "glory",
+     "audio": "chapt_10_e_sm7"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of [the]",
+     "audio": "chapt_10_e_sm8"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_10_e_sm9"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_10_e_rom323"
+   }
+  },
+  {
+   "id": "c10_qr_scripture_jn11",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 1:1",
+   "reference": "Jn 1:1",
+   "words": [
+    {
+     "greek": "Ἐν",
+     "gloss": "in",
+     "audio": "chapt_10_f_sm1"
+    },
+    {
+     "greek": "ἀρχῇ",
+     "gloss": "beginning",
+     "audio": "chapt_10_f_sm2"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_10_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_10_f_sm4"
+    },
+    {
+     "greek": "λόγος,",
+     "gloss": "word",
+     "audio": "chapt_10_f_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_10_f_sm6"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_10_f_sm7"
+    },
+    {
+     "greek": "λόγος",
+     "gloss": "word",
+     "audio": "chapt_10_f_sm8"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_10_f_sm9"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "with",
+     "audio": "chapt_10_f_sm10"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_10_f_sm11"
+    },
+    {
+     "greek": "θεόν,",
+     "gloss": "God",
+     "audio": "chapt_10_f_sm12"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_10_f_sm6"
+    },
+    {
+     "greek": "θεὸς",
+     "gloss": "God",
+     "audio": "chapt_10_f_sm13"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_10_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_10_f_sm4"
+    },
+    {
+     "greek": "λόγος.",
+     "gloss": "word.",
+     "audio": "chapt_10_f_sm5"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_10_f_jn1_1"
+   }
+  },
+  {
+   "id": "c10_qr_scripture_rom623a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 6:23a",
+   "reference": "Rom 6:23a",
+   "words": [
+    {
+     "greek": "τὰ",
+     "gloss": "the",
+     "audio": "chapt_10_h_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_10_h_sm2"
+    },
+    {
+     "greek": "ὀψώνια",
+     "gloss": "wages",
+     "audio": "chapt_10_h_sm3"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "the",
+     "audio": "chapt_10_h_sm4"
+    },
+    {
+     "greek": "ἁμαρτίας",
+     "gloss": "of  sin",
+     "audio": "chapt_10_h_sm5"
+    },
+    {
+     "greek": "θάνατος,",
+     "gloss": "[is]      death",
+     "audio": "chapt_10_h_sm6"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_10_h_rm623a"
+   }
+  },
+  {
+   "id": "c10_qr_scripture_rom623b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 6:23b",
+   "reference": "Rom 6:23b",
+   "words": [
+    {
+     "greek": "τὸ",
+     "gloss": "the",
+     "audio": "chapt_10_i_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "gloss": "but",
+     "audio": "chapt_10_i_sm2"
+    },
+    {
+     "greek": "χάρισμα",
+     "gloss": "gift",
+     "audio": "chapt_10_i_sm3"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "the",
+     "audio": "chapt_10_i_sm4"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "of God",
+     "audio": "chapt_10_i_sm5"
+    },
+    {
+     "greek": "ζωὴ",
+     "gloss": "[is] life",
+     "audio": "chapt_10_i_sm6"
+    },
+    {
+     "greek": "αἰώνιος",
+     "gloss": "eternal",
+     "audio": "chapt_10_i_sm7"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_10_i_sm8"
+    },
+    {
+     "greek": "Χριστῷ",
+     "gloss": "Christ",
+     "audio": "chapt_10_i_sm9"
+    },
+    {
+     "greek": "Ἰησοῦ",
+     "gloss": "Jesus",
+     "audio": "chapt_10_i_sm10"
+    },
+    {
+     "greek": "τῷ",
+     "gloss": "the",
+     "audio": "chapt_10_i_sm11"
+    },
+    {
+     "greek": "κυρίῳ",
+     "gloss": "Lord",
+     "audio": "chapt_10_i_sm12"
+    },
+    {
+     "greek": "ἡμῶν.",
+     "gloss": "our",
+     "audio": "chapt_10_i_sm13"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_10_i_rm623b"
+   }
+  },
+  {
+   "id": "c10_qr_scripture_mat633a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:33a",
+   "reference": "Mat 6:33a",
+   "words": [
+    {
+     "greek": "ζητεῖτε",
+     "gloss": "Seek",
+     "audio": "chapt_10_j_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "gloss": "but",
+     "audio": "chapt_10_j_sm2"
+    },
+    {
+     "greek": "πρῶτον",
+     "gloss": "first",
+     "audio": "chapt_10_j_sm3"
+    },
+    {
+     "greek": "τὴν",
+     "gloss": "the",
+     "audio": "chapt_10_j_sm4"
+    },
+    {
+     "greek": "βασιλείαν",
+     "gloss": "kingdom",
+     "audio": "chapt_10_j_sm5"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of",
+     "audio": "chapt_10_j_sm6"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_10_j_sm7"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_10_j_sm8"
+    },
+    {
+     "greek": "τὴν",
+     "gloss": "the",
+     "audio": "chapt_10_j_sm9"
+    },
+    {
+     "greek": "δικαιοσύνην",
+     "gloss": "righteousness",
+     "audio": "chapt_10_j_sm10"
+    },
+    {
+     "greek": "αὐτοῦ,",
+     "gloss": "his",
+     "audio": "chapt_10_j_sm11"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_10_j_mt633a"
+   },
+   "_field_note": "QR copy read at 0xa22c6 (live, with tou qeou); the copy at 0x43472 is stale and ignored."
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Great!",
+   "Congratulations",
+   "Perfect!",
+   "Right On!",
+   "Fantastic!",
+   "Yes"
+  ],
+  "incorrect": [
+   "Try again",
+   "Swing and a miss",
+   "Repetition will get it",
+   "Never give up",
+   "Keep trying"
+  ]
+ },
+ "sequence": [
+  "c10_learn_objectives",
+  "c10_learn_english_concepts",
+  "c10_learn_future_verbs",
+  "c10_drill_parsing",
+  "c10_drill_translation",
+  "c10_ex_speller",
+  "c10_ex_speller_roots",
+  "c10_learn_vocab",
+  "c10_drill_vocab_gk_en",
+  "c10_drill_vocab_en_gk",
+  "c10_ex_vocab_speller",
+  "c10_learn_scripture",
+  "c10_drill_scripture_memory",
+  "c10_ex_scripture_speller",
+  "c10_qr_vocab",
+  "c10_qr_paradigms",
+  "c10_qr_scripture_rom323",
+  "c10_qr_scripture_jn11",
+  "c10_qr_scripture_rom623a",
+  "c10_qr_scripture_rom623b",
+  "c10_qr_scripture_mat633a",
+  "c10_learn_bibliography"
+ ],
+ "_menu_note": "The original's Drill Menu prints \"Future Indication Translation Drill\" (typo); the drill page itself says \"Indicative\", which this port uses on both surfaces.",
+ "_audioVerify": "CHAPT_10 ships 183 WAVs. Flags: (1) parsing item 18 blank in the original's table, j_luwm1s wired (form of item 5); (2) j_TvD2 orphaned, unreferenced by design; (3) l_eimi wired to the standalone word eimi, listen; (4) j_epa* = PRESENT eimi, j_eimi* = FUTURE eimi, table-read.",
+ "_sequence_note": "Rail order from ch10railwalk.pdf (Nathanael, 2026-08-09).",
+ "hintCharts": {
+  "futureParadigms": {
+   "paradigmRefs": [
+    "futureActiveParadigm",
+    "futureMiddleParadigm"
+   ],
+   "_note": "Both drills' Hint opens the Future Active + Future Middle charts stacked in one popup (fields at 0xeb0ee/0x8eff4, rail walk evidenced). Present Active and present-eimi chart fields sit adjacent in the parsing drill's record -- whether Hint cycles to them is a VERIFY-5G item; not wired."
+  }
+ }
+}
