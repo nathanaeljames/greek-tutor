@@ -207,7 +207,14 @@
       {#if b.preamble}<p class="rc-preamble" class:rc-gap-before={b.gapBefore}><Marked text={b.preamble} /></p>{/if}
       {@const items = listItems(b)}
       {@const selfNum = (() => { const re = /^\(?\d+[.)]/; return items.length > 0 && items.every(it => it.label && re.test(it.label)); })()}
+      <!-- linkStyle:"plain" drops the underline from popup links inside this
+           list. Chapters 6-8 underline their links because the ORIGINAL
+           underlines the words they sit on; a list whose item NAMES are the
+           links has no such underlining to reproduce, and blue already says
+           tappable (directive 8). Chapter 2's 6 Accent Rules variant 3 is the
+           only user of the flag. -->
       <ol class="rc-list" class:authored-labels={selfNum} class:unnumbered={b.numbered === false}
+          class:plain-links={b.linkStyle === 'plain'}
           class:item-gap={b.itemGap} class:rc-gap-before={b.gapBefore && !b.preamble}>
         {#each items as it, idx}
           <!-- 5F-FEEDBACK3 item 3 (Nathanael, 2026-08-10): the NUMBER and the

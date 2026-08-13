@@ -465,6 +465,10 @@ button { font: inherit; cursor: pointer; }
   background: transparent; border: none; padding: 0; font: inherit; font-weight: 600;
   color: var(--link); cursor: pointer; }
 .rc-num-popup:active { opacity: 0.6; }
+/* linkStyle:"plain" (RichContent): the item NAME is the link, so it carries no
+   underline -- there is no original underlining under it to reproduce, and the
+   marker beside it is already an unadorned blue button. */
+.rc-list.plain-links .popup-link { text-decoration: none; }
 .rc-lead { text-decoration: underline; font-weight: 600; }
 /* labelStyle "underline" / "plain" (5D-SPEC2 §6): the original's own list-item
    terms. Ink, never --link: blue is reserved for tappable, and these labels

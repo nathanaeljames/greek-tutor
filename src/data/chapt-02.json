@@ -927,6 +927,387 @@
      ]
     },
     {
+     "id": "rules6_v2",
+     "title": "6 Accent Rules — Variant 2",
+     "content": [
+      {
+       "type": "numbered",
+       "items": [
+        {
+         "label": "1)",
+         "text": "[[u]]Nouns are retentive[[/u]]. They attempt to keep their accents on the same syllable.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Rule 1: [[u]]Nouns are retentive[[/u]]",
+           "content": [
+            {
+             "type": "greekRows",
+             "rows": [
+              {
+               "greek": "ἄνθρωπος",
+               "gloss": "man (antepenult acute)",
+               "audio": "chapt_2_a_voc3",
+               "_legacy": "a@nqrwpoj"
+              },
+              {
+               "greek": "ἀνθρώπου",
+               "gloss": "man (penult acute—long ultima causes change)",
+               "_legacy": "a]nqrw<pou",
+               "audio": "chapt_2_b_ex2_15"
+              },
+              {
+               "greek": "ἀνθρώπῳ",
+               "gloss": "man (penult acute—long ultima causes change)",
+               "_legacy": "a]nqrw<p&",
+               "audio": "chapt_2_b_ex2_17"
+              },
+              {
+               "greek": "ἄνθρωπον",
+               "gloss": "man (antepenult acute—short ultima, no change)",
+               "_legacy": "a@nqrwpon",
+               "audio": "chapt_2_b_ex2_12"
+              },
+              {
+               "greek": "ἄνθρωπε",
+               "gloss": "man (antepenult acute—short ultima, no change)",
+               "_legacy": "a@nqrwpe",
+               "_note": "b_ex2_21 IDENTIFIED (VERIFY3 item 2): the 21st accent-placement clip, unreferenced by the 20 exercise items, is the vocative. Replaces the a_voc3 stand-in wired in SPEC3.",
+               "audio": "chapt_2_b_ex2_21"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "label": "2)",
+         "text": "[[u]]Verbs are recessive[[/u]]. Their accent recedes towards the first syllable as far as is possible.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Rule 2: [[u]]Verbs are recessive[[/u]]",
+           "content": [
+            {
+             "type": "greekRows",
+             "rows": [
+              {
+               "greek": "λύω",
+               "gloss": "I loose (penult acute)",
+               "audio": "chapt_2_b_vb1",
+               "_legacy": "lu<w"
+              },
+              {
+               "greek": "λύεις",
+               "gloss": "you loose (penult acute)",
+               "audio": "chapt_2_b_vb2",
+               "_legacy": "lu<eij"
+              },
+              {
+               "greek": "λύει",
+               "gloss": "he/she looses (penult acute)",
+               "audio": "chapt_2_b_vb3",
+               "_legacy": "lu<ei"
+              },
+              {
+               "greek": "λύομεν",
+               "gloss": "we loose (antepenult acute—recessive)",
+               "audio": "chapt_2_b_vb4",
+               "_legacy": "lu<omen"
+              },
+              {
+               "greek": "λύετε",
+               "gloss": "you (pl) loose (antepenult acute—recessive)",
+               "audio": "chapt_2_b_vb5",
+               "_legacy": "lu<ete"
+              },
+              {
+               "greek": "λύουσι",
+               "gloss": "they loose (antepenult acute—recessive)",
+               "audio": "chapt_2_b_vb6",
+               "_legacy": "lu<ousi"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "label": "3)",
+         "text": "If the ultima is long, then the antepenult cannot be accented.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Rule 3: Long Ultima, no antepenult accent",
+           "content": [
+            {
+             "type": "greekRows",
+             "rows": [
+              {
+               "greek": "ἄνθρωπος",
+               "gloss": "man (antepenult accented, acute)",
+               "audio": "chapt_2_a_voc3",
+               "_legacy": "a@nqrwpoj"
+              },
+              {
+               "greek": "ἀνθρώπου",
+               "gloss": "man (penult acute—cannot accent antepenult)",
+               "_legacy": "a]nqrw<pou",
+               "audio": "chapt_2_b_ex2_15"
+              },
+              {
+               "greek": "ἀνθρώπῳ",
+               "gloss": "man (penult acute—cannot accent antepenult)",
+               "_legacy": "a]nqrw<p&",
+               "audio": "chapt_2_b_ex2_17"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "label": "4)",
+         "text": "If the ultima is long and the penult is accented, then the accent must be an acute.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Rule 4: Long Ultima, acute penult",
+           "content": [
+            {
+             "type": "greekRows",
+             "rows": [
+              {
+               "greek": "ἀνθρώπου",
+               "gloss": "man (penult acute—long ultima causes change)",
+               "audio": "chapt_2_b_ex2_15"
+              },
+              {
+               "greek": "ἀνθρώπῳ",
+               "gloss": "man (penult acute—long ultima causes change)",
+               "audio": "chapt_2_b_ex2_17"
+              },
+              {
+               "greek": "λύω",
+               "gloss": "I loose  (penult acute)",
+               "audio": "chapt_2_b_vb1"
+              },
+              {
+               "greek": "λύεις",
+               "gloss": "you loose  (penult acute)",
+               "audio": "chapt_2_b_vb2"
+              },
+              {
+               "greek": "λύει",
+               "gloss": "he/she looses  (penult acute)",
+               "audio": "chapt_2_b_vb3"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "label": "5)",
+         "text": "If the ultima is short and the penult is both long and accented, the accent must be a circumflex.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Rule 5: Short Ultima, long penult = circumflex",
+           "content": [
+            {
+             "type": "greekRows",
+             "rows": [
+              {
+               "greek": "ἦλθεν",
+               "gloss": "he went (short ultima—long penult) (Jn 1:7)",
+               "audio": "chapt_2_b_ac1",
+               "_legacy": "h#lqen"
+              },
+              {
+               "greek": "ἐκεῖνος",
+               "gloss": "that (short ultima—long penult) (Jn 1:8)",
+               "audio": "chapt_2_b_ac2",
+               "_legacy": "e]kei?noj"
+              },
+              {
+               "greek": "πρῶτος",
+               "gloss": "first, earlier (short ultima—long penult) (Jn 1:15)",
+               "audio": "chapt_2_b_ac3",
+               "_legacy": "prw?toj"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "label": "6)",
+         "text": "If an acute is on the ultima, it becomes a grave when followed by another word.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Rule 6: Acute Ultima changed to grave",
+           "content": [
+            {
+             "type": "greekRows",
+             "rows": [
+              {
+               "greek": "πρὸς τὸν θεόν,",
+               "gloss": "(two graves and an acute) (Jn 1:1)",
+               "audio": "chapt_2_b_ac4",
+               "_legacy": "pro>j to>n qeo<n,"
+              },
+              {
+               "greek": "καὶ θεὸς ἦν",
+               "gloss": "(two graves and a circumflex) (Jn 1:1)",
+               "audio": "chapt_2_b_ac5",
+               "_legacy": "kai> qeo>j h#n"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "refs",
+       "text": "(Machen, pp. 14f.; Mounce, p. 20)"
+      },
+      {
+       "type": "expander",
+       "label": "Chart: Accent Possibilities",
+       "content": [
+        {
+         "type": "heading",
+         "text": "Accent Chart"
+        },
+        {
+         "type": "greekRows",
+         "columns": [
+          "Antepenult Possibilities",
+          "Penult Possibilities",
+          "Ultima Possibilities"
+         ],
+         "rows": [
+          {
+           "label": "Short Ultima",
+           "syllables": [
+            "´",
+            "´ or ῀",
+            "´ or ῀"
+           ],
+           "greek": ""
+          },
+          {
+           "label": "Long Ultima",
+           "syllables": [
+            "None",
+            "´",
+            "́ or ῀ or ̀"
+           ],
+           "greek": ""
+          }
+         ]
+        },
+        {
+         "type": "refs",
+         "text": "(cf. Hewett, p. 5)"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "rules6_v3",
+     "title": "6 Accent Rules — Variant 3",
+     "content": [
+      {
+       "type": "numbered",
+       "linkStyle": "plain",
+       "items": [
+        {
+         "numberPopupRef": "accentRule1",
+         "text": "[[link:accentRule1]]Nouns are retentive[[/link]]\nThey attempt to keep their accents on the same syllable."
+        },
+        {
+         "numberPopupRef": "accentRule2",
+         "text": "[[link:accentRule2]]Verbs are recessive[[/link]]\nTheir accent recedes towards the first syllable as far as is possible."
+        },
+        {
+         "numberPopupRef": "accentRule3",
+         "text": "[[link:accentRule3]]Long Ultima, no antepenult accent[[/link]]\nIf the ultima is long, then the antepenult cannot be accented."
+        },
+        {
+         "numberPopupRef": "accentRule4",
+         "text": "[[link:accentRule4]]Long Ultima, acute penult[[/link]]\nIf the ultima is long and the penult is accented, then the accent must be an acute."
+        },
+        {
+         "numberPopupRef": "accentRule5",
+         "text": "[[link:accentRule5]]Short Ultima, long penult = circumflex[[/link]]\nIf the ultima is short and the penult is both long and accented, the accent must be a circumflex."
+        },
+        {
+         "numberPopupRef": "accentRule6",
+         "text": "[[link:accentRule6]]Acute Ultima changed to grave[[/link]]\nIf an acute is on the ultima, it becomes a grave when followed by another word."
+        }
+       ]
+      },
+      {
+       "type": "refs",
+       "text": "(Machen, pp. 14f.; Mounce, p. 20)"
+      },
+      {
+       "type": "expander",
+       "label": "Chart: Accent Possibilities",
+       "content": [
+        {
+         "type": "heading",
+         "text": "Accent Chart"
+        },
+        {
+         "type": "greekRows",
+         "columns": [
+          "Antepenult Possibilities",
+          "Penult Possibilities",
+          "Ultima Possibilities"
+         ],
+         "rows": [
+          {
+           "label": "Short Ultima",
+           "syllables": [
+            "´",
+            "´ or ῀",
+            "´ or ῀"
+           ],
+           "greek": ""
+          },
+          {
+           "label": "Long Ultima",
+           "syllables": [
+            "None",
+            "´",
+            "́ or ῀ or ̀"
+           ],
+           "greek": ""
+          }
+         ]
+        },
+        {
+         "type": "refs",
+         "text": "(cf. Hewett, p. 5)"
+        }
+       ]
+      }
+     ]
+    },
+    {
      "id": "noaccents",
      "title": "Words with No Accents",
      "content": [
@@ -1002,6 +1383,214 @@
            "_legacy": "]Egw< ei]mi"
           }
          ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "id": "accentRule1",
+     "title": "Rule 1: Nouns are retentive",
+     "content": [
+      {
+       "type": "greekRows",
+       "rows": [
+        {
+         "greek": "ἄνθρωπος",
+         "gloss": "man (antepenult acute)",
+         "audio": "chapt_2_a_voc3",
+         "_legacy": "a@nqrwpoj"
+        },
+        {
+         "greek": "ἀνθρώπου",
+         "gloss": "man (penult acute—long ultima causes change)",
+         "_legacy": "a]nqrw<pou",
+         "audio": "chapt_2_b_ex2_15"
+        },
+        {
+         "greek": "ἀνθρώπῳ",
+         "gloss": "man (penult acute—long ultima causes change)",
+         "_legacy": "a]nqrw<p&",
+         "audio": "chapt_2_b_ex2_17"
+        },
+        {
+         "greek": "ἄνθρωπον",
+         "gloss": "man (antepenult acute—short ultima, no change)",
+         "_legacy": "a@nqrwpon",
+         "audio": "chapt_2_b_ex2_12"
+        },
+        {
+         "greek": "ἄνθρωπε",
+         "gloss": "man (antepenult acute—short ultima, no change)",
+         "_legacy": "a@nqrwpe",
+         "_note": "b_ex2_21 IDENTIFIED (VERIFY3 item 2): the 21st accent-placement clip, unreferenced by the 20 exercise items, is the vocative. Replaces the a_voc3 stand-in wired in SPEC3.",
+         "audio": "chapt_2_b_ex2_21"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "accentRule2",
+     "title": "Rule 2: Verbs are recessive",
+     "content": [
+      {
+       "type": "greekRows",
+       "rows": [
+        {
+         "greek": "λύω",
+         "gloss": "I loose (penult acute)",
+         "audio": "chapt_2_b_vb1",
+         "_legacy": "lu<w"
+        },
+        {
+         "greek": "λύεις",
+         "gloss": "you loose (penult acute)",
+         "audio": "chapt_2_b_vb2",
+         "_legacy": "lu<eij"
+        },
+        {
+         "greek": "λύει",
+         "gloss": "he/she looses (penult acute)",
+         "audio": "chapt_2_b_vb3",
+         "_legacy": "lu<ei"
+        },
+        {
+         "greek": "λύομεν",
+         "gloss": "we loose (antepenult acute—recessive)",
+         "audio": "chapt_2_b_vb4",
+         "_legacy": "lu<omen"
+        },
+        {
+         "greek": "λύετε",
+         "gloss": "you (pl) loose (antepenult acute—recessive)",
+         "audio": "chapt_2_b_vb5",
+         "_legacy": "lu<ete"
+        },
+        {
+         "greek": "λύουσι",
+         "gloss": "they loose (antepenult acute—recessive)",
+         "audio": "chapt_2_b_vb6",
+         "_legacy": "lu<ousi"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "accentRule3",
+     "title": "Rule 3: Long Ultima, no antepenult accent",
+     "content": [
+      {
+       "type": "greekRows",
+       "rows": [
+        {
+         "greek": "ἄνθρωπος",
+         "gloss": "man (antepenult accented, acute)",
+         "audio": "chapt_2_a_voc3",
+         "_legacy": "a@nqrwpoj"
+        },
+        {
+         "greek": "ἀνθρώπου",
+         "gloss": "man (penult acute—cannot accent antepenult)",
+         "_legacy": "a]nqrw<pou",
+         "audio": "chapt_2_b_ex2_15"
+        },
+        {
+         "greek": "ἀνθρώπῳ",
+         "gloss": "man (penult acute—cannot accent antepenult)",
+         "_legacy": "a]nqrw<p&",
+         "audio": "chapt_2_b_ex2_17"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "accentRule4",
+     "title": "Rule 4: Long Ultima, acute penult",
+     "content": [
+      {
+       "type": "greekRows",
+       "rows": [
+        {
+         "greek": "ἀνθρώπου",
+         "gloss": "man (penult acute—long ultima causes change)",
+         "audio": "chapt_2_b_ex2_15"
+        },
+        {
+         "greek": "ἀνθρώπῳ",
+         "gloss": "man (penult acute—long ultima causes change)",
+         "audio": "chapt_2_b_ex2_17"
+        },
+        {
+         "greek": "λύω",
+         "gloss": "I loose  (penult acute)",
+         "audio": "chapt_2_b_vb1"
+        },
+        {
+         "greek": "λύεις",
+         "gloss": "you loose  (penult acute)",
+         "audio": "chapt_2_b_vb2"
+        },
+        {
+         "greek": "λύει",
+         "gloss": "he/she looses  (penult acute)",
+         "audio": "chapt_2_b_vb3"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "accentRule5",
+     "title": "Rule 5: Short Ultima, long penult = circumflex",
+     "content": [
+      {
+       "type": "greekRows",
+       "rows": [
+        {
+         "greek": "ἦλθεν",
+         "gloss": "he went (short ultima—long penult) (Jn 1:7)",
+         "audio": "chapt_2_b_ac1",
+         "_legacy": "h#lqen"
+        },
+        {
+         "greek": "ἐκεῖνος",
+         "gloss": "that (short ultima—long penult) (Jn 1:8)",
+         "audio": "chapt_2_b_ac2",
+         "_legacy": "e]kei?noj"
+        },
+        {
+         "greek": "πρῶτος",
+         "gloss": "first, earlier (short ultima—long penult) (Jn 1:15)",
+         "audio": "chapt_2_b_ac3",
+         "_legacy": "prw?toj"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "accentRule6",
+     "title": "Rule 6: Acute Ultima changed to grave",
+     "content": [
+      {
+       "type": "greekRows",
+       "rows": [
+        {
+         "greek": "πρὸς τὸν θεόν,",
+         "gloss": "(two graves and an acute) (Jn 1:1)",
+         "audio": "chapt_2_b_ac4",
+         "_legacy": "pro>j to>n qeo<n,"
+        },
+        {
+         "greek": "καὶ θεὸς ἦν",
+         "gloss": "(two graves and a circumflex) (Jn 1:1)",
+         "audio": "chapt_2_b_ac5",
+         "_legacy": "kai> qeo>j h#n"
         }
        ]
       }
