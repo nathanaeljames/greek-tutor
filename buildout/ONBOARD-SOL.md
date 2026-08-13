@@ -263,6 +263,17 @@ against:
   ui-behavior.mjs` exist specifically to make this mechanical rather
   than a squint; run BOTH, do not sample a subset of activities by eye
   and call it a rail walk.
+- **A new modal surface goes into `scripts/ui-modals.mjs`'s SURFACES
+  list in the same change that adds it.** Audited 2026-08-13: the list
+  held only SelectActivity Hints, so the Hints in `DivideActivity` and
+  `PlaceAccentActivity` (chapter 2's Syllable Division and Accent
+  Placement exercises), chapter 6's two prose Hints and the Settings
+  confirm dialog had never been opened at any device height — and two
+  of those components are where the bare-`.card`-instead-of-modal bug
+  lived in 5F. All seven are in the list now and pass at all five
+  heights, but until today nothing would have caught them regressing.
+  A modal
+  nothing opens is a modal nothing checks.
 - **When a component's DOM shape changes, grep the harness for the
   OLD shape before calling the change done.** Retiring
   `PronounParadigm.svelte` this round left `ui-behavior.mjs`,

@@ -92,6 +92,19 @@ const hint = (chapterId, activityId, meanings) => async () => {
 };
 
 const SURFACES = [
+  // Chapter 2's four Hint surfaces, added 2026-08-13. Two of them are the ONLY
+  // coverage of DivideActivity and PlaceAccentActivity, which -- with
+  // SelectActivity -- shipped a bare `.card` instead of a modal shell in 5F:
+  // one copy-pasted bug in three files (5F-SPEC1-PATCH1 item 15/16). That fix
+  // was never rechecked here at any device height, because this list only ever
+  // held SelectActivity Hints. A component whose modal nothing opens is a
+  // component whose modal nothing checks.
+  ['ch2-syllable-counting-hint', hint('chapt_2', 'c2_drill_syllable_counting', false)],
+  ['ch2-accent-rule-hint', hint('chapt_2', 'c2_drill_accent_rule', false)],
+  ['ch2-syllable-division-hint', hint('chapt_2', 'c2_ex_syllable_division', false)],
+  ['ch2-accent-placement-hint', hint('chapt_2', 'c2_ex_accent_placement', false)],
+  ['ch6-case-hint', hint('chapt_6', 'c6_drill_case', false)],
+  ['ch6-translation-hint', hint('chapt_6', 'c6_drill_translation', false)],
   ['ch3-verb-translating-hint', hint('chapt_3', 'c3_drill_verb_translating', false)],
   ['ch4-greek-noun-hint', hint('chapt_4', 'c4_drill_greek_noun', false)],
   ['ch4-greek-noun-hint-meanings', hint('chapt_4', 'c4_drill_greek_noun', true)],
@@ -187,6 +200,14 @@ const SURFACES = [
     await go('#/activity/chapt_1/c1_learn_bibliography');
     await page.locator('.rail-next').click();
     await page.waitForTimeout(250);
+  }],
+  // The Settings confirm dialog (added 2026-08-13). Two lines and two buttons
+  // -- the smallest modal in the app, and the one a shared-CSS change is most
+  // likely to leave behind.
+  ['settings-clear-audio-confirm', async () => {
+    await go('#/settings');
+    await page.getByRole('button', { name: 'Clear downloaded audio', exact: true }).click();
+    await page.waitForTimeout(180);
   }]
 ];
 
