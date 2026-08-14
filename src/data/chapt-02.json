@@ -979,7 +979,7 @@
             }
            ],
            "chrome": "bare",
-           "summaryStyle": "linkUnderline"
+           "summaryStyle": "greenUnderline"
           }
          ]
         },
@@ -1034,7 +1034,7 @@
             }
            ],
            "chrome": "bare",
-           "summaryStyle": "linkUnderline"
+           "summaryStyle": "greenUnderline"
           }
          ]
         },
@@ -1071,7 +1071,7 @@
             }
            ],
            "chrome": "bare",
-           "summaryStyle": "link"
+           "summaryStyle": "green"
           }
          ]
         },
@@ -1115,7 +1115,7 @@
             }
            ],
            "chrome": "bare",
-           "summaryStyle": "link"
+           "summaryStyle": "green"
           }
          ]
         },
