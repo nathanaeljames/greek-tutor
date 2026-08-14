@@ -544,13 +544,15 @@
       <!-- chrome:"bare" strips the box and padding so the closed expander is a
            line of text and its caret, sitting directly under the prose it
            belongs to; the BODY takes the border instead. summaryStyle picks the
-           text treatment: "linkUnderline" / "link" / "plain". Both are data
-           flags rather than a nesting rule, so an expander's appearance never
-           depends on what happens to contain it. Chapter 2's 6 Accent Rules
-           variant 2 is the only user of either. -->
+           text treatment: "linkUnderline" / "link" / "greenUnderline" /
+           "green" / "plain". Both are data flags rather than a nesting rule, so
+           an expander's appearance never depends on what happens to contain it.
+           Chapter 2's 6 Accent Rules variants 2 and 4 are the only users. -->
       <details class="rc-expander" class:rc-expander-bare={b.chrome === 'bare'}>
         <summary class:rc-summary-link-u={b.summaryStyle === 'linkUnderline'}
                  class:rc-summary-link={b.summaryStyle === 'link'}
+                 class:rc-summary-green-u={b.summaryStyle === 'greenUnderline'}
+                 class:rc-summary-green={b.summaryStyle === 'green'}
                  class:rc-summary-plain={b.summaryStyle === 'plain'}><Marked text={b.label} /></summary>
         <div class="rc-expander-body">
           {#if b.content && b.content.length}
