@@ -465,10 +465,6 @@ button { font: inherit; cursor: pointer; }
   background: transparent; border: none; padding: 0; font: inherit; font-weight: 600;
   color: var(--link); cursor: pointer; }
 .rc-num-popup:active { opacity: 0.6; }
-/* linkStyle:"plain" (RichContent): the item NAME is the link, so it carries no
-   underline -- there is no original underlining under it to reproduce, and the
-   marker beside it is already an unadorned blue button. */
-.rc-list.plain-links .popup-link { text-decoration: none; }
 .rc-lead { text-decoration: underline; font-weight: 600; }
 /* labelStyle "underline" / "plain" (5D-SPEC2 §6): the original's own list-item
    terms. Ink, never --link: blue is reserved for tappable, and these labels
@@ -640,38 +636,14 @@ button { font: inherit; cursor: pointer; }
 .rc-expander { margin: 8px 0; border: 1px solid #ddd6c2; border-radius: 10px; background: #fffdf3; }
 .rc-expander summary { padding: 11px 13px; color: var(--ink); font-weight: 600; cursor: pointer; }
 .rc-expander-body { padding: 0 13px 12px; }
-/* chrome:"bare" — no box and no padding around the closed row, so the summary
-   reads as a line of text with its caret hanging under the prose above it. The
-   frame moves to the BODY, which is what the paradigm charts' Meanings
-   expander does (.pg-meanings-toggle over .pg-meanings-card). The difference
-   from that one is deliberate: it sets display:inline-block, which is what
-   removes its disclosure triangle in Chrome and Safari, and this keeps the
-   native marker. */
-.rc-expander-bare { border: none; border-radius: 0; background: transparent; margin: 6px 0 2px; }
-.rc-expander-bare > summary { padding: 2px 0 2px 2px; }
-.rc-expander-bare > .rc-expander-body { margin-top: 7px; padding: 10px 12px;
-  border: 1px solid #ddd6c2; border-radius: 10px; background: #fffdf3; }
-/* summaryStyle. Blue on a summary is honest — the row IS the tap target that
-   opens the card (directive 8) — so the three treatments differ only in how
-   loudly they say so. The marker takes the text's colour with it.
-   The selectors carry `.rc-expander` because `.rc-expander summary` sets the
-   ink colour and would otherwise outrank a bare class. */
-.rc-expander summary.rc-summary-link-u,
-.rc-expander summary.rc-summary-link { color: var(--link); }
-.rc-expander summary.rc-summary-link-u::marker,
-.rc-expander summary.rc-summary-link::marker { color: var(--link); }
-.rc-expander summary.rc-summary-link-u { text-decoration: underline; }
-.rc-expander summary.rc-summary-link { text-decoration: none; }
-/* The same two treatments in the app's emphasis green (--accent-ink) rather
-   than link blue — the colour the app already uses for [[g]] terms, definition
-   terms and chart titles. */
-.rc-expander summary.rc-summary-green-u,
-.rc-expander summary.rc-summary-green { color: var(--accent-ink); }
-.rc-expander summary.rc-summary-green-u::marker,
+/* summaryStyle:"green" — the summary and its caret in the app's emphasis green
+   (--accent-ink), the colour already carrying [[g]] descriptive terms,
+   definition terms and chart titles. Chapter 2's 6 Accent Rules is the only
+   page that asks for it; every other expander stays ink. The selector carries
+   `.rc-expander` because `.rc-expander summary` sets the ink colour and would
+   otherwise outrank a bare class. */
+.rc-expander summary.rc-summary-green { color: var(--accent-ink); text-decoration: none; }
 .rc-expander summary.rc-summary-green::marker { color: var(--accent-ink); }
-.rc-expander summary.rc-summary-green-u { text-decoration: underline; }
-.rc-expander summary.rc-summary-green { text-decoration: none; }
-.rc-expander summary.rc-summary-plain { color: var(--ink); text-decoration: none; }
 
 .pending-verification { border: 1px dashed #a66a18; border-radius: 8px; background: #fff6df;
   color: #70460d; padding: 12px; text-align: center; font-weight: 600; }

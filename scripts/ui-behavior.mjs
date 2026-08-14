@@ -1481,10 +1481,28 @@ for (const [label, chapterId, activityId, open] of [
   check('5E §5.3 ch2 Learn Accent Rules: the rule list underlines both named rules',
     listUnderlines.includes('Nouns are retentive') && listUnderlines.includes('Verbs are recessive'),
     JSON.stringify(listUnderlines));
-  check('5E §5.3 ch2 Learn Accent Rules: the expander labels underline the rule name and print no markup',
-    summaryUnderlines.includes('Nouns are retentive') && summaryUnderlines.includes('Verbs are recessive')
-      && summaries.every(text => !text.includes('[[')),
-    JSON.stringify(summaries));
+  // REVISED 2026-08-14. This used to assert the opposite of what it asserts
+  // now: that the two named rules were UNDERLINED in their expander labels
+  // too. Nathanael chose the interspersed arrangement after a four-way
+  // comparison on device, and its accordions all read the same — the app's
+  // emphasis green, no underline, seven of seven — so the label underline the
+  // stamper used to put there is gone from the data. The prose above them
+  // still underlines both rule names (the assertion directly above), which is
+  // the original's own emphasis and is what 5E §5.3 was really protecting.
+  //
+  // The "no markup" half is unchanged and is the half that fails loudly: a
+  // renderer that stopped honouring the inline spans would print the literal
+  // [[u]] characters at the learner.
+  check('5E §5.3 ch2 Learn Accent Rules: the expander labels carry no underline and print no markup',
+    summaryUnderlines.length === 0 && summaries.every(text => !text.includes('[[')),
+    JSON.stringify({ summaries, summaryUnderlines }));
+  // The whole page is one treatment: every accordion, the six rules and the
+  // chart alike, in --accent-ink with no decoration.
+  const summaryColors = await page.locator('.rc-expander > summary').evaluateAll(nodes =>
+    nodes.map(n => `${getComputedStyle(n).color}/${getComputedStyle(n).textDecorationLine}`));
+  check('ch2 Learn Accent Rules: all seven accordions are green with no underline',
+    summaryColors.length === 7 && summaryColors.every(s => s === 'rgb(31, 95, 87)/none'),
+    JSON.stringify(summaryColors));
 }
 
 // ------------------------------------------------- §6.7 modals AT REST

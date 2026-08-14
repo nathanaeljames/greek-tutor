@@ -207,14 +207,7 @@
       {#if b.preamble}<p class="rc-preamble" class:rc-gap-before={b.gapBefore}><Marked text={b.preamble} /></p>{/if}
       {@const items = listItems(b)}
       {@const selfNum = (() => { const re = /^\(?\d+[.)]/; return items.length > 0 && items.every(it => it.label && re.test(it.label)); })()}
-      <!-- linkStyle:"plain" drops the underline from popup links inside this
-           list. Chapters 6-8 underline their links because the ORIGINAL
-           underlines the words they sit on; a list whose item NAMES are the
-           links has no such underlining to reproduce, and blue already says
-           tappable (directive 8). Chapter 2's 6 Accent Rules variant 3 is the
-           only user of the flag. -->
       <ol class="rc-list" class:authored-labels={selfNum} class:unnumbered={b.numbered === false}
-          class:plain-links={b.linkStyle === 'plain'}
           class:item-gap={b.itemGap} class:rc-gap-before={b.gapBefore && !b.preamble}>
         {#each items as it, idx}
           <!-- 5F-FEEDBACK3 item 3 (Nathanael, 2026-08-10): the NUMBER and the
@@ -541,19 +534,14 @@
       <PrepositionsChart block={b} title={sameTitle(b.title) ? null : b.title} />
 
     {:else if b.type === 'expander'}
-      <!-- chrome:"bare" strips the box and padding so the closed expander is a
-           line of text and its caret, sitting directly under the prose it
-           belongs to; the BODY takes the border instead. summaryStyle picks the
-           text treatment: "linkUnderline" / "link" / "greenUnderline" /
-           "green" / "plain". Both are data flags rather than a nesting rule, so
-           an expander's appearance never depends on what happens to contain it.
-           Chapter 2's 6 Accent Rules variants 2 and 4 are the only users. -->
-      <details class="rc-expander" class:rc-expander-bare={b.chrome === 'bare'}>
-        <summary class:rc-summary-link-u={b.summaryStyle === 'linkUnderline'}
-                 class:rc-summary-link={b.summaryStyle === 'link'}
-                 class:rc-summary-green-u={b.summaryStyle === 'greenUnderline'}
-                 class:rc-summary-green={b.summaryStyle === 'green'}
-                 class:rc-summary-plain={b.summaryStyle === 'plain'}><Marked text={b.label} /></summary>
+      <!-- summaryStyle:"green" sets the summary in the app's emphasis green
+           instead of ink (chapter 2's 6 Accent Rules, adopted 2026-08-14 after
+           a four-way comparison on device). A data flag rather than a nesting
+           rule, so an expander's appearance never depends on what contains it.
+           Three other treatments (blue, underlined, frameless) were built for
+           that comparison and removed with the variants that used them. -->
+      <details class="rc-expander">
+        <summary class:rc-summary-green={b.summaryStyle === 'green'}><Marked text={b.label} /></summary>
         <div class="rc-expander-body">
           {#if b.content && b.content.length}
             <svelte:self blocks={b.content} greekTaps={b.greekTaps || greekTaps} />
