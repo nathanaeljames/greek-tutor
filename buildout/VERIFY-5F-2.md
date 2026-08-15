@@ -27,7 +27,7 @@ moveable" and made the port accept **ἐστί as well as ἐστίν**. That is
 me inventing a grading rule. If the original only PRINTS it that way
 and rejects the bare form, it comes out.
 
-Answer: accepts ἐστί / rejects it
+Answer: accepts ἐστί
 
 **3. ch8 Personal Pronoun Case Drill — case tapped before person?**
 You settled person-then-case (VERIFY-5F item 7) and that is built.
@@ -37,7 +37,7 @@ person tap commits it and you get no chance to change the person. The
 alternative is to refuse case input until a person is chosen. The rail
 walk shows both grids drawn live, which is why I did not gate it.
 
-Answer: leave as is / gate the case grid
+Answer: leave as is
 
 ---
 
@@ -56,6 +56,8 @@ wiring:
   emphatic", which the grammar does not have.
 
 Answer:
+- [X] `h_voc3` says both ἐγώ and ἡμεῖς
+- [X] `h_voc9` says both σύ and ὑμεῖς
 
 ---
 
@@ -65,28 +67,29 @@ Answer:
 airplane mode on, walk all three rails (20 / 25 / 25 stops). Content,
 bundled Greek font, audio from IndexedDB, end-of-chapter dialog.
 
-PASS / FAIL:
+PASS / FAIL: PASS
+N.B. doesnt the standard testing pipeline require a full offline railwalk?
 
 **6. The prepositions SVG on real WebKit (ch6).** Its Greek labels are
 SVG `<text>` — the one place in the app where the bundled font could
 fail to apply when HTML succeeds. Do ἐν, περί, ἐπί render in the Greek
 face with breathings and accents intact?
 
-PASS / FAIL:
+PASS / FAIL: PASS
 
 **7. The two new layouts at phone width, no clipping.** ch8's pronoun
 paradigm (Singular and Plural side by side, four rows) and ch8's
 two-stage case drill (person column plus a 2x4 case grid). Shortest
 phone you have.
 
-PASS / FAIL:
+PASS / FAIL: PASS
 
 **8. ch6 ἐπί popup with the Safari toolbar showing.** Longest sheet in
 the cohort. Clean at five CSS viewport sizes in the modal pass, but a
 dialog has shipped twice with its close button below the fold. Is
 Cancel reachable at rest?
 
-PASS / FAIL:
+PASS / FAIL: PASS
 
 ---
 
@@ -102,7 +105,7 @@ image, not a pixel trace (no coordinate-extraction tool available in
 this environment) — this question is still open in that narrower
 sense: does the rebuilt geometry read as a closer match at a glance?
 
-PASS / FAIL:
+PASS / FAIL: After I asked you to trace and stencil it was accepted
 
 **10. ch6 and ch8 vocabulary drills stay two-up on iPad** where ch5 and
 ch7 go four-up (D-32 — the case split forces an authored grid, and
@@ -110,4 +113,5 @@ nothing in the data marks it as vocabulary). Compare ch5 and ch6
 Vocabulary: Greek to English side by side on the iPad. Live with it,
 or have the pipeline mark those four drills?
 
-PASS / FAIL:
+PASS / FAIL: FAIL
+Your reasoning is not clear - why did you revert chs 6 and 8 after I gave explicit instructions to use 4 up on ipad? Is there a reason to do 4 up on 5 & 7 but not 6 & 8?

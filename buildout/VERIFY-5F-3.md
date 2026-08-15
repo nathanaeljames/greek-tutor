@@ -146,8 +146,9 @@ you want kept open.
 - `h_1nse`, `h_kai`, `h_kagw` — recorded as surfaceless. `h_gs1` and
   `h_exx2` were placed from your screenshots and are wired.
 
-- [X] Close all of the above
-- [ ] Keep open (list which)
+- [] Close all of the above
+- [X] Keep open (list which)
+Close everything except VERIFY-5F-2 - I do not understand why chs 6 and 8 reverted to 2 up? Either provide a good reason or standardize this across the app for all vocab drills use 4 up on ipad 2 up on iphone.
 
 ---
 

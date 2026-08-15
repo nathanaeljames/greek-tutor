@@ -16,7 +16,7 @@ something to land against.
 
 Files are on the ISO and in the app's pack; both paths are given.
 
-- [ ] **(a) `chapt_9_i_mpar` — does the Passive chart have its own recording?**
+- [X] **(a) `chapt_9_i_mpar` — does the Passive chart have its own recording?**
   Port: the ch9 **Present Passive** paradigm's Say Paradigm plays
   `i_mpar`; the **Middle** paradigm plays `i_midpar`. `i_mpar` is
   referenced NOWHERE in `9_MIDDLE.TBK` — it was wired here by
@@ -26,40 +26,40 @@ Files are on the ISO and in the app's pack; both paths are given.
   `I_MIDPAR.WAV` beside it, and run the original's Passive chart's Say
   Paradigm button.
   → **Same clip / distinct passive clip / neither:** ______________
-  Notes:
+  Notes: Same clip, he recorded saying identical words twice. Port works fine as wired.
 
-- [ ] **(b) `chapt_9_i_voc11` — is it διέρχομαι?**
+- [X] **(b) `chapt_9_i_voc11` — is it διέρχομαι?**
   Port: it backs the fourth Compound Verbs row, διέρχομαι "I go
   through". Wired by elimination — it is a live dispatch key with no
   surviving surface, and the other ten `i_voc*` clips are the chapter's
   vocabulary.
   `CHAPT_9/I_VOC11.WAV` (`/audio/chapt_9/i_voc11.m4a`).
   → **PASS / FAIL (says: ______________)**
-  Notes:
+  Notes: Yes, διέρχομαι, and the port wires it correctly
 
-- [ ] **(c) `chapt_10_l_eimi` — a standalone εἰμί?**
+- [X] **(c) `chapt_10_l_eimi` — a standalone εἰμί?**
   Port: the "Future of εἰμί" topic TITLE taps its Greek word to this
   clip. If it is a sentence, a paradigm recitation or the future forms
   rather than the bare word, the tap is wrong and the title should go
   back to plain ink.
   `CHAPT_10/L_EIMI.WAV` (`/audio/chapt_10/l_eimi.m4a`).
   → **PASS / FAIL (says: ______________)**
-  Notes:
+  Notes: Yes, a standalone εἰμί, and the port wires it correctly
 
-- [ ] **(i) `j_TvD2` and `j_palp` — genuinely orphaned?**
+- [X] **(i) `j_TvD2` and `j_palp` — genuinely orphaned?**
   Port: neither is referenced by any chapter, by design. `j_TvD2` is
   the gap in the translation drill's shifted table (item N plays
   `j_TvD(N+1)`); `j_palp` has no surface at all. Both ship in the pack
   and are downloaded; nothing plays them.
   `CHAPT_10/J_TVD2.WAV`, `CHAPT_10/J_PALP.WAV`.
   → **Both orphaned / one of them belongs somewhere:** ______________
-  Notes:
+  Notes: j_palp is luomen, as seen in Future Indicative Parsing Drill (already wired correctly so may be a duplicate); j_TvD2 sppears to be a Greek phrase or verse that never made it into the Translation Drill - don't worry about it
 
 ---
 
 ## DOSBox observations (d, g, h, j, k)
 
-- [ ] **(d) "Repeat This Exercise" — does the control exist at all?**
+- [X] **(d) "Repeat This Exercise" — does the control exist at all?**
   **Start here, not with the semantics.** Neither rail-walk panel draws
   it: rw9 p13-2 and rw10 p14-2 both show exactly ONE checkbox on the
   Scripture Memory Spelling Exercise, "With Accents". Both captures are
@@ -78,9 +78,9 @@ Files are on the ISO and in the app's pack; both paths are given.
      what happens — does the verse replay, does the typed text clear,
      does anything about the score or the page counter change?
   → ______________________________________________
-  Notes:
+  Notes: It is there. In the original you get exactly one chance to 'Check Answer', then 'Major Hint' and 'Pronounce' buttons are replaced with 'Repeat This Exercise' button which clears the entire screen and starts over. I do not want to copy this behavior. As I have specified previously, making a wrong guess should NOT clear the slate but allow guess until right. I don't want to retype the whole verse which is frankly a bitch on any keyboard because I missed one accent mark.
 
-- [ ] **(g) Present-tense εἰμί in the ch10 Parsing Drill — which VOICE does the original accept?**
+- [X] **(g) Present-tense εἰμί in the ch10 Parsing Drill — which VOICE does the original accept?**
   Port: derives voice from the form — the four present items (εἰμί,
   εἶ, ἐστέ, εἰσί) parse **Active**; the six future ones (ἔσομαι, ἔσῃ,
   ἔσται, ἐσόμεθα, ἔσεσθε, ἔσονται) parse **Middle**, since the future
@@ -89,9 +89,9 @@ Files are on the ISO and in the app's pack; both paths are given.
   Parse one present item (e.g. εἰμί) in DOSBox and record what it
   accepts.
   → **Active / Middle / accepts either:** ______________
-  Notes:
+  Notes: Only Present Active Singular is accepted for εἰμί
 
-- [ ] **(h) Does the ch10 Parsing Drill's Hint cycle past the two future charts?**
+- [X] **(h) Does the ch10 Parsing Drill's Hint cycle past the two future charts?**
   Port: Hint opens ONE popup holding Future Active over Future Middle,
   stacked under a single Close — which is what rw10 p7-1 shows. No
   cycling is wired. The drill's page record has Present Active and
@@ -99,18 +99,18 @@ Files are on the ISO and in the app's pack; both paths are given.
   question exists.
   Click Hint in DOSBox and then keep clicking whatever it offers.
   → **FA+FM only / cycles to (list): ______________**
-  Notes:
+  Notes: Ah, this is the first time I have noticed this - there is no cycling, BUT if you are viewing a lusw form and click Hint you get the lusw luseis paradigm BUT it you are viewing an eimi form you see the eimi paradigm. I have attached a screenshot of that page with this response (please remind me if I missed it). Let's copy this and keep an eye out for similar behavior moving forward
 
-- [ ] **(j) Irregular Futures headers — underlined or not?**
+- [X] **(j) Irregular Futures headers — underlined or not?**
   Port: underlines "Present" and "Future" on BOTH the Deponent Futures
   and Irregular Futures charts, because 5G-SPEC1 §3.2 says both are
   underlined and the data marks both. Panel p6-2 shows the **Irregular**
   headers NOT underlined while p5-4's Deponent headers are.
   → **Keep both underlined / drop the underline on Irregular Futures:**
   ______________
-  Notes:
+  Notes: Keep both underlined
 
-- [ ] **(k) The SM speller's Previous Page / Next Page pair.**
+- [X] **(k) The SM speller's Previous Page / Next Page pair.**
   Port: the whole verse is one field with one Check Answer, as every
   ported whole-verse speller has been since chapter 3. The original
   pages the entry area (panel p13-2). This is a standing pre-5G
@@ -118,7 +118,7 @@ Files are on the ISO and in the app's pack; both paths are given.
   a decision rather than an omission.
   → **Standing divergence stays / page the field like the original:**
   ______________
-  Notes:
+  Notes: Not sure what you are referring to, botht the original and the port have Previous/ Next buttons, but keep doing these as you are and as I have approved them since chapter 3.
 
 ---
 
@@ -127,22 +127,22 @@ Files are on the ISO and in the app's pack; both paths are given.
 Both are the original's own slips, shipped verbatim. Either answer gets
 a divergence entry; "keep" is not the free option.
 
-- [ ] **(e) Chapter 9 objective 6 reads "memorize Jn 6:23b in Greek."**
+- [X] **(e) Chapter 9 objective 6 reads "memorize Jn 6:23b in Greek."**
   The verse the chapter actually teaches is **Rom 6:23b** — the Learn
   Scripture Memory page, the speller's own instruction line and the
   Quick Review entry all say Rom.
   Port: prints the objective verbatim, Jn and all.
   → **Keep the typo / fix to Rom 6:23b:** ______________
-  Notes:
+  Notes: fix to Rom 6:23b
 
-- [ ] **(f) Chapter 9 glosses ἔρχομαι "I go in, enter" on the Compound Verbs page.**
+- [X] **(f) Chapter 9 glosses ἔρχομαι "I go in, enter" on the Compound Verbs page.**
   That is εἰσέρχομαι's gloss, copied one row up; the chapter's own
   vocabulary glosses ἔρχομαι "I come, go", and so does the Frequently
   Used Deponent Verbs popup two topics earlier — so the page contradicts
   itself.
   Port: prints "I go in, enter" verbatim.
   → **Keep verbatim / fix to "I come, go":** ______________
-  Notes:
+  Notes: fix to "I come, go"
 
 ---
 
@@ -152,25 +152,29 @@ The preview half is scripted (`npm run ui:offline`: 44 stops, refresh on
 an activity route, no console errors). This is the part only a real
 iPhone can answer.
 
-- [ ] **Download both packs through the app**, then turn on airplane
+- [X] **Download both packs through the app**, then turn on airplane
   mode and walk **all 44 stops** — chapter 9's 22 and chapter 10's 22.
   → **PASS / FAIL at: ______________**
+  All PASS
 
-- [ ] **Tap the Greek prompt on at least one ch10 Translation Drill
+- [X] **Tap the Greek prompt on at least one ch10 Translation Drill
   item.** This is the surface behind the round's blocking fix: all 31
   of that drill's clips were keyed in the wrong case and would have
   toasted "Audio not found" on every item. One tap that speaks is the
   proof it is fixed on device.
   → **Speaks / silent / toast:** ______________
+  Speaks, tried several successfully
 
-- [ ] **Run one Repeat-checkbox exercise offline** (ch9 or ch10 SM
+- [X] **Run one Repeat-checkbox exercise offline** (ch9 or ch10 SM
   speller): tick Repeat This Exercise, spell the verse correctly, and
   let the verse play to the end — the field should clear for another
   pass. Then do it again and tap **Pronounce** while the verse is still
   playing: what you typed must stay put, because an interrupted clip is
   not you hearing your verse. *(Skip if item (d) retires the control.)*
   → **PASS / FAIL:** ______________
+  Remove 'Repeat This Exercise' checkbox from chapters 9 & 10 completely! Make a note moving forward that I DO NOT WANT this behavior and have deliberately decided against it - if a student wants to reset the exercise I have already provided them a Restart Exercise button. 
 
-- [ ] **Anything that looks wrong.** Free text; a screenshot beats a
+- [X] **Anything that looks wrong.** Free text; a screenshot beats a
   description.
   → ______________________________________________
+  Everything looks good besides what I have noted in 5G-FEEDBACK1.pdf
