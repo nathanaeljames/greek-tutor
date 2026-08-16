@@ -136,3 +136,43 @@ I used the supplied `F:\greekapp\ch9railwalkFIXED.pdf` (13 pages, SHA-256 `10D8B
 - [x] Build, shape, lazy-chunk, behavior, modal, rail, and 44-stop offline checks are green.
 - [x] No data, lexicon, audio manifest, cache architecture, route-mount scan, or audio-byte writer changed.
 - [x] Results and cumulative BUILD handoffs are delivered; nothing was committed or pushed.
+
+---
+
+## XPATCH2 (cross-patch from the parallel run)
+
+Base: `26b83827f55abbf5207c8561863faab6207dab01` (`sol wins 5g spec 2, implementing xpatch from opus`). Nathanael had incorporated the accepted Sol SPEC2 tree before this patch began; the XPATCH2 working tree was clean at that baseline. No commit or push was made in this patch.
+
+1. **D-42 rationale recorded in the component** — a header comment in `SpellVerseActivity.svelte` states why the Repeat control is gone and that no future DOSBox observation reinstates it, at the place a future round would add it back. The build-time guard in `check-content-shapes.mjs` is unchanged and remains the enforcement.
+2. **Gloss-taps-play-nothing assertions hardened** — the εἰμί hint stack now has a separately named audio-log conduct assertion in addition to its 12-Greek/12-English structural checks. One ordinary chapter 9 Present Middle lesson paradigm has the same negative conduct assertion, after prewarming its authored first clip so an empty audio DB cannot make the test vacuously pass.
+
+### Spec/code drift
+
+The accepted Sol base already cleared the audio log, clicked the first εἰμί gloss, and required zero clips. That conduct was bundled into the existing 12-gloss/plain-ink structural assertion rather than independently named. XPATCH2's stated absence was therefore stale. This patch preserved the existing structural coverage, split the εἰμί conduct into its own assertion, and added the missing ordinary-paradigm assertion. The accounting change is 871 to 873 checks.
+
+### Assertion bite proof
+
+I temporarily moved the rendered `.pg-gloss` inside the existing `button.pg-greek-tap` in `Paradigm.svelte`. Retaining the current selector let the full maintained harness reach both new assertions while behaviorally recreating the rejected gloss-plays-Greek defect. I built that regressed artifact, restored the source immediately, and verified the component's SHA-256 before and after as `EC7BA73DCB706E24E6CC1822F7A264A7911F7EA69CAE4E94A8CC82303B994214` with no `Paradigm.svelte` diff. The isolated regressed build produced:
+
+```text
+FAIL  5G-SPEC2 eimi charts: all English glosses are plain, ink, and not tappable  — 12 glosses, plain false
+FAIL  5G-SPEC2 eimi hint: tapping an English gloss plays no audio  — 1 clip(s) played on a gloss tap
+FAIL  5G-XPATCH2 chapter 9 Present Middle paradigm: tapping an English gloss plays no audio  — 1 clip(s) played on a gloss tap
+870/873 behavior checks passed
+```
+
+The first failure is the retained structural sibling check; the latter two are the requested conduct checks. Both new assertions therefore demonstrably bite. The restored final build then passed 873/873.
+
+### Final verification
+
+| Command/check | Result |
+| --- | --- |
+| `npm.cmd run verify` | PASS: shapes for all 10 chapters; 101 modules transformed; PWA precache 37 entries; 10 chapter plus 10 lexicon chunks emitted and precached |
+| `npm.cmd run ui:behavior` with `BASE=http://127.0.0.1:4183` | PASS: 873/873 behavior checks |
+| Temporary nested-gloss build, same behavior command | Expected failure: 870/873; both new checks reported one clip from a gloss tap |
+| `npm.cmd run ui:modals -- --base=http://127.0.0.1:4183 ...` | PASS: 150/150 modal states; zero failures |
+| `npm.cmd run ui:walk -- --base=http://127.0.0.1:4183 --chapters=chapt_1,...,chapt_10 ...` | PASS: 219 stops x 2 widths; 612/612 states; zero overflow, rail, interaction, or console errors |
+| `npm.cmd run ui:offline` with `BASE=http://127.0.0.1:4183` | PASS: 44 stops; zero missing; offline refresh OK; zero console errors |
+| `node --check scripts/ui-behavior.mjs` and `git diff --check` | PASS |
+
+The build retains the pre-existing `DivideActivity.svelte:370` accessibility warning; XPATCH2 does not touch that component. No chapter data, lexicon, audio manifest, cache/store path, or shared paradigm renderer changed. The complete patch diff, including this amendment and excluding its self-referential carrier, is in `buildout/5G-XPATCH2-DIFF.md`.

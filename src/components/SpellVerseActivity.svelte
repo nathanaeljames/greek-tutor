@@ -1,4 +1,14 @@
 <script>
+  // NO "REPEAT THIS EXERCISE" CONTROL (D-42 RETIRED, 5G-SPEC2 section 2).
+  // The original gives one Check Answer and then clears the whole screen.
+  // That behavior was OBSERVED and then DELIBERATELY REJECTED by Nathanael.
+  // Do not add this control back, in any chapter, regardless of what a
+  // future DOSBox observation shows — the observation is not in dispute.
+  // A wrong Check Answer keeps what was typed (retry-until-right); the
+  // only thing that clears the slate is the learner pressing Restart
+  // Exercise (D-12). check-content-shapes.mjs fails the build if any
+  // chapter's data reintroduces the key.
+
   // SCRIPTURE MEMORY SPELLING EXERCISE (5D, activity type `spellVerse`).
   // The whole verse is typed as free text and graded word by word against
   // answerWords[] when Check Answer is pressed — one surface, not a

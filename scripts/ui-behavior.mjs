@@ -3637,17 +3637,49 @@ for (const [itemIndex, expectedGreek] of [[20, 'εἰμί'], [24, 'ἔσομαι
       await greekButtons.count() === 12 && (await clips()).length === 1
         && firstPresentAudio === 'chapt_10_g_eimi1s',
       `${await greekButtons.count()} Greek buttons, first audio ${JSON.stringify(firstPresentAudio)}`);
-    await page.evaluate(() => { window.__clips.length = 0; });
-    await glosses.first().click();
-    await page.waitForTimeout(120);
     check('5G-SPEC2 eimi charts: all English glosses are plain, ink, and not tappable',
-      await glosses.count() === 12 && glossesPlain && (await clips()).length === 0,
-      `${await glosses.count()} glosses, plain ${glossesPlain}, clips ${(await clips()).length}`);
+      await glosses.count() === 12 && glossesPlain,
+      `${await glosses.count()} glosses, plain ${glossesPlain}`);
+
+    // The gloss must play NOTHING. This is the check the parallel 5G-SPEC2
+    // run did not have: it asserted no BUTTON inside .pg-gloss, which the
+    // pre-fix DOM satisfied trivially while the gloss sat inside the
+    // .pg-cell button and a tap on it played the Greek clip. Assert the
+    // conduct, not just the shape.
+    await page.evaluate(() => { window.__clips.length = 0; });
+    const before = (await clips()).length;
+    await glosses.first().click();
+    await page.waitForTimeout(250);
+    const after = (await clips()).length;
+    check('5G-SPEC2 eimi hint: tapping an English gloss plays no audio',
+      after === before,
+      `${after - before} clip(s) played on a gloss tap`);
   }
 
   await modal.getByRole('button', { name: 'Close', exact: true }).click();
   await page.waitForTimeout(80);
   check(`${label}: the form-dependent Hint closes`, await page.locator('.hint-modal').count() === 0);
+}
+
+// The same negative conduct contract must hold on an ordinary lesson chart,
+// not only inside the new eimi Hint. Prewarm the authored first form so this
+// remains deterministic even when the browser starts with an empty audio DB.
+{
+  await go('#/activity/chapt_9/c9_learn_mp_verbs');
+  await gotoTopic(1);
+  const middleChart = page.locator('.card .paradigm')
+    .filter({ hasText: 'Present Middle Indicative Paradigm' }).first();
+  const firstCell = middleChart.locator('.pg-cell').first();
+  await firstCell.locator('button.pg-greek-tap:not([disabled])').click();
+  await page.waitForFunction(() => window.__clips.length > 0, null, { timeout: 5000 });
+  await page.evaluate(() => { window.__clips.length = 0; });
+  const before = (await clips()).length;
+  await firstCell.locator('.pg-gloss').click();
+  await page.waitForTimeout(250);
+  const after = (await clips()).length;
+  check('5G-XPATCH2 chapter 9 Present Middle paradigm: tapping an English gloss plays no audio',
+    after === before,
+    `${after - before} clip(s) played on a gloss tap`);
 }
 
 // ---- G8 the Quick Review paradigm pair is stacked, not paged ------------
