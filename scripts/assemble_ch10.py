@@ -175,7 +175,12 @@ def parsing_drill(tbk, conv):
     # cross-assert: dispatched clip family must agree with the derived
     # tense/voice on all 30 items (epa/eimi before pa; luwm before luw)
     FAMILY = [('j_epa', ('Present', 'Active')),
-              ('j_eimi', ('Future', 'Middle')),
+              # D-45: the six future-eimi items grade Future ACTIVE. The
+              # original's own hint chart is titled 'Future Active
+              # Indicative of eimi' and its deponent note extends
+              # translated-active to the parse. Walkthrough-verified
+              # 30/30 against ch10parsingdrill.pdf, 2026-08-15.
+              ('j_eimi', ('Future', 'Active')),
               ('j_luwm', ('Future', 'Middle')),
               ('j_luw', ('Future', 'Active')),
               ('j_pa', ('Present', 'Active')),

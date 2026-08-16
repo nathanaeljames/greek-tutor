@@ -138,7 +138,15 @@ header in the original?** Header → C6. No header → C5.
    modal's content in place; it does not open a second modal on top
    (broken item 3). Replaced states that carry audio get their own
    Say Whole Paradigm button; nothing autoplays on state change.
-5. **C9 pages** show everything at once: paradigms stack vertically
+5. **Centred navigation where there is no say-all button.** The
+   control row's layout assumes a say-all button anchoring it. Where a
+   chart or modal state has NO Say Paradigm / Say Whole List button,
+   the navigation control that remains — the §4.1 single toggle or the
+   §4.2 Back/More pair — is CENTRED on its own line rather than left
+   where the pair would have sat. Applies app-wide, every category
+   (added 2026-08-16 from the εἰμί hint, whose charts carry no say-all).
+
+6. **C9 pages** show everything at once: paradigms stack vertically
    (Singular above Plural, Middle above Passive), one say-all button
    per chart, no toggles, no More/Back, no topic rail. Audio buttons
    are not pagination and stay.
@@ -340,7 +348,7 @@ App-wide renderer items (one implementation each, applied everywhere):
 | --- | --- |
 | R1 | ALL in-text citation and aside links render green underlined — every chapter, existing and converted alike |
 | R2 | Accordion styling: green #1f5f57, left caret, `[[u]]` stripped from labels, collapsed by default without exception |
-| R3 | Pinned control row: say-all + toggle / Back-More never scrolls off screen — fixed modal footer, sticky in main (D-38 amendment) |
+| R3 | Pinned control row: say-all + toggle / Back-More never scrolls off screen — fixed modal footer, sticky in main (D-38 amendment). Where a state has NO say-all button, the remaining control is CENTRED (§4.5) |
 | R4 | No modal stacking; in-modal controls replace content in place; replaced states with audio get their own Say button; no autoplay (covers the ch3/4/5 Paradigm-Endings hints) |
 | R5 | Two-state single toggle button on the say-all line (covers ch4 Masculine, ch5 Alpha, ch7 both adjective learn paradigms, ch7 Adjective Case Drill hint, ch7 Adjective Translation Drill hint, ch3/4/5 Paradigm-Endings hints with R4, ch9 Middle/Passive hint, ch10 Active/Middle hint) |
 | R6 | Meanings chart affordance: green, UNDERLINED (sole exception to R2's no-underline rule), caret, no border |

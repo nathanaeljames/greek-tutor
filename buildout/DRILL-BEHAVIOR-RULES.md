@@ -305,3 +305,19 @@ the ones that do not must be marked.
 of a button, the name of an activity, or how the same-named activity
 behaves in another chapter. The Vocabulary drills changed class between
 chapters in DRILL-MATRIX.md purely because of that last error.
+
+## Retry semantics and the Repeat control (added 2026-08-16, D-42)
+
+A wrong answer NEVER clears what the learner has entered. Spellers and
+typed-entry exercises keep the typed text and allow retry until right;
+selection drills keep the item live. This is a deliberate DEPARTURE
+from the original in the Scripture Memory spellers, where a single
+"Check Answer" is followed by a "Repeat This Exercise" button that
+wipes the whole screen.
+
+That control is RETIRED (D-42) and must never be re-added in any
+chapter, regardless of what a future DOSBox observation shows — the
+observation is not in dispute, the design decision overrides it. The
+only thing that clears a slate is the learner pressing Restart
+Exercise (D-12). `check-content-shapes.mjs` fails the build if any
+chapter's data reintroduces `repeatCheckbox` or the checkbox label.

@@ -1,7 +1,8 @@
 # PHASE5-PLAN.md — vertical buildout roadmap (LIVING DOCUMENT)
 
-Status date: 2026-08-10 (5F CLOSED after three patch rounds +
-device pass; 5G opening — chapters 9-10, ledger already CONFIRMED).
+Status date: 2026-08-16 (5G CLOSED after three spec rounds and three
+cross-patches, walkthrough answer-key verification and a device pass;
+next is DISCLOSURE-SPEC1, an APP-WIDE SPIKE, not a cohort).
 Roadmap only; per-cohort detail lives in
 the numbered specs. Updated at every cohort boundary.
 
@@ -12,11 +13,49 @@ the numbered specs. Updated at every cohort boundary.
 2. Every cohort ends with a VERIFY-*.md returned by Nathanael before
    the next cohort's spec is drafted.
 3. Every cohort ends with an airplane-mode check + 320px chart checks.
+4. Every cohort's recon rail walk now ALSO captures the answered
+   screens of every TRANSLATION-type drill (added 2026-08-16). Parsing
+   drills are machine-verifiable against the TBK dispatch tables;
+   translation answers rest on derivation alone, and the ch10
+   walkthrough proved the original reveals its full key on wrong
+   answers. Capture it at recon, not at VERIFY.
+5. Classify every screen against DISCLOSURE-RULES.md at assembly time
+   and log the decision (added 2026-08-16).
 4. Pipeline protocol: PIPELINE-INSIGHTS-v3.md §VIII + the mode
    vocabulary contracts in CHAT-HANDOFF.md. New modes are REGISTERED
    here, never invented silently.
 5. Data files regenerate only from committed copies; DOSBox answers
    route to Fable, never directly to the implementer.
+
+## Interposed: the disclosure spike (2026-08-16)
+
+DISCLOSURE-SPEC1 is NOT a cohort. It is an app-wide renderer spike
+sitting between cohort 5G and cohort 5H, and it is the first work in
+Phase 5 whose unit is a RULE rather than a chapter.
+
+Why it exists: walking the finished chapters surfaced that disclosure
+decisions — accordion vs modal vs flowing scroll vs paged — had been
+made per screen, per cohort, without a governing rule. DISCLOSURE-RULES.md
+(canonical) now classifies every screen into C1-C9 and the categories
+extrapolate to every chapter, present and future.
+
+Shape:
+- Step 0, the ten-chapter data pass, is DONE. chapt-09/10 shipped with
+  the 5G rounds; chapt-01..08 + lexicon-chapt08 are staged and must be
+  committed WITH the spike, never before it (they carry termList,
+  wordUsage and the ch1 Six Points expander, which today's renderer
+  does not know).
+- The spike itself implements R1-R7 app-wide: green underlined C3
+  links, accordion restyle (green, caret, no underline, always
+  collapsed), pinned control rows with centred navigation where no
+  say-all exists, no modal stacking, the two-state toggle component,
+  Meanings styling, and the termList layout.
+- Budget a FULL window with checkpoint discipline: cumulative BUILD
+  diff, resumable visual checklist, incremental commits by Nathanael.
+
+Consequence for every later cohort: new chapters are classified against
+DISCLOSURE-RULES at assembly time and the decision is logged, so this
+spike should never need repeating.
 
 ## Cohort ledger
 
