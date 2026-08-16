@@ -393,6 +393,13 @@ button { font: inherit; cursor: pointer; }
   margin-top: 16px; padding-top: 12px; background: var(--card);
   box-shadow: 0 -10px 12px -12px rgba(0, 0, 0, 0.35); }
 .modal-actions .btn { width: 100%; min-height: 44px; }
+/* 5G-SPEC3: a two-state Hint keeps Say Paradigm and its target-labelled
+   disclosure control together in the pinned footer. The toggle is always the
+   right-hand control; εἰμί has no authored whole-paradigm clip, so its empty
+   first slot remains empty rather than borrowing or inventing audio. */
+.hint-paradigm-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px; width: 100%; }
+.hint-paradigm-controls.no-say .hint-paradigm-toggle { grid-column: 2; }
 /* A SHORT SCREEN CANNOT PIN A TALL BUTTON STACK. The end-of-chapter dialog
    offers four full-width actions: at 44px each plus gaps that is 234px, and in
    a 320x360 window the gap between the app's bars is only 226px. A sticky
@@ -423,6 +430,12 @@ button { font: inherit; cursor: pointer; }
   color: var(--accent-ink); margin: 14px 0 2px; }
 .rc-subheading:first-child { margin-top: 0; }
 .rc-para { margin: 0 0 10px; }
+/* 5G-SPEC3: the authored future formula keeps the paragraph rhythm it
+   replaces. Its morpheme equation is one full-width tap unit; the worked
+   example uses the ordinary inline Greek-tap boundary. */
+.rc-formula { margin: 0 0 12px; }
+.rc-formula.rc-center { text-align: center; }
+.rc-formula-unit { display: block; width: 100%; line-height: inherit; text-align: center; }
 /* An EXAMPLE BLOCK is a para that carries its own line breaks. The original
    sets these as an indented panel, one example per line, under the sentence
    that introduces them ("Zachary drove the car." / "Elliott is a good kid.";
@@ -1445,10 +1458,9 @@ button, a, input, select, textarea, label,
   cursor: pointer; }
 .rc-greeksuffix:disabled { color: var(--ink); cursor: default; }
 
-/* ---- §2.8/§3.7/§4.8 two charts on one page ----
-   The Middle+Passive and Future Active+Middle pairs are printed together, in
-   the Quick Review page and in the drills' Hint popup alike. Not a pager: a
-   rule separates them and both are on screen at once. */
+/* ---- §2.8/§3.7 two charts on one page ----
+   Quick Review keeps its Middle+Passive and Future Active+Middle pairs
+   printed together. Drill hints use the scoped one-at-a-time disclosure. */
 .paradigm-stack { display: flex; flex-direction: column; gap: 4px; }
 .paradigm-stack-rule { height: 1px; background: rgba(0,0,0,0.12); margin: 14px 0 10px; }
 

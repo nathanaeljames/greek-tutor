@@ -81,7 +81,19 @@ const go = async hash => {
   await page.waitForTimeout(150);
 };
 
-const hint = (chapterId, activityId, meanings) => async () => {
+const setHintDisclosureState = async stateIndex => {
+  const controls = page.locator('.modal [data-hint-paradigm-controls]');
+  await controls.waitFor({ state: 'visible' });
+  const expected = String(stateIndex);
+  const current = await controls.getAttribute('data-state-index');
+  if (current !== expected) {
+    await controls.locator('[data-hint-paradigm-toggle]').click();
+    await page.locator(`.modal [data-hint-paradigm-controls][data-state-index="${expected}"]`).waitFor();
+    await page.waitForTimeout(180);
+  }
+};
+
+const hint = (chapterId, activityId, meanings, disclosureState = null) => async () => {
   await go(`#/activity/${chapterId}/${activityId}`);
   await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
   await page.waitForTimeout(180);
@@ -89,13 +101,14 @@ const hint = (chapterId, activityId, meanings) => async () => {
     const toggle = page.locator('.modal [data-paradigm-meanings] summary');
     if (await toggle.count()) { await toggle.first().click(); await page.waitForTimeout(200); }
   }
+  if (disclosureState !== null) await setHintDisclosureState(disclosureState);
 };
 
 // Form-dependent Hints cannot be covered by opening whichever shuffled item
 // happens to mount first. Seek the named form through the activity's real Next
 // control, then open the modal variant that form routes to.
 const normalizeText = value => String(value ?? '').replace(/\s+/g, ' ').trim().normalize('NFC');
-const hintAtPrompt = (chapterId, activityId, prompt, itemCount) => async () => {
+const hintAtPrompt = (chapterId, activityId, prompt, itemCount, disclosureState = null) => async () => {
   await go(`#/activity/${chapterId}/${activityId}`);
   const next = () => page.locator('.card').getByRole('button', { name: 'Next', exact: true });
   let found = false;
@@ -109,6 +122,7 @@ const hintAtPrompt = (chapterId, activityId, prompt, itemCount) => async () => {
   if (!found) throw new Error(`never reached Hint form ${JSON.stringify(prompt)}`);
   await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
   await page.waitForTimeout(180);
+  if (disclosureState !== null) await setHintDisclosureState(disclosureState);
 };
 
 const SURFACES = [
@@ -171,16 +185,19 @@ const SURFACES = [
     await page.locator('.popup-link').first().click();
     await page.waitForTimeout(180);
   }],
-  // 5G: the cohort's new modals. The COMPOSITE hint is the tallest thing in
-  // the app now — two full paradigm charts with glosses in one dialog — so it
-  // is exactly the surface the modal-sizing rule exists for, and it is
-  // captured on both chapters. Chapter 10's parsing Hint has two payloads, so
-  // its luo and eimi forms are sought explicitly instead of trusting shuffle.
+  // 5G: each two-chart Hint now discloses one chart at a time. Capture both
+  // states independently so neither replacement chart can evade the modal
+  // sizing check. Chapter 10's parsing Hint has two payloads, so its luo and
+  // eimi forms are sought explicitly instead of trusting shuffle. The third
+  // tuple field requires the pinned disclosure-control row on these surfaces.
   // The remaining popups are the content[] shape: a one-line aside and a
   // six-row Greek list. Stem derivations are interspersed accordions now.
-  ['ch9-composite-hint-middle-passive', hint('chapt_9', 'c9_drill_parsing', false)],
-  ['ch10-composite-hint-future-active-middle', hintAtPrompt('chapt_10', 'c10_drill_parsing', 'λύω', 30)],
-  ['ch10-composite-hint-eimi-present-future', hintAtPrompt('chapt_10', 'c10_drill_parsing', 'εἰμί', 30)],
+  ['ch9-hint-middle', hint('chapt_9', 'c9_drill_parsing', false, 0), true, true],
+  ['ch9-hint-passive', hint('chapt_9', 'c9_drill_parsing', false, 1), true, true],
+  ['ch10-hint-future-active', hintAtPrompt('chapt_10', 'c10_drill_parsing', 'λύω', 30, 0), true, true],
+  ['ch10-hint-future-middle', hintAtPrompt('chapt_10', 'c10_drill_parsing', 'λύω', 30, 1), true, true],
+  ['ch10-hint-eimi-present', hintAtPrompt('chapt_10', 'c10_drill_parsing', 'εἰμί', 30, 0), true, false],
+  ['ch10-hint-eimi-future', hintAtPrompt('chapt_10', 'c10_drill_parsing', 'εἰμί', 30, 1), true, false],
   ['ch9-popup-punctiliar', async () => {
     await go('#/activity/chapt_9/c9_learn_mp_verbs');
     await page.locator('.rc-para .popup-link').first().click();
@@ -232,7 +249,7 @@ const report = [];
 let bad = 0;
 for (const { name, width, height } of VIEWPORTS) {
   await page.setViewportSize({ width, height });
-  for (const [label, open] of SURFACES) {
+  for (const [label, open, expectHintControls = false, expectHintSay = false] of SURFACES) {
     try {
       await open();
     } catch (e) {
@@ -257,11 +274,30 @@ for (const { name, width, height } of VIEWPORTS) {
       const m = modal.getBoundingClientRect();
       const action = [...modal.querySelectorAll('.modal-actions .btn')].pop();
       const a = action ? action.getBoundingClientRect() : null;
+      const hintControls = modal.querySelector('[data-hint-paradigm-controls]');
+      const hc = hintControls ? hintControls.getBoundingClientRect() : null;
+      const hintSay = modal.querySelector('[data-hint-paradigm-say]');
+      const hs = hintSay ? hintSay.getBoundingClientRect() : null;
+      const hintToggle = modal.querySelector('[data-hint-paradigm-toggle]');
+      const ht = hintToggle ? hintToggle.getBoundingClientRect() : null;
       const bar = sel => { const el = document.querySelector(sel); return el ? el.getBoundingClientRect() : null; };
       const tb = bar('.topbar'), bb = bar('.bottom-bar');
       return {
         top: Math.round(m.top), bottom: Math.round(m.bottom),
+        left: Math.round(m.left), right: Math.round(m.right),
         action: a ? { top: Math.round(a.top), bottom: Math.round(a.bottom) } : null,
+        hintControls: hc ? {
+          top: Math.round(hc.top), bottom: Math.round(hc.bottom),
+          left: Math.round(hc.left), right: Math.round(hc.right)
+        } : null,
+        hintSay: hs ? {
+          top: Math.round(hs.top), bottom: Math.round(hs.bottom),
+          left: Math.round(hs.left), right: Math.round(hs.right)
+        } : null,
+        hintToggle: ht ? {
+          top: Math.round(ht.top), bottom: Math.round(ht.bottom),
+          left: Math.round(ht.left), right: Math.round(ht.right)
+        } : null,
         ceiling: tb ? Math.round(tb.bottom) : 0,
         floor: bb ? Math.round(bb.top) : window.innerHeight,
         overlayRange: ov.scrollHeight - ov.clientHeight,
@@ -281,9 +317,21 @@ for (const { name, width, height } of VIEWPORTS) {
       const m = modal.getBoundingClientRect();
       const action = [...modal.querySelectorAll('.modal-actions .btn')].pop();
       const a = action ? action.getBoundingClientRect() : null;
+      const hintControls = modal.querySelector('[data-hint-paradigm-controls]');
+      const hc = hintControls ? hintControls.getBoundingClientRect() : null;
+      const hintToggle = modal.querySelector('[data-hint-paradigm-toggle]');
+      const ht = hintToggle ? hintToggle.getBoundingClientRect() : null;
       return {
         top: Math.round(m.top), bottom: Math.round(m.bottom),
-        action: a ? { top: Math.round(a.top), bottom: Math.round(a.bottom) } : null
+        action: a ? { top: Math.round(a.top), bottom: Math.round(a.bottom) } : null,
+        hintControls: hc ? {
+          top: Math.round(hc.top), bottom: Math.round(hc.bottom),
+          left: Math.round(hc.left), right: Math.round(hc.right)
+        } : null,
+        hintToggle: ht ? {
+          top: Math.round(ht.top), bottom: Math.round(ht.bottom),
+          left: Math.round(ht.left), right: Math.round(ht.right)
+        } : null
       };
     });
     await page.screenshot({ path: `${OUT}/${name}--${label}--2-content-scrolled.png` });
@@ -295,10 +343,33 @@ for (const { name, width, height } of VIEWPORTS) {
     // The pinned block must not have moved when the content did.
     const pinnedOk = !rest.action || !scrolled.action
       || Math.abs(rest.action.bottom - scrolled.action.bottom) <= 1;
-    const ok = topOk && bottomOk && actionOk && fitsOk && pinnedOk;
+    const hintControlsVisibleOk = !expectHintControls || (rest.hintControls
+      && rest.hintControls.top >= rest.ceiling - 1
+      && rest.hintControls.bottom <= rest.floor + 1);
+    const hintControlsPinnedOk = !expectHintControls || (rest.hintControls && scrolled.hintControls
+      && Math.abs(rest.hintControls.top - scrolled.hintControls.top) <= 1
+      && Math.abs(rest.hintControls.bottom - scrolled.hintControls.bottom) <= 1
+      && Math.abs(rest.hintControls.left - scrolled.hintControls.left) <= 1
+      && Math.abs(rest.hintControls.right - scrolled.hintControls.right) <= 1);
+    const hintControlsInsideOk = !expectHintControls || (rest.hintControls
+      && rest.hintControls.top >= rest.top - 1 && rest.hintControls.bottom <= rest.bottom + 1
+      && rest.hintControls.left >= rest.left - 1 && rest.hintControls.right <= rest.right + 1);
+    const hintTogglePinnedOk = !expectHintControls || (rest.hintToggle && scrolled.hintToggle
+      && Math.abs(rest.hintToggle.top - scrolled.hintToggle.top) <= 1
+      && Math.abs(rest.hintToggle.left - scrolled.hintToggle.left) <= 1);
+    const hintOrderOk = !expectHintSay || (rest.hintSay && rest.hintToggle
+      && Math.abs(rest.hintSay.top - rest.hintToggle.top) <= 1
+      && Math.abs(rest.hintSay.bottom - rest.hintToggle.bottom) <= 1
+      && rest.hintToggle.left >= rest.hintSay.right - 1);
+    const ok = topOk && bottomOk && actionOk && fitsOk && pinnedOk
+      && hintControlsVisibleOk && hintControlsPinnedOk && hintControlsInsideOk
+      && hintTogglePinnedOk && hintOrderOk;
     if (!ok) bad += 1;
-    console.log(`${ok ? 'OK  ' : 'BAD '} ${name.padEnd(24)} ${label.padEnd(34)} modal ${String(rest.top).padStart(4)}..${String(rest.bottom).padStart(4)} in ${String(rest.ceiling).padStart(3)}..${String(rest.floor).padStart(4)}  overlay ${String(rest.overlayRange).padStart(4)}  content ${String(rest.contentRange).padStart(5)}  pinned ${pinnedOk}`);
-    report.push({ viewport: name, width, height, surface: label, atRest: rest, afterContentScroll: scrolled, ok });
+    console.log(`${ok ? 'OK  ' : 'BAD '} ${name.padEnd(24)} ${label.padEnd(34)} modal ${String(rest.top).padStart(4)}..${String(rest.bottom).padStart(4)} in ${String(rest.ceiling).padStart(3)}..${String(rest.floor).padStart(4)}  overlay ${String(rest.overlayRange).padStart(4)}  content ${String(rest.contentRange).padStart(5)}  pinned ${pinnedOk}${expectHintControls ? `  hint-controls ${hintControlsPinnedOk}/${hintControlsInsideOk} toggle ${hintTogglePinnedOk}${expectHintSay ? ` right-of-say ${hintOrderOk}` : ''}` : ''}`);
+    report.push({
+      viewport: name, width, height, surface: label,
+      expectHintControls, expectHintSay, atRest: rest, afterContentScroll: scrolled, ok
+    });
   }
 }
 

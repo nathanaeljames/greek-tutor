@@ -15,7 +15,7 @@ const problems = [];
 // the build, which is where a new pipeline block type should be noticed
 // (5B-SPEC3 D4). Add the type here in the same change that adds its branch.
 const BLOCK_TYPES = new Set([
-  'heading', 'subheading', 'para', 'numbered', 'defList',
+  'heading', 'subheading', 'para', 'formula', 'numbered', 'defList',
   'biblist', 'refs', 'note', 'greekRows', 'expander', 'paradigm',
   // 5F: chapter 6's preposition DIAGRAM.
   'prepositionsChart',
@@ -322,6 +322,62 @@ for (const file of files) {
     // source instead of relying on a screenshot to catch the wrap.
     if (block.type === 'para' && typeof block.text === 'string' && /^\s*\(?\d{1,2}[.)]\s/.test(block.text)) {
       problems.push(`${path}: para text starts with a hand-authored number ("${block.text.slice(0, 24)}...") — use a numbered block instead so wrapped lines hang under their own text.`);
+    }
+    // 5G-SPEC3: the three-line future formula has two distinct tap contracts.
+    // A tapUnit owns its WHOLE line and one clip; a greekTap owns only one
+    // standalone Greek word inside an otherwise inert line. Reject ambiguous
+    // or incomplete shapes before they can silently widen a tap target.
+    if (block.type === 'formula') {
+      if (block.align !== 'center') {
+        problems.push(`${path}.align: formula must be centered.`);
+      }
+      if (!Array.isArray(block.lines) || !block.lines.length) {
+        problems.push(`${path}: formula has no lines array.`);
+      } else {
+        block.lines.forEach((line, index) => {
+          const linePath = `${path}.lines[${index}]`;
+          if (!line || typeof line !== 'object' || typeof line.text !== 'string' || !line.text.trim()) {
+            problems.push(`${linePath}: expected an object with non-empty text.`);
+            return;
+          }
+          const hasTapUnit = Object.prototype.hasOwnProperty.call(line, 'tapUnit');
+          const hasGreekTap = Object.prototype.hasOwnProperty.call(line, 'greekTap');
+          if (hasTapUnit && line.tapUnit !== true) {
+            problems.push(`${linePath}.tapUnit: when present, expected true.`);
+          }
+          if (hasTapUnit && hasGreekTap) {
+            problems.push(`${linePath}: tapUnit and greekTap are mutually exclusive.`);
+          }
+          if (hasTapUnit) {
+            if (typeof line.audio !== 'string' || !line.audio.trim()) {
+              problems.push(`${linePath}.audio: tapUnit requires a non-empty audio id.`);
+            }
+          } else if (Object.prototype.hasOwnProperty.call(line, 'audio')) {
+            problems.push(`${linePath}.audio: top-level audio is only valid on a tapUnit line.`);
+          }
+          if (hasGreekTap) {
+            const tap = line.greekTap;
+            if (!tap || typeof tap !== 'object'
+                || typeof tap.word !== 'string' || !tap.word.trim()
+                || typeof tap.audio !== 'string' || !tap.audio.trim()) {
+              problems.push(`${linePath}.greekTap: expected non-empty word and audio strings.`);
+            } else {
+              let standalone = false;
+              for (let at = line.text.indexOf(tap.word); at !== -1; at = line.text.indexOf(tap.word, at + 1)) {
+                const before = at > 0 ? line.text[at - 1] : '';
+                const after = line.text[at + tap.word.length] || '';
+                if (!/[Ͱ-Ͽἀ-῿]/u.test(before) && !/[Ͱ-Ͽἀ-῿]/u.test(after)) {
+                  standalone = true;
+                  break;
+                }
+              }
+              if (!standalone) {
+                problems.push(`${linePath}.greekTap.word: "${tap.word}" is not a standalone Greek substring of the line.`);
+              }
+            }
+          }
+        });
+      }
     }
     // Every contentAudio mode must have a branch in ContentAudio.svelte; an
     // unknown one silently falls through to the generic chart layout.
@@ -791,4 +847,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; retired Repeat controls are absent; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras; every presentFutureRows row has both sides; every hintChart has paradigmRefs or inline charts; every hintRef, paradigmRef, [[link:id]] and topic titleLink resolves; every audio id the data names exists in the audio manifest).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; formula lines have exclusive whole-line/inline tap contracts; spellVerse answers are single words; retired Repeat controls are absent; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras; every presentFutureRows row has both sides; every hintChart has paradigmRefs or inline charts; every hintRef, paradigmRef, [[link:id]] and topic titleLink resolves; every audio id the data names exists in the audio manifest).`);

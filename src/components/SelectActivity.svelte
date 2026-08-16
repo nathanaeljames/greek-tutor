@@ -189,6 +189,37 @@
   // activity-level Hint.
   $: activeHintRef = current?.hintRef ?? activity.ui?.hintRef;
   $: hintChart = activeHintRef ? resolveHintRef(chapter, activeHintRef) : null;
+  // 5G-SPEC3 / D-48f1: these exact two-chart drill hints disclose one chart
+  // at a time. The button always names the OTHER state, so the learner sees
+  // where it goes rather than a generic "switch" instruction. This policy is
+  // deliberately scoped by hintRef; Quick Review and every unrelated chart
+  // retain their existing renderer behavior.
+  const HINT_DISCLOSURE_TARGETS = {
+    middlePassiveParadigms: ['Passive', 'Middle'],
+    futureParadigms: ['Middle', 'Active'],
+    eimiParadigms: ['Future', 'Present']
+  };
+  let hintParadigmIndex = 0;
+  let hintParadigmRef = null;
+  // A correct answer may auto-advance behind an already-open Hint. If the new
+  // form changes its item-level hintRef (future λύω ↔ εἰμί), that is a newly
+  // disclosed surface and must begin at its authored state 1 just like a
+  // freshly opened modal. Retaining state 2 across unlike refs would show the
+  // learner a chart they did not choose for the new form.
+  $: if (activeHintRef !== hintParadigmRef) {
+    hintParadigmRef = activeHintRef;
+    hintParadigmIndex = 0;
+  }
+  $: hintDisclosureTargets = HINT_DISCLOSURE_TARGETS[activeHintRef] || null;
+  $: hintDisclosure = hintDisclosureTargets
+    && Array.isArray(hintChart?.paradigms) && hintChart.paradigms.length === 2;
+  $: hintParadigm = hintDisclosure ? hintChart.paradigms[hintParadigmIndex] : null;
+  // The selected chart's Say action belongs in the pinned modal footer beside
+  // the disclosure control, not in Paradigm's scrolling chart body.
+  $: hintParadigmBody = hintParadigm ? { ...hintParadigm, sayWhole: null } : null;
+  $: hintParadigmTarget = hintDisclosureTargets
+    ? hintDisclosureTargets[hintParadigmIndex]
+    : null;
   // 5F-FEEDBACK2 items 13/28 (Nathanael, 2026-08-09): a MULTI-PAGE hint, the
   // original's More/Back-paged popup. ui.hintPages lists pages by reference —
   // { hintRef } (a chart; a stack of N charts flattens to N pages, one chart
@@ -205,10 +236,10 @@
       if (def.hintRef) {
         const target = resolveHintRef(chapterData, def.hintRef);
         if (!target) continue;
-        // A COMPOSITE ref (5G §4.8) resolves to several charts. Reached from
-        // hintPages it means one chart per page, the same as a charts[] stack;
-        // reached from ui.hintRef it means one page with both charts stacked.
-        // Which one the data asked for is which field it used.
+        // A COMPOSITE ref resolves to several charts. Reached from hintPages
+        // it means one chart per page, the same as a charts[] stack. The
+        // direct drill-hint route applies its own target-labelled disclosure
+        // policy below; which route the data asked for is which field it used.
         const charts = Array.isArray(target.paradigms) && target.paradigms.length
           ? target.paradigms
           : (Array.isArray(target.charts) && target.charts.length ? target.charts : [target]);
@@ -227,6 +258,14 @@
   function toggleHint() {
     showHint = !showHint;
     hintPageIndex = 0;   // a reopened hint starts back at page 1
+    hintParadigmIndex = 0; // and a disclosure starts at its authored state 1
+  }
+  function toggleHintParadigm() {
+    // The old chart no longer owns the screen after this click. Stop anything
+    // it started before replacing both its cells and its Say action; the new
+    // state itself remains silent until the learner taps it.
+    stopAudio();
+    hintParadigmIndex = hintParadigmIndex === 0 ? 1 : 0;
   }
   $: showHintButton = hintPages.length > 0 || hintBlocks.length > 0 || !!hintChart;
   $: orderedRevealControls = orderControls([
@@ -739,13 +778,18 @@
       <!-- 5F-FEEDBACK.pdf §8.1 root-cause fix: every paradigm the Hint route
            can resolve now ships in the one standard cell-audio shape, so
            there is no second renderer to keep in sync. -->
-      {#if Array.isArray(hintChart.paradigms)}
-        <!-- 5G-SPEC1 §4.8: a COMPOSITE hint — several of the chapter's charts
-             stacked in ONE popup under one Close, which is how the original
-             draws chapter 10's Future Active + Future Middle pair
-             (ch10railwalk p7) and chapter 9's Middle + Passive pair. Not a
-             pager: nothing here cycles, and item (h) of VERIFY-5G is what
-             would settle whether the original cycles further. -->
+      {#if hintDisclosure}
+        <!-- D-48f1: one chart at a time. Only the body scrolls; the state Say
+             action and target-labelled toggle live with Close in the pinned
+             footer below. -->
+        <div class="paradigm-stack">
+          {#if hintChart.title}<div class="rc-heading">{hintChart.title}</div>{/if}
+          <Paradigm paradigm={hintParadigmBody} title={hintParadigm.title || null} />
+        </div>
+      {:else if Array.isArray(hintChart.paradigms)}
+        <!-- A future composite outside the three scoped disclosure refs keeps
+             the established stacked rendering until its own source requires
+             a different policy. -->
         <div class="paradigm-stack">
           {#if hintChart.title}<div class="rc-heading">{hintChart.title}</div>{/if}
           {#each hintChart.paradigms as chart, chartIndex}
@@ -759,6 +803,23 @@
       {/if}
       </div>
       <div class="modal-actions">
+        {#if hintDisclosure}
+          <div class="hint-paradigm-controls" class:no-say={!hintParadigm.sayWhole?.audio}
+               data-hint-paradigm-controls data-hint-ref={activeHintRef}
+               data-state-index={hintParadigmIndex}>
+            {#if hintParadigm.sayWhole?.audio}
+              <button class="btn secondary" data-hint-paradigm-say
+                      data-audio-id={hintParadigm.sayWhole.audio}
+                      on:click={() => play(hintParadigm.sayWhole.audio)}>
+                {hintParadigm.sayWhole.label || 'Say Paradigm'}
+              </button>
+            {/if}
+            <button class="btn secondary hint-paradigm-toggle"
+                    data-paradigm-switch="hint" data-hint-paradigm-toggle
+                    data-target-index={hintParadigmIndex === 0 ? 1 : 0}
+                    on:click={toggleHintParadigm}>{hintParadigmTarget}</button>
+          </div>
+        {/if}
         <!-- svelte-ignore a11y-autofocus -->
         <button class="btn" autofocus on:click={() => (showHint = false)}>Close</button>
       </div>

@@ -679,18 +679,18 @@ function optionClassForLayout(layout, activity, activityOptions, questions) {
 // A hintRef names a chart source in the chapter: an existing chart by id/type/
 // title, or a chapter-level hintCharts entry. Chapter 3's three verb drills all
 // open the same λύω paradigm the Learn page draws; later composite entries may
-// bundle referenced or inline paradigms for one stacked Hint popup.
+// bundle referenced or inline paradigms for a surface-specific disclosure.
 export function resolveHintRef(chapter, ref) {
   if (!chapter || !ref) return null;
   // A chapter-level `hintCharts` register names a COMPOSITE hint: one popup
   // holding several paradigms, either referenced by id (`paradigmRefs`) or
-  // authored inline (`charts`). It resolves to one `paradigms[]` bundle the
-  // surface renders as a stack. Checked FIRST, so a composite id can never be
+  // authored inline (`charts`). It resolves to one `paradigms[]` bundle whose
+  // surface chooses the disclosure policy. Checked FIRST, so a composite id can never be
   // shadowed by an activity or topic that happens to share its name.
   const composite = chapter.hintCharts && chapter.hintCharts[ref];
   if (composite) {
     // Composites either reference charts authored elsewhere in the chapter or
-    // own inline paradigm blocks. Normalize both forms to the same stack.
+    // own inline paradigm blocks. Normalize both forms to the same bundle.
     const paradigms = Array.isArray(composite.charts) && composite.charts.length
       ? composite.charts.filter(Boolean)
       : (composite.paradigmRefs || [])

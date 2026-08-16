@@ -188,6 +188,11 @@ const activityFor = (data, id) => Object.values(data)
   .filter(Array.isArray).flat().find(activity => activity && activity.id === id);
 const slug = text => String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   .replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase() || 'state';
+const TWO_STATE_HINT_REFS = new Set([
+  'middlePassiveParadigms',
+  'futureParadigms',
+  'eimiParadigms'
+]);
 const chartGroupsIn = (node, found = []) => {
   if (Array.isArray(node)) {
     node.forEach(value => chartGroupsIn(value, found));
@@ -415,7 +420,8 @@ for (const size of WIDTHS) {
 
         // A topic-id or item-level hintRef exercises the resolver through its
         // real modal host. Capture the payload that the shuffled current form
-        // selects, label it from the rendered titles, and prove it closes.
+        // selects. The three direct two-chart composites expose one chart at a
+        // time, so walk both states and restore state 1 before closing.
         if (activity?.ui?.hintRef || activity?.items?.some(item => item?.hintRef)) {
           const hint = page.locator('.card').first().getByRole('button', { name: 'Hint', exact: true });
           if (!await hint.count() || !await hint.isVisible()) {
@@ -426,9 +432,56 @@ for (const size of WIDTHS) {
             if (!await modal.count() || !await modal.isVisible() || !await modal.locator('.paradigm').count()) {
               report.interactionErrors.push({ ...evidence, state: activityId, error: 'Hint did not open a paradigm' });
             } else {
-              const titles = (await modal.locator('.pg-title').allInnerTexts())
+              const titles = (await modal.locator('.pg-title:visible').allInnerTexts())
                 .map(text => text.replace(/\s+/g, ' ').trim()).filter(Boolean);
               await recordExtra(`${activityId}--hint`, `hint: ${titles.join(' + ') || activity.ui?.hintRef || 'item hint'}`);
+
+              const hintRefs = [activity?.ui?.hintRef,
+                ...(activity?.items || []).map(item => item?.hintRef)].filter(Boolean);
+              const expectsTwoStateHint = hintRefs.some(ref => TWO_STATE_HINT_REFS.has(ref));
+              if (expectsTwoStateHint) {
+                const visibleCharts = modal.locator('.paradigm:visible');
+                const toggle = modal.locator('[data-hint-paradigm-toggle]:visible');
+                const initialTitle = titles[0] || '';
+                const initialTarget = await toggle.count()
+                  ? (await toggle.first().innerText()).replace(/\s+/g, ' ').trim()
+                  : '';
+
+                if (await visibleCharts.count() !== 1) {
+                  report.interactionErrors.push({ ...evidence, state: `${activityId}--hint`, error: 'two-state Hint did not show exactly one paradigm in state 1' });
+                }
+                if (await toggle.count() !== 1 || !initialTarget) {
+                  report.interactionErrors.push({ ...evidence, state: `${activityId}--hint`, error: 'two-state Hint has no single target-labelled toggle' });
+                } else {
+                  await toggle.first().click();
+                  await page.waitForTimeout(80);
+                  const alternateTitles = (await modal.locator('.pg-title:visible').allInnerTexts())
+                    .map(text => text.replace(/\s+/g, ' ').trim()).filter(Boolean);
+                  const alternateTitle = alternateTitles[0] || '';
+                  const alternateTarget = (await toggle.first().innerText()).replace(/\s+/g, ' ').trim();
+                  if (await visibleCharts.count() !== 1) {
+                    report.interactionErrors.push({ ...evidence, state: `${activityId}--hint-${slug(initialTarget)}`, error: 'two-state Hint did not show exactly one paradigm in state 2' });
+                  }
+                  if (!initialTitle || !alternateTitle || alternateTitle === initialTitle) {
+                    report.interactionErrors.push({ ...evidence, state: `${activityId}--hint-${slug(initialTarget)}`, error: 'two-state Hint toggle did not replace the chart title' });
+                  }
+                  if (!alternateTarget || alternateTarget === initialTarget) {
+                    report.interactionErrors.push({ ...evidence, state: `${activityId}--hint-${slug(initialTarget)}`, error: 'two-state Hint toggle did not replace its target label' });
+                  }
+                  await recordExtra(`${activityId}--hint-${slug(alternateTitle || initialTarget)}`,
+                    `hint state 2: ${alternateTitle || initialTarget}`);
+
+                  await toggle.first().click();
+                  await page.waitForTimeout(80);
+                  const restoredTitles = (await modal.locator('.pg-title:visible').allInnerTexts())
+                    .map(text => text.replace(/\s+/g, ' ').trim()).filter(Boolean);
+                  const restoredTarget = (await toggle.first().innerText()).replace(/\s+/g, ' ').trim();
+                  if (await visibleCharts.count() !== 1 || restoredTitles[0] !== initialTitle || restoredTarget !== initialTarget) {
+                    report.interactionErrors.push({ ...evidence, state: `${activityId}--hint-restored`, error: 'two-state Hint did not restore state 1' });
+                  }
+                }
+              }
+
               await modal.getByRole('button', { name: 'Close', exact: true }).click();
               await page.waitForTimeout(50);
               if (await modal.count()) report.interactionErrors.push({ ...evidence, state: activityId, error: 'Hint did not close' });

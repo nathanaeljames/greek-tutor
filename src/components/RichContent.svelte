@@ -5,9 +5,9 @@
   // rows and underlined list lead-ins are all load-bearing, not decoration.
   //
   // Block types: heading | subheading | para | numbered | defList | biblist |
-  // refs | note | greekRows | expander | paradigm | presentFutureRows. An
-  // unknown type renders LOUD (see the dispatch's final else) rather than
-  // vanishing.
+  // refs | note | greekRows | expander | paradigm | presentFutureRows |
+  // formula. An unknown type renders LOUD (see the dispatch's final else)
+  // rather than vanishing.
   // Trailing { greek, caption?, audio? } "example" objects render in the Greek
   // font and play their clip on tap. defList rows [term, value, audio?] play
   // the row's clip when present.
@@ -202,6 +202,26 @@
           {#if b.example.caption}<span class="rc-caption">{b.example.caption}</span>{/if}
         </button>
       {/if}
+
+    {:else if b.type === 'formula'}
+      <!-- 5G-SPEC3: the future-tense construction is three centred authored
+           lines with two deliberately different tap boundaries. The whole
+           morpheme equation is ONE button (including plus signs), while only
+           the named Greek word inside the worked example is a button. Plain
+           English remains inert ink. -->
+      <div class="rc-formula" class:rc-center={b.align === 'center'}
+           class:rc-gap-before={b.gapBefore}>
+        {#each b.lines || [] as line}
+          {#if line.tapUnit}
+            <button class="rc-formula-line rc-formula-unit greek-tap greek"
+                    on:click={() => playAudio(line.audio)}>{line.text}</button>
+          {:else if line.greekTap}
+            <div class="rc-formula-line">{#each splitTaps(line.text, { [line.greekTap.word]: line.greekTap.audio }) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}<Marked text={seg.t} />{/if}{/each}</div>
+          {:else}
+            <div class="rc-formula-line"><Marked text={line.text} /></div>
+          {/if}
+        {/each}
+      </div>
 
     {:else if b.type === 'numbered'}
       {#if b.preamble}<p class="rc-preamble" class:rc-gap-before={b.gapBefore}><Marked text={b.preamble} /></p>{/if}
