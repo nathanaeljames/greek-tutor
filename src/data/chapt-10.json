@@ -248,15 +248,179 @@
       {
        "type": "numbered",
        "items": [
-        "if after a [[link:palatal]]palatal[[/link]] ( κ, γ, χ )\nσ + [ κ, γ, χ] ==> ξ",
-        "if after a [[link:labial]]labial[[/link]] ( π, β, φ )\nσ + [ π, β, φ] ==> ψ",
-        "if after a [[link:dental]]dental[[/link]] ( τ, δ, θ )\nσ + [ τ, δ, θ ] ==> σ",
-        "if after a [[link:liquid]]liquid[[/link]] ( λ, μ, ν, ρ ) the sigma is dropped and the ω is accented with a circumflex. When a stem ends in a double liquid consonant, one of them is sometimes dropped.",
-        "if after a [[link:sibilant]]sibilant[[/link]] ( σ, ζ ) the sibilant is dropped and the sigma is kept."
+        {
+         "text": "if after a palatal ( κ, γ, χ )\nσ + [ κ, γ, χ] ==> ξ",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "presentFutureRows",
+             "rows": [
+              {
+               "present": {
+                "greek": "ἔχω",
+                "audio": "chapt_10_j_exw"
+               },
+               "future": {
+                "greek": "ἕξω",
+                "audio": "chapt_10_j_ecw",
+                "gloss": "I will have (note breathing change)"
+               }
+              },
+              {
+               "present": {
+                "greek": "ἄγω",
+                "audio": "chapt_10_j_agw"
+               },
+               "future": {
+                "greek": "ἄξω",
+                "audio": "chapt_10_j_acw",
+                "gloss": "I will lead, bring"
+               }
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "text": "if after a labial ( π, β, φ )\nσ + [ π, β, φ] ==> ψ",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "presentFutureRows",
+             "rows": [
+              {
+               "present": {
+                "greek": "βλέπω",
+                "audio": "chapt_10_j_blepw"
+               },
+               "future": {
+                "greek": "βλέψω",
+                "audio": "chapt_10_j_blepsw",
+                "gloss": "I will see"
+               }
+              },
+              {
+               "present": {
+                "greek": "γράφω",
+                "audio": "chapt_10_j_grapw"
+               },
+               "future": {
+                "greek": "γράψω",
+                "audio": "chapt_10_j_grapsw",
+                "gloss": "I will write"
+               }
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "text": "if after a dental ( τ, δ, θ )\nσ + [ τ, δ, θ ] ==> σ",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "presentFutureRows",
+             "rows": [
+              {
+               "present": {
+                "greek": "πείθω",
+                "audio": "chapt_10_j_peithw"
+               },
+               "future": {
+                "greek": "πείσω",
+                "audio": "chapt_10_j_peisw",
+                "gloss": "I will persuade"
+               }
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "text": "if after a liquid ( λ, μ, ν, ρ ) the sigma is dropped and the ω is accented with a circumflex. When a stem ends in a double liquid consonant, one of them is sometimes dropped.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "presentFutureRows",
+             "rows": [
+              {
+               "present": {
+                "greek": "μένω",
+                "audio": "chapt_10_j_menw"
+               },
+               "future": {
+                "greek": "μενῶ",
+                "audio": "chapt_10_j_menww",
+                "gloss": "I will remain"
+               }
+              },
+              {
+               "present": {
+                "greek": "ἀποστέλλω",
+                "audio": "chapt_10_j_apostw"
+               },
+               "future": {
+                "greek": "ἀποστελῶ",
+                "audio": "chapt_10_j_aposww",
+                "gloss": "I will send"
+               }
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "text": "if after a sibilant ( σ, ζ ) the sibilant is dropped and the sigma is kept.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "presentFutureRows",
+             "rows": [
+              {
+               "present": {
+                "greek": "σῴζω",
+                "audio": "chapt_10_j_swzw"
+               },
+               "future": {
+                "greek": "σώσω",
+                "audio": "chapt_10_j_swsw",
+                "gloss": "I will save"
+               }
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
        ],
        "gapBefore": true
       }
-     ]
+     ],
+     "_note": "DISCLOSURE-RULES rule 5e (2026-08-15): five stem-variation popups -> interspersed C2 \"Examples\" accordions; in-text links retired. Popup titles carried the consonant groups, already printed in the item text."
     },
     {
      "id": "futureEimi",
@@ -419,151 +583,6 @@
         "[[u]]Future[[/u]]"
        ],
        "gapBefore": true
-      }
-     ]
-    }
-   ],
-   "popups": [
-    {
-     "id": "palatal",
-     "title": "After a Palatal ( κ, γ, χ )",
-     "content": [
-      {
-       "type": "presentFutureRows",
-       "rows": [
-        {
-         "present": {
-          "greek": "ἔχω",
-          "audio": "chapt_10_j_exw"
-         },
-         "future": {
-          "greek": "ἕξω",
-          "audio": "chapt_10_j_ecw",
-          "gloss": "I will have (note breathing change)"
-         }
-        },
-        {
-         "present": {
-          "greek": "ἄγω",
-          "audio": "chapt_10_j_agw"
-         },
-         "future": {
-          "greek": "ἄξω",
-          "audio": "chapt_10_j_acw",
-          "gloss": "I will lead, bring"
-         }
-        }
-       ]
-      }
-     ]
-    },
-    {
-     "id": "labial",
-     "title": "After a Labial ( π, β, φ )",
-     "content": [
-      {
-       "type": "presentFutureRows",
-       "rows": [
-        {
-         "present": {
-          "greek": "βλέπω",
-          "audio": "chapt_10_j_blepw"
-         },
-         "future": {
-          "greek": "βλέψω",
-          "audio": "chapt_10_j_blepsw",
-          "gloss": "I will see"
-         }
-        },
-        {
-         "present": {
-          "greek": "γράφω",
-          "audio": "chapt_10_j_grapw"
-         },
-         "future": {
-          "greek": "γράψω",
-          "audio": "chapt_10_j_grapsw",
-          "gloss": "I will write"
-         }
-        }
-       ]
-      }
-     ]
-    },
-    {
-     "id": "dental",
-     "title": "After a Dental ( τ, δ, θ )",
-     "content": [
-      {
-       "type": "presentFutureRows",
-       "rows": [
-        {
-         "present": {
-          "greek": "πείθω",
-          "audio": "chapt_10_j_peithw"
-         },
-         "future": {
-          "greek": "πείσω",
-          "audio": "chapt_10_j_peisw",
-          "gloss": "I will persuade"
-         }
-        }
-       ]
-      }
-     ]
-    },
-    {
-     "id": "liquid",
-     "title": "After a Liquid ( λ, μ, ν, ρ )",
-     "content": [
-      {
-       "type": "presentFutureRows",
-       "rows": [
-        {
-         "present": {
-          "greek": "μένω",
-          "audio": "chapt_10_j_menw"
-         },
-         "future": {
-          "greek": "μενῶ",
-          "audio": "chapt_10_j_menww",
-          "gloss": "I will remain"
-         }
-        },
-        {
-         "present": {
-          "greek": "ἀποστέλλω",
-          "audio": "chapt_10_j_apostw"
-         },
-         "future": {
-          "greek": "ἀποστελῶ",
-          "audio": "chapt_10_j_aposww",
-          "gloss": "I will send"
-         }
-        }
-       ]
-      }
-     ]
-    },
-    {
-     "id": "sibilant",
-     "title": "After a Sibilant ( σ, ζ )",
-     "content": [
-      {
-       "type": "presentFutureRows",
-       "rows": [
-        {
-         "present": {
-          "greek": "σῴζω",
-          "audio": "chapt_10_j_swzw"
-         },
-         "future": {
-          "greek": "σώσω",
-          "audio": "chapt_10_j_swsw",
-          "gloss": "I will save"
-         }
-        }
-       ]
       }
      ]
     }
@@ -918,7 +937,8 @@
       "Active",
       "First Singular"
      ],
-     "audio": "chapt_10_j_epa1s"
+     "audio": "chapt_10_j_epa1s",
+     "hintRef": "eimiParadigms"
     },
     {
      "greek": "ἐστέ",
@@ -928,57 +948,63 @@
       "Active",
       "Second Plural"
      ],
-     "audio": "chapt_10_j_epa2p"
+     "audio": "chapt_10_j_epa2p",
+     "hintRef": "eimiParadigms"
     },
     {
      "greek": "ἔσῃ",
      "translate": "you will be",
      "answer": [
       "Future",
-      "Middle",
+      "Active",
       "Second Singular"
      ],
-     "audio": "chapt_10_j_eimi2s"
+     "audio": "chapt_10_j_eimi2s",
+     "hintRef": "eimiParadigms"
     },
     {
      "greek": "ἔσεσθε",
      "translate": "you will be",
      "answer": [
       "Future",
-      "Middle",
+      "Active",
       "Second Plural"
      ],
-     "audio": "chapt_10_j_eimi2p"
+     "audio": "chapt_10_j_eimi2p",
+     "hintRef": "eimiParadigms"
     },
     {
      "greek": "ἔσομαι",
      "translate": "I will be",
      "answer": [
       "Future",
-      "Middle",
+      "Active",
       "First Singular"
      ],
-     "audio": "chapt_10_j_eimi1s"
+     "audio": "chapt_10_j_eimi1s",
+     "hintRef": "eimiParadigms"
     },
     {
      "greek": "ἔσται",
      "translate": "he/she will be",
      "answer": [
       "Future",
-      "Middle",
+      "Active",
       "Third Singular"
      ],
-     "audio": "chapt_10_j_eimi3s"
+     "audio": "chapt_10_j_eimi3s",
+     "hintRef": "eimiParadigms"
     },
     {
      "greek": "ἐσόμεθα",
      "translate": "we will be",
      "answer": [
       "Future",
-      "Middle",
+      "Active",
       "First Plural"
      ],
-     "audio": "chapt_10_j_eimi1p"
+     "audio": "chapt_10_j_eimi1p",
+     "hintRef": "eimiParadigms"
     },
     {
      "greek": "εἰσί",
@@ -988,17 +1014,19 @@
       "Active",
       "Third Plural"
      ],
-     "audio": "chapt_10_j_epa3p"
+     "audio": "chapt_10_j_epa3p",
+     "hintRef": "eimiParadigms"
     },
     {
      "greek": "ἔσονται",
      "translate": "they will be",
      "answer": [
       "Future",
-      "Middle",
+      "Active",
       "Third Plural"
      ],
-     "audio": "chapt_10_j_eimi3p"
+     "audio": "chapt_10_j_eimi3p",
+     "hintRef": "eimiParadigms"
     },
     {
      "greek": "εἶ",
@@ -1008,7 +1036,8 @@
       "Active",
       "Second Singular"
      ],
-     "audio": "chapt_10_j_epa2s"
+     "audio": "chapt_10_j_epa2s",
+     "hintRef": "eimiParadigms"
     }
    ],
    "scored": true,
@@ -1031,7 +1060,7 @@
     "hintRef": "futureParadigms"
    },
    "_stage_note": "THREE optionStages -- the twoStageGrid component generalizes to N stages; selections accumulate and the guess commits on the FINAL (person/number) click, per the original's own instruction line and the c8_drill_case semantics (VERIFY-5F item 7).",
-   "_answer_note": "answer is [tense, voice, personNumber], derived from the form. Present-tense eimi items parse Active; future eimi parse Middle (deponent future) -- form-keyed, one eimi item queued for DOSBox confirmation. Item 18's dispatch entry is blank in the original; j_luwm1s wired (same form as item 5).",
+   "_answer_note": "Answer key WALKTHROUGH-VERIFIED against ch10parsingdrill.pdf 2026-08-15: the original reveals the correct trio on every wrong answer, giving a full 30/30 key. CORRECTION from that key: the six future-eimi items grade Future ACTIVE in the original (its chart is titled \"Future Active Indicative of eimi\" and its note extends deponent-translated-active to the parse), not the morphological Middle the pipeline first derived (D-46). The four present-eimi items grade Present Active (DOSBox-confirmed); all twenty luw items verify. Item 18's dispatch entry is blank in the original; j_luwm1s wired (same form as item 5).",
    "audioTiming": "beforeGuess",
    "answerPolicy": {
     "advanceClass": "manualOnIncorrect",
@@ -1439,7 +1468,7 @@
     "liveScore": true,
     "hintRef": "futureParadigms"
    },
-   "_answer_note": "Answer column derived per item from the future verb's person/number plus explicit subject/object nouns; rail walk confirms item 1. Audio mapping is the original's shifted table: item 1 -> j_TvD1, item N -> j_TvD(N+1); j_TvD2 was orphaned by a deleted item and is NOT referenced.",
+   "_answer_note": "Answer column derived per item from the future verb's person/number plus explicit subject/object nouns; rail walk confirms item 1. Audio mapping is the original's shifted table: item 1 -> j_TvD1, item N -> j_TvD(N+1); j_TvD2 was orphaned by a deleted item and is NOT referenced. WALKTHROUGH-VERIFIED 2026-08-15 against Ch10TranslationDrill.pdf: 30 of 31 items covered (8 green-confirmed exact, 22 wrong-option eliminations, zero contradictions); item coverage gap is one derivation-only item.",
    "audioTiming": "afterGuess",
    "answerPolicy": {
     "advanceClass": "manualOnIncorrect",
@@ -2128,7 +2157,6 @@
    "punctuationOptional": true,
    "audio": "chapt_10_j_mt633a",
    "spellerTilesRef": "chapt_1",
-   "repeatCheckbox": true,
    "ui": {
     "fields": [
      "Spell Greek"
@@ -2141,17 +2169,16 @@
     ],
     "checkboxes": [
      "Show Answer",
-     "With Accents",
-     "Repeat This Exercise"
+     "With Accents"
     ],
-    "_reveal_note": "RULES C8 / D-30.",
-    "_repeat_note": "\"Repeat This Exercise\" checkbox as in chapter 9 (label at 0xba6ec, this page). Same modeling, same VERIFY-5G item."
+    "_reveal_note": "RULES C8 / D-30."
    },
    "audioTiming": "afterGuess",
    "answerPolicy": {
     "advanceClass": "retryUntilRight",
     "attemptsPerItem": "retry"
-   }
+   },
+   "_repeat_note": "\"Repeat This Exercise\" DELIBERATELY NOT PORTED (D-42 retired 2026-08-15); see chapt-09 c9_ex_scripture_speller for the full rationale. DO NOT re-add."
   }
  ],
  "quickReview": [
@@ -2686,7 +2713,7 @@
   "c10_learn_bibliography"
  ],
  "_menu_note": "The original's Drill Menu prints \"Future Indication Translation Drill\" (typo); the drill page itself says \"Indicative\", which this port uses on both surfaces.",
- "_audioVerify": "CHAPT_10 ships 183 WAVs. Flags: (1) parsing item 18 blank in the original's table, j_luwm1s wired (form of item 5); (2) j_TvD2 orphaned, unreferenced by design; (3) l_eimi wired to the standalone word eimi, listen; (4) j_epa* = PRESENT eimi, j_eimi* = FUTURE eimi, table-read.",
+ "_audioVerify": "CHAPT_10 ships 183 WAVs. Flags: (1) parsing item 18 blank in the original's table, j_luwm1s wired (form of item 5); (2) j_TvD2 orphaned, unreferenced by design; (3) l_eimi wired to the standalone word eimi, listen; (4) j_epa* = PRESENT eimi, j_eimi* = FUTURE eimi, table-read. LISTEN-CONFIRMED 2026-08-15: l_eimi is the bare word eimi (title tap correct); j_palp is luomen, a duplicate of the wired parsing clip, unreferenced by design; j_TvD2 is an unused phrase that never entered the drill.",
  "_sequence_note": "Rail order from ch10railwalk.pdf (Nathanael, 2026-08-09).",
  "hintCharts": {
   "futureParadigms": {
@@ -2695,6 +2722,123 @@
     "futureMiddleParadigm"
    ],
    "_note": "Both drills' Hint opens the Future Active + Future Middle charts stacked in one popup (fields at 0xeb0ee/0x8eff4, rail walk evidenced). Present Active and present-eimi chart fields sit adjacent in the parsing drill's record -- whether Hint cycles to them is a VERIFY-5G item; not wired."
+  },
+  "eimiParadigms": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "id": "hintPresentEimi",
+     "title": "Present Active Indicative of εἰμί",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "εἰμί",
+         "audio": "chapt_10_g_eimi1s",
+         "gloss": "I am"
+        },
+        {
+         "greek": "ἐσμέν",
+         "audio": "chapt_10_g_eimi1p",
+         "gloss": "we are"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "εἶ",
+         "audio": "chapt_10_g_eimi2s",
+         "gloss": "you are"
+        },
+        {
+         "greek": "ἐστέ",
+         "audio": "chapt_10_g_eimi2p",
+         "gloss": "you are"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "ἐστί(ν)",
+         "audio": "chapt_10_g_eimi3s",
+         "gloss": "he/she/it is"
+        },
+        {
+         "greek": "εἰσί(ν)",
+         "audio": "chapt_10_g_eimi3p",
+         "gloss": "they are"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "id": "hintFutureEimi",
+     "title": "Future Active Indicative of εἰμί",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "ἔσομαι",
+         "audio": "chapt_10_j_eimi1s",
+         "gloss": "I will be"
+        },
+        {
+         "greek": "ἐσόμεθα",
+         "audio": "chapt_10_j_eimi1p",
+         "gloss": "we will be"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "ἔσῃ",
+         "audio": "chapt_10_j_eimi2s",
+         "gloss": "you will be"
+        },
+        {
+         "greek": "ἔσεσθε",
+         "audio": "chapt_10_j_eimi2p",
+         "gloss": "you will be"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "ἔσται",
+         "audio": "chapt_10_j_eimi3s",
+         "gloss": "he/she/it will be"
+        },
+        {
+         "greek": "ἔσονται",
+         "audio": "chapt_10_j_eimi3p",
+         "gloss": "they will be"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "_note": "FORM-DEPENDENT HINT, copying the original (observed 2026-08-15, D-47): eimi items open this popup (both eimi charts stacked, titles verbatim from field 0xec4b2 — the original itself says \"Future Active\"); luw items open futureParadigms. Present-eimi cells use the ch7-forwarded g_eimi* clips, all shipped in the CHAPT_10 pack. Renderer: per-item hintRef overrides the drill-level ui.hintRef."
   }
  }
 }

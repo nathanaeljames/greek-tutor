@@ -186,7 +186,13 @@ D-30 | ch3,4,5 | THE WHOLE-VERSE SPELLERS USE `Show Answer`, NOT
      verse is still available at any time, which the original does not
      allow. | Nathanael, 2026-08-07; 5E-SPEC3-PATCH item 12.
 
-D-31 | ch7 | **RE-REVISED 2026-08-10 (5F-FEEDBACK3 item 3, D-31r2).**
+D-31 | ch7 | **AMENDED AGAIN 2026-08-15 (DISCLOSURE-RULES §6.3,
+     D-31r3): THE NUMBER-MARKER POPUP MECHANISM IS RETIRED
+     APP-WIDE. The three items are C2 rules, each with an
+     interspersed "Examples" accordion holding the former popup
+     body; the Greek words remain ordinary audio taps.
+     `numberPopupRef` no longer exists in any data file.**
+     Previous revision: **RE-REVISED 2026-08-10 (5F-FEEDBACK3 item 3, D-31r2).**
      Nathanael reversed the item-15 reading below: "I want the number
      AND the word to be the same link and to bring up the menus. If
      they want to hear the word they can click the menu title." Both
@@ -244,7 +250,9 @@ D-32 | ch6,8 | THE CASE-SPLIT VOCABULARY DRILLS DO NOT FOLLOW D-19.
      6 and 8 should cover 9 and 10 as well, and the responsive class
      picks all eight up with no renderer change.
      | Implementer, 5F-SPEC1 §5; extended 5G-SPEC1.
-D-33 | ch7 | THE εἰμί SPELLER'S PARENTHESISED ALTERNATE MAKES THE
+D-33 | ch7 | **CONFIRMED 2026-08-15 (VERIFY-5F-3 item 1): DOSBox
+     shows the original ACCEPTS bare ἐστί. D-33 STANDS and is no
+     longer an inference.** THE εἰμί SPELLER'S PARENTHESISED ALTERNATE MAKES THE
      PARENTHESISED SEGMENT OPTIONAL. `answerAlt` is "ἐστί(ν)" against
      an `answer` of "ἐστίν". Punctuation is already optional under
      D-18, so the alternate folds onto the answer and the field would
@@ -311,7 +319,13 @@ D-37 | ch8 | THE PERSONAL PRONOUNS INTRODUCTION SHOWS ITS SECOND PAGE
      gaps, rather than reproducing the broken pager. | Nathanael,
      5F-FEEDBACK2 item 22.
 
-D-38 | ch7,ch8 | HINT POPUPS PAGE More/Back AT THE MODAL LEVEL, IN
+D-38 | ch7,ch8 | **AMENDED 2026-08-15 (DISCLOSURE-RULES §4.3): the
+     control row — say-all plus its navigation (the §4.1 single
+     toggle, or the §4.2 Back/More pair) — is PINNED and never
+     scrolls off: fixed to the modal footer, sticky at the panel
+     bottom in main. Two-chart hints become the §4.1 single
+     toggle rather than a Back/More pair.** 
+     HINT POPUPS PAGE More/Back AT THE MODAL LEVEL, IN
      FIXED SLOTS. 5F-FEEDBACK2 items 12/13/27/28/29: (a) the
      More/Back pair everywhere sits in its own row — Back always the
      left slot, More always the right — so paging never moves a
@@ -396,7 +410,17 @@ D-41 | ch10 | THE THREE-STAGE PARSING DRILL IS STACKED, NOT COLUMNED.
      (chapter 8's person + case grid) are two different shapes already
      and keep their unmarked layout. | Implementer, 5G-SPEC1 §4.1.
 
-D-42 | ch9,ch10 | "REPEAT THIS EXERCISE" SEMANTICS ARE MODELLED,
+D-42 | ch9,ch10 | **RETIRED 2026-08-15 (VERIFY-5G item d). DOSBox
+     shows the original gives exactly ONE "Check Answer"; the
+     Major Hint and Pronounce buttons are then replaced by a
+     "Repeat This Exercise" button that CLEARS THE ENTIRE SCREEN
+     and starts over. Nathanael DELIBERATELY REJECTS that
+     behaviour: a wrong guess must never clear the slate, the
+     learner retries until right, and Restart Exercise (D-12)
+     already provides a voluntary reset. THE CHECKBOX IS REMOVED
+     FROM CHAPTERS 9 AND 10 ENTIRELY AND MUST NEVER BE RE-ADDED
+     IN ANY CHAPTER.** The superseded modelling follows, kept
+     for the record:
      PENDING VERIFY-5G (d). The checkbox is the original's, on the
      Scripture Memory Spelling Exercise of both chapters, and it
      ships default OFF. What it DOES here is 5G-SPEC1 §4.5's
@@ -411,10 +435,58 @@ D-42 | ch9,ch10 | "REPEAT THIS EXERCISE" SEMANTICS ARE MODELLED,
      differs, this entry is what to correct. | 5G-SPEC1 §4.5;
      implementer, pending Nathanael.
 
+D-43 | ch9 | Objective 6 read "memorize Jn 6:23b in Greek" in the
+     original — its own slip; the chapter teaches Rom 6:23b on the
+     Learn Scripture Memory page, in the speller's instruction line
+     and in the Quick Review. FIXED to Rom 6:23b. | Nathanael,
+     VERIFY-5G (e).
+
+D-44 | ch9 | The Compound Verbs page glossed ἔρχομαι "I go in,
+     enter" — εἰσέρχομαι's gloss copied one row up, contradicting
+     the chapter's own vocabulary and its Frequently Used Deponent
+     Verbs popup. FIXED to "I come, go". | Nathanael, VERIFY-5G (f).
+
+D-45 | ch10 | PARSING DRILL ANSWER KEY CORRECTED. The walkthrough
+     (ch10parsingdrill.pdf) shows the original REVEALS the correct
+     trio in blue on every wrong answer, yielding a full 30/30 key.
+     Against it, the six future-εἰμί items (ἔσομαι, ἔσῃ, ἔσται,
+     ἐσόμεθα, ἔσεσθε, ἔσονται) grade Future ACTIVE, not the
+     morphological Middle the pipeline derived — consistent with the
+     original's own chart title "Future Active Indicative of εἰμί"
+     and its deponent-translated-active note. All twenty λύω items
+     and the four present-εἰμί items verify unchanged. Data and
+     assemble_ch10.py both corrected so regeneration reproduces the
+     key. | Pipeline, 2026-08-15.
+
+D-46 | ch10 | FORM-DEPENDENT HINT, copied from the original. In the
+     Parsing Drill the Hint payload depends on the item: εἰμί forms
+     open the stacked Present + Future εἰμί charts (field 0xec4b2,
+     titles verbatim), λύω forms open Future Active + Future Middle.
+     Implemented as a per-item hintRef overriding the drill-level
+     ui.hintRef. Standing recon rule: check for form-dependent hints
+     in every future chapter. | Nathanael, VERIFY-5G (h).
+
+D-47 | app | DISCLOSURE FRAMEWORK ADOPTED (DISCLOSURE-RULES.md,
+     canonical 2026-08-11, final 2026-08-15). Categories C1-C9 govern
+     every disclosure decision app-wide; the examples in the source
+     rules are not exhaustive and the categories extrapolate to every
+     screen. Consequences logged here so they are not re-litigated:
+     nested modals are ABOLISHED (an in-modal control replaces that
+     modal's content in place, replaced audio states get their own
+     Say button, nothing autoplays on state change); every accordion
+     is COLLAPSED BY DEFAULT without exception; accordion labels are
+     green with a caret and NEVER underlined, except "Meanings",
+     which is the sole underlined label; the three chapter-1 Notes
+     are a named INLINE exception (§3.8) that does not generalise.
+     21 screen-level data revisions applied in the Step 0 pass;
+     renderer items R1-R7 assigned to DISCLOSURE-SPEC1. | Nathanael,
+     DISCLOSURE-RULES.md.
+
 ## Auto-progress / advance rule matrix
 
 MOVED. The full exercise-by-exercise, chapter-by-chapter matrix —
 original behavior, port behavior, timings and departures — now lives
-in **DRILL-MATRIX.md** (canonical living set). Ratified values as of
+in **DRILL-BEHAVIOR-RULES.md** + **DRILLBEHAVIORLEDGER.csv**
+(canonical living set; DRILL-MATRIX.md deleted). Ratified values as of
 VERIFY-5D: ADVANCE_CORRECT_MS = 2000, ADVANCE_INCORRECT_MS = 4000,
 HINT_VISIBLE_MS = 7000, applied retroactively to every chapter.

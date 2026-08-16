@@ -10,7 +10,7 @@
   "recognize and translate deponent verbs,",
   "recognize when the passive or middle verb is followed by a preposition or case which helps complete the verb's meaning,",
   "master 10 more high frequency vocabulary words,",
-  "memorize Jn 6:23b in Greek."
+  "memorize Rom 6:23b in Greek."
  ],
  "_objectives_note": "Objective 6 prints \"memorize Jn 6:23b in Greek.\" in the ORIGINAL; the verse is Rom 6:23b. Kept verbatim pending VERIFY-5G decision.",
  "vocab": [
@@ -328,8 +328,9 @@
        "rows": [
         {
          "greek": "ἔρχομαι",
-         "gloss": "I go in, enter",
-         "audio": "chapt_9_i_voc7"
+         "gloss": "I come, go",
+         "audio": "chapt_9_i_voc7",
+         "_gloss_note": "Original printed \"I go in, enter\" (copied from the eiserchomai row, contradicting the chapter's own vocabulary). Fixed per Nathanael 2026-08-15, D-45."
         },
         {
          "greek": "εἰσέρχομαι",
@@ -913,7 +914,7 @@
     "liveScore": true,
     "hintRef": "middlePassiveParadigms"
    },
-   "_answer_note": "The correct option is NOT a fixed column. Each answer is the option whose English subject matches the person/number of the Greek verb (plus explicit subject nouns): 1:erchontai 3pl; 2:poreuomai 1sg; 3:ta eschata tou anthropou (sg); 4:ho huios ... erchetai 3sg; 5:erchomai 1sg + pros humas; 6:Saddoukaioi ... 3pl subject; 7:Elias ... erchetai 3sg subject; 8:poreuomai 1sg; 9:Erchometha ... 1pl + syn soi; 10:hemerai erchontai 3pl subject; 11:kago ... erchomai 1sg; 12:ho basileus sou ... erchetai soi 3sg + sou/soi; 13:erchetai ... ho Iesous 3sg subject; 14:lego 1sg. Rail walk confirms items 1 and 2. Dispatch at 0xc7d23 maps items 1-14 to i_TD1-14.",
+   "_answer_note": "The correct option is NOT a fixed column. Each answer is the option whose English subject matches the person/number of the Greek verb (plus explicit subject nouns): 1:erchontai 3pl; 2:poreuomai 1sg; 3:ta eschata tou anthropou (sg); 4:ho huios ... erchetai 3sg; 5:erchomai 1sg + pros humas; 6:Saddoukaioi ... 3pl subject; 7:Elias ... erchetai 3sg subject; 8:poreuomai 1sg; 9:Erchometha ... 1pl + syn soi; 10:hemerai erchontai 3pl subject; 11:kago ... erchomai 1sg; 12:ho basileus sou ... erchetai soi 3sg + sou/soi; 13:erchetai ... ho Iesous 3sg subject; 14:lego 1sg. Rail walk confirms items 1 and 2. Dispatch at 0xc7d23 maps items 1-14 to i_TD1-14. WALKTHROUGH-VERIFIED 2026-08-15: all 14 answers checked against Ch9TranslationDrill.pdf (3 green-confirmed exact, 11 wrong-option eliminations, zero contradictions).",
    "audioTiming": "afterGuess",
    "answerPolicy": {
     "advanceClass": "manualOnIncorrect",
@@ -1419,7 +1420,6 @@
    "punctuationOptional": true,
    "audio": "chapt_9_i_rm623b",
    "spellerTilesRef": "chapt_1",
-   "repeatCheckbox": true,
    "ui": {
     "fields": [
      "Spell Greek"
@@ -1432,17 +1432,16 @@
     ],
     "checkboxes": [
      "Show Answer",
-     "With Accents",
-     "Repeat This Exercise"
+     "With Accents"
     ],
-    "_reveal_note": "RULES C8 / D-30.",
-    "_repeat_note": "NEW ch9+: \"Repeat This Exercise\" checkbox, default OFF. Found once in the TBK, on this page (0x64d0c). When ON, a successful check plays the verse (C7), then clears the slate for another pass; completion state is unaffected. Semantics EXTRAPOLATED -- VERIFY-5G item."
+    "_reveal_note": "RULES C8 / D-30."
    },
    "audioTiming": "afterGuess",
    "answerPolicy": {
     "advanceClass": "retryUntilRight",
     "attemptsPerItem": "retry"
-   }
+   },
+   "_repeat_note": "The original's \"Repeat This Exercise\" control (which CLEARS the whole slate after the single allowed Check Answer) is DELIBERATELY NOT PORTED — Nathanael rejected the behavior 2026-08-15 (D-42 retired). Wrong guesses allow retry-until-right; a Restart Exercise button already exists. DO NOT re-add this control in any chapter."
   }
  ],
  "quickReview": [
@@ -2049,7 +2048,7 @@
   "c9_qr_scripture_rom623b",
   "c9_learn_bibliography"
  ],
- "_audioVerify": "CHAPT_9 ships 125 WAVs. Flags: (1) i_mpar.wav is referenced NOWHERE in the TBK -- provisionally wired as the passive paradigm Say Paradigm, listen before trusting; (2) i_voc11 is a live dispatch key wired here to dierchomai (Compound Verbs) by elimination -- listen; (3) parsing item audio i_pd1..16 and translation i_td1..14 are table-read; (4) the M/P Speller items 7-11 play i_pd1/2/3/4/6 per the dispatch table.",
+ "_audioVerify": "CHAPT_9 ships 125 WAVs. Flags: (1) i_mpar.wav is referenced NOWHERE in the TBK -- provisionally wired as the passive paradigm Say Paradigm, listen before trusting; (2) i_voc11 is a live dispatch key wired here to dierchomai (Compound Verbs) by elimination -- listen; (3) parsing item audio i_pd1..16 and translation i_td1..14 are table-read; (4) the M/P Speller items 7-11 play i_pd1/2/3/4/6 per the dispatch table. LISTEN-CONFIRMED 2026-08-15: i_mpar is the same sentence recorded twice (intentional duplicate of the middle recording) and is correctly wired to the Passive chart; i_voc11 says dierchomai and is correctly wired.",
  "_sequence_note": "Rail order from ch9railwalk.pdf (Nathanael, 2026-08-09).",
  "hintCharts": {
   "middlePassiveParadigms": {
@@ -2059,5 +2058,6 @@
    ],
    "_note": "Hint on both ch9 drills opens the Middle and Passive paradigm charts (rail walk shows the Middle chart popup; both fields sit in each drill's page record)."
   }
- }
+ },
+ "_objective_note": "Objective 6 read \"Jn 6:23b\" in the original (its own slip; the chapter teaches Rom 6:23b everywhere else). Fixed per Nathanael 2026-08-15, D-44."
 }
