@@ -1,0 +1,20 @@
+#!/bin/sh
+# .githooks/pre-commit — living-document integrity gate.
+#
+# Runs AUTOMATICALLY on every `git commit`. Blocks the commit if any
+# buildout/*.md loses a "## " section or shrinks by more than 30%, or if
+# DRILLBEHAVIORLEDGER.csv changes row count. This is the guard that commit
+# 021a03d (CHAT-HANDOFF.md 696 -> 70 lines, eleven sections destroyed) would
+# have tripped.
+#
+# It inspects the INDEX, not the working tree: what this commit will record.
+#
+# To pass a DELIBERATE removal through, name the file(s) for one commit only:
+#   DOC_INTEGRITY_ACK=CHAT-HANDOFF.md git commit -m "..."
+#
+# Emergency bypass is git's own --no-verify. If you use it on a buildout
+# commit, run `node scripts/check-doc-integrity.mjs` afterwards and read it.
+
+if [ -z "$SKIP_DOC_INTEGRITY" ]; then
+  node scripts/check-doc-integrity.mjs --staged || exit 1
+fi

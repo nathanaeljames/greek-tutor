@@ -10,13 +10,15 @@
     "preview": "vite preview",
     "check:lazy-chunk": "node scripts/check-lazy-chunk.mjs",
     "check:shapes": "node scripts/check-content-shapes.mjs",
-    "verify": "npm run check:shapes && npm run build && npm run check:lazy-chunk",
+    "check:docs": "node scripts/check-doc-integrity.mjs",
+    "verify": "npm run check:docs && npm run check:shapes && npm run build && npm run check:lazy-chunk",
     "ui:walk": "node scripts/ui-walk.mjs",
     "ui:behavior": "node scripts/ui-behavior.mjs",
     "ui:modals": "node scripts/ui-modals.mjs",
     "ui:offline": "node scripts/ui-offline.mjs",
     "ui:smoke5f": "node scripts/ui-smoke-5f.mjs",
-    "ui:shots5f": "node scripts/ui-shots-5f.mjs"
+    "ui:shots5f": "node scripts/ui-shots-5f.mjs",
+    "prepare": "git config core.hooksPath .githooks || echo hooks-path-skip"
   },
   "dependencies": {
     "idb": "^7.1.1"
