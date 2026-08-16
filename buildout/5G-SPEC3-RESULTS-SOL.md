@@ -206,3 +206,92 @@ round does not touch that component.
       remount behavior, or audio-byte writer changed.
 - [x] Results and exact cumulative BUILD handoffs are delivered; nothing was
       staged, committed, or pushed.
+
+---
+
+## XPATCH3 (cross-patch from the parallel run)
+
+Base: `2857e92` (`sol wins 5g spec 3, saving before xpatch`), the accepted Sol
+5G-SPEC3 tree. The working tree was clean before this patch. Nathanael has not
+reversed the rule-derived εἰμί extension, so its label derivation and existing
+assertions remain included while the objection window stays open. Nothing was
+staged, committed, or pushed.
+
+1. **Toggle labels derived from chart titles** — `paradigmToggleLabels()` in
+   `content.js` replaces the hardcoded label table; the explicit three-ref gate
+   still scopes which Hint surfaces toggle. The returned words are indexed by
+   state and `SelectActivity` reads the target state, preserving all six
+   requested readings: Passive/Middle, Middle/Active, and Future/Present.
+2. **`actionsPinned` replaces the nulled-`sayWhole` spread** — `Paradigm` takes
+   an optional, default-false prop and the two-state Hint passes the real chart
+   object with `actionsPinned={true}`. The pinned footer remains the sole Say
+   Paradigm control, and all other hosts keep the existing default. There was
+   no visual regression in the ten-chapter walk: 219 rail stops at both widths,
+   612/612 checklist states, eight alternate-Hint captures, 0px overflow, and
+   zero rail, interaction, or console errors.
+3. **Four D-48 divergence entries** — D-48f1, D-48f2, D-48f3, and D-48f3e are
+   backfilled into `DIVERGENCE-LOG.md` in the existing format. D-48f3e records
+   that the εἰμί extension remains reversible during its objection window.
+4. **Two named stop assertions and six retained label pins** — chapter 9 and
+   chapter 10 now report the outgoing-clip stop as independent conduct checks.
+   The existing state assertions continue to pin each derived target word, so
+   a title change that falls back to More/Back fails loudly.
+
+### Spec/code drift
+
+XPATCH3 item 4 said neither run had these guards, but the accepted Sol harness
+already covered both conducts: playback stop was a conjunct inside the broader
+"toggle replaces the chart without autoplay" assertion, and the six expected
+labels were already read in the state-transition assertions. This patch split
+the two authored-audio stop cases into independently named checks and retained
+the folded label pins. That is why behavior accounting moves by exactly two,
+from 898 to 900, rather than adding eight duplicate checks.
+
+The base also had no separate `HINT_DISCLOSURE_REFS` list: its hardcoded label
+object doubled as the scope gate. The patch replaces that object with an
+explicit refs-only gate containing the same three refs; disclosure is not
+generalized.
+
+`content.js` contains a pre-existing literal NUL delimiter in `pairKey`, so Git
+classifies the file as binary by default. The diff carrier uses `git diff
+--text` to show the complete helper patch rather than a `Binary files differ`
+placeholder; the delimiter itself is unchanged.
+
+### Assertion bite proof
+
+I temporarily removed only `stopAudio()` from `toggleHintParadigm()`, built the
+regressed artifact, and restored the source immediately. The restored
+`SelectActivity.svelte` SHA-256 matched before and after as
+`6C4AC61ECA3AB32C507AA3ABCE9C9803C938342A839203FC1A817E9A238322E3`.
+The full maintained behavior harness against the isolated mutant build failed
+only the two new checks:
+
+```text
+FAIL  5G-XPATCH3 c9_drill_parsing: toggling stops the outgoing paradigm clip — playing 1 -> 1
+FAIL  5G-XPATCH3 c10_drill_parsing: toggling stops the outgoing paradigm clip — playing 1 -> 1
+898/900 behavior checks passed
+```
+
+The final restored build then passed 900/900.
+
+### Final verification
+
+| Command/check | Result |
+| --- | --- |
+| `npm.cmd run check:shapes` | PASS: all 10 chapter files and their content/audio/reference invariants |
+| `npm.cmd run build` | PASS: 101 modules transformed; PWA precache 37 entries |
+| `npm.cmd run ui:behavior` with `BASE=http://127.0.0.1:4194` | PASS: 900/900 behavior checks in 787.4 seconds |
+| Mutant build, same full behavior command | Expected failure: 898/900; both outgoing-clip checks reported `playing 1 -> 1` |
+| `npm.cmd run ui:modals -- --base=http://127.0.0.1:4194 ...` | PASS: 165/165 states, 33 surfaces across five device viewports, in 158.336 seconds |
+| `npm.cmd run ui:walk -- --base=http://127.0.0.1:4194 --chapters=chapt_1,...,chapt_10 ...` | PASS in 343.1 seconds: 219 stops x 2 widths; 612/612 checklist states; eight alternate-Hint captures; 0px overflow; zero rail, interaction, or console errors |
+| `npm.cmd run ui:offline` with `BASE=http://127.0.0.1:4194` | PASS: 44 stops rendered; zero missing; offline refresh OK; zero console errors |
+| `node --check scripts/ui-behavior.mjs`, stale-symbol grep, and `git diff --check` | PASS |
+
+The production build retains the pre-existing Svelte accessibility warning at
+`DivideActivity.svelte:370` (`tabIndex` on a noninteractive element). This
+patch does not touch that component. No chapter data, lexicon, audio manifest,
+cache/store path, route remount behavior, or audio-byte writer changed.
+
+Suite: 898 -> 900, all passing. The complete patch diff, including this
+amendment and excluding its self-referential carrier, is in
+`buildout/5G-XPATCH3-DIFF.md`.

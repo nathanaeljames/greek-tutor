@@ -18,6 +18,12 @@
   import MeaningsCard from './MeaningsCard.svelte';
   export let paradigm;
   export let title = null;
+  // The control row (Say Paradigm, and the switch where a chart has one)
+  // normally lives inside the chart body. A host that pins its own row —
+  // the two-state Hint modal, whose footer holds Say + toggle + Close
+  // outside the scroller (DISCLOSURE-RULES 4.3) — passes true and draws
+  // the row itself. Every other host passes nothing and is unaffected.
+  export let actionsPinned = false;
   // 5F-FEEDBACK2 item 12 (Nathanael, 2026-08-09): a HOST may rename the
   // More/Back pair per chart index — the Adjective Case Drill's Hint reads
   // "Plural"/"Singular" while the Learn topic showing the SAME chart stack
@@ -234,7 +240,7 @@
       <div class="pg-note">{#each splitTaps(chart.note, chart.noteTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => play(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}</div>
     {/if}
 
-    {#if hasActions}
+    {#if !actionsPinned && hasActions}
       <div class="pg-actions" class:pg-actions-each={sayWholeEach.length > 0} style={`--pg-action-count:${sayWholeEach.length || 1}`}>
         {#if chart.sayWhole}
           <button class="btn secondary pg-say-whole" on:click={() => play(chart.sayWhole.audio)}>{chart.sayWhole.label || 'Say Whole Paradigm'}</button>

@@ -34,7 +34,7 @@
   // policy machinery as a one-stage item, so no timing or advance rule below
   // has a special case for it.
   import { onDestroy } from 'svelte';
-  import { authoredOptionSource, buildSelectQuestions, buildTwoStageQuestions, randomFeedback, resolveContentById, resolveHintBlocks, resolveHintRef } from '../lib/content.js';
+  import { authoredOptionSource, buildSelectQuestions, buildTwoStageQuestions, paradigmToggleLabels, randomFeedback, resolveContentById, resolveHintBlocks, resolveHintRef } from '../lib/content.js';
   import { combiningForMarkName, firstAccentCluster, markOverlayParts } from '../lib/greek.js';
   import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
@@ -194,11 +194,11 @@
   // where it goes rather than a generic "switch" instruction. This policy is
   // deliberately scoped by hintRef; Quick Review and every unrelated chart
   // retain their existing renderer behavior.
-  const HINT_DISCLOSURE_TARGETS = {
-    middlePassiveParadigms: ['Passive', 'Middle'],
-    futureParadigms: ['Middle', 'Active'],
-    eimiParadigms: ['Future', 'Present']
-  };
+  const HINT_DISCLOSURE_REFS = [
+    'middlePassiveParadigms',
+    'futureParadigms',
+    'eimiParadigms'
+  ];
   let hintParadigmIndex = 0;
   let hintParadigmRef = null;
   // A correct answer may auto-advance behind an already-open Hint. If the new
@@ -210,15 +210,13 @@
     hintParadigmRef = activeHintRef;
     hintParadigmIndex = 0;
   }
-  $: hintDisclosureTargets = HINT_DISCLOSURE_TARGETS[activeHintRef] || null;
-  $: hintDisclosure = hintDisclosureTargets
+  $: hintDisclosure = HINT_DISCLOSURE_REFS.includes(activeHintRef)
     && Array.isArray(hintChart?.paradigms) && hintChart.paradigms.length === 2;
   $: hintParadigm = hintDisclosure ? hintChart.paradigms[hintParadigmIndex] : null;
-  // The selected chart's Say action belongs in the pinned modal footer beside
-  // the disclosure control, not in Paradigm's scrolling chart body.
-  $: hintParadigmBody = hintParadigm ? { ...hintParadigm, sayWhole: null } : null;
-  $: hintParadigmTarget = hintDisclosureTargets
-    ? hintDisclosureTargets[hintParadigmIndex]
+  $: hintToggleLabels = paradigmToggleLabels(
+    (hintChart?.paradigms || []).map(chart => chart.title));
+  $: hintParadigmTarget = hintDisclosure
+    ? hintToggleLabels[1 - hintParadigmIndex]
     : null;
   // 5F-FEEDBACK2 items 13/28 (Nathanael, 2026-08-09): a MULTI-PAGE hint, the
   // original's More/Back-paged popup. ui.hintPages lists pages by reference —
@@ -784,7 +782,7 @@
              footer below. -->
         <div class="paradigm-stack">
           {#if hintChart.title}<div class="rc-heading">{hintChart.title}</div>{/if}
-          <Paradigm paradigm={hintParadigmBody} title={hintParadigm.title || null} />
+          <Paradigm paradigm={hintParadigm} title={hintParadigm.title || null} actionsPinned={true} />
         </div>
       {:else if Array.isArray(hintChart.paradigms)}
         <!-- A future composite outside the three scoped disclosure refs keeps

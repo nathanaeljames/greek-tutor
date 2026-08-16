@@ -676,6 +676,32 @@ function optionClassForLayout(layout, activity, activityOptions, questions) {
   return longest <= 3 ? 'wide' : '';
 }
 
+// THE TOGGLE LABELS OF A TWO-STATE HINT (5G-SPEC3, DISCLOSURE-RULES 4.1).
+// If a one-word contrast exists that is meaningful without the noun, the
+// toggle reads that word; otherwise it falls back to More/Back. The three
+// shipped pairs each differ in EXACTLY ONE word of their titles, and that
+// word IS the contrast the rule asks for:
+//   Present [Middle] Indicative Paradigm  / Present [Passive] Indicative Paradigm
+//   Future [Active] Indicative Paradigm   / Future [Middle] Indicative Paradigm
+//   [Present] Active Indicative of eimi   / [Future] Active Indicative of eimi
+// So the label is DERIVED from the titles the data already carries rather
+// than authored beside them: a second place to write "Passive" is a second
+// place for it to disagree with the chart it names. Titles that do not
+// differ in exactly one word get More/Back, the rule's own fallback.
+// The returned array is indexed BY STATE: entry i is the contrast word of
+// title i. Callers index it by the TARGET state, so the button names where
+// it goes, not where it is.
+export function paradigmToggleLabels(titles) {
+  const words = (titles || []).map(title => String(title || '').trim().split(/\s+/));
+  const fallback = (titles || []).map((_, index) => (index === 0 ? 'Back' : 'More'));
+  if (words.length !== 2 || words[0].length !== words[1].length || !words[0].length) return fallback;
+  const differing = words[0].map((word, index) => word !== words[1][index]).reduce(
+    (found, differs, index) => (differs ? [...found, index] : found), []);
+  if (differing.length !== 1) return fallback;
+  const at = differing[0];
+  return [words[0][at], words[1][at]];
+}
+
 // A hintRef names a chart source in the chapter: an existing chart by id/type/
 // title, or a chapter-level hintCharts entry. Chapter 3's three verb drills all
 // open the same λύω paradigm the Learn page draws; later composite entries may

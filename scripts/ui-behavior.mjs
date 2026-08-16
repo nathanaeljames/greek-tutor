@@ -3669,6 +3669,11 @@ const seekSelectPrompt = async (hash, expectedPrompt, itemCount) => {
 };
 
 const parsing10 = activityById(ch10, 'c10_drill_parsing');
+// XPATCH3 item 1 derives these labels from the chart titles. A retitle that
+// breaks the one-word contrast degrades to More/Back SILENTLY, so the expected
+// words stay pinned here and in the eimi state assertions below. A failure
+// means the data changed and the labels need a decision, not that the
+// derivation itself should be bypassed.
 for (const [chapterId, activityId, first, second, firstTarget, secondTarget, target, sayAudio] of [
   ['chapt_9', 'c9_drill_parsing', 'Present Middle Indicative Paradigm', 'Present Passive Indicative Paradigm', 'Passive', 'Middle', null,
     ['chapt_9_i_midpar', 'chapt_9_i_mpar']],
@@ -3687,6 +3692,8 @@ for (const [chapterId, activityId, first, second, firstTarget, secondTarget, tar
     check(`5G-SPEC3 ${activityId}: Hint opens in state 1 with a target-labelled toggle`, false,
       `never reached ${JSON.stringify(target)}`);
     check(`5G-SPEC3 ${activityId}: toggle replaces the chart without autoplay`, false, 'target form not reached');
+    if (sayAudio) check(`5G-XPATCH3 ${activityId}: toggling stops the outgoing paradigm clip`, false,
+      'target form not reached');
     check(`5G-SPEC3 ${activityId}: toggling back restores state 1`, false, 'target form not reached');
     check(`5G-SPEC3 ${activityId}: the Hint closes`, false, 'target form not reached');
     continue;
@@ -3709,31 +3716,44 @@ for (const [chapterId, activityId, first, second, firstTarget, secondTarget, tar
     const played = await exactAudioTap(say, sayAudio[0]);
     check(`5G-SPEC3 ${activityId}: state 1 Say Paradigm plays its exact authored clip`,
       await say.getAttribute('data-audio-id') === sayAudio[0]
+        && await modal.locator('[data-hint-paradigm-say]').count() === 1
+        && await modal.locator('.modal-scroll .pg-actions').count() === 0
         && played.clipCount === 1
         && played.fetched.some(url => url.includes(played.path)),
       `${await say.getAttribute('data-audio-id')}; ${played.clipCount} clip(s); requests ${JSON.stringify(played.fetched)}`);
+    await page.waitForTimeout(400);
   }
 
   if (!sayAudio) await page.evaluate(() => { window.__clips.length = 0; });
   const clipsBeforeToggle = (await clips()).length;
   const playingBeforeToggle = await clipsPlaying();
   await toggle.click();
-  await page.waitForTimeout(250);
+  await page.waitForTimeout(sayAudio ? 200 : 250);
   const clipsAfterToggle = (await clips()).length;
   const playingAfterToggle = await clipsPlaying();
   check(`5G-SPEC3 ${activityId}: toggle replaces the chart without autoplay`,
     await modal.locator('.paradigm').count() === 1
       && normalizeText(await modal.locator('.pg-title').innerText()) === second
       && normalizeText(await toggle.innerText()) === secondTarget
-      && clipsAfterToggle === clipsBeforeToggle
-      && (!sayAudio || (playingBeforeToggle === 1 && playingAfterToggle === 0)),
+      && clipsAfterToggle === clipsBeforeToggle,
     `${normalizeText(await modal.locator('.pg-title').innerText())}; toggle ${JSON.stringify(await toggle.innerText())}; clips ${clipsBeforeToggle}->${clipsAfterToggle}; playing ${playingBeforeToggle}->${playingAfterToggle}`);
+  if (sayAudio) {
+    // Press Say Paradigm, let it get going, then toggle. The OLD clip must
+    // stop: it belongs to the chart that just left the screen. Asserting
+    // "no new clip started" is not this check — a clip that is still playing
+    // satisfies that trivially, which is how this bug passes a green suite.
+    check(`5G-XPATCH3 ${activityId}: toggling stops the outgoing paradigm clip`,
+      playingBeforeToggle === 1 && playingAfterToggle === 0,
+      `playing ${playingBeforeToggle} -> ${playingAfterToggle}`);
+  }
 
   if (sayAudio) {
     const say = modal.locator('[data-hint-paradigm-say]');
     const played = await exactAudioTap(say, sayAudio[1]);
     check(`5G-SPEC3 ${activityId}: state 2 Say Paradigm plays its exact authored clip`,
       await say.getAttribute('data-audio-id') === sayAudio[1]
+        && await modal.locator('[data-hint-paradigm-say]').count() === 1
+        && await modal.locator('.modal-scroll .pg-actions').count() === 0
         && played.clipCount === 1
         && played.fetched.some(url => url.includes(played.path)),
       `${await say.getAttribute('data-audio-id')}; ${played.clipCount} clip(s); requests ${JSON.stringify(played.fetched)}`);

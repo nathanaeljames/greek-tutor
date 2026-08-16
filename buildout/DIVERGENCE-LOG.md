@@ -482,6 +482,29 @@ D-47 | app | DISCLOSURE FRAMEWORK ADOPTED (DISCLOSURE-RULES.md,
      renderer items R1-R7 assigned to DISCLOSURE-SPEC1. | Nathanael,
      DISCLOSURE-RULES.md.
 
+D-48f1 | ch9 | DRILL HINTS SHOW ONE PARADIGM AT A TIME WITH A
+     MIDDLE/PASSIVE TOGGLE. The original draws only the Middle chart;
+     the port previously stacked Middle and Passive in one scrolling
+     modal. A two-state control is closer to the original than the
+     stack was. | Nathanael, 5G-FEEDBACK-1 item 1.
+
+D-48f2 | ch10 | THE INTRODUCTION FORMULA IS TAPPABLE. The derivation
+     line `λύ + σ + ω` is one tap unit playing `chapt_10_j_luw1s`,
+     and λύσω in the gloss line taps to the same clip. The original's
+     formula is silent. | Nathanael, 5G-FEEDBACK-1 item 2.
+
+D-48f3 | ch10 | DRILL HINTS SHOW ONE PARADIGM AT A TIME WITH AN
+     ACTIVE/MIDDLE TOGGLE. The port previously stacked Future Active
+     and Future Middle in one scrolling modal. For the same reasoning
+     as D-48f1, a two-state control is closer to the original than the
+     stack was. | Nathanael, 5G-FEEDBACK-1 item 3.
+
+D-48f3e | ch10 | THE εἰμί HINT GETS THE SAME TWO-STATE TREATMENT,
+     DERIVED from DISCLOSURE-RULES §4.1 rather than requested in the
+     feedback. This extension remains inside its objection window and
+     is flagged for reversal; reversing it is a two-line change. |
+     Implementer, 5G-SPEC3 §2.
+
 ## Auto-progress / advance rule matrix
 
 MOVED. The full exercise-by-exercise, chapter-by-chapter matrix —
