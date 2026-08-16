@@ -135,14 +135,10 @@ export function stop() {
 // no longer playing. It NEVER rejects — a caller's advance must not be lost to
 // a missing file.
 //
-// IT ALSO REPORTS HOW PLAYBACK ENDED (5G-XPATCH1 §1): `true` only when the
-// clip reached its own `ended`, `false` when it was paused, errored, failed to
-// start, or was superseded by a newer play. Every advance caller races this
-// against a minimum timer and ignores the value — an interrupted clip should
-// release the wait either way. The caller that needs the distinction is the
-// whole-verse speller's repeat pass (D-42): it clears what the learner typed
-// once the verse has been spoken, and a clip cut off by a route exit, a screen
-// lock or a superseding tap must NOT go on to wipe the slate.
+// It also reports how playback ended: `true` only when the clip reached its
+// own `ended`, `false` when it was paused, errored, failed to start, or was
+// superseded by a newer play. Current advance callers ignore that distinction;
+// either outcome releases their wait immediately.
 // WHICH EVENT FIRED IS NOT THE ANSWER — `audio.ended` IS. A clip that reaches
 // its end fires `pause` AND `ended` (the spec pauses the element on the way
 // out, and Chrome delivers them in that order), so a listener that resolved

@@ -378,6 +378,16 @@ for (const file of files) {
         });
       }
     }
+    // D-42 is retired: Scripture Memory spellers always keep a wrong attempt
+    // available for retry and never offer the old Repeat This Exercise mode.
+    // Reject either half of the former data contract if a future assembly
+    // accidentally stamps it back onto any activity.
+    if (Object.prototype.hasOwnProperty.call(block, 'repeatCheckbox')) {
+      problems.push(`${path}.repeatCheckbox: Repeat This Exercise was retired by D-42.`);
+    }
+    if (Array.isArray(block.ui?.checkboxes) && block.ui.checkboxes.includes('Repeat This Exercise')) {
+      problems.push(`${path}.ui.checkboxes: Repeat This Exercise was retired by D-42.`);
+    }
     // TIMING IS NOT A DATA FIELD (5D-SPEC2 §3, D-14 at 2000/4000). Advance
     // durations live in src/lib/timing.js and nowhere else, so ch1, ch2 and
     // ch3 always read the same two numbers. A regenerated data file that
@@ -440,10 +450,10 @@ for (const file of files) {
 // Five of chapter 6-8's six hintRefs dangled once, and a dangling reference
 // fails SILENTLY in both directions: a hintRef that resolves to nothing simply
 // removes the Hint button, and a [[link:id]] that names no popup renders as
-// plain text. Both look like a deliberate absence on screen. 5G adds two more
-// reference kinds — the chapter-level `hintCharts` register and its
-// `paradigmRefs`, and the explicit link markup — so the whole class is checked
-// here rather than one kind at a time.
+// plain text. Both look like a deliberate absence on screen. 5G adds the
+// chapter-level `hintCharts` register (referenced `paradigmRefs` or inline
+// `charts`) and explicit link markup, so the whole class is checked here
+// rather than one kind at a time.
 //
 // The resolver accepts an id, a block type, or the camelCase slug of a chart
 // title (src/lib/content.js resolveHintRef). That slug rule is copied rather
@@ -473,21 +483,38 @@ for (const file of files) {
 
   for (const [name, composite] of Object.entries(data.hintCharts || {})) {
     const refs = composite && composite.paradigmRefs;
-    if (!Array.isArray(refs) || !refs.length) {
-      problems.push(`${file}.hintCharts.${name}: expected a non-empty paradigmRefs array.`);
+    const charts = composite && composite.charts;
+    const hasRefs = Array.isArray(refs) && refs.length > 0;
+    const hasCharts = Array.isArray(charts) && charts.length > 0;
+    if (!hasRefs && !hasCharts) {
+      problems.push(`${file}.hintCharts.${name}: expected a non-empty paradigmRefs or charts array.`);
       continue;
     }
-    refs.forEach((ref, index) => {
-      if (!chartRefs.has(ref)) {
-        problems.push(`${file}.hintCharts.${name}.paradigmRefs[${index}]: "${ref}" names no chart, topic or block in this chapter — the Hint would open empty.`);
-      }
-    });
+    if (hasRefs && hasCharts) {
+      problems.push(`${file}.hintCharts.${name}: use paradigmRefs or inline charts, not both.`);
+    }
+    if (hasRefs) {
+      refs.forEach((ref, index) => {
+        if (!chartRefs.has(ref)) {
+          problems.push(`${file}.hintCharts.${name}.paradigmRefs[${index}]: "${ref}" names no chart, topic or block in this chapter — the Hint would open empty.`);
+        }
+      });
+    }
+    if (hasCharts) {
+      charts.forEach((chart, index) => {
+        if (!chart || typeof chart !== 'object' || Array.isArray(chart) || chart.type !== 'paradigm') {
+          problems.push(`${file}.hintCharts.${name}.charts[${index}]: expected an inline paradigm block.`);
+        }
+      });
+    }
   }
 
   walk(data, file, (node, path) => {
-    const ref = node.ui && node.ui.hintRef;
+    // Walking every object reaches ui, item and hint-page records alike, so
+    // one own-property check covers both drill defaults and item overrides.
+    const ref = node.hintRef;
     if (typeof ref === 'string' && !chartRefs.has(ref)) {
-      problems.push(`${path}.ui.hintRef: "${ref}" resolves to nothing — the Hint control would silently not render.`);
+      problems.push(`${path}.hintRef: "${ref}" resolves to nothing — the Hint control would silently not render.`);
     }
   });
 
@@ -764,4 +791,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras; every presentFutureRows row has both sides; every hintRef, paradigmRef, [[link:id]] and topic titleLink resolves; every audio id the data names exists in the audio manifest).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; spellVerse answers are single words; retired Repeat controls are absent; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras; every presentFutureRows row has both sides; every hintChart has paradigmRefs or inline charts; every hintRef, paradigmRef, [[link:id]] and topic titleLink resolves; every audio id the data names exists in the audio manifest).`);

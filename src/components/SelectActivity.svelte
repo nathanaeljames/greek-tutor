@@ -184,7 +184,11 @@
   // three verb drills all open the λύω paradigm, which the original shows as a
   // popup, so a hintRef opens a modal.
   $: hintBlocks = resolveHintBlocks(chapter, activity.hint);
-  $: hintChart = activity.ui?.hintRef ? resolveHintRef(chapter, activity.ui.hintRef) : null;
+  // A form may override the drill's default chart. The question builder keeps
+  // that reference attached while shuffling; forms without one retain the
+  // activity-level Hint.
+  $: activeHintRef = current?.hintRef ?? activity.ui?.hintRef;
+  $: hintChart = activeHintRef ? resolveHintRef(chapter, activeHintRef) : null;
   // 5F-FEEDBACK2 items 13/28 (Nathanael, 2026-08-09): a MULTI-PAGE hint, the
   // original's More/Back-paged popup. ui.hintPages lists pages by reference —
   // { hintRef } (a chart; a stack of N charts flattens to N pages, one chart

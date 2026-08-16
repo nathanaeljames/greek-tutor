@@ -109,7 +109,7 @@ const EXTRACT = () => {
     .map(el => ({ role: roleOf(el), text: el.textContent.trim() }));
   // Which words are tappable is a fidelity question (directive 9), so the dump
   // names them: prose taps, chart rows, paradigm cells and the lemma.
-  const taps = [...card.querySelectorAll('button.greek-tap, button.greek-say, button.pg-cell:not([disabled]), button.pg-lemma, button.rv-greek, button.ilv-word:not([disabled])')]
+  const taps = [...card.querySelectorAll('button.greek-tap, button.greek-say, button.pg-greek-tap:not([disabled]), button.pg-lemma, button.rv-greek, button.ilv-word:not([disabled])')]
     .filter(visible)
     .map(el => (el.querySelector('.greek') || el).textContent.trim()).filter(Boolean);
   const lists = [...card.querySelectorAll('ol')].filter(visible).map(ol => ({
@@ -413,9 +413,10 @@ for (const size of WIDTHS) {
         }
         await captureInteractiveStates(page, activity || {}, activityId, recordExtra, evidence);
 
-        // A topic-id hintRef exercises the 5E resolver through its real modal
-        // host. Capture it at both widths and prove it can close cleanly.
-        if (activity?.ui?.hintRef) {
+        // A topic-id or item-level hintRef exercises the resolver through its
+        // real modal host. Capture the payload that the shuffled current form
+        // selects, label it from the rendered titles, and prove it closes.
+        if (activity?.ui?.hintRef || activity?.items?.some(item => item?.hintRef)) {
           const hint = page.locator('.card').first().getByRole('button', { name: 'Hint', exact: true });
           if (!await hint.count() || !await hint.isVisible()) {
             report.interactionErrors.push({ ...evidence, state: activityId, error: 'missing Hint control' });
@@ -423,9 +424,11 @@ for (const size of WIDTHS) {
             await hint.click();
             const modal = page.locator('.hint-modal');
             if (!await modal.count() || !await modal.isVisible() || !await modal.locator('.paradigm').count()) {
-              report.interactionErrors.push({ ...evidence, state: activityId, error: `Hint did not open paradigm "${activity.ui.hintRef}"` });
+              report.interactionErrors.push({ ...evidence, state: activityId, error: 'Hint did not open a paradigm' });
             } else {
-              await recordExtra(`${activityId}--hint`, `hint: ${activity.ui.hintRef}`);
+              const titles = (await modal.locator('.pg-title').allInnerTexts())
+                .map(text => text.replace(/\s+/g, ' ').trim()).filter(Boolean);
+              await recordExtra(`${activityId}--hint`, `hint: ${titles.join(' + ') || activity.ui?.hintRef || 'item hint'}`);
               await modal.getByRole('button', { name: 'Close', exact: true }).click();
               await page.waitForTimeout(50);
               if (await modal.count()) report.interactionErrors.push({ ...evidence, state: activityId, error: 'Hint did not close' });

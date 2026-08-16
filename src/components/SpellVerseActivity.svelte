@@ -35,17 +35,9 @@
   // is waiting — 5E-SPEC2 shipped a "Click Next to continue" line here for the
   // withdrawn `spellUntilRight` class, and it is gone with the class (D-28).
   //
-  // 5G-SPEC1 §4.5 adds the original's "Repeat This Exercise" CHECKBOX, which
-  // first appears on this page in chapter 9. Default OFF; when it is on, a
-  // successful Check Answer plays the verse (C7, as always) and then clears
-  // the slate for another pass. Completion is unaffected — the exercise is
-  // done the first time it is answered, and a learner choosing to type it
-  // again is practising, not re-earning it. THESE SEMANTICS ARE EXTRAPOLATED,
-  // not observed in DOSBox: VERIFY-5G item (d) settles them, and nothing
-  // beyond replay-and-clear is invented here in the meantime.
   import { onMount, onDestroy } from 'svelte';
   import { randomFeedback } from '../lib/content.js';
-  import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
+  import { play, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import { checkVerse } from '../lib/answer-check.js';
   import * as input from '../lib/speller-input.js';
@@ -70,18 +62,6 @@
   let showKeyboard = false;
   let withAccents = false;
   let solved = false;
-  // §4.5. Present only where the data declares it (chapters 9 and 10); the
-  // three earlier whole-verse spellers have no such control in the original
-  // and gain none here. `repeatToken` cancels a pending replay-then-clear the
-  // way advanceToken does in SelectActivity: Restart, a route change or an
-  // unmount must not have the slate cleared out from under it a clip later.
-  // `destroyed` says the same thing for the unmount case in its own right,
-  // because clearing state on a dead component is worth refusing explicitly
-  // rather than by side effect (5G-XPATCH1 §1).
-  $: repeatCheckbox = activity.repeatCheckbox === true;
-  let repeatExercise = false;
-  let repeatToken = 0;
-  let destroyed = false;
 
   $: audioTiming = activity.audioTiming || 'afterGuess';
 
@@ -111,36 +91,12 @@
       feedback = randomFeedback(chapter, 'correct');
       feedbackKind = 'ok';
       detail = null;
-      // Completion is recorded on the FIRST success and is not touched by the
-      // repeat pass (§4.5): the exercise stays done.
       markCompleted(activity.id);
       // §2.5 / C7: hear the verse you just spelled. Nothing is waiting on the
       // clip here — rule B1b: one item, so there is no next item for it to
       // talk over and nothing for the auto-advance to advance to.
-      const repeating = repeatCheckbox && repeatExercise;
       if (audioTiming !== 'none' && activity.audio) {
-        if (repeating) {
-          // The verse is spoken in FULL before the slate clears — clearing it
-          // under the clip would leave the learner listening to a verse that
-          // is no longer on screen.
-          //
-          // AND ONLY IF IT ACTUALLY FINISHED (5G-XPATCH1 §1). playThrough
-          // resolves false for a clip cut off by a route exit, a screen lock
-          // or a superseding tap, and none of those is the learner hearing
-          // their verse — wiping what they typed on the strength of a clip
-          // that never played would be the worst possible reading of a
-          // checkbox they ticked. The token and `destroyed` cover the other
-          // half: a Restart or an unmount BETWEEN the success and the clip's
-          // end, and the checkbox being unticked while it played.
-          const token = ++repeatToken;
-          playThrough(activity.audio).then(finished => {
-            if (finished && repeatExercise && !destroyed && token === repeatToken) clearSlate();
-          });
-        } else {
-          play(activity.audio);
-        }
-      } else if (repeating) {
-        clearSlate();
+        play(activity.audio);
       }
       return;
     }
@@ -152,8 +108,7 @@
       : { text: 'There are more words here than the verse has.' };
   }
 
-  // An empty surface, ready to be typed again. Shared by Restart and by the
-  // repeat pass, so "another go" means exactly one thing on this page.
+  // An empty surface, ready to be typed again via Restart Exercise.
   function clearSlate() {
     buffer = input.clear();
     feedback = '';
@@ -165,7 +120,6 @@
 
   function restart() {
     stopAudio();
-    repeatToken += 1;                 // cancel a replay-then-clear in flight
     clearSlate();
   }
 
@@ -185,8 +139,6 @@
   onMount(() => window.addEventListener('keydown', onKey));
   onDestroy(() => {
     window.removeEventListener('keydown', onKey);
-    destroyed = true;
-    repeatToken += 1;                              // no clear after unmount
     stopAudio();                                   // §3.1
   });
 </script>
@@ -217,9 +169,6 @@
   <div class="spell-checks">
     <label><input type="checkbox" bind:checked={showAnswer} /> Show Answer</label>
     <label><input type="checkbox" bind:checked={withAccents} /> With Accents</label>
-    {#if repeatCheckbox}
-      <label data-repeat-exercise><input type="checkbox" bind:checked={repeatExercise} /> Repeat This Exercise</label>
-    {/if}
   </div>
 
   <SpellerKeyboard

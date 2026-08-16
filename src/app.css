@@ -838,8 +838,9 @@ button { font: inherit; cursor: pointer; }
 
 /* ---- PARADIGM CHART ----
    One grid, three hosts (Learn topic block, Quick Review page, drill Hint
-   popup). Person column + one column per number; each cell is a tappable
-   Greek form over its gloss. The glosses are the widest thing in the chart
+   popup). Person column + one column per number; each cell holds a tappable
+   Greek form over a static English gloss. The glosses are the widest thing in
+   the chart
    ("He/she/it looses/is loosing"), so the columns are fr units with min-width
    0 and the text wraps — at 320px the two data columns get ~110px each and
    the gloss runs to three lines rather than clipping. */
@@ -878,17 +879,27 @@ button { font: inherit; cursor: pointer; }
   color: var(--teal-dark); font-weight: 700; font-size: 0.9rem; }
 .pg-row-label { overflow-wrap: break-word; line-height: 1.2; }
 .pg-cell { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0;
-  background: transparent; border: none; padding: 9px 2px; text-align: center; }
-.pg-cell:active { background: rgba(0,0,0,0.04); border-radius: 8px; }
-.pg-cell:disabled { cursor: default; }
+  padding: 0 2px; text-align: center; }
+.pg-greek-tap { display: flex; align-items: center; justify-content: center; width: 100%; min-width: 0;
+  background: transparent; border: none; padding: 9px 0; text-align: inherit; }
+/* Keep the old cell geometry while leaving the English outside the button:
+   with a gloss, the button owns the top padding and the gloss owns the bottom. */
+.pg-cell-gloss .pg-greek-tap { padding-bottom: 0; }
+.pg-cell-gloss > .pg-gloss { padding-bottom: 9px; }
+.pg-greek-tap:active { background: rgba(0,0,0,0.04); border-radius: 8px; }
+.pg-greek-tap:disabled { cursor: default; }
 .pg-greek { font-size: 1.35rem; color: var(--link); overflow-wrap: anywhere; }
 .pg-long-forms { --pg-gap: 4px; }
 .pg-long-forms .pg-greek { font-size: 1.08rem; white-space: nowrap; overflow-wrap: normal; }
-.pg-cell:disabled .pg-greek { color: var(--ink); }
-.pg-gloss { font-size: 0.78rem; line-height: 1.3; color: var(--teal-dark); overflow-wrap: break-word; }
+.pg-greek-tap:disabled .pg-greek { color: var(--ink); }
+.pg-gloss { min-width: 0; max-width: 100%; font-size: 0.78rem; line-height: 1.3;
+  color: var(--teal-dark); overflow-wrap: anywhere; }
 .pg-many-columns .pg-head { font-size: 0.66rem; }
 .pg-many-columns .pg-person { font-size: 0.78rem; }
-.pg-many-columns .pg-cell { padding: 8px 0; }
+.pg-many-columns .pg-cell { padding: 0; }
+.pg-many-columns .pg-greek-tap { padding-top: 8px; padding-bottom: 8px; }
+.pg-many-columns .pg-cell-gloss .pg-greek-tap { padding-bottom: 0; }
+.pg-many-columns .pg-cell-gloss > .pg-gloss { padding-bottom: 8px; }
 .pg-many-columns .pg-greek { font-size: 0.92rem; white-space: nowrap; overflow-wrap: normal; }
 @media (min-width: 560px) {
   .pg-long-forms:not(.pg-many-columns) { --pg-gap: 6px; }
@@ -1131,7 +1142,7 @@ button, a, input, select, textarea, label,
 .rv-greek, .lm-row, .rc-defrow, .rc-example, .greek-chip, .greek-tap,
 .seg, .flash-hidden, .icon-btn, .bb-item, .section-head, .collapse-head,
 .rc-expander summary, .accent-slot,
-.pg-cell, .pg-lemma, .ilv-word,
+.pg-greek-tap, .pg-lemma, .ilv-word,
 .one-syllable-bar {
   touch-action: manipulation;
 }
@@ -1401,6 +1412,21 @@ button, a, input, select, textarea, label,
 .rc-pfrows.arrow-form .rc-pfcell { flex-direction: row; align-items: baseline; }
 .rc-pfrows.arrow-form .rc-pfgloss { grid-column: 1 / -1; margin-bottom: 8px; }
 .rc-pfarrow { color: var(--ink); font-size: 0.95rem; }
+/* 5G-SPEC2: Stem Variations places the existing arrow chart inside both a
+   numbered item's hanging indent and an Examples accordion. At the 320px
+   floor, reclaim the accordion padding and tighten only that nested chart so
+   long forms such as ἀποστέλλω stay inside the card. */
+@media (max-width: 359px) {
+  /* The three-column adjective charts sit at the font's exact intrinsic
+     width. Once Greek and gloss became siblings, two forms and the Masculine
+     heading exposed 2-3px of that old button overflow; keep them inside their
+     columns at the supported 320px floor. */
+  .paradigm.pg-three-columns.pg-long-forms .pg-head { font-size: 0.7rem; }
+  .paradigm.pg-three-columns.pg-long-forms .pg-greek { font-size: 1.04rem; }
+  .rc-item-below .rc-expander-body { padding-left: 8px; padding-right: 8px; }
+  .rc-item-below .rc-pfrows.arrow-form { column-gap: 4px; }
+  .rc-item-below .rc-pfrows.arrow-form .rc-pfgreek { font-size: 1.05rem; }
+}
 @media (min-width: 560px) {
   .rc-pfrows.arrow-form { grid-template-columns: auto auto auto minmax(0, 1fr); }
   .rc-pfrows.arrow-form .rc-pfgloss { grid-column: auto; margin-bottom: 0; }

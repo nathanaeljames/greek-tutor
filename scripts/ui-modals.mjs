@@ -91,6 +91,26 @@ const hint = (chapterId, activityId, meanings) => async () => {
   }
 };
 
+// Form-dependent Hints cannot be covered by opening whichever shuffled item
+// happens to mount first. Seek the named form through the activity's real Next
+// control, then open the modal variant that form routes to.
+const normalizeText = value => String(value ?? '').replace(/\s+/g, ' ').trim().normalize('NFC');
+const hintAtPrompt = (chapterId, activityId, prompt, itemCount) => async () => {
+  await go(`#/activity/${chapterId}/${activityId}`);
+  const next = () => page.locator('.card').getByRole('button', { name: 'Next', exact: true });
+  let found = false;
+  for (let step = 0; step < itemCount; step++) {
+    const shown = normalizeText(await page.locator('.card .prompt').first().innerText());
+    if (shown === normalizeText(prompt)) { found = true; break; }
+    if (await next().isDisabled()) break;
+    await next().click();
+    await page.waitForTimeout(45);
+  }
+  if (!found) throw new Error(`never reached Hint form ${JSON.stringify(prompt)}`);
+  await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
+  await page.waitForTimeout(180);
+};
+
 const SURFACES = [
   // Chapter 2's four Hint surfaces, added 2026-08-13. Two of them are the ONLY
   // coverage of DivideActivity and PlaceAccentActivity, which -- with
@@ -154,10 +174,13 @@ const SURFACES = [
   // 5G: the cohort's new modals. The COMPOSITE hint is the tallest thing in
   // the app now — two full paradigm charts with glosses in one dialog — so it
   // is exactly the surface the modal-sizing rule exists for, and it is
-  // captured on both chapters. The popups are the content[] shape: a one-line
-  // aside, a six-row Greek list, and the arrow-form derivation chart.
+  // captured on both chapters. Chapter 10's parsing Hint has two payloads, so
+  // its luo and eimi forms are sought explicitly instead of trusting shuffle.
+  // The remaining popups are the content[] shape: a one-line aside and a
+  // six-row Greek list. Stem derivations are interspersed accordions now.
   ['ch9-composite-hint-middle-passive', hint('chapt_9', 'c9_drill_parsing', false)],
-  ['ch10-composite-hint-future-active-middle', hint('chapt_10', 'c10_drill_parsing', false)],
+  ['ch10-composite-hint-future-active-middle', hintAtPrompt('chapt_10', 'c10_drill_parsing', 'λύω', 30)],
+  ['ch10-composite-hint-eimi-present-future', hintAtPrompt('chapt_10', 'c10_drill_parsing', 'εἰμί', 30)],
   ['ch9-popup-punctiliar', async () => {
     await go('#/activity/chapt_9/c9_learn_mp_verbs');
     await page.locator('.rc-para .popup-link').first().click();
@@ -167,12 +190,6 @@ const SURFACES = [
     await go('#/activity/chapt_9/c9_learn_mp_verbs');
     for (let i = 0; i < 3; i++) { await page.getByRole('button', { name: 'Next Topic', exact: true }).click(); await page.waitForTimeout(80); }
     await page.locator('.rc-para .popup-link').first().click();
-    await page.waitForTimeout(180);
-  }],
-  ['ch10-popup-palatal', async () => {
-    await go('#/activity/chapt_10/c10_learn_future_verbs');
-    for (let i = 0; i < 3; i++) { await page.getByRole('button', { name: 'Next Topic', exact: true }).click(); await page.waitForTimeout(80); }
-    await page.locator('.rc-list .popup-link').first().click();
     await page.waitForTimeout(180);
   }],
   ['ch10-verse-speller-greek-keyboard', async () => {
@@ -216,8 +233,22 @@ let bad = 0;
 for (const { name, width, height } of VIEWPORTS) {
   await page.setViewportSize({ width, height });
   for (const [label, open] of SURFACES) {
-    try { await open(); } catch (e) { console.log(`SKIP  ${label} @ ${name}: ${e.message.split('\n')[0]}`); continue; }
-    if (await page.locator('.modal-overlay').count() === 0) { console.log(`SKIP  ${label} @ ${name}: no modal opened`); continue; }
+    try {
+      await open();
+    } catch (e) {
+      const error = e.message.split('\n')[0];
+      console.log(`BAD  ${label} @ ${name}: ${error}`);
+      bad += 1;
+      report.push({ viewport: name, width, height, surface: label, error, ok: false });
+      continue;
+    }
+    if (await page.locator('.modal-overlay').count() === 0) {
+      const error = 'no modal opened';
+      console.log(`BAD  ${label} @ ${name}: ${error}`);
+      bad += 1;
+      report.push({ viewport: name, width, height, surface: label, error, ok: false });
+      continue;
+    }
 
     // AT REST. Nothing is scrolled before this measurement or this capture.
     const rest = await page.evaluate(() => {

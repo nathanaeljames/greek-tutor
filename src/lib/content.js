@@ -486,6 +486,10 @@ export function buildTwoStageQuestions(chapter, activity) {
       // disabled — a control the original has, that does nothing.
       translate: stripMarkup(item.translate) || null,
       gloss: stripMarkup(item.gloss) || null,
+      // A parsing form may route Hint to a chart specific to that form.
+      // Preserve the override through the shuffle; the surface falls back to
+      // the drill-level reference when this is absent.
+      hintRef: item.hintRef,
       answer,
       pairs,
       accepted: new Set(pairs.map(pairKey)),
@@ -597,6 +601,7 @@ export function buildSelectQuestions(chapter, activity) {
         // from `gloss`, which chapter 2's one-attempt drills reveal on their
         // own once an item is answered — a translation is shown on request.
         translate: stripMarkup(item.translate) || null,
+        hintRef: item.hintRef,
         reveals,
         correctForm: item.correctForm || null,
         redMarkCluster: item.redMarkCluster || null,
@@ -671,26 +676,26 @@ function optionClassForLayout(layout, activity, activityOptions, questions) {
   return longest <= 3 ? 'wide' : '';
 }
 
-// A hintRef names a CHART TYPE that already exists in the chapter — chapter
-// 3's three verb drills all open the same λύω paradigm the Learn page draws
-// (the original's Hint popup). Resolving by block type keeps the hint from
-// duplicating, or inventing, authored content and stays mode-keyed: any later
-// chapter whose drills point at their own paradigm gets this for free.
+// A hintRef names a chart source in the chapter: an existing chart by id/type/
+// title, or a chapter-level hintCharts entry. Chapter 3's three verb drills all
+// open the same λύω paradigm the Learn page draws; later composite entries may
+// bundle referenced or inline paradigms for one stacked Hint popup.
 export function resolveHintRef(chapter, ref) {
   if (!chapter || !ref) return null;
-  // 5G-SPEC1 §4.8: a chapter-level `hintCharts` register may name a COMPOSITE
-  // hint — one popup holding several of the chapter's charts, referenced by
-  // id (`paradigmRefs`). Both chapter-9 drills open the Middle and Passive
-  // paradigms together and both chapter-10 drills open Future Active and
-  // Future Middle together; the original draws them stacked under one Cancel
-  // (ch10railwalk p7), so the composite resolves to a `paradigms[]` bundle the
+  // A chapter-level `hintCharts` register names a COMPOSITE hint: one popup
+  // holding several paradigms, either referenced by id (`paradigmRefs`) or
+  // authored inline (`charts`). It resolves to one `paradigms[]` bundle the
   // surface renders as a stack. Checked FIRST, so a composite id can never be
   // shadowed by an activity or topic that happens to share its name.
   const composite = chapter.hintCharts && chapter.hintCharts[ref];
   if (composite) {
-    const paradigms = (composite.paradigmRefs || [])
-      .map(chartRef => resolveHintRef(chapter, chartRef))
-      .filter(Boolean);
+    // Composites either reference charts authored elsewhere in the chapter or
+    // own inline paradigm blocks. Normalize both forms to the same stack.
+    const paradigms = Array.isArray(composite.charts) && composite.charts.length
+      ? composite.charts.filter(Boolean)
+      : (composite.paradigmRefs || [])
+        .map(chartRef => resolveHintRef(chapter, chartRef))
+        .filter(Boolean);
     if (!paradigms.length) return null;
     if (paradigms.length === 1) return paradigms[0];
     return { paradigms, title: composite.title || null };

@@ -2790,7 +2790,7 @@ for (const [chapterId, activityId, opener] of [
     `${await chart.locator('.pg-row').count()} rows`);
   // Directive 9: a cell whose form has a clip plays it.
   await page.evaluate(() => { window.__clips.length = 0; });
-  await chart.locator('.pg-cell').first().click();
+  await chart.locator('.pg-greek-tap:not([disabled])').first().click();
   await page.waitForTimeout(200);
   check('5F §2.8 a paradigm cell plays its own clip', (await clips()).length === 1);
 
@@ -3220,8 +3220,8 @@ for (const [chapterId, activityId, expected] of [
 // ledger read-back). What follows is what only they have: the parsing drill
 // generalized to THREE stages, the single-topic page with no topic rail, the
 // popup written as content blocks, the present/future chart in both of its
-// printed forms, the composite Hint, the compound-verb suffix, and the
-// "Repeat This Exercise" checkbox.
+// printed forms, the form-dependent composite Hint, the compound-verb suffix,
+// and the retired Repeat control's preserved retry-until-right path.
 
 // ---- G1 the THREE-stage parsing drill (5G-SPEC1 §4.1) --------------------
 {
@@ -3441,29 +3441,40 @@ for (const [chapterId, activityId, expected] of [
   await page.locator('.popup-sheet').getByRole('button', { name: 'Cancel', exact: true }).click();
   await page.waitForTimeout(80);
 
-  // ch10: five stem-variation popups whose bodies are presentFutureRows in
-  // the ARROW form the original prints inside a popup.
+  // ch10: the five stem-variation examples are now interspersed disclosure
+  // rows. Each numbered variation owns exactly one collapsed "Examples"
+  // expander; none may drift into a detached group at the end of the topic.
   await go('#/activity/chapt_10/c10_learn_future_verbs');
   await gotoTopic(3);
-  const stemLinks = page.locator('.rc-list .popup-link');
-  check('5G G4 all five stem variations carry a popup link on their own line',
-    await stemLinks.count() === 5, `${await stemLinks.count()} links`);
-  await stemLinks.first().click();
+  const stemItems = page.locator('.rc-list > li');
+  const placement = await stemItems.evaluateAll(items => items.map(item => {
+    const expanders = item.querySelectorAll(':scope > .rc-item-below > .rich > details.rc-expander');
+    return [...expanders].map(expander => ({
+      label: expander.querySelector('summary')?.textContent?.replace(/\s+/g, ' ').trim(),
+      open: expander.open
+    }));
+  }));
+  check('5G-SPEC2 stem variations: five collapsed Examples accordions, one under each numbered variation',
+    await stemItems.count() === 5
+      && placement.length === 5
+      && placement.every(entries => entries.length === 1 && entries[0].label === 'Examples' && !entries[0].open)
+      && await page.locator('.card details.rc-expander').count() === 5
+      && await page.locator('.rc-list .popup-link').count() === 0,
+    JSON.stringify(placement));
+  await stemItems.first().locator('summary', { hasText: 'Examples' }).click();
   await page.waitForTimeout(150);
-  const sheet = page.locator('.popup-sheet');
-  check('5G G4 the palatal popup is a presentFutureRows chart in ARROW form, Greek tappable on both sides',
-    await sheet.getAttribute('data-popup-id') === 'palatal'
-      && await sheet.locator('.rc-pfrows.arrow-form').count() === 1
-      && await sheet.locator('.rc-pfrow').count() === 2
-      && await sheet.locator('.rc-pfgreek:not([disabled])').count() === 4,
-    normalizeText(await sheet.innerText()));
+  const examples = stemItems.first().locator('details.rc-expander');
+  check('5G-SPEC2 the first interspersed Examples accordion reveals its existing arrow-form chart',
+    await examples.getAttribute('open') !== null
+      && await examples.locator('.rc-pfrows.arrow-form').count() === 1
+      && await examples.locator('.rc-pfrow').count() === 2
+      && await examples.locator('.rc-pfgreek:not([disabled])').count() === 4,
+    normalizeText(await examples.innerText()));
   await page.evaluate(() => { window.__clips.length = 0; });
-  await sheet.locator('.rc-pfgreek').first().click();
+  await examples.locator('.rc-pfgreek').first().click();
   await page.waitForTimeout(250);
-  check('5G G4 a Greek cell in a popup plays its own clip (directive 9)',
+  check('5G-SPEC2 a Greek cell in an interspersed example plays its own clip (directive 9)',
     (await clips()).length === 1, JSON.stringify(await clips()));
-  await sheet.getByRole('button', { name: 'Cancel', exact: true }).click();
-  await page.waitForTimeout(80);
 }
 
 // ---- G5 presentFutureRows in the HEADED form (5G-SPEC1 §4.4) -------------
@@ -3534,26 +3545,109 @@ for (const [chapterId, activityId, expected] of [
   }
 }
 
-// ---- G7 the composite Hint: two charts, one popup (5G-SPEC1 §4.8) --------
-for (const [chapterId, activityId, first, second] of [
-  ['chapt_9', 'c9_drill_parsing', 'Present Middle Indicative Paradigm', 'Present Passive Indicative Paradigm'],
-  ['chapt_9', 'c9_drill_translation', 'Present Middle Indicative Paradigm', 'Present Passive Indicative Paradigm'],
-  ['chapt_10', 'c10_drill_parsing', 'Future Active Indicative Paradigm', 'Future Middle Indicative Paradigm'],
-  ['chapt_10', 'c10_drill_translation', 'Future Active Indicative Paradigm', 'Future Middle Indicative Paradigm']
+// ---- G7 composite + form-dependent Hints (5G-SPEC2 §3) -----------------
+// Two-stage questions are shuffled at mount, so a form-dependent assertion
+// must seek the authored form through the real Next control. Testing whatever
+// happens to load first would make the eimi/luo route nondeterministic.
+const seekSelectPrompt = async (hash, expectedPrompt, itemCount) => {
+  await go(hash);
+  const pronounceEach = page.locator('.exercise-checks input').first();
+  if (await pronounceEach.count() && await pronounceEach.isChecked()) await pronounceEach.uncheck();
+  for (let step = 0; step < itemCount; step++) {
+    if (await promptOnScreen() === normalizeText(expectedPrompt)) return true;
+    const next = stepper('Next');
+    if (await next.isDisabled()) break;
+    await next.click();
+    await page.waitForTimeout(45);
+  }
+  return false;
+};
+
+const parsing10 = activityById(ch10, 'c10_drill_parsing');
+for (const [chapterId, activityId, first, second, target] of [
+  ['chapt_9', 'c9_drill_parsing', 'Present Middle Indicative Paradigm', 'Present Passive Indicative Paradigm', null],
+  ['chapt_9', 'c9_drill_translation', 'Present Middle Indicative Paradigm', 'Present Passive Indicative Paradigm', null],
+  // Item 16 has no override and must retain the drill-level future pair.
+  ['chapt_10', 'c10_drill_parsing', 'Future Active Indicative Paradigm', 'Future Middle Indicative Paradigm', 'λύω'],
+  ['chapt_10', 'c10_drill_translation', 'Future Active Indicative Paradigm', 'Future Middle Indicative Paradigm', null]
 ]) {
-  await go(`#/activity/${chapterId}/${activityId}`);
+  const hash = `#/activity/${chapterId}/${activityId}`;
+  const sourceMatches = !target || (activityId === 'c10_drill_parsing'
+    && normalizeText(parsing10.items[15]?.greek) === normalizeText(target)
+    && !Object.prototype.hasOwnProperty.call(parsing10.items[15], 'hintRef'));
+  const reached = target ? await seekSelectPrompt(hash, target, parsing10.items.length) : (await go(hash), true);
+  if (!reached) {
+    check(`5G G7 ${activityId}: Hint opens ONE popup holding BOTH charts, stacked`, false,
+      `never reached ${JSON.stringify(target)}`);
+    check(`5G G7 ${activityId}: the Hint closes`, false, 'target form not reached');
+    continue;
+  }
   await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
   await page.waitForTimeout(150);
   const modal = page.locator('.hint-modal');
   const titles = (await modal.locator('.pg-title').allInnerTexts()).map(normalizeText);
   check(`5G G7 ${activityId}: Hint opens ONE popup holding BOTH charts, stacked`,
-    await modal.count() === 1 && await modal.locator('.paradigm').count() === 2
+    sourceMatches && await modal.count() === 1 && await modal.locator('.paradigm').count() === 2
       && titles[0] === first && titles[1] === second
       && await modal.locator('[data-paradigm-switch]').count() === 0,
     JSON.stringify(titles));
   await modal.getByRole('button', { name: 'Close', exact: true }).click();
   await page.waitForTimeout(80);
   check(`5G G7 ${activityId}: the Hint closes`, await page.locator('.hint-modal').count() === 0);
+}
+
+// Items 21 (present eimi) and 25 (future eimi) both override the drill-level
+// future-luo pair. They open the same two inline eimi charts, stacked in one
+// modal with one footer Close and no paging.
+for (const [itemIndex, expectedGreek] of [[20, 'εἰμί'], [24, 'ἔσομαι']]) {
+  const item = parsing10.items[itemIndex];
+  const reached = await seekSelectPrompt('#/activity/chapt_10/c10_drill_parsing', expectedGreek, parsing10.items.length);
+  const label = `5G-SPEC2 item ${itemIndex + 1}`;
+  if (!reached) {
+    check(`${label}: item-level hintRef opens Present and Future eimi charts`, false,
+      `never reached ${JSON.stringify(expectedGreek)}`);
+    check(`${label}: the form-dependent Hint closes`, false, 'target form not reached');
+    continue;
+  }
+  await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
+  await page.waitForTimeout(150);
+  const modal = page.locator('.hint-modal');
+  const titles = (await modal.locator('.pg-title').allInnerTexts()).map(normalizeText);
+  check(`${label}: item-level hintRef opens Present and Future eimi charts`,
+    normalizeText(item?.greek) === normalizeText(expectedGreek)
+      && item?.hintRef === 'eimiParadigms'
+      && await modal.count() === 1
+      && await modal.locator('.paradigm-stack > .paradigm').count() === 2
+      && titles.some(title => title.includes('Present Active Indicative of'))
+      && titles.some(title => title.includes('Future Active Indicative of'))
+      && await modal.locator('.pg-nav, [data-paradigm-switch]').count() === 0
+      && await modal.locator('.modal-actions').getByRole('button', { name: 'Close', exact: true }).count() === 1,
+    JSON.stringify(titles));
+
+  if (itemIndex === 20) {
+    const greekButtons = modal.locator('button.pg-greek-tap:not([disabled])');
+    const glosses = modal.locator('.pg-gloss');
+    const glossesPlain = await glosses.evaluateAll(nodes => nodes.every(node =>
+      !node.closest('button, [role="button"]') && getComputedStyle(node).color !== 'rgb(22, 99, 199)'));
+    await page.evaluate(() => { window.__clips.length = 0; });
+    await greekButtons.first().click();
+    await page.waitForTimeout(300);
+    const firstPresentAudio = ch10.hintCharts?.eimiParadigms?.charts?.[0]?.rows?.[0]?.cells?.[0]?.audio;
+    check('5G-SPEC2 eimi charts: all Greek forms are tappable and the present form uses its authored clip',
+      await greekButtons.count() === 12 && (await clips()).length === 1
+        && firstPresentAudio === 'chapt_10_g_eimi1s',
+      `${await greekButtons.count()} Greek buttons, first audio ${JSON.stringify(firstPresentAudio)}`);
+    await page.evaluate(() => { window.__clips.length = 0; });
+    await glosses.first().click();
+    await page.waitForTimeout(120);
+    check('5G-SPEC2 eimi charts: all English glosses are plain, ink, and not tappable',
+      await glosses.count() === 12 && glossesPlain && (await clips()).length === 0,
+      `${await glosses.count()} glosses, plain ${glossesPlain}, clips ${(await clips()).length}`);
+  }
+
+  await modal.getByRole('button', { name: 'Close', exact: true }).click();
+  await page.waitForTimeout(80);
+  check(`${label}: the form-dependent Hint closes`, await page.locator('.hint-modal').count() === 0);
 }
 
 // ---- G8 the Quick Review paradigm pair is stacked, not paged ------------
@@ -3575,129 +3669,36 @@ check('5G G8 ch8 third person stays a More/Back sequence (its charts are named)'
     && await page.locator('.paradigm').count() === 1
     && await page.locator('[data-paradigm-switch="more"]').count() === 1);
 
-// ---- G9 "Repeat This Exercise" (5G-SPEC1 §4.5) ---------------------------
-// PRESENCE and DEFAULT only. The behavior behind the box is EXTRAPOLATED
-// (replay the verse, clear the slate, completion unaffected) and VERIFY-5G
-// item (d) is what settles it; asserting modelled semantics here would pin
-// down a guess as though it were the original. 5G-SPEC1 §7 says the same:
-// extend the harness for this path only after item (d) resolves.
+// ---- G9 Repeat is retired; retry-until-right remains (5G-SPEC2 §2/§5) ----
 for (const [chapterId, activityId] of [
   ['chapt_9', 'c9_ex_scripture_speller'], ['chapt_10', 'c10_ex_scripture_speller']
 ]) {
   await go(`#/activity/${chapterId}/${activityId}`);
-  const box = page.locator('.spell-checks [data-repeat-exercise] input');
-  check(`5G G9 ${activityId}: the Repeat This Exercise checkbox is present and OFF by default`,
-    await box.count() === 1 && !await box.isChecked()
-      && normalizeText(await page.locator('.spell-checks [data-repeat-exercise]').innerText()) === 'Repeat This Exercise');
-}
-// The whole-verse spellers of the earlier chapters have no such control in
-// the original and gain none here.
-for (const [chapterId, activityId] of [
-  ['chapt_3', 'c3_ex_scripture_speller'], ['chapt_8', 'c8_ex_scripture_speller']
-]) {
-  const activity = activityById(CHAPTERS[chapterId], activityId);
-  if (!activity) continue;
-  await go(`#/activity/${chapterId}/${activityId}`);
-  check(`5G G9 ${activityId} (pre-ch9): no Repeat checkbox`,
-    await page.locator('.spell-checks [data-repeat-exercise]').count() === 0);
+  check(`5G-SPEC2 ${activityId}: Repeat This Exercise is absent and Restart remains`,
+    await page.locator('[data-repeat-exercise]').count() === 0
+      && !(await page.locator('.spell-checks').innerText()).includes('Repeat This Exercise')
+      && await page.locator('.card').getByRole('button', { name: 'Restart Exercise', exact: true }).count() === 1);
+
+  // A deliberately wrong first word must stay in the field, reveal no answer,
+  // and remain editable for another attempt.
+  await setAccents(false);
+  await typeGreek('α');
+  const before = normalizeText(await typed());
+  await stepper('Check Answer').click();
+  await page.waitForTimeout(120);
+  await typeGreek('β');
+  const after = normalizeText(await typed());
+  check(`5G-SPEC2 ${activityId}: a wrong Check Answer keeps the typed text and permits retry`,
+    before === 'α' && after === 'αβ' && await feedbackKind() === 'bad'
+      && await page.locator('.spell-answer').count() === 0,
+    `field ${JSON.stringify(before)} -> ${JSON.stringify(after)}, feedback ${await feedbackKind()}`);
 }
 
 
 
 // ===================================================================
-// 5G-XPATCH1: the two cross-ported pieces
+// 5G-XPATCH1: N-stage commit-order coverage retained
 // ===================================================================
-
-// ---- X1 the repeat lifecycle only fires on a clip that FINISHED ---------
-// D-42 clears what the learner typed once the verse has been spoken. "Spoken"
-// has to mean ENDED: a clip cut off by a route exit, a screen lock or a
-// superseding tap is not the learner hearing their verse, and wiping the slate
-// on the strength of one would be the worst possible reading of a checkbox
-// they ticked. playThrough now reports which happened; this pins all three
-// paths on chapter 9's SM speller (chapter 10 mounts the same component).
-{
-  const HASH = '#/activity/chapt_9/c9_ex_scripture_speller';
-  const activity = activityById(ch9, 'c9_ex_scripture_speller');
-  const verseWords = stripAccents((activity.answerWords || []).join(' '));
-  const repeatBox = () => page.locator('.spell-checks [data-repeat-exercise] input');
-  const completedIn = () => page.evaluate(() => {
-    try { return JSON.parse(localStorage.getItem('greek-tutor-progress-v1') || '{}').completed || {}; }
-    catch { return {}; }
-  });
-  // The preview ships no audio, so the verse clip is seeded into the store the
-  // app already reads (the same route §6.2's long-clip cases use). A SHORT one
-  // here: the point is a clip that reaches its own `ended` quickly.
-  const versePath = audioPath(activity.audio);
-  const solveIt = async () => {
-    await setAccents(false);
-    await typeAccented(verseWords);
-    await stepper('Check Answer').click();
-  };
-
-  // (c) REPEAT OFF is unchanged: the verse is spoken and what was typed STAYS.
-  await go(HASH);
-  await seedLongClip([versePath], 0.4);
-  await go(HASH);
-  await solveIt();
-  await page.waitForTimeout(1200);
-  check('5G-X1 repeat OFF: a solved verse plays and the slate is left alone',
-    await feedbackKind() === 'ok' && normalizeText(await typed()).length > 0
-      && !await repeatBox().isChecked(),
-    `feedback ${await feedbackKind()}, field ${JSON.stringify((await typed()).slice(0, 24))}`);
-
-  // (a) REPEAT ON, clip plays to its natural end -> the slate clears for
-  // another pass, and completion is recorded and STAYS recorded.
-  await go(HASH);
-  await repeatBox().check();
-  await solveIt();
-  await page.waitForTimeout(1600);
-  {
-    const completed = await completedIn();
-    check('5G-X1 repeat ON, clip reaches its end: the slate clears and completion stands',
-      normalizeText(await typed()) === '' && completed.c9_ex_scripture_speller === true
-        && await repeatBox().isChecked(),
-      `field ${JSON.stringify(await typed())}, completed ${completed.c9_ex_scripture_speller}`);
-  }
-
-  // (b) REPEAT ON, but the clip is CUT OFF. This is the assertion that
-  // discriminates: under the old contract playThrough resolved the same way
-  // whether a clip ended or was interrupted, so an interrupted verse cleared
-  // the slate exactly as a finished one did.
-  //
-  // The interruption used here is a SUPERSEDING TAP — Pronounce, mid-verse —
-  // because it leaves the component mounted and the field readable. A route
-  // exit and a screen lock reach the same pause; a route exit additionally
-  // unmounts, which the `destroyed` guard covers and which is checked below
-  // for the thing that IS observable across it, completion.
-  await go(HASH);
-  await seedLongClip([versePath], 5);          // long enough to interrupt
-  await go(HASH);
-  await repeatBox().check();
-  await solveIt();
-  await page.waitForTimeout(300);
-  const typedMidClip = normalizeText(await typed());
-  await stepper('Pronounce').click();          // supersedes the verse mid-play
-  await page.waitForTimeout(900);
-  check('5G-X1 repeat ON, verse INTERRUPTED mid-clip: the slate is NOT wiped',
-    typedMidClip.length > 0 && normalizeText(await typed()).length > 0,
-    `field mid-clip ${JSON.stringify(typedMidClip.slice(0, 24))}, field after the interruption ${JSON.stringify((await typed()).slice(0, 24))}`);
-
-  // ...and leaving the page mid-clip does not un-complete the exercise. The
-  // clear itself is unobservable across an unmount (the page comes back
-  // freshly mounted either way); completion is the state that survives, and
-  // it is what D-42 says the repeat pass must not touch.
-  await go(HASH);
-  await repeatBox().check();
-  await solveIt();
-  await page.waitForTimeout(250);
-  await go('#/activity/chapt_9/c9_learn_scripture');      // route exit mid-clip
-  await page.waitForTimeout(600);
-  const completedAfter = await completedIn();
-  check('5G-X1 repeat ON, page left mid-clip: completion still stands',
-    completedAfter.c9_ex_scripture_speller === true,
-    `completed ${completedAfter.c9_ex_scripture_speller}`);
-  await seedLongClip([versePath], 0.4);
-}
 
 // ---- X2 the N-stage commit order --------------------------------------
 // 5G-SPEC1 §4.1 says both "commits on the final stage's click" and "exactly as
@@ -3788,6 +3789,56 @@ for (const [chapterId, activityId] of [
         `after the person ${midKind}, after the case ${await feedbackKind()}`);
     }
   }
+}
+
+// ---- G10 six future-eimi answer-key flips (5G-SPEC2 §4/§5) -------------
+// These fixtures are deliberately independent of the JSON's answer field. A
+// harness that reads "Active" from the same data it is meant to police would
+// bless a future Active -> Middle regression instead of catching it. The spec
+// names zero-based indices 22, 23, 24, 25, 26 and 28.
+for (const [itemIndex, greek, personNumber] of [
+  [22, 'ἔσῃ', 'Second Singular'],
+  [23, 'ἔσεσθε', 'Second Plural'],
+  [24, 'ἔσομαι', 'First Singular'],
+  [25, 'ἔσται', 'Third Singular'],
+  [26, 'ἐσόμεθα', 'First Plural'],
+  [28, 'ἔσονται', 'Third Plural']
+]) {
+  const label = `5G-SPEC2 parsing index ${itemIndex} ${greek}`;
+  const stage = index => page.locator(`[data-stage="${index}"]`);
+  const choose = async (index, value) => {
+    await stage(index).getByRole('button', { name: value, exact: true }).click();
+    await page.waitForTimeout(70);
+  };
+
+  let reached = await seekSelectPrompt('#/activity/chapt_10/c10_drill_parsing', greek, parsing10.items.length);
+  if (reached) {
+    await choose(0, 'Future');
+    await choose(1, 'Active');
+    await choose(2, personNumber);
+    await page.waitForTimeout(180);
+  }
+  check(`${label}: Future Active grades correct`,
+    normalizeText(parsing10.items[itemIndex]?.greek) === normalizeText(greek)
+      && reached && await feedbackKind() === 'ok'
+      && normalizeText(await stage(1).locator('.tile.selected').innerText()) === 'Active',
+    reached ? `feedback ${await feedbackKind()}` : 'target form not reached');
+
+  reached = await seekSelectPrompt('#/activity/chapt_10/c10_drill_parsing', greek, parsing10.items.length);
+  if (reached) {
+    await choose(0, 'Future');
+    await choose(1, 'Middle');
+    await choose(2, personNumber);
+    await page.waitForTimeout(180);
+  }
+  const revealedVoice = reached
+    ? (await stage(1).locator('.tile.correct').allInnerTexts()).map(normalizeText)
+    : [];
+  check(`${label}: Future Middle grades incorrect and reveals Active`,
+    reached && await feedbackKind() === 'bad'
+      && normalizeText(await stage(1).locator('.tile.selected').innerText()) === 'Middle'
+      && revealedVoice.includes('Active'),
+    reached ? `feedback ${await feedbackKind()}, revealed ${JSON.stringify(revealedVoice)}` : 'target form not reached');
 }
 
 

@@ -38,14 +38,18 @@
       <div class="pg-row" data-row-index={rowIndex}>
         <span class="pg-person pg-row-label">{row.label ?? row.person ?? ''}</span>
         {#each row.cells || [] as cell, cellIndex}
-          <button
+          <div
             class="pg-cell"
-            data-cell-index={cellIndex}
-            disabled={!cell.audio}
-            on:click={() => cell.audio && play(cell.audio)}>
-            <span class="greek pg-greek">{cell.greek}</span>
+            class:pg-cell-gloss={!!cell.gloss}
+            data-cell-index={cellIndex}>
+            <button
+              class="pg-greek-tap"
+              disabled={!cell.audio}
+              on:click={() => cell.audio && play(cell.audio)}>
+              <span class="greek pg-greek">{cell.greek}</span>
+            </button>
             {#if cell.gloss}<span class="pg-gloss">{cell.gloss}</span>{/if}
-          </button>
+          </div>
         {/each}
       </div>
     {/each}
