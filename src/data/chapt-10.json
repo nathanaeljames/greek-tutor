@@ -93,10 +93,27 @@
        "gapBefore": true
       },
       {
-       "type": "para",
-       "text": "Stem + Sigma + Ending\nλύ + σ + ω\n(λύσω — I will loose)",
+       "type": "formula",
        "align": "center",
-       "gapBefore": true
+       "gapBefore": true,
+       "lines": [
+        {
+         "text": "Stem + Sigma + Ending"
+        },
+        {
+         "text": "λύ + σ + ω",
+         "audio": "chapt_10_j_luw1s",
+         "tapUnit": true
+        },
+        {
+         "text": "(λύσω — I will loose)",
+         "greekTap": {
+          "word": "λύσω",
+          "audio": "chapt_10_j_luw1s"
+         }
+        }
+       ],
+       "_note": "5G-FEEDBACK-1 item 2 (2026-08-16): the whole line \"λύ + σ + ω\" — letters AND plus marks, one tap unit — and the word λύσω both play the λύσω clip (j_luw1s, the same clip the parsing drill uses for this form). \"Stem + Sigma + Ending\" is English and not tappable."
       },
       {
        "type": "para",
