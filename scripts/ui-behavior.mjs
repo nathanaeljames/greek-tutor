@@ -1610,9 +1610,18 @@ async function checkCloseReachable(label, open) {
     const topVisible = seen.modal.top >= ceiling - 1;
     const bottomVisible = seen.modal.bottom <= floor + 1;
     const closeVisible = seen.close.top >= ceiling - 1 && seen.close.bottom <= floor + 1;
-    // Only .modal-scroll may scroll, and the overlay must have no range left —
-    // range there means the box did not fit between the bars.
-    const onlyModalScrolls = seen.scrollers.every(c => String(c).split(' ').includes('modal-scroll'));
+    // Exactly ONE region inside the dialog may scroll, and the overlay must
+    // have no range left — range there means the box did not fit between the
+    // bars. Since DISCLOSURE-SPEC1 W4.1 that region is `.modal-scroll` for a
+    // prose dialog and `.pg-body` for a CHART one: DISCLOSURE-RULES §4.3 puts
+    // the say-all and its navigation control outside the scroller, so a
+    // Paradigm hosted in a modal owns the scroll itself and pins its own row
+    // between the chart and .modal-actions. The rule this line protects is
+    // unchanged (one scroller, the overlay is not it); only which element plays
+    // the part depends on what the dialog is showing.
+    const SCROLL_REGIONS = ['modal-scroll', 'pg-body'];
+    const onlyModalScrolls = seen.scrollers.every(c =>
+      SCROLL_REGIONS.some(region => String(c).split(' ').includes(region)));
     check(`5E §6.7 ${label}: both borders and Close clear the app bars AT REST at ${width}x${height} (${name})`,
       topVisible && bottomVisible && closeVisible && seen.overlayRange === 0 && onlyModalScrolls,
       `modal ${seen.modal.top}..${seen.modal.bottom} inside gap ${ceiling}..${floor}, close ${seen.close.top}..${seen.close.bottom}, overlay range ${seen.overlayRange}, scrollers ${JSON.stringify(seen.scrollers)}`);
@@ -1681,7 +1690,11 @@ await checkCloseReachable('ch5 whole-verse speller Greek Keyboard reference', as
       modalOverflowY: modal.overflowY,
       modalMaxHeight: modal.maxHeight,
       modalDisplay: modal.display,
-      scrollRegionOverflowY: getComputedStyle(modalEl.querySelector('.modal-scroll')).overflowY,
+      // '.modal-scroll' for a prose dialog, '.pg-body' for a chart one — see
+      // the SCROLL_REGIONS note above; W4.1 hands the scroll to Paradigm so the
+      // control row can sit outside it.
+      scrollRegionOverflowY: getComputedStyle(
+        modalEl.querySelector('.modal-scroll, .pg-body')).overflowY,
       actionsFlex: getComputedStyle(modalEl.querySelector('.modal-actions')).flexGrow,
       modalVh: getComputedStyle(document.documentElement).getPropertyValue('--modal-vh').trim(),
       chromeTop: getComputedStyle(document.documentElement).getPropertyValue('--chrome-top').trim(),
@@ -1698,7 +1711,8 @@ await checkCloseReachable('ch5 whole-verse speller Greek Keyboard reference', as
       && shape.modalOverflowY === 'hidden'
       && /auto|scroll/.test(shape.scrollRegionOverflowY) && shape.actionsFlex === '0'
       && parseFloat(shape.chromeTop) > 0 && parseFloat(shape.chromeBottom) > 0
-      && shape.nested.every(c => String(c).split(' ').includes('modal-scroll')),
+      && shape.nested.every(c => ['modal-scroll', 'pg-body']
+        .some(region => String(c).split(' ').includes(region))),
     JSON.stringify(shape));
   await page.setViewportSize({ width: 390, height: 900 });
 }
@@ -2984,16 +2998,28 @@ for (const [chapterId, activityId, expected] of [
   // a lexicon pool. Same renderer consequence, same divergence, same fix
   // pending: the vocabulary-pool marker Stage 8.8 already owes chapters 6 and
   // 8 (D-32). Listed here as what it is rather than dropped from the census.
+  // DISCLOSURE-SPEC1 W9 CLOSES THIS DIVERGENCE, and this assertion inverts with
+  // it. "The renderer has no way to tell an authored vocabulary grid from any
+  // other authored grid" was true only for as long as nothing in the data said
+  // so; `poolKind: "vocabulary"` is the marker Stage 8.8 owed (D-32 and its
+  // 5G-SPEC1 extension), and all eight of these drills now carry it. They join
+  // D-19 like every other vocabulary pool, so they are asserted with the
+  // vocabulary set below rather than against it. What still has to hold — and
+  // is what would break if the predicate widened instead of being told — is
+  // that no OTHER authored grid moved: the census check further down pins the
+  // rest, and ui-disclosure.mjs D6.2 pins a named control.
   const AUTHORED_VOCAB = new Set([
     'c6_drill_vocab_gk_en', 'c6_drill_vocab_en_gk',
     'c8_drill_vocab_gk_en', 'c8_drill_vocab_en_gk',
     'c9_drill_vocab_gk_en', 'c9_drill_vocab_en_gk',
     'c10_drill_vocab_gk_en', 'c10_drill_vocab_en_gk'
   ]);
-  const vocabulary = census.filter(row => /_vocab_(gk_en|en_gk)$/.test(row.id) && !AUTHORED_VOCAB.has(row.id));
+  const vocabulary = census.filter(row => /_vocab_(gk_en|en_gk)$/.test(row.id));
   for (const row of census.filter(row => AUTHORED_VOCAB.has(row.id))) {
-    check(`5F §5 ${row.chapterId} ${row.id}: authored vocabulary grid stays 2-up at both widths (D-32)`,
-      row.cols[320] === 2 && row.cols[768] === 2, `${row.cols[320]} / ${row.cols[768]} columns`);
+    const activity = activitiesOf(CH_5F[row.chapterId] || {}).find(a => a && a.id === row.id);
+    check(`DISCLOSURE W9 ${row.chapterId} ${row.id}: carries poolKind and joins D-19 (D-32 closed)`,
+      activity && activity.poolKind === 'vocabulary' && row.cols[320] === 2 && row.cols[768] === 4,
+      `poolKind ${activity && activity.poolKind}, ${row.cols[320]} / ${row.cols[768]} columns`);
   }
   const paradigm = census.filter(row => row.layout === 'paradigm2col');
   const declared = census.filter(row => row.layout === 'single');
@@ -3103,13 +3129,19 @@ for (const [chapterId, activityId, expected] of [
 // nav row's centre within 2px, and the buttons' positions IDENTICAL from
 // page to page.
 {
+  // SCOPE NARROWED BY DISCLOSURE-SPEC1 W6 (R5/§4.2): the centred pair is now
+  // the THREE-OR-MORE control only. Four surfaces left this list because they
+  // disclose exactly two states and §4.1 gives those a single alternating
+  // toggle instead — ch7's two Learn adjective paradigms and its Adjective Case
+  // Drill hint (all two named charts, Singular/Plural), and its Adjective
+  // Translation Drill hint (two pages). None of them lost coverage: the toggle
+  // each one grew is asserted in scripts/ui-disclosure.mjs (D7 and D10),
+  // including that the pair is ABSENT, which is what would catch a regression
+  // back to this shape. What remains here is every surface that still pages
+  // three or more ways, which is what this block was written to protect.
   const navSurfaces = [
-    ['ch7 Learn Adjective Paradigm', '#/activity/chapt_7/c7_learn_adjectives', { topic: 1 }],
-    ['ch7 Learn 2nd Adjective Paradigm', '#/activity/chapt_7/c7_learn_adjectives', { topic: 2 }],
     ['ch8 Learn Third Person Paradigm', '#/activity/chapt_8/c8_learn_third_person', { topic: 1 }],
     ['ch8 Review Third Person (ContentAudio pager)', '#/activity/chapt_8/c8_qr_third', {}],
-    ['ch7 Adjective Case Drill Hint', '#/activity/chapt_7/c7_drill_case', { hint: true }],
-    ['ch7 Adjective Translation Drill Hint (modal pager)', '#/activity/chapt_7/c7_drill_translation', { hint: true }],
     ['ch8 Aὐτός Translation Drill Hint (modal pager)', '#/activity/chapt_8/c8_drill_translation_autos', { hint: true }]
   ];
   for (const [label, hash, opts] of navSurfaces) {
@@ -3173,27 +3205,54 @@ for (const [chapterId, activityId, expected] of [
     const seen = [];
     for (let i = 0; i < expected.length; i++) {
       seen.push(normalizeText(await page.locator('.pg-subtitle').first().innerText().catch(() => '')));
-      if (i < expected.length - 1) { await page.locator('[data-paradigm-switch="more"]').click(); await page.waitForTimeout(120); }
+      // Step by whichever control this stack draws. Since DISCLOSURE-SPEC1 W6
+      // that depends on the CHART COUNT, not the chapter: two charts advance
+      // through the single §4.1 toggle (ch7's Singular/Plural), three or more
+      // through More (ch8's genders). The label under test is the same either
+      // way, which is why this check reads the control rather than naming it.
+      if (i < expected.length - 1) {
+        const step = page.locator('[data-paradigm-switch="more"], [data-paradigm-switch="named"]').first();
+        await step.click();
+        await page.waitForTimeout(120);
+      }
     }
     check(`P3.3 ${label}: every page shows its own green label`,
       JSON.stringify(seen) === JSON.stringify(expected), seen.join(' -> ') || 'none');
   }
 }
 
-// ---- P3.4 the οὐ/οὐκ/οὐχ WORD is a popup link, same as its number ---------
-// 5F-FEEDBACK3 item 3 (D-31r2): both the number marker AND the Greek word
-// open the popup; hearing the word is the popup title's job.
+// ---- P3.4 οὐ/οὐκ/οὐχ is a C2 RULE LIST, and its words are audio taps ------
+// REVERSED BY DISCLOSURE-RULES §7 / §6.3, ratified 2026-08-11. This used to
+// assert D-31r2: that both the number marker AND the Greek word opened a
+// popup. The sheet retires the number-marker mechanism outright — the page is
+// a numbered closed set in which EVERY item is disclosed, which is C2, so each
+// item carries its own "Examples" accordion and the Greek words go back to
+// being ordinary audio taps like every other displayed Greek in the app
+// (directive 9). The popup route is not merely unused here; it must be ABSENT,
+// because a surviving popup link would be the old disclosure showing through
+// the new one. That is what this now asserts, together with the accordions
+// that replaced it.
 {
   await go('#/activity/chapt_7/c7_learn_eimi');
   await gotoTopic(3);
-  const words = page.locator('.rc-word-popup');
-  check('P3.4 all three ου-form words render as popup links', await words.count() === 3,
-    `${await words.count()} word links`);
-  await words.first().click();
+  check('P3.4 no popup link survives on the ου-form page (D-31 amended, numberPopupRef retired)',
+    await page.locator('.rc-word-popup').count() === 0
+      && await page.locator('.rc-num-popup').count() === 0
+      && await page.locator('.rc-list .popup-link').count() === 0);
+  const examples = page.locator('.rc-list details.rc-expander');
+  check('P3.4 each of the three rules carries its own "Examples" accordion, collapsed (C2)',
+    await examples.count() === 3
+      && (await examples.evaluateAll(nodes => nodes.every(n => !n.open))),
+    `${await examples.count()} accordions`);
+  await examples.first().locator('summary').click();
   await page.waitForTimeout(150);
-  check('P3.4 tapping the WORD opens its popup',
-    await page.locator('.popup-sheet').count() === 1
-      && await page.locator('.popup-sheet').getAttribute('data-popup-id') === 'ou');
+  const mark = audioRequests.length;
+  await page.locator('.rc-wordusage .rc-wu-head').first().click();
+  await page.waitForTimeout(300);
+  check('P3.4 the Greek word inside is an ordinary audio tap, not a link',
+    await page.locator('.popup-sheet').count() === 0
+      && audioRequests.slice(mark).join(' ').includes('g_ou.m4a'),
+    audioRequests.slice(mark).join(' ') || 'no audio request (already cached this run?)');
 }
 
 // ---- P3.5 the emphatic triads and the intro examples are tappable ---------

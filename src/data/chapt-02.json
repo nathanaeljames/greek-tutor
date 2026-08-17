@@ -74,239 +74,245 @@
        "items": [
         {
          "label": "1)",
-         "text": "There is one vowel or diphthong per syllable.  A lone consonant often goes with the following vowel."
+         "text": "There is one vowel or diphthong per syllable.  A lone consonant often goes with the following vowel.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "One Vowel per Syllable",
+           "content": [
+            {
+             "type": "greekRows",
+             "columns": [
+              "Syllables",
+              "Meaning"
+             ],
+             "rows": [
+              {
+               "greek": "ἀμήν",
+               "syllables": [
+                "ἀ",
+                "μήν"
+               ],
+               "gloss": "truly, verily",
+               "audio": "chapt_2_a_voc2"
+              },
+              {
+               "greek": "δόξα",
+               "syllables": [
+                "δό",
+                "ξα"
+               ],
+               "gloss": "glory, fame",
+               "audio": "chapt_2_b_voc3"
+              },
+              {
+               "greek": "ἐγώ",
+               "syllables": [
+                "ἐ",
+                "γώ"
+               ],
+               "gloss": "I",
+               "audio": "chapt_2_a_voc4"
+              },
+              {
+               "greek": "λέγω",
+               "syllables": [
+                "λέ",
+                "γω"
+               ],
+               "gloss": "I say",
+               "audio": "chapt_2_a_voc8"
+              },
+              {
+               "greek": "λόγος",
+               "syllables": [
+                "λό",
+                "γος"
+               ],
+               "gloss": "word, statement",
+               "audio": "chapt_2_b_voc7"
+              },
+              {
+               "greek": "κύριος",
+               "syllables": [
+                "κύρ",
+                "ι",
+                "ος"
+               ],
+               "gloss": "lord, LORD (note the rho goes forward showing there are many exceptions to this \"rule\")",
+               "audio": "chapt_2_b_voc6"
+              }
+             ]
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "2)",
-         "text": "Two consonants in a row are divided (except when the second consonant is ν or a consonant pair that is used to begin words)."
+         "text": "Two consonants in a row are divided (except when the second consonant is ν or a consonant pair that is used to begin words).",
+         "below": [
+          {
+           "type": "expander",
+           "label": "2 Consonants Divide",
+           "content": [
+            {
+             "type": "greekRows",
+             "columns": [
+              "Syllables",
+              "Meaning"
+             ],
+             "rows": [
+              {
+               "greek": "ἄγγελος",
+               "syllables": [
+                "ἄγ",
+                "γε",
+                "λος"
+               ],
+               "gloss": "angel, messenger",
+               "audio": "chapt_2_a_voc1"
+              },
+              {
+               "greek": "ἀδελφός",
+               "syllables": [
+                "ἀ",
+                "δελ",
+                "φός"
+               ],
+               "gloss": "brother",
+               "audio": "chapt_2_b_voc1"
+              },
+              {
+               "greek": "ἄνθρωπος",
+               "syllables": [
+                "ἄν",
+                "θρω",
+                "πος"
+               ],
+               "gloss": "man",
+               "audio": "chapt_2_a_voc3"
+              },
+              {
+               "greek": "καρδία",
+               "syllables": [
+                "καρ",
+                "δί",
+                "α"
+               ],
+               "gloss": "heart",
+               "audio": "chapt_2_a_voc7"
+              },
+              {
+               "greek": "κόσμος",
+               "syllables": [
+                "κόσ",
+                "μος"
+               ],
+               "gloss": "world",
+               "audio": "chapt_2_b_voc5"
+              },
+              {
+               "greek": "Πέτρος",
+               "syllables": [
+                "Πέτ",
+                "ρος"
+               ],
+               "gloss": "Peter",
+               "audio": "chapt_2_b_voc8"
+              },
+              {
+               "greek": "Χριστός",
+               "syllables": [
+                "Χρισ",
+                "τός"
+               ],
+               "gloss": "Christ",
+               "audio": "chapt_2_a_voc10"
+              }
+             ]
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "3)",
-         "text": "Two vowels (two diphthongs or a vowel and a diphthong) in a row are split unless the two vowels form a diphthong."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "One Vowel per Syllable",
-       "content": [
-        {
-         "type": "greekRows",
-         "columns": [
-          "Syllables",
-          "Meaning"
-         ],
-         "rows": [
+         "text": "Two vowels (two diphthongs or a vowel and a diphthong) in a row are split unless the two vowels form a diphthong.",
+         "below": [
           {
-           "greek": "ἀμήν",
-           "syllables": [
-            "ἀ",
-            "μήν"
-           ],
-           "gloss": "truly, verily",
-           "audio": "chapt_2_a_voc2"
-          },
-          {
-           "greek": "δόξα",
-           "syllables": [
-            "δό",
-            "ξα"
-           ],
-           "gloss": "glory, fame",
-           "audio": "chapt_2_b_voc3"
-          },
-          {
-           "greek": "ἐγώ",
-           "syllables": [
-            "ἐ",
-            "γώ"
-           ],
-           "gloss": "I",
-           "audio": "chapt_2_a_voc4"
-          },
-          {
-           "greek": "λέγω",
-           "syllables": [
-            "λέ",
-            "γω"
-           ],
-           "gloss": "I say",
-           "audio": "chapt_2_a_voc8"
-          },
-          {
-           "greek": "λόγος",
-           "syllables": [
-            "λό",
-            "γος"
-           ],
-           "gloss": "word, statement",
-           "audio": "chapt_2_b_voc7"
-          },
-          {
-           "greek": "κύριος",
-           "syllables": [
-            "κύρ",
-            "ι",
-            "ος"
-           ],
-           "gloss": "lord, LORD (note the rho goes forward showing there are many exceptions to this \"rule\")",
-           "audio": "chapt_2_b_voc6"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "2 Consonants Divide",
-       "content": [
-        {
-         "type": "greekRows",
-         "columns": [
-          "Syllables",
-          "Meaning"
-         ],
-         "rows": [
-          {
-           "greek": "ἄγγελος",
-           "syllables": [
-            "ἄγ",
-            "γε",
-            "λος"
-           ],
-           "gloss": "angel, messenger",
-           "audio": "chapt_2_a_voc1"
-          },
-          {
-           "greek": "ἀδελφός",
-           "syllables": [
-            "ἀ",
-            "δελ",
-            "φός"
-           ],
-           "gloss": "brother",
-           "audio": "chapt_2_b_voc1"
-          },
-          {
-           "greek": "ἄνθρωπος",
-           "syllables": [
-            "ἄν",
-            "θρω",
-            "πος"
-           ],
-           "gloss": "man",
-           "audio": "chapt_2_a_voc3"
-          },
-          {
-           "greek": "καρδία",
-           "syllables": [
-            "καρ",
-            "δί",
-            "α"
-           ],
-           "gloss": "heart",
-           "audio": "chapt_2_a_voc7"
-          },
-          {
-           "greek": "κόσμος",
-           "syllables": [
-            "κόσ",
-            "μος"
-           ],
-           "gloss": "world",
-           "audio": "chapt_2_b_voc5"
-          },
-          {
-           "greek": "Πέτρος",
-           "syllables": [
-            "Πέτ",
-            "ρος"
-           ],
-           "gloss": "Peter",
-           "audio": "chapt_2_b_voc8"
-          },
-          {
-           "greek": "Χριστός",
-           "syllables": [
-            "Χρισ",
-            "τός"
-           ],
-           "gloss": "Christ",
-           "audio": "chapt_2_a_voc10"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "2 Vowels Divide",
-       "content": [
-        {
-         "type": "greekRows",
-         "columns": [
-          "Syllables",
-          "Meaning"
-         ],
-         "rows": [
-          {
-           "greek": "ἀκούω",
-           "syllables": [
-            "ἀ",
-            "κού",
-            "ω"
-           ],
-           "gloss": "I hear, obey",
-           "audio": "chapt_2_b_voc2"
-          },
-          {
-           "greek": "θεός",
-           "syllables": [
-            "θε",
-            "ός"
-           ],
-           "gloss": "God",
-           "audio": "chapt_2_a_voc5"
-          },
-          {
-           "greek": "καρδία",
-           "syllables": [
-            "καρ",
-            "δί",
-            "α"
-           ],
-           "gloss": "heart",
-           "audio": "chapt_2_a_voc7"
-          },
-          {
-           "greek": "κύριος",
-           "syllables": [
-            "κύρ",
-            "ι",
-            "ος"
-           ],
-           "gloss": "lord, LORD",
-           "audio": "chapt_2_b_voc6"
-          },
-          {
-           "greek": "υἱός",
-           "syllables": [
-            "υἱ",
-            "ός"
-           ],
-           "gloss": "son, descendant",
-           "audio": "chapt_2_b_voc9"
-          },
-          {
-           "greek": "φαρισαῖος",
-           "syllables": [
-            "φα",
-            "ρι",
-            "σαῖ",
-            "ος"
-           ],
-           "gloss": "Pharisee",
-           "audio": "chapt_2_b_voc10"
+           "type": "expander",
+           "label": "2 Vowels Divide",
+           "content": [
+            {
+             "type": "greekRows",
+             "columns": [
+              "Syllables",
+              "Meaning"
+             ],
+             "rows": [
+              {
+               "greek": "ἀκούω",
+               "syllables": [
+                "ἀ",
+                "κού",
+                "ω"
+               ],
+               "gloss": "I hear, obey",
+               "audio": "chapt_2_b_voc2"
+              },
+              {
+               "greek": "θεός",
+               "syllables": [
+                "θε",
+                "ός"
+               ],
+               "gloss": "God",
+               "audio": "chapt_2_a_voc5"
+              },
+              {
+               "greek": "καρδία",
+               "syllables": [
+                "καρ",
+                "δί",
+                "α"
+               ],
+               "gloss": "heart",
+               "audio": "chapt_2_a_voc7"
+              },
+              {
+               "greek": "κύριος",
+               "syllables": [
+                "κύρ",
+                "ι",
+                "ος"
+               ],
+               "gloss": "lord, LORD",
+               "audio": "chapt_2_b_voc6"
+              },
+              {
+               "greek": "υἱός",
+               "syllables": [
+                "υἱ",
+                "ός"
+               ],
+               "gloss": "son, descendant",
+               "audio": "chapt_2_b_voc9"
+              },
+              {
+               "greek": "φαρισαῖος",
+               "syllables": [
+                "φα",
+                "ρι",
+                "σαῖ",
+                "ος"
+               ],
+               "gloss": "Pharisee",
+               "audio": "chapt_2_b_voc10"
+              }
+             ]
+            }
+           ]
           }
          ]
         }
@@ -456,144 +462,150 @@
        "items": [
         {
          "label": "1)",
-         "text": "Acute may occur on any of the last three syllables."
+         "text": "Acute may occur on any of the last three syllables.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Acute on any of the last three syllables",
+           "content": [
+            {
+             "type": "greekRows",
+             "columns": [
+              "Syllables",
+              "Meaning"
+             ],
+             "rows": [
+              {
+               "greek": "ἄγγελος",
+               "syllables": [
+                "ἄγ",
+                "γε",
+                "λος"
+               ],
+               "gloss": "angel, messenger (antepenult acute)",
+               "audio": "chapt_2_a_voc1",
+               "_legacy": "a@g ge loj"
+              },
+              {
+               "greek": "δόξα",
+               "syllables": [
+                "δό",
+                "ξα"
+               ],
+               "gloss": "glory, fame (penult acute)",
+               "audio": "chapt_2_b_voc3",
+               "_legacy": "do< ca"
+              },
+              {
+               "greek": "ἐγώ",
+               "syllables": [
+                "ἐ",
+                "γώ"
+               ],
+               "gloss": "I (ultima acute)",
+               "audio": "chapt_2_a_voc4",
+               "_legacy": "e] gw<"
+              }
+             ]
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "2)",
-         "text": "Circumflex may occur only on the last two syllables (but only if the vowel is long.)"
+         "text": "Circumflex may occur only on the last two syllables (but only if the vowel is long.)",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Circumflex on either of the last two long syllables",
+           "content": [
+            {
+             "type": "greekRows",
+             "columns": [
+              "Syllables",
+              "Meaning"
+             ],
+             "rows": [
+              {
+               "greek": "φαρισαῖος",
+               "syllables": [
+                "φα",
+                "ρι",
+                "σαῖ",
+                "ος"
+               ],
+               "gloss": "Pharisee (penult circumflex)",
+               "audio": "chapt_2_b_voc10",
+               "_legacy": "fa ri sai? oj"
+              },
+              {
+               "greek": "αὐτοῦ",
+               "syllables": [
+                "αὐ",
+                "τοῦ"
+               ],
+               "gloss": "of him (ultima circumflex)",
+               "audio": "chapt_2_b_autou",
+               "_legacy": "au] tou?"
+              }
+             ]
+            },
+            {
+             "type": "note",
+             "text": "Diphthongs are considered long except for final syllable oi or ai."
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "3)",
-         "text": "Grave may occur only on the last syllable."
+         "text": "Grave may occur only on the last syllable.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Grave on the last syllable",
+           "content": [
+            {
+             "type": "greekRows",
+             "columns": [
+              "Syllables",
+              "Meaning"
+             ],
+             "rows": [
+              {
+               "greek": "ἀδελφὸς",
+               "syllables": [
+                "ἀ",
+                "δελ",
+                "φὸς"
+               ],
+               "gloss": "brother (ultima grave)",
+               "audio": "chapt_2_b_voc1",
+               "_legacy": "a] del fo>j"
+              },
+              {
+               "greek": "ἀμὴν",
+               "syllables": [
+                "ἀ",
+                "μὴν"
+               ],
+               "gloss": "truly, verily (ultima grave)",
+               "audio": "chapt_2_a_voc2",
+               "_legacy": "a] mh>n"
+              }
+             ]
+            }
+           ]
+          }
+         ]
         }
        ]
       },
       {
        "type": "refs",
        "text": "(Machen, p. 14; Mounce, p. 20; Summers, p. 9)"
-      },
-      {
-       "type": "expander",
-       "label": "Acute on any of the last three syllables",
-       "content": [
-        {
-         "type": "greekRows",
-         "columns": [
-          "Syllables",
-          "Meaning"
-         ],
-         "rows": [
-          {
-           "greek": "ἄγγελος",
-           "syllables": [
-            "ἄγ",
-            "γε",
-            "λος"
-           ],
-           "gloss": "angel, messenger (antepenult acute)",
-           "audio": "chapt_2_a_voc1",
-           "_legacy": "a@g ge loj"
-          },
-          {
-           "greek": "δόξα",
-           "syllables": [
-            "δό",
-            "ξα"
-           ],
-           "gloss": "glory, fame (penult acute)",
-           "audio": "chapt_2_b_voc3",
-           "_legacy": "do< ca"
-          },
-          {
-           "greek": "ἐγώ",
-           "syllables": [
-            "ἐ",
-            "γώ"
-           ],
-           "gloss": "I (ultima acute)",
-           "audio": "chapt_2_a_voc4",
-           "_legacy": "e] gw<"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Circumflex on either of the last two long syllables",
-       "content": [
-        {
-         "type": "greekRows",
-         "columns": [
-          "Syllables",
-          "Meaning"
-         ],
-         "rows": [
-          {
-           "greek": "φαρισαῖος",
-           "syllables": [
-            "φα",
-            "ρι",
-            "σαῖ",
-            "ος"
-           ],
-           "gloss": "Pharisee (penult circumflex)",
-           "audio": "chapt_2_b_voc10",
-           "_legacy": "fa ri sai? oj"
-          },
-          {
-           "greek": "αὐτοῦ",
-           "syllables": [
-            "αὐ",
-            "τοῦ"
-           ],
-           "gloss": "of him (ultima circumflex)",
-           "audio": "chapt_2_b_autou",
-           "_legacy": "au] tou?"
-          }
-         ]
-        },
-        {
-         "type": "note",
-         "text": "Diphthongs are considered long except for final syllable oi or ai."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Grave on the last syllable",
-       "content": [
-        {
-         "type": "greekRows",
-         "columns": [
-          "Syllables",
-          "Meaning"
-         ],
-         "rows": [
-          {
-           "greek": "ἀδελφὸς",
-           "syllables": [
-            "ἀ",
-            "δελ",
-            "φὸς"
-           ],
-           "gloss": "brother (ultima grave)",
-           "audio": "chapt_2_b_voc1",
-           "_legacy": "a] del fo>j"
-          },
-          {
-           "greek": "ἀμὴν",
-           "syllables": [
-            "ἀ",
-            "μὴν"
-           ],
-           "gloss": "truly, verily (ultima grave)",
-           "audio": "chapt_2_a_voc2",
-           "_legacy": "a] mh>n"
-          }
-         ]
-        }
-       ]
       }
      ]
     },
@@ -916,67 +928,71 @@
        "items": [
         {
          "label": "1)",
-         "text": "Proclitic: comes before the word which carries the accent."
+         "text": "Proclitic: comes before the word which carries the accent.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Proclitic (before the accented word)",
+           "content": [
+            {
+             "type": "greekRows",
+             "rows": [
+              {
+               "greek": "ὁ Χριστός",
+               "gloss": "the Christ (Jn 1:20)",
+               "audio": "chapt_2_b_hoxris",
+               "_legacy": "o[ Xristo<j"
+              },
+              {
+               "greek": "ὁ λόγος",
+               "gloss": "the word (Jn 1:1)",
+               "audio": "chapt_2_b_hologo",
+               "_legacy": "o[ lo<goj"
+              },
+              {
+               "greek": "Ἐν ἀρχῇ",
+               "gloss": "in the beginning (Jn 1:1)",
+               "audio": "chapt_2_b_enarxn",
+               "_legacy": "]En a]rx^?"
+              },
+              {
+               "greek": "οὐ κατέλαβεν",
+               "gloss": "it did not understand/overcome (Jn 1:5)",
+               "audio": "chapt_2_b_oukate",
+               "_legacy": "ou] kate<laben"
+              }
+             ]
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "2)",
-         "text": "Enclitic: comes after the word which carries the accent."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Proclitic (before the accented word)",
-       "content": [
-        {
-         "type": "greekRows",
-         "rows": [
+         "text": "Enclitic: comes after the word which carries the accent.",
+         "below": [
           {
-           "greek": "ὁ Χριστός",
-           "gloss": "the Christ (Jn 1:20)",
-           "audio": "chapt_2_b_hoxris",
-           "_legacy": "o[ Xristo<j"
-          },
-          {
-           "greek": "ὁ λόγος",
-           "gloss": "the word (Jn 1:1)",
-           "audio": "chapt_2_b_hologo",
-           "_legacy": "o[ lo<goj"
-          },
-          {
-           "greek": "Ἐν ἀρχῇ",
-           "gloss": "in the beginning (Jn 1:1)",
-           "audio": "chapt_2_b_enarxn",
-           "_legacy": "]En a]rx^?"
-          },
-          {
-           "greek": "οὐ κατέλαβεν",
-           "gloss": "it did not understand/overcome (Jn 1:5)",
-           "audio": "chapt_2_b_oukate",
-           "_legacy": "ou] kate<laben"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Enclitic (after the accented word)",
-       "content": [
-        {
-         "type": "greekRows",
-         "rows": [
-          {
-           "greek": "πρῶτός μου",
-           "gloss": "before me (Jn 1:15)",
-           "audio": "chapt_2_b_protos",
-           "_legacy": "prw?to<j mou"
-          },
-          {
-           "greek": "Ἐγώ εἰμι",
-           "gloss": "I am (Jn 6:35)",
-           "audio": "chapt_2_b_egoeim",
-           "_legacy": "]Egw< ei]mi"
+           "type": "expander",
+           "label": "Enclitic (after the accented word)",
+           "content": [
+            {
+             "type": "greekRows",
+             "rows": [
+              {
+               "greek": "πρῶτός μου",
+               "gloss": "before me (Jn 1:15)",
+               "audio": "chapt_2_b_protos",
+               "_legacy": "prw?to<j mou"
+              },
+              {
+               "greek": "Ἐγώ εἰμι",
+               "gloss": "I am (Jn 6:35)",
+               "audio": "chapt_2_b_egoeim",
+               "_legacy": "]Egw< ei]mi"
+              }
+             ]
+            }
+           ]
           }
          ]
         }
@@ -1006,83 +1022,87 @@
        "items": [
         {
          "label": "1)",
-         "text": "Smooth breathing ( ᾿ ):  It does not affect pronunciation."
+         "text": "Smooth breathing ( ᾿ ):  It does not affect pronunciation.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Smooth Breathing ( ᾿ )",
+           "content": [
+            {
+             "type": "greekRows",
+             "rows": [
+              {
+               "greek": "ἄγγελος",
+               "gloss": "angel, messenger",
+               "audio": "chapt_2_a_voc1"
+              },
+              {
+               "greek": "ἀδελφός",
+               "gloss": "brother",
+               "audio": "chapt_2_b_voc1"
+              },
+              {
+               "greek": "ἀμήν",
+               "gloss": "truly, verily",
+               "audio": "chapt_2_a_voc2"
+              },
+              {
+               "greek": "ἀπόστολος",
+               "gloss": "apostle",
+               "audio": "chapt_2_b_aposto"
+              },
+              {
+               "greek": "ἐγώ",
+               "gloss": "I",
+               "audio": "chapt_2_a_voc4"
+              }
+             ]
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "2)",
-         "text": "Rough breathing ( ῾ ):  Adds an \"h\" before the sound of the initial vowel."
+         "text": "Rough breathing ( ῾ ):  Adds an \"h\" before the sound of the initial vowel.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Rough Breathing ( ῾ )",
+           "content": [
+            {
+             "type": "greekRows",
+             "rows": [
+              {
+               "greek": "υἱός",
+               "gloss": "son, descendant",
+               "audio": "chapt_2_b_voc9"
+              },
+              {
+               "greek": "ὑπέρ",
+               "gloss": "in behalf of, above",
+               "audio": "chapt_2_b_huper"
+              },
+              {
+               "greek": "ῥῆμα",
+               "gloss": "word",
+               "audio": "chapt_2_b_rema"
+              }
+             ]
+            },
+            {
+             "type": "note",
+             "text": "NOTE:  an initial rho ( ῥ ) also takes a rough breathing."
+            }
+           ]
+          }
+         ]
         }
        ]
       },
       {
        "type": "refs",
        "text": "(Mounce, p. 10;  Machen, p. 11;  Summers, pp. 8f.)"
-      },
-      {
-       "type": "expander",
-       "label": "Smooth Breathing ( ᾿ )",
-       "content": [
-        {
-         "type": "greekRows",
-         "rows": [
-          {
-           "greek": "ἄγγελος",
-           "gloss": "angel, messenger",
-           "audio": "chapt_2_a_voc1"
-          },
-          {
-           "greek": "ἀδελφός",
-           "gloss": "brother",
-           "audio": "chapt_2_b_voc1"
-          },
-          {
-           "greek": "ἀμήν",
-           "gloss": "truly, verily",
-           "audio": "chapt_2_a_voc2"
-          },
-          {
-           "greek": "ἀπόστολος",
-           "gloss": "apostle",
-           "audio": "chapt_2_b_aposto"
-          },
-          {
-           "greek": "ἐγώ",
-           "gloss": "I",
-           "audio": "chapt_2_a_voc4"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Rough Breathing ( ῾ )",
-       "content": [
-        {
-         "type": "greekRows",
-         "rows": [
-          {
-           "greek": "υἱός",
-           "gloss": "son, descendant",
-           "audio": "chapt_2_b_voc9"
-          },
-          {
-           "greek": "ὑπέρ",
-           "gloss": "in behalf of, above",
-           "audio": "chapt_2_b_huper"
-          },
-          {
-           "greek": "ῥῆμα",
-           "gloss": "word",
-           "audio": "chapt_2_b_rema"
-          }
-         ]
-        },
-        {
-         "type": "note",
-         "text": "NOTE:  an initial rho ( ῥ ) also takes a rough breathing."
-        }
-       ]
       }
      ]
     },
@@ -1276,7 +1296,7 @@
         },
         {
          "label": "4.",
-         "text": "Pronoun: a word used instead of a noun (e.g. the book, it)."
+         "text": "[[link:pronoun]]Pronoun[[/link]]: a word used instead of a noun (e.g. the book, it)."
         },
         {
          "label": "5.",
@@ -1299,41 +1319,6 @@
       {
        "type": "refs",
        "text": "(See any English Grammar handbook for help in this area. (cf. Wenham, pp. 1ff)."
-      },
-      {
-       "type": "expander",
-       "label": "Pronouns",
-       "content": [
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "Personal Pronouns:",
-           "def": "I, you, he, she, we, it"
-          },
-          {
-           "term": "Demonstrative Pronouns:",
-           "def": "this, that"
-          },
-          {
-           "term": "Possessive Pronouns:",
-           "def": "mine, yours, ours, theirs"
-          },
-          {
-           "term": "Interrogative Pronouns:",
-           "def": "who? which? what?"
-          },
-          {
-           "term": "Reciprocal Pronouns:",
-           "def": "one another"
-          },
-          {
-           "term": "Relative Pronouns:",
-           "def": "who, which, that"
-          }
-         ]
-        }
-       ]
       }
      ]
     },
@@ -1350,163 +1335,21 @@
        "items": [
         {
          "label": "1)",
-         "text": "subject—about which something is said, and"
+         "text": "[[link:subject]]subject[[/link]]—about which something is said, and"
         },
         {
          "label": "2)",
-         "text": "predicate—that which is said about the subject."
+         "text": "[[link:predicate]]predicate[[/link]]—that which is said about the subject."
         }
        ]
       },
       {
        "type": "para",
-       "text": "A phrase is a group of words used as a single part of speech."
+       "text": "A [[link:phrase]]phrase[[/link]] is a group of words used as a single part of speech."
       },
       {
        "type": "para",
-       "text": "A clause is a group of words which includes a subject and predicate."
-      },
-      {
-       "type": "expander",
-       "label": "Subject",
-       "content": [
-        {
-         "type": "heading",
-         "text": "Subject of a Sentence"
-        },
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "Simple subject:",
-           "def": "[[u]]Terry[[/u]] went to the store. / The big red [[u]]truck[[/u]] moved slowly."
-          },
-          {
-           "term": "Complete subject:",
-           "def": "[[u]]The big red truck[[/u]] moved slowly."
-          },
-          {
-           "term": "Compound subject:",
-           "def": "[[u]]Terry and Dawn[[/u]] went to the store."
-          },
-          {
-           "term": "Understood subject:",
-           "def": "Please close the door.  (\"[[u]]you[[/u]]\" is understood)"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Predicate",
-       "content": [
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "Simple Predicate:",
-           "def": "Joy [[u]]walked[[/u]] home."
-          },
-          {
-           "term": "Complete Predicate:",
-           "def": "Joy [[u]]walked home[[/u]]."
-          },
-          {
-           "term": "Compound Predicate:",
-           "def": "Joy [[u]]walked home and raked leaves[[/u]]."
-          },
-          {
-           "term": "Predicate Nominative:",
-           "def": "It is [[u]]I[[/u]].  (rather than \"It is me.\")"
-          }
-         ]
-        },
-        {
-         "type": "para",
-         "text": "A predicate nominative completes the idea of the subject.  It will most often occur with an \"is\" verb."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Phrase",
-       "content": [
-        {
-         "type": "para",
-         "text": "Perhaps the most common is the prepositional phrase:"
-        },
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "",
-           "def": "Students are often late [[u]]in the morning[[/u]].  (Acts like an adjective)"
-          },
-          {
-           "term": "",
-           "def": "He held the book [[u]]over his head[[/u]].  (Acts like an adverb)"
-          }
-         ]
-        },
-        {
-         "type": "para",
-         "text": "Infinitive phrases often act as nouns:"
-        },
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "",
-           "def": "With work you can expect [[u]]to master Greek[[/u]].  (as a noun)"
-          },
-          {
-           "term": "",
-           "def": "He played [[u]]to win[[/u]].  (as an adverb)"
-          },
-          {
-           "term": "",
-           "def": "He had plenty of water [[u]]to drink[[/u]].  (as an adjective modifying water)"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Clause",
-       "content": [
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "Phrase:",
-           "def": "The [[u]]great big strong[[/u]] man  (an adjective phrase)"
-          },
-          {
-           "term": "Clause:",
-           "def": "The man [[u]]who owns the store[[/u]]  (an adjectival/relative clause)"
-          }
-         ]
-        },
-        {
-         "type": "para",
-         "text": "A main clause expresses a complete thought and can stand alone.  A subordinate clause is dependent on the main clause and cannot stand alone.  Note the following subordinate clauses."
-        },
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "",
-           "def": "[[u]]When the store opened[[/u]] the people pushed through the front door."
-          },
-          {
-           "term": "",
-           "def": "He knew [[u]]that power had gone out of him[[/u]]."
-          }
-         ]
-        }
-       ]
+       "text": "A [[link:clause]]clause[[/link]] is a group of words which includes a subject and predicate."
       }
      ]
     },
@@ -1515,23 +1358,27 @@
      "title": "Identifying Verbs",
      "content": [
       {
-       "type": "defList",
+       "type": "termList",
        "items": [
         {
          "term": "Tense:",
-         "def": "generally describes the time of action (Present, Future, Past).  However, some Greek tenses are used to denote aspect, or type of action, rather than time."
+         "def": "generally describes the time of action (Present, Future, Past).  However, some Greek tenses are used to denote aspect, or type of action, rather than time.",
+         "link": "tense"
         },
         {
          "term": "Aspect:",
-         "def": "denotes the type of action:  Continuous action (the event as a process), Undefined (the event happened) or Perfect (the event happened with effects continuing into the present)."
+         "def": "denotes the type of action:  Continuous action (the event as a process), Undefined (the event happened) or Perfect (the event happened with effects continuing into the present).",
+         "link": "aspect"
         },
         {
          "term": "Voice:",
-         "def": "Active:  subject does the action,  Middle:  subject does action on or for itself,  Passive:  subject receives the action."
+         "def": "Active:  subject does the action,  Middle:  subject does action on or for itself,  Passive:  subject receives the action.",
+         "link": "voice"
         },
         {
          "term": "Mood:",
-         "def": "how something is said.  Indicative:  statement of fact;  Subjunctive:  desire, probable;  Imperative:  command;  Optative:  wish, remote possibility."
+         "def": "how something is said.  Indicative:  statement of fact;  Subjunctive:  desire, probable;  Imperative:  command;  Optative:  wish, remote possibility.",
+         "link": "mood"
         },
         {
          "term": "Person:",
@@ -1541,119 +1388,12 @@
          "term": "Number:",
          "def": "Singular:  I, you, he, she, it;  Plural:  we, they, you (all)"
         }
-       ]
+       ],
+       "_layout_note": "termList: term on its own line in green with its text beneath (DISCLOSURE-RULES R7; replaces the two-column defList, broken item 2). Terms are C3 links opening their popups."
       },
       {
        "type": "refs",
        "text": "(Story & Story, pp. 9-13)"
-      },
-      {
-       "type": "expander",
-       "label": "Tense",
-       "content": [
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "",
-           "def": "Joy walks everyday.  (Present tense)"
-          },
-          {
-           "term": "",
-           "def": "Joy walked yesterday.  (Past tense)"
-          },
-          {
-           "term": "",
-           "def": "Joy will walk tomorrow.  (Future Tense)"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Aspect",
-       "content": [
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "Continuous:",
-           "def": "I was studying for a week for the test.  (Process)"
-          },
-          {
-           "term": "Undefined:",
-           "def": "I studied for the test."
-          },
-          {
-           "term": "Perfect:",
-           "def": "I have studied for the test.  (Completed action with continuing effects)"
-          }
-         ]
-        },
-        {
-         "type": "refs",
-         "text": "(Mounce, pp. 118ff)"
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Voice",
-       "content": [
-        {
-         "type": "heading",
-         "text": "Voice of a Verb"
-        },
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "",
-           "def": "Zachary shot the ball.  (Active)"
-          },
-          {
-           "term": "",
-           "def": "The ball was shot by Zachary.  (Passive)"
-          },
-          {
-           "term": "",
-           "def": "Zachary got a ball for himself.  (Middle)"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Mood",
-       "content": [
-        {
-         "type": "heading",
-         "text": "Mood of a Verb"
-        },
-        {
-         "type": "defList",
-         "items": [
-          {
-           "term": "Indicative:",
-           "def": "He learned Greek well."
-          },
-          {
-           "term": "Subjunctive:",
-           "def": "In order that he might learn Greek well...  If he studies he may learn Greek well."
-          },
-          {
-           "term": "Imperative:",
-           "def": "Learn Greek well."
-          },
-          {
-           "term": "Optative:",
-           "def": "O that you might learn Greek well."
-          }
-         ]
-        }
-       ]
       }
      ]
     },
@@ -1726,6 +1466,293 @@
       {
        "type": "para",
        "text": "Endings will be added to the Greek nouns to indicate gender, number and case."
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "id": "pronoun",
+     "title": "Pronouns",
+     "content": [
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "Personal Pronouns:",
+         "def": "I, you, he, she, we, it"
+        },
+        {
+         "term": "Demonstrative Pronouns:",
+         "def": "this, that"
+        },
+        {
+         "term": "Possessive Pronouns:",
+         "def": "mine, yours, ours, theirs"
+        },
+        {
+         "term": "Interrogative Pronouns:",
+         "def": "who? which? what?"
+        },
+        {
+         "term": "Reciprocal Pronouns:",
+         "def": "one another"
+        },
+        {
+         "term": "Relative Pronouns:",
+         "def": "who, which, that"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "subject",
+     "title": "Subject",
+     "content": [
+      {
+       "type": "heading",
+       "text": "Subject of a Sentence"
+      },
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "Simple subject:",
+         "def": "[[u]]Terry[[/u]] went to the store. / The big red [[u]]truck[[/u]] moved slowly."
+        },
+        {
+         "term": "Complete subject:",
+         "def": "[[u]]The big red truck[[/u]] moved slowly."
+        },
+        {
+         "term": "Compound subject:",
+         "def": "[[u]]Terry and Dawn[[/u]] went to the store."
+        },
+        {
+         "term": "Understood subject:",
+         "def": "Please close the door.  (\"[[u]]you[[/u]]\" is understood)"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "predicate",
+     "title": "Predicate",
+     "content": [
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "Simple Predicate:",
+         "def": "Joy [[u]]walked[[/u]] home."
+        },
+        {
+         "term": "Complete Predicate:",
+         "def": "Joy [[u]]walked home[[/u]]."
+        },
+        {
+         "term": "Compound Predicate:",
+         "def": "Joy [[u]]walked home and raked leaves[[/u]]."
+        },
+        {
+         "term": "Predicate Nominative:",
+         "def": "It is [[u]]I[[/u]].  (rather than \"It is me.\")"
+        }
+       ]
+      },
+      {
+       "type": "para",
+       "text": "A predicate nominative completes the idea of the subject.  It will most often occur with an \"is\" verb."
+      }
+     ]
+    },
+    {
+     "id": "phrase",
+     "title": "Phrase",
+     "content": [
+      {
+       "type": "para",
+       "text": "Perhaps the most common is the prepositional phrase:"
+      },
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "",
+         "def": "Students are often late [[u]]in the morning[[/u]].  (Acts like an adjective)"
+        },
+        {
+         "term": "",
+         "def": "He held the book [[u]]over his head[[/u]].  (Acts like an adverb)"
+        }
+       ]
+      },
+      {
+       "type": "para",
+       "text": "Infinitive phrases often act as nouns:"
+      },
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "",
+         "def": "With work you can expect [[u]]to master Greek[[/u]].  (as a noun)"
+        },
+        {
+         "term": "",
+         "def": "He played [[u]]to win[[/u]].  (as an adverb)"
+        },
+        {
+         "term": "",
+         "def": "He had plenty of water [[u]]to drink[[/u]].  (as an adjective modifying water)"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "clause",
+     "title": "Clause",
+     "content": [
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "Phrase:",
+         "def": "The [[u]]great big strong[[/u]] man  (an adjective phrase)"
+        },
+        {
+         "term": "Clause:",
+         "def": "The man [[u]]who owns the store[[/u]]  (an adjectival/relative clause)"
+        }
+       ]
+      },
+      {
+       "type": "para",
+       "text": "A main clause expresses a complete thought and can stand alone.  A subordinate clause is dependent on the main clause and cannot stand alone.  Note the following subordinate clauses."
+      },
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "",
+         "def": "[[u]]When the store opened[[/u]] the people pushed through the front door."
+        },
+        {
+         "term": "",
+         "def": "He knew [[u]]that power had gone out of him[[/u]]."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "tense",
+     "title": "Tense",
+     "content": [
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "",
+         "def": "Joy walks everyday.  (Present tense)"
+        },
+        {
+         "term": "",
+         "def": "Joy walked yesterday.  (Past tense)"
+        },
+        {
+         "term": "",
+         "def": "Joy will walk tomorrow.  (Future Tense)"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "aspect",
+     "title": "Aspect",
+     "content": [
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "Continuous:",
+         "def": "I was studying for a week for the test.  (Process)"
+        },
+        {
+         "term": "Undefined:",
+         "def": "I studied for the test."
+        },
+        {
+         "term": "Perfect:",
+         "def": "I have studied for the test.  (Completed action with continuing effects)"
+        }
+       ]
+      },
+      {
+       "type": "refs",
+       "text": "(Mounce, pp. 118ff)"
+      }
+     ]
+    },
+    {
+     "id": "voice",
+     "title": "Voice",
+     "content": [
+      {
+       "type": "heading",
+       "text": "Voice of a Verb"
+      },
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "",
+         "def": "Zachary shot the ball.  (Active)"
+        },
+        {
+         "term": "",
+         "def": "The ball was shot by Zachary.  (Passive)"
+        },
+        {
+         "term": "",
+         "def": "Zachary got a ball for himself.  (Middle)"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "mood",
+     "title": "Mood",
+     "content": [
+      {
+       "type": "heading",
+       "text": "Mood of a Verb"
+      },
+      {
+       "type": "defList",
+       "items": [
+        {
+         "term": "Indicative:",
+         "def": "He learned Greek well."
+        },
+        {
+         "term": "Subjunctive:",
+         "def": "In order that he might learn Greek well...  If he studies he may learn Greek well."
+        },
+        {
+         "term": "Imperative:",
+         "def": "Learn Greek well."
+        },
+        {
+         "term": "Optative:",
+         "def": "O that you might learn Greek well."
+        }
+       ]
       }
      ]
     }

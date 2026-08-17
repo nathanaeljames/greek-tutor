@@ -1948,7 +1948,9 @@
    "answerPolicy": {
     "advanceClass": "autoBoth",
     "attemptsPerItem": 1
-   }
+   },
+   "poolKind": "vocabulary",
+   "_pool_note": "D-32 / Stage 8.8: vocabulary-pool marker; renderer applies the 4-up iPad grid."
   },
   {
    "id": "c6_drill_vocab_en_gk",
@@ -2076,7 +2078,9 @@
    "answerPolicy": {
     "advanceClass": "autoBoth",
     "attemptsPerItem": 1
-   }
+   },
+   "poolKind": "vocabulary",
+   "_pool_note": "D-32 / Stage 8.8: vocabulary-pool marker; renderer applies the 4-up iPad grid."
   },
   {
    "id": "c6_drill_scripture_memory",

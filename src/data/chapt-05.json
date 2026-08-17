@@ -160,69 +160,75 @@
        "items": [
         {
          "label": "Subjective case",
-         "text": " (Gk:  nominative):\n[[u]]He[[/u]] hit the ball."
+         "text": " (Gk:  nominative):\n[[u]]He[[/u]] hit the ball.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "The subject of the sentence can usually be discovered by putting \"who\" or \"what\" before the verb."
+            },
+            {
+             "type": "para",
+             "text": "E.g.   [[u]]Zach[[/u]] ran to the store."
+            },
+            {
+             "type": "para",
+             "text": "Who ran to the store?    Zach (= subject)"
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "Objective case",
-         "text": " (Gk:  accusative):\nThe ball hit [[u]]him[[/u]]."
+         "text": " (Gk:  accusative):\nThe ball hit [[u]]him[[/u]].",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "The object of a sentence can usually be discovered by putting a \"who\" or \"what\" after the verb."
+            },
+            {
+             "type": "para",
+             "text": "E.g.   Zach hit the ball."
+            },
+            {
+             "type": "para",
+             "text": "Zach hit what?    ball (= object)"
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "Possessive case",
-         "text": " (Gk:  genitive):\nHe hit [[u]]his[[/u]] ball."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Subjective Case:",
-       "content": [
-        {
-         "type": "para",
-         "text": "The subject of the sentence can usually be discovered by putting \"who\" or \"what\" before the verb."
-        },
-        {
-         "type": "para",
-         "text": "E.g.   [[u]]Zach[[/u]] ran to the store."
-        },
-        {
-         "type": "para",
-         "text": "Who ran to the store?    Zach (= subject)"
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Objective Case:",
-       "content": [
-        {
-         "type": "para",
-         "text": "The object of a sentence can usually be discovered by putting a \"who\" or \"what\" after the verb."
-        },
-        {
-         "type": "para",
-         "text": "E.g.   Zach hit the ball."
-        },
-        {
-         "type": "para",
-         "text": "Zach hit what?    ball (= object)"
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Possessive Case:",
-       "content": [
-        {
-         "type": "para",
-         "text": "The possessive case often can be discovered by asking \"whose\"?"
-        },
-        {
-         "type": "para",
-         "text": "Charlie hid his ball."
-        },
-        {
-         "type": "para",
-         "text": "whose ball?    his (possessive)"
+         "text": " (Gk:  genitive):\nHe hit [[u]]his[[/u]] ball.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "The possessive case often can be discovered by asking \"whose\"?"
+            },
+            {
+             "type": "para",
+             "text": "Charlie hid his ball."
+            },
+            {
+             "type": "para",
+             "text": "whose ball?    his (possessive)"
+            }
+           ]
+          }
+         ]
         }
        ]
       }
@@ -265,48 +271,7 @@
      "content": [
       {
        "type": "para",
-       "text": "There are three noun [[u]]declensions[[/u]] in Greek.  We have learned the second declension with its masculine and neuter nouns.  Now we will focus on the first declension which is largely feminine.  First declension nouns are largely feminine which is indicated by placing a \" ἡ \" [[u]]definite article[[/u]] (\"the\") in front of the root.  Each noun should be learned with its definite article which indicates its gender.  The stem of first declension nouns end with an alpha or eta."
-      },
-      {
-       "type": "expander",
-       "label": "Declensions:  First, Second, Third",
-       "content": [
-        {
-         "type": "para",
-         "text": "A declension is a grouping of nouns that are inflected with a shared set of endings.  The difference in endings does not effect the translation between first, second and third declensions.  First declension nouns are characterized by an \"η\" or \"α\" and are mostly feminine.  The second declension is characterized by an \"o\" as the final letter of the stem.  They are largely masculine or neuter.   Third declension nouns have stems that end in a consonant."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Definite Article",
-       "content": [
-        {
-         "type": "para",
-         "text": "Greek has no indefinite article,  whereas in English we would say \"[[u]]a[[/u]] book.\"  Thus the Greek indefinite noun may be translated \"book\" or \"a book.\"  Greek nouns are assumed to be indefinite unless marked by the definite article (\"the\").  For now simply be aware of the nominative form of the definite article which will indicate the gender of the noun being learned:"
-        },
-        {
-         "type": "greekRows",
-         "layout": "glossOnly",
-         "rows": [
-          {
-           "greek": "ὁ",
-           "gloss": "= masculine (\"the\")",
-           "audio": "chapt_5_e_ho"
-          },
-          {
-           "greek": "ἡ",
-           "gloss": "= feminine (\"the\")",
-           "audio": "chapt_5_e_hn"
-          },
-          {
-           "greek": "τό",
-           "gloss": "= neuter (\"the\")",
-           "audio": "chapt_5_e_to"
-          }
-         ]
-        }
-       ]
+       "text": "There are three noun [[u]][[link:declensions]]declensions[[/link]][[/u]] in Greek.  We have learned the second declension with its masculine and neuter nouns.  Now we will focus on the first declension which is largely feminine.  First declension nouns are largely feminine which is indicated by placing a \" ἡ \" [[u]][[link:definiteArticle]]definite article[[/link]][[/u]] (\"the\") in front of the root.  Each noun should be learned with its definite article which indicates its gender.  The stem of first declension nouns end with an alpha or eta."
       }
      ]
     },
@@ -371,97 +336,107 @@
        "items": [
         {
          "label": "Nominative form",
-         "text": ":  marks the subject of the sentence"
+         "text": ":  marks the subject of the sentence",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "[[u]]The music[[/u]] soothed our hearts."
+            },
+            {
+             "type": "para",
+             "text": "\"The music\" is the subject of the sentence.  In Greek it would be marked with a nominative inflectional ending."
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "Genitive form",
-         "text": ":  expresses a possessive"
+         "text": ":  expresses a possessive",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "The Pharisee went to the house [[u]]of God[[/u]]."
+            },
+            {
+             "type": "para",
+             "text": "The Pharisee went to [[u]]God's[[/u]] house."
+            },
+            {
+             "type": "para",
+             "text": "\"Of God\" or \"God's\" would be marked in Greek with a genitive inflectional ending."
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "Dative form",
-         "text": ":  marks the indirect object"
+         "text": ":  marks the indirect object",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "He spoke a word [[u]]to the apostle[[/u]]."
+            },
+            {
+             "type": "para",
+             "text": "\"To the apostle\" would be marked with a dative inflectional ending in Greek."
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "Accusative form",
-         "text": ":  indicates the object of the sentence"
+         "text": ":  indicates the object of the sentence",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "Joy saw [[u]]the ball[[/u]]."
+            },
+            {
+             "type": "para",
+             "text": "\"The ball\" is the object of the sentence.  It would be marked by an accusative inflectional ending in Greek."
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "Vocative form",
-         "text": ":  is used for direct address"
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Nominative Case:",
-       "content": [
-        {
-         "type": "para",
-         "text": "[[u]]The music[[/u]] soothed our hearts."
-        },
-        {
-         "type": "para",
-         "text": "\"The music\" is the subject of the sentence.  In Greek it would be marked with a nominative inflectional ending."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Genitive Case:",
-       "content": [
-        {
-         "type": "para",
-         "text": "The Pharisee went to the house [[u]]of God[[/u]]."
-        },
-        {
-         "type": "para",
-         "text": "The Pharisee went to [[u]]God's[[/u]] house."
-        },
-        {
-         "type": "para",
-         "text": "\"Of God\" or \"God's\" would be marked in Greek with a genitive inflectional ending."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Dative Case:",
-       "content": [
-        {
-         "type": "para",
-         "text": "He spoke a word [[u]]to the apostle[[/u]]."
-        },
-        {
-         "type": "para",
-         "text": "\"To the apostle\" would be marked with a dative inflectional ending in Greek."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Accusative Case:",
-       "content": [
-        {
-         "type": "para",
-         "text": "Joy saw [[u]]the ball[[/u]]."
-        },
-        {
-         "type": "para",
-         "text": "\"The ball\" is the object of the sentence.  It would be marked by an accusative inflectional ending in Greek."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Vocative Case:",
-       "content": [
-        {
-         "type": "para",
-         "text": "[[u]]Brother[[/u]], you are the man!"
-        },
-        {
-         "type": "para",
-         "text": "\"Brother\" is a direct address and would be marked by a vocative inflectional ending in Greek."
+         "text": ":  is used for direct address",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "[[u]]Brother[[/u]], you are the man!"
+            },
+            {
+             "type": "para",
+             "text": "\"Brother\" is a direct address and would be marked by a vocative inflectional ending in Greek."
+            }
+           ]
+          }
+         ]
         }
        ]
       }
@@ -1225,7 +1200,50 @@
      ]
     }
    ],
-   "_label_note": "D-27: the Eta chart prints \"Nom.\\Voc.\" with a backslash, the first Alpha chart \"Nom./Voc.\" with a slash, and the second Alpha chart \"Nom./Voc\" with no trailing period. All three are the original's own labels and ship verbatim."
+   "_label_note": "D-27: the Eta chart prints \"Nom.\\Voc.\" with a backslash, the first Alpha chart \"Nom./Voc.\" with a slash, and the second Alpha chart \"Nom./Voc\" with no trailing period. All three are the original's own labels and ship verbatim.",
+   "popups": [
+    {
+     "id": "declensions",
+     "title": "Declensions: First, Second, Third",
+     "content": [
+      {
+       "type": "para",
+       "text": "A declension is a grouping of nouns that are inflected with a shared set of endings.  The difference in endings does not effect the translation between first, second and third declensions.  First declension nouns are characterized by an \"η\" or \"α\" and are mostly feminine.  The second declension is characterized by an \"o\" as the final letter of the stem.  They are largely masculine or neuter.   Third declension nouns have stems that end in a consonant."
+      }
+     ]
+    },
+    {
+     "id": "definiteArticle",
+     "title": "Definite Article",
+     "content": [
+      {
+       "type": "para",
+       "text": "Greek has no indefinite article,  whereas in English we would say \"[[u]]a[[/u]] book.\"  Thus the Greek indefinite noun may be translated \"book\" or \"a book.\"  Greek nouns are assumed to be indefinite unless marked by the definite article (\"the\").  For now simply be aware of the nominative form of the definite article which will indicate the gender of the noun being learned:"
+      },
+      {
+       "type": "greekRows",
+       "layout": "glossOnly",
+       "rows": [
+        {
+         "greek": "ὁ",
+         "gloss": "= masculine (\"the\")",
+         "audio": "chapt_5_e_ho"
+        },
+        {
+         "greek": "ἡ",
+         "gloss": "= feminine (\"the\")",
+         "audio": "chapt_5_e_hn"
+        },
+        {
+         "greek": "τό",
+         "gloss": "= neuter (\"the\")",
+         "audio": "chapt_5_e_to"
+        }
+       ]
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "c5_learn_article",
@@ -3026,165 +3044,187 @@
    "mode": "paradigmChart",
    "title": "Review Definite Article",
    "chartTitle": "Review Definite Article",
-   "paradigm": {
-    "title": "Review Definite Article",
-    "columns": [
-     "Masc.",
-     "Fem.",
-     "Neut.",
-     "Masc.",
-     "Fem.",
-     "Neut."
-    ],
-    "columnAudio": [
-     "chapt_5_e_artms",
-     "chapt_5_e_artfs",
-     "chapt_5_e_artns",
-     "chapt_5_e_artmp",
-     "chapt_5_e_artfp",
-     "chapt_5_e_artnp"
-    ],
-    "columnGroups": [
-     {
-      "label": "Singular",
-      "span": 3
-     },
-     {
-      "label": "Plural",
-      "span": 3
-     }
-    ],
-    "rows": [
-     {
-      "label": "Nom.",
-      "cells": [
-       {
-        "greek": "ὁ",
-        "audio": "chapt_5_e_ho"
-       },
-       {
-        "greek": "ἡ",
-        "audio": "chapt_5_e_hn"
-       },
-       {
-        "greek": "τό",
-        "audio": "chapt_5_e_to"
-       },
-       {
-        "greek": "οἱ",
-        "audio": "chapt_5_e_hoi"
-       },
-       {
-        "greek": "αἱ",
-        "audio": "chapt_5_e_hai"
-       },
-       {
-        "greek": "τά",
-        "audio": "chapt_5_e_ta"
-       }
-      ]
-     },
-     {
-      "label": "Gen.",
-      "cells": [
-       {
-        "greek": "τοῦ",
-        "audio": "chapt_5_e_tou"
-       },
-       {
-        "greek": "τῆς",
-        "audio": "chapt_5_e_tns"
-       },
-       {
-        "greek": "τοῦ",
-        "audio": "chapt_5_e_tou"
-       },
-       {
-        "greek": "τῶν",
-        "audio": "chapt_5_e_twn"
-       },
-       {
-        "greek": "τῶν",
-        "audio": "chapt_5_e_twn"
-       },
-       {
-        "greek": "τῶν",
-        "audio": "chapt_5_e_twn"
-       }
-      ]
-     },
-     {
-      "label": "Dat.",
-      "cells": [
-       {
-        "greek": "τῷ",
-        "audio": "chapt_5_e_tw"
-       },
-       {
-        "greek": "τῇ",
-        "audio": "chapt_5_e_tn"
-       },
-       {
-        "greek": "τῷ",
-        "audio": "chapt_5_e_tw"
-       },
-       {
-        "greek": "τοῖς",
-        "audio": "chapt_5_e_tois"
-       },
-       {
-        "greek": "ταῖς",
-        "audio": "chapt_5_e_tais"
-       },
-       {
-        "greek": "τοῖς",
-        "audio": "chapt_5_e_tois"
-       }
-      ]
-     },
-     {
-      "label": "Acc.",
-      "cells": [
-       {
-        "greek": "τόν",
-        "audio": "chapt_5_e_ton"
-       },
-       {
-        "greek": "τήν",
-        "audio": "chapt_5_e_tnn"
-       },
-       {
-        "greek": "τό",
-        "audio": "chapt_5_e_to"
-       },
-       {
-        "greek": "τούς",
-        "audio": "chapt_5_e_tous"
-       },
-       {
-        "greek": "τάς",
-        "audio": "chapt_5_e_tas"
-       },
-       {
-        "greek": "τά",
-        "audio": "chapt_5_e_ta"
-       }
-      ]
-     }
-    ],
-    "showGlosses": false,
-    "sayWholeEach": [
-     {
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "id": "qrArticleSingular",
+     "title": "Singular",
+     "sayWhole": {
       "label": "Say Whole Paradigm",
       "audio": "chapt_5_e_artsg"
      },
-     {
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "columnAudio": [
+      "chapt_5_e_artms",
+      "chapt_5_e_artfs",
+      "chapt_5_e_artns"
+     ],
+     "rows": [
+      {
+       "label": "Nom.",
+       "cells": [
+        {
+         "greek": "ὁ",
+         "audio": "chapt_5_e_ho"
+        },
+        {
+         "greek": "ἡ",
+         "audio": "chapt_5_e_hn"
+        },
+        {
+         "greek": "τό",
+         "audio": "chapt_5_e_to"
+        }
+       ]
+      },
+      {
+       "label": "Gen.",
+       "cells": [
+        {
+         "greek": "τοῦ",
+         "audio": "chapt_5_e_tou"
+        },
+        {
+         "greek": "τῆς",
+         "audio": "chapt_5_e_tns"
+        },
+        {
+         "greek": "τοῦ",
+         "audio": "chapt_5_e_tou"
+        }
+       ]
+      },
+      {
+       "label": "Dat.",
+       "cells": [
+        {
+         "greek": "τῷ",
+         "audio": "chapt_5_e_tw"
+        },
+        {
+         "greek": "τῇ",
+         "audio": "chapt_5_e_tn"
+        },
+        {
+         "greek": "τῷ",
+         "audio": "chapt_5_e_tw"
+        }
+       ]
+      },
+      {
+       "label": "Acc.",
+       "cells": [
+        {
+         "greek": "τόν",
+         "audio": "chapt_5_e_ton"
+        },
+        {
+         "greek": "τήν",
+         "audio": "chapt_5_e_tnn"
+        },
+        {
+         "greek": "τό",
+         "audio": "chapt_5_e_to"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "id": "qrArticlePlural",
+     "title": "Plural",
+     "sayWhole": {
       "label": "Say Whole Paradigm",
       "audio": "chapt_5_e_artpl"
-     }
-    ],
-    "_layout_note": "The Quick Review chart shows Singular AND Plural side by side in one six-column table with a Say Whole Paradigm button under each half -- NOT the Singular/Plural toggle used on the Learn page."
-   }
+     },
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "columnAudio": [
+      "chapt_5_e_artmp",
+      "chapt_5_e_artfp",
+      "chapt_5_e_artnp"
+     ],
+     "rows": [
+      {
+       "label": "Nom.",
+       "cells": [
+        {
+         "greek": "οἱ",
+         "audio": "chapt_5_e_hoi"
+        },
+        {
+         "greek": "αἱ",
+         "audio": "chapt_5_e_hai"
+        },
+        {
+         "greek": "τά",
+         "audio": "chapt_5_e_ta"
+        }
+       ]
+      },
+      {
+       "label": "Gen.",
+       "cells": [
+        {
+         "greek": "τῶν",
+         "audio": "chapt_5_e_twn"
+        },
+        {
+         "greek": "τῶν",
+         "audio": "chapt_5_e_twn"
+        },
+        {
+         "greek": "τῶν",
+         "audio": "chapt_5_e_twn"
+        }
+       ]
+      },
+      {
+       "label": "Dat.",
+       "cells": [
+        {
+         "greek": "τοῖς",
+         "audio": "chapt_5_e_tois"
+        },
+        {
+         "greek": "ταῖς",
+         "audio": "chapt_5_e_tais"
+        },
+        {
+         "greek": "τοῖς",
+         "audio": "chapt_5_e_tois"
+        }
+       ]
+      },
+      {
+       "label": "Acc.",
+       "cells": [
+        {
+         "greek": "τούς",
+         "audio": "chapt_5_e_tous"
+        },
+        {
+         "greek": "τάς",
+         "audio": "chapt_5_e_tas"
+        },
+        {
+         "greek": "τά",
+         "audio": "chapt_5_e_ta"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "_layout_note": "DISCLOSURE-RULES C9 (rule 11): six-column chart split into Singular over Plural, scaling vertically. The old two \"Say Whole Paradigm\" buttons were column-group plays; each chart keeps its three columnAudio clips. Implementer: verify the per-chart say control against the ch9 QR pattern. IMPLEMENTER EDIT 2026-08-16 (DISCLOSURE-SPEC1 0.3): the split dropped both say controls -- the old chart carried them as sayWholeEach [chapt_5_e_artsg, chapt_5_e_artpl], one per column group, and neither new chart received one, so the page shipped with no say-all at all against W10's \"two charts, two say-alls\". Restored as a per-chart sayWhole with the SAME two clips in the same order (Singular -> artsg, Plural -> artpl -- the pairing the Learn page uses for the same two charts) and the old chart's own authored label, matching the ch9/ch10 QR stacked-pair pattern the note asks to verify against."
   },
   {
    "id": "c5_qr_scripture_146a",

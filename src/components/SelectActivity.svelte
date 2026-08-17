@@ -154,9 +154,23 @@
   // The responsive vocabulary pool (D-19), in either direction. A vocabulary
   // select is the non-generator, non-authored branch in buildSelectQuestions.
   // Explicit pedagogical layouts remain outside this responsive class.
-  $: vocabularyPool = !activity.generator && !authoredOptions && !wideOptions
-    && optionClass !== 'single'
-    && optionClass !== 'paradigm2col';
+  //
+  // D-32 and its extension (5G-SPEC1, landed with DISCLOSURE-SPEC1 W9): the
+  // INFERENCE below is a proxy for "this is a vocabulary pool", and it is wrong
+  // for the eight case-split vocabulary drills in chapters 6, 8, 9 and 10.
+  // Those ship an AUTHORED option list — the original draws a fixed grid of
+  // fifteen or sixteen words, not a pool sampled from the lexicon — so
+  // authoredOptions is true and they fell out of the responsive class, staying
+  // two-up on a tablet while chapter 3's identical-looking vocabulary drill
+  // went four-up. `poolKind: "vocabulary"` is the data saying outright what the
+  // inference could not see. It only ever ADDS a drill to the class: no
+  // activity without the key changes, which is what keeps the explicit
+  // pedagogical layouts (wide letter grids, paradigm2col, single) exactly where
+  // they are.
+  $: vocabularyPool = activity.poolKind === 'vocabulary'
+    || (!activity.generator && !authoredOptions && !wideOptions
+      && optionClass !== 'single'
+      && optionClass !== 'paradigm2col');
   // A LONG Greek prompt cannot have the 3rem type a single letter gets. At
   // 320px, πιστεύουσι sets 268px of glyph into 260px of card and the tail is
   // lost in silence (overflow-x is hidden app-wide). Declared here rather than
@@ -189,16 +203,20 @@
   // activity-level Hint.
   $: activeHintRef = current?.hintRef ?? activity.ui?.hintRef;
   $: hintChart = activeHintRef ? resolveHintRef(chapter, activeHintRef) : null;
-  // 5G-SPEC3 / D-48f1: these exact two-chart drill hints disclose one chart
-  // at a time. The button always names the OTHER state, so the learner sees
-  // where it goes rather than a generic "switch" instruction. This policy is
-  // deliberately scoped by hintRef; Quick Review and every unrelated chart
-  // retain their existing renderer behavior.
-  const HINT_DISCLOSURE_REFS = [
-    'middlePassiveParadigms',
-    'futureParadigms',
-    'eimiParadigms'
-  ];
+  // 5G-SPEC3 / D-48f1: a composite drill hint discloses one chart at a time,
+  // and the button always names the OTHER state so the learner sees where it
+  // goes rather than a generic "switch" instruction.
+  //
+  // DISCLOSURE-SPEC1 W6.3: that policy used to be scoped by an ALLOWLIST of
+  // three hintRefs — the three composites that existed when it was written.
+  // DISCLOSURE-RULES §5 states the rule structurally instead: a resolved bundle
+  // of exactly two paradigms renders the §4.1 toggle, three or more render the
+  // §4.2 Back/More pair. The allowlist and the structural rule agree exactly on
+  // today's data (all three named bundles hold two charts); what changes is
+  // that the NEXT composite a chapter ships discloses correctly without an edit
+  // here, and that a bundle of three no longer falls through to the stacked
+  // rendering the surface never asked for. Quick Review does not route through
+  // hintRef and is unaffected.
   let hintParadigmIndex = 0;
   let hintParadigmRef = null;
   // A correct answer may auto-advance behind an already-open Hint. If the new
@@ -210,12 +228,18 @@
     hintParadigmRef = activeHintRef;
     hintParadigmIndex = 0;
   }
-  $: hintDisclosure = HINT_DISCLOSURE_REFS.includes(activeHintRef)
-    && Array.isArray(hintChart?.paradigms) && hintChart.paradigms.length === 2;
-  $: hintParadigm = hintDisclosure ? hintChart.paradigms[hintParadigmIndex] : null;
-  $: hintToggleLabels = paradigmToggleLabels(
-    (hintChart?.paradigms || []).map(chart => chart.title));
-  $: hintParadigmTarget = hintDisclosure
+  $: hintBundle = Array.isArray(hintChart?.paradigms) ? hintChart.paradigms : [];
+  $: hintDisclosure = hintBundle.length >= 2;
+  // §4.1 at exactly two, §4.2 at three or more — the same split Paradigm makes
+  // for a charts[] stack, stated once per host because the two hosts own their
+  // control rows separately (this one pins its row in the modal's own footer
+  // beside Close; Paradigm pins its own).
+  $: hintPairToggle = hintBundle.length === 2;
+  $: hintParadigm = hintDisclosure
+    ? hintBundle[Math.min(hintParadigmIndex, hintBundle.length - 1)]
+    : null;
+  $: hintToggleLabels = paradigmToggleLabels(hintBundle.map(chart => chart.title));
+  $: hintParadigmTarget = hintPairToggle
     ? hintToggleLabels[1 - hintParadigmIndex]
     : null;
   // 5F-FEEDBACK2 items 13/28 (Nathanael, 2026-08-09): a MULTI-PAGE hint, the
@@ -264,6 +288,11 @@
     // state itself remains silent until the learner taps it.
     stopAudio();
     hintParadigmIndex = hintParadigmIndex === 0 ? 1 : 0;
+  }
+  // §4.2, for a bundle of three or more: step, do not alternate.
+  function stepHintParadigm(delta) {
+    stopAudio();
+    hintParadigmIndex = Math.max(0, Math.min(hintBundle.length - 1, hintParadigmIndex + delta));
   }
   $: showHintButton = hintPages.length > 0 || hintBlocks.length > 0 || !!hintChart;
   $: orderedRevealControls = orderControls([
@@ -741,28 +770,44 @@
   {@const hintPage = hintPages[Math.min(hintPageIndex, hintPages.length - 1)]}
   <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
     <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
-      <div class="modal-scroll">
-        {#if hintPage.chart}
-          <Paradigm paradigm={hintPage.chart} title={hintPage.title} />
-        {:else}
+      {#if hintPage.chart}
+        <!-- W4.1: a chart page IS the dialog's body — Paradigm owns the scroll
+             and pins its own say-all row above the footer, so the say action
+             never scrolls away from the chart it speaks. -->
+        <Paradigm paradigm={hintPage.chart} title={hintPage.title} modalHost={true} />
+      {:else}
+        <div class="modal-scroll">
           {#if hintPage.title}<div class="rc-heading">{hintPage.title}</div>{/if}
           <RichContent blocks={hintPage.blocks} />
-        {/if}
-      </div>
-      {#if hintPages.length > 1}
-        <!-- Same centred always-both-visible pair as every other .pg-nav
-             (5F-PATCH3 addendum): the invalid direction greys out, never
-             disappears. -->
-        <div class="pg-nav hint-page-nav">
-          <button class="btn secondary" data-hint-page-nav="back"
-                  disabled={hintPageIndex <= 0}
-                  on:click={() => (hintPageIndex -= 1)}>Back</button>
-          <button class="btn secondary" data-hint-page-nav="more"
-                  disabled={hintPageIndex >= hintPages.length - 1}
-                  on:click={() => (hintPageIndex += 1)}>More</button>
         </div>
       {/if}
       <div class="modal-actions">
+        {#if hintPages.length === 2}
+          <!-- W6.4 / §4.1: TWO pages are a two-state disclosure, so they get
+               the single alternating button, not a pair with one half always
+               greyed. The label is More on page 1 and Back on page 2: these
+               two pages have no one-word contrast to name them by (chapter 7's
+               "Adjective Paradigm" against "Attributive & Predicate
+               Positions"), which is exactly the case §4.1 sends to More/Back. -->
+          <div class="hint-paradigm-controls no-say" data-hint-page-controls>
+            <button class="btn secondary hint-paradigm-toggle"
+                    data-hint-page-nav={hintPageIndex === 0 ? 'more' : 'back'}
+                    data-target-index={hintPageIndex === 0 ? 1 : 0}
+                    on:click={() => (hintPageIndex = hintPageIndex === 0 ? 1 : 0)}>{hintPageIndex === 0 ? 'More' : 'Back'}</button>
+          </div>
+        {:else if hintPages.length > 2}
+          <!-- §4.2: three or more pages keep the centred always-both-visible
+               pair (5F-PATCH3 addendum) — the invalid direction greys out,
+               never disappears. -->
+          <div class="pg-nav hint-page-nav">
+            <button class="btn secondary" data-hint-page-nav="back"
+                    disabled={hintPageIndex <= 0}
+                    on:click={() => (hintPageIndex -= 1)}>Back</button>
+            <button class="btn secondary" data-hint-page-nav="more"
+                    disabled={hintPageIndex >= hintPages.length - 1}
+                    on:click={() => (hintPageIndex += 1)}>More</button>
+          </div>
+        {/if}
         <!-- svelte-ignore a11y-autofocus -->
         <button class="btn" autofocus on:click={() => (showHint = false)}>Close</button>
       </div>
@@ -772,34 +817,31 @@
   <!-- The original's Hint POPUP: the chapter's paradigm chart over the drill. -->
   <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
     <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
-      <div class="modal-scroll">
       <!-- 5F-FEEDBACK.pdf §8.1 root-cause fix: every paradigm the Hint route
            can resolve now ships in the one standard cell-audio shape, so
            there is no second renderer to keep in sync. -->
       {#if hintDisclosure}
         <!-- D-48f1: one chart at a time. Only the body scrolls; the state Say
-             action and target-labelled toggle live with Close in the pinned
-             footer below. -->
-        <div class="paradigm-stack">
-          {#if hintChart.title}<div class="rc-heading">{hintChart.title}</div>{/if}
-          <Paradigm paradigm={hintParadigm} title={hintParadigm.title || null} actionsPinned={true} />
-        </div>
-      {:else if Array.isArray(hintChart.paradigms)}
-        <!-- A future composite outside the three scoped disclosure refs keeps
-             the established stacked rendering until its own source requires
-             a different policy. -->
-        <div class="paradigm-stack">
-          {#if hintChart.title}<div class="rc-heading">{hintChart.title}</div>{/if}
-          {#each hintChart.paradigms as chart, chartIndex}
-            <Paradigm paradigm={chart} title={chart.title || null} />
-            {#if chartIndex < hintChart.paradigms.length - 1}<div class="paradigm-stack-rule" aria-hidden="true"></div>{/if}
-          {/each}
+             action and its disclosure control live with Close in the pinned
+             footer below, which is why this Paradigm draws no row of its own
+             (actionsPinned). A composite bundle is the one hint shape whose
+             state the HOST owns — it picks which of the bundle's paradigms is
+             on screen — so the host also owns the control row. -->
+        <div class="modal-scroll">
+          <div class="paradigm-stack">
+            {#if hintChart.title}<div class="rc-heading">{hintChart.title}</div>{/if}
+            <Paradigm paradigm={hintParadigm} title={hintParadigm.title || null} actionsPinned={true} />
+          </div>
         </div>
       {:else}
+        <!-- W4.1: every other hint chart IS the dialog's body. Paradigm owns
+             the scroller and pins its own control row outside it, which is what
+             gives the ch3/4/5/7 chart hints a say-all and a toggle that never
+             scroll away — and, for chapter 3's λύω chart, an in-place
+             Paradigm/Endings toggle instead of a second modal (§4.4). -->
         <Paradigm paradigm={hintChart} title={hintChart.title || hintChart.charts?.[0]?.title || null}
-                  switchLabels={activity.ui?.hintSwitchLabels || null} />
+                  switchLabels={activity.ui?.hintSwitchLabels || null} modalHost={true} />
       {/if}
-      </div>
       <div class="modal-actions">
         {#if hintDisclosure}
           <div class="hint-paradigm-controls" class:no-say={!hintParadigm.sayWhole?.audio}
@@ -812,10 +854,25 @@
                 {hintParadigm.sayWhole.label || 'Say Paradigm'}
               </button>
             {/if}
-            <button class="btn secondary hint-paradigm-toggle"
-                    data-paradigm-switch="hint" data-hint-paradigm-toggle
-                    data-target-index={hintParadigmIndex === 0 ? 1 : 0}
-                    on:click={toggleHintParadigm}>{hintParadigmTarget}</button>
+            {#if hintPairToggle}
+              <button class="btn secondary hint-paradigm-toggle"
+                      data-paradigm-switch="hint" data-hint-paradigm-toggle
+                      data-target-index={hintParadigmIndex === 0 ? 1 : 0}
+                      on:click={toggleHintParadigm}>{hintParadigmTarget}</button>
+            {:else}
+              <!-- §4.2: three or more charts in the bundle — the centred pair,
+                   both always visible, the invalid direction disabled. -->
+              <div class="pg-nav">
+                <button class="btn secondary pg-switch pg-switch-back"
+                        data-paradigm-switch="back" data-hint-paradigm-nav="back"
+                        disabled={hintParadigmIndex <= 0}
+                        on:click={() => stepHintParadigm(-1)}>Back</button>
+                <button class="btn secondary pg-switch pg-switch-more"
+                        data-paradigm-switch="more" data-hint-paradigm-nav="more"
+                        disabled={hintParadigmIndex >= hintBundle.length - 1}
+                        on:click={() => stepHintParadigm(1)}>More</button>
+              </div>
+            {/if}
           </div>
         {/if}
         <!-- svelte-ignore a11y-autofocus -->

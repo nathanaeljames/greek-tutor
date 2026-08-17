@@ -60,6 +60,7 @@ ch05 introduction: 2 expanders -> C3 links+popups
 ch10 stemVariations: 5 link-popups -> "Examples" below-expanders (items promoted to dicts)
 ch05 QR article: 6-col chart -> Singular + Plural stacked (C9)
 ch01: Six Points -> standard expander (no visual change); Capitals Note two missing screens RESTORED inline from railwalk p6
+ch08 threeUses: 3 expanders interspersed (C2), titled "Examples", wrapping the former popup bodies as wordUsage blocks (title + examples); popups asAPronoun/reflexiveIntensifier/adjectiveMeaningSame retired. OMITTED FROM THE 2026-08-15 PASS IN ERROR -- caught by an implementer STOP at DISCLOSURE-SPEC1 W1 and executed 2026-08-16.
 
 ## Provenance flags
 
@@ -68,7 +69,9 @@ ch01: Six Points -> standard expander (no visual change); Capitals Note two miss
   when 1_ALPHABET.TBK is next mounted.
 - ch7 "Examples" accordions wrap the former popup bodies as a
   `wordUsage` block (headword, gloss, condition, example verses) —
-  same fields the popup renderer drew.
+  same fields the popup renderer drew. ch8's variant (2026-08-16)
+  carries title + examples only, mirroring its popups' own shape
+  (no Greek headword) — wordUsage fields are optional-per-source.
 - Assemblers for ch9/ch10 remain provenance tools; after this pass the
   repo JSONs are the source of truth (Stage 8.7), with assemble_ch10
   updated so a regeneration cannot resurrect the Middle answers.

@@ -21,7 +21,13 @@ const BLOCK_TYPES = new Set([
   'prepositionsChart',
   // 5G: chapter 10's present-beside-future chart (teaching topics and the
   // five stem-variation popups share the one shape).
-  'presentFutureRows'
+  'presentFutureRows',
+  // DISCLOSURE R7: chapter 2's Identifying Verbs terms — term on its own line
+  // in green with its definition beneath, replacing the two-column defList.
+  'termList',
+  // DISCLOSURE W8: the former chapter-7 popup BODY, now a block inside the
+  // οὐ/οὐκ/οὐχ "Examples" accordions (D-31 amended, the page is C2).
+  'wordUsage'
   // 'pronounParadigm' (chapter 8's free-text pronoun-row shape) was RETIRED
   // in the 5F-FEEDBACK.pdf patch round: every pronoun paradigm now ships as a
   // standard `paradigm` block with real cells and real per-cell audio, which
@@ -491,6 +497,83 @@ for (const file of files) {
         problems.push(`${path}.headers: expected exactly two headers (Present, Future) or none at all — the headed form is the two-column chart, the unheaded one the "==>" derivation.`);
       }
     }
+    // DISCLOSURE R7: a termList item is { term, def, link? }, all strings. A
+    // missing `def` prints a green term over nothing at all -- exactly the
+    // silent-visual class this file exists for -- and a `link` is a C3 trigger,
+    // so a non-string one would render an untappable term with no way to say
+    // so. Whether the link RESOLVES is checked with the other references below.
+    if (block.type === 'termList') {
+      if (!Array.isArray(block.items) || !block.items.length) {
+        problems.push(`${path}: termList has no items array.`);
+        return;
+      }
+      block.items.forEach((item, index) => {
+        const itemPath = `${path}.items[${index}]`;
+        if (!item || typeof item !== 'object' || Array.isArray(item)) {
+          problems.push(`${itemPath}: termList item is not an object.`);
+          return;
+        }
+        for (const key of ['term', 'def']) {
+          if (typeof item[key] !== 'string' || !item[key].trim()) {
+            problems.push(`${itemPath}.${key}: expected a non-empty string.`);
+          }
+        }
+        if (item.link != null && (typeof item.link !== 'string' || !item.link.trim())) {
+          problems.push(`${itemPath}.link: when present, expected a non-empty popup id.`);
+        }
+      });
+    }
+    // DISCLOSURE W8 (amended 2026-08-16): a former popup BODY inline, inside an
+    // "Examples" accordion. Two source shapes, one block type, because the
+    // popups it replaces had two shapes -- PopupSheet.svelte reads the same
+    // fields the same optional way on its chapter-7 and chapter-8 branches:
+    //   ch7  greek + gloss + condition (+ audio): a headword and the rule it
+    //        applies under (ou / ouk / ouch).
+    //   ch8  title only: the three uses of autos, whose popups never had a
+    //        Greek headword of their own -- the title names the USE.
+    // So the required core is what BOTH have: at least one heading (title or
+    // greek) and the examples themselves. Everything else is optional per
+    // source, and a block with neither heading nor examples would render as an
+    // empty accordion body -- disclosure with nothing disclosed, which is the
+    // silent-visual failure this file exists to refuse.
+    if (block.type === 'wordUsage') {
+      if (!block.title && !block.greek) {
+        problems.push(`${path}: wordUsage has neither a title nor a Greek headword — the accordion would open on an unheaded list.`);
+      }
+      for (const key of ['title', 'greek', 'gloss', 'condition', 'audio']) {
+        if (block[key] != null && (typeof block[key] !== 'string' || !block[key].trim())) {
+          problems.push(`${path}.${key}: when present, expected a non-empty string.`);
+        }
+      }
+      if (!Array.isArray(block.examples) || !block.examples.length) {
+        problems.push(`${path}.examples: expected a non-empty array.`);
+      } else {
+        block.examples.forEach((example, index) => {
+          const examplePath = `${path}.examples[${index}]`;
+          if (!example || typeof example !== 'object' || Array.isArray(example)) {
+            problems.push(`${examplePath}: expected an example object.`);
+            return;
+          }
+          for (const key of ['greek', 'gloss']) {
+            if (typeof example[key] !== 'string' || !example[key].trim()) {
+              problems.push(`${examplePath}.${key}: expected a non-empty string.`);
+            }
+          }
+          for (const key of ['ref', 'audio']) {
+            if (example[key] != null && (typeof example[key] !== 'string' || !example[key].trim())) {
+              problems.push(`${examplePath}.${key}: when present, expected a non-empty string.`);
+            }
+          }
+        });
+      }
+    }
+    // DISCLOSURE W9: `poolKind` opts an AUTHORED option grid into the
+    // responsive vocabulary-pool class (D-19/D-32). One value is meaningful;
+    // any other string would silently do nothing, which is how a drill would
+    // stay two-up on a tablet with the data claiming otherwise.
+    if (Object.prototype.hasOwnProperty.call(block, 'poolKind') && block.poolKind !== 'vocabulary') {
+      problems.push(`${path}.poolKind: "${block.poolKind}" is not "vocabulary" — the only pool kind the renderer knows (D-32).`);
+    }
     // greekRows rows carry a word, a positional-chart cell list, or an
     // alternating parts[] equation -- never nothing at all.
     if (block.type === 'greekRows') {
@@ -598,6 +681,23 @@ for (const file of files) {
           }
         }
       })(activity, '');
+      // A termList term that IS a link resolves the same way (R7/§3.2). The
+      // markup scan above cannot see it: the target is a `link` FIELD, not a
+      // [[link:id]] run inside a string, and an unresolved one renders the term
+      // as plain green text with nothing behind it.
+      (function scanTermLists(node) {
+        if (Array.isArray(node)) return node.forEach(scanTermLists);
+        if (!node || typeof node !== 'object') return;
+        if (node.type === 'termList') {
+          (node.items || []).forEach((item, index) => {
+            const ref = item && item.link;
+            if (typeof ref === 'string' && !popupIds.has(ref) && !popupIds.has(slugOf(ref))) {
+              problems.push(`${file}.${key}[${activity.id}] termList.items[${index}].link: "${ref}" names no popup on this activity — the term would render as plain text with nothing behind it.`);
+            }
+          });
+        }
+        for (const value of Object.values(node)) scanTermLists(value);
+      })(activity);
       // A topic title that IS a link resolves the same way.
       for (const [index, topic] of (activity.topics || []).entries()) {
         if (topic && topic.titleLink && !popupIds.has(topic.titleLink) && !popupIds.has(slugOf(topic.titleLink))) {
@@ -847,4 +947,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; formula lines have exclusive whole-line/inline tap contracts; spellVerse answers are single words; retired Repeat controls are absent; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras; every presentFutureRows row has both sides; every hintChart has paradigmRefs or inline charts; every hintRef, paradigmRef, [[link:id]] and topic titleLink resolves; every audio id the data names exists in the audio manifest).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; formula lines have exclusive whole-line/inline tap contracts; spellVerse answers are single words; retired Repeat controls are absent; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras; every presentFutureRows row has both sides; every termList item has a term and a definition; every wordUsage carries a heading and its examples; every poolKind is "vocabulary"; every hintChart has paradigmRefs or inline charts; every hintRef, paradigmRef, [[link:id]], termList link and topic titleLink resolves; every audio id the data names exists in the audio manifest).`);

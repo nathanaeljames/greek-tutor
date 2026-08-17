@@ -399,7 +399,22 @@ button { font: inherit; cursor: pointer; }
    first slot remains empty rather than borrowing or inventing audio. */
 .hint-paradigm-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px; width: 100%; }
-.hint-paradigm-controls.no-say .hint-paradigm-toggle { grid-column: 2; }
+/* R3 / §4.5, added 2026-08-16 from the εἰμί hint: WHERE THERE IS NO SAY-ALL,
+   THE REMAINING CONTROL IS CENTRED. The two-column row's layout assumes a
+   say-all anchoring its left slot; εἰμί's charts carry no whole-paradigm clip,
+   so the empty slot left the toggle sitting hard right against the modal edge,
+   reading as a stray control rather than as this state's navigation. It spans
+   both columns now and centres at its natural width — the same 96px floor
+   .pg-nav uses, so a lone toggle and a Back/More pair sit at the same size. */
+.hint-paradigm-controls.no-say { justify-items: center; }
+.hint-paradigm-controls.no-say .hint-paradigm-toggle,
+.hint-paradigm-controls.no-say .pg-nav { grid-column: 1 / -1; }
+.hint-paradigm-controls.no-say .hint-paradigm-toggle { width: auto; min-width: 96px; }
+/* §4.2 inside the pinned footer: a bundle of three or more charts discloses
+   with the Back/More pair rather than a single toggle. It spans the row so the
+   pair itself is what centres, exactly as it does in main content. */
+.hint-paradigm-controls .pg-nav { grid-column: 1 / -1; margin-top: 0; width: 100%; }
+.hint-paradigm-controls .pg-nav .btn { width: auto; }
 /* A SHORT SCREEN CANNOT PIN A TALL BUTTON STACK. The end-of-chapter dialog
    offers four full-width actions: at 44px each plus gaps that is 234px, and in
    a 320x360 window the gap between the app's bars is only 226px. A sticky
@@ -646,17 +661,37 @@ button { font: inherit; cursor: pointer; }
 .rc-greekword.greek-say { width: auto; color: var(--link); }
 .rc-greekgloss { color: var(--teal-dark); overflow-wrap: anywhere; }
 .rc-syllables { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
-.rc-expander { margin: 8px 0; border: 1px solid #ddd6c2; border-radius: 10px; background: #fffdf3; }
-.rc-expander summary { padding: 11px 13px; color: var(--ink); font-weight: 600; cursor: pointer; }
-.rc-expander-body { padding: 0 13px 12px; }
-/* summaryStyle:"green" — the summary and its caret in the app's emphasis green
-   (--accent-ink), the colour already carrying [[g]] descriptive terms,
-   definition terms and chart titles. Chapter 2's 6 Accent Rules is the only
-   page that asks for it; every other expander stays ink. The selector carries
-   `.rc-expander` because `.rc-expander summary` sets the ink colour and would
-   otherwise outrank a bare class. */
-.rc-expander summary.rc-summary-green { color: var(--accent-ink); text-decoration: none; }
-.rc-expander summary.rc-summary-green::marker { color: var(--accent-ink); }
+/* R2 / DISCLOSURE-RULES §3.1 — THE ONE ACCORDION LOOK, every category, every
+   chapter, no exceptions: green (#1f5f57) summary text, caret to the LEFT in
+   the same green, NEVER underlined, and always collapsed by default. The ch2
+   "6 Accent Rules" screen is the in-app model.
+   What went: the card frame (border, radius, cream fill) and the ink summary.
+   The frame was a per-expander box, and a C2 rule list draws one accordion
+   under EVERY numbered item — six boxed cards stacked down a page read as six
+   separate things rather than as six disclosures of one list. Without the
+   frame the summary is a line of the page that opens, which is what the rule
+   describes.
+   The former summaryStyle:"green" special case is GONE as a distinction: it is
+   now simply what every summary does. The key is still harmless in data (see
+   RichContent's expander branch, which no longer reads it).
+   NOT underlined is load-bearing, not a leftover: R1 gives in-text links the
+   same green WITH an underline, and the underline is the whole difference
+   between "opens a modal" and "opens in place". The single exception is
+   Meanings (§3.9, .pg-meanings-toggle below), which is a chart affordance
+   rather than page content. */
+.rc-expander { margin: 8px 0; }
+.rc-expander summary { padding: 4px 0; color: var(--teal-dark); font-weight: 600;
+  cursor: pointer; text-decoration: none; }
+/* Two marker pseudo-elements, because two engines. ::marker is the standard one
+   (Chrome, Firefox, Safari 16+); ::-webkit-details-marker is what older iOS
+   WebKit draws and it ignores ::marker entirely. Colouring only one leaves the
+   caret ink on half the devices this app is used on. */
+.rc-expander summary::marker { color: var(--teal-dark); }
+.rc-expander summary::-webkit-details-marker { color: var(--teal-dark); }
+/* The body hangs under the summary TEXT, past the caret, so a disclosure reads
+   as belonging to the line that opened it. 1.15em is the disclosure triangle
+   plus its gap at the summary's own font size. */
+.rc-expander-body { padding: 2px 0 10px 1.15em; }
 
 .pending-verification { border: 1px dashed #a66a18; border-radius: 8px; background: #fff6df;
   color: #70460d; padding: 12px; text-align: center; font-weight: 600; }
@@ -667,13 +702,13 @@ button { font: inherit; cursor: pointer; }
 .topic-controls { align-items: center; }
 .topic-count { min-width: 52px; color: var(--teal-dark); font-size: 0.9rem; font-weight: 700; text-align: center; }
 
-/* ---- Six Points collapsible ---- */
-.card.collapsible { padding: 0; overflow: hidden; }
-.collapse-head { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
-  border: none; background: transparent; padding: 14px 16px; font-size: 1.02rem; font-weight: 600; color: var(--ink); }
-.collapse-head .chevron { color: var(--teal-dark); transition: transform 0.2s ease; flex-shrink: 0; }
-.collapse-head .chevron.down { transform: rotate(90deg); }
-.collapse-body { padding: 0 16px 14px; }
+/* The bespoke "Six Points collapsible" (.card.collapsible / .collapse-head /
+   .collapse-body) is GONE with DISCLOSURE-SPEC1 W3.3: chapter 1's Six Points
+   ships as a standard `expander` block and is drawn by .rc-expander like every
+   other accordion in the app, which is the whole point of R2 — one accordion
+   look, styled in one place. Nothing else in src/ ever used these three
+   classes. The .collapse-head entry in the touch-action list below goes with
+   them. */
 
 /* ---- Equation chart (transliterations / capitals) ---- */
 .equation-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
@@ -919,13 +954,23 @@ button { font: inherit; cursor: pointer; }
   .pg-long-forms:not(.pg-many-columns) .pg-greek { font-size: 1.35rem; }
   .pg-many-columns .pg-greek { font-size: 1.25rem; }
 }
-/* A chart's Meanings hotword stays immediately under the grid. Its expanded
-   body is the original's green teaching card, while the blue summary alone is
-   the tap target. */
-.pg-meanings { margin-top: 7px; }
-.pg-meanings-toggle { display: inline-block; color: var(--link); font-weight: 700;
+/* R6 / DISCLOSURE-RULES §3.9 — Meanings is a CHART AFFORDANCE, not page
+   content, so it is the one accordion label that keeps an underline: green,
+   underlined, left caret, no border and no margins, collapsed by default. It
+   sits immediately under the grid it belongs to, and the summary alone is the
+   tap target; the expanded body is the original's green teaching card.
+   `display: list-item` is what restores the caret. The old rule set
+   `inline-block` to keep the hotword from claiming the full row width, which
+   suppressed the marker box entirely — Nathanael confirmed (2026-08-11) these
+   were already collapsed DESPITE lacking a caret, and this is the missing
+   caret. `width: fit-content` keeps the tap target on the text rather than the
+   line, which is what inline-block was really for. */
+.pg-meanings { margin: 0; }
+.pg-meanings-toggle { display: list-item; width: fit-content;
+  list-style-position: inside; color: var(--teal-dark); font-weight: 700;
   text-decoration: underline; cursor: pointer; }
-.pg-meanings-toggle::marker { color: var(--link); }
+.pg-meanings-toggle::marker { color: var(--teal-dark); }
+.pg-meanings-toggle::-webkit-details-marker { color: var(--teal-dark); }
 .pg-meanings-card { margin-top: 8px; padding: 10px; border-radius: 10px;
   background: #dff6df; border: 1px solid #b8dfb9; }
 .pg-meanings-card .paradigm { margin: 0; }
@@ -937,6 +982,46 @@ button { font: inherit; cursor: pointer; }
 .pg-legend-text { min-width: 0; overflow-wrap: break-word; }
 .pg-closing { margin-top: 10px; font-size: 0.85rem; line-height: 1.4; }
 .pg-note { margin-top: 8px; color: var(--ink); font-size: 0.88rem; line-height: 1.4; }
+/* ---- R3 / DISCLOSURE-RULES §4.3: THE CONTROL ROW IS PINNED ----
+   The say-all button plus its navigation control (the §4.1 toggle or the §4.2
+   Back/More pair) is a NAVIGATION SURFACE. It must be on screen from the moment
+   a chart is disclosed and must never scroll out of view while the learner is
+   reading a chart taller than the viewport (chapter 8's Third Person Paradigm
+   is the tall case).
+   TWO HOSTS, TWO MECHANISMS, one rule:
+     modal  .pg-modal-host makes the chart a flex COLUMN inside the dialog, so
+            .pg-body is the scroller and .pg-controls sits outside it entirely
+            — the same shape .modal / .modal-scroll / .modal-actions already
+            uses, and for the same reason (a sticky footer inside a scroller
+            hangs wrong at rest; a flex footer has no such state).
+     main   position: sticky, which holds the row at the bottom of the app's
+            scroller while the chart it belongs to is on screen and releases it
+            once the chart is past. The offset is ZERO, not --chrome-bottom:
+            .scroll-area is a flex sibling of the tab bar inside .app, so its
+            own bottom edge already sits above the bar and subtracting the
+            bar's height again would float the row a tab bar clear of the
+            content. (--chrome-bottom is for .modal-overlay, which is
+            position: fixed against the visual viewport and therefore does have
+            to subtract it. Two different containing blocks, two different
+            answers — worth saying because taking the modal's number here is
+            the obvious wrong move.)
+   Only a row that actually carries navigation is pinned (.pg-pinned-controls,
+   set by the component): a Quick Review page's per-chart say-all is an audio
+   button, not pagination (§4.6), and pinning two stacked charts' say-alls would
+   put two competing bars over each other. */
+.pg-controls { background: var(--card); }
+.paradigm.pg-modal-host { display: flex; flex-direction: column; min-height: 0;
+  flex: 1 1 auto; }
+/* {#key chart} wraps the body and the controls in a keyed block, which renders
+   as a fragment with no box of its own — so the flex column above lays out the
+   two children directly and no extra wrapper rule is needed. */
+.pg-modal-host .pg-body { flex: 1 1 auto; min-height: 0; overflow-y: auto;
+  -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+.pg-modal-host .pg-controls { flex: 0 0 auto; padding-top: 4px;
+  box-shadow: 0 -10px 12px -12px rgba(0, 0, 0, 0.35); }
+.paradigm.pg-pinned-controls:not(.pg-modal-host) .pg-controls {
+  position: sticky; bottom: 0; z-index: 2;
+  padding-bottom: 6px; box-shadow: 0 -10px 12px -12px rgba(0, 0, 0, 0.35); }
 /* The original keeps Say Whole Paradigm / Endings INSIDE the chart frame. */
 .pg-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
 .pg-actions.pg-actions-each { display: grid;
@@ -1153,8 +1238,8 @@ html, body { touch-action: manipulation; }
 button, a, input, select, textarea, label,
 .tile, .tk-key, .chip, .act-row, .menu-item, .eq-cell, .diph-tile, .diph-ex,
 .rv-greek, .lm-row, .rc-defrow, .rc-example, .greek-chip, .greek-tap,
-.seg, .flash-hidden, .icon-btn, .bb-item, .section-head, .collapse-head,
-.rc-expander summary, .accent-slot,
+.seg, .flash-hidden, .icon-btn, .bb-item, .section-head,
+.rc-expander summary, .pg-meanings-toggle, .accent-slot,
 .pg-greek-tap, .pg-lemma, .ilv-word,
 .one-syllable-bar {
   touch-action: manipulation;
@@ -1301,11 +1386,37 @@ button, a, input, select, textarea, label,
 .hint-page-nav { flex: 0 0 auto; margin-top: 12px; }
 
 /* ---- §2.2 full-page popups ----
-   The link is blue because it is tappable (directive 8) and underlined because
-   the original underlines it; the popup itself is the original's green page. */
+   R1 / DISCLOSURE-RULES §3.2: an in-text citation or aside link is GREEN
+   (--teal-dark #1f5f57) and underlined, app-wide, in every chapter. It was blue
+   until this round because blue is the app's tappable colour (directive 8); the
+   ratified sheet adds green-underlined as a SECOND tappable affordance, which
+   directive 8 permits — the rule it states is that nothing NON-tappable may be
+   blue, not that nothing tappable may be anything else. The underline is what
+   carries "tappable" here, and it is why the accordion labels R2 turns the same
+   green are deliberately NOT underlined (§3.1): underline is the difference
+   between "this opens a modal" and "this opens in place".
+   Numbers are never part of the link (§3.2) — the data excludes them, so there
+   is nothing to strip here. */
+/* A LINK INSIDE A SENTENCE IS ONE UNBREAKABLE BOX. A <button> is inline-level
+   but ATOMIC — a UA blockifies `display: inline` back to inline-block — so a
+   long link run cannot break across lines the way the prose around it does,
+   and it pushes the paragraph past the card at the 320px floor. That is how
+   the chapters 4 and 5 Learn Nouns Introductions overran by 3px (ui-walk.mjs):
+   their links were printing their own markup as text, which made the run far
+   longer than the words in it. The markup fix (src/lib/markup.js recursion) is
+   what actually shortened the run; overflow-wrap is the floor under it, so a
+   genuinely long link breaks inside itself rather than overrunning the card. */
 .popup-link { background: transparent; border: none; padding: 0; font: inherit;
-  color: var(--link); text-decoration: underline; cursor: pointer; text-align: left; }
+  color: var(--teal-dark); text-decoration: underline;
+  cursor: pointer; text-align: left; overflow-wrap: break-word; }
 .popup-link:active { opacity: 0.6; }
+/* THE ONE EXCEPTION (§3.3): an IN-CHART trigger keeps its existing appearance.
+   Chapter 6's case-chart glosses are the hot text inside a chart whose Greek
+   headwords are already blue taps, and a green underline beside them would
+   collide with that convention rather than distinguish itself from it. Split
+   from .popup-link rather than dropped from it, because the two share every
+   other property and the shared button reset is what makes them line up. */
+.rc-sense-link { color: var(--link); }
 .popup-sheet { background: #f2f7ef; }
 .popup-head { font-size: 2.1rem; text-align: center; width: 100%; }
 .popup-title { margin: 4px 0 8px; font-size: 1.15rem; text-align: center; color: var(--teal-dark); }
@@ -1322,6 +1433,53 @@ button, a, input, select, textarea, label,
 .popup-example-greek:active { opacity: 0.6; }
 .popup-example-gloss { text-align: center; color: var(--teal-dark); font-size: 0.95rem; margin-top: 3px; }
 .popup-example-ref { text-align: center; color: var(--ink); font-size: 0.8rem; opacity: 0.75; margin-top: 2px; }
+
+/* ---- R7 termList (DISCLOSURE-SPEC1 W7) ----
+   Term on its own line in the emphasis green, definition full-width beneath it.
+   NOT a grid: the two-column defList this replaces gave the definition only
+   what the longest term left over, and chapter 2's "Aspect:" definition wrapped
+   into a three-word ribbon (broken item 2). A linked term additionally carries
+   .popup-link, whose green underline it inherits rather than restates. */
+.rc-termlist { display: flex; flex-direction: column; gap: 10px; margin: 8px 0 10px; }
+.rc-term-name { display: block; font-weight: 700; color: var(--accent-ink);
+  overflow-wrap: break-word; }
+/* .popup-link resets the button to inherit its font, which would drop the
+   weight the plain term carries; state it on the button too so a linked term
+   and an unlinked one sit at the same weight in the same list. */
+button.rc-term-name { font-weight: 700; }
+.rc-term-def { color: var(--ink); margin-top: 1px; overflow-wrap: break-word; }
+
+/* ---- wordUsage (DISCLOSURE-SPEC1 W8) ----
+   The chapter-7 popup body, inline inside an "Examples" accordion. Mirrors
+   .popup-* above field for field — same centred headword, same gloss and
+   condition treatment, same ruled example blocks — because it is the same
+   content in a different host, and two arrangements of one thing is how the
+   two would drift. Sized down a step: it sits in an accordion body inside a
+   page, not alone on a full-screen sheet. */
+.rc-wordusage { margin: 2px 0 4px; }
+.rc-wu-head { display: block; width: 100%; background: transparent; border: none;
+  padding: 0; text-align: center; font-size: 1.7rem; color: var(--link);
+  cursor: pointer; overflow-wrap: anywhere; }
+.rc-wu-head:disabled { color: var(--ink); }
+.rc-wu-head:active { opacity: 0.6; }
+/* Chapter 8's variant heads its block with a TITLE instead of a headword
+   ("αὐτός as a pronoun"). Mirrors .popup-title, which is how that same string
+   rendered when this content was a popup — centred, in the heading green, one
+   step down from a Greek headword. It is a heading, never a tap target: the
+   Greek inside it belongs to the sentence, not to a clip. */
+.rc-wu-title { text-align: center; color: var(--teal-dark); font-size: 1.05rem;
+  margin: 0 0 4px; overflow-wrap: break-word; }
+.rc-wu-gloss { text-align: center; color: var(--ink); margin: 2px 0; }
+.rc-wu-condition { text-align: center; color: var(--teal-dark); font-size: 0.92rem; margin: 2px 0; }
+.rc-wu-examples { margin-top: 10px; display: flex; flex-direction: column; gap: 12px; }
+.rc-wu-example { border-top: 1px solid rgba(0,0,0,0.08); padding-top: 10px; }
+.rc-wu-example-greek { display: block; width: 100%; background: transparent; border: none;
+  padding: 0; text-align: center; font-size: 1.2rem; color: var(--link); cursor: pointer;
+  overflow-wrap: anywhere; }
+.rc-wu-example-greek:disabled { color: var(--ink); }
+.rc-wu-example-greek:active { opacity: 0.6; }
+.rc-wu-example-gloss { text-align: center; color: var(--teal-dark); font-size: 0.95rem; margin-top: 3px; }
+.rc-wu-example-ref { text-align: center; color: var(--ink); font-size: 0.8rem; opacity: 0.75; margin-top: 2px; }
 
 /* ---- §2.3 greekRows extensions ---- */
 /* Sense rows: the headword, then one line per sense — gloss (the link) plus

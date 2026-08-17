@@ -842,17 +842,102 @@
        "type": "numbered",
        "items": [
         {
-         "text": "[[u]]As a pronoun[[/u]]—matching its antecedent in number and gender and translated as \"he,\" \"she,\" \"it,\" or \"they.\""
+         "text": "[[u]]As a pronoun[[/u]]—matching its antecedent in number and gender and translated as \"he,\" \"she,\" \"it,\" or \"they.\"",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "wordUsage",
+             "title": "αὐτός as a pronoun",
+             "examples": [
+              {
+               "greek": "λέγει αὐτῷ ὁ Ἰησοῦς",
+               "gloss": "and Jesus said to him",
+               "ref": "Jn 14:6",
+               "audio": "chapt_8_h_ex31"
+              },
+              {
+               "greek": "πρὸς τοὺς πόδας αὐτοῦ",
+               "gloss": "at his feet",
+               "ref": "Acts 5:10",
+               "audio": "chapt_8_h_ex32"
+              },
+              {
+               "greek": "ἐν τρισὶν ἡμέραις ἐγερῶ αὐτόν.",
+               "gloss": "in three days I will raise it",
+               "ref": "Jn 2:19",
+               "audio": "chapt_8_h_ex33"
+              }
+             ]
+            }
+           ]
+          }
+         ]
         },
         {
-         "text": "[[u]]Reflexive Intensifier[[/u]]—when it is used as an adjective in the predicate position (usually in the nominative case) it is translated reflexively (e.g. he [[u]]himself[[/u]] will get the car)."
+         "text": "[[u]]Reflexive Intensifier[[/u]]—when it is used as an adjective in the predicate position (usually in the nominative case) it is translated reflexively (e.g. he [[u]]himself[[/u]] will get the car).",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "wordUsage",
+             "title": "αὐτός as a Reflexive Intensifier",
+             "examples": [
+              {
+               "greek": "αὐτὸ τὸ πνεῦμα συμμαρτυρεῖ",
+               "gloss": "The Spirit itself beareth witness",
+               "ref": "Rom 8:16",
+               "audio": "chapt_8_h_ex3r1"
+              },
+              {
+               "greek": "Ἰησοῦς αὐτὸς οὐκ ἐβάπτιζεν",
+               "gloss": "Jesus himself did not baptize",
+               "ref": "Jn 4:2",
+               "audio": "chapt_8_h_ex3r2"
+              }
+             ]
+            }
+           ]
+          }
+         ]
         },
         {
-         "text": "[[u]]Adjective meaning \"same\"[[/u]]—when it is used as an adjective in the attributive position, it is translated as \"same.\""
+         "text": "[[u]]Adjective meaning \"same\"[[/u]]—when it is used as an adjective in the attributive position, it is translated as \"same.\"",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "type": "wordUsage",
+             "title": "αὐτός as an Adjective meaning \"same\"",
+             "examples": [
+              {
+               "greek": "ἡ αὐτὴ σὰρξ",
+               "gloss": "the same flesh",
+               "ref": "1 Cor 15:39",
+               "audio": "chapt_8_h_ex3a1"
+              },
+              {
+               "greek": "ἐν αὐτῇ τῇ ἡμέρᾳ",
+               "gloss": "in that same day",
+               "ref": "Lk 23:12",
+               "audio": "chapt_8_h_ex3a2"
+              }
+             ]
+            }
+           ]
+          }
+         ]
         }
        ]
       }
-     ]
+     ],
+     "_note": "DISCLOSURE-RULES ch8 (settled 2026-08-11): Three Uses is C2 -- three interspersed \"Examples\" accordions holding the former popup bodies as wordUsage blocks (title + examples; no headword, per the popup shape). The three popups are retired; the [[u]] runs remain as authored emphasis only. Same shape as ch7 ouOukOuch. Omitted from the 2026-08-15 Step 0 pass in error; added 2026-08-16."
     }
    ],
    "greekTaps": true,
@@ -893,69 +978,7 @@
     "ἐμοῦ": "chapt_8_h_1gse",
     "ἐμοί": "chapt_8_h_1dse",
     "ἐμέ": "chapt_8_h_1ase"
-   },
-   "popups": [
-    {
-     "id": "asAPronoun",
-     "title": "αὐτός as a pronoun",
-     "examples": [
-      {
-       "greek": "λέγει αὐτῷ ὁ Ἰησοῦς",
-       "gloss": "and Jesus said to him",
-       "ref": "Jn 14:6",
-       "audio": "chapt_8_h_ex31"
-      },
-      {
-       "greek": "πρὸς τοὺς πόδας αὐτοῦ",
-       "gloss": "at his feet",
-       "ref": "Acts 5:10",
-       "audio": "chapt_8_h_ex32"
-      },
-      {
-       "greek": "ἐν τρισὶν ἡμέραις ἐγερῶ αὐτόν.",
-       "gloss": "in three days I will raise it",
-       "ref": "Jn 2:19",
-       "audio": "chapt_8_h_ex33"
-      }
-     ]
-    },
-    {
-     "id": "reflexiveIntensifier",
-     "title": "αὐτός as a Reflexive Intensifier",
-     "examples": [
-      {
-       "greek": "αὐτὸ τὸ πνεῦμα συμμαρτυρεῖ",
-       "gloss": "The Spirit itself beareth witness",
-       "ref": "Rom 8:16",
-       "audio": "chapt_8_h_ex3r1"
-      },
-      {
-       "greek": "Ἰησοῦς αὐτὸς οὐκ ἐβάπτιζεν",
-       "gloss": "Jesus himself did not baptize",
-       "ref": "Jn 4:2",
-       "audio": "chapt_8_h_ex3r2"
-      }
-     ]
-    },
-    {
-     "id": "adjectiveMeaningSame",
-     "title": "αὐτός as an Adjective meaning \"same\"",
-     "examples": [
-      {
-       "greek": "ἡ αὐτὴ σὰρξ",
-       "gloss": "the same flesh",
-       "ref": "1 Cor 15:39",
-       "audio": "chapt_8_h_ex3a1"
-      },
-      {
-       "greek": "ἐν αὐτῇ τῇ ἡμέρᾳ",
-       "gloss": "in that same day",
-       "ref": "Lk 23:12",
-       "audio": "chapt_8_h_ex3a2"
-      }
-     ]
-    }
-   ]
+   }
   },
   {
    "id": "c8_learn_vocab",
@@ -2045,7 +2068,9 @@
    "answerPolicy": {
     "advanceClass": "autoBoth",
     "attemptsPerItem": 1
-   }
+   },
+   "poolKind": "vocabulary",
+   "_pool_note": "D-32 / Stage 8.8: vocabulary-pool marker; renderer applies the 4-up iPad grid."
   },
   {
    "id": "c8_drill_vocab_en_gk",
@@ -2167,7 +2192,9 @@
    "answerPolicy": {
     "advanceClass": "autoBoth",
     "attemptsPerItem": 1
-   }
+   },
+   "poolKind": "vocabulary",
+   "_pool_note": "D-32 / Stage 8.8: vocabulary-pool marker; renderer applies the 4-up iPad grid."
   },
   {
    "id": "c8_drill_scripture_memory",

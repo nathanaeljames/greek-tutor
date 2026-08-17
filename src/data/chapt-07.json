@@ -356,7 +356,7 @@
          "subtitle": "Plural"
         }
        ],
-       "switch": "moreBack"
+       "switch": "named"
       }
      ]
     },
@@ -559,7 +559,7 @@
          "subtitle": "Plural"
         }
        ],
-       "switch": "moreBack"
+       "switch": "named"
       }
      ]
     },
@@ -881,85 +881,105 @@
        "type": "numbered",
        "items": [
         {
-         "numberPopupRef": "ou",
-         "text": "οὐ before a consonant;"
+         "text": "οὐ before a consonant;",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "greek": "οὐ",
+             "gloss": "no, not",
+             "condition": "when before a word that begins with a consonant",
+             "audio": "chapt_7_g_ou",
+             "examples": [
+              {
+               "greek": "καὶ ταῦτα οὐ γινώσκεις;",
+               "gloss": "and you do not understand these things?",
+               "ref": "Jn 3:10",
+               "audio": "chapt_7_g_ou1"
+              },
+              {
+               "greek": "καὶ οὐ λαμβάνετέ με",
+               "gloss": "and you do not accept me",
+               "ref": "Jn 5:43",
+               "audio": "chapt_7_g_ou2"
+              }
+             ],
+             "type": "wordUsage"
+            }
+           ]
+          }
+         ]
         },
         {
-         "numberPopupRef": "ouk",
-         "text": "οὐκ before a vowel with a smooth breathing mark; and"
+         "text": "οὐκ before a vowel with a smooth breathing mark; and",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "greek": "οὐκ",
+             "gloss": "no, not",
+             "condition": "when before a vowel with a smooth breathing mark",
+             "audio": "chapt_7_g_ouk",
+             "examples": [
+              {
+               "greek": "καὶ τὸν λόγον αὐτοῦ οὐκ ἔχετε ἐν ὑμῖν",
+               "gloss": "and you do not have his word in you",
+               "ref": "Jn 5:38",
+               "audio": "chapt_7_g_ouk1"
+              },
+              {
+               "greek": "καὶ λέγει, Οὐκ εἰμί.",
+               "gloss": "and he said, \"I am not.\"",
+               "ref": "Jn 1:21",
+               "audio": "chapt_7_g_ouk2"
+              }
+             ],
+             "type": "wordUsage"
+            }
+           ]
+          }
+         ]
         },
         {
-         "numberPopupRef": "ouch",
-         "text": "οὐχ before a vowel with a rough breathing mark."
+         "text": "οὐχ before a vowel with a rough breathing mark.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Examples",
+           "content": [
+            {
+             "greek": "οὐχ",
+             "gloss": "no, not",
+             "condition": "when before a vowel with a rough breathing mark",
+             "audio": "chapt_7_g_oux",
+             "examples": [
+              {
+               "greek": "οὐχ ὑμεῖς λέγετέ ὅτι",
+               "gloss": "do you not say that",
+               "ref": "Jn 4:35",
+               "audio": "chapt_7_g_oux1"
+              },
+              {
+               "greek": "καὶ οὐχ ὁ ἄνθρωπος διὰ τὸ σάββατον",
+               "gloss": "and not man for the sabbath",
+               "ref": "Mk 2:27",
+               "audio": "chapt_7_g_oux2"
+              }
+             ],
+             "type": "wordUsage"
+            }
+           ]
+          }
+         ]
         }
        ]
       }
-     ]
-    }
-   ],
-   "popups": [
-    {
-     "id": "ou",
-     "greek": "οὐ",
-     "gloss": "no, not",
-     "condition": "when before a word that begins with a consonant",
-     "audio": "chapt_7_g_ou",
-     "examples": [
-      {
-       "greek": "καὶ ταῦτα οὐ γινώσκεις;",
-       "gloss": "and you do not understand these things?",
-       "ref": "Jn 3:10",
-       "audio": "chapt_7_g_ou1"
-      },
-      {
-       "greek": "καὶ οὐ λαμβάνετέ με",
-       "gloss": "and you do not accept me",
-       "ref": "Jn 5:43",
-       "audio": "chapt_7_g_ou2"
-      }
-     ]
-    },
-    {
-     "id": "ouk",
-     "greek": "οὐκ",
-     "gloss": "no, not",
-     "condition": "when before a vowel with a smooth breathing mark",
-     "audio": "chapt_7_g_ouk",
-     "examples": [
-      {
-       "greek": "καὶ τὸν λόγον αὐτοῦ οὐκ ἔχετε ἐν ὑμῖν",
-       "gloss": "and you do not have his word in you",
-       "ref": "Jn 5:38",
-       "audio": "chapt_7_g_ouk1"
-      },
-      {
-       "greek": "καὶ λέγει, Οὐκ εἰμί.",
-       "gloss": "and he said, \"I am not.\"",
-       "ref": "Jn 1:21",
-       "audio": "chapt_7_g_ouk2"
-      }
-     ]
-    },
-    {
-     "id": "ouch",
-     "greek": "οὐχ",
-     "gloss": "no, not",
-     "condition": "when before a vowel with a rough breathing mark",
-     "audio": "chapt_7_g_oux",
-     "examples": [
-      {
-       "greek": "οὐχ ὑμεῖς λέγετέ ὅτι",
-       "gloss": "do you not say that",
-       "ref": "Jn 4:35",
-       "audio": "chapt_7_g_oux1"
-      },
-      {
-       "greek": "καὶ οὐχ ὁ ἄνθρωπος διὰ τὸ σάββατον",
-       "gloss": "and not man for the sabbath",
-       "ref": "Mk 2:27",
-       "audio": "chapt_7_g_oux2"
-      }
-     ]
+     ],
+     "_note": "D-31 AMENDED 2026-08-15: number-marker popups retired app-wide (DISCLOSURE-RULES §6.3). Each numbered item carries an interspersed C2 \"Examples\" accordion holding the former popup body (wordUsage block: headword, gloss, condition, example verses). Greek words remain ordinary audio taps."
     }
    ]
   },

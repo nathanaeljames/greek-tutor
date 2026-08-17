@@ -1592,7 +1592,9 @@
    "answerPolicy": {
     "advanceClass": "autoBoth",
     "attemptsPerItem": 1
-   }
+   },
+   "poolKind": "vocabulary",
+   "_pool_note": "D-32 / Stage 8.8: vocabulary-pool marker; renderer applies the responsive D-19 grid (two-up phone, four-up from 768px). Added with DISCLOSURE-SPEC1 per the D-32 extension (5G-SPEC1)."
   },
   {
    "id": "c10_drill_vocab_en_gk",
@@ -1684,7 +1686,9 @@
    "answerPolicy": {
     "advanceClass": "autoBoth",
     "attemptsPerItem": 1
-   }
+   },
+   "poolKind": "vocabulary",
+   "_pool_note": "D-32 / Stage 8.8: vocabulary-pool marker; renderer applies the responsive D-19 grid (two-up phone, four-up from 768px). Added with DISCLOSURE-SPEC1 per the D-32 extension (5G-SPEC1)."
   },
   {
    "id": "c10_drill_scripture_memory",

@@ -13,17 +13,28 @@
   // Greek-tap rule: every Greek cell and lemma is tappable when it carries an
   // audio clip. Endings rows are bare morphemes with no clips of their own, so
   // they render in ink rather than tappable blue.
-  import { play } from '../lib/audio.js';
+  import { play, stop as stopAudio } from '../lib/audio.js';
   import { splitTaps } from '../lib/greek.js';
+  import EndingsGrid from './EndingsGrid.svelte';
   import MeaningsCard from './MeaningsCard.svelte';
   export let paradigm;
   export let title = null;
   // The control row (Say Paradigm, and the switch where a chart has one)
   // normally lives inside the chart body. A host that pins its own row —
-  // the two-state Hint modal, whose footer holds Say + toggle + Close
-  // outside the scroller (DISCLOSURE-RULES 4.3) — passes true and draws
+  // the composite two-state Hint modal, whose footer holds Say + toggle +
+  // Close outside the scroller (DISCLOSURE-RULES §4.3) — passes true and draws
   // the row itself. Every other host passes nothing and is unaffected.
   export let actionsPinned = false;
+  // DISCLOSURE-SPEC1 W4.1/W5: this chart IS the modal's body. The chart scrolls
+  // inside .pg-body and the control row sits outside that scroller, so the
+  // say-all and its navigation control are on screen from the moment the dialog
+  // opens and never scroll away (§4.3) — the modal's own .modal-actions footer
+  // holds Close beneath it. It also switches `endings` from a nested modal to
+  // an in-place STATE of this chart, because §4.4 abolishes stacking a second
+  // modal on top of the first. In main content the prop is absent and the
+  // Endings button keeps its own single-level modal (one level is not
+  // stacking, W5.4).
+  export let modalHost = false;
   // 5F-FEEDBACK2 item 12 (Nathanael, 2026-08-09): a HOST may rename the
   // More/Back pair per chart index — the Adjective Case Drill's Hint reads
   // "Plural"/"Singular" while the Learn topic showing the SAME chart stack
@@ -32,6 +43,10 @@
   export let switchLabels = null;
 
   let chartIndex = 0;
+  // Two different disclosures of the same `endings` table, one per host.
+  // endingsState is the in-place modal-host state (§4.4); endingsOpen is the
+  // main-content single-level modal (W5.4). Never both.
+  let endingsState = false;
   let endingsOpen = false;
   let renderedParadigm = null;
 
@@ -41,6 +56,7 @@
   $: if (paradigm !== renderedParadigm) {
     renderedParadigm = paradigm;
     chartIndex = 0;
+    endingsState = false;
     endingsOpen = false;
   }
 
@@ -79,30 +95,84 @@
   $: sayWholeEach = chart.sayWholeEach || [];
   $: switchKind = paradigm?.switch || null;
   $: hasSwitch = charts.length > 1 && (switchKind === 'moreBack' || switchKind === 'named');
+  // R5 / DISCLOSURE-RULES §4.1-§4.2 (DISCLOSURE-SPEC1 W6): the control the
+  // chart count decides, NOT the declared switch kind.
+  //   two charts    ONE toggle on the say-all line, whatever the kind. `named`
+  //                 labels it with the target chart's name (Singular/Plural);
+  //                 `moreBack` alternates a single button — More on chart 0,
+  //                 Back on chart 1 — because its contrast is lexical and has
+  //                 no one-word name (λόγος/ἄνθρωπος). Before this round
+  //                 `moreBack` ALWAYS drew the centred pair, so a two-chart
+  //                 stack showed a permanently-greyed button beside a live one
+  //                 where the sheet asks for a single alternating control.
+  //   three or more the centred Back/More pair, both always visible, the
+  //                 invalid direction disabled (chapter 8's Third Person
+  //                 Paradigm is the in-app model). A `named` switch is
+  //                 meaningless past two charts — §5 defines it as the
+  //                 one-word contrast between a PAIR — so 3+ is the pair
+  //                 however the data spelled the kind.
+  $: twoChartToggle = hasSwitch && charts.length === 2;
+  $: hasMoreBackNav = hasSwitch && charts.length > 2;
   $: namedTarget = charts.length > 1 ? (chartIndex + 1) % charts.length : -1;
+  // The single toggle always names where it GOES, never where it is.
+  $: toggleLabel = switchKind === 'named'
+    ? (charts[namedTarget]?.name || `Chart ${namedTarget + 1}`)
+    : ((switchLabels && switchLabels[namedTarget])
+      || (charts[namedTarget] && charts[namedTarget].switchLabel)
+      || (chartIndex === 0 ? 'More' : 'Back'));
+  // W5: the Endings STATE. Only chapter 3's λύω paradigm carries an `endings`
+  // table, and it is the hint target of all three chapter-3 drills as well as a
+  // Learn topic of its own — the same chart in a modal and in main content,
+  // which is why the disclosure differs by HOST and not by chapter.
+  $: endingsInline = modalHost && !!chart.endings;
+  $: showingEndings = endingsInline && endingsState;
+  // §4.1 named-style labels: the button says which state it goes to.
+  $: endingsToggleLabel = showingEndings
+    ? (chart.paradigmLabel || 'Paradigm')
+    : (chart.endings?.label || 'Endings');
+  // §4.4: a replaced state that carries audio gets its own say button, in the
+  // same slot and class as Say Whole Paradigm. Left as a VERIFY decision
+  // (DISCLOSURE-SPEC1 W5.2) — it is a one-string change.
+  $: endingsSayLabel = chart.endings?.sayLabel || 'Say Endings';
   // 5F-FEEDBACK2 item 27 (Nathanael, 2026-08-09): the More/Back pair lives in
   // its OWN row under the action buttons — Back always in the left slot, More
   // always in the right — so stepping through a stack never makes a button
   // jump. The say/endings row above it no longer counts the switch.
   $: hasActions = !!chart.sayWhole || !!chart.endings || sayWholeEach.length > 0
-    || (hasSwitch && switchKind === 'named');
-  $: hasMoreBackNav = hasSwitch && switchKind === 'moreBack';
+    || twoChartToggle;
+  // §4.3: the say-all plus its navigation control is a NAVIGATION SURFACE and
+  // must never scroll out of view. A row with no navigation in it is not one —
+  // a Quick Review page's per-chart say-all is an audio button, and §4.6 keeps
+  // those exactly where the charts are, which is also what stops two stacked
+  // charts from pinning two competing bars over each other.
+  $: pinnedControls = hasSwitch || endingsInline;
   $: moreLabel = (switchLabels && switchLabels[chartIndex + 1])
     || (charts[chartIndex + 1] && charts[chartIndex + 1].switchLabel) || 'More';
   $: backLabel = (switchLabels && switchLabels[chartIndex - 1])
     || (charts[chartIndex - 1] && charts[chartIndex - 1].switchLabel) || 'Back';
 
   function switchChart(nextIndex) {
+    // The old chart no longer owns the screen. Stop whatever it started before
+    // its cells and its say action are replaced (rule A4); the new state stays
+    // silent until the learner taps it.
+    stopAudio();
     chartIndex = Math.max(0, Math.min(charts.length - 1, nextIndex));
+    endingsState = false;
     endingsOpen = false;
   }
 
-  function openEndings() {
-    endingsOpen = true;
-    // D-10: the original ships c_ending but its button plays nothing. Treated
-    // as an original defect and restored -- behind the tap, never on render.
-    if (chart.endings && chart.endings.audio) play(chart.endings.audio);
+  // §4.4: NOTHING AUTOPLAYS ON STATE CHANGE. openEndings() used to play
+  // chart.endings.audio here — the D-10 restoration, which put the clip behind
+  // the Endings tap because the original ships c_ending with a button that
+  // plays nothing. D-10's audio stays restored, but behind the explicit say
+  // button the replaced state now carries, which is what D-10's own text
+  // ("behind the tap, never on render") already required: opening a disclosure
+  // is not the same tap as asking to hear it.
+  function toggleEndings() {
+    stopAudio();
+    endingsState = !endingsState;
   }
+  function openEndings() { stopAudio(); endingsOpen = true; }
 
   function onKeydown(e) { if (e.key === 'Escape') endingsOpen = false; }
 
@@ -121,11 +191,28 @@
   class:pg-long-forms={hasLongForms}
   class:pg-three-columns={columns.length === 3}
   class:pg-many-columns={columns.length > 3}
+  class:pg-modal-host={modalHost}
+  class:pg-pinned-controls={pinnedControls && !actionsPinned}
   data-chart-index={chartIndex}
   data-chart-count={charts.length}
-  data-chart-name={chart.name || ''}>
+  data-chart-name={chart.name || ''}
+  data-endings-state={endingsInline ? (endingsState ? 'endings' : 'paradigm') : null}>
   {#key chart}
-    {#if title}<div class="pg-title">{title}</div>{/if}
+    <!-- W4: the chart BODY. In a modal host this is the only scroller, so the
+         control row below it cannot scroll away (§4.3); everywhere else it is a
+         plain wrapper and changes nothing. -->
+    <div class="pg-body">
+    <!-- In the Endings STATE the heading names the state, not the chart: the
+         dialog is showing endings, and leaving "Paradigm" up there put that
+         word on screen twice meaning two different things (the chart's own
+         title, and the toggle that goes back to it). The main-content Endings
+         modal has always titled itself this way; the in-place state now reads
+         the same. -->
+    {#if showingEndings}
+      <div class="pg-title">{chart.endings.label || 'Endings'}</div>
+    {:else if title}
+      <div class="pg-title">{title}</div>
+    {/if}
     <!-- 5F-FEEDBACK.pdf item 8/9: a per-chart secondary heading, changing as
          chartIndex changes -- unlike `title` (an outer, static prop), this
          reads off the CURRENT chart, which is what makes "Masculine" become
@@ -150,6 +237,12 @@
       </button>
     {/if}
 
+    {#if showingEndings}
+      <!-- §4.4: the Endings state REPLACES the chart in place. No second modal
+           opens over the first, and the toggle in the control row below brings
+           the paradigm back. -->
+      <EndingsGrid rows={endingRows} {columns} />
+    {:else}
     <div class="pg-grid" style="--pg-cols:{columns.length}">
       {#if columnGroups.length}
         <div class="pg-head pg-group-head" style="--pg-cols:{columns.length}">
@@ -211,6 +304,7 @@
         </div>
       {/each}
     </div>
+    {/if}
 
     {#if chart.meanings}
       <details class="pg-meanings" data-paradigm-meanings>
@@ -240,52 +334,89 @@
       <div class="pg-note">{#each splitTaps(chart.note, chart.noteTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => play(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}</div>
     {/if}
 
-    {#if !actionsPinned && hasActions}
-      <div class="pg-actions" class:pg-actions-each={sayWholeEach.length > 0} style={`--pg-action-count:${sayWholeEach.length || 1}`}>
-        {#if chart.sayWhole}
-          <button class="btn secondary pg-say-whole" on:click={() => play(chart.sayWhole.audio)}>{chart.sayWhole.label || 'Say Whole Paradigm'}</button>
+    </div><!-- /.pg-body -->
+
+    <!-- W4/§4.3: the say-all and its navigation control are ONE row block, so
+         a stack that has both (chapter 8's Third Person: Say Whole Paradigm
+         over a Back/More pair) pins as one surface instead of two competing
+         sticky bars. -->
+    {#if !actionsPinned && (hasActions || hasMoreBackNav)}
+      <div class="pg-controls">
+        {#if hasActions}
+          <div class="pg-actions" class:pg-actions-each={sayWholeEach.length > 0} style={`--pg-action-count:${sayWholeEach.length || 1}`}>
+            {#if showingEndings}
+              <!-- §4.4: the replaced state's own say button, in the SAME slot
+                   and class as Say Whole Paradigm. This is where D-10's clip
+                   now lives; nothing plays on the state change itself. -->
+              <button class="btn secondary pg-say-whole pg-say-endings"
+                      data-audio-id={chart.endings.audio || ''}
+                      disabled={!chart.endings.audio}
+                      on:click={() => chart.endings.audio && play(chart.endings.audio)}>{endingsSayLabel}</button>
+            {:else if chart.sayWhole}
+              <button class="btn secondary pg-say-whole" on:click={() => play(chart.sayWhole.audio)}>{chart.sayWhole.label || 'Say Whole Paradigm'}</button>
+            {/if}
+            {#each sayWholeEach as action, actionIndex}
+              <button
+                class="btn secondary pg-say-whole pg-say-whole-each"
+                data-action-index={actionIndex}
+                on:click={() => action.audio && play(action.audio)}>
+                {action.label || 'Say Whole Paradigm'}
+              </button>
+            {/each}
+            {#if chart.endings}
+              {#if endingsInline}
+                <!-- R4: in a modal host the Endings control is an IN-PLACE
+                     two-state toggle, not a button that opens a second modal
+                     on top of the first (§4.4, broken item 3). -->
+                <button class="btn secondary pg-switch pg-endings-toggle"
+                        data-paradigm-switch="endings"
+                        data-target-state={endingsState ? 'paradigm' : 'endings'}
+                        on:click={toggleEndings}>{endingsToggleLabel}</button>
+              {:else}
+                <!-- W5.4: from MAIN content the Endings button still opens its
+                     own single-level modal. One level is not stacking, and the
+                     chapter-3 Learn page is device-verified that way. -->
+                <button class="btn secondary pg-endings-open" on:click={openEndings}>{chart.endings.label || 'Endings'}</button>
+              {/if}
+            {/if}
+            {#if twoChartToggle}
+              <!-- R5/§4.1: ONE toggle on the say-all line, naming the chart it
+                   goes to. `named` reads Singular/Plural; `moreBack`
+                   alternates More/Back for a contrast with no one-word name. -->
+              <button
+                class="btn secondary pg-switch pg-switch-named"
+                data-paradigm-switch="named"
+                data-switch-kind={switchKind}
+                data-target-index={namedTarget}
+                on:click={() => switchChart(namedTarget)}>
+                {toggleLabel}
+              </button>
+            {/if}
+          </div>
         {/if}
-        {#each sayWholeEach as action, actionIndex}
-          <button
-            class="btn secondary pg-say-whole pg-say-whole-each"
-            data-action-index={actionIndex}
-            on:click={() => action.audio && play(action.audio)}>
-            {action.label || 'Say Whole Paradigm'}
-          </button>
-        {/each}
-        {#if chart.endings}
-          <button class="btn secondary pg-endings-open" on:click={openEndings}>{chart.endings.label || 'Endings'}</button>
+        {#if hasMoreBackNav}
+          <!-- 5F-PATCH3 addendum (Nathanael, 2026-08-10, after user testing):
+               BOTH buttons render on EVERY page of the stack, as a centred pair —
+               the invalid direction is greyed out (disabled), never removed, so
+               nothing ever jumps or disappears while paging. This supersedes the
+               item-27 left/right fixed-slot model. Since DISCLOSURE-SPEC1 W6 it
+               is reached only at THREE OR MORE charts (§4.2); a two-chart stack
+               takes the single toggle above. -->
+          <div class="pg-nav">
+            <button
+              class="btn secondary pg-switch pg-switch-back"
+              data-paradigm-switch="back"
+              data-target-index={chartIndex - 1}
+              disabled={chartIndex <= 0}
+              on:click={() => switchChart(chartIndex - 1)}>{backLabel}</button>
+            <button
+              class="btn secondary pg-switch pg-switch-more"
+              data-paradigm-switch="more"
+              data-target-index={chartIndex + 1}
+              disabled={chartIndex >= charts.length - 1}
+              on:click={() => switchChart(chartIndex + 1)}>{moreLabel}</button>
+          </div>
         {/if}
-        {#if hasSwitch && switchKind === 'named'}
-          <button
-            class="btn secondary pg-switch pg-switch-named"
-            data-paradigm-switch="named"
-            data-target-index={namedTarget}
-            on:click={() => switchChart(namedTarget)}>
-            {charts[namedTarget]?.name || `Chart ${namedTarget + 1}`}
-          </button>
-        {/if}
-      </div>
-    {/if}
-    {#if hasMoreBackNav}
-      <!-- 5F-PATCH3 addendum (Nathanael, 2026-08-10, after user testing):
-           BOTH buttons render on EVERY page of the stack, as a centred pair —
-           the invalid direction is greyed out (disabled), never removed, so
-           nothing ever jumps or disappears while paging. This supersedes the
-           item-27 left/right fixed-slot model. -->
-      <div class="pg-nav">
-        <button
-          class="btn secondary pg-switch pg-switch-back"
-          data-paradigm-switch="back"
-          data-target-index={chartIndex - 1}
-          disabled={chartIndex <= 0}
-          on:click={() => switchChart(chartIndex - 1)}>{backLabel}</button>
-        <button
-          class="btn secondary pg-switch pg-switch-more"
-          data-paradigm-switch="more"
-          data-target-index={chartIndex + 1}
-          disabled={chartIndex >= charts.length - 1}
-          on:click={() => switchChart(chartIndex + 1)}>{moreLabel}</button>
       </div>
     {/if}
   {/key}
@@ -296,19 +427,18 @@
     <div class="modal pg-endings" role="dialog" aria-modal="true" aria-label={chart.endings.label || 'Endings'}>
       <div class="modal-scroll">
       <h2 class="modal-title">{chart.endings.label || 'Endings'}</h2>
-      <div class="pg-endgrid">
-        {#if columns.length === 2}
-          <div class="pg-endhead"><span>{columns[0]}</span><span>{columns[1]}</span></div>
-        {/if}
-        {#each endingRows as row}
-          <div class="pg-endrow">
-            <span class="pg-endpair"><span class="greek pg-ending">{row[0]}</span><span class="pg-endgloss">{row[1]}</span></span>
-            <span class="pg-endpair"><span class="greek pg-ending">{row[2]}</span><span class="pg-endgloss">{row[3]}</span></span>
-          </div>
-        {/each}
+      <EndingsGrid rows={endingRows} {columns} />
       </div>
-      </div>
+      <!-- W4.1/W5.4: Close is a fixed footer (.modal-actions is flex: 0 0 auto,
+           outside .modal-scroll), and the state's own say button sits with it
+           rather than in the scrolling body — the same slot the in-place
+           Endings state uses in a modal host. Nothing plays on open (§4.4). -->
       <div class="modal-actions">
+        {#if chart.endings.audio}
+          <button class="btn secondary pg-say-whole pg-say-endings"
+                  data-audio-id={chart.endings.audio}
+                  on:click={() => play(chart.endings.audio)}>{endingsSayLabel}</button>
+        {/if}
         <!-- svelte-ignore a11y-autofocus -->
         <button class="btn" autofocus on:click={() => (endingsOpen = false)}>Close</button>
       </div>

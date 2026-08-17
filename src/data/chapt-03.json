@@ -94,56 +94,62 @@
        "items": [
         {
          "label": "Active voice",
-         "text": ":  subject does the action of the verb."
+         "text": ":  subject does the action of the verb.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Active Voice Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "Terry hit the ball.\nJoy kissed Andy."
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "Passive voice",
-         "text": ":  subject receives the action of the verb."
+         "text": ":  subject receives the action of the verb.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Passive Voice Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "Terry was hit by the ball.\nJoy was kissed by Andy."
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "Middle voice",
-         "text": ":  where the subject acts on him/herself (reflexive) or members of a group interact among themselves (reciprocal).  In Greek, self-interest may be reflected in the middle voice."
+         "text": ":  where the subject acts on him/herself (reflexive) or members of a group interact among themselves (reciprocal).  In Greek, self-interest may be reflected in the middle voice.",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Middle Voice Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "Terry kicked himself.  [[g]]— reflexive[[/g]]\nThe players patted each other.  [[g]]— reciprocal[[/g]]"
+            },
+            {
+             "type": "para",
+             "text": "Middle verbs in Greek are usually (75% of the time) translated as an active or the middle changes the whole root meaning from the active form.  In this program, the middle will be translated active unless otherwise indicated."
+            },
+            {
+             "type": "refs",
+             "text": "(Mounce, p. 149; Summer, pp. 50-51)"
+            }
+           ]
+          }
+         ]
         }
        ],
        "labelStyle": "underline"
-      },
-      {
-       "type": "expander",
-       "label": "Active Voice Examples",
-       "content": [
-        {
-         "type": "para",
-         "text": "Terry hit the ball.\nJoy kissed Andy."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Passive Voice Examples",
-       "content": [
-        {
-         "type": "para",
-         "text": "Terry was hit by the ball.\nJoy was kissed by Andy."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Middle Voice Examples",
-       "content": [
-        {
-         "type": "para",
-         "text": "Terry kicked himself.  [[g]]— reflexive[[/g]]\nThe players patted each other.  [[g]]— reciprocal[[/g]]"
-        },
-        {
-         "type": "para",
-         "text": "Middle verbs in Greek are usually (75% of the time) translated as an active or the middle changes the whole root meaning from the active form.  In this program, the middle will be translated active unless otherwise indicated."
-        },
-        {
-         "type": "refs",
-         "text": "(Mounce, p. 149; Summer, pp. 50-51)"
-        }
-       ]
       }
      ]
     },
@@ -188,48 +194,54 @@
        "items": [
         {
          "label": "First person",
-         "text": "is the person(s) speaking (I or we)."
+         "text": "is the person(s) speaking (I or we).",
+         "below": [
+          {
+           "type": "expander",
+           "label": "First Person Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "[[u]]I[[/u]] studied Greek.\n[[u]]We[[/u]] studied Greek."
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "Second person",
-         "text": "is the person(s) spoken to (you [singular or plural])."
+         "text": "is the person(s) spoken to (you [singular or plural]).",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Second Person Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "[[u]]You[[/u]] studied Greek.\n[[u]]You[[/u]] both studied Greek."
+            }
+           ]
+          }
+         ]
         },
         {
          "label": "Third person",
-         "text": "is the person(s) or thing(s) spoken about (he, she, they, it)."
+         "text": "is the person(s) or thing(s) spoken about (he, she, they, it).",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Third Person Examples",
+           "content": [
+            {
+             "type": "para",
+             "text": "[[u]]She[[/u]] studied Greek.\n[[u]]They[[/u]] studied Greek."
+            }
+           ]
+          }
+         ]
         }
        ],
        "labelStyle": "underline"
-      },
-      {
-       "type": "expander",
-       "label": "First Person Examples",
-       "content": [
-        {
-         "type": "para",
-         "text": "[[u]]I[[/u]] studied Greek.\n[[u]]We[[/u]] studied Greek."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Second Person Examples",
-       "content": [
-        {
-         "type": "para",
-         "text": "[[u]]You[[/u]] studied Greek.\n[[u]]You[[/u]] both studied Greek."
-        }
-       ]
-      },
-      {
-       "type": "expander",
-       "label": "Third Person Examples",
-       "content": [
-        {
-         "type": "para",
-         "text": "[[u]]She[[/u]] studied Greek.\n[[u]]They[[/u]] studied Greek."
-        }
-       ]
       }
      ]
     },

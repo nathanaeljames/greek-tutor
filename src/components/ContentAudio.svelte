@@ -7,7 +7,6 @@
   // modes are pedagogical layouts reconstructed from the original's yellow
   // panels; their per-mode data contracts are documented in HANDOFF-4 §5 (B1).
   import { onDestroy } from 'svelte';
-  import { slide } from 'svelte/transition';
   import { getGreekTapMap, headingCovers, resolveItems, shuffle } from '../lib/content.js';
   import { splitGreekRuns } from '../lib/greek.js';
   import { play, stop as stopAudio } from '../lib/audio.js';
@@ -70,7 +69,6 @@
   let idx = -1;
   let revealed = false;
   let lastClicked = null;
-  let sixOpen = false;
   let topicIndex = 0;
   $: topics = activity.topics || [];
   $: currentTopic = topics[topicIndex] || null;
@@ -377,17 +375,20 @@
     </div>
   </div>
 
-  {#if activity.sixPointsContent}
-    <div class="card collapsible">
-      <button class="collapse-head" on:click={() => (sixOpen = !sixOpen)} aria-expanded={sixOpen}>
-        <svg class="chevron" class:down={sixOpen} viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6l-6 6" /></svg>
-        <span>Six Points</span>
-      </button>
-      {#if sixOpen}
-        <div class="collapse-body" transition:slide|local>
-          <RichContent blocks={activity.sixPointsContent.filter(b => b.text !== 'Six Points')} />
-        </div>
-      {/if}
+  <!-- DISCLOSURE-SPEC1 W3.3: chapter 1's Six Points. It was already an
+       accordion under the letter stepper, but a BESPOKE one — its own card,
+       its own chevron, its own open/closed flag, fed by an activity-level
+       `sixPointsContent` field no other chapter had. Nothing keyed to it could
+       be styled by R2, and the collapse-default it happened to have was its
+       own rather than the shared component's.
+       The pipeline moved that content into a standard `expander` block inside
+       the activity's ordinary `content[]`, so the stepper now renders content
+       through RichContent after its controls exactly as textPage mode does,
+       and Six Points is an accordion like every other accordion in the app.
+       Zero visual change is intended beyond the universal R2 restyle. -->
+  {#if activity.content}
+    <div class="card">
+      <RichContent blocks={activity.content} greekTaps={activityGreekTaps} />
     </div>
   {/if}
 

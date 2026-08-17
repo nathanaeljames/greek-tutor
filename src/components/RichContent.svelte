@@ -4,9 +4,10 @@
   // is pedagogy: headings, hanging-indent bibliographies, aligned definition
   // rows and underlined list lead-ins are all load-bearing, not decoration.
   //
-  // Block types: heading | subheading | para | numbered | defList | biblist |
-  // refs | note | greekRows | expander | paradigm | presentFutureRows |
-  // formula. An unknown type renders LOUD (see the dispatch's final else)
+  // Block types: heading | subheading | para | numbered | defList | termList |
+  // biblist | refs | note | greekRows | wordUsage | expander | paradigm |
+  // presentFutureRows | formula.
+  // An unknown type renders LOUD (see the dispatch's final else)
   // rather than vanishing.
   // Trailing { greek, caption?, audio? } "example" objects render in the Greek
   // font and play their clip on tap. defList rows [term, value, audio?] play
@@ -14,6 +15,7 @@
   import { play } from '../lib/audio.js';
   import { headingKey } from '../lib/content.js';
   import { splitMarkRun, splitTaps } from '../lib/greek.js';
+  import { stripMarkup } from '../lib/markup.js';
   import { usePopups, popupFor } from '../lib/popups.js';
   import Marked from './Marked.svelte';
   import Paradigm from './Paradigm.svelte';
@@ -333,6 +335,74 @@
         {/each}
       </div>
 
+    {:else if b.type === 'termList'}
+      <!-- R7 / DISCLOSURE-RULES §8 broken item 2: chapter 2's Identifying Verbs
+           terms. The two-column defList this replaces gave the definition
+           whatever width the longest TERM left over, and item 2 ("Aspect:", the
+           longest definition of the six) wrapped into a ribbon three words
+           wide. A term now owns its own line in green and its definition sets
+           full width beneath it — the original's own arrangement, and the same
+           term-over-text shape `subheading` already uses for the Grammar Review
+           Nouns page.
+           A term carrying `link` is a C3 trigger and takes the green underline
+           every other in-text link takes (R1). A term without one is plain
+           green: not underlined, not a button, nothing to tap. -->
+      <div class="rc-termlist" class:rc-gap-before={b.gapBefore}>
+        {#each b.items || [] as item}
+          {@const popup = linkedPopup(item.link)}
+          <div class="rc-termitem">
+            {#if popup}
+              <button class="rc-term-name popup-link" on:click={() => openPopup(popup)}><Marked text={item.term} /></button>
+            {:else}
+              <span class="rc-term-name"><Marked text={item.term} /></span>
+            {/if}
+            <div class="rc-term-def"><Marked text={item.def} /></div>
+          </div>
+        {/each}
+      </div>
+
+    {:else if b.type === 'wordUsage'}
+      <!-- W8: what used to be a POPUP body, rendered inline inside a C2
+           "Examples" accordion. Chapter 7's οὐ/οὐκ/οὐχ page and chapter 8's
+           Three Uses of αὐτός are both rule lists in which every item is
+           disclosed, so both are C2 and both retire their popup mechanism
+           (D-31 amended for ch7's number markers; ch8's three slug-linked
+           popups retired with the same conversion).
+           TWO SOURCE SHAPES, ONE BLOCK, because the popups had two shapes and
+           the content is not ours to reshape:
+             ch7  a Greek headword, its gloss, and the condition it applies
+                  under — then the examples.
+             ch8  a TITLE naming the use ("αὐτός as a pronoun"); those popups
+                  carry no headword of their own — then the examples.
+           Every field renders only when present, which is exactly how
+           PopupSheet.svelte reads the same fields on its own two branches, and
+           each field keeps that sheet's treatment so the same content does not
+           look like two different things in two hosts.
+           Greek-tap rule (directive 9): the headword and every example phrase
+           play their own clip; titles, glosses, conditions and references are
+           not tappable. -->
+      <div class="rc-wordusage">
+        {#if b.greek}
+          <button class="rc-wu-head greek greek-say" disabled={!b.audio}
+                  on:click={() => playAudio(b.audio)}>{b.greek}</button>
+        {/if}
+        {#if b.title}<div class="rc-wu-title"><Marked text={b.title} /></div>{/if}
+        {#if b.gloss}<div class="rc-wu-gloss"><Marked text={b.gloss} /></div>{/if}
+        {#if b.condition}<div class="rc-wu-condition"><Marked text={b.condition} /></div>{/if}
+        {#if b.examples && b.examples.length}
+          <div class="rc-wu-examples">
+            {#each b.examples as example, index}
+              <div class="rc-wu-example" data-example-index={index}>
+                <button class="rc-wu-example-greek greek greek-say" disabled={!example.audio}
+                        on:click={() => playAudio(example.audio)}>{example.greek}</button>
+                {#if example.gloss}<div class="rc-wu-example-gloss"><Marked text={example.gloss} /></div>{/if}
+                {#if example.ref}<div class="rc-wu-example-ref">{example.ref}</div>{/if}
+              </div>
+            {/each}
+          </div>
+        {/if}
+      </div>
+
     {:else if b.type === 'greekRows'}
       {@const syllableMatrix = isSyllableMatrix(b)}
       {@const rowLabels = syllableMatrix && hasRowLabels(b)}
@@ -554,14 +624,20 @@
       <PrepositionsChart block={b} title={sameTitle(b.title) ? null : b.title} />
 
     {:else if b.type === 'expander'}
-      <!-- summaryStyle:"green" sets the summary in the app's emphasis green
-           instead of ink (chapter 2's 6 Accent Rules, adopted 2026-08-14 after
-           a four-way comparison on device). A data flag rather than a nesting
-           rule, so an expander's appearance never depends on what contains it.
-           Three other treatments (blue, underlined, frameless) were built for
-           that comparison and removed with the variants that used them. -->
+      <!-- R2 / DISCLOSURE-RULES §3.1: ONE accordion look for every category in
+           every chapter — green summary, left caret, no underline, collapsed by
+           default. `summaryStyle: "green"` (chapter 2's 6 Accent Rules, adopted
+           2026-08-14 after a four-way on-device comparison) was the trial of
+           that look on one page; the ratified sheet makes it universal, so the
+           conditional class is gone and the styling is unconditional in
+           app.css. The key stays harmless if it remains in data.
+           THE LABEL IS PLAIN TEXT, not <Marked>: §3.1 requires accordion titles
+           to carry no underline, and a C2 title drawn from rule text can arrive
+           carrying the rule's own [[u]] run ("Words with [[u]]No[[/u]] Accents").
+           stripMarkup drops the markers rather than rendering them, so a marker
+           can never reach the screen as literal text either. -->
       <details class="rc-expander">
-        <summary class:rc-summary-green={b.summaryStyle === 'green'}><Marked text={b.label} /></summary>
+        <summary>{stripMarkup(b.label)}</summary>
         <div class="rc-expander-body">
           {#if b.content && b.content.length}
             <svelte:self blocks={b.content} greekTaps={b.greekTaps || greekTaps} />

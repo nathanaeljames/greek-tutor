@@ -417,196 +417,198 @@
     "buttons": [
      "Next Letter",
      "Previous Letter",
-     "Six Points",
      "Say Alphabet"
     ],
     "beginPrompt": "Click on \"Next Letter\" to begin."
    },
    "sayAlphabetAudio": "chapt_1_a_alphab",
-   "sixPointsContent": [
+   "_sixPoints_audio_note": "Item 6 of PHASE4-REVIEW (2026-07-18): standalone Greek letters in Six Points are tappable and play the letter NAME (audioShort), matching the original. Greek buried in English prose stays plain UNLESS listed in an item's greekTaps map (exact-substring -> audio id).",
+   "content": [
     {
-     "type": "heading",
-     "text": "Six Points"
-    },
-    {
-     "type": "numbered",
-     "items": [
+     "type": "expander",
+     "label": "Six Points",
+     "content": [
       {
-       "label": "Final Sigma",
-       "text": "when sigma is the last letter of a word the form ς is used instead of the normal σ.",
-       "example": {
-        "greek": "ἀπόστολος",
-        "audio": "chapt_1_a_word1"
-       },
-       "note": "NOTE: for this chapter ignore the accent and breathing marks which are seen above the letters."
-      },
-      {
-       "label": "Nasal Gamma",
-       "text": "when gamma (γ) is followed by γ, κ, χ, or ξ it is pronounced as \"n\" instead of the normal \"g.\"",
-       "example": {
-        "greek": "ἄγγελος",
-        "caption": "pronounced \"angelos\"",
-        "audio": "chapt_1_a_voc1"
-       }
-      },
-      {
-       "label": "Letter Confusion",
-       "text": "Be careful not to confuse the following letters",
-       "defList": [
-        [
-         "η (Eta)",
-         "with the English n.",
-         "chapt_1_a_etan"
-        ],
-        [
-         "ν (Nu)",
-         "with the English v.",
-         "chapt_1_a_nun"
-        ],
-        [
-         "ρ (Rho)",
-         "with the English p.",
-         "chapt_1_a_rhon"
-        ],
-        [
-         "ω (Omega)",
-         "with the English w.",
-         "chapt_1_a_omegan"
-        ],
-        [
-         "χ (Chi)",
-         "with the English x.",
-         "chapt_1_a_chin"
-        ]
+       "type": "numbered",
+       "items": [
+        {
+         "label": "Final Sigma",
+         "text": "when sigma is the last letter of a word the form ς is used instead of the normal σ.",
+         "example": {
+          "greek": "ἀπόστολος",
+          "audio": "chapt_1_a_word1"
+         },
+         "note": "NOTE: for this chapter ignore the accent and breathing marks which are seen above the letters."
+        },
+        {
+         "label": "Nasal Gamma",
+         "text": "when gamma (γ) is followed by γ, κ, χ, or ξ it is pronounced as \"n\" instead of the normal \"g.\"",
+         "example": {
+          "greek": "ἄγγελος",
+          "caption": "pronounced \"angelos\"",
+          "audio": "chapt_1_a_voc1"
+         }
+        },
+        {
+         "label": "Letter Confusion",
+         "text": "Be careful not to confuse the following letters",
+         "defList": [
+          [
+           "η (Eta)",
+           "with the English n.",
+           "chapt_1_a_etan"
+          ],
+          [
+           "ν (Nu)",
+           "with the English v.",
+           "chapt_1_a_nun"
+          ],
+          [
+           "ρ (Rho)",
+           "with the English p.",
+           "chapt_1_a_rhon"
+          ],
+          [
+           "ω (Omega)",
+           "with the English w.",
+           "chapt_1_a_omegan"
+          ],
+          [
+           "χ (Chi)",
+           "with the English x.",
+           "chapt_1_a_chin"
+          ]
+         ]
+        },
+        {
+         "label": "Zeta Pronunciation",
+         "text": "ζ is pronounced \"dz\" in some grammars (Machen, Wenham) unless it is the first letter of the word in which case it is pronounced as a \"z\". Greek Tutor will follow this convention. Others always pronounce it as a \"z\" (cf. Mounce).",
+         "greekTaps": {
+          "ζ": "chapt_1_a_zetan"
+         }
+        },
+        {
+         "label": "Linguistic Pronunciation Descriptions",
+         "defList": [
+          [
+           "Labials (lips)",
+           {
+            "letters": [
+             {
+              "greek": "π",
+              "audio": "chapt_1_a_pin"
+             },
+             {
+              "greek": "β",
+              "audio": "chapt_1_a_betan"
+             },
+             {
+              "greek": "φ",
+              "audio": "chapt_1_a_phin"
+             }
+            ]
+           }
+          ],
+          [
+           "Dentals (teeth)",
+           {
+            "letters": [
+             {
+              "greek": "τ",
+              "audio": "chapt_1_a_taun"
+             },
+             {
+              "greek": "δ",
+              "audio": "chapt_1_a_deltan"
+             },
+             {
+              "greek": "θ",
+              "audio": "chapt_1_a_thetan"
+             }
+            ]
+           }
+          ],
+          [
+           "Palatals (palate)",
+           {
+            "letters": [
+             {
+              "greek": "κ",
+              "audio": "chapt_1_a_kappan"
+             },
+             {
+              "greek": "γ",
+              "audio": "chapt_1_a_gamman"
+             },
+             {
+              "greek": "χ",
+              "audio": "chapt_1_a_chin"
+             }
+            ]
+           }
+          ],
+          [
+           "Sibilants",
+           {
+            "letters": [
+             {
+              "greek": "σ",
+              "audio": "chapt_1_a_sigman"
+             },
+             {
+              "greek": "ζ",
+              "audio": "chapt_1_a_zetan"
+             },
+             {
+              "greek": "ξ",
+              "audio": "chapt_1_a_xin"
+             },
+             {
+              "greek": "ψ",
+              "audio": "chapt_1_a_psin"
+             }
+            ]
+           }
+          ],
+          [
+           "Liquids",
+           {
+            "letters": [
+             {
+              "greek": "λ",
+              "audio": "chapt_1_a_lambdn"
+             },
+             {
+              "greek": "μ",
+              "audio": "chapt_1_a_mun"
+             },
+             {
+              "greek": "ν",
+              "audio": "chapt_1_a_nun"
+             },
+             {
+              "greek": "ρ",
+              "audio": "chapt_1_a_rhon"
+             }
+            ]
+           }
+          ]
+         ]
+        },
+        {
+         "label": "Pronunciation variations",
+         "text": "There are variations on the pronunciation of several letters. Some will pronounce π as \"pie\" others attempting to be more consistent will pronounce it \"pee\". Omicron also has several variations: 1) as the \"o\" in \"hope\" which is the same as the omega, 2) as the \"o\" in \"Boston\" (\"aw\" like sound), or 3) as the \"o\" in \"not\", in which case it sounds like the alpha. We have adopted the third choice here. It is also particularly difficult to know when the iota is long or short. Some will make the upsilon sound like the German ü. The chi is pronounced by many like the \"ch\" in the Gaelic word \"loch\" but many also pronounce it like the \"ch\" in \"chemical\" which makes it sound like a \"k\". Phi, Chi, Psi some will pronounce with an English long \"i\" rather than as a long Greek iota which is pronounced \"phee\" as in this program. Modern Greek will pronounce many of the letters very differently.\n\nThe point is there is variation in how the letters are pronounced and the student should go with whatever method their teacher suggests. It is a dead language and to get lost on the fine points of phonetics is counterproductive."
+        }
        ]
       },
       {
-       "label": "Zeta Pronunciation",
-       "text": "ζ is pronounced \"dz\" in some grammars (Machen, Wenham) unless it is the first letter of the word in which case it is pronounced as a \"z\". Greek Tutor will follow this convention. Others always pronounce it as a \"z\" (cf. Mounce).",
-       "greekTaps": {
-        "ζ": "chapt_1_a_zetan"
-       }
-      },
-      {
-       "label": "Linguistic Pronunciation Descriptions",
-       "defList": [
-        [
-         "Labials (lips)",
-         {
-          "letters": [
-           {
-            "greek": "π",
-            "audio": "chapt_1_a_pin"
-           },
-           {
-            "greek": "β",
-            "audio": "chapt_1_a_betan"
-           },
-           {
-            "greek": "φ",
-            "audio": "chapt_1_a_phin"
-           }
-          ]
-         }
-        ],
-        [
-         "Dentals (teeth)",
-         {
-          "letters": [
-           {
-            "greek": "τ",
-            "audio": "chapt_1_a_taun"
-           },
-           {
-            "greek": "δ",
-            "audio": "chapt_1_a_deltan"
-           },
-           {
-            "greek": "θ",
-            "audio": "chapt_1_a_thetan"
-           }
-          ]
-         }
-        ],
-        [
-         "Palatals (palate)",
-         {
-          "letters": [
-           {
-            "greek": "κ",
-            "audio": "chapt_1_a_kappan"
-           },
-           {
-            "greek": "γ",
-            "audio": "chapt_1_a_gamman"
-           },
-           {
-            "greek": "χ",
-            "audio": "chapt_1_a_chin"
-           }
-          ]
-         }
-        ],
-        [
-         "Sibilants",
-         {
-          "letters": [
-           {
-            "greek": "σ",
-            "audio": "chapt_1_a_sigman"
-           },
-           {
-            "greek": "ζ",
-            "audio": "chapt_1_a_zetan"
-           },
-           {
-            "greek": "ξ",
-            "audio": "chapt_1_a_xin"
-           },
-           {
-            "greek": "ψ",
-            "audio": "chapt_1_a_psin"
-           }
-          ]
-         }
-        ],
-        [
-         "Liquids",
-         {
-          "letters": [
-           {
-            "greek": "λ",
-            "audio": "chapt_1_a_lambdn"
-           },
-           {
-            "greek": "μ",
-            "audio": "chapt_1_a_mun"
-           },
-           {
-            "greek": "ν",
-            "audio": "chapt_1_a_nun"
-           },
-           {
-            "greek": "ρ",
-            "audio": "chapt_1_a_rhon"
-           }
-          ]
-         }
-        ]
-       ]
-      },
-      {
-       "label": "Pronunciation variations",
-       "text": "There are variations on the pronunciation of several letters. Some will pronounce π as \"pie\" others attempting to be more consistent will pronounce it \"pee\". Omicron also has several variations: 1) as the \"o\" in \"hope\" which is the same as the omega, 2) as the \"o\" in \"Boston\" (\"aw\" like sound), or 3) as the \"o\" in \"not\", in which case it sounds like the alpha. We have adopted the third choice here. It is also particularly difficult to know when the iota is long or short. Some will make the upsilon sound like the German ü. The chi is pronounced by many like the \"ch\" in the Gaelic word \"loch\" but many also pronounce it like the \"ch\" in \"chemical\" which makes it sound like a \"k\". Phi, Chi, Psi some will pronounce with an English long \"i\" rather than as a long Greek iota which is pronounced \"phee\" as in this program. Modern Greek will pronounce many of the letters very differently.\n\nThe point is there is variation in how the letters are pronounced and the student should go with whatever method their teacher suggests. It is a dead language and to get lost on the fine points of phonetics is counterproductive."
+       "type": "refs",
+       "text": "Machen, p. 9; Wenham, pp. 18f.; Mounce, pp. 8f.; Summers/Sawyer, p. 5"
       }
      ]
-    },
-    {
-     "type": "refs",
-     "text": "Machen, p. 9; Wenham, pp. 18f.; Mounce, pp. 8f.; Summers/Sawyer, p. 5"
     }
    ],
-   "_sixPoints_audio_note": "Item 6 of PHASE4-REVIEW (2026-07-18): standalone Greek letters in Six Points are tappable and play the letter NAME (audioShort), matching the original. Greek buried in English prose stays plain UNLESS listed in an item's greekTaps map (exact-substring -> audio id)."
+   "_six_points_note": "DISCLOSURE-RULES ch1 refactor: the bespoke sixPointsContent field and stepper button move to a standard expander block. ZERO visual change intended -- the panel already rendered as an accordion. Renderer swap lands with DISCLOSURE-SPEC1 R2."
   },
   {
    "id": "c1_learn_translit",
@@ -665,8 +667,27 @@
     {
      "type": "refs",
      "text": "(Mounce, p. 7)"
+    },
+    {
+     "type": "para",
+     "text": "Eight tough ones:",
+     "gapBefore": true
+    },
+    {
+     "type": "para",
+     "text": "Γ is a gamma (γ)\nΔ is a delta (δ)\nΗ is an eta (η)\nΛ is a lambda (λ)\nΞ is a xi (ξ)\nΣ is a sigma (σ)\nΥ is an upsilon (υ)\nΩ is an omega (ω)"
+    },
+    {
+     "type": "para",
+     "text": "Beware confusing the following capital letters:",
+     "gapBefore": true
+    },
+    {
+     "type": "para",
+     "text": "Η is eta (not English \"H\")\nΡ is rho (not English \"P\")\nΥ is upsilon (not English \"Y\")"
     }
-   ]
+   ],
+   "_note_provenance": "Broken item 1 fixed 2026-08-15: the Note's two scrolled screens (\"Eight tough ones\" and \"Beware confusing\"), missing since extraction, are RESTORED verbatim from ch1railwalk.pdf p.6 (transcription; 1_ALPHABET.TBK was not mounted in this session -- a future TBK session may byte-verify). Stays INLINE per DISCLOSURE-RULES section 3.8: the three ch1 Notes are the named non-accordion exception."
   },
   {
    "id": "c1_learn_vowels",

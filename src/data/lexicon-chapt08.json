@@ -41,7 +41,7 @@
    "lexicalForm": "ἐγώ / ἡμεῖς",
    "gloss": "I / we",
    "glossShort": "I",
-   "audio": "chapt_8_h_voc3a",
+   "audio": "chapt_8_h_voc3",
    "ntFreq": 2666,
    "senses": [
     {
@@ -56,7 +56,8 @@
      "glossShort": "we",
      "audio": "chapt_8_h_voc3b"
     }
-   ]
+   ],
+   "_audio_note": "Paired flashcard: chapt_8_h_voc3 says BOTH words (listen-confirmed 2026-08-15, VERIFY-5F-3 item 4); senses keep chapt_8_h_voc3a and its twin."
   },
   "hemera": {
    "greek": "ἡμέρα",
@@ -161,7 +162,7 @@
    "lexicalForm": "σύ / ὑμεῖς",
    "gloss": "you / you (pl)",
    "glossShort": "you (sg)",
-   "audio": "chapt_8_h_voc9a",
+   "audio": "chapt_8_h_voc9",
    "ntFreq": 2905,
    "senses": [
     {
@@ -176,7 +177,8 @@
      "glossShort": "you (pl)",
      "audio": "chapt_8_h_voc9b"
     }
-   ]
+   ],
+   "_audio_note": "Paired flashcard: chapt_8_h_voc9 says BOTH words (listen-confirmed 2026-08-15, VERIFY-5F-3 item 4); senses keep chapt_8_h_voc9a and its twin."
   },
   "hupo": {
    "greek": "ὑπό",

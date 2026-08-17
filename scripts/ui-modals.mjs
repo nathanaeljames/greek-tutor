@@ -170,21 +170,24 @@ const SURFACES = [
     await page.locator('.rc-sense-link').first().click();
     await page.waitForTimeout(180);
   }],
-  ['ch7-popup-ou', async () => {
-    // 5F-FEEDBACK.pdf item 15 (Nathanael, 2026-08-09): the popup opens from
-    // the NUMBER marker now, not the Greek headword -- D-31r supersedes
-    // D-31's original reading. See RichContent.svelte / DIVERGENCE-LOG.
-    await go('#/activity/chapt_7/c7_learn_eimi');
-    for (let i = 0; i < 3; i++) { await page.getByRole('button', { name: 'Next Topic', exact: true }).click(); await page.waitForTimeout(80); }
-    await page.locator('.rc-num-popup').first().click();
-    await page.waitForTimeout(180);
-  }],
-  ['ch8-popup-autos-as-a-pronoun', async () => {
-    await go('#/activity/chapt_8/c8_learn_third_person');
-    for (let i = 0; i < 2; i++) { await page.getByRole('button', { name: 'Next Topic', exact: true }).click(); await page.waitForTimeout(80); }
-    await page.locator('.popup-link').first().click();
-    await page.waitForTimeout(180);
-  }],
+  // TWO MODAL STATES ARE GONE, and this census is where that shows up as a
+  // deletion rather than a silent absence. DISCLOSURE-RULES §6.3/§7 and the
+  // chapter-8 row of §8 reclassify BOTH pages as C2 rule lists — a numbered
+  // closed set in which every item is disclosed — so their popups are retired
+  // outright and the content is disclosed in place, in an "Examples" accordion
+  // under each item:
+  //   ch7-popup-ou                  οὐ/οὐκ/οὐχ; numberPopupRef retired, D-31
+  //                                 amended (was 5F-FEEDBACK.pdf item 15's
+  //                                 number-marker route).
+  //   ch8-popup-autos-as-a-pronoun  the three uses of αὐτός; the three
+  //                                 slug-linked popups retired with the
+  //                                 conversion, and the [[u]] runs that used to
+  //                                 reach them stay as plain emphasis.
+  // Neither page lost its census coverage: both are asserted in
+  // scripts/ui-disclosure.mjs (D5.4-D5.10) as accordions with a wordUsage body,
+  // and P3.4 in ui-behavior.mjs asserts the popup route is ABSENT rather than
+  // merely unused — a surviving popup link would be the old disclosure showing
+  // through the new one.
   // 5G: each two-chart Hint now discloses one chart at a time. Capture both
   // states independently so neither replacement chart can evade the modal
   // sizing check. Chapter 10's parsing Hint has two payloads, so its luo and
