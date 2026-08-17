@@ -161,7 +161,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Subjective Case Examples",
            "content": [
             {
              "type": "para",
@@ -185,7 +185,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Objective Case Examples",
            "content": [
             {
              "type": "para",
@@ -209,7 +209,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Possessive Case Examples",
            "content": [
             {
              "type": "para",
@@ -315,7 +315,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Nominative Form Examples",
            "content": [
             {
              "type": "para",
@@ -335,7 +335,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Genitive Form Examples",
            "content": [
             {
              "type": "para",
@@ -359,7 +359,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Dative Form Examples",
            "content": [
             {
              "type": "para",
@@ -383,7 +383,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Accusative Form Examples",
            "content": [
             {
              "type": "para",
@@ -403,7 +403,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Vocative Form Examples",
            "content": [
             {
              "type": "para",

@@ -846,7 +846,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Pronoun Examples",
            "content": [
             {
              "type": "wordUsage",
@@ -881,7 +881,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Reflexive Intensifier Examples",
            "content": [
             {
              "type": "wordUsage",
@@ -910,7 +910,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "\"Same\" Examples",
            "content": [
             {
              "type": "wordUsage",

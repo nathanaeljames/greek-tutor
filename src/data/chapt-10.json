@@ -270,7 +270,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Palatal Examples",
            "content": [
             {
              "type": "presentFutureRows",
@@ -308,7 +308,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Labial Examples",
            "content": [
             {
              "type": "presentFutureRows",
@@ -346,7 +346,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Dental Examples",
            "content": [
             {
              "type": "presentFutureRows",
@@ -373,7 +373,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Liquid Examples",
            "content": [
             {
              "type": "presentFutureRows",
@@ -411,7 +411,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "Sibilant Examples",
            "content": [
             {
              "type": "presentFutureRows",

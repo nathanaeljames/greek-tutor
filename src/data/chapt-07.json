@@ -885,7 +885,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "οὐ Examples",
            "content": [
             {
              "greek": "οὐ",
@@ -917,7 +917,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "οὐκ Examples",
            "content": [
             {
              "greek": "οὐκ",
@@ -949,7 +949,7 @@
          "below": [
           {
            "type": "expander",
-           "label": "Examples",
+           "label": "οὐχ Examples",
            "content": [
             {
              "greek": "οὐχ",

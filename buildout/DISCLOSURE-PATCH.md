@@ -75,3 +75,22 @@ ch08 threeUses: 3 expanders interspersed (C2), titled "Examples", wrapping the f
 - Assemblers for ch9/ch10 remain provenance tools; after this pass the
   repo JSONs are the source of truth (Stage 8.7), with assemble_ch10
   updated so a regeneration cannot resurrect the Middle answers.
+
+## Second pass, 2026-08-16/17 (post-SPEC1 device review)
+
+Base copies: the LIVE repo JSONs at `fae598e`. Full replacements:
+chapt-04, chapt-05, chapt-07, chapt-08, chapt-10.
+
+ONLY change: the 27 bare "Examples" accordion labels gain their
+qualifiers per the amended DISCLOSURE-RULES §3.5 (Disclosure_Spike_
+Review.pdf item 3; PDF checked clean of strikethrough).
+
+ch04/ch05 (8 each, derived from the item labels): Subjective Case /
+Objective Case / Possessive Case Examples; Nominative / Genitive /
+Dative / Accusative / Vocative Form Examples.
+ch07 (3): οὐ Examples; οὐκ Examples; οὐχ Examples. Greek in a title is
+a control label, not an audio tap (amended §3.5).
+ch08 (3): Pronoun Examples; Reflexive Intensifier Examples; "Same"
+Examples. PIPELINE-CHOSEN short forms of "as a pronoun" / "reflexive
+intensifier" / "adjective meaning \"same\"" -- listed for veto.
+ch10 (5): Palatal / Labial / Dental / Liquid / Sibilant Examples.

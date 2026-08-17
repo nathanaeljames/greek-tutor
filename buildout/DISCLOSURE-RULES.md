@@ -3,7 +3,12 @@
 Status: CANONICAL LIVING DOCUMENT, ratified by Nathanael 2026-08-11
 (DISCLOSURE-RULES3.pdf, including its strikethrough deletions: rule 3e
 and rule-6 examples b/e/f/h are struck and void) from the two-round
-review in DISCLOSURE-REVIEW.md. Governs how every piece of chapter content is
+review in DISCLOSURE-REVIEW.md. AMENDED 2026-08-17 from the post-
+DISCLOSURE-SPEC1 device pass (Disclosure_Spike_Review.pdf, checked
+clean of strikethrough): §3.1 boxed accordion style, §3.5 qualified
+"Examples" titles, §4.3 pinning restricted to modals with a fixed
+footer composition, §4.6 no-pager enforcement on Quick Review.
+Governs how every piece of chapter content is
 disclosed: accordion vs modal vs flowing scroll vs paged. Sits
 alongside DRILL-BEHAVIOR-RULES.md (drill behaviour) and
 TITLE-SWEEP-RULES.md (inventory) as a standing constraint on both the
@@ -75,14 +80,21 @@ header in the original?** Header → C6. No header → C5.
 
 ## 3. Styling and trigger rules
 
-1. **Accordions**: green (#1f5f57) text, caret to the left, NEVER
-   underlined in the title, and ALWAYS collapsed by default — every
-   accordion of every category, no exceptions. Migration impact:
-   NONE — the shared expander component already defaults collapsed,
-   and Nathanael confirmed (2026-08-11) the Meanings elements were
-   already collapsed despite lacking a caret. Six Points remains the
-   one default to verify. The renderer strips `[[u]]` markup from any
-   string used as an accordion label.
+1. **Accordions** (AMENDED 2026-08-17, superseding the borderless
+   render DISCLOSURE-SPEC1 shipped): every accordion is a BOX —
+   1px border (#ddd6c2), rounded, background one visible step
+   LIGHTER than the containing card (#fffdf3 on the #fdf9e7 card),
+   MINIMAL padding — with the title in green (#1f5f57), caret to the
+   left in the same green, NEVER underlined, ALWAYS collapsed by
+   default. Body text is NOT additionally indented: the box itself
+   determines text placement — no hanging indent inside an accordion,
+   body text starts at the box's own padding edge. This is the
+   variation approved after the 2026-08-14 accordion experiments,
+   with the title in green. Applies to every accordion of every
+   category in every chapter, present and future, INCLUDING ch1 Six
+   Points, EXCEPT the Meanings affordance (rule 9 below keeps its own
+   style). The renderer strips `[[u]]` markup from any string used as
+   an accordion label.
 2. **In-text links (C3)**: green, underlined, open a modal. Numbers
    are never part of the link even where the original linked only the
    number ("Pronoun", not "4. Pronoun").
@@ -91,10 +103,16 @@ header in the original?** Header → C6. No header → C5.
    with the blue Greek-tap convention).
 4. **All other clickable blue** — audio taps, Greek forms, chart
    headers — stays blue, formatted as it currently appears.
-5. **C2 accordion titles**: drawn from the rule text. IF the title
-   would merely repeat the term already visible in the rule above it
-   (the Case panels, οὐ/οὐκ/οὐχ, and equivalents), the accordion is
-   titled **"Examples"** instead.
+5. **C2 accordion titles** (AMENDED 2026-08-17, inverting the
+   bare-"Examples" rule): where a one-or-two-word qualifier for the
+   rule item exists, the title is **"<Qualifier> Examples"** — the
+   ch3 pattern ("Active Voice Examples"), preferred by Nathanael even
+   when the qualifier repeats the term visible in the rule above.
+   Bare **"Examples"** only where no short qualifier exists. Applies
+   to all chapters, present and future. Greek qualifiers are allowed
+   (οὐ Examples); a Greek word inside an accordion TITLE is a control
+   label like an option button and is NOT an audio tap (standing
+   directive-9 treatment of controls).
 6. **C2 placement**: each accordion sits immediately after and beneath
    the numbered item it belongs to (`below` in the data), never
    grouped at the end of the topic.
@@ -128,12 +146,24 @@ header in the original?** Header → C6. No header → C5.
    More as a pair on their own centered line beneath the say-all
    button. BOTH always visible; Back disabled on the first page, More
    disabled on the last. Buttons never disappear or move.
-3. **The control row is pinned.** The say-all button plus its
-   navigation control (the §4.1 toggle, or the §4.2 Back/More pair) is
-   a navigation surface and must ALWAYS remain on screen when content
-   is taller than the viewport — fixed to the footer in modals (broken
-   item 4; D-38 remains the slot rule), sticky at the panel bottom in
-   main content. Nothing in the control row ever scrolls out of view.
+3. **Pinning happens in MODALS ONLY** (AMENDED 2026-08-17; the
+   earlier main-content sticky is REVOKED — main-content control rows
+   scroll with their chart, and no divider is drawn between Meanings
+   and the say-all row in main content). Inside a modal, the fixed
+   footer has EXACTLY this composition, top to bottom: the scrolling
+   content; a thin strip of light padding; ONE divider; a thin strip
+   of light padding; AT MOST ONE pinned line of navigation; the Close
+   button. Neither the content nor the buttons ever butt directly
+   against the divider, and NO divider ever separates the nav line
+   from Close.
+   - TWO-screen modal (§4.1): the say-all button and the single
+     toggle share that one pinned line.
+   - THREE-plus modal (§4.2): the Back/More pair is the pinned line;
+     the say-all button is NOT pinned — it stays in the scrolling
+     content with its chart.
+   - A say button is NEVER pinned unless a navigation control shares
+     its line. A modal with no navigation pins nothing above Close.
+   (D-38 remains the slot rule: Back left, More right.)
 4. **Never stack modals.** A control inside a modal replaces that
    modal's content in place; it does not open a second modal on top
    (broken item 3). Replaced states that carry audio get their own
@@ -149,7 +179,15 @@ header in the original?** Header → C6. No header → C5.
 6. **C9 pages** show everything at once: paradigms stack vertically
    (Singular above Plural, Middle above Passive), one say-all button
    per chart, no toggles, no More/Back, no topic rail. Audio buttons
-   are not pagination and stay.
+   are not pagination and stay. RATIONALE AND ENFORCEMENT (added
+   2026-08-17): students may want to PRINT Review pages, so all
+   content must be visible in one flowing scroll — pagers are fine on
+   Learn pages but never on Review pages. The renderer stacks a
+   Review page's charts REGARDLESS of whether they carry names; a
+   named chart prints its name as its heading. (The ch8 Personal 3rd
+   Person page was cited as the C9 in-app model while it still paged
+   — the model is its STACKED render, not what shipped before this
+   amendment.)
 
 ## 5. Data-model vocabulary (pipeline)
 
@@ -303,7 +341,7 @@ implementer workstream.
 | Learn Third Person > Third Person Paradigm | C8-main 3+ | Keep — the in-app model for §4.2 | — |
 | Learn Third Person > Three Uses | C2 | Revise — SETTLED: three interspersed accordions titled "Examples" (all items linked; same shape as οὐ/οὐκ/οὐχ) | Data |
 | All three drills > Hint | C4 | Revise — fixed footer per §4.3 | Renderer |
-| Review pages incl. Personal 3rd Person | C9 | Keep — the in-app model for C9 | — |
+| Review pages incl. Personal 3rd Person | C9 | Revise (2026-08-17) — the shipped page PAGED its three charts, violating §4.6; it stacks Masculine/Feminine/Neuter vertically, one say-all each. Its stacked render is the C9 model | Renderer |
 
 ### Chapter 9
 
