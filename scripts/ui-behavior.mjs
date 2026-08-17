@@ -2804,48 +2804,42 @@ for (const [chapterId, activityId, opener] of [
 // keep in sync. The chart's own `subtitle` field ("Masculine" / "Feminine" /
 // "Neuter") is what Paradigm.svelte stamps onto data-chart-name, so this
 // asserts against the generic .paradigm host instead of the deleted one.
+// REWRITTEN FOR DISCLOSURE-SPEC2 (amended §4.6). The three gender charts used
+// to be a More/Back sequence on this REVIEW page and most of this block drove
+// that pager. The device review (item 4) revoked pagers on Review pages
+// outright, with a rationale that is not about taste — students may want to
+// PRINT the page, so all of it has to be visible. The chart contract itself
+// (one standard `paradigm` shape, four case rows over two columns, each chart
+// reporting its own data-chart-name, cells that play their own clip) is what
+// this block was really protecting in 5F, and all of it still holds; it is now
+// asserted across the three STACKED charts instead of through a pager.
 {
   await go('#/activity/chapt_8/c8_qr_third');
-  const chart = page.locator('.paradigm');
-  const genders = [];
-  const switchDisabled = dir => page.locator(`[data-paradigm-switch="${dir}"]`).isDisabled();
-  // 5F-PATCH3 addendum: BOTH buttons render on every page — the invalid
-  // direction is greyed out (disabled), never removed.
-  genders.push(await chart.getAttribute('data-chart-name'));
-  check('5F §2.8 the third-person chart opens on Masculine: More live, Back greyed out (both visible)',
-    genders[0] === 'Masculine' && await page.locator('[data-paradigm-switch="more"]').count() === 1
-      && await page.locator('[data-paradigm-switch="back"]').count() === 1
-      && await switchDisabled('back') && !await switchDisabled('more'));
-  await page.locator('[data-paradigm-switch="more"]').click();
-  await page.waitForTimeout(100);
-  genders.push(await chart.getAttribute('data-chart-name'));
-  check('5F §2.8 More steps to Feminine, and Back comes live',
-    genders[1] === 'Feminine' && !await switchDisabled('back'));
-  await page.locator('[data-paradigm-switch="more"]').click();
-  await page.waitForTimeout(100);
-  genders.push(await chart.getAttribute('data-chart-name'));
-  check('5F §2.8 More again steps to Neuter, where More greys out but stays visible',
-    genders[2] === 'Neuter' && await switchDisabled('more') && !await switchDisabled('back'),
-    genders.join(' -> '));
-  await page.locator('[data-paradigm-switch="back"]').click();
-  await page.waitForTimeout(100);
-  check('5F §2.8 Back steps down again', await chart.getAttribute('data-chart-name') === 'Feminine');
+  const charts = page.locator('.card .paradigm');
+  const genders = await charts.evaluateAll(nodes => nodes.map(n => n.getAttribute('data-chart-name')));
+  check('5F §2.8 / §4.6 all three third-person charts are on the page at once, each naming itself',
+    genders.join(' ') === 'Masculine Feminine Neuter', genders.join(' -> ') || 'none');
+  check('5F §4.6 and nothing pages between them',
+    await page.locator('.card [data-paradigm-switch], .card .pg-nav').count() === 0);
   // Four case rows over two columns, on every one of the three charts.
-  check('5F §2.8 four case rows over a Singular and a Plural column',
-    await chart.locator('.pg-row').count() === 4 && await chart.locator('.pg-row').first().locator('.pg-cell').count() === 2,
-    `${await chart.locator('.pg-row').count()} rows`);
+  const shapes = await charts.evaluateAll(nodes => nodes.map(n =>
+    `${n.querySelectorAll('.pg-row').length}x${n.querySelector('.pg-row').querySelectorAll('.pg-cell').length}`));
+  check('5F §2.8 four case rows over a Singular and a Plural column, on each chart',
+    shapes.join(' ') === '4x2 4x2 4x2', shapes.join(' '));
   // Directive 9: a cell whose form has a clip plays it.
   await page.evaluate(() => { window.__clips.length = 0; });
-  await chart.locator('.pg-greek-tap:not([disabled])').first().click();
+  await charts.first().locator('.pg-greek-tap:not([disabled])').first().click();
   await page.waitForTimeout(200);
   check('5F §2.8 a paradigm cell plays its own clip', (await clips()).length === 1);
 
-  // Rule A4, on the cohort's NEW exit. §6.4 covers a topic switch, rail
-  // navigation and a route change; stepping between the charts of a
-  // paradigms[] stack is a fourth way out of a surface that is playing, and
-  // it changes neither the route nor the topic — which is exactly the shape
-  // of the defect 5E-SPEC2 §3.1 reported.
-  await go('#/activity/chapt_8/c8_qr_third');
+  // Rule A4 on a CHART SWITCH. §6.4 covers a topic switch, rail navigation and
+  // a route change; stepping between the charts of a paradigms[] stack is a
+  // fourth way out of a surface that is playing, and it changes neither the
+  // route nor the topic — the shape of the defect 5E-SPEC2 §3.1 reported.
+  // Moved to the LEARN page, which is where a chart switch still exists:
+  // §4.1/§4.2 paging is unchanged there and only Review lost its pager.
+  await go('#/activity/chapt_8/c8_learn_third_person');
+  await gotoTopic(1);
   await page.locator('.card .pg-actions .btn', { hasText: 'Say Whole' }).first().click();
   await page.waitForTimeout(250);
   const playingBefore = await clipsPlaying();
@@ -2874,7 +2868,13 @@ for (const [chapterId, activityId, opener] of [
 for (const [chapterId, chapter] of Object.entries(CH_5F)) {
   for (const activity of activitiesOf(chapter).filter(a => a && a.mode === 'paradigmChart')) {
     const charts = activity.paradigms || (activity.paradigm ? [activity.paradigm] : []);
-    const stacked = charts.length > 1 && charts.every(chart => !chart.name);
+    // AMENDED §4.6 (DISCLOSURE-SPEC2): a Review page stacks EVERY chart it
+    // carries, named or not. The name/no-name distinction that used to decide
+    // this is still real and still decides paging on Learn pages; it has no
+    // authority on a Review page, which must be printable in one scroll. The
+    // paged branch below is therefore reached only by a single-chart page now,
+    // where its loop runs once and steps nothing.
+    const stacked = charts.length > 1;
     const sayWholeCount = () => page.locator('.card .pg-say-whole').count();
     if (stacked) {
       await go(`#/activity/${chapterId}/${activity.id}`);
@@ -3141,7 +3141,11 @@ for (const [chapterId, activityId, expected] of [
   // three or more ways, which is what this block was written to protect.
   const navSurfaces = [
     ['ch8 Learn Third Person Paradigm', '#/activity/chapt_8/c8_learn_third_person', { topic: 1 }],
-    ['ch8 Review Third Person (ContentAudio pager)', '#/activity/chapt_8/c8_qr_third', {}],
+    // 'ch8 Review Third Person (ContentAudio pager)' left this list with
+    // DISCLOSURE-SPEC2: amended §4.6 removed the Review pager entirely, so
+    // there is no .pg-nav on that page to measure. The ContentAudio copy of
+    // this layout went with it — Paradigm.svelte is the only renderer of the
+    // pair now, which is one fewer place for the markup to drift.
     ['ch8 Aὐτός Translation Drill Hint (modal pager)', '#/activity/chapt_8/c8_drill_translation_autos', { hint: true }]
   ];
   for (const [label, hash, opts] of navSurfaces) {
@@ -3618,10 +3622,19 @@ for (const [chapterId, activityId, expected] of [
       open: expander.open
     }));
   }));
-  check('5G-SPEC2 stem variations: five collapsed Examples accordions, one under each numbered variation',
+  // The LABEL half of this changed with DISCLOSURE-SPEC2: amended §3.5 inverts
+  // the bare-"Examples" rule, so each of these five now carries the variation's
+  // own qualifier ("Palatal Examples"). What the check is really for — one
+  // accordion per numbered item, collapsed, none drifting into a detached group
+  // at the end of the topic — is untouched, so the label test becomes the
+  // qualified pattern rather than the exact string. The 27 relabelled titles
+  // are asserted as a set in ui-disclosure.mjs D15.
+  const STEM_QUALIFIERS = ['Palatal', 'Labial', 'Dental', 'Liquid', 'Sibilant'];
+  check('5G-SPEC2 / §3.5 stem variations: five collapsed qualified-Examples accordions, one under each numbered variation',
     await stemItems.count() === 5
       && placement.length === 5
-      && placement.every(entries => entries.length === 1 && entries[0].label === 'Examples' && !entries[0].open)
+      && placement.every((entries, index) => entries.length === 1 && !entries[0].open
+        && entries[0].label === `${STEM_QUALIFIERS[index]} Examples`)
       && await page.locator('.card details.rc-expander').count() === 5
       && await page.locator('.rc-list .popup-link').count() === 0,
     JSON.stringify(placement));
@@ -4028,14 +4041,19 @@ for (const [chapterId, activityId] of [
       && await page.locator('.pg-nav, [data-paradigm-switch], [data-hint-paradigm-toggle]').count() === 0,
     `${await page.locator('.paradigm').count()} charts, ${await page.locator('.pg-nav').count()} pagers, ${await page.locator('[data-paradigm-switch]').count()} toggles`);
 }
-// Chapter 8's three-chart stack is NAMED and stays a More/Back sequence: the
-// naming rule is what tells the two apart, so this is what proves the
-// device-verified pager did not become a stack.
+// REVERSED BY DISCLOSURE-SPEC2 (amended §4.6). This asserted the exact
+// opposite: that chapter 8's NAMED three-chart stack stayed a More/Back
+// sequence, the naming rule being what told a paged stack from a stacked pair.
+// The device review (item 4) revoked pagers on Review pages with a rationale
+// the naming rule cannot outrank — a Review page must be printable, so all of
+// it has to be visible at once. The naming rule still decides paging on LEARN
+// pages, and the line below is what proves this page converted rather than
+// half-converted: three charts stacked, and no pager left anywhere on it.
 await go('#/activity/chapt_8/c8_qr_third');
-check('5G G8 ch8 third person stays a More/Back sequence (its charts are named)',
-  await page.locator('.paradigm-stack').count() === 0
-    && await page.locator('.paradigm').count() === 1
-    && await page.locator('[data-paradigm-switch="more"]').count() === 1);
+check('5G G8 / §4.6 ch8 third person is a STACK on its Review page, with no pager',
+  await page.locator('.paradigm-stack').count() === 1
+    && await page.locator('.paradigm-stack .paradigm').count() === 3
+    && await page.locator('.pg-nav, [data-paradigm-switch]').count() === 0);
 
 // ---- G9 Repeat is retired; retry-until-right remains (5G-SPEC2 §2/§5) ----
 for (const [chapterId, activityId] of [

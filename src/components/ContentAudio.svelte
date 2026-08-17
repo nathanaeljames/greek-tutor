@@ -100,28 +100,27 @@
     ? getGreekTapMap(chapter.id)
     : activity.greekTaps;
 
-  // paradigmChart: one chart, or a More/Back stack of them (5F §2.8). Same
-  // exit rule as a topic switch — stepping between charts stops whatever the
-  // last one started (rule A4).
-  let paradigmIndex = 0;
+  // paradigmChart: a Quick Review page's chart, or several of them. This mode
+  // is used by quickReview activities and nothing else, so it IS the C9 host.
   $: paradigmPages = Array.isArray(activity.paradigms) && activity.paradigms.length
     ? activity.paradigms
     : (activity.paradigm ? [activity.paradigm] : []);
-  // 5G-SPEC1 §2.8/§3.7: two charts on ONE page, not a More/Back sequence.
-  // Chapters 9 and 10 print their Middle+Passive and Future Active+Middle
-  // paradigms stacked in a single panel (ch10railwalk p7 shows both charts
-  // under one Cancel), where chapter 8's third-person stack is genuinely
-  // paged. The data says which: a paged stack NAMES each chart, because the
-  // name is what the More/Back control and data-chart-name report; a stacked
-  // pair has no names to report because nothing is being switched between.
-  // check-content-shapes enforces all-or-none so the two can never blur.
-  $: stackedParadigms = paradigmPages.length > 1 && paradigmPages.every(chart => !chart || !chart.name);
-  function goToParadigm(index) {
-    const next = Math.max(0, Math.min(paradigmPages.length - 1, index));
-    if (next === paradigmIndex) return;
-    stopAudio();
-    paradigmIndex = next;
-  }
+  // §4.6 as AMENDED 2026-08-17: A REVIEW PAGE NEVER PAGES. Every chart it
+  // carries is stacked into one flowing scroll, regardless of whether the
+  // charts are named.
+  //
+  // What this replaces: 5G-SPEC1 §2.8/§3.7 read the DATA for the answer — a
+  // paged stack NAMES each chart (the name is what More/Back and
+  // data-chart-name report) and a stacked pair does not — so chapters 9 and 10
+  // stacked while chapter 8's named third-person stack paged. The device review
+  // (item 4) rejected the paged half outright and gave the rule its rationale:
+  // students may want to PRINT a Review page, so all of its content has to be
+  // visible at once. The name/no-name distinction is still real and still
+  // decides paging on LEARN pages; it simply has no authority here. Each named
+  // chart keeps printing its own authored title and subtitle, which is how a
+  // reader tells the stacked charts apart now that nothing switches between
+  // them.
+  $: stackedParadigms = paradigmPages.length > 1;
 
   // Learn Vocabulary flashcard visibility (A15). Segmented radio: Show Both /
   // Hide Greek / Hide English. A hidden pane blanks until tapped (per-card
@@ -276,7 +275,7 @@
         {/each}
       </div>
     {:else if paradigmPages.length}
-      {@const page = paradigmPages[paradigmIndex] || paradigmPages[0]}
+      {@const page = paradigmPages[0]}
       <!-- 5F-FEEDBACK.pdf §8.1 root-cause fix: every pronoun paradigm now
            ships in the SAME cell-audio shape every other chapter's paradigm
            does (chapt-08.json no longer carries a `pronounParadigm` block
@@ -295,22 +294,10 @@
           <button class="btn secondary pg-say-whole" on:click={() => play(externalSayWhole.audio)}>{externalSayWhole.label || 'Say Whole Paradigm'}</button>
         </div>
       {/if}
-      {#if paradigmPages.length > 1}
-        <!-- The one shared More/Back layout (.pg-nav): both buttons on every
-             page, centred pair, invalid direction greyed out — identical to
-             Paradigm.svelte's, per the 5F-PATCH3 addendum. This block exists
-             only because the Review pager's index lives here (goToParadigm
-             stops audio on the way); the MARKUP must never drift from
-             Paradigm's — ui-behavior P3.2 measures both. -->
-        <div class="pg-nav">
-          <button class="btn secondary pg-switch pg-switch-back" data-paradigm-switch="back"
-                  disabled={paradigmIndex <= 0}
-                  on:click={() => goToParadigm(paradigmIndex - 1)}>Back</button>
-          <button class="btn secondary pg-switch pg-switch-more" data-paradigm-switch="more"
-                  disabled={paradigmIndex >= paradigmPages.length - 1}
-                  on:click={() => goToParadigm(paradigmIndex + 1)}>More</button>
-        </div>
-      {/if}
+      <!-- THE REVIEW PAGER IS GONE (amended §4.6, DISCLOSURE-SPEC2 W4). This
+           branch draws a single chart now: with more than one, the stacked
+           branch above runs instead, so there is nothing left to page between
+           and no second copy of .pg-nav in the app to drift from Paradigm's. -->
     {:else}
       <div class="pending-verification">Chart content pending verification.</div>
     {/if}
@@ -385,11 +372,17 @@
        the activity's ordinary `content[]`, so the stepper now renders content
        through RichContent after its controls exactly as textPage mode does,
        and Six Points is an accordion like every other accordion in the app.
-       Zero visual change is intended beyond the universal R2 restyle. -->
+       DISCLOSURE-SPEC2 W2.4: and NO card around it. SPEC1 wrapped this render
+       in one, which was invisible while the accordion was borderless — the
+       card WAS the box you saw. Now that §3.1 puts a box on the accordion
+       itself, a card here would be a box inside a box, and its 16px padding
+       around a single one-line summary is exactly the inflated spacing the
+       device review flagged (item 1(b)). Unwrapped, Six Points is one
+       accordion box under the stepper card, with the same minimal padding
+       every other accordion in the app has. The page's own .content gutter
+       keeps it inset from the screen edge. -->
   {#if activity.content}
-    <div class="card">
-      <RichContent blocks={activity.content} greekTaps={activityGreekTaps} />
-    </div>
+    <RichContent blocks={activity.content} greekTaps={activityGreekTaps} />
   {/if}
 
 {:else if mode === 'flashcard'}

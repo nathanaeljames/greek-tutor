@@ -1,0 +1,6437 @@
+[
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch2-syllable-counting-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 196,
+   "bottom": 650,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 584,
+    "bottom": 628
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 196,
+   "bottom": 650,
+   "action": {
+    "top": 584,
+    "bottom": 628
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch2-accent-rule-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 64,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch2-syllable-division-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 196,
+   "bottom": 650,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 584,
+    "bottom": 628
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 196,
+   "bottom": 650,
+   "action": {
+    "top": 584,
+    "bottom": 628
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch2-accent-placement-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 64,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch6-case-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 120,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch6-translation-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 120,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch3-verb-translating-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 170,
+   "bottom": 676,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 610,
+    "bottom": 654
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 170,
+   "bottom": 676,
+   "action": {
+    "top": 610,
+    "bottom": 654
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch4-greek-noun-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 147,
+   "bottom": 700,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 634,
+    "bottom": 678
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 147,
+   "bottom": 700,
+   "action": {
+    "top": 634,
+    "bottom": 678
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch4-greek-noun-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch4-declining-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch5-first-decl-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch5-declining-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 778,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 778,
+   "action": {
+    "top": 712,
+    "bottom": 756
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch5-article-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 192,
+   "bottom": 654,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 588,
+    "bottom": 632
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 192,
+   "bottom": 654,
+   "action": {
+    "top": 588,
+    "bottom": 632
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch3-learn-verbs-endings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 200,
+   "bottom": 646,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 579,
+    "bottom": 624
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 200,
+   "bottom": 646,
+   "action": {
+    "top": 579,
+    "bottom": 624
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch6-popup-apo",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 178,
+   "bottom": 669,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 603,
+    "bottom": 647
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 178,
+   "bottom": 669,
+   "action": {
+    "top": 603,
+    "bottom": 647
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch6-popup-epi-three-senses",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 169,
+   "bottom": 678,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 612,
+    "bottom": 656
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 169,
+   "bottom": 678,
+   "action": {
+    "top": 612,
+    "bottom": 656
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch9-hint-middle",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 173,
+   "bottom": 673,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 607,
+    "bottom": 651
+   },
+   "hintControls": {
+    "top": 555,
+    "bottom": 599,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 555,
+    "bottom": 599,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 555,
+    "bottom": 599,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 173,
+   "bottom": 673,
+   "action": {
+    "top": 607,
+    "bottom": 651
+   },
+   "hintControls": {
+    "top": 555,
+    "bottom": 599,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 555,
+    "bottom": 599,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch9-hint-passive",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 198,
+   "bottom": 648,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 582,
+    "bottom": 626
+   },
+   "hintControls": {
+    "top": 530,
+    "bottom": 574,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 530,
+    "bottom": 574,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 530,
+    "bottom": 574,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 198,
+   "bottom": 648,
+   "action": {
+    "top": 582,
+    "bottom": 626
+   },
+   "hintControls": {
+    "top": 530,
+    "bottom": 574,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 530,
+    "bottom": 574,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch10-hint-future-active",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 215,
+   "bottom": 631,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 565,
+    "bottom": 609
+   },
+   "hintControls": {
+    "top": 513,
+    "bottom": 557,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 513,
+    "bottom": 557,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 513,
+    "bottom": 557,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 215,
+   "bottom": 631,
+   "action": {
+    "top": 565,
+    "bottom": 609
+   },
+   "hintControls": {
+    "top": 513,
+    "bottom": 557,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 513,
+    "bottom": 557,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch10-hint-future-middle",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 182,
+   "bottom": 664,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 598,
+    "bottom": 642
+   },
+   "hintControls": {
+    "top": 546,
+    "bottom": 590,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 546,
+    "bottom": 590,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 546,
+    "bottom": 590,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 182,
+   "bottom": 664,
+   "action": {
+    "top": 598,
+    "bottom": 642
+   },
+   "hintControls": {
+    "top": 546,
+    "bottom": 590,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 546,
+    "bottom": 590,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch10-hint-eimi-present",
+  "expectHintControls": true,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 206,
+   "bottom": 640,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 574,
+    "bottom": 618
+   },
+   "hintControls": {
+    "top": 522,
+    "bottom": 566,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": null,
+   "hintToggle": {
+    "top": 522,
+    "bottom": 566,
+    "left": 147,
+    "right": 243
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 206,
+   "bottom": 640,
+   "action": {
+    "top": 574,
+    "bottom": 618
+   },
+   "hintControls": {
+    "top": 522,
+    "bottom": 566,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 522,
+    "bottom": 566,
+    "left": 147,
+    "right": 243
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch10-hint-eimi-future",
+  "expectHintControls": true,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 206,
+   "bottom": 640,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 574,
+    "bottom": 618
+   },
+   "hintControls": {
+    "top": 522,
+    "bottom": 566,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": null,
+   "hintToggle": {
+    "top": 522,
+    "bottom": 566,
+    "left": 147,
+    "right": 243
+   },
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 206,
+   "bottom": 640,
+   "action": {
+    "top": 574,
+    "bottom": 618
+   },
+   "hintControls": {
+    "top": 522,
+    "bottom": 566,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 522,
+    "bottom": 566,
+    "left": 147,
+    "right": 243
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch9-popup-punctiliar",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 332,
+   "bottom": 514,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 448,
+    "bottom": 492
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 332,
+   "bottom": 514,
+   "action": {
+    "top": 448,
+    "bottom": 492
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch9-popup-frequent-verbs",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 189,
+   "bottom": 657,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 591,
+    "bottom": 635
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 189,
+   "bottom": 657,
+   "action": {
+    "top": 591,
+    "bottom": 635
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch10-verse-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 94,
+   "bottom": 753,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 687,
+    "bottom": 731
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 94,
+   "bottom": 753,
+   "action": {
+    "top": 687,
+    "bottom": 731
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch6-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 94,
+   "bottom": 753,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 687,
+    "bottom": 731
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 94,
+   "bottom": 753,
+   "action": {
+    "top": 687,
+    "bottom": 731
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch7-adjective-case-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 175,
+   "bottom": 671,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 605,
+    "bottom": 649
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 175,
+   "bottom": 671,
+   "action": {
+    "top": 605,
+    "bottom": 649
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch1-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 94,
+   "bottom": 753,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 687,
+    "bottom": 731
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 94,
+   "bottom": 753,
+   "action": {
+    "top": 687,
+    "bottom": 731
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch5-verse-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 94,
+   "bottom": 753,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 687,
+    "bottom": 731
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 94,
+   "bottom": 753,
+   "action": {
+    "top": 687,
+    "bottom": 731
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "ch1-end-of-chapter",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 259,
+   "bottom": 587,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 521,
+    "bottom": 565
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 790,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 259,
+   "bottom": 587,
+   "action": {
+    "top": 521,
+    "bottom": 565
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-844",
+  "width": 390,
+  "height": 844,
+  "surface": "settings-clear-audio-confirm",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 328,
+   "bottom": 573,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 507,
+    "bottom": 551
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 844,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 844
+  },
+  "afterContentScroll": {
+   "top": 328,
+   "bottom": 573,
+   "action": {
+    "top": 507,
+    "bottom": 551
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch2-syllable-counting-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 141,
+   "bottom": 595,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 529,
+    "bottom": 573
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 141,
+   "bottom": 595,
+   "action": {
+    "top": 529,
+    "bottom": 573
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch2-accent-rule-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 174,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch2-syllable-division-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 141,
+   "bottom": 595,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 529,
+    "bottom": 573
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 141,
+   "bottom": 595,
+   "action": {
+    "top": 529,
+    "bottom": 573
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch2-accent-placement-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 174,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch6-case-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 230,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch6-translation-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 230,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch3-verb-translating-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 115,
+   "bottom": 621,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 555,
+    "bottom": 599
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 115,
+   "bottom": 621,
+   "action": {
+    "top": 555,
+    "bottom": 599
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch4-greek-noun-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 92,
+   "bottom": 645,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 579,
+    "bottom": 623
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 92,
+   "bottom": 645,
+   "action": {
+    "top": 579,
+    "bottom": 623
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch4-greek-noun-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch4-declining-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch5-first-decl-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch5-declining-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch5-article-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 137,
+   "bottom": 599,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 533,
+    "bottom": 577
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 137,
+   "bottom": 599,
+   "action": {
+    "top": 533,
+    "bottom": 577
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch3-learn-verbs-endings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 145,
+   "bottom": 591,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 524,
+    "bottom": 569
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 145,
+   "bottom": 591,
+   "action": {
+    "top": 524,
+    "bottom": 569
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch6-popup-apo",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 123,
+   "bottom": 614,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 548,
+    "bottom": 592
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 123,
+   "bottom": 614,
+   "action": {
+    "top": 548,
+    "bottom": 592
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch6-popup-epi-three-senses",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 114,
+   "bottom": 623,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 557,
+    "bottom": 601
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 114,
+   "bottom": 623,
+   "action": {
+    "top": 557,
+    "bottom": 601
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch9-hint-middle",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 118,
+   "bottom": 618,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 552,
+    "bottom": 596
+   },
+   "hintControls": {
+    "top": 500,
+    "bottom": 544,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 500,
+    "bottom": 544,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 500,
+    "bottom": 544,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 118,
+   "bottom": 618,
+   "action": {
+    "top": 552,
+    "bottom": 596
+   },
+   "hintControls": {
+    "top": 500,
+    "bottom": 544,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 500,
+    "bottom": 544,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch9-hint-passive",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 143,
+   "bottom": 593,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 527,
+    "bottom": 571
+   },
+   "hintControls": {
+    "top": 475,
+    "bottom": 519,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 475,
+    "bottom": 519,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 475,
+    "bottom": 519,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 143,
+   "bottom": 593,
+   "action": {
+    "top": 527,
+    "bottom": 571
+   },
+   "hintControls": {
+    "top": 475,
+    "bottom": 519,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 475,
+    "bottom": 519,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch10-hint-future-active",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 160,
+   "bottom": 576,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 510,
+    "bottom": 554
+   },
+   "hintControls": {
+    "top": 458,
+    "bottom": 502,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 458,
+    "bottom": 502,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 458,
+    "bottom": 502,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 160,
+   "bottom": 576,
+   "action": {
+    "top": 510,
+    "bottom": 554
+   },
+   "hintControls": {
+    "top": 458,
+    "bottom": 502,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 458,
+    "bottom": 502,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch10-hint-future-middle",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 127,
+   "bottom": 609,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 543,
+    "bottom": 587
+   },
+   "hintControls": {
+    "top": 491,
+    "bottom": 535,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 491,
+    "bottom": 535,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 491,
+    "bottom": 535,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 127,
+   "bottom": 609,
+   "action": {
+    "top": 543,
+    "bottom": 587
+   },
+   "hintControls": {
+    "top": 491,
+    "bottom": 535,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 491,
+    "bottom": 535,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch10-hint-eimi-present",
+  "expectHintControls": true,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 151,
+   "bottom": 585,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 519,
+    "bottom": 563
+   },
+   "hintControls": {
+    "top": 467,
+    "bottom": 511,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": null,
+   "hintToggle": {
+    "top": 467,
+    "bottom": 511,
+    "left": 147,
+    "right": 243
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 151,
+   "bottom": 585,
+   "action": {
+    "top": 519,
+    "bottom": 563
+   },
+   "hintControls": {
+    "top": 467,
+    "bottom": 511,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 467,
+    "bottom": 511,
+    "left": 147,
+    "right": 243
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch10-hint-eimi-future",
+  "expectHintControls": true,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 151,
+   "bottom": 585,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 519,
+    "bottom": 563
+   },
+   "hintControls": {
+    "top": 467,
+    "bottom": 511,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": null,
+   "hintToggle": {
+    "top": 467,
+    "bottom": 511,
+    "left": 147,
+    "right": 243
+   },
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 151,
+   "bottom": 585,
+   "action": {
+    "top": 519,
+    "bottom": 563
+   },
+   "hintControls": {
+    "top": 467,
+    "bottom": 511,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 467,
+    "bottom": 511,
+    "left": 147,
+    "right": 243
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch9-popup-punctiliar",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 277,
+   "bottom": 459,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 393,
+    "bottom": 437
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 277,
+   "bottom": 459,
+   "action": {
+    "top": 393,
+    "bottom": 437
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch9-popup-frequent-verbs",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 134,
+   "bottom": 602,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 536,
+    "bottom": 580
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 134,
+   "bottom": 602,
+   "action": {
+    "top": 536,
+    "bottom": 580
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch10-verse-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 59,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch6-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 59,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch7-adjective-case-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 120,
+   "bottom": 616,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 550,
+    "bottom": 594
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 120,
+   "bottom": 616,
+   "action": {
+    "top": 550,
+    "bottom": 594
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch1-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 59,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch5-verse-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 668,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 59,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 668,
+   "action": {
+    "top": 602,
+    "bottom": 646
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "ch1-end-of-chapter",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 204,
+   "bottom": 532,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 466,
+    "bottom": 510
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 680,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 204,
+   "bottom": 532,
+   "action": {
+    "top": 466,
+    "bottom": 510
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-toolbars-734",
+  "width": 390,
+  "height": 734,
+  "surface": "settings-clear-audio-confirm",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 273,
+   "bottom": 518,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 452,
+    "bottom": 496
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 734,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 734
+  },
+  "afterContentScroll": {
+   "top": 273,
+   "bottom": 518,
+   "action": {
+    "top": 452,
+    "bottom": 496
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch2-syllable-counting-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 106,
+   "bottom": 560,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 494,
+    "bottom": 538
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 106,
+   "bottom": 560,
+   "action": {
+    "top": 494,
+    "bottom": 538
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch2-accent-rule-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 244,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch2-syllable-division-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 106,
+   "bottom": 560,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 494,
+    "bottom": 538
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 106,
+   "bottom": 560,
+   "action": {
+    "top": 494,
+    "bottom": 538
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch2-accent-placement-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 244,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch6-case-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 300,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch6-translation-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 300,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch3-verb-translating-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 80,
+   "bottom": 586,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 520,
+    "bottom": 564
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 80,
+   "bottom": 586,
+   "action": {
+    "top": 520,
+    "bottom": 564
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch4-greek-noun-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch4-greek-noun-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch4-declining-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch5-first-decl-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch5-declining-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch5-article-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 102,
+   "bottom": 564,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 498,
+    "bottom": 542
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 102,
+   "bottom": 564,
+   "action": {
+    "top": 498,
+    "bottom": 542
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch3-learn-verbs-endings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 110,
+   "bottom": 556,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 489,
+    "bottom": 534
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 110,
+   "bottom": 556,
+   "action": {
+    "top": 489,
+    "bottom": 534
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch6-popup-apo",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 88,
+   "bottom": 579,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 513,
+    "bottom": 557
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 88,
+   "bottom": 579,
+   "action": {
+    "top": 513,
+    "bottom": 557
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch6-popup-epi-three-senses",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 79,
+   "bottom": 588,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 522,
+    "bottom": 566
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 79,
+   "bottom": 588,
+   "action": {
+    "top": 522,
+    "bottom": 566
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch9-hint-middle",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 83,
+   "bottom": 583,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 517,
+    "bottom": 561
+   },
+   "hintControls": {
+    "top": 465,
+    "bottom": 509,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 465,
+    "bottom": 509,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 465,
+    "bottom": 509,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 83,
+   "bottom": 583,
+   "action": {
+    "top": 517,
+    "bottom": 561
+   },
+   "hintControls": {
+    "top": 465,
+    "bottom": 509,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 465,
+    "bottom": 509,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch9-hint-passive",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 108,
+   "bottom": 558,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 492,
+    "bottom": 536
+   },
+   "hintControls": {
+    "top": 440,
+    "bottom": 484,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 440,
+    "bottom": 484,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 440,
+    "bottom": 484,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 108,
+   "bottom": 558,
+   "action": {
+    "top": 492,
+    "bottom": 536
+   },
+   "hintControls": {
+    "top": 440,
+    "bottom": 484,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 440,
+    "bottom": 484,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch10-hint-future-active",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 125,
+   "bottom": 541,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 475,
+    "bottom": 519
+   },
+   "hintControls": {
+    "top": 423,
+    "bottom": 467,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 423,
+    "bottom": 467,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 423,
+    "bottom": 467,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 125,
+   "bottom": 541,
+   "action": {
+    "top": 475,
+    "bottom": 519
+   },
+   "hintControls": {
+    "top": 423,
+    "bottom": 467,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 423,
+    "bottom": 467,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch10-hint-future-middle",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 92,
+   "bottom": 574,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 508,
+    "bottom": 552
+   },
+   "hintControls": {
+    "top": 456,
+    "bottom": 500,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": {
+    "top": 456,
+    "bottom": 500,
+    "left": 40,
+    "right": 191
+   },
+   "hintToggle": {
+    "top": 456,
+    "bottom": 500,
+    "left": 199,
+    "right": 350
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 92,
+   "bottom": 574,
+   "action": {
+    "top": 508,
+    "bottom": 552
+   },
+   "hintControls": {
+    "top": 456,
+    "bottom": 500,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 456,
+    "bottom": 500,
+    "left": 199,
+    "right": 350
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch10-hint-eimi-present",
+  "expectHintControls": true,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 116,
+   "bottom": 550,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 484,
+    "bottom": 528
+   },
+   "hintControls": {
+    "top": 432,
+    "bottom": 476,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": null,
+   "hintToggle": {
+    "top": 432,
+    "bottom": 476,
+    "left": 147,
+    "right": 243
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 116,
+   "bottom": 550,
+   "action": {
+    "top": 484,
+    "bottom": 528
+   },
+   "hintControls": {
+    "top": 432,
+    "bottom": 476,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 432,
+    "bottom": 476,
+    "left": 147,
+    "right": 243
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch10-hint-eimi-future",
+  "expectHintControls": true,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 116,
+   "bottom": 550,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 484,
+    "bottom": 528
+   },
+   "hintControls": {
+    "top": 432,
+    "bottom": 476,
+    "left": 40,
+    "right": 350
+   },
+   "hintSay": null,
+   "hintToggle": {
+    "top": 432,
+    "bottom": 476,
+    "left": 147,
+    "right": 243
+   },
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 116,
+   "bottom": 550,
+   "action": {
+    "top": 484,
+    "bottom": 528
+   },
+   "hintControls": {
+    "top": 432,
+    "bottom": 476,
+    "left": 40,
+    "right": 350
+   },
+   "hintToggle": {
+    "top": 432,
+    "bottom": 476,
+    "left": 147,
+    "right": 243
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch9-popup-punctiliar",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 242,
+   "bottom": 424,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 358,
+    "bottom": 402
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 242,
+   "bottom": 424,
+   "action": {
+    "top": 358,
+    "bottom": 402
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch9-popup-frequent-verbs",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 99,
+   "bottom": 567,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 501,
+    "bottom": 545
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 99,
+   "bottom": 567,
+   "action": {
+    "top": 501,
+    "bottom": 545
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch10-verse-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 129,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch6-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 129,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch7-adjective-case-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 85,
+   "bottom": 581,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 515,
+    "bottom": 559
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 85,
+   "bottom": 581,
+   "action": {
+    "top": 515,
+    "bottom": 559
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch1-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 129,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch5-verse-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 598,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 129,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 598,
+   "action": {
+    "top": 532,
+    "bottom": 576
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "ch1-end-of-chapter",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 169,
+   "bottom": 497,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 431,
+    "bottom": 475
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 610,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 169,
+   "bottom": 497,
+   "action": {
+    "top": 431,
+    "bottom": 475
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "iphone14-urlbar-664",
+  "width": 390,
+  "height": 664,
+  "surface": "settings-clear-audio-confirm",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 238,
+   "bottom": 483,
+   "left": 20,
+   "right": 370,
+   "action": {
+    "top": 417,
+    "bottom": 461
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 664,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 664
+  },
+  "afterContentScroll": {
+   "top": 238,
+   "bottom": 483,
+   "action": {
+    "top": 417,
+    "bottom": 461
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch2-syllable-counting-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 311,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch2-accent-rule-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 656,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch2-syllable-division-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 311,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch2-accent-placement-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 656,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch6-case-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 747,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch6-translation-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 747,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch3-verb-translating-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch4-greek-noun-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch4-greek-noun-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch4-declining-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch5-first-decl-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch5-declining-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch5-article-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch3-learn-verbs-endings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 213,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 230,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 213,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch6-popup-apo",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 295,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch6-popup-epi-three-senses",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 340,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch9-hint-middle",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintSay": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 156
+   },
+   "hintToggle": {
+    "top": 149,
+    "bottom": 211,
+    "left": 164,
+    "right": 280
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 383,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintToggle": {
+    "top": 149,
+    "bottom": 211,
+    "left": 164,
+    "right": 280
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch9-hint-passive",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintSay": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 156
+   },
+   "hintToggle": {
+    "top": 149,
+    "bottom": 211,
+    "left": 164,
+    "right": 280
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 334,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintToggle": {
+    "top": 149,
+    "bottom": 211,
+    "left": 164,
+    "right": 280
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch10-hint-future-active",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintSay": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 156
+   },
+   "hintToggle": {
+    "top": 149,
+    "bottom": 211,
+    "left": 164,
+    "right": 280
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 255,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintToggle": {
+    "top": 149,
+    "bottom": 211,
+    "left": 164,
+    "right": 280
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch10-hint-future-middle",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintSay": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 156
+   },
+   "hintToggle": {
+    "top": 149,
+    "bottom": 211,
+    "left": 164,
+    "right": 280
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 320,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 149,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintToggle": {
+    "top": 149,
+    "bottom": 211,
+    "left": 164,
+    "right": 280
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch10-hint-eimi-present",
+  "expectHintControls": true,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 170,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintSay": null,
+   "hintToggle": {
+    "top": 170,
+    "bottom": 211,
+    "left": 112,
+    "right": 208
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 236,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 170,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintToggle": {
+    "top": 170,
+    "bottom": 211,
+    "left": 112,
+    "right": 208
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch10-hint-eimi-future",
+  "expectHintControls": true,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 170,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintSay": null,
+   "hintToggle": {
+    "top": 170,
+    "bottom": 211,
+    "left": 112,
+    "right": 208
+   },
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 281,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": {
+    "top": 170,
+    "bottom": 211,
+    "left": 40,
+    "right": 280
+   },
+   "hintToggle": {
+    "top": 170,
+    "bottom": 211,
+    "left": 112,
+    "right": 208
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch9-popup-punctiliar",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 73,
+   "bottom": 289,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 212,
+    "bottom": 253
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 73,
+   "bottom": 289,
+   "action": {
+    "top": 212,
+    "bottom": 253
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch9-popup-frequent-verbs",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 392,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch10-verse-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 503,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch6-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 503,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch7-adjective-case-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch1-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 503,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch5-verse-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 503,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 217,
+    "bottom": 258
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "ch1-end-of-chapter",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 294,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 252,
+    "bottom": 293
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 306,
+   "overlayRange": 0,
+   "contentRange": 82,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 294,
+   "action": {
+    "top": 252,
+    "bottom": 293
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "short-320x360",
+  "width": 320,
+  "height": 360,
+  "surface": "settings-clear-audio-confirm",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 73,
+   "bottom": 343,
+   "left": 20,
+   "right": 300,
+   "action": {
+    "top": 266,
+    "bottom": 307
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 360,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 360
+  },
+  "afterContentScroll": {
+   "top": 73,
+   "bottom": 343,
+   "action": {
+    "top": 266,
+    "bottom": 307
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch2-syllable-counting-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 311,
+   "bottom": 715,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 649,
+    "bottom": 693
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 311,
+   "bottom": 715,
+   "action": {
+    "top": 649,
+    "bottom": 693
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch2-accent-rule-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 163,
+   "bottom": 863,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 797,
+    "bottom": 841
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 163,
+   "bottom": 863,
+   "action": {
+    "top": 797,
+    "bottom": 841
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch2-syllable-division-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 311,
+   "bottom": 715,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 649,
+    "bottom": 693
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 311,
+   "bottom": 715,
+   "action": {
+    "top": 649,
+    "bottom": 693
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch2-accent-placement-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 163,
+   "bottom": 863,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 797,
+    "bottom": 841
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 163,
+   "bottom": 863,
+   "action": {
+    "top": 797,
+    "bottom": 841
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch6-case-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 112,
+   "bottom": 914,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 848,
+    "bottom": 892
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 112,
+   "bottom": 914,
+   "action": {
+    "top": 848,
+    "bottom": 892
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch6-translation-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 112,
+   "bottom": 914,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 848,
+    "bottom": 892
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 112,
+   "bottom": 914,
+   "action": {
+    "top": 848,
+    "bottom": 892
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch3-verb-translating-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 268,
+   "bottom": 758,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 692,
+    "bottom": 736
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 268,
+   "bottom": 758,
+   "action": {
+    "top": 692,
+    "bottom": 736
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch4-greek-noun-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 237,
+   "bottom": 790,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 724,
+    "bottom": 768
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 237,
+   "bottom": 790,
+   "action": {
+    "top": 724,
+    "bottom": 768
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch4-greek-noun-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 958,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch4-declining-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 958,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch5-first-decl-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 958,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch5-declining-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 68,
+   "bottom": 958,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 68,
+   "bottom": 958,
+   "action": {
+    "top": 892,
+    "bottom": 936
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch5-article-hint-meanings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 282,
+   "bottom": 744,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 678,
+    "bottom": 722
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 282,
+   "bottom": 744,
+   "action": {
+    "top": 678,
+    "bottom": 722
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch3-learn-verbs-endings",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 290,
+   "bottom": 736,
+   "left": 194,
+   "right": 574,
+   "action": {
+    "top": 669,
+    "bottom": 714
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 290,
+   "bottom": 736,
+   "action": {
+    "top": 669,
+    "bottom": 714
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch6-popup-apo",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 268,
+   "bottom": 759,
+   "left": 204,
+   "right": 564,
+   "action": {
+    "top": 693,
+    "bottom": 737
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 268,
+   "bottom": 759,
+   "action": {
+    "top": 693,
+    "bottom": 737
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch6-popup-epi-three-senses",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 259,
+   "bottom": 768,
+   "left": 204,
+   "right": 564,
+   "action": {
+    "top": 702,
+    "bottom": 746
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 259,
+   "bottom": 768,
+   "action": {
+    "top": 702,
+    "bottom": 746
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch9-hint-middle",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 271,
+   "bottom": 755,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 689,
+    "bottom": 733
+   },
+   "hintControls": {
+    "top": 637,
+    "bottom": 681,
+    "left": 204,
+    "right": 564
+   },
+   "hintSay": {
+    "top": 637,
+    "bottom": 681,
+    "left": 204,
+    "right": 380
+   },
+   "hintToggle": {
+    "top": 637,
+    "bottom": 681,
+    "left": 388,
+    "right": 564
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 271,
+   "bottom": 755,
+   "action": {
+    "top": 689,
+    "bottom": 733
+   },
+   "hintControls": {
+    "top": 637,
+    "bottom": 681,
+    "left": 204,
+    "right": 564
+   },
+   "hintToggle": {
+    "top": 637,
+    "bottom": 681,
+    "left": 388,
+    "right": 564
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch9-hint-passive",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 296,
+   "bottom": 730,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 664,
+    "bottom": 708
+   },
+   "hintControls": {
+    "top": 612,
+    "bottom": 656,
+    "left": 204,
+    "right": 564
+   },
+   "hintSay": {
+    "top": 612,
+    "bottom": 656,
+    "left": 204,
+    "right": 380
+   },
+   "hintToggle": {
+    "top": 612,
+    "bottom": 656,
+    "left": 388,
+    "right": 564
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 296,
+   "bottom": 730,
+   "action": {
+    "top": 664,
+    "bottom": 708
+   },
+   "hintControls": {
+    "top": 612,
+    "bottom": 656,
+    "left": 204,
+    "right": 564
+   },
+   "hintToggle": {
+    "top": 612,
+    "bottom": 656,
+    "left": 388,
+    "right": 564
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch10-hint-future-active",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 296,
+   "bottom": 730,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 664,
+    "bottom": 708
+   },
+   "hintControls": {
+    "top": 612,
+    "bottom": 656,
+    "left": 204,
+    "right": 564
+   },
+   "hintSay": {
+    "top": 612,
+    "bottom": 656,
+    "left": 204,
+    "right": 380
+   },
+   "hintToggle": {
+    "top": 612,
+    "bottom": 656,
+    "left": 388,
+    "right": 564
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 296,
+   "bottom": 730,
+   "action": {
+    "top": 664,
+    "bottom": 708
+   },
+   "hintControls": {
+    "top": 612,
+    "bottom": 656,
+    "left": 204,
+    "right": 564
+   },
+   "hintToggle": {
+    "top": 612,
+    "bottom": 656,
+    "left": 388,
+    "right": 564
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch10-hint-future-middle",
+  "expectHintControls": true,
+  "expectHintSay": true,
+  "atRest": {
+   "top": 271,
+   "bottom": 755,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 689,
+    "bottom": 733
+   },
+   "hintControls": {
+    "top": 637,
+    "bottom": 681,
+    "left": 204,
+    "right": 564
+   },
+   "hintSay": {
+    "top": 637,
+    "bottom": 681,
+    "left": 204,
+    "right": 380
+   },
+   "hintToggle": {
+    "top": 637,
+    "bottom": 681,
+    "left": 388,
+    "right": 564
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 271,
+   "bottom": 755,
+   "action": {
+    "top": 689,
+    "bottom": 733
+   },
+   "hintControls": {
+    "top": 637,
+    "bottom": 681,
+    "left": 204,
+    "right": 564
+   },
+   "hintToggle": {
+    "top": 637,
+    "bottom": 681,
+    "left": 388,
+    "right": 564
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch10-hint-eimi-present",
+  "expectHintControls": true,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 296,
+   "bottom": 730,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 664,
+    "bottom": 708
+   },
+   "hintControls": {
+    "top": 612,
+    "bottom": 656,
+    "left": 204,
+    "right": 564
+   },
+   "hintSay": null,
+   "hintToggle": {
+    "top": 612,
+    "bottom": 656,
+    "left": 336,
+    "right": 432
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 296,
+   "bottom": 730,
+   "action": {
+    "top": 664,
+    "bottom": 708
+   },
+   "hintControls": {
+    "top": 612,
+    "bottom": 656,
+    "left": 204,
+    "right": 564
+   },
+   "hintToggle": {
+    "top": 612,
+    "bottom": 656,
+    "left": 336,
+    "right": 432
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch10-hint-eimi-future",
+  "expectHintControls": true,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 296,
+   "bottom": 730,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 664,
+    "bottom": 708
+   },
+   "hintControls": {
+    "top": 612,
+    "bottom": 656,
+    "left": 204,
+    "right": 564
+   },
+   "hintSay": null,
+   "hintToggle": {
+    "top": 612,
+    "bottom": 656,
+    "left": 336,
+    "right": 432
+   },
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 296,
+   "bottom": 730,
+   "action": {
+    "top": 664,
+    "bottom": 708
+   },
+   "hintControls": {
+    "top": 612,
+    "bottom": 656,
+    "left": 204,
+    "right": 564
+   },
+   "hintToggle": {
+    "top": 612,
+    "bottom": 656,
+    "left": 336,
+    "right": 432
+   }
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch9-popup-punctiliar",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 422,
+   "bottom": 604,
+   "left": 204,
+   "right": 564,
+   "action": {
+    "top": 538,
+    "bottom": 582
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 422,
+   "bottom": 604,
+   "action": {
+    "top": 538,
+    "bottom": 582
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch9-popup-frequent-verbs",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 279,
+   "bottom": 747,
+   "left": 204,
+   "right": 564,
+   "action": {
+    "top": 681,
+    "bottom": 725
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 279,
+   "bottom": 747,
+   "action": {
+    "top": 681,
+    "bottom": 725
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch10-verse-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 194,
+   "bottom": 833,
+   "left": 174,
+   "right": 594,
+   "action": {
+    "top": 767,
+    "bottom": 811
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 194,
+   "bottom": 833,
+   "action": {
+    "top": 767,
+    "bottom": 811
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch6-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 194,
+   "bottom": 833,
+   "left": 174,
+   "right": 594,
+   "action": {
+    "top": 767,
+    "bottom": 811
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 194,
+   "bottom": 833,
+   "action": {
+    "top": 767,
+    "bottom": 811
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch7-adjective-case-hint",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 250,
+   "bottom": 776,
+   "left": 184,
+   "right": 584,
+   "action": {
+    "top": 710,
+    "bottom": 754
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 250,
+   "bottom": 776,
+   "action": {
+    "top": 710,
+    "bottom": 754
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch1-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 194,
+   "bottom": 833,
+   "left": 174,
+   "right": 594,
+   "action": {
+    "top": 767,
+    "bottom": 811
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 194,
+   "bottom": 833,
+   "action": {
+    "top": 767,
+    "bottom": 811
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch5-verse-speller-greek-keyboard",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 194,
+   "bottom": 833,
+   "left": 174,
+   "right": 594,
+   "action": {
+    "top": 767,
+    "bottom": 811
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 194,
+   "bottom": 833,
+   "action": {
+    "top": 767,
+    "bottom": 811
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "ch1-end-of-chapter",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 349,
+   "bottom": 677,
+   "left": 204,
+   "right": 564,
+   "action": {
+    "top": 611,
+    "bottom": 655
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 970,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 349,
+   "bottom": 677,
+   "action": {
+    "top": 611,
+    "bottom": 655
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ },
+ {
+  "viewport": "ipad-768x1024",
+  "width": 768,
+  "height": 1024,
+  "surface": "settings-clear-audio-confirm",
+  "expectHintControls": false,
+  "expectHintSay": false,
+  "atRest": {
+   "top": 418,
+   "bottom": 663,
+   "left": 204,
+   "right": 564,
+   "action": {
+    "top": 597,
+    "bottom": 641
+   },
+   "hintControls": null,
+   "hintSay": null,
+   "hintToggle": null,
+   "ceiling": 56,
+   "floor": 1024,
+   "overlayRange": 0,
+   "contentRange": 0,
+   "vh": 1024
+  },
+  "afterContentScroll": {
+   "top": 418,
+   "bottom": 663,
+   "action": {
+    "top": 597,
+    "bottom": 641
+   },
+   "hintControls": null,
+   "hintToggle": null
+  },
+  "ok": true
+ }
+]

@@ -821,16 +821,19 @@
            can resolve now ships in the one standard cell-audio shape, so
            there is no second renderer to keep in sync. -->
       {#if hintDisclosure}
-        <!-- D-48f1: one chart at a time. Only the body scrolls; the state Say
-             action and its disclosure control live with Close in the pinned
-             footer below, which is why this Paradigm draws no row of its own
-             (actionsPinned). A composite bundle is the one hint shape whose
-             state the HOST owns — it picks which of the bundle's paradigms is
-             on screen — so the host also owns the control row. -->
+        <!-- D-48f1: one chart at a time. A composite bundle is the one hint
+             shape whose state the HOST owns — it picks which of the bundle's
+             paradigms is on screen — so the host also owns the pinned line.
+             DISCLOSURE-SPEC2 W3.4: only at TWO states. `actionsPinned` hands
+             the say button to the footer, and at three or more the amended
+             §4.3 explicitly leaves it in the scrolling content with its chart,
+             so the pinned line is the Back/More pair alone. Passing
+             `hintPairToggle` here is what makes that switch. -->
         <div class="modal-scroll">
           <div class="paradigm-stack">
             {#if hintChart.title}<div class="rc-heading">{hintChart.title}</div>{/if}
-            <Paradigm paradigm={hintParadigm} title={hintParadigm.title || null} actionsPinned={true} />
+            <Paradigm paradigm={hintParadigm} title={hintParadigm.title || null}
+                      actionsPinned={hintPairToggle} />
           </div>
         </div>
       {:else}
@@ -844,10 +847,17 @@
       {/if}
       <div class="modal-actions">
         {#if hintDisclosure}
-          <div class="hint-paradigm-controls" class:no-say={!hintParadigm.sayWhole?.audio}
+          <!-- W3.4: at three or more states the say button is NOT here — it is
+               above, in the scrolling content, drawn by the Paradigm itself.
+               `no-say` therefore covers both reasons the say slot can be empty:
+               a chart with no whole-paradigm clip (εἰμί), and a three-plus
+               bundle whose say button is deliberately unpinned. Either way the
+               remaining control centres on its own line (§4.5). -->
+          <div class="hint-paradigm-controls"
+               class:no-say={!hintPairToggle || !hintParadigm.sayWhole?.audio}
                data-hint-paradigm-controls data-hint-ref={activeHintRef}
                data-state-index={hintParadigmIndex}>
-            {#if hintParadigm.sayWhole?.audio}
+            {#if hintPairToggle && hintParadigm.sayWhole?.audio}
               <button class="btn secondary" data-hint-paradigm-say
                       data-audio-id={hintParadigm.sayWhole.audio}
                       on:click={() => play(hintParadigm.sayWhole.audio)}>

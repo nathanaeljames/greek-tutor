@@ -386,12 +386,20 @@ button { font: inherit; cursor: pointer; }
 .modal-note { margin: 0; font-size: 0.9rem; color: var(--teal-dark); font-weight: 600; }
 /* The pinned footer. flex: 0 0 auto keeps it out of the scroll entirely, so
    the escape from a dialog is on screen from the moment it opens and stays
-   there while the content moves behind it. The soft top edge separates it
-   from content scrolling underneath. */
+   there while the content moves behind it.
+   THE ONE DIVIDER (amended §4.3, DISCLOSURE-SPEC2 W3.2). It is a thin 1px line
+   rather than the soft box-shadow gradient it used to be: the amended rule
+   asks for a divider with a strip of light padding above AND below it, and a
+   12px shadow fading into the content is neither crisply one nor clearly
+   padded. margin-top is the padding above the line, padding-top the padding
+   below it, so neither the scrolling content nor the buttons ever touch it
+   (review item 2, panes a and c). Every modal in the app shares this footer,
+   which is the point: the review found five different compositions across the
+   chapters, and there is one here. */
 .modal-actions { flex: 0 0 auto;
   display: flex; flex-direction: column; gap: 8px;
-  margin-top: 16px; padding-top: 12px; background: var(--card);
-  box-shadow: 0 -10px 12px -12px rgba(0, 0, 0, 0.35); }
+  margin-top: 12px; padding-top: 10px; background: var(--card);
+  border-top: 1px solid rgba(0, 0, 0, 0.10); }
 .modal-actions .btn { width: 100%; min-height: 44px; }
 /* 5G-SPEC3: a two-state Hint keeps Say Paradigm and its target-labelled
    disclosure control together in the pinned footer. The toggle is always the
@@ -661,26 +669,32 @@ button { font: inherit; cursor: pointer; }
 .rc-greekword.greek-say { width: auto; color: var(--link); }
 .rc-greekgloss { color: var(--teal-dark); overflow-wrap: anywhere; }
 .rc-syllables { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
-/* R2 / DISCLOSURE-RULES §3.1 — THE ONE ACCORDION LOOK, every category, every
-   chapter, no exceptions: green (#1f5f57) summary text, caret to the LEFT in
-   the same green, NEVER underlined, and always collapsed by default. The ch2
-   "6 Accent Rules" screen is the in-app model.
-   What went: the card frame (border, radius, cream fill) and the ink summary.
-   The frame was a per-expander box, and a C2 rule list draws one accordion
-   under EVERY numbered item — six boxed cards stacked down a page read as six
-   separate things rather than as six disclosures of one list. Without the
-   frame the summary is a line of the page that opens, which is what the rule
-   describes.
-   The former summaryStyle:"green" special case is GONE as a distinction: it is
-   now simply what every summary does. The key is still harmless in data (see
-   RichContent's expander branch, which no longer reads it).
+/* DISCLOSURE-RULES §3.1 as AMENDED 2026-08-17 — THE ONE ACCORDION LOOK, every
+   category, every chapter, no exceptions but Meanings: a BOX (1px #ddd6c2,
+   rounded, filled one visible step lighter than the card it sits on) with the
+   title in green (#1f5f57), the caret to its left in the same green, NEVER
+   underlined, ALWAYS collapsed by default.
+   THIS SUPERSEDES THE BORDERLESS RENDER DISCLOSURE-SPEC1 SHIPPED. SPEC1 read
+   §3.1 as green-text-and-caret and dropped the frame, reasoning that six boxed
+   cards down a C2 rule list would read as six separate things. The device pass
+   (Disclosure_Spike_Review.pdf item 1) rejected that outright: the approved
+   variation from the 2026-08-14 accordion experiments is the BOXED one, and
+   what the amendment adds to it is only the green title. Pane (f) of that item
+   is the target and the boxes in the "6 Accent Rules" panes are it on a real
+   rule list — so the box is what distinguishes a disclosure from the prose
+   around it, and the green title is what marks it as tappable.
+   PADDING IS MINIMAL and deliberately smaller than the pre-SPEC1 11px/13px,
+   which the same review called out as inflated (item 1(b)).
    NOT underlined is load-bearing, not a leftover: R1 gives in-text links the
    same green WITH an underline, and the underline is the whole difference
-   between "opens a modal" and "opens in place". The single exception is
-   Meanings (§3.9, .pg-meanings-toggle below), which is a chart affordance
-   rather than page content. */
-.rc-expander { margin: 8px 0; }
-.rc-expander summary { padding: 4px 0; color: var(--teal-dark); font-weight: 600;
+   between "opens a modal" and "opens in place". The single exception to all of
+   this is Meanings (rule 9, .pg-meanings-toggle below), a chart affordance
+   rather than page content, which this round does not touch.
+   The former summaryStyle:"green" special case remains gone as a distinction:
+   it is simply what every summary does. */
+.rc-expander { margin: 8px 0; border: 1px solid #ddd6c2; border-radius: 10px;
+  background: #fffdf3; }
+.rc-expander summary { padding: 7px 10px; color: var(--teal-dark); font-weight: 600;
   cursor: pointer; text-decoration: none; }
 /* Two marker pseudo-elements, because two engines. ::marker is the standard one
    (Chrome, Firefox, Safari 16+); ::-webkit-details-marker is what older iOS
@@ -688,10 +702,14 @@ button { font: inherit; cursor: pointer; }
    caret ink on half the devices this app is used on. */
 .rc-expander summary::marker { color: var(--teal-dark); }
 .rc-expander summary::-webkit-details-marker { color: var(--teal-dark); }
-/* The body hangs under the summary TEXT, past the caret, so a disclosure reads
-   as belonging to the line that opened it. 1.15em is the disclosure triangle
-   plus its gap at the summary's own font size. */
-.rc-expander-body { padding: 2px 0 10px 1.15em; }
+/* NO SECOND INDENT INSIDE THE BOX (amended §3.1). The body used to hang at
+   1.15em, past the caret, so a disclosure read as belonging to the line that
+   opened it. With a box around it that reasoning no longer holds and the
+   result is a double indent — the box insets the text once and the padding
+   inset it again, which is what item 1(d)/(e) flagged as displaying badly.
+   The BOX determines text placement now: the body starts at the box's own
+   padding edge, aligned under the summary's own left inset. */
+.rc-expander-body { padding: 0 10px 8px; }
 
 .pending-verification { border: 1px dashed #a66a18; border-radius: 8px; background: #fff6df;
   color: #70460d; padding: 12px; text-align: center; font-weight: 600; }
@@ -982,34 +1000,32 @@ button { font: inherit; cursor: pointer; }
 .pg-legend-text { min-width: 0; overflow-wrap: break-word; }
 .pg-closing { margin-top: 10px; font-size: 0.85rem; line-height: 1.4; }
 .pg-note { margin-top: 8px; color: var(--ink); font-size: 0.88rem; line-height: 1.4; }
-/* ---- R3 / DISCLOSURE-RULES §4.3: THE CONTROL ROW IS PINNED ----
-   The say-all button plus its navigation control (the §4.1 toggle or the §4.2
-   Back/More pair) is a NAVIGATION SURFACE. It must be on screen from the moment
-   a chart is disclosed and must never scroll out of view while the learner is
-   reading a chart taller than the viewport (chapter 8's Third Person Paradigm
-   is the tall case).
-   TWO HOSTS, TWO MECHANISMS, one rule:
-     modal  .pg-modal-host makes the chart a flex COLUMN inside the dialog, so
-            .pg-body is the scroller and .pg-controls sits outside it entirely
-            — the same shape .modal / .modal-scroll / .modal-actions already
-            uses, and for the same reason (a sticky footer inside a scroller
-            hangs wrong at rest; a flex footer has no such state).
-     main   position: sticky, which holds the row at the bottom of the app's
-            scroller while the chart it belongs to is on screen and releases it
-            once the chart is past. The offset is ZERO, not --chrome-bottom:
-            .scroll-area is a flex sibling of the tab bar inside .app, so its
-            own bottom edge already sits above the bar and subtracting the
-            bar's height again would float the row a tab bar clear of the
-            content. (--chrome-bottom is for .modal-overlay, which is
-            position: fixed against the visual viewport and therefore does have
-            to subtract it. Two different containing blocks, two different
-            answers — worth saying because taking the modal's number here is
-            the obvious wrong move.)
-   Only a row that actually carries navigation is pinned (.pg-pinned-controls,
-   set by the component): a Quick Review page's per-chart say-all is an audio
-   button, not pagination (§4.6), and pinning two stacked charts' say-alls would
-   put two competing bars over each other. */
-.pg-controls { background: var(--card); }
+/* ---- DISCLOSURE-RULES §4.3 as AMENDED 2026-08-17: PINNING IS MODALS ONLY ----
+   MAIN-CONTENT PINNING IS REVOKED. DISCLOSURE-SPEC1 pinned Learn-page control
+   rows with `position: sticky`, reading §4.3's "sticky at the panel bottom in
+   main content" literally. The device review revoked it outright — "my comment
+   about pinning the nav items applies ONLY to nav items in modals" — and named
+   the visible cost: a dark divider drawn across the ch4 Masculine Declension
+   page between Meanings and the say-all row (review item 2(a)). The sticky rule
+   and its divider are DELETED rather than narrowed, so there is no
+   main-content pinning left to configure. A Learn page's control row scrolls
+   with its chart like the rest of the chart.
+   IN A MODAL the composition is fixed, top to bottom (review pane f):
+     the scrolling content
+     a thin strip of light padding      <- .pg-body's own padding-bottom
+     ONE divider                        <- .pg-controls' border-top
+     a thin strip of light padding      <- .pg-controls' padding-top
+     AT MOST ONE pinned line of navigation
+     Close
+   Neither the content nor the buttons ever butt against the divider (panes a
+   and c are the butting to avoid), and NO divider ever separates the nav line
+   from Close (panes b and e are that mistake) — which is why .modal-actions
+   drops its own divider whenever a pinned line precedes it, immediately below.
+   .pg-modal-host makes the chart a flex COLUMN inside the dialog, so .pg-body
+   is the scroller and .pg-controls sits outside it entirely — the same shape
+   .modal / .modal-scroll / .modal-actions already uses, and for the same reason
+   (a sticky footer inside a scroller hangs wrong at rest; a flex footer has no
+   such state). */
 .paradigm.pg-modal-host { display: flex; flex-direction: column; min-height: 0;
   flex: 1 1 auto; }
 /* {#key chart} wraps the body and the controls in a keyed block, which renders
@@ -1017,11 +1033,18 @@ button { font: inherit; cursor: pointer; }
    two children directly and no extra wrapper rule is needed. */
 .pg-modal-host .pg-body { flex: 1 1 auto; min-height: 0; overflow-y: auto;
   -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
-.pg-modal-host .pg-controls { flex: 0 0 auto; padding-top: 4px;
-  box-shadow: 0 -10px 12px -12px rgba(0, 0, 0, 0.35); }
-.paradigm.pg-pinned-controls:not(.pg-modal-host) .pg-controls {
-  position: sticky; bottom: 0; z-index: 2;
-  padding-bottom: 6px; box-shadow: 0 -10px 12px -12px rgba(0, 0, 0, 0.35); }
+/* The padding ABOVE the divider has to come from the scroller, not from the
+   footer: it is the gap the content stops short at when scrolled to the end. */
+.pg-modal-host .pg-body { padding-bottom: 10px; }
+.pg-modal-host .pg-controls { flex: 0 0 auto; background: var(--card);
+  border-top: 1px solid rgba(0, 0, 0, 0.10); padding-top: 10px; }
+/* NO SECOND DIVIDER, and no gap that reads like one. When the paradigm pins a
+   nav line, .modal-actions follows it directly and its own top divider would be
+   the second of two — the exact composition panes (b) and (e) were marked wrong
+   for. The 8px is .modal-actions' own flex gap, so Close sits the same distance
+   below the nav line as it would below any sibling button. */
+.paradigm.pg-pins-nav + .modal-actions { margin-top: 8px; padding-top: 0;
+  border-top: none; box-shadow: none; }
 /* The original keeps Say Whole Paradigm / Endings INSIDE the chart frame. */
 .pg-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
 .pg-actions.pg-actions-each { display: grid;

@@ -33,6 +33,10 @@ const check = (name, ok, detail = '') => {
 
 const GREEN = 'rgb(31, 95, 87)';     // --teal-dark / --accent-ink #1f5f57
 const BLUE = 'rgb(22, 99, 199)';     // --link #1663c7
+// The amended §3.1 accordion box: 1px #ddd6c2, filled one step lighter than the
+// #fdf9e7 card it sits on.
+const BOX_BORDER = '1px/solid/rgb(221, 214, 194)';
+const BOX_FILL = 'rgb(255, 253, 243)';
 
 const DATA = 'src/data';
 const chapterFiles = readdirSync(DATA).filter(name => /^chapt-\d+\.json$/.test(name)).sort();
@@ -144,6 +148,9 @@ const shot = async name => {
   const wrongColour = [];
   const underlined = [];
   const markupLeak = [];
+  const unboxed = [];
+  const indented = [];
+  const padding = new Set();
   let seen = 0;
   for (const [chapterId, chapter] of chapters) {
     for (const activity of activitiesOf(chapter)) {
@@ -155,12 +162,22 @@ const shot = async name => {
         const found = await page.locator('details.rc-expander').evaluateAll(nodes => nodes.map(node => {
           const summary = node.querySelector('summary');
           const style = summary ? getComputedStyle(summary) : null;
+          const box = getComputedStyle(node);
+          const body = node.querySelector('.rc-expander-body');
           return {
             label: (summary ? summary.textContent : '').trim(),
             open: node.open,
             color: style ? style.color : '',
             decoration: style ? style.textDecorationLine : '',
-            hasU: !!(summary && summary.querySelector('u'))
+            hasU: !!(summary && summary.querySelector('u')),
+            // AMENDED §3.1: the box, and the absence of a second indent inside it.
+            border: `${box.borderTopWidth}/${box.borderTopStyle}/${box.borderTopColor}`,
+            background: box.backgroundColor,
+            summaryPad: style ? `${style.paddingTop}/${style.paddingLeft}` : '',
+            bodyIndent: body
+              ? Math.round(parseFloat(getComputedStyle(body).paddingLeft)
+                - parseFloat(style ? style.paddingLeft : '0'))
+              : 0
           };
         }));
         for (const entry of found) {
@@ -170,6 +187,11 @@ const shot = async name => {
           if (entry.color !== GREEN) wrongColour.push(`${where} ${entry.color}`);
           if (entry.decoration !== 'none' || entry.hasU) underlined.push(where);
           if (entry.label.includes('[[')) markupLeak.push(where);
+          if (entry.border !== BOX_BORDER || entry.background !== BOX_FILL) {
+            unboxed.push(`${where} ${entry.border} on ${entry.background}`);
+          }
+          if (entry.bodyIndent > 1) indented.push(`${where} +${entry.bodyIndent}px`);
+          padding.add(entry.summaryPad);
         }
       }
     }
@@ -179,6 +201,21 @@ const shot = async name => {
   check(`D2.3 R2 no accordion summary is underlined`, underlined.length === 0, underlined.join(', '));
   check(`D2.4 R2 no accordion label prints inline markup`, markupLeak.length === 0, markupLeak.join(', '));
   check(`D2.5 R2 the sweep actually found accordions to judge`, seen >= 20, `${seen} seen`);
+  // NEW IN DISCLOSURE-SPEC2 (amended §3.1). SPEC1 shipped these borderless; the
+  // device review (item 1) rejected that and named the approved variation: a
+  // box, one step lighter than the card, with the title in green.
+  check(`D2.6 §3.1 all ${seen} accordions are a BOX: 1px #ddd6c2 on #fffdf3`,
+    unboxed.length === 0, unboxed.slice(0, 6).join(', '));
+  // Item 1(d)/(e): the body was hanging past the caret, which put a second
+  // indent inside a box that already insets its text. The box determines
+  // placement now, so the body starts level with the summary.
+  check(`D2.7 §3.1 no accordion body is indented past its summary`,
+    indented.length === 0, indented.slice(0, 6).join(', '));
+  // Item 1(b) flagged ch1 Six Points' padding as inflated relative to the rest.
+  // Every accordion in the app resolving to ONE padding value is what makes
+  // that impossible to reintroduce, whatever the host.
+  check(`D2.8 §3.1 every accordion has the SAME minimal summary padding`,
+    padding.size === 1, [...padding].join(' | '));
 }
 
 // ===========================================================================
@@ -430,44 +467,46 @@ const shot = async name => {
 }
 
 // ===========================================================================
-// D8. R3/§4.3 — the control row never scrolls out of view
+// D8. §4.3 AS AMENDED 2026-08-17 — PINNING IS MODALS ONLY
 // ---------------------------------------------------------------------------
-// Measured, not asserted from a class name: the row's box has to be inside the
-// viewport with the surface scrolled to its very bottom AND at its very top.
-// "Sticky" that only holds at one end is the bug this rule was written from.
+// REWRITTEN FOR DISCLOSURE-SPEC2. D8.1 used to assert the opposite of what it
+// asserts now: that on a taller-than-viewport LEARN page the control row stayed
+// on screen at both ends of the scroll. The device review revoked main-content
+// pinning outright ("my comment about pinning the nav items applies ONLY to nav
+// items in modals"), so the check is inverted rather than deleted — a row that
+// sticks again is a regression, and nothing else would catch it.
 {
-  // A SHORT viewport, deliberately: the rule only says anything where the chart
-  // is taller than the screen, and at 390x780 chapter 8's chart fits. 390x480
-  // is an iPhone SE in landscape, which is a real device state and is the
-  // shortest portrait-ish box the app supports.
+  // Same short viewport the old assertion used, for the same reason: the rule
+  // only says anything where the chart is taller than the screen.
   await page.setViewportSize({ width: 390, height: 480 });
   await go('#/activity/chapt_8/c8_learn_third_person');
   await gotoTopic(1);
-  const rowVisible = async () => page.locator('.paradigm .pg-controls').first().evaluate(node => {
-    const box = node.getBoundingClientRect();
-    const port = document.querySelector('.scroll-area').getBoundingClientRect();
-    return box.top >= port.top - 1 && box.bottom <= port.bottom + 1;
-  });
   // The app scrolls .scroll-area, not the document (.app is a fixed-height flex
-  // column between the two bars), so that is the box the row has to hold inside
-  // and that is what gets scrolled here.
+  // column between the two bars).
   const scrollTo = where => page.locator('.scroll-area').evaluate((node, to) => {
     node.scrollTop = to === 'end' ? node.scrollHeight : 0;
   }, where);
-  await scrollTo('top');
-  await page.waitForTimeout(120);
-  const atTop = await rowVisible();
   const tallEnough = await page.locator('.scroll-area')
     .evaluate(node => node.scrollHeight > node.clientHeight + 40);
+  await scrollTo('top');
+  await page.waitForTimeout(120);
+  const navTopAtStart = await page.locator('.paradigm .pg-nav').first()
+    .evaluate(node => node.getBoundingClientRect().top);
   await scrollTo('end');
   await page.waitForTimeout(150);
-  const atBottom = await rowVisible();
-  check('D8.1 §4.3 ch8 Third Person: the control row is on screen at BOTH ends of a taller-than-viewport page',
-    tallEnough && atTop && atBottom, `tall ${tallEnough}, top ${atTop}, bottom ${atBottom}`);
-  await shot('ch8-third-person-pinned-row');
+  const navTopAtEnd = await page.locator('.paradigm .pg-nav').first()
+    .evaluate(node => node.getBoundingClientRect().top);
+  const scrolled = await page.locator('.scroll-area').evaluate(node => node.scrollTop);
+  check('D8.1 §4.3 ch8 Third Person LEARN page: the control row SCROLLS with its chart (main-content pinning revoked)',
+    tallEnough && scrolled > 40 && Math.abs((navTopAtStart - navTopAtEnd) - scrolled) <= 2,
+    `moved ${Math.round(navTopAtStart - navTopAtEnd)}px against ${Math.round(scrolled)}px of scroll`);
+  check('D8.1b §4.3 nothing anywhere in main content computes to position: sticky',
+    await page.locator('.scroll-area .pg-controls, .scroll-area .pg-nav, .scroll-area .pg-actions')
+      .evaluateAll(nodes => nodes.every(n => getComputedStyle(n).position !== 'sticky')));
+  await shot('ch8-third-person-learn-unpinned');
   await page.setViewportSize({ width: 390, height: 780 });
 
-  // In a modal the row is a flex footer OUTSIDE the scroller — the same shape
+  // In a MODAL the row is a flex footer OUTSIDE the scroller — the same shape
   // .modal-actions uses, and for the same reason (a sticky footer hangs wrong
   // at rest). Proven by scrolling the modal body to its end and finding the row
   // unmoved, with the dialog's own Close still beneath it.
@@ -478,12 +517,140 @@ const shot = async name => {
   await page.waitForTimeout(150);
   const after = await page.locator('.modal .pg-controls').boundingBox();
   const closeBox = await page.locator('.modal .modal-actions .btn').last().boundingBox();
-  check('D8.2 §4.3 ch3 drill Hint: the control row does not move when the chart scrolls, and Close is below it',
+  check('D8.2 §4.3 ch3 drill Hint: the pinned line does not move when the chart scrolls, and Close is below it',
     before && after && Math.abs(before.y - after.y) <= 1 && closeBox.y >= after.y + after.height - 1,
     `y ${before && Math.round(before.y)} -> ${after && Math.round(after.y)}`);
-  check('D8.3 §4.3 the pinned row is OUTSIDE the scroller (nothing in .pg-body)',
+  check('D8.3 §4.3 the pinned line is OUTSIDE the scroller (nothing in .pg-body)',
     await page.locator('.modal .pg-body .pg-controls').count() === 0);
-  await shot('ch3-hint-pinned-controls');
+  await shot('ch3-hint-pinned-line');
+}
+
+// ===========================================================================
+// D13. §4.3 — THE MODAL FOOTER COMPOSITION, EVERY MODAL IN THE APP
+// ---------------------------------------------------------------------------
+// New in DISCLOSURE-SPEC2. The device review found FIVE different compositions
+// across the chapters (item 2, panes a-e), so this walks every modal the app
+// can open and measures the one composition against all of them at once:
+//
+//   at most ONE pinned line of navigation, and only in a modal;
+//   a say button is pinned only when a nav control shares its line;
+//   exactly ONE divider, between the scrolling content and the pinned block;
+//   NO divider between the nav line and Close;
+//   neither the content nor the buttons butt against the divider.
+//
+// A "divider" is read as a computed border-top or box-shadow, because the two
+// are interchangeable to the eye and a fix that swapped one for the other would
+// otherwise pass.
+{
+  const MODALS = [
+    ['ch3 Parsing Drill hint (2-state: say + Endings)', '#/activity/chapt_3/c3_drill_parsing', 'hint', 'toggle'],
+    ['ch4 Greek Noun hint (2-chart: say + More)', '#/activity/chapt_4/c4_drill_greek_noun', 'hint', 'toggle'],
+    ['ch5 Declining Noun hint (single chart, NO nav)', '#/activity/chapt_5/c5_drill_declining', 'hint', 'none'],
+    ['ch5 Article Drill hint (2-chart named)', '#/activity/chapt_5/c5_drill_article', 'hint', 'toggle'],
+    ['ch7 Adjective Case Drill hint (2-chart named)', '#/activity/chapt_7/c7_drill_case', 'hint', 'toggle'],
+    ['ch8 Personal Pronoun Case hint (3 charts)', '#/activity/chapt_8/c8_drill_case', 'hint', 'pair'],
+    ['ch8 Autos Translation hint (4 pages)', '#/activity/chapt_8/c8_drill_translation_autos', 'hint', 'pair'],
+    ['ch9 Parsing hint (composite, 2 states)', '#/activity/chapt_9/c9_drill_parsing', 'hint', 'toggle'],
+    ['ch2 Syllable Division hint (prose, no nav)', '#/activity/chapt_2/c2_ex_syllable_division', 'hint', 'none'],
+    ['ch3 Learn Verbs Endings modal (no nav)', '#/activity/chapt_3/c3_learn_verbs', 'endings', 'none'],
+    ['ch6 preposition popup (no nav)', '#/activity/chapt_6/c6_learn_prepositions', 'popup', 'none']
+  ];
+  const readFooter = () => page.locator('.modal').last().evaluate(modal => {
+    const divider = el => {
+      if (!el) return false;
+      const s = getComputedStyle(el);
+      return parseFloat(s.borderTopWidth) > 0 || (s.boxShadow && s.boxShadow !== 'none');
+    };
+    const actions = modal.querySelector('.modal-actions');
+    // Every element between the scroller and Close that holds a control.
+    const pinnedLines = [...modal.querySelectorAll(
+      ':scope > .paradigm > .pg-controls, :scope > .pg-controls, .modal-actions > .pg-nav, .modal-actions > [data-hint-paradigm-controls], .modal-actions > [data-hint-page-controls]')];
+    const scroller = modal.querySelector('.modal-scroll, .pg-body');
+    const close = [...modal.querySelectorAll('.modal-actions .btn')].pop();
+    return {
+      pinnedLines: pinnedLines.length,
+      // A say button counts as pinned only if it is inside a pinned line.
+      pinnedSays: pinnedLines.reduce((n, line) =>
+        n + line.querySelectorAll('.pg-say-whole, [data-hint-paradigm-say]').length, 0),
+      pinnedNavs: pinnedLines.reduce((n, line) =>
+        n + line.querySelectorAll('.pg-switch, .hint-paradigm-toggle, [data-hint-page-nav]').length, 0),
+      dividers: [...modal.querySelectorAll('.pg-controls, .modal-actions')].filter(divider).length,
+      // The nav line and Close must not be separated by one.
+      dividerBetweenNavAndClose: pinnedLines.length > 0
+        && pinnedLines.some(line => line.parentElement !== actions) && divider(actions),
+      // Nothing touches the divider: measured as real vertical space between
+      // the scroller's content edge and the first pinned/footer box.
+      gapAboveDivider: scroller ? Math.round(parseFloat(getComputedStyle(scroller).paddingBottom)
+        || parseFloat(getComputedStyle(scroller.parentElement).paddingBottom) || 0) : 0,
+      gapBelowDivider: Math.round(parseFloat(getComputedStyle(
+        pinnedLines.find(l => l.parentElement !== actions) || actions).paddingTop) || 0),
+      closeIsLast: !!close && /close|cancel/i.test(close.textContent)
+    };
+  });
+  for (const [label, hash, how, expect] of MODALS) {
+    await go(hash);
+    if (how === 'hint') {
+      await page.getByRole('button', { name: 'Hint', exact: true }).click();
+    } else if (how === 'endings') {
+      await gotoTopic(2);
+      await page.locator('.pg-endings-open').first().click();
+    } else {
+      await gotoTopic(1);
+      await page.locator('.rc-sense-link').first().click();
+    }
+    await page.waitForSelector('.modal', { timeout: 8000 });
+    await page.waitForTimeout(200);
+    const f = await readFooter();
+    check(`D13 ${label}: at most ONE pinned line, and it is ${expect === 'none' ? 'absent' : 'present'}`,
+      f.pinnedLines <= 1 && (expect === 'none' ? f.pinnedLines === 0 : f.pinnedLines === 1),
+      JSON.stringify(f));
+    check(`D13 ${label}: a say button is pinned only beside a nav control`,
+      expect === 'toggle' ? f.pinnedNavs >= 1 : f.pinnedSays === 0,
+      `${f.pinnedSays} pinned says, ${f.pinnedNavs} pinned navs`);
+    check(`D13 ${label}: exactly ONE divider, and none between the nav line and Close`,
+      f.dividers === 1 && !f.dividerBetweenNavAndClose,
+      `${f.dividers} dividers, between-nav-and-close ${f.dividerBetweenNavAndClose}`);
+    check(`D13 ${label}: padding above and below the divider (nothing butts against it)`,
+      f.gapAboveDivider >= 6 && f.gapBelowDivider >= 6,
+      `above ${f.gapAboveDivider}px, below ${f.gapBelowDivider}px`);
+    check(`D13 ${label}: Close is the last control in the footer`, f.closeIsLast);
+  }
+}
+
+// ===========================================================================
+// D14. §4.6 as AMENDED — NO PAGER ON ANY REVIEW PAGE, APP-WIDE
+// ---------------------------------------------------------------------------
+// The rationale the amendment adds is that a Review page must be PRINTABLE, so
+// this is a total sweep rather than a spot check: every quickReview activity in
+// all ten chapters, asserting the absence of pagination and the presence of one
+// say-all per chart that carries one.
+{
+  const offenders = [];
+  const sayCounts = [];
+  for (const [chapterId, chapter] of chapters) {
+    for (const activity of chapter.quickReview || []) {
+      if (!activity || !activity.id) continue;
+      await go(`#/activity/${chapterId}/${activity.id}`);
+      const pagers = await page.locator('.card .pg-switch, .card .pg-nav').count();
+      if (pagers) offenders.push(`${chapterId}/${activity.id} (${pagers})`);
+      const charts = activity.paradigms || (activity.paradigm ? [activity.paradigm] : []);
+      if (charts.length > 1) {
+        const wants = charts.filter(c => c.sayWhole || activity.sayWhole).length;
+        const got = await page.locator('.card .pg-say-whole').count();
+        const grids = await page.locator('.card .paradigm .pg-grid').count();
+        sayCounts.push(`${activity.id} ${grids} charts/${got} says (want ${charts.length}/${wants})`);
+        if (got !== wants || grids !== charts.length) {
+          offenders.push(`${chapterId}/${activity.id} stacked ${grids}/${charts.length}, says ${got}/${wants}`);
+        }
+      }
+    }
+  }
+  check('D14.1 §4.6 zero pagers on every Review page in chapters 1-10',
+    offenders.length === 0, offenders.join('; '));
+  check('D14.2 §4.6 every multi-chart Review page stacks all its charts, one say-all each',
+    sayCounts.length >= 4, sayCounts.join('; '));
+  await go('#/activity/chapt_8/c8_qr_third');
+  await shot('ch8-qr-third-stacked');
 }
 
 // ===========================================================================
@@ -715,6 +882,77 @@ if (SHOTS) {
   await wide.close();
   await go('#/activity/chapt_9/c9_drill_vocab_gk_en');
   await shot('ch9-vocab-pool-390px-two-up');
+}
+
+// ===========================================================================
+// D15. §3.5 as AMENDED — QUALIFIED "Examples" TITLES
+// ---------------------------------------------------------------------------
+// New in DISCLOSURE-SPEC2. The amendment INVERTS the bare-"Examples" rule: a
+// C2 accordion takes "<Qualifier> Examples" wherever a one-or-two-word
+// qualifier exists, the chapter-3 pattern, even when the qualifier repeats the
+// term visible in the rule above it. The 27 relabelled accordions are read off
+// the shipped data and then matched against the screen, so the check cannot
+// pass by agreeing with itself.
+{
+  const expected = [];
+  for (const [chapterId, chapter] of chapters) {
+    for (const activity of activitiesOf(chapter)) {
+      if (!activity || !activity.id) continue;
+      (function scan(node) {
+        if (Array.isArray(node)) return node.forEach(scan);
+        if (!node || typeof node !== 'object') return;
+        if (node.type === 'expander' && /Examples$/.test(node.label || '')) {
+          expected.push({ chapterId, id: activity.id, label: node.label });
+        }
+        for (const value of Object.values(node)) scan(value);
+      })(activity);
+    }
+  }
+  const bare = expected.filter(e => e.label === 'Examples');
+  check('D15.1 §3.5 no bare "Examples" label survives in the shipped data',
+    bare.length === 0, bare.map(b => `${b.chapterId}/${b.id}`).join(', '));
+  // ...and every qualified label actually reaches the screen as plain text.
+  const byActivity = new Map();
+  for (const e of expected) {
+    const key = `${e.chapterId}/${e.id}`;
+    byActivity.set(key, [...(byActivity.get(key) || []), e.label]);
+  }
+  const missing = [];
+  for (const [key, labels] of byActivity) {
+    const [chapterId, id] = key.split('/');
+    await go(`#/activity/${chapterId}/${id}`);
+    const chapter = chapters.get(chapterId);
+    const activity = activitiesOf(chapter).find(a => a && a.id === id);
+    const topics = (activity.topics || []).length || 1;
+    const seen = new Set();
+    for (let topic = 0; topic < topics; topic++) {
+      if (topic) await gotoTopic(1);
+      for (const text of await page.locator('details.rc-expander summary').allInnerTexts()) {
+        seen.add(text.replace(/\s+/g, ' ').trim());
+      }
+    }
+    for (const label of labels) if (!seen.has(label)) missing.push(`${key} "${label}"`);
+  }
+  check(`D15.2 §3.5 all ${expected.length} qualified "Examples" labels render as authored`,
+    missing.length === 0, missing.join(', '));
+  // §3.5's Greek clause: a Greek word inside an accordion TITLE is a control
+  // label like an option button, NOT an audio tap. It must not be blue and must
+  // not carry a handler — the whole point of stating it was that ch7's three
+  // titles now contain Greek.
+  await go('#/activity/chapt_7/c7_learn_eimi');
+  await gotoTopic(3);
+  const greekTitles = await page.locator('details.rc-expander summary').evaluateAll(nodes =>
+    nodes.map(n => ({
+      text: n.textContent.trim(),
+      color: getComputedStyle(n).color,
+      taps: n.querySelectorAll('button, .greek-tap').length
+    })));
+  check('D15.3 §3.5 the ch7 Greek-qualified titles are control labels: green, no tap target inside',
+    greekTitles.length === 3
+      && greekTitles.every(t => t.color === GREEN && t.taps === 0)
+      && greekTitles.map(t => t.text).join('|') === 'οὐ Examples|οὐκ Examples|οὐχ Examples',
+    JSON.stringify(greekTitles));
+  await shot('ch7-greek-qualified-labels');
 }
 
 // ===========================================================================

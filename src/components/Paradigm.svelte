@@ -17,6 +17,7 @@
   import { splitTaps } from '../lib/greek.js';
   import EndingsGrid from './EndingsGrid.svelte';
   import MeaningsCard from './MeaningsCard.svelte';
+  import ParadigmActions from './ParadigmActions.svelte';
   export let paradigm;
   export let title = null;
   // The control row (Say Paradigm, and the switch where a chart has one)
@@ -140,12 +141,33 @@
   // jump. The say/endings row above it no longer counts the switch.
   $: hasActions = !!chart.sayWhole || !!chart.endings || sayWholeEach.length > 0
     || twoChartToggle;
-  // §4.3: the say-all plus its navigation control is a NAVIGATION SURFACE and
-  // must never scroll out of view. A row with no navigation in it is not one —
-  // a Quick Review page's per-chart say-all is an audio button, and §4.6 keeps
-  // those exactly where the charts are, which is also what stops two stacked
-  // charts from pinning two competing bars over each other.
-  $: pinnedControls = hasSwitch || endingsInline;
+  // §4.3 AS AMENDED 2026-08-17. Pinning happens in MODALS ONLY, at most one
+  // line, and only when that line carries navigation.
+  //
+  // What this replaces: DISCLOSURE-SPEC1 read §4.3's "sticky at the panel
+  // bottom in main content" literally and pinned Learn-page control rows too.
+  // The device review revoked it in as many words ("my comment about pinning
+  // the nav items applies ONLY to nav items in modals"), so `pinnedControls`
+  // and its sticky rule are gone rather than narrowed — there is no
+  // main-content pinning left to configure.
+  //
+  // `pinNav`     is there a pinned line at all? Only in a modal, and only with
+  //              a navigation control to put on it. A say button is NEVER
+  //              pinned alone (review item 2(c)).
+  // `pinActions` does the say-all row share that line? Only in the two-screen
+  //              composition, where the toggle sits beside it (pane f). At
+  //              three-plus the pinned line is the Back/More pair and the say
+  //              button stays in the scrolling content with its chart, which
+  //              is what keeps this to ONE pinned line.
+  $: navControl = twoChartToggle || endingsInline ? 'toggle' : (hasMoreBackNav ? 'pair' : null);
+  $: pinNav = modalHost && !actionsPinned && !!navControl;
+  $: pinActions = pinNav && navControl === 'toggle' && hasActions;
+  // The row's whole resolved presentation, handed to ParadigmActions as one
+  // object so the two placements cannot be given different halves of it.
+  $: actionState = {
+    showingEndings, endingsInline, endingsState, endingsSayLabel, endingsToggleLabel,
+    sayWholeEach, twoChartToggle, toggleLabel, switchKind, namedTarget
+  };
   $: moreLabel = (switchLabels && switchLabels[chartIndex + 1])
     || (charts[chartIndex + 1] && charts[chartIndex + 1].switchLabel) || 'More';
   $: backLabel = (switchLabels && switchLabels[chartIndex - 1])
@@ -192,7 +214,7 @@
   class:pg-three-columns={columns.length === 3}
   class:pg-many-columns={columns.length > 3}
   class:pg-modal-host={modalHost}
-  class:pg-pinned-controls={pinnedControls && !actionsPinned}
+  class:pg-pins-nav={pinNav}
   data-chart-index={chartIndex}
   data-chart-count={charts.length}
   data-chart-name={chart.name || ''}
@@ -334,74 +356,60 @@
       <div class="pg-note">{#each splitTaps(chart.note, chart.noteTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => play(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}</div>
     {/if}
 
+    <!-- THE SAY-ALL ROW, IN FLOW. It scrolls with its chart everywhere except
+         a two-screen modal, which is the only composition that pins it
+         (amended §4.3: a say button is never pinned unless a navigation
+         control shares its line). That covers main content, a three-plus modal
+         and a modal with no navigation at all. -->
+    {#if !actionsPinned && hasActions && !pinActions}
+      <ParadigmActions {chart} state={actionState}
+                       on:toggleEndings={toggleEndings}
+                       on:openEndings={openEndings}
+                       on:switchChart={event => switchChart(event.detail)} />
+    {/if}
+    <!-- The §4.2 pair, in flow, when this is not a modal. -->
+    {#if hasMoreBackNav && !pinNav}
+      <div class="pg-nav">
+        <button
+          class="btn secondary pg-switch pg-switch-back"
+          data-paradigm-switch="back"
+          data-target-index={chartIndex - 1}
+          disabled={chartIndex <= 0}
+          on:click={() => switchChart(chartIndex - 1)}>{backLabel}</button>
+        <button
+          class="btn secondary pg-switch pg-switch-more"
+          data-paradigm-switch="more"
+          data-target-index={chartIndex + 1}
+          disabled={chartIndex >= charts.length - 1}
+          on:click={() => switchChart(chartIndex + 1)}>{moreLabel}</button>
+      </div>
+    {/if}
     </div><!-- /.pg-body -->
 
-    <!-- W4/§4.3: the say-all and its navigation control are ONE row block, so
-         a stack that has both (chapter 8's Third Person: Say Whole Paradigm
-         over a Back/More pair) pins as one surface instead of two competing
-         sticky bars. -->
-    {#if !actionsPinned && (hasActions || hasMoreBackNav)}
+    <!-- THE ONE PINNED LINE (amended §4.3). Exactly one line, only in a modal,
+         and only when it carries navigation:
+           two-screen   the say-all and the single toggle, together
+           three-plus   the Back/More pair alone; the say button stayed above,
+                        in the scrolling content, with its chart
+         A modal with no navigation renders nothing here at all, so Close is
+         the only thing below the divider. Every wrong composition the device
+         review found (item 2, panes a-e) is a violation of one of those two
+         sentences. -->
+    {#if pinNav}
       <div class="pg-controls">
-        {#if hasActions}
-          <div class="pg-actions" class:pg-actions-each={sayWholeEach.length > 0} style={`--pg-action-count:${sayWholeEach.length || 1}`}>
-            {#if showingEndings}
-              <!-- §4.4: the replaced state's own say button, in the SAME slot
-                   and class as Say Whole Paradigm. This is where D-10's clip
-                   now lives; nothing plays on the state change itself. -->
-              <button class="btn secondary pg-say-whole pg-say-endings"
-                      data-audio-id={chart.endings.audio || ''}
-                      disabled={!chart.endings.audio}
-                      on:click={() => chart.endings.audio && play(chart.endings.audio)}>{endingsSayLabel}</button>
-            {:else if chart.sayWhole}
-              <button class="btn secondary pg-say-whole" on:click={() => play(chart.sayWhole.audio)}>{chart.sayWhole.label || 'Say Whole Paradigm'}</button>
-            {/if}
-            {#each sayWholeEach as action, actionIndex}
-              <button
-                class="btn secondary pg-say-whole pg-say-whole-each"
-                data-action-index={actionIndex}
-                on:click={() => action.audio && play(action.audio)}>
-                {action.label || 'Say Whole Paradigm'}
-              </button>
-            {/each}
-            {#if chart.endings}
-              {#if endingsInline}
-                <!-- R4: in a modal host the Endings control is an IN-PLACE
-                     two-state toggle, not a button that opens a second modal
-                     on top of the first (§4.4, broken item 3). -->
-                <button class="btn secondary pg-switch pg-endings-toggle"
-                        data-paradigm-switch="endings"
-                        data-target-state={endingsState ? 'paradigm' : 'endings'}
-                        on:click={toggleEndings}>{endingsToggleLabel}</button>
-              {:else}
-                <!-- W5.4: from MAIN content the Endings button still opens its
-                     own single-level modal. One level is not stacking, and the
-                     chapter-3 Learn page is device-verified that way. -->
-                <button class="btn secondary pg-endings-open" on:click={openEndings}>{chart.endings.label || 'Endings'}</button>
-              {/if}
-            {/if}
-            {#if twoChartToggle}
-              <!-- R5/§4.1: ONE toggle on the say-all line, naming the chart it
-                   goes to. `named` reads Singular/Plural; `moreBack`
-                   alternates More/Back for a contrast with no one-word name. -->
-              <button
-                class="btn secondary pg-switch pg-switch-named"
-                data-paradigm-switch="named"
-                data-switch-kind={switchKind}
-                data-target-index={namedTarget}
-                on:click={() => switchChart(namedTarget)}>
-                {toggleLabel}
-              </button>
-            {/if}
-          </div>
+        {#if pinActions}
+          <ParadigmActions {chart} state={actionState}
+                           on:toggleEndings={toggleEndings}
+                           on:openEndings={openEndings}
+                           on:switchChart={event => switchChart(event.detail)} />
         {/if}
         {#if hasMoreBackNav}
           <!-- 5F-PATCH3 addendum (Nathanael, 2026-08-10, after user testing):
                BOTH buttons render on EVERY page of the stack, as a centred pair —
                the invalid direction is greyed out (disabled), never removed, so
-               nothing ever jumps or disappears while paging. This supersedes the
-               item-27 left/right fixed-slot model. Since DISCLOSURE-SPEC1 W6 it
-               is reached only at THREE OR MORE charts (§4.2); a two-chart stack
-               takes the single toggle above. -->
+               nothing ever jumps or disappears while paging. Since
+               DISCLOSURE-SPEC1 W6 it is reached only at THREE OR MORE charts
+               (§4.2); a two-chart stack takes the single toggle instead. -->
           <div class="pg-nav">
             <button
               class="btn secondary pg-switch pg-switch-back"
