@@ -981,7 +981,12 @@
      ],
      "_note": "D-31 AMENDED 2026-08-15: number-marker popups retired app-wide (DISCLOSURE-RULES §6.3). Each numbered item carries an interspersed C2 \"Examples\" accordion holding the former popup body (wordUsage block: headword, gloss, condition, example verses). Greek words remain ordinary audio taps."
     }
-   ]
+   ],
+   "audioMap": {
+    "οὐκ": "chapt_7_g_ouk",
+    "οὐχ": "chapt_7_g_oux"
+   },
+   "_audioMap_note": "ADDED 2026-08-18 (Disclosure_Verify_Response.pdf B2 response; DISCLOSURE-RULES 4.7 hand-cursor rule): the original shows the hand cursor on all three rule lines; ou resolves via lexicon lemma, these two inflected forms are wired here, same mechanism as ch8 pronoun forms. Clips already exist and play from the accordion headwords."
   },
   {
    "id": "c7_learn_vocab",

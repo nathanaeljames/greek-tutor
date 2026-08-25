@@ -8,6 +8,10 @@ DISCLOSURE-SPEC1 device pass (Disclosure_Spike_Review.pdf, checked
 clean of strikethrough): §3.1 boxed accordion style, §3.5 qualified
 "Examples" titles, §4.3 pinning restricted to modals with a fixed
 footer composition, §4.6 no-pager enforcement on Quick Review.
+FURTHER AMENDED 2026-08-18 (Disclosure_Verify_Response.pdf, checked
+clean of strikethrough): §3.2 green-underline exclusivity and title
+links; §4.3 divider verification at forced scroll; §4.7 hint-modal
+source fidelity and the hand-cursor rule.
 Governs how every piece of chapter content is
 disclosed: accordion vs modal vs flowing scroll vs paged. Sits
 alongside DRILL-BEHAVIOR-RULES.md (drill behaviour) and
@@ -98,6 +102,18 @@ header in the original?** Header → C6. No header → C5.
 2. **In-text links (C3)**: green, underlined, open a modal. Numbers
    are never part of the link even where the original linked only the
    number ("Pronoun", not "4. Pronoun").
+   AMENDED 2026-08-18: GREEN UNDERLINE IS EXCLUSIVE TO TAPPABLE
+   ELEMENTS, app-wide. Nothing non-tappable may render green and
+   underlined; an audit found no ratified exceptions (the Meanings
+   label is green underlined AND tappable, so it conforms). Underline
+   flags or `[[u]]` markup on non-tappable chart headers, column
+   labels, or control labels render WITHOUT the underline — the
+   `headerUnderline` data key becomes inert provenance, like
+   `numberPopupRef` (the ch8 Number chart is the found case). Topic
+   TITLE links (`titleLink` — ch9 Deponent Verbs, ch10 Future of
+   εἰμί) are in-text links and take this same green underlined style;
+   they were missed by the R1 conversion and no rule ever ratified
+   them blue.
 3. **In-chart triggers (C3)**: keep their existing appearance — the
    gloss itself is the hot text; no green underline (it would collide
    with the blue Greek-tap convention).
@@ -164,6 +180,14 @@ header in the original?** Header → C6. No header → C5.
    - A say button is NEVER pinned unless a navigation control shares
      its line. A modal with no navigation pins nothing above Close.
    (D-38 remains the slot rule: Back left, More right.)
+   VERIFICATION (added 2026-08-18): in EVERY railwalk, every modal is
+   checked at forced scroll — resize until the content must scroll,
+   then confirm the light padding appears ABOVE and BELOW the divider
+   with no extra or doubled padding on either side. The 2026-08-18
+   review found the two-screen and three-plus footers had drifted
+   apart (ch7 correct, ch8 double-padded below and bare above); the
+   fix is one divider owner with symmetric padding, regardless of
+   footer composition.
 4. **Never stack modals.** A control inside a modal replaces that
    modal's content in place; it does not open a second modal on top
    (broken item 3). Replaced states that carry audio get their own
@@ -188,6 +212,18 @@ header in the original?** Header → C6. No header → C5.
    Person page was cited as the C9 in-app model while it still paged
    — the model is its STACKED render, not what shipped before this
    amendment.)
+7. **Hint-modal source fidelity and the hand cursor** (added
+   2026-08-18, from the ch5 First Declension hint finding): a drill
+   hint is transcribed from its OWN original screen, never assumed
+   identical to the Learn chart it resembles — the original hint may
+   print rows the Learn chart merges (ch5 prints Nom. and Voc. as
+   separate rows in the hint while merging them elsewhere). Row
+   structure is NEVER merged or collapsed unless the original screen
+   being transcribed merges it. And the HAND CURSOR in a railwalk
+   marks clickable content: any Greek the original shows a hand
+   cursor over gets a tap in the port (the ch7 οὐ/οὐκ/οὐχ rule lines
+   are the found case). Both are visual-verification checklist items
+   in every railwalk from now on.
 
 ## 5. Data-model vocabulary (pipeline)
 

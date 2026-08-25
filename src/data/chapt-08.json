@@ -891,15 +891,16 @@
                "greek": "αὐτὸ τὸ πνεῦμα συμμαρτυρεῖ",
                "gloss": "The Spirit itself beareth witness",
                "ref": "Rom 8:16",
-               "audio": "chapt_8_h_ex3r1"
+               "audio": "chapt_8_h_ex3r2"
               },
               {
                "greek": "Ἰησοῦς αὐτὸς οὐκ ἐβάπτιζεν",
                "gloss": "Jesus himself did not baptize",
                "ref": "Jn 4:2",
-               "audio": "chapt_8_h_ex3r2"
+               "audio": "chapt_8_h_ex3r1"
               }
-             ]
+             ],
+             "_audio_note": "CORRECTED 2026-08-18 (Disclosure_Verify_Response.pdf item 5): the two example clips were crossed at extraction; ex3r2 speaks the pneuma verse, ex3r1 the Iesous verse. Swap verified by ear by Nathanael before the fix was authored."
             }
            ]
           }

@@ -164,6 +164,30 @@ infer behavior from a feedback string.**
 
 ---
 
+### B-last. Initial load (added 2026-08-18, Disclosure_Verify_Response.pdf item 1)
+
+Sequence-stepped activities NEVER start empty. Any activity the user
+advances with Previous/Next (Learn steppers, Learn Vocabulary in every
+chapter, pronounce-letter exercises, sequence-driven drills) loads its
+FIRST item on mount, exactly as if Next had been pressed once, and
+pronounces it on load if and only if that activity pronounces on
+advance (its ledger `TARGET audioTiming` / pronounceEach defaults --
+`beforeGuess` and Learn-stepper pronounce-on-advance behaviors fire on
+the initial item too). "Click Next to begin" screens are retired for
+this class.
+
+Selection-driven activities (ledger `audioTiming: afterTap` and any
+activity where the USER picks the item -- ch1 Letter Names and Sounds
+Drill is the named model) keep their empty start: the first answer
+appears when the first selection is made. Their instruction lines
+("Click on a letter...") stay.
+
+When in doubt, the test is: does pressing Next produce the first item
+(sequence-stepped -> auto-load), or does the user choose it
+(selection-driven -> empty start)? Every activity changed or exempted
+under this rule is listed in the implementing round's RESULTS with its
+ledger row.
+
 ## C. Spelling exercises
 
 **C0. A correct answer auto-advances**, exactly as everywhere else
