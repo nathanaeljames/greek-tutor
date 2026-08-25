@@ -763,3 +763,22 @@ nothing marking them as vocabulary, so they miss D-19's 4-up iPad
 layout. When those files are next open for any reason, add the pool
 marker the implementer named (`pool` or `promptFrom.lexicon`); the
 renderer already handles it. Not worth its own round.
+
+
+## Rich-document inspection (PERMANENT, 2026-08-25 — supersedes the PDF-only strikethrough rule)
+
+Every provided rich-text document — PDF, Excel/any spreadsheet, Word —
+is INSPECTED, not just text-extracted, before its content is treated
+as ratified:
+
+- STRIKETHROUGH: struck content is VOID (pdfplumber line-vs-glyph-
+  midline geometry for PDFs; run properties for docx; cell font
+  strike for xlsx).
+- COLOR CODING: cell fills and font colors carry meaning, especially
+  in spreadsheets. Extract them alongside values; if a color's
+  semantics are not already established in the conversation, ASK
+  before acting on the rows it marks.
+
+Plain-text extraction silently drops both, and that loss has caused
+repeated failures across projects. This rule applies to every
+document in every round, both pipeline and grader seats.

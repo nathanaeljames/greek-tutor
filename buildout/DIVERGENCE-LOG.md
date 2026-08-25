@@ -505,6 +505,32 @@ D-48f3e | ch10 | THE εἰμί HINT GETS THE SAME TWO-STATE TREATMENT,
      is flagged for reversal; reversing it is a two-line change. |
      Implementer, 5G-SPEC3 §2.
 
+D-49 | app | DISCLOSURE SPIKE CLOSED (SPEC1/2/3 + XPATCH + padding
+     patch; accepted head cc89c9f). The rule canon is DISCLOSURE-
+     RULES.md as amended 2026-08-17 and 2026-08-18 and DRILL-BEHAVIOR-
+     RULES.md B-last; this entry is the pointer, not the restatement.
+     Supersessions to note: the SPEC1 borderless accordion and main-
+     content sticky are REVOKED by the amendments; D-38's footer
+     placement is superseded by the §4.3 one-divider composition (the
+     Back-left/More-right slot rule survives); D-10's Endings autoplay
+     is replaced by an explicit say button; number-marker popups
+     (D-31) stayed retired. New standing behaviors: initial-load
+     (B-last, census 13/202/4 pinned by ui-disclosure3), one-shot
+     keyboard Shift, viewport re-measure + clamp (device soak
+     pending), green-underline exclusivity with headerUnderline
+     inert, §4.7 hint-modal source fidelity + hand-cursor rule. |
+     Nathanael, Disclosure_Spike_Review.pdf +
+     Disclosure_Verify_Response.pdf.
+
+D-50 | process | THREE PERMANENT PROCESS RULES (2026-08-25):
+     (1) wall-clock time mandatory every round, addenda add to the
+     main total; (2) the BUILD document IS the complete exact git
+     diff; (3) every rich-text document (PDF, spreadsheet, Word) is
+     inspected for strikethrough AND color coding before its content
+     is treated as ratified. Grader auto-penalties enforce (1) and
+     (2). Recorded here because repeated requests were repeatedly
+     missed by both implementers. | Nathanael, 5H prep message.
+
 ## Auto-progress / advance rule matrix
 
 MOVED. The full exercise-by-exercise, chapter-by-chapter matrix —

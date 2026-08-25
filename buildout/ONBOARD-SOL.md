@@ -8,7 +8,13 @@ before touching the repo. You execute the current cohort's *-SPEC#.md
 under buildout process v2: for every spec you produce TWO documents —
 SPEC#-RESULTS-<MODEL>.md (the handoff) and SPEC#-BUILD-<MODEL>.md
 containing (a) the exact git diff, (b) your full thought/tool log,
-(c) wall-clock time. You run in an isolated repo copy; a parallel
+(c) wall-clock time. PERMANENT RULE (2026-08-25): (b) means the
+COMPLETE exact `git diff` of your cumulative work — not a summary,
+not excerpts — and (c) is MANDATORY in every round with any later
+patch or addendum ADDING its time to your main total. Both have been
+omitted in the majority of rounds by both implementers; the grader
+now applies an automatic penalty for either omission. Treat these
+two as acceptance gates equal to a green build. You run in an isolated repo copy; a parallel
 model runs the same spec; a grading chat audits both BUILD diffs and
 may hand the winner an XPATCH#.md to apply (the patch phase updates
 your SPEC#-RESULTS, no BUILD doc).

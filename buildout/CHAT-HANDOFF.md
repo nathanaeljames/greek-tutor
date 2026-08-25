@@ -15,40 +15,52 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
 internet. Full license from the author. Secondary goal: portfolio
 piece. Nathanael goes by "Fable" when addressing Claude (chat).
 
-## Live state (2026-08-16 — 5G CLOSED, DISCLOSURE-SPEC1 next)
+## Live state (2026-08-25 — DISCLOSURE SPIKE CLOSED, 5H NEXT)
 
-Cohort 5G (chapters 9-10) is CLOSED. Three implementation rounds ran:
-5G-SPEC1 (+XPATCH1), 5G-SPEC2 (+XPATCH2), 5G-SPEC3 (+XPATCH3). The Sol
-tree won SPEC2 and SPEC3; the accepted head is `bbf5a6b`.
+The disclosure spike is CLOSED and merged: DISCLOSURE-SPEC1 (Opus win,
+no XPATCH), DISCLOSURE-SPEC2 (Opus solo), DISCLOSURE-SPEC3 (Opus win;
+Sol XPATCH ported the ui-disclosure3 census harness and the ui-walk
+location-proven console waiver), plus a same-day modal-padding patch
+(RESULTS §12). Accepted head: `cc89c9f`. Tally: Sol 4, Opus 10, Ties 0
+(Opus total includes solo rounds). All ten chapters' data is committed
+and disclosure-conformant; nothing is staged.
 
-What 5G settled beyond the chapters themselves:
+What the spike settled (canon lives in DISCLOSURE-RULES.md, amended
+2026-08-17 and 2026-08-18, and DRILL-BEHAVIOR-RULES.md B-last):
 
-- The ch10 Parsing Drill answer key is WALKTHROUGH-VERIFIED 30/30. The
-  original reveals the correct trio in blue on every wrong answer, so
-  an answered-screen walkthrough is a FULL KEY, not just eliminations.
-  It found a real defect: the six future-eimi items grade Future
-  ACTIVE, not the morphological Middle the pipeline derived (D-45).
-- Both translation drills verified the same way (ch9 14/14, ch10 30/31
-  covered, zero contradictions). Answered-screen capture of every
-  TRANSLATION-type drill is now part of the recon rail-walk standard:
-  parsing drills are machine-verifiable, translation answers are not.
-- "Repeat This Exercise" is DELIBERATELY REJECTED (D-42 retired) and is
-  now guarded at BUILD TIME by check-content-shapes.mjs.
-- Form-dependent Hints exist in the original (D-46): the payload can
-  depend on the ITEM. Watch for this at recon in every future chapter.
-- Two-state hint toggles shipped for ch9 (Middle/Passive), ch10
-  (Active/Middle) and eimi (Present/Future); labels are DERIVED from
-  chart titles by paradigmToggleLabels() (D-48f1/f2/f3/f3e).
+- Accordions are BOXED (green title, left caret, #fffdf3 on #fdf9e7,
+  minimal padding, no inner indent); Meanings is the sole exception.
+- "<Qualifier> Examples" titles everywhere; bare "Examples" only when
+  no short qualifier exists. Greek allowed in titles as inert control
+  labels.
+- Pinning is MODALS ONLY; one footer composition (one divider, padding
+  above and below MEASURED as painted strips, nav line never divided
+  from Close); say buttons never pinned alone; 3+ modals pin only the
+  Back/More pair. The D13 harness measures strips, not declarations —
+  declared padding passed on a build the eye rejected.
+- Review (C9) pages NEVER page, regardless of chart names (printable).
+- Green underline is EXCLUSIVE to tappable elements; headerUnderline
+  is inert provenance; title links (titleLink) are green.
+- Sequence-stepped activities load item 1 on mount (pronounce per
+  advance behavior); selection-driven keep their empty start
+  (DRILL-BEHAVIOR-RULES B-last). Census pinned by ui-disclosure3:
+  13 changed / 202 already-loaded / 4 exempt over 219 activities.
+- Hints transcribe their OWN original screens (§4.7); rows never merge
+  unless the original merges; the railwalk HAND CURSOR is binding for
+  tappability. The ch5 hint chart was rebuilt from ch5railwalk.pdf.
+- Speller keyboard has a one-shot Shift (bottom-left, width from the
+  spacebar); capitals map through one table, tiles and physical alike.
+- The half-screen modal bug: root-caused to a stale --modal-vh
+  (missed resize on iOS resume with keyboard height snapshotted);
+  fixed with pageshow/visibilitychange/focusout/modal-open re-measure
+  plus a plausibility clamp. DEVICE SOAK STILL PENDING — the fix is
+  proven at the trigger level, not yet over days of real use.
 
-Step 0, the ten-chapter disclosure data pass, is DONE. chapt-09/10 are
-in the repo. chapt-01..08 + lexicon-chapt08 are STAGED, NOT COMMITTED:
-they carry shapes the current renderer does not know (termList,
-wordUsage, the ch1 Six Points expander) and would break live screens if
-they landed before DISCLOSURE-SPEC1 implements R1-R7.
-
-Immediate next: DISCLOSURE-SPEC1 — R1-R7 app-wide plus those nine data
-files. Budget a full window; checkpoint discipline required (cumulative
-BUILD diff, resumable visual checklist). Tally: Sol 4, Opus 7, Ties 0.
+Gates at close: shapes/build/lazy-chunk green; ui-disclosure 206/206;
+ui-disclosure3 73/73; ui-behavior 902/902; ui-modals 155/155; ui-walk
+105 stops x 2 widths clean; offline 44 stops. Standing debt:
+check:docs fails on ~45 docs from a CRLF-vs-LF guard defect (pre-
+existing, cause documented in DISCLOSURE-SPEC1 RESULTS §7.1).
 
 ## Buildout process v2 (established 2026-07-26; applies to buildout phases)
 
@@ -63,8 +75,11 @@ Per-cohort loop with fixed document naming (# = round number):
 4. BOTH implementer models (currently Sol/Codex and Opus-class/Claude
    Code) execute the same SPEC# in isolated repo copies. Each returns
    SPEC#-RESULTS-<MODEL>.md (the handoff; replaces HANDOFF-* naming)
-   and SPEC#-BUILD-<MODEL>.md: exact git diff + full thought/tool log
-   + wall-clock time. Specs must instruct producing both.
+   and SPEC#-BUILD-<MODEL>.md: the COMPLETE exact git diff + full
+   thought/tool log + wall-clock time. Specs must instruct producing
+   both. PERMANENT (2026-08-25): wall-clock and the full diff are
+   MANDATORY every round; addenda and patches add their time to the
+   main total; the grader auto-penalizes either omission.
 5. The grading chat (GRADER-PROMPT.md v2) audits claims against the
    BUILD diffs, grades, picks the winner, and when justified emits
    XPATCH#.md porting the loser's superior pieces onto the winner.
@@ -386,6 +401,27 @@ files carry only what a new chat needs.
 - **Check PDFs for STRIKETHROUGH before treating text as ratified.**
   Text extraction drops it silently; test rule/line geometry against
   glyph midlines (pdfplumber). Struck passages are VOID.
+- **RICH DOCUMENTS ARE INSPECTED, NOT JUST EXTRACTED (PERMANENT,
+  2026-08-25, supersedes the PDF-only form above).** Every provided
+  document in a rich-text format — PDF, Excel/spreadsheet, Word —
+  is checked for STRIKETHROUGH and for COLOR CODING (cell fills and
+  font colors, especially in spreadsheets) before its content is
+  treated as ratified. Nathanael uses both liberally and their loss
+  in plain-text extraction has caused repeated failures. Struck
+  content is VOID; color semantics are surfaced and asked about if
+  their meaning is not already established.
+- **WALL-CLOCK TIME IS MANDATORY IN EVERY ROUND (PERMANENT,
+  2026-08-25).** Every spec instructs it, every RESULTS/BUILD reports
+  it, and every follow-up patch or addendum ADDS its time to the main
+  implementation's total. Both implementers have omitted it in the
+  MAJORITY of rounds despite repeated requests — the grader now
+  applies an automatic penalty when it is missing (GRADER-PROMPT).
+  There are no rounds without wall-clock values.
+- **THE BUILD DOCUMENT IS THE FULL GIT DIFF (PERMANENT, 2026-08-25).**
+  A BUILD doc without the complete, exact `git diff` of the round's
+  cumulative work has failed its one purpose. Summaries, excerpts, or
+  "see the tree" do not satisfy it. The grader applies an automatic
+  penalty when the full diff is absent.
 
 ## Audio semantics cheat-sheet (most-relitigated facts)
 
@@ -408,27 +444,37 @@ files carry only what a new chat needs.
   i_rm623b pre-ships in CHAPT_8). Full taxonomy:
   buildout/5C-RECON-FINDINGS.md §3.
 
-## Immediate queue (2026-08-16)
+## Immediate queue (2026-08-25)
 
-1. **DISCLOSURE-SPEC1** — the big round. R1-R7 app-wide plus consuming
-   chapt-01..08 + lexicon-chapt08 (staged, see Live state). Nathanael
-   intends to draft it in a FRESH CHAT with the ISO and project files.
-2. After it merges: mirror chapt-01/06/07/08 + lexicon-chapt08 to the
-   project files (the mirror follows the repo, never leads it).
-3. Cohort 5H (chapters 11-12) opening: rail walks first, resize check
-   on the provisional 11-28 grouping, translation-drill answered-screen
-   capture per the new recon standard.
-
-Standing pipeline debt: the phi-arisaios redMarkCluster off-by-one.
+1. **Cohort 5H opens: chapters 11-12 (Demonstratives; Imperfect).**
+   Launch in a FRESH CHAT with the project files and the ISO (the ISO
+   does not persist across conversations and extraction needs it).
+   Recon first, per the standard: rail-walk PDFs for both chapters,
+   answered-screen capture for every TRANSLATION-type drill, watch for
+   form-dependent hints (D-46), resize check on the provisional 11-28
+   grouping (title sweep surfaced extra activities in 11 and 13).
+   Ledger rows for the new chapters' drills before any spec.
+2. Extraction pipeline: assemble_ch11/ch12 assemblers with Stage 8.7
+   provenance banners and post_patches() guards; new-chapter data
+   passes are DISCLOSURE-CONFORMANT FROM BIRTH (boxed-accordion
+   labels with qualifiers, no bare "Examples", C2 interspersing,
+   hints from their own screens, hand-cursor tap wiring, C9 stacked
+   review pages, initial-load classification per B-last).
+3. VERIFY-DISCLOSURE3 residue rides along: the half-screen fix device
+   soak, Shift-key feel, ch8 swapped clips by ear, ch7 rule-line taps,
+   title-link green — confirm during normal 5H device use, no
+   dedicated round needed unless something fails.
 
 ## Known open questions
 
-- **Centred navigation when a chart has no say-all button** (new,
-  2026-08-16, from the eimi hint screenshot): where there is no Say
-  Paradigm button, the toggle / More-Back control must be CENTRED
-  rather than sitting where the pair would have been. Recorded in
-  DISCLOSURE-RULES section 4.6; folded into DISCLOSURE-SPEC1 R3.
-- The eimi two-state hint extension (D-48f3e) was DERIVED from
-   DISCLOSURE-RULES 4.1, not requested. Its objection window is open;
-   reversing it is a two-line change.
+- **Half-screen modal fix awaits its device soak** (VERIFY-DISCLOSURE3
+  item 1): trigger-level proof exists; days-of-use confirmation does
+  not. If it recurs, the clamp threshold and trigger set in
+  src/lib/viewport.js are the knobs.
+- **check:docs CRLF guard defect** (~45 false failures, documented
+  DISCLOSURE-SPEC1 RESULTS §7.1): fix the guard's normalizer or the
+  blob/working-tree comparison in a future round; it is noise today.
+- The eimi two-state hint extension (D-48f3e) objection window
+  remains open; reversing it is a two-line change.
 - Cohort 5H+ grouping remains provisional pending each cohort opening.
+- Standing pipeline debt: the phi-arisaios redMarkCluster off-by-one.

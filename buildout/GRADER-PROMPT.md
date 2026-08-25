@@ -42,6 +42,14 @@ which model produced which.
 
 ## Grading procedure — in order
 
+0. AUTOMATIC PENALTIES (PERMANENT, 2026-08-25), applied before any
+   quality judgment: a RESULTS/BUILD set missing the wall-clock time,
+   or a BUILD doc missing the COMPLETE exact git diff, drops that
+   model's round grade by one full letter per omission. A follow-up
+   patch that does not add its time to the main total counts as a
+   missing wall clock. These were requested repeatedly and omitted in
+   the majority of rounds; the penalty is not discretionary.
+
 ### Step 1: Claims-vs-BUILD audit (FIRST, before judgment)
 The BUILD document is your evidence base. For each model, trace every
 acceptance claim and every "what changed" claim in the RESULTS
