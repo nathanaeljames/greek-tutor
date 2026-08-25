@@ -181,7 +181,8 @@ const report = {
   overflow320: [],
   railErrors: [],
   interactionErrors: [],
-  consoleErrors: []
+  consoleErrors: [],
+  waivedConsole: []
 };
 
 const activityFor = (data, id) => Object.values(data)
@@ -340,10 +341,21 @@ for (const size of WIDTHS) {
   page.on('console', m => {
     if (m.type() !== 'error') return;
     const t = m.text();
-    // Known preview artifacts, not bugs (CHAT-HANDOFF): revoked blob: URLs on
-    // fast route exits and /audio/* with no audio shipped to the preview.
-    if (/ERR_FILE_NOT_FOUND|blob:|\/audio\//.test(t)) return;
-    report.consoleErrors.push({ width: size.name, url: page.url(), text: t });
+    const locationUrl = m.location().url || '';
+    // A resource-load error is waived ONLY when the message and its
+    // location URL together prove blob/audio teardown (revoked blob: URL
+    // or an /audio/ path released on route exit). Anything else — any
+    // generic 404, any script or asset failure — stays a walk failure.
+    // Waiving by text alone is how a real missing asset would hide behind
+    // teardown noise; the location is what makes the proof.
+    const resourceLoadError = /Failed to load resource|ERR_FILE_NOT_FOUND/.test(t);
+    const teardownProven = /blob:|\/audio\//.test(locationUrl);
+    if (resourceLoadError && teardownProven) {
+      // Waived, not silent: a waiver that leaves no trace is a blind spot.
+      report.waivedConsole.push({ width: size.name, url: page.url(), text: t, locationUrl });
+      return;
+    }
+    report.consoleErrors.push({ width: size.name, url: page.url(), text: t, locationUrl });
   });
   page.on('pageerror', e => report.consoleErrors.push({ width: size.name, url: page.url(), text: String(e) }));
 
@@ -537,7 +549,13 @@ console.log(clipped.length ? `HORIZONTAL OVERFLOW: ${clipped.length} stops` : `n
 console.log(report.railErrors.length ? `RAIL ERRORS: ${report.railErrors.length}` : 'all rail counts and Next actions are live');
 console.log(report.interactionErrors.length ? `INTERACTION ERRORS: ${report.interactionErrors.length}` : 'all authored expanders and chart states opened');
 console.log(report.consoleErrors.length ? `CONSOLE ERRORS: ${report.consoleErrors.length}` : 'no console errors');
+// Every waiver is named even on a green walk: an unreported waiver is a
+// standing hole in the walk's console coverage that nobody would ever see.
+console.log(report.waivedConsole.length
+  ? `WAIVED (blob/audio teardown, location-proven): ${report.waivedConsole.length}`
+  : 'no waived console messages');
 if (report.railErrors.length) console.log(JSON.stringify(report.railErrors.slice(0, 10), null, 1));
 if (report.interactionErrors.length) console.log(JSON.stringify(report.interactionErrors.slice(0, 10), null, 1));
 if (report.consoleErrors.length) console.log(JSON.stringify(report.consoleErrors.slice(0, 10), null, 1));
+if (report.waivedConsole.length) console.log(JSON.stringify(report.waivedConsole.slice(0, 10), null, 1));
 if (clipped.length || report.railErrors.length || report.interactionErrors.length || report.consoleErrors.length) process.exitCode = 1;

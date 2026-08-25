@@ -16,6 +16,7 @@
     "ui:behavior": "node scripts/ui-behavior.mjs",
     "ui:modals": "node scripts/ui-modals.mjs",
     "ui:disclosure": "node scripts/ui-disclosure.mjs",
+    "ui:disclosure3": "node scripts/ui-disclosure3.mjs",
     "ui:offline": "node scripts/ui-offline.mjs",
     "ui:smoke5f": "node scripts/ui-smoke-5f.mjs",
     "ui:shots5f": "node scripts/ui-shots-5f.mjs",

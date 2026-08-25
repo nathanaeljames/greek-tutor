@@ -851,3 +851,177 @@ and reports zero.
    port has none. If you want a say-all there it is a deliberate divergence
    rather than a restoration, so it needs your word.
 9. **Airplane-mode device pass** (standing).
+
+---
+
+## 11. XPATCH (cross-patch from the parallel Sol run)
+
+Source: the Sol worktree at `f:\greekapp\sol-space` — a sibling repo copy on
+this machine. Port 1 copies a file out of it; the path was not stated in the
+handover, so it was resolved by locating the named file (`sol-space` is the
+only sibling copy and it holds `scripts/ui-disclosure3.mjs`). Nothing was
+reconstructed from the spec's description of the script.
+
+1. **`ui-disclosure3.mjs` census harness adopted** — the exact 13/202/4
+   partition, the 95-row ledger mapping, direct-load probes for every changed
+   and exempt route, and the blocked-autoplay contract are now a standing
+   suite, run as `npm run ui:disclosure3`. Copied byte-for-byte except the one
+   block named below; **not** folded into `ui-disclosure.mjs`.
+
+   **Selector drift: none.** The copied script ran **73/73 on this tree
+   unmodified**, before any adaptation — every route hash, authored top-bar
+   title, readiness selector (`.content > .card`, `.prompt.greek`,
+   `.flash-pane`, `.phonetic-band`, `.tile`, `.fields`/`.field`,
+   `.topbar-title`, `.instructions`, `.toast`), data path
+   (`src/data/chapt-NN.json`, `src/data/lexicon-chaptNN.json`,
+   `buildout/DRILLBEHAVIORLEDGER.csv`) and audio-id contract resolved as
+   authored. So the list of adapted checks below is not a list of selectors
+   that drifted — there were none — it is the single contract the two trees
+   genuinely implement differently.
+
+   **Adapted to this tree's hold-for-first-gesture autoplay contract** (the
+   `W2 iOS block` group; the diff is four hunks, all inside that one block,
+   nothing else in the file touched):
+
+   | Check | What changed |
+   | --- | --- |
+   | `W2 iOS block: item 1 remains visible with Previous disabled` | kept; the settle wait after mount went 250ms -> 650ms, so a clip released by anything other than a gesture — a timer, a retry, a second mount — would surface as a second attempt before this is read |
+   | `W2 iOS block: NotAllowedError is attempted once, caught, and never toasted` | kept, and strengthened: the attempt must now carry `rejected === 'NotAllowedError'`, not merely be counted |
+   | `W2 iOS block: no console or page error escapes` | kept unchanged |
+   | `W2 iOS block: the first gesture releases the held clip, exactly once` | **new** — two attempts total, the second `gestured` and resolved |
+   | `W2 iOS block: the released clip is the held first-item clip and nothing else` | **new** — the released blob's byte length equals the mount attempt's AND equals `public/audio/chapt_1/a_alpha.m4a` on disk (17474 bytes, unique in that directory), and no audio request for any other path follows the gesture |
+   | `W2 iOS block: the release is as silent as the block` | **new** — no toast and no new console or page error after the gesture |
+
+   Two mechanism changes were needed to assert the richer contract, both in the
+   injected shim and neither touching app code:
+
+   - The Sol shim rejects `play()` **forever**. Under it the released clip
+     would reject too, and `play()` (not `playOnLoad`) toasts on a non-block
+     failure — so the shim now refuses every **un-gestured** play and accepts
+     every play once a trusted gesture has reached the window. That is the
+     platform rule `audio.js`'s `armGesture` is written against; a shim that
+     refused forever would be testing a browser nobody ships. The unlock is
+     recorded by capture listeners registered at document-start, so they run
+     before `audio.js`'s armed handler on the same window in the same capture
+     phase — the ordering a real browser gives it.
+   - `URL.createObjectURL` is wrapped to record each blob's byte length. Once
+     `play()` has turned a clip id into an opaque `blob:` URL, the byte length
+     is the only handle left on *which* clip an attempt is for, and the
+     released clip is read from IDB rather than refetched, so the network
+     request cannot identify it a second time.
+
+   The gesture itself is a bare `Shift` keydown — no handler mounted on the
+   `c1_learn_letters` route reads it (`SpellActivity`/`SpellVerseActivity`'s
+   `keydown` handlers are not mounted there), so the gesture releases the clip
+   and does nothing else.
+
+   **Total: 76/76**, delta from 73 named in full: **+3**, all in the
+   blocked-autoplay block (`releases the held clip, exactly once`; `is the held
+   first-item clip and nothing else`; `the release is as silent as the block`).
+   No check was deleted.
+
+   **The rewritten contract proven to bite**, since an adapted assertion that
+   asserts nothing is worse than the one it replaced. `armGesture(id)` in
+   `src/lib/audio.js` was temporarily gated off — which is precisely the
+   parallel tree's suppress-and-stop behavior — and rebuilt:
+
+   ```
+   FAIL  W2 iOS block: the first gesture releases the held clip, exactly once  - 1 attempts total (un-gestured:NotAllowedError)
+   FAIL  W2 iOS block: the released clip is the held first-item clip and nothing else  - /audio/chapt_1/a_alpha.m4a is 17474 bytes; mount played 17474, gesture played undefined; requests after gesture []
+
+   74/76 DISCLOSURE-SPEC3 W2 checks passed.
+   ```
+
+   Two of the three new checks fail; the third (`the release is as silent as
+   the block`) correctly still passes, because suppress-and-stop is silent too
+   — that check guards against noise on release, not against the hold being
+   dropped. `audio.js` restored, rebuilt, 76/76 again. **No app code changed in
+   this patch**; `git diff src/lib/audio.js` is empty.
+
+   **Census proven to count.** `changed.length === 13` changed to `=== 14`:
+
+   ```
+   FAIL  W2.4 exhaustive classification is 13 changed / 202 already-loaded / 4 exempted  - 13 / 202 / 4
+
+   75/76 DISCLOSURE-SPEC3 W2 checks passed.
+   Failures: W2.4 exhaustive classification is 13 changed / 202 already-loaded / 4 exempted
+   ```
+
+   The detail column prints the partition it actually measured (`13 / 202 / 4`)
+   against the mutated expectation, so the discrepancy is named and not merely
+   counted. Constant restored; 76/76 again.
+
+2. **`ui-walk` console strictness** — messages retain their source location;
+   only location-proven blob/audio teardown is waived; a generic 404 fails the
+   walk.
+
+   One correction to the patch spec's premise, because it changes what this
+   buys: this tree's walker was **not** a flat failure list. It carried a
+   text-only waiver, `if (/ERR_FILE_NOT_FOUND|blob:|\/audio\//.test(t)) return;`
+   — broader than the Sol rule and *silent*. So the port is a narrowing and a
+   de-silencing, not a loosening. Under the old rule any message whose text
+   merely contained `ERR_FILE_NOT_FOUND` was waived no matter what resource it
+   came from — a missing image, a bad chunk — and left no trace at all. The new
+   predicate requires the message to be a resource-load error **and** its
+   `location().url` to carry `blob:` or `/audio/`; everything else fails; and
+   every waiver is pushed to `report.waivedConsole` and printed even on a green
+   walk.
+
+   **Proven to bite.** The spec's literal injection cannot fire here:
+   `vite preview`'s SPA fallback answers *every* unmatched path with
+   `index.html` at **200**, so `fetch('/definitely-missing-asset')` produces no
+   404 at all (verified by curl on `/definitely-missing-asset`,
+   `/definitely-missing-asset.png` and `/assets/definitely-missing-asset.js` —
+   all 200). The injection was therefore a route-fulfilled 404 on one stop
+   (`chapt_1/c1_learn_letters`), which delivers exactly the signal the spec
+   asked for — and a **second** injected 404 under `/audio/`, to prove the
+   other arm of the predicate with the identical message text:
+
+   ```
+   CONSOLE ERRORS: 2
+   WAIVED (blob/audio teardown, location-proven): 2
+   [
+    {
+     "width": "320",
+     "url": "http://localhost:4173/#/activity/chapt_1/c1_learn_letters",
+     "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "locationUrl": "http://localhost:4173/xpatch-404-definitely-missing-asset"
+    },
+   ```
+   ```
+   [
+    {
+     "width": "320",
+     "url": "http://localhost:4173/#/activity/chapt_1/c1_learn_letters",
+     "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+     "locationUrl": "http://localhost:4173/audio/chapt_1/xpatch-404-teardown.m4a"
+    },
+   ```
+
+   Same message, both widths, opposite verdicts, decided by the location alone
+   — which is the whole claim. Walk exit code 1. Injection removed; both full
+   walks re-run green on the final code.
+
+   **Waived messages this run: none.** Both spans, both widths, zero waived and
+   zero failed — the audio pack is shipped in this tree, so no teardown noise
+   arose to waive. The reporting line prints `no waived console messages`
+   rather than staying silent about it.
+
+3. **Not ported**, per §3 of the patch spec: the parallel run's W2/W3/W7
+   implementations, its D13 walk, its divider and Shift geometry (converged);
+   its `playOnMount` suppress-and-stop contract (this tree's hold-for-gesture
+   is the richer behavior, and VERIFY item 3 covers how it feels on device);
+   its 226-check `ui-disclosure` bookkeeping; W8 (nothing to reconcile). No app
+   code moved in either direction.
+
+Gates re-run: `check:shapes` PASS, `build` green, `ui:disclosure` **206/206**,
+`ui:disclosure3` **76/76**, `ui:behavior` **902/902**, `ui:walk`
+both spans at both widths — chapt_1-5 **105 stops x 2 widths** and chapt_6-10
+**114 stops x 2 widths**, both exit 0, no horizontal overflow, no rail or
+interaction errors, no console errors, no waived messages. Walk captures were
+written to a scratch directory, so no new screenshot directories were added
+under `buildout/`.
+
+The complete `git diff` of this patch is beside this document in
+[DISCLOSURE-SPEC3-XPATCH-DIFF.md](DISCLOSURE-SPEC3-XPATCH-DIFF.md).
+**Nothing committed, staged, or pushed.**
