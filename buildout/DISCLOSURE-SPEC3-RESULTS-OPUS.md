@@ -1025,3 +1025,132 @@ under `buildout/`.
 The complete `git diff` of this patch is beside this document in
 [DISCLOSURE-SPEC3-XPATCH-DIFF.md](DISCLOSURE-SPEC3-XPATCH-DIFF.md).
 **Nothing committed, staged, or pushed.**
+
+---
+
+## 12. W7 re-landed — the divider strip above the line was not real (A2, 2026-08-25)
+
+Nathanael's device screenshots (ch7 Adjective Translation, ch8 Personal
+Pronoun Case): content and buttons scrolling straight into the divider line,
+zero white above it, on the build §7 reported as verified. He is right, the
+report was wrong, and this section corrects the record before describing the
+fix.
+
+### 12.1 What was actually shipped
+
+W7 drew the one divider as the **scroller's own `border-bottom`**, with the
+scroller's own `padding-bottom` as the light strip above it — reasoning that
+one selector on one element could not drift the way SPEC2's two footer
+selectors had. The reasoning missed a CSS fact: **`overflow-y` clips content
+at the padding box**, not the content box. The scroller's bottom padding is
+inside its own clip region, so scrolling content paints straight through that
+padding to the border. The strip above the line existed at exactly one scroll
+position — the very end, where the content has run out — and at every other
+position the content butted the line. Which is to say: W7 shipped the ch8 BAD
+pane (bare above, padded below) on every modal in the app, visible whenever a
+modal was actually being scrolled, and the GOOD composition only in the
+parked-at-the-end state.
+
+### 12.2 How it passed "visual verification" — answered honestly
+
+D13 did measure every modal state at forced scroll, with a ruler, both sides
+of the line — **after first scrolling every modal to the end of its content**:
+
+```js
+// Scroll to the very end: the strip above the divider is only visible, and
+// only meaningful, once the content has run out.
+if (scroller) scroller.scrollTop = scroller.scrollHeight;
+```
+
+That comment is the defect. "Only visible at the end" was treated as a
+measurement convenience when it was the bug itself: the walk measured the one
+scroll position where the padding-carried strip appears, and blessed 31 modal
+states whose strip did not exist anywhere else. The screenshots the round
+produced were taken in the same parked state. Mid-scroll — the state a person
+reading a chart is actually in — was never measured or photographed. So the
+verification was not skipped; it was aimed at the wrong scroll position, and
+its own reassuring comment said why.
+
+### 12.3 The fix
+
+The strip above the line must live where the scroll clip cannot reach:
+**outside the scroller**, as the pinned block's `margin-top` — a band content
+cannot paint at any scroll position. One authored rule in `src/app.css`
+composes the whole thing from the one token, top to bottom — margin above the
+line, the line, padding below it:
+
+```css
+.modal .modal-actions,
+.modal .pg-modal-host .pg-controls {
+  margin-top: var(--modal-divider-pad);
+  border-top: 1px solid var(--modal-divider-ink);
+  padding-top: var(--modal-divider-pad);
+}
+```
+
+The scroller's `border-bottom`/`padding-bottom` rule is deleted. When a chart
+modal pins its nav line, `.pg-controls` is the block that draws; the existing
+`.paradigm.pg-pins-nav + .modal-actions` override now also strips Close's
+`border-top`, so there is still never a divider between the nav line and
+Close. Two selectors, one rule, one number — the SPEC2 drift W7 feared came
+from two separately-authored compositions, not from the footer as such.
+Comments in `app.css` and `Paradigm.svelte` are rewritten to name the
+clip-at-padding-box rule so the scroller-owner design cannot come back looking
+clever. No data, no component markup, and no behavior changed — the diff is
+CSS plus two comment blocks plus the harness.
+
+Universality: the rule reaches every `.modal-actions` in the app (all eleven
+hosts: hints in SelectActivity, DivideActivity, PlaceAccentActivity, the
+Paradigm endings modal, PopupSheet full-page popups, Settings and its confirm,
+the keyboard reference, the end-of-chapter dialog) and both chart-modal
+footers, which is D13's whole modal list.
+
+### 12.4 D13 rewritten to measure mid-scroll — and proven against the shipped bug
+
+`readFooter` now measures the strip above **mid-scroll, at the clip edge**
+(the band between where content can paint and the line), and again at the end
+of the scroll from the last painted content edge, and every state must show
+the two agreeing within 1px as well as equalling the strip below. The
+end-only measurement is deleted.
+
+Proven to bite against the exact CSS that shipped: `src/app.css` was reverted
+to git HEAD (the broken form), rebuilt, and the rewritten D13 run against it:
+
+```
+FAIL  D13 ch3 Parsing Drill hint (2-state: say + Endings): the strip above the divider equals the strip below it, AT FORCED SCROLL  — scrolls true, above 0px (mid-scroll), below 10px
+FAIL  D13 ch3 Parsing Drill hint (2-state: say + Endings): the strip above the line is the same mid-scroll as at the end of the scroll  — mid-scroll 0px, at end 10px
+```
+
+— and so on across every modal state: `above 0px (mid-scroll), below 10px` is
+the shipped defect stated as a number, and `mid-scroll 0px, at end 10px` is
+the camouflage that hid it from the old walk. Fix restored, rebuilt: all
+strips read 10px/10px at mid-scroll AND at the end, on all 31 states.
+
+Visual confirmation was done by eye this time, on pixels, mid-scroll: the ch8
+Personal Pronoun Case hint with Say Whole Paradigm chopped by the clip edge
+now shows white, line, white below it (the ch7 GOOD composition), and the ch7
+hint likewise. `ui-modals` re-photographed all 155 states to
+`buildout/screenshots/modals-20260825-122910`.
+
+### 12.5 Gates re-run
+
+| Gate | Result |
+| --- | --- |
+| `npm run build` | green |
+| `npm run ui:disclosure` | **237/237** (206 + 31: one mid-scroll-agreement check per D13 modal state) |
+| `npm run ui:modals` | 155/155 modal states clean |
+| `npm run ui:behavior` | **902/902** |
+| `npm run ui:disclosure3` | 76/76 |
+| `ui-walk` chapt_1-5 | 105 stops x 2 widths, exit 0, no overflow, no console errors, no waived messages |
+| `ui-walk` chapt_6-10 | 114 stops x 2 widths, exit 0, no overflow, no console errors, no waived messages |
+
+Walk captures went to scratch directories; the one new directory under
+`buildout/` is the `ui-modals` evidence set named above. **Nothing committed,
+staged, or pushed.**
+
+### 12.6 What VERIFY still needs
+
+Item 2 of §10 (the footer on real WebKit) now includes this specifically: on
+the phone, open a tall hint, scroll it to the MIDDLE, and confirm the white
+strip holds above the line while content moves behind it. Chromium says it
+does; WebKit's scroll compositing is the reason that check exists.
