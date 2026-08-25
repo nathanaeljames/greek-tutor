@@ -393,29 +393,36 @@ button { font: inherit; cursor: pointer; }
 .modal-title { margin: 0 0 8px; font-size: 1.2rem; }
 .modal-body { margin: 0 0 6px; color: var(--ink); }
 .modal-note { margin: 0; font-size: 0.9rem; color: var(--teal-dark); font-weight: 600; }
-/* ---- THE ONE DIVIDER, AND THE ONE THING THAT DRAWS IT (§4.3 as amended
-   2026-08-18; DISCLOSURE-SPEC3 W7) ------------------------------------------
-   THE SCROLLER DRAWS THE LINE. Not the footer, not the pinned control row —
-   the scrolling content's own bottom edge, in every modal in the app, by the
-   single rule below. Everything under it is spaced by `--modal-divider-pad`,
-   the same token the line's own padding-bottom reads.
-   WHY IT MOVED. SPEC2 put the divider on `.modal-actions` and, for a chart
-   modal, a second copy on `.pg-controls` — two selectors that could each draw
-   one, each carrying its own idea of the padding above (a margin here, the
-   scroller's padding there) and the padding below (10px, plus whatever
-   margin-top the control row inside it happened to have). They drifted, which
-   is what the 2026-08-18 review measured: ch7's Adjective Translation footer
-   correct, ch8's Personal Pronoun Case footer bare above the line and doubled
-   below it. Two owners is the defect; one owner is the fix. If a future round
-   is tempted to add a `border-top` to a footer, this is the comment that says
-   why it will reopen the bug.
-   THE PADDING ABOVE IS THE SCROLLER'S OWN, which is also what makes it real
-   when the content scrolls: the content stops short of the line by exactly
-   that strip, at rest and at the end of the scroll alike. The last child's
-   own bottom margin is zeroed so it cannot add a second, invisible strip —
-   that is where the 22px and 24px readings came from. */
-.modal .modal-scroll { padding-bottom: var(--modal-divider-pad);
-  border-bottom: 1px solid var(--modal-divider-ink); }
+/* ---- THE ONE DIVIDER, AND THE ONE RULE THAT DRAWS IT (§4.3 as amended
+   2026-08-18; DISCLOSURE-SPEC3 W7, re-landed 2026-08-25) --------------------
+   THE FIRST PINNED BLOCK UNDER THE SCROLLER DRAWS THE LINE, as one rule:
+   `margin-top` is the light strip ABOVE the line, `border-top` is the line,
+   `padding-top` is the light strip BELOW it — the same token read twice, so
+   the two strips cannot drift apart by composition.
+   WHY THE SCROLLER MUST NOT OWN IT (the 2026-08-25 regression). W7 first put
+   the divider on the scroller — `border-bottom` with its own `padding-bottom`
+   as the strip above — reasoning that one selector was safer than the two
+   that had drifted (review A2, ch7 good / ch8 bad). But `overflow-y` CLIPS AT
+   THE PADDING BOX: scrolling content paints straight through the scroller's
+   own bottom padding to the border, so the "strip above" existed only at the
+   very end of the scroll, and at every other position the content butted the
+   line — Say Whole Paradigm chopped mid-glyph in Nathanael's screenshots.
+   The strip above has to live where the clip cannot reach: OUTSIDE the
+   scroller, as the footer's margin. That margin is unpaintable by content at
+   every scroll position, which is the whole requirement.
+   TWO SELECTORS, ONE RULE. The pinned block is `.modal-actions` in a plain
+   dialog and `.pg-controls` in a chart modal that pins its nav; both are
+   listed in the single rule below, so there is still exactly one authored
+   composition and one number. When a pinned nav line precedes Close, the
+   `.pg-pins-nav + .modal-actions` override strips Close's copy down to a
+   plain button gap — the one divider is already above the nav line, and NO
+   divider ever separates the nav line from Close. */
+.modal .modal-actions,
+.modal .pg-modal-host .pg-controls {
+  margin-top: var(--modal-divider-pad);
+  border-top: 1px solid var(--modal-divider-ink);
+  padding-top: var(--modal-divider-pad);
+}
 /* ...and THE LAST THING IN THE SCROLL KEEPS NO BOTTOM MARGIN OF ITS OWN,
    however deeply it is wrapped. A modal body is usually `.rich > p`, and a
    block's final margin collapses out through its wrappers, so the paragraph's
@@ -443,13 +450,12 @@ button { font: inherit; cursor: pointer; }
 
 /* The pinned footer. flex: 0 0 auto keeps it out of the scroll entirely, so
    the escape from a dialog is on screen from the moment it opens and stays
-   there while the content moves behind it. It draws NO divider of its own
-   (above); the padding-top is the light strip BELOW the one divider, and it is
-   the same token as the strip above. */
+   there while the content moves behind it. Its divider composition — the
+   margin above the line, the line, the padding below it — comes from the one
+   rule above and is not restated here. */
 .modal-actions { flex: 0 0 auto;
   display: flex; flex-direction: column; gap: 8px;
-  margin-top: 0; padding-top: var(--modal-divider-pad); background: var(--card);
-  border-top: none; }
+  background: var(--card); }
 .modal-actions .btn { width: 100%; min-height: 44px; }
 /* 5G-SPEC3: a two-state Hint keeps Say Paradigm and its target-labelled
    disclosure control together in the pinned footer. The toggle is always the
@@ -1074,7 +1080,7 @@ button { font: inherit; cursor: pointer; }
    with its chart like the rest of the chart.
    IN A MODAL the composition is fixed, top to bottom (review pane f):
      the scrolling content
-     a thin strip of light padding      <- .pg-body's own padding-bottom
+     a thin strip of light padding      <- .pg-controls' margin-top (unreachable by the scroll)
      ONE divider                        <- .pg-controls' border-top
      a thin strip of light padding      <- .pg-controls' padding-top
      AT MOST ONE pinned line of navigation
@@ -1102,18 +1108,16 @@ button { font: inherit; cursor: pointer; }
    two children directly and no extra wrapper rule is needed. */
 .pg-modal-host .pg-body { flex: 1 1 auto; min-height: 0; overflow-y: auto;
   -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
-/* W7: `.pg-body`'s own `padding-bottom: 10px` and `.pg-controls`' own
-   `border-top` + `padding-top: 10px` are GONE. In a modal `.pg-body` carries
-   `.modal-scroll` and takes the app's one divider rule with it; the pinned line
-   takes the strip below the line from the same token. What is left here is the
-   flex behaviour, which is genuinely this composition's own.
+/* W7 (re-landed 2026-08-25): `.pg-controls`' divider composition — margin
+   above the line, the line, padding below — comes from the app's ONE divider
+   rule beside `.modal-actions`, up with the modal styles. What is left here is
+   the flex behaviour, which is genuinely this composition's own.
    The inner rows are flattened because they arrived with margins of their own —
    `.pg-actions` 12px, `.pg-nav` 10px — which sat UNDER the 10px strip and made
    the gap below the line 22-23px against 10px above it. That is precisely the
    doubling the review reported on ch8, and zeroing it here is what makes the
    strip below the line equal the strip above it rather than merely near it. */
-.pg-modal-host .pg-controls { flex: 0 0 auto; background: var(--card);
-  padding-top: var(--modal-divider-pad); }
+.pg-modal-host .pg-controls { flex: 0 0 auto; background: var(--card); }
 .pg-modal-host .pg-controls > .pg-actions,
 .pg-modal-host .pg-controls > .pg-nav { margin-top: 0; }
 /* NO DIVIDER BETWEEN THE NAV LINE AND CLOSE, and no gap that reads like one.
@@ -1123,7 +1127,7 @@ button { font: inherit; cursor: pointer; }
    line as it would below any sibling button (panes b and e are the mistake this
    avoids). This is the ONE rule in the app that overrides the footer's
    divider-pad, and it overrides it downward, to a plain gap. */
-.paradigm.pg-pins-nav + .modal-actions { margin-top: 8px; padding-top: 0; }
+.paradigm.pg-pins-nav + .modal-actions { margin-top: 8px; padding-top: 0; border-top: none; }
 /* The original keeps Say Whole Paradigm / Endings INSIDE the chart frame. */
 .pg-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
 .pg-actions.pg-actions-each { display: grid;

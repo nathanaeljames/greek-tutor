@@ -562,9 +562,23 @@ const shot = async name => {
 //
 // A "divider" is read as a computed border or box-shadow, because the two are
 // interchangeable to the eye and a fix that swapped one for the other would
-// otherwise pass. Since W7 there is exactly one thing in the app that draws
-// one — the scroller's own bottom border — and a second appearing anywhere is
-// the regression this is here to catch.
+// otherwise pass. Since the 2026-08-25 re-land there is exactly one thing in
+// the app that draws one — the first pinned block's TOP border — and a second
+// appearing anywhere, including the scroller's own bottom border coming back,
+// is the regression this is here to catch.
+//
+//  4. MID-SCROLL, NOT JUST AT THE END (added 2026-08-25, after this walk
+//     passed a build Nathanael's screenshots showed broken). The W7 rewrite
+//     scrolled every modal to the END of its content before measuring,
+//     reasoning that the strip above the line "is only visible once the
+//     content has run out". That reasoning was the bug's camouflage: the strip
+//     was the scroller's own padding-bottom, and overflow clips at the PADDING
+//     BOX, so scrolling content painted straight through that padding to the
+//     line — Say Whole Paradigm chopped mid-glyph — at every position EXCEPT
+//     the end, which is the one position this walk measured. The strip above
+//     is now measured at mid-scroll, from the scroller's clip edge (the band
+//     content cannot paint), and again at the end of the scroll from the last
+//     painted content edge, and the two must agree within 1px.
 {
   // `expect` is the pinned-line shape; `steps` is how many times the modal's
   // own navigation is pressed, so each replaced state is measured in turn.
@@ -614,31 +628,52 @@ const shot = async name => {
     const pinnedLines = [...modal.querySelectorAll(
       ':scope > .paradigm > .pg-controls, :scope > .pg-controls, .modal-actions > .pg-nav, .modal-actions > [data-hint-paradigm-controls], .modal-actions > [data-hint-page-controls]')];
     const close = [...modal.querySelectorAll('.modal-actions .btn')].pop();
-    // Scroll to the very end: the strip above the divider is only visible, and
-    // only meaningful, once the content has run out.
-    if (scroller) scroller.scrollTop = scroller.scrollHeight;
-    // WHAT DRAWS A LINE BELOW THE CONTENT. The scroller's own bottom border is
-    // the one sanctioned divider; anything OUTSIDE the scroller drawing a top
-    // border or shadow is a second one.
+    // WHAT DRAWS A LINE BELOW THE CONTENT. The first pinned block's top border
+    // is the one sanctioned divider; the scroller drawing its own bottom
+    // border is the 2026-08-25 regression coming back (its "strip above" is
+    // paintable padding), and anything else drawing a top border or shadow is
+    // a second line.
     const outside = [...modal.querySelectorAll('*')]
       .filter(el => scroller && el !== scroller && !scroller.contains(el));
-    const extra = outside.filter(el => drawsLine(el, 'Top'));
     const owners = [];
     if (scroller && drawsLine(scroller, 'Bottom')) owners.push(scroller);
-    owners.push(...extra);
-    const style = scroller ? getComputedStyle(scroller) : null;
-    const rect = scroller ? scroller.getBoundingClientRect() : null;
-    const line = scroller ? rect.bottom - parseFloat(style.borderBottomWidth) : null;
-    const contentEdge = line == null ? null : line - parseFloat(style.paddingBottom);
-    // The last painted content edge, ignoring anything still scrolled under the
-    // padding strip — that is what the eye reads as the bottom of the content.
-    let lastContent = null;
-    if (scroller) {
+    owners.push(...outside.filter(el => drawsLine(el, 'Top')));
+    const owner = owners[0] || null;
+    const ownerStyle = owner ? getComputedStyle(owner) : null;
+    const line = owner == null ? null
+      : owner === scroller
+        ? owner.getBoundingClientRect().bottom - parseFloat(ownerStyle.borderBottomWidth)
+        : owner.getBoundingClientRect().top;
+    const border = owner == null ? 0
+      : parseFloat(owner === scroller ? ownerStyle.borderBottomWidth : ownerStyle.borderTopWidth);
+    // MID-SCROLL FIRST (comment 4 above): the strip above the line is the band
+    // between the scroller's CLIP EDGE and the line, because the clip edge is
+    // where content stops painting at every scroll position — a strip carried
+    // inside the scroller's own padding box does not exist mid-scroll and must
+    // read as 0 here, which is exactly the defect the end-only walk blessed.
+    let aboveMid = null;
+    let clip = null;
+    if (scroller && line != null) {
+      scroller.scrollTop = Math.round((scroller.scrollHeight - scroller.clientHeight) / 2);
+      const r = scroller.getBoundingClientRect();
+      const s = getComputedStyle(scroller);
+      clip = r.bottom - parseFloat(s.borderBottomWidth);
+      aboveMid = line - clip;
+    }
+    // ...then the END of the scroll, where the eye reads the gap from the last
+    // painted content edge instead of the clip edge. A trailing margin under
+    // the last block, or a reintroduced scroller padding, opens daylight
+    // between this number and the mid-scroll one.
+    let aboveEnd = null;
+    if (scroller && line != null) {
+      scroller.scrollTop = scroller.scrollHeight;
+      let lastContent = null;
       for (const el of scroller.querySelectorAll('*')) {
         const r = el.getBoundingClientRect();
-        if (r.height === 0 || r.bottom > contentEdge + 0.5) continue;
+        if (r.height === 0 || r.bottom > clip + 0.5) continue;
         if (lastContent === null || r.bottom > lastContent) lastContent = r.bottom;
       }
+      if (lastContent !== null) aboveEnd = line - lastContent;
     }
     // The first control drawn under the line.
     const firstBelow = outside
@@ -646,7 +681,6 @@ const shot = async name => {
         && el.getBoundingClientRect().top >= line - 1)
       .map(el => el.getBoundingClientRect().top)
       .sort((a, b) => a - b)[0];
-    const border = scroller ? parseFloat(style.borderBottomWidth) : 0;
     return {
       pinnedLines: pinnedLines.length,
       // A say button counts as pinned only if it is inside a pinned line.
@@ -660,7 +694,8 @@ const shot = async name => {
       dividerBetweenNavAndClose: pinnedLines.length > 0
         && pinnedLines.some(l => l.parentElement !== actions) && drawsLine(actions, 'Top'),
       scrolls: scroller ? scroller.scrollHeight > scroller.clientHeight + 2 : false,
-      above: lastContent === null ? null : Math.round(line - lastContent),
+      above: aboveMid == null ? null : Math.round(aboveMid),
+      aboveEnd: aboveEnd == null ? null : Math.round(aboveEnd),
       below: firstBelow == null ? null : Math.round(firstBelow - line - border),
       closeIsLast: !!close && new RegExp(pattern, 'i').test(close.textContent)
     };
@@ -722,12 +757,20 @@ const shot = async name => {
         `${f.dividers} dividers (${f.dividerOwner}), between-nav-and-close ${f.dividerBetweenNavAndClose}`);
       // W7.2(b)/(c): the content must actually be scrolling, and the two light
       // strips must be the same size. This is the check the review asked for in
-      // as many words, and the one this file did not have.
+      // as many words, and the one this file did not have. `above` is measured
+      // MID-SCROLL, at the clip edge (comment 4): a strip that only exists at
+      // the end of the scroll reads 0 here and fails.
       if (f.scrolls) scrolledStates += 1;
       check(`D13 ${where}: the strip above the divider equals the strip below it${mustScroll ? ', AT FORCED SCROLL' : ''}`,
         (!mustScroll || f.scrolls) && f.above != null && f.below != null
           && Math.abs(f.above - f.below) <= 1 && f.above >= 6,
-        `scrolls ${f.scrolls}, above ${f.above}px, below ${f.below}px`);
+        `scrolls ${f.scrolls}, above ${f.above}px (mid-scroll), below ${f.below}px`);
+      // 2026-08-25: and the strip must be the SAME strip at every scroll
+      // position — the band the eye saw collapse was equal-at-the-end and
+      // absent everywhere else.
+      check(`D13 ${where}: the strip above the line is the same mid-scroll as at the end of the scroll`,
+        f.above != null && f.aboveEnd != null && Math.abs(f.above - f.aboveEnd) <= 1,
+        `mid-scroll ${f.above}px, at end ${f.aboveEnd}px`);
     }
   }
   // ...and the walk really did judge the scrolled state, rather than passing on
