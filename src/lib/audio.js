@@ -30,6 +30,61 @@ let toastCallback = null;
 
 export function onAudioProblem(cb) { toastCallback = cb; }
 
+// ---- AUTOPLAY ON MOUNT (DISCLOSURE-SPEC3 W2.4) --------------------------
+//
+// DRILL-BEHAVIOR-RULES B-last loads a sequence-stepped activity's first item
+// on mount and pronounces it there if the activity pronounces on advance. That
+// is the app's FIRST un-gestured play, and iOS refuses un-gestured audio
+// outright: `audio.play()` rejects with NotAllowedError. Left to the ordinary
+// path that would be a toast ("Audio couldn't play") on arrival at every Learn
+// Vocabulary screen on a phone — a visible defect where the rule asks only for
+// a silent clip.
+//
+// So a mount clip is played through `playOnLoad`, which differs from `play` in
+// exactly two ways and in no others:
+//
+//   * a blocked-autoplay rejection is SILENT (no toast, no console error). A
+//     missing file still toasts, because that is a real fault and the learner
+//     needs to know the audio pack is absent.
+//   * the blocked clip is HELD for the first real user gesture and played
+//     once there, which is the platform's own contract: the first tap unlocks
+//     audio, and the item the learner is looking at is the one they hear.
+//
+// The held clip is abandoned the moment anything else claims the audio channel
+// (`play`, `stop`, a route change, a topic switch), so it can never surface
+// over a later screen. `armed` is a module-level singleton for the same reason
+// `currentAudio` is: this module is the sole audio choke point.
+const GESTURES = ['pointerdown', 'touchend', 'keydown'];
+let armed = null;
+function disarmGesture() {
+  if (!armed) return;
+  for (const type of GESTURES) window.removeEventListener(type, armed, true);
+  armed = null;
+}
+function armGesture(id) {
+  if (typeof window === 'undefined') return;
+  disarmGesture();
+  const fire = () => { disarmGesture(); play(id); };
+  armed = fire;
+  for (const type of GESTURES) window.addEventListener(type, fire, { capture: true, once: true });
+}
+// Did the browser refuse an un-gestured play, as opposed to failing to play?
+const isAutoplayBlock = err => !!err && (err.name === 'NotAllowedError' || err.name === 'SecurityError');
+
+// Set by play() when THIS id was refused for want of a gesture; read once, by
+// playOnLoad below. A plain flag rather than a change to play()'s return value,
+// so its contract (boolean: did the clip start) is untouched for its callers.
+let blockedOnLoad = null;
+
+export function playOnLoad(id) {
+  if (!id) return Promise.resolve(false);
+  blockedOnLoad = null;
+  return play(id, { onLoad: true }).then(ok => {
+    if (!ok && blockedOnLoad === id) armGesture(id);
+    return ok;
+  });
+}
+
 export function audioPath(id) {
   if (!id) return null;
   const m = id.match(DIR_PATTERN);
@@ -46,7 +101,9 @@ function revokeCurrentUrl() {
   }
 }
 
-export async function play(id) {
+export async function play(id, options) {
+  const onLoad = !!(options && options.onLoad);
+  if (!onLoad) disarmGesture();   // anything the learner asked for wins the channel
   const src = audioPath(id);
   if (!src) return false;
 
@@ -107,13 +164,20 @@ export async function play(id) {
     // missing file. Free the URL and say so.
     revokeCurrentUrl();
     currentAudio = null;
+    // W2.4: an un-gestured mount clip refused by the platform is NOT a fault —
+    // it is iOS's documented behaviour. Record it for playOnLoad to hold for
+    // the first gesture, and say nothing. Every other failure still toasts, and
+    // a mount clip whose FILE is missing still toasts, because that one is real.
+    if (onLoad && isAutoplayBlock(err)) { blockedOnLoad = id; return false; }
     if (toastCallback) toastCallback(`Audio couldn't play: ${src}`);
     return false;
   });
 }
 
 export function stop() {
-  // Supersede any in-flight play() resolution, then tear down.
+  // Supersede any in-flight play() resolution, then tear down. A held mount
+  // clip (W2.4) goes with it: silence was asked for.
+  disarmGesture();
   playToken++;
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
   revokeCurrentUrl();

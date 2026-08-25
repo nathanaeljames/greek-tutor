@@ -1862,7 +1862,7 @@
      "pronounceEach": true
     },
     "liveScore": true,
-    "hintRef": "firstDeclensionEta"
+    "hintRef": "firstDeclensionHint"
    },
    "scored": true,
    "answerPolicy": {
@@ -2092,7 +2092,7 @@
      "pronounceEach": true
     },
     "liveScore": true,
-    "hintRef": "firstDeclensionEta"
+    "hintRef": "firstDeclensionHint"
    },
    "scored": true,
    "answerPolicy": {
@@ -3468,5 +3468,97 @@
   "c5_learn_bibliography"
  ],
  "_sequence_note": "Rail order from ch5railwalk.pdf (Nathanael, 2026-08-03).",
- "_audioVerify": "Three chapter-5 clips could not be assigned from their filenames alone and need a listen-check on device: e_graphn (wired to both γραφή and γραφῇ, which are homophones -- the same doubling ὥρα/ὥρᾳ gets with e_hwra), e_grapax (UNREFERENCED; most likely a second take of γραφάς), and e_aleia (UNREFERENCED; most likely a second take of ἀλήθεια, for which e_alntia is wired). Three whole-gender clips (e_artmas, e_artfem, e_artneu) and the whole-paradigm e_artpar have no surface in the rail walk -- the article charts offer Say Whole List (e_artsg / e_artpl) and per-column headers (e_artms/fs/ns, e_artmp/fp/np), which the data wires. Leave the four unwired unless the build finds a surface."
+ "_audioVerify": "Three chapter-5 clips could not be assigned from their filenames alone and need a listen-check on device: e_graphn (wired to both γραφή and γραφῇ, which are homophones -- the same doubling ὥρα/ὥρᾳ gets with e_hwra), e_grapax (UNREFERENCED; most likely a second take of γραφάς), and e_aleia (UNREFERENCED; most likely a second take of ἀλήθεια, for which e_alntia is wired). Three whole-gender clips (e_artmas, e_artfem, e_artneu) and the whole-paradigm e_artpar have no surface in the rail walk -- the article charts offer Say Whole List (e_artsg / e_artpl) and per-column headers (e_artms/fs/ns, e_artmp/fp/np), which the data wires. Leave the four unwired unless the build finds a surface.",
+ "hintCharts": {
+  "firstDeclensionHint": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "showGlosses": true,
+     "rows": [
+      {
+       "label": "Nom.",
+       "cells": [
+        {
+         "greek": "γραφή",
+         "gloss": "a writing",
+         "audio": "chapt_5_e_graphn"
+        },
+        {
+         "greek": "γραφαί",
+         "gloss": "writings (subject of sentence)",
+         "audio": "chapt_5_e_grapai"
+        }
+       ]
+      },
+      {
+       "label": "Gen.",
+       "cells": [
+        {
+         "greek": "γραφῆς",
+         "gloss": "of a writing",
+         "audio": "chapt_5_e_grapns"
+        },
+        {
+         "greek": "γραφῶν",
+         "gloss": "of writings (possessive)",
+         "audio": "chapt_5_e_grapwn"
+        }
+       ]
+      },
+      {
+       "label": "Dat.",
+       "cells": [
+        {
+         "greek": "γραφῇ",
+         "gloss": "to a writing",
+         "audio": "chapt_5_e_graphn"
+        },
+        {
+         "greek": "γραφαῖς",
+         "gloss": "to writings (indirect obj)",
+         "audio": "chapt_5_e_graais"
+        }
+       ]
+      },
+      {
+       "label": "Acc.",
+       "cells": [
+        {
+         "greek": "γραφήν",
+         "gloss": "a writing",
+         "audio": "chapt_5_e_grapnn"
+        },
+        {
+         "greek": "γραφάς",
+         "gloss": "writings (direct obj)",
+         "audio": "chapt_5_e_grapas"
+        }
+       ]
+      },
+      {
+       "label": "Voc.",
+       "cells": [
+        {
+         "greek": "γραφή",
+         "gloss": "writing",
+         "audio": "chapt_5_e_graphn"
+        },
+        {
+         "greek": "γραφαί",
+         "gloss": "writings (direct address)",
+         "audio": "chapt_5_e_grapai"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "_note": "ADDED 2026-08-25 (Disclosure_Verify_Response.pdf item 6; DISCLOSURE-RULES 4.7). The two ch5 drills' Hint had been pointing at the LEARN topic's chart, which merges Nom. and Voc. into one row as the chapter legitimately does on its own teaching page. The original hint does not: ch5railwalk.pdf p10 (First Declension Noun Drill -> Hint) and p11 (Declining Noun Drill -> Hint) both print FIVE separate rows with the English beside each form, and no title, no lemma line, no Meanings control and no Say button -- only Cancel. Transcribed from those two screens. The row body is the same table the Learn page's Meanings popup prints (p7), minus that popup's title and its five-line legend, so a correction to one of these glosses belongs in both places. Audio ids are the chapter's own existing form->clip wiring, not new assignments."
+  }
+ }
 }

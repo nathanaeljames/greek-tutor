@@ -526,7 +526,7 @@ const shot = async name => {
 }
 
 // ===========================================================================
-// D13. §4.3 — THE MODAL FOOTER COMPOSITION, EVERY MODAL IN THE APP
+// D13. §4.3 — THE MODAL FOOTER COMPOSITION, EVERY MODAL, EVERY STATE
 // ---------------------------------------------------------------------------
 // New in DISCLOSURE-SPEC2. The device review found FIVE different compositions
 // across the chapters (item 2, panes a-e), so this walks every modal the app
@@ -536,85 +536,206 @@ const shot = async name => {
 //   a say button is pinned only when a nav control shares its line;
 //   exactly ONE divider, between the scrolling content and the pinned block;
 //   NO divider between the nav line and Close;
-//   neither the content nor the buttons butt against the divider.
+//   THE STRIP ABOVE THE DIVIDER EQUALS THE STRIP BELOW IT.
 //
-// A "divider" is read as a computed border-top or box-shadow, because the two
-// are interchangeable to the eye and a fix that swapped one for the other would
-// otherwise pass.
+// REWRITTEN FOR DISCLOSURE-SPEC3 (W7), in three ways, each of which is a thing
+// the SPEC2 version could not have caught:
+//
+//  1. THE PADDING IS MEASURED, NOT READ OFF A DECLARATION. SPEC2 read
+//     `paddingBottom` from the scroller and `paddingTop` from the footer and
+//     asked only that both were >= 6. Both were, in every modal, on the build
+//     the 2026-08-18 review then rejected — because the strips the EYE sees are
+//     not those declarations. Above the line the eye sees the scroller's
+//     padding PLUS whatever bottom margin the last block let escape (20px on
+//     ch2); below it, the footer's padding PLUS the control row's own
+//     margin-top (23px on ch8). This measures from the last painted content
+//     edge down to the line, and from the line down to the first control, which
+//     is what a person with a ruler would do.
+//  2. THE TWO STRIPS MUST BE EQUAL, within 1px, not merely both present.
+//     "Padding above AND below, with no extra or double padding on either
+//     side" is Nathanael's wording and it is a symmetry claim; >= 6 is not.
+//  3. AT FORCED SCROLL, and through EVERY STATE a modal can reach. The
+//     amendment's own instruction is to resize until the content must scroll
+//     before looking, because a short body hides the strip above by never
+//     reaching it — so the walk runs at 390x520 and steps each modal's own
+//     navigation, measuring the replaced states too.
+//
+// A "divider" is read as a computed border or box-shadow, because the two are
+// interchangeable to the eye and a fix that swapped one for the other would
+// otherwise pass. Since W7 there is exactly one thing in the app that draws
+// one — the scroller's own bottom border — and a second appearing anywhere is
+// the regression this is here to catch.
 {
+  // `expect` is the pinned-line shape; `steps` is how many times the modal's
+  // own navigation is pressed, so each replaced state is measured in turn.
   const MODALS = [
-    ['ch3 Parsing Drill hint (2-state: say + Endings)', '#/activity/chapt_3/c3_drill_parsing', 'hint', 'toggle'],
-    ['ch4 Greek Noun hint (2-chart: say + More)', '#/activity/chapt_4/c4_drill_greek_noun', 'hint', 'toggle'],
-    ['ch5 Declining Noun hint (single chart, NO nav)', '#/activity/chapt_5/c5_drill_declining', 'hint', 'none'],
-    ['ch5 Article Drill hint (2-chart named)', '#/activity/chapt_5/c5_drill_article', 'hint', 'toggle'],
-    ['ch7 Adjective Case Drill hint (2-chart named)', '#/activity/chapt_7/c7_drill_case', 'hint', 'toggle'],
-    ['ch8 Personal Pronoun Case hint (3 charts)', '#/activity/chapt_8/c8_drill_case', 'hint', 'pair'],
-    ['ch8 Autos Translation hint (4 pages)', '#/activity/chapt_8/c8_drill_translation_autos', 'hint', 'pair'],
-    ['ch9 Parsing hint (composite, 2 states)', '#/activity/chapt_9/c9_drill_parsing', 'hint', 'toggle'],
-    ['ch2 Syllable Division hint (prose, no nav)', '#/activity/chapt_2/c2_ex_syllable_division', 'hint', 'none'],
-    ['ch3 Learn Verbs Endings modal (no nav)', '#/activity/chapt_3/c3_learn_verbs', 'endings', 'none'],
-    ['ch6 preposition popup (no nav)', '#/activity/chapt_6/c6_learn_prepositions', 'popup', 'none']
+    ['ch3 Parsing Drill hint (2-state: say + Endings)', '#/activity/chapt_3/c3_drill_parsing', 'hint', 'toggle', 1],
+    ['ch3 Verb Translating hint (2-state, review pane f)', '#/activity/chapt_3/c3_drill_verb_translating', 'hint', 'toggle', 1],
+    ['ch4 Greek Noun hint (2-chart: say + More)', '#/activity/chapt_4/c4_drill_greek_noun', 'hint', 'toggle', 1],
+    ['ch5 Declining Noun hint (single chart, NO nav)', '#/activity/chapt_5/c5_drill_declining', 'hint', 'none', 0],
+    ['ch5 Article Drill hint (2-chart named)', '#/activity/chapt_5/c5_drill_article', 'hint', 'toggle', 1],
+    ['ch5 First Declension Noun hint (single chart)', '#/activity/chapt_5/c5_drill_first_decl_noun', 'hint', 'none', 0],
+    ['ch7 Adjective Case Drill hint (2-chart named)', '#/activity/chapt_7/c7_drill_case', 'hint', 'toggle', 1],
+    // The review's GOOD pane and BAD pane, side by side in one walk. They are
+    // the two compositions that drifted apart, so they are named here rather
+    // than left to the generic sweep.
+    ['ch7 Adjective Translation hint (review A2 GOOD pane)', '#/activity/chapt_7/c7_drill_translation', 'hint', 'pair', 1],
+    ['ch8 Personal Pronoun Case hint (review A2 BAD pane)', '#/activity/chapt_8/c8_drill_case', 'hint', 'pair', 2],
+    ['ch8 Autos Translation hint (4 pages)', '#/activity/chapt_8/c8_drill_translation_autos', 'hint', 'pair', 3],
+    ['ch9 Parsing hint (composite, 2 states)', '#/activity/chapt_9/c9_drill_parsing', 'hint', 'toggle', 1],
+    // §4.5's lone centred toggle: the one state in the app with no say button.
+    ['ch10 Parsing hint (εἰμί, no say button)', '#/activity/chapt_10/c10_drill_parsing', 'hint', 'toggle', 1],
+    ['ch2 Syllable Division hint (prose, no nav)', '#/activity/chapt_2/c2_ex_syllable_division', 'hint', 'none', 0],
+    ['ch3 Learn Verbs Endings modal (no nav)', '#/activity/chapt_3/c3_learn_verbs', 'endings', 'none', 0],
+    ['ch6 preposition popup (no nav)', '#/activity/chapt_6/c6_learn_prepositions', 'popup', 'none', 0],
+    // THE THREE MODALS THAT ARE NOT A HINT. The A2 response says the divider
+    // "lands on EVERY modal — drill hints, popups, the end-of-chapter dialog,
+    // the keyboard reference", so the walk covers those too. The last two are
+    // short enough that their content does not scroll at 520px, which is fine:
+    // the SYMMETRY claim holds either way, and `mustScroll` says which states
+    // are also carrying the forced-scroll half of the check.
+    ['the Greek keyboard reference', '#/activity/chapt_1/c1_ex_speller', 'keyboard', 'none', 0],
+    // Its escape is called "Stay", not "Close" — a dialog that offers three
+    // places to GO needs its dismissal to say what staying means. §4.3's rule is
+    // that the escape is LAST, not that it is spelled a particular way, so the
+    // expected label is named here rather than the app-wide pattern loosened.
+    ['the end-of-chapter dialog', '#/activity/chapt_1/c1_learn_bibliography', 'endofchapter', 'none', 0, false, /stay/i],
+    ['the Settings confirm dialog', '#/settings', 'settings', 'none', 0, false]
   ];
-  const readFooter = () => page.locator('.modal').last().evaluate(modal => {
-    const divider = el => {
+  const readFooter = escape => page.locator('.modal').last().evaluate((modal, pattern) => {
+    const drawsLine = (el, side) => {
       if (!el) return false;
       const s = getComputedStyle(el);
-      return parseFloat(s.borderTopWidth) > 0 || (s.boxShadow && s.boxShadow !== 'none');
+      return parseFloat(s[`border${side}Width`]) > 0 || (s.boxShadow && s.boxShadow !== 'none');
     };
     const actions = modal.querySelector('.modal-actions');
+    const scroller = modal.querySelector('.modal-scroll, .pg-body');
     // Every element between the scroller and Close that holds a control.
     const pinnedLines = [...modal.querySelectorAll(
       ':scope > .paradigm > .pg-controls, :scope > .pg-controls, .modal-actions > .pg-nav, .modal-actions > [data-hint-paradigm-controls], .modal-actions > [data-hint-page-controls]')];
-    const scroller = modal.querySelector('.modal-scroll, .pg-body');
     const close = [...modal.querySelectorAll('.modal-actions .btn')].pop();
+    // Scroll to the very end: the strip above the divider is only visible, and
+    // only meaningful, once the content has run out.
+    if (scroller) scroller.scrollTop = scroller.scrollHeight;
+    // WHAT DRAWS A LINE BELOW THE CONTENT. The scroller's own bottom border is
+    // the one sanctioned divider; anything OUTSIDE the scroller drawing a top
+    // border or shadow is a second one.
+    const outside = [...modal.querySelectorAll('*')]
+      .filter(el => scroller && el !== scroller && !scroller.contains(el));
+    const extra = outside.filter(el => drawsLine(el, 'Top'));
+    const owners = [];
+    if (scroller && drawsLine(scroller, 'Bottom')) owners.push(scroller);
+    owners.push(...extra);
+    const style = scroller ? getComputedStyle(scroller) : null;
+    const rect = scroller ? scroller.getBoundingClientRect() : null;
+    const line = scroller ? rect.bottom - parseFloat(style.borderBottomWidth) : null;
+    const contentEdge = line == null ? null : line - parseFloat(style.paddingBottom);
+    // The last painted content edge, ignoring anything still scrolled under the
+    // padding strip — that is what the eye reads as the bottom of the content.
+    let lastContent = null;
+    if (scroller) {
+      for (const el of scroller.querySelectorAll('*')) {
+        const r = el.getBoundingClientRect();
+        if (r.height === 0 || r.bottom > contentEdge + 0.5) continue;
+        if (lastContent === null || r.bottom > lastContent) lastContent = r.bottom;
+      }
+    }
+    // The first control drawn under the line.
+    const firstBelow = outside
+      .filter(el => (el.tagName === 'BUTTON' || el.classList.contains('pg-nav'))
+        && el.getBoundingClientRect().top >= line - 1)
+      .map(el => el.getBoundingClientRect().top)
+      .sort((a, b) => a - b)[0];
+    const border = scroller ? parseFloat(style.borderBottomWidth) : 0;
     return {
       pinnedLines: pinnedLines.length,
       // A say button counts as pinned only if it is inside a pinned line.
-      pinnedSays: pinnedLines.reduce((n, line) =>
-        n + line.querySelectorAll('.pg-say-whole, [data-hint-paradigm-say]').length, 0),
-      pinnedNavs: pinnedLines.reduce((n, line) =>
-        n + line.querySelectorAll('.pg-switch, .hint-paradigm-toggle, [data-hint-page-nav]').length, 0),
-      dividers: [...modal.querySelectorAll('.pg-controls, .modal-actions')].filter(divider).length,
+      pinnedSays: pinnedLines.reduce((n, l) =>
+        n + l.querySelectorAll('.pg-say-whole, [data-hint-paradigm-say]').length, 0),
+      pinnedNavs: pinnedLines.reduce((n, l) =>
+        n + l.querySelectorAll('.pg-switch, .hint-paradigm-toggle, [data-hint-page-nav]').length, 0),
+      dividers: owners.length,
+      dividerOwner: owners.length ? (owners[0] === scroller ? 'scroller' : owners[0].className) : null,
       // The nav line and Close must not be separated by one.
       dividerBetweenNavAndClose: pinnedLines.length > 0
-        && pinnedLines.some(line => line.parentElement !== actions) && divider(actions),
-      // Nothing touches the divider: measured as real vertical space between
-      // the scroller's content edge and the first pinned/footer box.
-      gapAboveDivider: scroller ? Math.round(parseFloat(getComputedStyle(scroller).paddingBottom)
-        || parseFloat(getComputedStyle(scroller.parentElement).paddingBottom) || 0) : 0,
-      gapBelowDivider: Math.round(parseFloat(getComputedStyle(
-        pinnedLines.find(l => l.parentElement !== actions) || actions).paddingTop) || 0),
-      closeIsLast: !!close && /close|cancel/i.test(close.textContent)
+        && pinnedLines.some(l => l.parentElement !== actions) && drawsLine(actions, 'Top'),
+      scrolls: scroller ? scroller.scrollHeight > scroller.clientHeight + 2 : false,
+      above: lastContent === null ? null : Math.round(line - lastContent),
+      below: firstBelow == null ? null : Math.round(firstBelow - line - border),
+      closeIsLast: !!close && new RegExp(pattern, 'i').test(close.textContent)
     };
-  });
-  for (const [label, hash, how, expect] of MODALS) {
+  }, escape.source);
+  // FORCED SCROLL, for the whole walk (amended §4.3). 520px is short enough to
+  // make every one of these modals scroll and tall enough to stay outside the
+  // max-height:420px compaction, which is a different composition question.
+  await page.setViewportSize({ width: 390, height: 520 });
+  let scrolledStates = 0;
+  for (const [label, hash, how, expect, steps, mustScroll = true, escape = /close|cancel/i] of MODALS) {
     await go(hash);
     if (how === 'hint') {
       await page.getByRole('button', { name: 'Hint', exact: true }).click();
     } else if (how === 'endings') {
       await gotoTopic(2);
       await page.locator('.pg-endings-open').first().click();
+    } else if (how === 'keyboard') {
+      await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();
+    } else if (how === 'endofchapter') {
+      await page.locator('.rail-next').click();
+    } else if (how === 'settings') {
+      await page.getByRole('button', { name: 'Clear downloaded audio', exact: true }).click();
     } else {
       await gotoTopic(1);
       await page.locator('.rc-sense-link').first().click();
     }
     await page.waitForSelector('.modal', { timeout: 8000 });
     await page.waitForTimeout(200);
-    const f = await readFooter();
-    check(`D13 ${label}: at most ONE pinned line, and it is ${expect === 'none' ? 'absent' : 'present'}`,
-      f.pinnedLines <= 1 && (expect === 'none' ? f.pinnedLines === 0 : f.pinnedLines === 1),
-      JSON.stringify(f));
-    check(`D13 ${label}: a say button is pinned only beside a nav control`,
-      expect === 'toggle' ? f.pinnedNavs >= 1 : f.pinnedSays === 0,
-      `${f.pinnedSays} pinned says, ${f.pinnedNavs} pinned navs`);
-    check(`D13 ${label}: exactly ONE divider, and none between the nav line and Close`,
-      f.dividers === 1 && !f.dividerBetweenNavAndClose,
-      `${f.dividers} dividers, between-nav-and-close ${f.dividerBetweenNavAndClose}`);
-    check(`D13 ${label}: padding above and below the divider (nothing butts against it)`,
-      f.gapAboveDivider >= 6 && f.gapBelowDivider >= 6,
-      `above ${f.gapAboveDivider}px, below ${f.gapBelowDivider}px`);
-    check(`D13 ${label}: Close is the last control in the footer`, f.closeIsLast);
+    for (let step = 0; step <= steps; step++) {
+      const where = step === 0 ? label : `${label} [state ${step + 1}]`;
+      if (step) {
+        // Whatever this modal's own navigation is: the two-state toggle, the
+        // Back/More pair, or the paged hint's More.
+        // Every shape of "show me the next state" this app has: the composite
+        // hint's toggle, a paged hint's More, the §4.2 pair's More, the §4.1
+        // named toggle, and the in-place Endings toggle.
+        const nav = page.locator([
+          '.modal [data-hint-paradigm-toggle]',
+          '.modal [data-hint-page-nav="more"]',
+          '.modal [data-paradigm-switch="more"]',
+          '.modal [data-paradigm-switch="named"]',
+          '.modal [data-paradigm-switch="endings"]'
+        ].join(', ')).first();
+        await nav.click();
+        await page.waitForTimeout(180);
+      }
+      const f = await readFooter(escape);
+      if (step === 0) {
+        check(`D13 ${where}: at most ONE pinned line, and it is ${expect === 'none' ? 'absent' : 'present'}`,
+          f.pinnedLines <= 1 && (expect === 'none' ? f.pinnedLines === 0 : f.pinnedLines === 1),
+          JSON.stringify(f));
+        check(`D13 ${where}: a say button is pinned only beside a nav control`,
+          expect === 'toggle' ? f.pinnedNavs >= 1 : f.pinnedSays === 0,
+          `${f.pinnedSays} pinned says, ${f.pinnedNavs} pinned navs`);
+        check(`D13 ${where}: Close is the last control in the footer`, f.closeIsLast);
+      }
+      check(`D13 ${where}: exactly ONE divider, and none between the nav line and Close`,
+        f.dividers === 1 && !f.dividerBetweenNavAndClose,
+        `${f.dividers} dividers (${f.dividerOwner}), between-nav-and-close ${f.dividerBetweenNavAndClose}`);
+      // W7.2(b)/(c): the content must actually be scrolling, and the two light
+      // strips must be the same size. This is the check the review asked for in
+      // as many words, and the one this file did not have.
+      if (f.scrolls) scrolledStates += 1;
+      check(`D13 ${where}: the strip above the divider equals the strip below it${mustScroll ? ', AT FORCED SCROLL' : ''}`,
+        (!mustScroll || f.scrolls) && f.above != null && f.below != null
+          && Math.abs(f.above - f.below) <= 1 && f.above >= 6,
+        `scrolls ${f.scrolls}, above ${f.above}px, below ${f.below}px`);
+    }
   }
+  // ...and the walk really did judge the scrolled state, rather than passing on
+  // a shelf of modals that all happened to fit. This is the number the amended
+  // §4.3 checklist item is about.
+  check('D13 the divider walk measured the forced-scroll state on most of its modals',
+    scrolledStates >= 20, `${scrolledStates} states scrolled`);
+  await page.setViewportSize({ width: 390, height: 780 });
 }
 
 // ===========================================================================
@@ -953,6 +1074,391 @@ if (SHOTS) {
       && greekTitles.map(t => t.text).join('|') === 'οὐ Examples|οὐκ Examples|οὐχ Examples',
     JSON.stringify(greekTitles));
   await shot('ch7-greek-qualified-labels');
+}
+
+// ===========================================================================
+// D16. §3.2 as AMENDED — GREEN UNDERLINE IS EXCLUSIVE TO TAPPABLE ELEMENTS
+// ---------------------------------------------------------------------------
+// New in DISCLOSURE-SPEC3 (W5.2). The amendment is app-wide and admits no
+// ratified exception, so this is a total sweep rather than a spot check on the
+// chapter-8 Number chart that produced it: every activity in all ten chapters,
+// every topic, with every accordion OPENED so bodies are judged too, looking
+// for anything that computes green AND underlined and is not genuinely
+// tappable.
+//
+// "Tappable" is read from the DOM, not from a class list: a link, a button, a
+// summary, or something carrying role="button" — an ancestor chain walk, so a
+// green underlined <span> inside a button counts as tappable and a green
+// underlined <u> inside a gloss does not.
+//
+// This is the check that makes the three-selector rule in app.css safe. That
+// rule fixes the three hosts the audit found; this is what stops a fourth from
+// arriving quietly, and it names the offender in its own failure text.
+{
+  const SWEEP = () => {
+    const GREEN = 'rgb(31, 95, 87)';
+    const tappable = el => {
+      for (let n = el; n && n.tagName !== 'BODY'; n = n.parentElement) {
+        if (n.tagName === 'A' || n.tagName === 'BUTTON' || n.tagName === 'SUMMARY') return true;
+        if (n.getAttribute && n.getAttribute('role') === 'button') return true;
+      }
+      return false;
+    };
+    const out = [];
+    for (const el of document.querySelectorAll('body *')) {
+      if (!el.textContent || !el.textContent.trim()) continue;
+      // Judge the element that OWNS the text, not every ancestor above it.
+      if (![...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) continue;
+      const style = getComputedStyle(el);
+      if (style.color !== GREEN) continue;
+      if (!/underline/.test(style.textDecorationLine)) continue;
+      if (tappable(el)) continue;
+      out.push(`${el.tagName}.${el.className || '(no class)'} "${el.textContent.trim().slice(0, 28)}"`);
+    }
+    return out;
+  };
+  const offenders = [];
+  let scanned = 0;
+  for (const [chapterId, chapter] of chapters) {
+    for (const activity of activitiesOf(chapter)) {
+      if (!activity || !activity.id) continue;
+      await go(`#/activity/${chapterId}/${activity.id}`);
+      const topics = (activity.topics || []).length || 1;
+      for (let topic = 0; topic < topics; topic++) {
+        if (topic) await gotoTopic(1);
+        // A closed accordion hides its body from getComputedStyle entirely, so
+        // an offender inside one would be invisible to this sweep.
+        await page.locator('details.rc-expander summary').evaluateAll(nodes => nodes.forEach(n => n.click()));
+        await page.waitForTimeout(40);
+        scanned += 1;
+        for (const hit of await page.evaluate(SWEEP)) {
+          offenders.push(`${chapterId}/${activity.id} topic ${topic + 1}: ${hit}`);
+        }
+      }
+    }
+  }
+  check(`D16.1 §3.2 nothing non-tappable renders green AND underlined, across ${scanned} screens`,
+    offenders.length === 0, offenders.slice(0, 8).join(' | '));
+  // ...and the sweep found enough screens to mean anything.
+  check('D16.2 §3.2 the exclusivity sweep actually walked the app', scanned >= 200, `${scanned} screens`);
+  // The found case, named: the ch8 Number chart's headers render PLAIN. Asserted
+  // separately from the sweep because "no green underline" would also be
+  // satisfied by the headers disappearing.
+  await go('#/activity/chapt_8/c8_learn_english_concepts');
+  await gotoTopic(3);
+  const headers = await page.locator('.rc-greekrows .rc-greekhead span').evaluateAll(nodes =>
+    nodes.filter(n => n.textContent.trim()).map(n => ({
+      text: n.textContent.trim(), decoration: getComputedStyle(n).textDecorationLine })));
+  check('D16.3 W5.1 the ch8 Number chart still prints its four headers, none of them underlined',
+    headers.length === 4
+      && headers.map(h => h.text).join(' ') === 'Singular Plural Singular Plural'
+      && headers.every(h => h.decoration === 'none'),
+    JSON.stringify(headers));
+  await shot('ch8-number-headers-plain');
+}
+
+// ===========================================================================
+// D17. §3.2 as AMENDED — TITLE LINKS ARE IN-TEXT LINKS
+// ---------------------------------------------------------------------------
+// New in DISCLOSURE-SPEC3 (W6). `.topic-title-link` restated `color: var(--link)`
+// on top of the .popup-link it already carried, so chapter 9's Deponent Verbs
+// heading opened its popup in BLUE three lines above a green one that opened
+// another (review item 7). No rule ever ratified that: §3.3 gives blue to
+// in-chart triggers and to Greek audio taps, and to nothing else.
+//
+// Driven off the DATA, so a `titleLink` added to any chapter is covered without
+// an edit here.
+{
+  const titleLinks = [];
+  for (const [chapterId, chapter] of chapters) {
+    for (const activity of activitiesOf(chapter)) {
+      for (const topic of (activity && activity.topics) || []) {
+        if (topic && topic.titleLink) titleLinks.push([chapterId, activity.id, topic.title]);
+      }
+    }
+  }
+  check('D17.1 W6 the titleLink sweep found the authored title links', titleLinks.length >= 1,
+    titleLinks.map(t => `${t[0]}/${t[1]}`).join(', '));
+  for (const [chapterId, activityId, title] of titleLinks) {
+    await go(`#/activity/${chapterId}/${activityId}`);
+    const activity = activitiesOf(chapters.get(chapterId)).find(a => a && a.id === activityId);
+    const topics = (activity.topics || []).length;
+    let found = null;
+    for (let topic = 0; topic < topics; topic++) {
+      if (topic) await gotoTopic(1);
+      if (await page.locator('.topic-title-link').count()) {
+        found = await page.locator('.topic-title-link').evaluate(node => {
+          const style = getComputedStyle(node);
+          return { text: node.textContent.trim(), color: style.color,
+            decoration: style.textDecorationLine, cursor: style.cursor, tag: node.tagName };
+        });
+        break;
+      }
+    }
+    check(`D17.2 W6 ${chapterId} "${title}" title link is GREEN, underlined and tappable`,
+      !!found && found.color === GREEN && /underline/.test(found.decoration)
+        && found.tag === 'BUTTON' && found.cursor === 'pointer',
+      JSON.stringify(found));
+    // And it still does its job.
+    await page.locator('.topic-title-link').click();
+    await page.waitForTimeout(250);
+    check(`D17.3 W6 ${chapterId} "${title}" title link still opens its popup`,
+      await page.locator('.popup-sheet, .modal-overlay').count() > 0);
+    // The IN-TEXT links on the same screen are the comparison the review made.
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(150);
+    const inText = await page.locator('.rich .popup-link').evaluateAll(nodes => nodes.map(n => {
+      const style = getComputedStyle(n);
+      return { text: n.textContent.trim().slice(0, 20), color: style.color, decoration: style.textDecorationLine };
+    }));
+    check(`D17.4 W6 ${chapterId} the title link and the in-text links on that screen now match`,
+      inText.length > 0 && inText.every(l => l.color === GREEN && /underline/.test(l.decoration)),
+      JSON.stringify(inText));
+    await shot(`${chapterId}-title-link-green`);
+  }
+  // The counter-case, in the same breath: §3.3's in-chart triggers stay blue,
+  // so "everything is green now" cannot pass this file.
+  await go('#/activity/chapt_6/c6_learn_prepositions');
+  await gotoTopic(1);
+  check('D17.5 §3.3 in-chart triggers are still BLUE (the conversion did not overreach)',
+    await page.locator('.rc-sense-link').first().evaluate(n => getComputedStyle(n).color) === BLUE);
+}
+
+// ===========================================================================
+// D18. §4.7 THE HAND CURSOR — ch7's three negative forms all tap
+// ---------------------------------------------------------------------------
+// New in DISCLOSURE-SPEC3 (W1, chapt-07.json). The original shows a hand cursor
+// over οὐ, οὐκ AND οὐχ in the three rule lines; the port had a tap on οὐ only,
+// because οὐ is a lexicon lemma and the other two are inflected forms in no
+// source the tap map reads. The delivered `audioMap` wires them.
+//
+// The check is deliberately about the RULE LINES, not the accordions: the clips
+// always played from the accordion headwords, so an assertion that found the
+// audio anywhere on the page would have passed before the fix too.
+{
+  await go('#/activity/chapt_7/c7_learn_eimi');
+  await gotoTopic(3);
+  const ruleTaps = await page.locator('.rc-list > li').evaluateAll(nodes => nodes.map(node => {
+    // Only the rule line itself — not the accordion hanging under it.
+    const accordion = node.querySelector('details.rc-expander');
+    const taps = [...node.querySelectorAll('.greek-tap')]
+      .filter(tap => !accordion || !accordion.contains(tap));
+    return taps.map(tap => ({ text: tap.textContent.trim(), cursor: getComputedStyle(tap).cursor }));
+  }));
+  check('D18.1 §4.7 all three ch7 rule lines carry a tap: οὐ, οὐκ and οὐχ',
+    ruleTaps.length === 3 && ruleTaps.every(line => line.length === 1)
+      && ruleTaps.map(line => line[0].text).join(' ') === 'οὐ οὐκ οὐχ',
+    JSON.stringify(ruleTaps));
+  check('D18.2 §4.7 and each shows the hand cursor that marks clickable content',
+    ruleTaps.every(line => line.every(tap => tap.cursor === 'pointer')));
+  // Directive 9's other half: they PLAY, and each plays its own clip.
+  const played = [];
+  for (let index = 0; index < 3; index++) {
+    await resetClips();
+    await page.locator('.rc-list > li').nth(index).locator('.greek-tap').first().click();
+    await page.waitForTimeout(400);
+    played.push(await page.evaluate(() => window.__clips.map(c => c.src).join('')));
+  }
+  check('D18.3 §4.7 each of the three plays a clip, and no two play the same one',
+    played.every(Boolean) && new Set(played).size === 3, played.length + ' clips');
+  await shot('ch7-three-negative-taps');
+}
+
+// ===========================================================================
+// D19. W4 — THE MODAL HEIGHT CANNOT GO STALE
+// ---------------------------------------------------------------------------
+// The half-screen modal bug (Verify item 3). `--modal-vh` was published once at
+// startup and re-measured only on resize/orientationchange; a height snapshotted
+// while the SOFTWARE KEYBOARD was up survives a backgrounding on an iOS PWA,
+// because those drop resize on resume, and every modal opened afterwards is
+// sized to a keyboard that is no longer there. Kill-and-restart re-measures,
+// which is exactly the reported cure.
+//
+// WHAT THIS CAN AND CANNOT SETTLE (W4.4). It cannot prove the bug fixed: the
+// trigger is a real iOS resume and this is Chromium. What it CAN do, and does,
+// is prove the two defences work on their own terms — the clamp rejects a
+// phantom height, honours a real one, and a modal opening after a SILENT height
+// change is sized correctly anyway. The fix stays a device-soak item in VERIFY.
+//
+// `visualViewport` is replaced with a controllable stand-in installed before the
+// app boots, so lib/viewport.js captures it exactly as it would the real one.
+// Nothing in src/ knows this is happening.
+{
+  const clampPage = await context.newPage();
+  await clampPage.addInitScript(() => {
+    const listeners = new Set();
+    const fake = {
+      height: window.innerHeight, width: window.innerWidth, offsetTop: 0, offsetLeft: 0, scale: 1,
+      addEventListener: (type, fn) => { if (type === 'resize') listeners.add(fn); },
+      removeEventListener: (type, fn) => listeners.delete(fn)
+    };
+    Object.defineProperty(window, 'visualViewport', { configurable: true, get: () => fake });
+    window.__vv = {
+      // The keyboard coming up, announced: a resize event, as every engine that
+      // works sends one.
+      set(height) { fake.height = height; for (const fn of listeners) fn(); },
+      // The iOS resume: the height CHANGES and no event is delivered.
+      setSilently(height) { fake.height = height; }
+    };
+  });
+  await clampPage.goto(`${BASE}/?clamp=1#/activity/chapt_3/c3_drill_verb_translating`, { waitUntil: 'load' });
+  await clampPage.waitForSelector('.card', { timeout: 15000 });
+  await clampPage.waitForTimeout(200);
+  const modalVh = async () => clampPage.evaluate(() =>
+    parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--modal-vh')));
+  const inner = await clampPage.evaluate(() => window.innerHeight);
+  const PHANTOM = Math.round(inner * 0.49);          // a keyboard's worth, well under the 0.6 floor
+  const REAL_SHORT = Math.round(inner * 0.85);       // toolbars: legitimately short, above the floor
+
+  // 1. THE KEYBOARD IS REALLY UP: an editable is focused, so the short height
+  //    is honoured. The clamp must not fight a genuine keyboard.
+  await clampPage.evaluate(([height]) => {
+    const input = document.createElement('input');
+    input.id = '__clamp_probe';
+    document.body.appendChild(input);
+    input.focus();
+    window.__vv.set(height);
+  }, [PHANTOM]);
+  await clampPage.waitForTimeout(150);
+  check('D19.1 W4.2 a short height WITH an editable focused is honoured (a real keyboard is not clamped)',
+    Math.round(await modalVh()) === PHANTOM, `${await modalVh()} vs ${PHANTOM}`);
+
+  // 2. THE PHANTOM: the same height, nothing focused. This is the state the
+  //    app wakes up in after a resume, and it is what sized the half-screen
+  //    modal. innerHeight is published instead.
+  await clampPage.evaluate(() => {
+    document.getElementById('__clamp_probe').blur();
+    document.getElementById('__clamp_probe').remove();
+    window.__vv.set(window.innerHeight * 0.49);
+  });
+  await clampPage.waitForTimeout(150);
+  check('D19.2 W4.2 the clamp REJECTS a phantom height (short, with nothing focused)',
+    Math.round(await modalVh()) === inner, `${await modalVh()} vs innerHeight ${inner}`);
+
+  // 3. AND ONLY A PHANTOM. A legitimately short viewport — browser toolbars,
+  //    which is the whole reason this file exists — is published untouched.
+  await clampPage.evaluate(height => window.__vv.set(height), REAL_SHORT);
+  await clampPage.waitForTimeout(150);
+  check('D19.3 W4.2 a legitimately short viewport (toolbars) is NOT clamped',
+    Math.round(await modalVh()) === REAL_SHORT, `${await modalVh()} vs ${REAL_SHORT}`);
+
+  // 4. THE DROPPED-RESIZE CASE, with the clamp deliberately out of reach: the
+  //    height GROWS silently, which no clamp can catch because a too-SMALL
+  //    published value is the only thing a clamp can see. Only the measurement
+  //    taken when the modal opens catches this one, and it is the reason W4.1
+  //    asks for one.
+  const stale = Math.round(await modalVh());
+  await clampPage.evaluate(() => window.__vv.setSilently(window.innerHeight));
+  await clampPage.waitForTimeout(150);
+  check('D19.4 W4.1 a silent height change leaves the published value stale (the bug\'s own shape)',
+    Math.round(await modalVh()) === stale, `${await modalVh()}`);
+  await clampPage.getByRole('button', { name: 'Hint', exact: true }).click();
+  await clampPage.waitForSelector('.modal', { timeout: 8000 });
+  await clampPage.waitForTimeout(150);
+  const overlay = await clampPage.locator('.modal-overlay').evaluate(node =>
+    Math.round(node.getBoundingClientRect().height));
+  check('D19.5 W4.1 OPENING A MODAL re-measures, and the dialog is sized to the real viewport',
+    Math.round(await modalVh()) === inner && overlay === inner,
+    `--modal-vh ${await modalVh()}, overlay ${overlay}px, innerHeight ${inner}, was ${stale}`);
+  await clampPage.close();
+}
+
+// ===========================================================================
+// D20. §4.7 HINT-MODAL SOURCE FIDELITY — the ch5 First Declension hint
+// ---------------------------------------------------------------------------
+// New in the DISCLOSURE-SPEC3 W8 addendum, once ch5railwalk.pdf arrived.
+//
+// "A drill hint is transcribed from its OWN original screen, never assumed
+// identical to the Learn chart it resembles — the original hint may print rows
+// the Learn chart merges." Chapter 5 is the found case, and it is the case
+// worth pinning permanently: the two charts LOOK like the same chart, which is
+// exactly why the port collapsed them in the first place, and a future round
+// tidying "duplicate" data could collapse them again.
+//
+// So this asserts BOTH halves at once. Either alone would be satisfiable by the
+// wrong answer: five rows everywhere, or four rows everywhere.
+{
+  // ch5railwalk.pdf p10 (First Declension Noun Drill -> Hint) and p11
+  // (Declining Noun Drill -> Hint) print this table, and print nothing else —
+  // no title, no lemma line, no Meanings control, no Say button, only Cancel.
+  const HINT_ROWS = [
+    ['Nom.', 'γραφή', 'a writing', 'γραφαί', 'writings (subject of sentence)'],
+    ['Gen.', 'γραφῆς', 'of a writing', 'γραφῶν', 'of writings (possessive)'],
+    ['Dat.', 'γραφῇ', 'to a writing', 'γραφαῖς', 'to writings (indirect obj)'],
+    ['Acc.', 'γραφήν', 'a writing', 'γραφάς', 'writings (direct obj)'],
+    ['Voc.', 'γραφή', 'writing', 'γραφαί', 'writings (direct address)']
+  ];
+  const readHint = () => page.locator('.modal').last().evaluate(modal => ({
+    title: modal.querySelector('.pg-title') ? modal.querySelector('.pg-title').textContent.trim() : null,
+    lemma: !!modal.querySelector('.pg-lemma'),
+    meanings: !!modal.querySelector('[data-paradigm-meanings]'),
+    say: !!modal.querySelector('.pg-say-whole'),
+    columns: [...modal.querySelectorAll('.pg-head .pg-column')].map(n => n.textContent.trim()),
+    taps: modal.querySelectorAll('.pg-greek-tap:not([disabled])').length,
+    rows: [...modal.querySelectorAll('.pg-row')].map(row => [
+      row.querySelector('.pg-row-label').textContent.trim(),
+      ...[...row.querySelectorAll('.pg-cell')].flatMap(cell => [
+        cell.querySelector('.pg-greek').textContent.trim(),
+        cell.querySelector('.pg-gloss') ? cell.querySelector('.pg-gloss').textContent.trim() : null
+      ])
+    ])
+  }));
+  for (const [label, activityId] of [
+    ['First Declension Noun Drill', 'c5_drill_first_decl_noun'],
+    ['Declining Noun Drill', 'c5_drill_declining']
+  ]) {
+    await go(`#/activity/chapt_5/${activityId}`);
+    await openHint();
+    const hint = await readHint();
+    check(`D20.1 §4.7 ch5 ${label} Hint prints FIVE rows, Nom. and Voc. SEPARATE, as its own screen does`,
+      JSON.stringify(hint.rows) === JSON.stringify(HINT_ROWS), JSON.stringify(hint.rows));
+    check(`D20.2 §4.7 ch5 ${label} Hint is that screen and not the Learn chart: no title, no lemma, no Meanings, no Say`,
+      hint.title === null && !hint.lemma && !hint.meanings && !hint.say
+        && hint.columns.join('|') === 'Singular|Plural',
+      JSON.stringify({ title: hint.title, lemma: hint.lemma, meanings: hint.meanings,
+        say: hint.say, columns: hint.columns }));
+    // Directive 9 on the rows the port did not have before: the Vocative forms
+    // are new cells and they are live taps like every other form on screen.
+    check(`D20.3 ch5 ${label} Hint: all ten cells are live taps`, hint.taps === 10, `${hint.taps} live`);
+    await resetClips();
+    await page.locator('.modal .pg-greek-tap').nth(8).click();
+    await page.waitForTimeout(400);
+    check(`D20.4 ch5 ${label} Hint: the VOCATIVE cell plays its clip`, await started() === 1);
+  }
+  await shot('ch5-first-declension-hint-uncollapsed');
+
+  // THE OTHER HALF. The Learn page's chart merges Nom. and Voc. because ITS
+  // screen does (ch5railwalk.pdf p7), and this round must not have "fixed" it.
+  await go('#/activity/chapt_5/c5_learn_nouns');
+  await gotoTopic(4);
+  const learn = await page.locator('.card').evaluate(card => {
+    // Scoped outside the Meanings block: that is a SECOND chart inside the same
+    // card, with five rows and a title of its own, and counting it as the
+    // chart's is the very conflation §4.7 is about.
+    const meanings = card.querySelector('[data-paradigm-meanings]');
+    const own = selector => [...card.querySelectorAll(selector)]
+      .filter(node => !meanings || !meanings.contains(node));
+    return {
+      // The heading may be the TOPIC's rather than the chart's: the two say the
+      // same thing here, so 5E-R1 prints one of them. Either element counts.
+      title: (own('.topic-heading, .rc-heading, .pg-title')[0] || {}).textContent.trim(),
+      lemma: own('.pg-lemma').length > 0,
+      meanings: !!meanings,
+      say: own('.pg-say-whole').length > 0,
+      rows: own('.pg-grid .pg-row').map(row => row.querySelector('.pg-row-label').textContent.trim()),
+      meaningsRows: meanings ? meanings.querySelectorAll('.pg-row').length : 0,
+      meaningsLegend: meanings ? meanings.querySelectorAll('.pg-legend, .pg-legend-row').length : 0
+    };
+  });
+  check('D20.5 §4.7 the ch5 LEARN chart is UNCHANGED: four rows, Nom.\\Voc. still merged',
+    learn.rows.join(' ') === 'Nom.\\Voc. Gen. Dat. Acc.', learn.rows.join(' '));
+  check('D20.6 §4.7 ...and it keeps the furniture the hint does not have: title, lemma, Meanings, Say Whole List',
+    learn.title === 'First Declension—Eta' && learn.lemma && learn.meanings && learn.say,
+    JSON.stringify(learn));
+  check('D20.7 §4.7 the Learn page\'s Meanings popup still prints five rows AND its legend',
+    learn.meaningsRows === 5 && learn.meaningsLegend >= 5,
+    `${learn.meaningsRows} rows, ${learn.meaningsLegend} legend lines`);
+  await shot('ch5-learn-chart-still-merged');
 }
 
 // ===========================================================================

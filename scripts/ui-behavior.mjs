@@ -234,9 +234,14 @@ function keyFor(ch) {
 }
 // Accented text, typed the way the learner has to type it: the bare LOWERCASE
 // letter on the keyboard, then that cluster's marks on the mark tiles, and
-// punctuation on the punctuation tiles. Lowercase is not a shortcut — the
-// shared keyboard ships no capitals and no shift layer (D-18), which is
-// exactly why the checker folds case; Ἰησοῦς is untypeable any other way.
+// punctuation on the punctuation tiles.
+// LOWERCASE IS A CHOICE HERE, not a limitation, since DISCLOSURE-SPEC3 W3 gave
+// the shared keyboard a Shift key: Ἰησοῦς can be typed with its capital now.
+// This helper keeps typing lower case because the checker folds case at both
+// "With Accents" settings (W3.1 is explicit that the shift key is an input
+// capability and not a scoring change), so lower case is what proves the
+// FOLDING still holds. The capital path has its own checks at the foot of this
+// file, where a capital is typed and round-tripped through the same checker.
 async function typeAccented(text) {
   const clusters = [...new Intl.Segmenter('el', { granularity: 'grapheme' }).segment(text)].map(p => p.segment);
   for (const cluster of clusters) {
@@ -2946,7 +2951,15 @@ for (const [chapterId, activityId, expected] of [
   ['chapt_8', 'c8_learn_vocab', 13]
 ]) {
   await go(`#/activity/${chapterId}/${activityId}`);
-  let cards = 0;
+  // ADJUSTED FOR DISCLOSURE-SPEC3 W2 (DRILL-BEHAVIOR-RULES B-last). The count
+  // is unchanged and is still the thing under test; what changed is where the
+  // walk starts. Learn Vocabulary used to open on a "Click Next to begin"
+  // screen, so N presses of Next reached N cards; card 1 is on screen from
+  // mount now, so the same N cards are N-1 presses away. Counting the ARRIVAL
+  // as card 1 keeps this asserting the pool size rather than the press count,
+  // which is what it was written for — and it would have gone on passing
+  // silently at N-1 if the start had merely been decremented.
+  let cards = 1;
   const next = page.locator('.card').getByRole('button', { name: 'Next', exact: true });
   while (!await next.isDisabled() && cards < 40) { await next.click(); cards += 1; }
   check(`5F §3 ${chapterId} Learn Vocabulary steps through ${expected} cards, not ten`,
@@ -4225,6 +4238,359 @@ for (const [itemIndex, greek, personNumber] of [
       && normalizeText(await stage(1).locator('.tile.selected').innerText()) === 'Middle'
       && revealedVoice.includes('Active'),
     reached ? `feedback ${await feedbackKind()}, revealed ${JSON.stringify(revealedVoice)}` : 'target form not reached');
+}
+
+
+// =====================================================================
+// DISCLOSURE-SPEC3 W2 — INITIAL LOAD (DRILL-BEHAVIOR-RULES B-last)
+// ---------------------------------------------------------------------
+// "Anything advanced with Previous/Next loads item 1 on mount as if Next had
+// been pressed once, pronouncing it on load exactly when it would pronounce on
+// advance; anything where the USER picks the item keeps its empty start."
+//
+// Driven off the DATA rather than a hand list, so the census is the whole app:
+// every activity in all ten chapters is classified and then judged. The four
+// contentAudio modes below are the app's entire empty-start class — every other
+// stepping surface already opens on item 1 (SelectActivity's qIndex, the
+// spellers' wordIndex, DivideActivity/PlaceAccentActivity's item index,
+// topicPages' topicIndex, ReadingCategories' catIndex all start at 0) and this
+// asserts that too, so "already loaded" is verified rather than assumed.
+{
+  const CHAPTERS = { chapt_1: ch1, chapt_2: ch2, chapt_3: ch3, chapt_4: ch4, chapt_5: ch5,
+    chapt_6: ch6, chapt_7: ch7, chapt_8: ch8, chapt_9: ch9, chapt_10: ch10 };
+  const AUTO_LOAD_MODES = new Set(['stepper', 'flashcard', 'selfCheckStepper', 'selfCheckSequence']);
+  // What "item 1 is on screen" looks like, per mode. Each is the element that
+  // carries the ITEM — not the card, not the controls, which are drawn either
+  // way and would make a blank screen pass.
+  const ITEM_SELECTOR = {
+    stepper: '.card .prompt.greek',
+    flashcard: '.card .flash-pane .value, .card .flash-pane .flash-hidden',
+    selfCheckStepper: '.card .prompt.greek',
+    selfCheckSequence: '.card .phonetic-band'
+  };
+  const autoLoad = [];
+  const selectionDriven = [];
+  const alreadyLoaded = [];
+  let total = 0;
+  for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+    for (const section of ['learn', 'drill', 'exercise', 'quickReview']) {
+      for (const activity of chapter[section] || []) {
+        if (!activity || !activity.id) continue;
+        const row = { chapterId, id: activity.id, mode: activity.mode || '', type: activity.type };
+        if (activity.type === 'contentAudio' && !activity.categories && AUTO_LOAD_MODES.has(activity.mode)) {
+          autoLoad.push(row);
+        } else if (activity.audioTiming === 'afterTap') {
+          // The ledger's own name for "the user picks the item" — ch1's four
+          // explore grids, of which Letter Names and Sounds is the named model.
+          selectionDriven.push(row);
+        } else {
+          // Everything else: a stepping surface whose index already started at
+          // 0, or a page with no item sequence at all. Both are "not empty on
+          // arrival", which is the only property this rule cares about.
+          alreadyLoaded.push(row);
+        }
+        total += 1;
+      }
+    }
+  }
+  // EXHAUSTIVE, not a sample: every activity in the app falls into exactly one
+  // of the three buckets, and the three add up to the whole app. A floor like
+  // ">= 100 already-loaded" would have been satisfied by a classifier that
+  // quietly dropped activities it did not recognise.
+  check('W2 the initial-load census classifies EVERY activity in the app, once each',
+    total === 219 && autoLoad.length + selectionDriven.length + alreadyLoaded.length === total
+      && autoLoad.length === 13 && selectionDriven.length === 4,
+    `${total} activities: ${autoLoad.length} auto-load, ${selectionDriven.length} selection-driven, ${alreadyLoaded.length} already-loaded`);
+
+  const blank = [];
+  const begins = [];
+  const wrongAudio = [];
+  for (const row of autoLoad) {
+    await go(`#/activity/${row.chapterId}/${row.id}`);
+    await page.waitForTimeout(350);
+    const onScreen = (await page.locator(ITEM_SELECTOR[row.mode]).first().innerText().catch(() => '')).trim();
+    if (!onScreen) blank.push(`${row.chapterId}/${row.id} (${row.mode})`);
+    // W2.3: no begin screen survives anywhere in this class.
+    const text = await page.locator('.card').first().innerText();
+    if (/click .*(next|to begin)/i.test(text)) begins.push(`${row.chapterId}/${row.id}`);
+    // W2.2: "as if Next had been pressed once" — whatever ADVANCING pronounces,
+    // mounting pronounces, and whatever advancing leaves silent stays silent.
+    // Compared against the app's own advance rather than against a table, so a
+    // future change to one moves both or fails here.
+    const onMount = (await clips()).filter(c => c.startedAt).length;
+    await page.evaluate(() => { window.__clips.length = 0; });
+    const next = page.locator('.card').getByRole('button', { name: /^Next/, exact: false }).first();
+    if (await next.count() && !await next.isDisabled()) {
+      await next.click();
+      await page.waitForTimeout(400);
+      const onAdvance = (await clips()).filter(c => c.startedAt).length;
+      if (onMount !== onAdvance) {
+        wrongAudio.push(`${row.chapterId}/${row.id}: mount ${onMount}, advance ${onAdvance}`);
+      }
+    }
+  }
+  check(`W2.1 all ${autoLoad.length} sequence-stepped activities render item 1 ON MOUNT`,
+    blank.length === 0, blank.join(', '));
+  check('W2.3 no "Click Next to begin" screen survives in the auto-load class',
+    begins.length === 0, begins.join(', '));
+  check('W2.2 each pronounces on load exactly as it pronounces on advance',
+    wrongAudio.length === 0, wrongAudio.join('; '));
+
+  // THE EXEMPTION, on the named model. ch1's Letter Names and Sounds Drill must
+  // still open empty and must still print its instruction line: the learner
+  // picks the letter there, so there is no first item to load.
+  for (const row of selectionDriven) {
+    await go(`#/activity/${row.chapterId}/${row.id}`);
+    await page.waitForTimeout(250);
+    const fields = await page.locator('.card .fields').count();
+    const instruction = (await page.locator('.instructions').first().innerText().catch(() => '')).trim();
+    check(`W2.1 ${row.chapterId}/${row.id} (selection-driven) keeps its EMPTY start and its instruction line`,
+      fields === 0 && instruction.length > 0, `${fields} field blocks, instruction "${instruction}"`);
+    // ...and filling it is still a tap, not a Next.
+    await page.locator('.card .grid.letters .tile').first().click();
+    await page.waitForTimeout(250);
+    check(`W2.1 ${row.chapterId}/${row.id} fills on the first TAP`,
+      await page.locator('.card .fields').count() === 1);
+  }
+
+  // AND THE THIRD CLASS: the surfaces that never had an empty start. Sampled
+  // across every component type rather than every activity, because they share
+  // one index-starts-at-zero behaviour per component.
+  for (const [label, hash, selector] of [
+    ['select (ch3 Verb Translating)', '#/activity/chapt_3/c3_drill_verb_translating', '.card .prompt'],
+    ['twoStageGrid (ch8 Pronoun Case)', '#/activity/chapt_8/c8_drill_case', '.card .prompt'],
+    ['spell (ch1 Vocabulary)', '#/activity/chapt_1/c1_ex_speller', '.card .flash-pane .value'],
+    // NOT `.spell-target`: the whole-verse speller's typing buffer is empty on
+    // arrival and is meant to be — the learner types the verse. What "loaded"
+    // means on that surface is that the verse it is asking for is named.
+    ['spellVerse (ch3 Scripture)', '#/activity/chapt_3/c3_ex_scripture_speller', '.card .sv-ref'],
+    ['divide (ch2 Syllable Division)', '#/activity/chapt_2/c2_ex_syllable_division', '.card .exercise-count'],
+    ['placeAccent (ch2 Accent Placement)', '#/activity/chapt_2/c2_ex_accent_placement', '.card .exercise-count'],
+    ['categories (ch1 Reading People)', '#/activity/chapt_1/c1_ex_reading_people_places', '.reading-count'],
+    ['topicPages (ch7 εἰμί)', '#/activity/chapt_7/c7_learn_eimi', '.topic-count']
+  ]) {
+    await go(hash);
+    await page.waitForTimeout(200);
+    const first = (await page.locator(selector).first().innerText().catch(() => '')).trim();
+    check(`W2.1 ${label} was already loading item 1 and still does`, first.length > 0, `"${first.slice(0, 30)}"`);
+  }
+  await shot('w2-initial-load');
+}
+
+// =====================================================================
+// DISCLOSURE-SPEC3 W3 — THE KEYBOARD'S SHIFT KEY
+// ---------------------------------------------------------------------
+// One keyboard for every spell surface in the app (D-15), so this is checked on
+// one speller and asserted to be PRESENT on all of them — a fork would show up
+// as an absence rather than as a difference.
+{
+  const SPELLERS = [];
+  for (const [chapterId, chapter] of Object.entries({ chapt_1: ch1, chapt_2: ch2, chapt_3: ch3,
+    chapt_4: ch4, chapt_5: ch5, chapt_6: ch6, chapt_7: ch7, chapt_8: ch8, chapt_9: ch9, chapt_10: ch10 })) {
+    for (const activity of chapter.exercise || []) {
+      if (activity && (activity.type === 'spell' || activity.type === 'spellVerse')) {
+        SPELLERS.push(`${chapterId}/${activity.id}`);
+      }
+    }
+  }
+  const missing = [];
+  for (const speller of SPELLERS) {
+    await go(`#/activity/${speller}`);
+    if (await page.locator('[data-speller-shift]').count() !== 1) missing.push(speller);
+  }
+  check(`W3.2 the Shift key is on all ${SPELLERS.length} spell surfaces in the app (one shared keyboard)`,
+    missing.length === 0, missing.join(', '));
+
+  for (const width of [320, 390]) {
+    await page.setViewportSize({ width, height: 780 });
+    await go('#/activity/chapt_1/c1_ex_speller');
+    // W3.2/W3.5: bottom-left corner, ON THE SPACE BAR'S ROW, with its width
+    // taken out of the space bar and nothing wrapping or overflowing.
+    const row = await page.locator('.tk-bottom').evaluate(node => {
+      const box = node.getBoundingClientRect();
+      const keys = [...node.children].map(child => {
+        const r = child.getBoundingClientRect();
+        return { label: child.textContent.trim(), left: Math.round(r.left - box.left),
+          top: Math.round(r.top - box.top), width: Math.round(r.width) };
+      });
+      return { width: Math.round(box.width), gap: parseFloat(getComputedStyle(node).columnGap), keys };
+    });
+    const [shift, space] = row.keys;
+    check(`W3.2 at ${width}px Shift is the bottom row's LEFT-HAND corner key`,
+      row.keys.length === 2 && /shift/i.test(shift.label) && shift.left === 0 && shift.top === 0,
+      JSON.stringify(row.keys));
+    check(`W3.2 at ${width}px the space bar is the row MINUS the shift key (its width is subtracted)`,
+      /space/i.test(space.label) && space.top === 0
+        && Math.abs(space.width - (row.width - shift.width - row.gap)) <= 1,
+      `row ${row.width}, shift ${shift.width}, gap ${row.gap}, space ${space.width}`);
+    check(`W3.5 at ${width}px the added key causes no horizontal overflow`,
+      await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
+  }
+  await page.setViewportSize({ width: 390, height: 780 });
+
+  // W3.2: ONE-SHOT, with a visible armed state and capital faces while armed.
+  await go('#/activity/chapt_1/c1_ex_speller');
+  const shiftKey = page.locator('[data-speller-shift]');
+  const alpha = page.locator('.tk-letters .tk-key[data-lower="α"]');
+  const beta = page.locator('.tk-letters .tk-key[data-lower="β"]');
+  check('W3.2 Shift starts disarmed', await shiftKey.getAttribute('aria-pressed') === 'false');
+  const faceBefore = (await alpha.innerText()).trim();
+  await shiftKey.click();
+  const faceArmed = (await alpha.innerText()).trim();
+  check('W3.2 arming Shift turns the letter faces into capitals',
+    faceBefore === 'α' && faceArmed === 'Α' && await shiftKey.getAttribute('aria-pressed') === 'true',
+    `${faceBefore} -> ${faceArmed}`);
+  await alpha.click();
+  await page.waitForTimeout(80);
+  check('W3.2 the next letter tile types its CAPITAL and the state reverts by itself',
+    await typed() === 'Α' && (await alpha.innerText()).trim() === 'α'
+      && await shiftKey.getAttribute('aria-pressed') === 'false',
+    `typed "${await typed()}"`);
+  await beta.click();
+  await page.waitForTimeout(80);
+  check('W3.2 and the letter after it is lower case again (one-shot, not a lock)',
+    await typed() === 'Αβ', `typed "${await typed()}"`);
+  await shiftKey.click();
+  await shiftKey.click();
+  await page.locator('.tk-letters .tk-key[data-lower="γ"]').click();
+  await page.waitForTimeout(80);
+  check('W3.2 tapping Shift twice DISARMS it', await typed() === 'Αβγ', `typed "${await typed()}"`);
+  // W3.3: ς has no distinct capital and shifts to Σ, like σ.
+  await shiftKey.click();
+  await page.locator('.tk-letters .tk-key[data-lower="ς"]').click();
+  await shiftKey.click();
+  await page.locator('.tk-letters .tk-key[data-lower="σ"]').click();
+  await page.waitForTimeout(80);
+  check('W3.3 ς and σ both shift to Σ', await typed() === 'ΑβγΣΣ', `typed "${await typed()}"`);
+  // W3.4: physical-keyboard parity, through the same table.
+  await page.locator('.card .controls .btn', { hasText: 'Clear' }).first().click().catch(() => {});
+  await page.locator('.tk-edit .btn', { hasText: 'Clear' }).click();
+  await page.keyboard.press('Shift+KeyA');
+  await page.keyboard.press('KeyB');
+  await page.keyboard.press('Shift+KeyJ');
+  await page.waitForTimeout(80);
+  check('W3.4 uppercase roman input maps through the same capital table (A -> Α, J -> Σ)',
+    await typed() === 'ΑβΣ', `typed "${await typed()}"`);
+  await shot('w3-shift-key');
+
+  // W3.1 / §9.2: A CAPITAL ROUND-TRIPS THE CHECKER. The word is read off the
+  // shipped data and typed with its FIRST LETTER CAPITALIZED; the checker folds
+  // case, so it must grade CORRECT — which is the whole claim that the shift
+  // key is an input capability and not a scoring change.
+  //
+  // Every chapter-1 vocabulary word carries marks (this is Greek), so the
+  // capital is typed through the PHYSICAL-keyboard path — Shift+key, W3.4's
+  // parity layer, which reads the same capital table the tiles do — and the
+  // marks then go on the mark tiles exactly as typeAccented does them. That
+  // also makes this the round trip for a CAPITAL WITH A BREATHING, which is the
+  // harder case: Ἄ is a capital alpha carrying a psili and an oxia, and it has
+  // to fold back onto ἄ for the answer to match.
+  {
+    const speller = ch1.exercise.find(a => a.id === 'c1_ex_speller');
+    const lexicon = JSON.parse(readFileSync('src/data/lexicon-chapt01.json', 'utf8'));
+    const pool = lexicon.vocabulary || lexicon.lemmas || {};
+    let target = null;
+    for (let index = 0; index < (speller.items || []).length && !target; index++) {
+      const entry = pool[speller.items[index].ref];
+      const greek = entry && entry.greek;
+      if (!greek) continue;
+      const clusters = [...new Intl.Segmenter('el', { granularity: 'grapheme' }).segment(greek)]
+        .map(part => part.segment);
+      // The first cluster has to be a letter this keyboard shifts, and the word
+      // has to be typeable end to end (no iota subscript in position one, which
+      // is a composite tile rather than a shiftable key).
+      const first = clusters[0].normalize('NFD');
+      if (!REVERSE[first[0].toLowerCase()]) continue;
+      if (first.includes('\u0345')) continue;
+      target = { index, greek, clusters };
+    }
+    check('W3.1 the capital round-trip found a chapter-1 word whose first letter shifts',
+      !!target, target ? `item ${target.index + 1} "${target.greek}"` : 'none');
+    if (target) {
+      await go('#/activity/chapt_1/c1_ex_speller');
+      for (let step = 0; step < target.index; step++) await stepper('Next').click();
+      for (let index = 0; index < target.clusters.length; index++) {
+        const nfd = target.clusters[index].normalize('NFD');
+        const base = nfd[0].toLowerCase();
+        const marks = [...nfd.slice(1)].filter(c => /\p{M}/u.test(c)).join('');
+        if (index === 0) await page.keyboard.press(`Shift+Key${REVERSE[base].toUpperCase()}`);
+        else if (marks.includes('\u0345')) await tapComposite((base + '\u0345').normalize('NFC'));
+        else await page.keyboard.press(keyFor(base));
+        const rest = marks.replace('\u0345', '');
+        if (rest) await tapMark(rest);
+      }
+      await page.waitForTimeout(120);
+      const built = await typed();
+      await page.locator('.card .controls .btn', { hasText: 'Check Answer' }).click();
+      await page.waitForTimeout(400);
+      check(`W3.1 a capitalized spelling ("${built}") still grades CORRECT — case folding is unchanged`,
+        built.normalize('NFC') === target.greek.normalize('NFC')
+            .replace(/^./u, c => c.toUpperCase()).normalize('NFC')
+          && await page.locator('.card .feedback.ok').count() === 1,
+        `typed "${built}" for "${target.greek}"`);
+    }
+  }
+}
+
+// =====================================================================
+// DISCLOSURE-SPEC3 W1 — THE CHAPTER-8 REFLEXIVE CLIPS, ON BOTH SURFACES
+// ---------------------------------------------------------------------
+// The two example clips were crossed at extraction (Verify item 5). The data
+// swap is one edit, but the same topic is rendered twice — inline on the Learn
+// page and, through `contentRef`, inside the Aὐτός Translation Drill's hint —
+// so the fix is only real if BOTH surfaces speak the right verse.
+//
+// exactAudioTap is what makes this an assertion rather than a coincidence: the
+// named clip is evicted from the audio store first, so the tap has to FETCH the
+// file it claims, and the request log names it.
+{
+  const EXPECTED = [
+    ['αὐτὸ τὸ πνεῦμα συμμαρτυρεῖ', 'chapt_8_h_ex3r2'],
+    ['Ἰησοῦς αὐτὸς οὐκ ἐβάπτιζεν', 'chapt_8_h_ex3r1']
+  ];
+  const openReflexive = async () => {
+    await page.locator('details.rc-expander summary', { hasText: 'Reflexive Intensifier' }).first().click();
+    await page.waitForTimeout(150);
+  };
+  // Surface 1: the Learn page.
+  await go('#/activity/chapt_8/c8_learn_third_person');
+  await gotoTopic(2);
+  await openReflexive();
+  for (const [greek, id] of EXPECTED) {
+    const tap = page.locator('.rc-wu-example-greek', { hasText: greek }).first();
+    const result = await exactAudioTap(tap, id);
+    check(`W1 ch8 LEARN page: "${greek.slice(0, 24)}…" plays ${id}`,
+      result.clipCount === 1 && result.fetched.some(url => url.endsWith(result.path)),
+      `fetched ${JSON.stringify(result.fetched.map(u => u.split('/audio/')[1]))}`);
+  }
+  // Surface 2: the same topic, reached through the drill hint's contentRef.
+  await go('#/activity/chapt_8/c8_drill_translation_autos');
+  await page.getByRole('button', { name: 'Hint', exact: true }).click();
+  await page.waitForSelector('.modal', { timeout: 8000 });
+  let reached = false;
+  for (let page4 = 0; page4 < 5 && !reached; page4++) {
+    if (await page.locator('.modal details.rc-expander summary', { hasText: 'Reflexive Intensifier' }).count()) {
+      reached = true;
+      break;
+    }
+    const more = page.locator('.modal [data-hint-page-nav="more"]');
+    if (!await more.count() || await more.isDisabled()) break;
+    await more.click();
+    await page.waitForTimeout(180);
+  }
+  check('W1 the ch8 Aὐτός Translation hint reaches the Three Uses topic through its contentRef', reached);
+  if (reached) {
+    await page.locator('.modal details.rc-expander summary', { hasText: 'Reflexive Intensifier' }).first().click();
+    await page.waitForTimeout(150);
+    for (const [greek, id] of EXPECTED) {
+      const tap = page.locator('.modal .rc-wu-example-greek', { hasText: greek }).first();
+      const result = await exactAudioTap(tap, id);
+      check(`W1 ch8 DRILL HINT: "${greek.slice(0, 24)}…" plays ${id}`,
+        result.clipCount === 1 && result.fetched.some(url => url.endsWith(result.path)),
+        `fetched ${JSON.stringify(result.fetched.map(u => u.split('/audio/')[1]))}`);
+    }
+  }
+  await shot('w1-ch8-reflexive-clips');
 }
 
 

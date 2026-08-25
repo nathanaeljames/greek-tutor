@@ -9,7 +9,7 @@
   import { onDestroy } from 'svelte';
   import { getGreekTapMap, headingCovers, resolveItems, shuffle } from '../lib/content.js';
   import { splitGreekRuns } from '../lib/greek.js';
-  import { play, stop as stopAudio } from '../lib/audio.js';
+  import { play, playOnLoad, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import { providePopups, popupFor } from '../lib/popups.js';
   import RichContent from './RichContent.svelte';
@@ -157,14 +157,61 @@
 
   function next() { idx = Math.min(idx + 1, items.length - 1); revealed = false; revealG = false; revealE = false; onStep(); maybeComplete(); }
   function prev() { idx = Math.max(idx - 1, 0); revealed = false; revealG = false; revealE = false; onStep(); }
-  function onStep() {
+  function onStep(speak = play) {
     const item = items[idx];
     if (!item) return;
-    if (mode === 'stepper' && item.audio) play(item.audio);            // Learn Letters: audioFull
+    if (mode === 'stepper' && item.audio) speak(item.audio);           // Learn Letters: audioFull
     // Flashcard auto-play on Next — but NOT while the Greek is hidden (P5a):
     // hearing the lemma would give the answer away. Autoplay resumes when the
     // mode shows the Greek; tapping "reveal" plays it (the learner asking).
-    if (mode === 'flashcard' && item.audio && vocabMode !== 'hideGreek') play(item.audio);
+    if (mode === 'flashcard' && item.audio && vocabMode !== 'hideGreek') speak(item.audio);
+  }
+
+  // ---- INITIAL LOAD (DISCLOSURE-SPEC3 W2; DRILL-BEHAVIOR-RULES B-last) ----
+  //
+  // A SEQUENCE-STEPPED ACTIVITY NEVER STARTS EMPTY. These four modes are the
+  // whole of the app's empty-start class — every other stepping surface in the
+  // app already opens on its first item (SelectActivity's qIndex, the spellers'
+  // wordIndex, DivideActivity/PlaceAccentActivity's item index, topicPages'
+  // topicIndex, ReadingCategories' catIndex all start at 0). They opened at
+  // `idx = -1` behind a "Click Next to begin" screen, which the review (item 1)
+  // rejected: the learner arrives at a blank card and has to discover that the
+  // content is one press away.
+  //
+  // The rule is EXACTLY "as if Next had been pressed once", which is why this
+  // calls onStep() rather than declaring its own audio policy: whatever a step
+  // pronounces, the mount pronounces, and whatever a step leaves silent stays
+  // silent. Concretely, on today's data — Learn Letters speaks the letter
+  // (stepper), the ten Learn Vocabulary flashcards speak the lemma unless Hide
+  // Greek is on (P5a still holds on item 1), Pronounce Letters and Phonetic
+  // Reading are silent until Check Answer / Answer, exactly as their ledger
+  // rows say (afterCheck, none).
+  //
+  // maybeComplete() is deliberately NOT called: arriving somewhere is not
+  // finishing it, and on a one-item selfCheck sequence "Next once" would
+  // otherwise mark the exercise complete on sight.
+  //
+  // SELECTION-DRIVEN SURFACES ARE UNTOUCHED. The generic chart/exploreGrid
+  // branch (ch1's four `afterTap` drills, the named model) still shows its
+  // instruction line and its empty field block until a tile is tapped — the
+  // user picks the item there, so there is no "first item" to load.
+  const AUTO_LOAD_MODES = new Set(['stepper', 'flashcard', 'selfCheckStepper', 'selfCheckSequence']);
+  // Guarded by a flag rather than by `idx < 0` so that stepping BACK to item 1
+  // and the shuffle reset inside applyOrder() cannot re-trigger a mount clip.
+  // {#key activityId} remounts this component on every navigation, so the flag
+  // starts false on each fresh arrival without needing to be reset anywhere.
+  let initialLoadDone = false;
+  $: maybeInitialLoad(items);
+  function maybeInitialLoad(list) {
+    if (initialLoadDone || !AUTO_LOAD_MODES.has(mode) || !list.length) return;
+    initialLoadDone = true;
+    idx = 0;
+    revealed = false; revealG = false; revealE = false;
+    // W2.4: playOnLoad, not play. This is the app's only un-gestured playback
+    // and iOS refuses it; that refusal must be silent and must not cost the
+    // learner the clip (lib/audio.js holds it for the first tap). The ITEM is
+    // on screen either way — the load and the pronunciation are separate.
+    onStep(playOnLoad);
   }
   // selfCheck sequences (Pronounce Letters / Phonetic Reading) complete on
   // reaching the final item, not on visit.
@@ -342,10 +389,14 @@
 
 {:else if mode === 'stepper'}
   <div class="card">
-    {#if idx < 0}
-      <div class="prompt greek">&nbsp;</div>
-      <div class="instructions">{activity.ui?.beginPrompt || 'Click Next to begin.'}</div>
-    {:else}
+    <!-- W2.3: THE BEGIN SCREEN IS RETIRED. This branch used to draw a blank
+         Greek line and `ui.beginPrompt` ("Click on 'Next Letter' to begin.")
+         until Next was pressed. Item 1 is on screen from mount now (B-last), so
+         the only state left to guard is "the data resolved no items at all",
+         where drawing nothing is right and drawing an instruction to press a
+         button that cannot help would not be. `ui.beginPrompt` stays in the
+         data as inert provenance, like `numberPopupRef`. -->
+    {#if items[idx]}
       <div class="prompt greek">{items[idx].display}</div>
       <div class="fields">
         <div class="field"><div class="label">The Letter's Name:</div><div class="value">{items[idx].meta.name || items[idx].secondary}</div></div>
@@ -392,9 +443,8 @@
       <button class="seg" class:on={vocabMode === 'hideGreek'} role="radio" aria-checked={vocabMode === 'hideGreek'} on:click={() => setVocabMode('hideGreek')}>Hide Greek</button>
       <button class="seg" class:on={vocabMode === 'hideEnglish'} role="radio" aria-checked={vocabMode === 'hideEnglish'} on:click={() => setVocabMode('hideEnglish')}>Hide English</button>
     </div>
-    {#if idx < 0}
-      <div class="instructions">Click Next to begin.</div>
-    {:else}
+    <!-- W2.3: begin screen retired; card 1 is on screen from mount (B-last). -->
+    {#if items[idx]}
       <div class="flash-pane"><div class="label">Greek Word</div>
         {#if showGreek}
           <!-- Greek-tap rule (P5b): the visible Greek word pronounces itself. -->
@@ -421,9 +471,11 @@
 {:else if mode === 'selfCheckStepper'}
   <!-- Pronounce Letters Exercise: show letter, reveal name + sounds-like -->
   <div class="card">
-    {#if idx < 0}
-      <div class="instructions">{activity.ui?.hint || 'Click Next to begin.'}</div>
-    {:else}
+    <!-- W2.3: begin screen retired. Its text was `ui.hint`, which is a begin
+         prompt in all but name ("Click on 'Check Answer' to see if you are
+         correct") and duplicates the activity's own instruction line that the
+         shell already prints above this card. The key stays in the data. -->
+    {#if items[idx]}
       <!-- Greek-tap rule (P7): the displayed letter plays its audioShort (the
            same clip Check Answer speaks). The tap never reveals or advances. -->
       <button class="prompt greek greek-say" on:click={() => { const a = items[idx].audio || (items[idx].meta && items[idx].meta.audioShort); if (a) play(a); }}>{items[idx].display}</button>
@@ -444,9 +496,8 @@
 {:else if mode === 'selfCheckSequence'}
   <!-- Phonetic Reading: Greek-lettered phrase on a highlight band -->
   <div class="card">
-    {#if idx < 0}
-      <div class="instructions">Click Next to begin.</div>
-    {:else}
+    <!-- W2.3: begin screen retired; phrase 1 is on screen from mount (B-last). -->
+    {#if items[idx]}
       <div class="phonetic-band greek">{items[idx].display}</div>
       {#if revealed}
         <div class="field"><div class="label">Answer Key:</div>

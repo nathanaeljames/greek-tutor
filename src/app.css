@@ -351,7 +351,16 @@ button { font: inherit; cursor: pointer; }
 
    The cap subtracts the overlay's own padding so the box fits BETWEEN the safe
    areas rather than merely inside the viewport. */
-:root { --modal-vh: 100vh; --chrome-top: 0px; --chrome-bottom: 0px; }
+:root { --modal-vh: 100vh; --chrome-top: 0px; --chrome-bottom: 0px;
+  /* THE FOOTER DIVIDER, AS ONE NUMBER (DISCLOSURE-SPEC3 W7). The light strip
+     above the line and the light strip below it are the SAME custom property
+     read twice, which is the whole point: the 2026-08-18 review found the
+     two-screen and three-plus footers had drifted to different numbers (ch7
+     correct, ch8 bare above and doubled below), and two numbers authored in
+     two places is how that happens. There is now one number and it cannot
+     differ by composition. */
+  --modal-divider-pad: 10px;
+  --modal-divider-ink: rgba(0, 0, 0, 0.10); }
 @supports (height: 100svh) { :root { --modal-vh: 100svh; } }
 
 .modal-overlay { position: fixed; top: 0; left: 0; right: 0;
@@ -384,22 +393,63 @@ button { font: inherit; cursor: pointer; }
 .modal-title { margin: 0 0 8px; font-size: 1.2rem; }
 .modal-body { margin: 0 0 6px; color: var(--ink); }
 .modal-note { margin: 0; font-size: 0.9rem; color: var(--teal-dark); font-weight: 600; }
+/* ---- THE ONE DIVIDER, AND THE ONE THING THAT DRAWS IT (§4.3 as amended
+   2026-08-18; DISCLOSURE-SPEC3 W7) ------------------------------------------
+   THE SCROLLER DRAWS THE LINE. Not the footer, not the pinned control row —
+   the scrolling content's own bottom edge, in every modal in the app, by the
+   single rule below. Everything under it is spaced by `--modal-divider-pad`,
+   the same token the line's own padding-bottom reads.
+   WHY IT MOVED. SPEC2 put the divider on `.modal-actions` and, for a chart
+   modal, a second copy on `.pg-controls` — two selectors that could each draw
+   one, each carrying its own idea of the padding above (a margin here, the
+   scroller's padding there) and the padding below (10px, plus whatever
+   margin-top the control row inside it happened to have). They drifted, which
+   is what the 2026-08-18 review measured: ch7's Adjective Translation footer
+   correct, ch8's Personal Pronoun Case footer bare above the line and doubled
+   below it. Two owners is the defect; one owner is the fix. If a future round
+   is tempted to add a `border-top` to a footer, this is the comment that says
+   why it will reopen the bug.
+   THE PADDING ABOVE IS THE SCROLLER'S OWN, which is also what makes it real
+   when the content scrolls: the content stops short of the line by exactly
+   that strip, at rest and at the end of the scroll alike. The last child's
+   own bottom margin is zeroed so it cannot add a second, invisible strip —
+   that is where the 22px and 24px readings came from. */
+.modal .modal-scroll { padding-bottom: var(--modal-divider-pad);
+  border-bottom: 1px solid var(--modal-divider-ink); }
+/* ...and THE LAST THING IN THE SCROLL KEEPS NO BOTTOM MARGIN OF ITS OWN,
+   however deeply it is wrapped. A modal body is usually `.rich > p`, and a
+   block's final margin collapses out through its wrappers, so the paragraph's
+   own 10px sat between the wrapper's edge and the divider and made ch2's
+   Syllable Division hint 20px above the line against 10px below it — the same
+   asymmetry the ch8 footer had, arriving from the other side.
+   IT IS A CHAIN, NOT A SUBTREE, and deliberately so. `.modal-scroll :last-child`
+   would say it in one line and would also flatten the trailing margin of every
+   container in the body, tightening gaps that are doing real work between
+   siblings. This walks only the LAST-CHILD SPINE — the elements whose margins
+   can actually reach the divider — and nothing else moves.
+   Six levels is the deepest spine the app has: ch8's Aὐτός Translation hint,
+   page 4, runs `.rich > ol.rc-list > li > .rc-item-below > .rich >
+   details.rc-expander`, and it was that accordion's 8px that showed up as
+   18px above the line. ui-disclosure D13 measures the strip on both sides of
+   every modal state at forced scroll, so a seventh level fails there with the
+   modal's name in the failure text rather than shipping. */
+.modal .modal-scroll > :last-child,
+.modal .modal-scroll > :last-child > :last-child,
+.modal .modal-scroll > :last-child > :last-child > :last-child,
+.modal .modal-scroll > :last-child > :last-child > :last-child > :last-child,
+.modal .modal-scroll > :last-child > :last-child > :last-child > :last-child > :last-child,
+.modal .modal-scroll > :last-child > :last-child > :last-child > :last-child > :last-child > :last-child
+  { margin-bottom: 0; }
+
 /* The pinned footer. flex: 0 0 auto keeps it out of the scroll entirely, so
    the escape from a dialog is on screen from the moment it opens and stays
-   there while the content moves behind it.
-   THE ONE DIVIDER (amended §4.3, DISCLOSURE-SPEC2 W3.2). It is a thin 1px line
-   rather than the soft box-shadow gradient it used to be: the amended rule
-   asks for a divider with a strip of light padding above AND below it, and a
-   12px shadow fading into the content is neither crisply one nor clearly
-   padded. margin-top is the padding above the line, padding-top the padding
-   below it, so neither the scrolling content nor the buttons ever touch it
-   (review item 2, panes a and c). Every modal in the app shares this footer,
-   which is the point: the review found five different compositions across the
-   chapters, and there is one here. */
+   there while the content moves behind it. It draws NO divider of its own
+   (above); the padding-top is the light strip BELOW the one divider, and it is
+   the same token as the strip above. */
 .modal-actions { flex: 0 0 auto;
   display: flex; flex-direction: column; gap: 8px;
-  margin-top: 12px; padding-top: 10px; background: var(--card);
-  border-top: 1px solid rgba(0, 0, 0, 0.10); }
+  margin-top: 0; padding-top: var(--modal-divider-pad); background: var(--card);
+  border-top: none; }
 .modal-actions .btn { width: 100%; min-height: 44px; }
 /* 5G-SPEC3: a two-state Hint keeps Say Paradigm and its target-labelled
    disclosure control together in the pinned footer. The toggle is always the
@@ -423,6 +473,12 @@ button { font: inherit; cursor: pointer; }
    pair itself is what centres, exactly as it does in main content. */
 .hint-paradigm-controls .pg-nav { grid-column: 1 / -1; margin-top: 0; width: 100%; }
 .hint-paradigm-controls .pg-nav .btn { width: auto; }
+/* W7: and the PAGED hint's nav gives up its own 12px too. `.hint-page-nav`
+   carries that margin for its main-content life; inside the footer it stacked
+   on top of the strip below the divider and made ch8's Aὐτός Translation hint
+   24px below the line against 10px above it. Same rule as `.pg-actions` and
+   `.pg-nav` in a pinned line: nothing under the divider adds to the strip. */
+.modal-actions .hint-page-nav { margin-top: 0; }
 /* A SHORT SCREEN CANNOT PIN A TALL BUTTON STACK. The end-of-chapter dialog
    offers four full-width actions: at 44px each plus gaps that is 234px, and in
    a 320x360 window the gap between the app's bars is only 226px. A sticky
@@ -432,7 +488,13 @@ button { font: inherit; cursor: pointer; }
    pins again. 40px is still a comfortable target, and no phone is this short
    in portrait; an iPhone SE in LANDSCAPE (375px) is the real case this covers. */
 @media (max-height: 420px) {
-  .modal-actions { gap: 6px; padding: 8px 0 14px; }
+  /* W7: `padding: 8px 0 14px` used to live here, and its FIRST value silently
+     overrode the divider's padding-below on every short viewport — a shorthand
+     reaching a property this rule has no business setting. Only the bottom
+     padding is compacted now; the strip under the divider stays the one token
+     it is everywhere else, so the footer at 360px tall is the same composition
+     as at 780px and not a fourth arrangement. */
+  .modal-actions { gap: 6px; padding-bottom: 14px; }
   .modal-actions .btn { min-height: 40px; }
 }
 
@@ -1027,24 +1089,41 @@ button { font: inherit; cursor: pointer; }
    (a sticky footer inside a scroller hangs wrong at rest; a flex footer has no
    such state). */
 .paradigm.pg-modal-host { display: flex; flex-direction: column; min-height: 0;
-  flex: 1 1 auto; }
+  flex: 1 1 auto;
+  /* W7: and NO bottom margin. `.paradigm`'s standing `margin: 6px 0 2px` is the
+     air a chart needs on a page; in a modal host the chart's own bottom edge IS
+     the divider, so those 2px landed between the line and the footer and made
+     the strip below the line 12px against 10px above it. Small, systematic, and
+     exactly the kind of drift W7 exists to close: the strip below the divider
+     is `--modal-divider-pad` and nothing else may contribute to it. */
+  margin-bottom: 0; }
 /* {#key chart} wraps the body and the controls in a keyed block, which renders
    as a fragment with no box of its own — so the flex column above lays out the
    two children directly and no extra wrapper rule is needed. */
 .pg-modal-host .pg-body { flex: 1 1 auto; min-height: 0; overflow-y: auto;
   -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
-/* The padding ABOVE the divider has to come from the scroller, not from the
-   footer: it is the gap the content stops short at when scrolled to the end. */
-.pg-modal-host .pg-body { padding-bottom: 10px; }
+/* W7: `.pg-body`'s own `padding-bottom: 10px` and `.pg-controls`' own
+   `border-top` + `padding-top: 10px` are GONE. In a modal `.pg-body` carries
+   `.modal-scroll` and takes the app's one divider rule with it; the pinned line
+   takes the strip below the line from the same token. What is left here is the
+   flex behaviour, which is genuinely this composition's own.
+   The inner rows are flattened because they arrived with margins of their own —
+   `.pg-actions` 12px, `.pg-nav` 10px — which sat UNDER the 10px strip and made
+   the gap below the line 22-23px against 10px above it. That is precisely the
+   doubling the review reported on ch8, and zeroing it here is what makes the
+   strip below the line equal the strip above it rather than merely near it. */
 .pg-modal-host .pg-controls { flex: 0 0 auto; background: var(--card);
-  border-top: 1px solid rgba(0, 0, 0, 0.10); padding-top: 10px; }
-/* NO SECOND DIVIDER, and no gap that reads like one. When the paradigm pins a
-   nav line, .modal-actions follows it directly and its own top divider would be
-   the second of two — the exact composition panes (b) and (e) were marked wrong
-   for. The 8px is .modal-actions' own flex gap, so Close sits the same distance
-   below the nav line as it would below any sibling button. */
-.paradigm.pg-pins-nav + .modal-actions { margin-top: 8px; padding-top: 0;
-  border-top: none; box-shadow: none; }
+  padding-top: var(--modal-divider-pad); }
+.pg-modal-host .pg-controls > .pg-actions,
+.pg-modal-host .pg-controls > .pg-nav { margin-top: 0; }
+/* NO DIVIDER BETWEEN THE NAV LINE AND CLOSE, and no gap that reads like one.
+   When the paradigm pins a nav line, the one divider is already above that
+   line, so what `.modal-actions` supplies here is not a divider strip but the
+   ordinary distance between two buttons: Close sits the same 8px below the nav
+   line as it would below any sibling button (panes b and e are the mistake this
+   avoids). This is the ONE rule in the app that overrides the footer's
+   divider-pad, and it overrides it downward, to a plain gap. */
+.paradigm.pg-pins-nav + .modal-actions { margin-top: 8px; padding-top: 0; }
 /* The original keeps Say Whole Paradigm / Endings INSIDE the chart frame. */
 .pg-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
 .pg-actions.pg-actions-each { display: grid;
@@ -1113,19 +1192,36 @@ button { font: inherit; cursor: pointer; }
     padding-top: 0; padding-left: 12px; }
 }
 
-/* ---- SHARED KEYBOARD: punctuation + space row (D-15, Phase 0 layout A) ----
-   The letter and mark rows above are untouched. This row keeps the four
-   punctuation keys at a real touch target and gives the rest to the space
-   bar, which is the key the whole-verse speller lives on. */
+/* ---- SHARED KEYBOARD: punctuation row, then the bottom row (D-15, Phase 0
+   layout A, amended by DISCLOSURE-SPEC3 W3.2) ----
+   The letter and mark rows above are untouched. The punctuation keys keep a
+   real touch target; the space bar has moved down to a row of its own, which is
+   where it had already ended up by wrapping at every phone width — stating it
+   in the markup is what gives Shift a line to share with it. */
 .tk-punct { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
-.tk-punct .tk-key { flex: 0 0 auto; min-width: 44px; }
+.tk-punct .tk-key { flex: 1 1 44px; min-width: 44px; }
 .tk-key.punct { font-family: var(--greek-font); color: var(--teal-dark); }
-/* The space bar takes the rest of the row where there is room and drops to a
-   full-width row of its own where there is not — four 44px punctuation keys
-   leave only 64px inside 320px, which is a space bar in name only. The
-   flex-basis is what decides: it wraps when the remainder is under 140px. */
-.tk-key.tk-space { flex: 1 1 140px; min-width: 140px; font-size: 0.85rem; font-weight: 600;
+.tk-bottom { display: flex; flex-wrap: nowrap; gap: 5px; margin-top: 6px; }
+/* THE SPACE BAR TAKES THE REST OF THE BOTTOM ROW. `flex: 1 1 0` with a min of
+   zero is what makes "subtract Shift's width from the spacebar" literally true
+   and unconditional: the row never wraps (tk-bottom is nowrap), Shift never
+   grows, so the bar is exactly the row minus the shift key minus one gap, at
+   every width the app supports including 320px. */
+.tk-key.tk-space { flex: 1 1 0; min-width: 0; font-size: 0.85rem; font-weight: 600;
   color: var(--teal-dark); }
+/* ---- SHIFT (W3.2), BOTTOM-LEFT CORNER --------------------------------------
+   First child of the bottom row, so it is the keyboard's corner key. Sized like
+   a punctuation key rather than like the space bar: `flex: 0 0 auto` means it
+   never grows and never shrinks, so the space bar's width is the row minus a
+   FIXED amount and the two can never fight over the remainder.
+   The armed state has to be visible at a glance — a one-shot modifier the
+   learner cannot see is a modifier they will press twice — so it inverts to the
+   teal fill and white text of a pressed key, held rather than momentary. The
+   letter faces change with it, which is the other half of the same answer. */
+.tk-key.tk-shift { flex: 0 0 auto; width: 62px; font-size: 0.8rem; font-weight: 700;
+  color: var(--teal-dark); text-transform: uppercase; letter-spacing: 0.04em; }
+.tk-key.tk-shift.armed { background: var(--teal-dark); border-color: var(--teal-dark);
+  color: #fff; }
 
 /* ---- WHOLE-VERSE SPELLER ---- */
 .sv-ref { text-align: right; color: var(--teal-dark); font-size: 0.85rem; font-weight: 700;
@@ -1385,14 +1481,38 @@ button, a, input, select, textarea, label,
 /* Items 8-11/15/23: the original centres its Greek/English example blocks.
    The rows keep their internal column layout; the BLOCK narrows to its
    content and sits centred in the card. */
+/* ---- §3.2 AS AMENDED 2026-08-18: GREEN UNDERLINE IS EXCLUSIVE TO TAPPABLE
+   ELEMENTS, APP-WIDE ----------------------------------------------------------
+   An authored `[[u]]` run renders as a bare <u>, which takes the browser's own
+   underline. In INK PROSE that is exactly right and is untouched: chapter 2's
+   grammar pages underline the word a rule is about ("[[u]]Terry[[/u]] went to
+   the store"), and W5.3 keeps every one of those — the rule is about the GREEN
+   underline, not about emphasis in running text.
+   Inside a GREEN host it is wrong, because green + underlined is how this app
+   says "this opens something" (§3.2 R1) and none of these are tappable. A
+   walk of all ten chapters, every topic, every accordion body, found exactly
+   three such hosts, and they are the three below:
+     .rc-term          ch6 English Concepts, the term half of a definition row
+     .rc-greekgloss    ch7 Adjectives, the English under an example verse
+     .rc-pfhead        ch10 Future Verbs, the Present / Future column headers
+   THE LIST IS NOT THE GUARD. ui-disclosure D16 sweeps every activity in the app
+   for anything computing green AND underlined that is not a link, a button or a
+   summary with a handler, so a fourth host cannot appear quietly — it fails the
+   suite with its own name in the failure text. This rule is what fixes the
+   three that exist; that check is what keeps the number at zero. */
+.rc-term u, .rc-greekgloss u, .rc-pfhead u { text-decoration: none; }
+
 .rc-greekrows.centered { max-width: 26em; margin-left: auto; margin-right: auto; }
 .rc-greekrows.centered .rc-verse-greek,
 .rc-greekrows.centered .rc-greekgloss,
 .rc-greekrows.centered .rc-greekref { text-align: center; }
-/* Item 21: chapter 8's Number chart underlines its Singular/Plural headers,
-   exactly as the original prints them. Scoped to the authored flag so the
-   device-verified ch4/ch5 englishPairs tables do not move. */
-.rc-greekrows.head-underline .rc-greekhead span { text-decoration: underline; }
+/* Item 21's `.rc-greekrows.head-underline .rc-greekhead span` RULE IS DELETED
+   (DISCLOSURE-SPEC3 W5.1, §3.2 as amended 2026-08-18). It underlined chapter
+   8's Number chart headers because the original prints them underlined; in the
+   port those headers are green, and green + underlined is the app's link
+   signal, so they read as broken links (review item 4). The class binding in
+   RichContent went with it, which is what makes this a deleted path rather than
+   a rule waiting to be re-enabled. */
 /* The Number chart is TWO two-column tables side by side (first person, third
    person) — a narrow gutter column keeps the pairing readable, exactly as the
    original separates them. The gutter is an authored empty column. */
@@ -1677,9 +1797,18 @@ button.rc-term-name { font-weight: 700; }
 
 /* A topic heading that IS the link to its popup (chapter 9's Deponent Verbs),
    and one whose Greek word plays its own clip (chapter 10's Future of εἰμί).
-   Both inherit the heading's size; the link keeps the underline that marks a
-   popup link everywhere else. */
-.topic-title-link { font: inherit; color: var(--link); }
+   Both inherit the heading's size.
+   THE COLOUR OVERRIDE IS GONE (DISCLOSURE-SPEC3 W6, §3.2 as amended
+   2026-08-18). This class used to restate `color: var(--link)` — blue — on top
+   of the .popup-link the markup already carries, so chapter 9's Deponent Verbs
+   heading opened its popup in blue while the "frequent verbs" link three lines
+   below it opened one in green (review item 7). No rule ever governed that:
+   §3.3 ratifies blue for IN-CHART triggers and nothing else, and the R1
+   conversion simply missed this class. A title link is an in-text link, so it
+   takes the in-text link's green underlined style, which it now inherits from
+   .popup-link rather than fighting. The εἰμί case is unaffected — a Greek
+   audio tap is .greek-tap and stays blue (directive 9). */
+.topic-title-link { font: inherit; }
 .topic-heading .greek-tap { font-size: 1em; }
 /* A [[link:id]] run: a popup link named outright rather than by slug. */
 .named-link { display: inline; }

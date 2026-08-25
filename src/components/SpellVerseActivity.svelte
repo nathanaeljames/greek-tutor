@@ -51,7 +51,7 @@
   import { markCompleted } from '../lib/progress.js';
   import { checkVerse } from '../lib/answer-check.js';
   import * as input from '../lib/speller-input.js';
-  import SpellerKeyboard, { KEYMAP, PUNCT_KEYS } from './SpellerKeyboard.svelte';
+  import SpellerKeyboard, { greekForKey, PUNCT_KEYS } from './SpellerKeyboard.svelte';
   import SpellerField from './SpellerField.svelte';
   export let chapter;
   export let activity;
@@ -143,7 +143,9 @@
     if (e.key === 'ArrowLeft') { e.preventDefault(); if (!solved) buffer = input.placeCaret(buffer, buffer.caret - 1, false); return; }
     if (e.key === 'ArrowRight') { e.preventDefault(); if (!solved) buffer = input.placeCaret(buffer, buffer.caret + 1, false); return; }
     if (PUNCT_KEYS[e.key]) { e.preventDefault(); appendChar(PUNCT_KEYS[e.key]); return; }
-    const g = KEYMAP[e.key.toLowerCase()];
+    // W3.4: uppercase roman goes through the same capital table the tiles use,
+    // so the desktop convenience layer can spell everything the tiles can.
+    const g = greekForKey(e.key);
     if (g) { e.preventDefault(); appendChar(g); }
   }
   onMount(() => window.addEventListener('keydown', onKey));

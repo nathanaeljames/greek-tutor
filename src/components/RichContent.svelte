@@ -412,7 +412,17 @@
            class:gloss-only={b.layout === 'glossOnly'} class:english-pairs={b.layout === 'englishPairs'}
            class:compound-verbs={b.layout === 'compoundVerbs'}
            class:titled={b.title} class:centered={b.centered} class:rc-gap-before={b.gapBefore}
-           class:head-underline={b.headerUnderline} class:paired-gutter={b.pairedGutter}>
+           class:paired-gutter={b.pairedGutter}>
+        <!-- `headerUnderline` USED TO BIND `head-underline` HERE, and does not
+             any more (DISCLOSURE-SPEC3 W5.1, amended §3.2). The chapter-8
+             Number chart's Singular/Plural headers were underlined because the
+             original prints them that way — but the port gave green underline a
+             job the original's typography never had, and the review (item 4)
+             read those headers as broken links. Green underline is now
+             EXCLUSIVE to tappable elements app-wide, so the key becomes inert
+             provenance like `numberPopupRef`: it stays in the data recording
+             what the source page looked like, and the renderer no longer has a
+             path that can act on it. Headers render plain. -->
         <!-- B5: Review Marks groups its rows under a title ("Breathing:",
              "Punctuation:", "Apostrophe:  ( ᾽ )  elided letters"). The title
              owns its line in the heading green; the rows hang beneath it. -->

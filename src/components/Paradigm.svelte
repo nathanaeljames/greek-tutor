@@ -222,8 +222,15 @@
   {#key chart}
     <!-- W4: the chart BODY. In a modal host this is the only scroller, so the
          control row below it cannot scroll away (§4.3); everywhere else it is a
-         plain wrapper and changes nothing. -->
-    <div class="pg-body">
+         plain wrapper and changes nothing.
+         DISCLOSURE-SPEC3 W7.1: in a modal it ALSO takes `.modal-scroll`, the
+         class every other dialog's scroller already carries. Not cosmetic — the
+         footer divider is drawn by the scroller now, by one CSS rule, and one
+         rule needs one selector. While a chart's scroller was the only one in
+         the app with a different name, the divider needed a second selector to
+         reach it, and a second selector is how the ch7/ch8 footers drifted
+         apart in the first place (review A2). -->
+    <div class="pg-body" class:modal-scroll={modalHost}>
     <!-- In the Endings STATE the heading names the state, not the chart: the
          dialog is showing endings, and leaving "Paradigm" up there put that
          word on screen twice meaning two different things (the chart's own

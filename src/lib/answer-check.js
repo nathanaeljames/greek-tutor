@@ -36,12 +36,17 @@
 // Movable nu is real Greek and the chapter teaches it, but it is a per-word
 // authored choice, never a checker rule. Do not re-introduce it.
 //
-// CASE IS NEVER REQUIRED, under either toggle, because the shared keyboard
-// has no capitals and the Phase 0 decision was to keep it that way rather
-// than add a shift layer. That is not only a chapter-3 concern: chapter 1's
-// Χριστός and chapter 2's Π-/Φ- items have shipped since their cohorts with
-// no way to type their capital, so "With Accents" ON was unwinnable on them.
-// Folding case fixes those retroactively.
+// CASE IS NEVER REQUIRED, under either toggle. It was originally folded
+// because the shared keyboard had no capitals at all: chapter 1's Χριστός and
+// chapter 2's Π-/Φ- items had shipped since their cohorts with no way to type
+// their capital, so "With Accents" ON was unwinnable on them.
+//
+// THE KEYBOARD HAS CAPITALS NOW (DISCLOSURE-SPEC3 W3, Shift key) AND THIS
+// STILL FOLDS. W3.1 is explicit that the shift key is an INPUT capability and
+// not a scoring change: a learner who types χριστός is spelling the word, and
+// making the port start rejecting a spelling it has accepted for ten chapters
+// would be a regression dressed as a feature. What the shift key changes is
+// that the learner may now type what the chapter PRINTS.
 
 // Punctuation the checker may drop: the marks that appear in (or plausibly
 // appear in) a Scripture Memory verse. U+0387 GREEK ANO TELEIA and U+00B7

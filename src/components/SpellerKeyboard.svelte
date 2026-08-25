@@ -17,6 +17,42 @@
   // is a different mark on a different row and the two are NOT interchangeable
   // anywhere in the app, including in the checker.
   export const PUNCT_KEYS = { ' ': ' ', ',': ',', '.': '.', ';': ';', "'": "'" };
+
+  // ---- CAPITALS (DISCLOSURE-SPEC3 W3) --------------------------------------
+  //
+  // THE STANDARD GREEK UPPERCASE TABLE, written out rather than derived from
+  // String.prototype.toUpperCase(). Two reasons it has to be explicit:
+  //
+  //   * ς. Unicode gives final sigma the same capital as medial sigma, and
+  //     toUpperCase() agrees — but only by accident of the same table this
+  //     states outright. W3.3 names the behaviour, so it is named here.
+  //   * the composite tiles. toUpperCase('ᾳ') is 'ΑΙ' — TWO characters, the
+  //     Unicode full-uppercase mapping for an iota subscript. A shift key that
+  //     turned one tile into two letters would be a spelling bug. Only the 25
+  //     letter tiles are in this table; a composite, a mark or a punctuation
+  //     tile is not a key that shifts.
+  //
+  // Answer checking is case-INSENSITIVE at both "With Accents" settings
+  // (lib/answer-check.js), so this adds an input capability and changes no
+  // score: Χριστός was always accepted spelled χριστός, and now it can also be
+  // typed the way the chapter prints it.
+  export const CAPITALS = {
+    α: 'Α', β: 'Β', γ: 'Γ', δ: 'Δ', ε: 'Ε', ζ: 'Ζ', η: 'Η', θ: 'Θ', ι: 'Ι',
+    κ: 'Κ', λ: 'Λ', μ: 'Μ', ν: 'Ν', ξ: 'Ξ', ο: 'Ο', π: 'Π', ρ: 'Ρ', σ: 'Σ',
+    τ: 'Τ', υ: 'Υ', φ: 'Φ', χ: 'Χ', ψ: 'Ψ', ω: 'Ω', 'ς': 'Σ'
+  };
+  export const capitalOf = ch => CAPITALS[ch] || ch;
+  // PHYSICAL-KEYBOARD PARITY (W3.4). The desktop convenience layer folded the
+  // key to lower case before looking it up, so Shift-A and a both typed α and
+  // the tiles and the hardware keyboard disagreed about what the app can spell.
+  // One entry point for both spellers, reading the one KEYMAP and the one
+  // capital table — the same reason the keyboard itself is shared (D-15).
+  export function greekForKey(key) {
+    if (typeof key !== 'string' || [...key].length !== 1) return null;
+    const greek = KEYMAP[key.toLowerCase()];
+    if (!greek) return null;
+    return key !== key.toLowerCase() ? capitalOf(greek) : greek;
+  }
 </script>
 
 <script>
@@ -45,6 +81,23 @@
   // exactly the per-chapter fork the spec rules out. The inline copy survives
   // only as the fallback if the shared file is ever unreachable.
   export let inlineTiles = null;
+  // ---- SHIFT (W3.2) --------------------------------------------------------
+  // ONE-SHOT, like a phone keyboard: tap Shift, the next LETTER tile types its
+  // capital, the state reverts by itself. Tapping Shift again disarms it. The
+  // armed state is visible on the key AND on every letter face, so the learner
+  // can see what the next tap will produce rather than having to try one.
+  //
+  // The state lives HERE, in the one shared keyboard, and the component
+  // dispatches the character it has already resolved. Neither speller learns
+  // that a shift key exists — which is what keeps the two hosts from acquiring
+  // two slightly different ideas of when a shift is spent (the D-15 fork this
+  // component exists to prevent, and where the VERIFY-5D A6 defects lived).
+  let shifted = false;
+  const toggleShift = () => { shifted = !shifted; };
+  function typeLetter(ch) {
+    dispatch('insert', shifted ? capitalOf(ch) : ch);
+    shifted = false;                      // spent by the letter it capitalized
+  }
   $: tiles = getSpellerTiles(tilesRef) || inlineTiles || {};
   $: letterTiles = tiles.letters || (inlineTiles && inlineTiles.letters) || fallbackLetters;
   $: diacriticTiles = tiles.diacritics || (inlineTiles && inlineTiles.diacritics) || [];
@@ -56,7 +109,7 @@
 <div class="tile-keyboard">
   <div class="tk-letters">
     {#each letterTiles as ch}
-      <button class="tk-key greek" on:click={() => dispatch('insert', ch)}>{ch}</button>
+      <button class="tk-key greek" data-lower={ch} on:click={() => typeLetter(ch)}>{shifted ? capitalOf(ch) : ch}</button>
     {/each}
   </div>
   <div class="tk-marks">
@@ -67,16 +120,31 @@
       <button class="tk-key greek" on:click={() => dispatch('insert', ch)}>{ch}</button>
     {/each}
   </div>
-  {#if punctuationTiles.length || spaceTile}
+  {#if punctuationTiles.length}
     <div class="tk-punct">
       {#each punctuationTiles as p}
         <button class="tk-key punct" title={p.name} on:click={() => dispatch('insert', p.insert)}>{p.label}</button>
       {/each}
-      {#if spaceTile}
-        <button class="tk-key tk-space" on:click={() => dispatch('insert', spaceTile.insert)}>{spaceTile.label}</button>
-      {/if}
     </div>
   {/if}
+  <!-- W3.2: THE BOTTOM ROW — Shift in the keyboard's LEFT-HAND CORNER and the
+       space bar taking the rest of the line, so the shift key's width comes out
+       of the space bar and out of nothing else. That is Nathanael's stated
+       layout and it is also the only arrangement in which the phrase means
+       anything: the space bar had already wrapped clear of the punctuation keys
+       at every phone width, so a Shift key parked at the head of THAT row would
+       have cost the space bar nothing.
+       The row is unconditional. Shift is not tile data — it is a property of
+       the one shared keyboard (D-15), so it is present on every speller in the
+       app whatever tile set the activity names. -->
+  <div class="tk-bottom">
+    <button class="tk-key tk-shift" class:armed={shifted}
+            aria-pressed={shifted} data-speller-shift
+            on:click={toggleShift}>Shift</button>
+    {#if spaceTile}
+      <button class="tk-key tk-space" on:click={() => dispatch('insert', spaceTile.insert)}>{spaceTile.label}</button>
+    {/if}
+  </div>
   <div class="tk-edit">
     <button class="btn secondary" on:click={() => dispatch('backspace')}>⌫ Backspace</button>
     <button class="btn secondary" on:click={() => dispatch('clear')}>Clear</button>
