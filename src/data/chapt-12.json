@@ -1,0 +1,2935 @@
+{
+ "_comment": "Chapter 12 (Imperfect Verbs), assembled from 12_IMPF.TBK + CHAPT_12 audio + ch12railwalk.pdf under PIPELINE-INSIGHTS-v3 Stage 8 and DISCLOSURE-RULES. Behavior fields per DRILLBEHAVIORLEDGER.csv rows 107-115 (CONFIRMED 2026-08-25; row 108 afterGuess).",
+ "id": "chapt_12",
+ "number": 12,
+ "title": "Imperfect Verbs",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "recognize the various forms (augments, stems, endings) of the imperfect active and middle/passive verbs,",
+  "predict how the augment will change with the various consonants, vowels, diphthongs and prepositional prefixes,",
+  "translate imperfect verbs,",
+  "gain more practice in translating and working with Greek,",
+  "master 10 more high frequency vocabulary words,",
+  "memorize Mat 6:9 in Greek."
+ ],
+ "vocab": [
+  "apothnesko",
+  "ekei",
+  "heos",
+  "idou",
+  "hina",
+  "ioannes",
+  "men",
+  "holos",
+  "hote",
+  "sun"
+ ],
+ "learn": [
+  {
+   "id": "c12_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives",
+   "instructions": ""
+  },
+  {
+   "id": "c12_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "In English we have only one official past tense (Tanya [[u]]drove[[/u]] the car.) This refers to time in the past."
+      },
+      {
+       "type": "para",
+       "text": "If we want to refer to a continuous or repetitive act in the past, we may add a helping verb to a participle and say \"Tanya [[u]]was driving[[/u]] the car.\"",
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "comparison",
+     "title": "Comparison with Greek",
+     "content": [
+      {
+       "type": "para",
+       "text": "In Greek, the [[u]]aorist[[/u]] tense is used to reference that the action of the verb simply happened in the past without regard to the exact time involved."
+      },
+      {
+       "type": "para",
+       "text": "The [[u]]imperfect[[/u]] is used for showing continuity or repetitive action in the past. We will be working on the imperfect in this chapter.",
+       "gapBefore": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c12_learn_imperfect",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Imperfect Indicative Verbs",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "The Greek imperfect tense is used when continuous or repeated action in the past is being referred to."
+      },
+      {
+       "type": "para",
+       "text": "In English it will usually be translated with the helping verb was/were + the participle form of the verb (e.g. was singing).",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "Verbs that are deponent in the present tense are also deponent in the imperfect.",
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "form",
+     "title": "Form",
+     "content": [
+      {
+       "type": "para",
+       "text": "The imperfect is built from the present verb stem. It is preceded by an \"ε\" augment and followed by secondary active personal endings."
+      },
+      {
+       "type": "formula",
+       "align": "center",
+       "gapBefore": true,
+       "lines": [
+        {
+         "text": "Augment + Verb stem + Connecting vowel"
+        },
+        {
+         "text": "+ Secondary active endings"
+        },
+        {
+         "text": "ε + λυ + ο + ν = ἔλυον",
+         "audio": "chapt_12_l_as1",
+         "tapUnit": true
+        },
+        {
+         "text": "Aug   Stem   CV   Ending"
+        }
+       ],
+       "_note": "D-48f2 shape: the Greek line is one tap unit playing eluon (l_as1, the page's SayWord as1 entry); the English lines are inert. The rail walk shows hands on e, lu and eluon."
+      },
+      {
+       "type": "para",
+       "text": "The connecting vowel will be:",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "ο before μ and ν\nε elsewhere",
+       "flush": true,
+       "_disclosure": "C5: \"Form (cont.)\" is the same header with a continuation marker; merged. VERIFY-5H (l)."
+      }
+     ]
+    },
+    {
+     "id": "imperfectActive",
+     "title": "Imperfect Active",
+     "titleAudio": "chapt_12_l_luw",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "imperfectActiveParadigm",
+       "title": "Imperfect Active Indicative of λύω",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1.",
+         "cells": [
+          {
+           "greek": "ἔλυον",
+           "gloss": "I was loosing",
+           "audio": "chapt_12_l_as1"
+          },
+          {
+           "greek": "ἐλύομεν",
+           "gloss": "We were loosing",
+           "audio": "chapt_12_l_ap1"
+          }
+         ]
+        },
+        {
+         "label": "2.",
+         "cells": [
+          {
+           "greek": "ἔλυες",
+           "gloss": "You were loosing",
+           "audio": "chapt_12_l_as2"
+          },
+          {
+           "greek": "ἐλύετε",
+           "gloss": "You were loosing",
+           "audio": "chapt_12_l_ap2"
+          }
+         ]
+        },
+        {
+         "label": "3.",
+         "cells": [
+          {
+           "greek": "ἔλυε(ν)",
+           "gloss": "He/she/it was loosing",
+           "audio": "chapt_12_l_as3"
+          },
+          {
+           "greek": "ἔλυον",
+           "gloss": "They were loosing",
+           "audio": "chapt_12_l_ap3"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_12_l_ipfpar"
+       }
+      }
+     ]
+    },
+    {
+     "id": "imperfectMiddlePassive",
+     "title": "Imperfect Middle/Passive",
+     "titleAudio": "chapt_12_l_luw",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "imperfectMiddlePassiveParadigm",
+       "title": "Imperfect Middle/Passive Indicative of λύω",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1.",
+         "cells": [
+          {
+           "greek": "ἐλυόμην",
+           "gloss": "I was being loosed",
+           "audio": "chapt_12_l_ms1"
+          },
+          {
+           "greek": "ἐλυόμεθα",
+           "gloss": "We were being loosed",
+           "audio": "chapt_12_l_mp1"
+          }
+         ]
+        },
+        {
+         "label": "2.",
+         "cells": [
+          {
+           "greek": "ἐλύου",
+           "gloss": "You were being loosed",
+           "audio": "chapt_12_l_ms2"
+          },
+          {
+           "greek": "ἐλύεσθε",
+           "gloss": "You were being loosed",
+           "audio": "chapt_12_l_mp2"
+          }
+         ]
+        },
+        {
+         "label": "3.",
+         "cells": [
+          {
+           "greek": "ἐλύετο",
+           "gloss": "He/she/it was being loosed",
+           "audio": "chapt_12_l_ms3"
+          },
+          {
+           "greek": "ἐλύοντο",
+           "gloss": "They were being loosed",
+           "audio": "chapt_12_l_mp3"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_12_l_ipmpar"
+       },
+       "note": "The above paradigm is translated using the passive voice. The middle uses exactly the same forms, which would be translated—I was loosing (for myself), you were loosing (for yourself), he was loosing (for himself), etc. Context will determine whether the form should be translated middle or passive."
+      }
+     ]
+    },
+    {
+     "id": "augments",
+     "title": "Augments",
+     "content": [
+      {
+       "type": "para",
+       "text": "The augment is added in 4 ways:"
+      },
+      {
+       "type": "numbered",
+       "gapBefore": true,
+       "items": [
+        {
+         "text": "before consonants it is \"ε\""
+        },
+        {
+         "text": "before vowels the augment contracts with the vowel according to the following rules:\nα + ε = η      ε + ε = η      ο + ε = ω\nει + ε = ῃ     αι + ε = ῃ     οι + ε = ῳ\nαυ + ε = ηυ    ευ + ε = ηυ",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Contraction Examples",
+           "content": [
+            {
+             "type": "greekRows",
+             "layout": "contraction",
+             "rows": [
+              {
+               "greek": "ἤκουον",
+               "audio": "chapt_12_l_ex1",
+               "gloss": "ε + α = η",
+               "parts": [
+                {
+                 "greek": "ἀκούω",
+                 "audio": "chapt_12_l_ex2"
+                },
+                {
+                 "text": "+ ε augment"
+                }
+               ]
+              },
+              {
+               "greek": "ἤγειρον",
+               "audio": "chapt_12_l_ex3",
+               "gloss": "ε + ε = η",
+               "parts": [
+                {
+                 "greek": "ἐγείρω",
+                 "audio": "chapt_12_l_ex4"
+                },
+                {
+                 "text": "+ ε augment"
+                }
+               ]
+              },
+              {
+               "greek": "ὠρχούμην",
+               "audio": "chapt_12_l_ex5",
+               "gloss": "ε + ο = ω",
+               "parts": [
+                {
+                 "greek": "ὀρχέομαι",
+                 "audio": "chapt_12_l_ex6"
+                },
+                {
+                 "text": "+ ε augment"
+                }
+               ]
+              },
+              {
+               "greek": "ᾖρον",
+               "audio": "chapt_12_l_ex7",
+               "gloss": "ε + αι = ῃ",
+               "parts": [
+                {
+                 "greek": "αἴρω",
+                 "audio": "chapt_12_l_ex8"
+                },
+                {
+                 "text": "+ ε augment"
+                }
+               ]
+              },
+              {
+               "greek": "ᾠκοδόμουν",
+               "audio": "chapt_12_l_ex9",
+               "gloss": "ε + οι = ῳ",
+               "parts": [
+                {
+                 "greek": "οἰκοδομέω",
+                 "audio": "chapt_12_l_ex10"
+                },
+                {
+                 "text": "+ ε augment"
+                }
+               ]
+              }
+             ],
+             "_layout_note": "Each row prints rule, augmented form, lemma + \"ε augment\"; both Greek forms tap (hand cursors, rail walk p5)."
+            }
+           ],
+           "_disclosure": "C1: chart payload behind an in-text \"Examples\" link (§6.1) -> accordion, §3.5 title. VERIFY-5H (l)."
+          }
+         ]
+        },
+        {
+         "text": "Compound verbs with prepositions ending in a consonant: insert the augment between the prepositional prefix and the verb stem.\nἐκβάλλω becomes ἐξεβάλλον"
+        },
+        {
+         "text": "Compound verbs with prepositions ending in a vowel: the final vowel of the preposition is dropped and the ε augment inserted in its place.\nἀποκτείνω becomes ἀπέκτεινον"
+        }
+       ],
+       "_disclosure": "C5: \"Augments (cont.)\" continues the same numbered list 1-4 (the Augment Drill hint prints all four on one screen). VERIFY-5H (l)."
+      }
+     ],
+     "audioMap": {
+      "ἐκβάλλω": "chapt_12_l_ex11",
+      "ἐξεβάλλον": "chapt_12_l_ex12",
+      "ἀποκτείνω": "chapt_12_l_ex13",
+      "ἀπέκτεινον": "chapt_12_l_ex14"
+     },
+     "_greek_note": "Rule lines are bare font-Greek letters in the TBK (a,e,h,o,w,ei,ai,oi,au,eu); converted as notation, not taps."
+    },
+    {
+     "id": "eimiImperfect",
+     "title": "εἰμί Imperfect",
+     "titleAudio": "chapt_12_l_eimi",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "imperfectEimiParadigm",
+       "title": "εἰμί Imperfect Indicative",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1.",
+         "cells": [
+          {
+           "greek": "ἤμην",
+           "gloss": "I was",
+           "audio": "chapt_12_l_eis1"
+          },
+          {
+           "greek": "ἦμεν",
+           "gloss": "We were",
+           "audio": "chapt_12_l_eip1"
+          }
+         ]
+        },
+        {
+         "label": "2.",
+         "cells": [
+          {
+           "greek": "ἦς",
+           "gloss": "You were",
+           "audio": "chapt_12_l_eis2"
+          },
+          {
+           "greek": "ἦτε",
+           "gloss": "You were",
+           "audio": "chapt_12_l_eip2"
+          }
+         ]
+        },
+        {
+         "label": "3.",
+         "cells": [
+          {
+           "greek": "ἦν",
+           "gloss": "He/she/it was",
+           "audio": "chapt_12_l_eis3"
+          },
+          {
+           "greek": "ἦσαν",
+           "gloss": "They were",
+           "audio": "chapt_12_l_eip3"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_12_l_eimpar"
+       }
+      }
+     ]
+    },
+    {
+     "id": "echoImperfect",
+     "title": "ἔχω Imperfect",
+     "titleAudio": "chapt_12_l_exw",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "imperfectEchoParadigm",
+       "title": "ἔχω Imperfect Indicative",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1.",
+         "cells": [
+          {
+           "greek": "εἶχον",
+           "gloss": "I was having",
+           "audio": "chapt_12_l_eixs1"
+          },
+          {
+           "greek": "εἴχομεν",
+           "gloss": "We were having",
+           "audio": "chapt_12_l_eixp1"
+          }
+         ]
+        },
+        {
+         "label": "2.",
+         "cells": [
+          {
+           "greek": "εἶχες",
+           "gloss": "You were having",
+           "audio": "chapt_12_l_eixs2"
+          },
+          {
+           "greek": "εἴχετε",
+           "gloss": "You were having",
+           "audio": "chapt_12_l_eixp2"
+          }
+         ]
+        },
+        {
+         "label": "3.",
+         "cells": [
+          {
+           "greek": "εἶχε(ν)",
+           "gloss": "He/she/it was having",
+           "audio": "chapt_12_l_eixs3"
+          },
+          {
+           "greek": "εἶχον",
+           "gloss": "They were having",
+           "audio": "chapt_12_l_eixp3"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_12_l_eixpar"
+       },
+       "note": "Note: This is an exception. The augment is a contraction of ε + ε = ει. Another exceptional augmented form is θέλω which takes an η becoming ἤθελεν in Mat 18:30."
+      }
+     ],
+     "audioMap": {
+      "θέλω": "chapt_12_l_thelw",
+      "ἤθελεν": "chapt_12_l_nthel"
+     }
+    }
+   ],
+   "greekTaps": true,
+   "_title_note": "Chart-title Greek taps: luw -> l_luw (D-40), eimi -> l_eimi, exw -> l_exw (TBK title dispatch tokens luw/eimi/exw on each page)."
+  },
+  {
+   "id": "c12_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "senses"
+  },
+  {
+   "id": "c12_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory",
+   "reference": "Mat 6:9",
+   "words": [
+    {
+     "greek": "Πάτερ",
+     "gloss": "Father",
+     "audio": "chapt_12_l_sm1"
+    },
+    {
+     "greek": "ἡμῶν",
+     "gloss": "our",
+     "audio": "chapt_12_l_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_12_l_sm3"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_12_l_sm4"
+    },
+    {
+     "greek": "τοῖς",
+     "gloss": "the",
+     "audio": "chapt_12_l_sm5"
+    },
+    {
+     "greek": "οὐρανοῖς·",
+     "gloss": "heavens",
+     "audio": "chapt_12_l_sm6"
+    },
+    {
+     "greek": "ἁγιασθήτω",
+     "gloss": "hallowed",
+     "audio": "chapt_12_l_sm7"
+    },
+    {
+     "greek": "τὸ",
+     "gloss": "the",
+     "audio": "chapt_12_l_sm8"
+    },
+    {
+     "greek": "ὄνομά",
+     "gloss": "name",
+     "audio": "chapt_12_l_sm9"
+    },
+    {
+     "greek": "σου·",
+     "gloss": "your",
+     "audio": "chapt_12_l_sm10"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_12_l_mt6_9"
+   }
+  },
+  {
+   "id": "c12_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham. New Testament Greek for Beginners (Toronto: The Macmillan Company, 1923), pp. 64-73.",
+      "Mounce, William D. Basics of Biblical Greek: Grammar (Grand Rapids: Zondervan, 1993), pp. 176-188.",
+      "Summers, Ray and Thomas Sawyer. Essentials of New Testament Greek (Nashville: Broadman & Holman, 1995), pp. 55-63.",
+      "Wenham, J. W. The Elements of New Testament Greek (Cambridge: Cambridge University Press, 1965), pp. 52-56, 68-71."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c12_drill_parsing",
+   "type": "select",
+   "mode": "twoStageGrid",
+   "title": "Imperfect Indicative Parsing Drill",
+   "instructions": "Click on the voice, then person and number",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionStages": [
+    {
+     "label": "Voice",
+     "values": [
+      "Active",
+      "Middle/Passive"
+     ]
+    },
+    {
+     "label": "Person / Number",
+     "values": [
+      "First Singular",
+      "First Plural",
+      "Second Singular",
+      "Second Plural",
+      "Third Singular",
+      "Third Plural"
+     ],
+     "optionGroups": [
+      2,
+      2,
+      2
+     ]
+    }
+   ],
+   "items": [
+    {
+     "greek": "ἔλυον",
+     "translate": "I was loosing/they were loosing",
+     "answer": [
+      "Active",
+      "First Singular"
+     ],
+     "audio": "chapt_12_l_as1",
+     "hintRef": "luoParadigms",
+     "answerAlt": [
+      [
+       "Active",
+       "Third Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts both; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "εἴχετε",
+     "translate": "you (pl.) were having",
+     "answer": [
+      "Active",
+      "Second Plural"
+     ],
+     "audio": "chapt_12_l_eixp2",
+     "hintRef": "eimiEchoParadigms"
+    },
+    {
+     "greek": "ἐλύετο",
+     "translate": "he/she/it was being loosed",
+     "answer": [
+      "Middle/Passive",
+      "Third Singular"
+     ],
+     "audio": "chapt_12_l_ms3",
+     "hintRef": "luoParadigms"
+    },
+    {
+     "greek": "ἦς",
+     "translate": "you (sg.) were",
+     "answer": [
+      "Active",
+      "Second Singular"
+     ],
+     "audio": "chapt_12_l_eis2",
+     "hintRef": "eimiEchoParadigms"
+    },
+    {
+     "greek": "ἐλύομεν",
+     "translate": "we were loosing",
+     "answer": [
+      "Active",
+      "First Plural"
+     ],
+     "audio": "chapt_12_l_ap1",
+     "hintRef": "luoParadigms"
+    },
+    {
+     "greek": "ἦσαν",
+     "translate": "they were",
+     "answer": [
+      "Active",
+      "Third Plural"
+     ],
+     "audio": "chapt_12_l_eip3",
+     "hintRef": "eimiEchoParadigms"
+    },
+    {
+     "greek": "ἐλύου",
+     "translate": "you (sg.) were being loosed",
+     "answer": [
+      "Middle/Passive",
+      "Second Singular"
+     ],
+     "audio": "chapt_12_l_ms2",
+     "hintRef": "luoParadigms"
+    },
+    {
+     "greek": "ἦν",
+     "translate": "he/she/it was",
+     "answer": [
+      "Active",
+      "Third Singular"
+     ],
+     "audio": "chapt_12_l_eis3",
+     "hintRef": "eimiEchoParadigms"
+    },
+    {
+     "greek": "εἶχες",
+     "translate": "you (sg.) were having",
+     "answer": [
+      "Active",
+      "Second Singular"
+     ],
+     "audio": "chapt_12_l_eixs2",
+     "hintRef": "eimiEchoParadigms"
+    },
+    {
+     "greek": "ἔλυε",
+     "translate": "he/she/it was loosing",
+     "answer": [
+      "Active",
+      "Third Singular"
+     ],
+     "audio": "chapt_12_l_as3",
+     "hintRef": "luoParadigms"
+    },
+    {
+     "greek": "ἦμεν",
+     "translate": "we were",
+     "answer": [
+      "Active",
+      "First Plural"
+     ],
+     "audio": "chapt_12_l_eip1",
+     "hintRef": "eimiEchoParadigms"
+    },
+    {
+     "greek": "ἐλυόμεθα",
+     "translate": "we were being loosed",
+     "answer": [
+      "Middle/Passive",
+      "First Plural"
+     ],
+     "audio": "chapt_12_l_mp1",
+     "hintRef": "luoParadigms"
+    },
+    {
+     "greek": "ἐλύοντο",
+     "translate": "they were being loosed",
+     "answer": [
+      "Middle/Passive",
+      "Third Plural"
+     ],
+     "audio": "chapt_12_l_mp3",
+     "hintRef": "luoParadigms"
+    },
+    {
+     "greek": "ἤμην",
+     "translate": "I was",
+     "answer": [
+      "Active",
+      "First Singular"
+     ],
+     "audio": "chapt_12_l_eis1",
+     "hintRef": "eimiEchoParadigms"
+    },
+    {
+     "greek": "εἶχον",
+     "translate": "I was having/they were having",
+     "answer": [
+      "Active",
+      "First Singular"
+     ],
+     "audio": "chapt_12_l_eixs1",
+     "hintRef": "eimiEchoParadigms",
+     "answerAlt": [
+      [
+       "Active",
+       "Third Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts both; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ἐλύετε",
+     "translate": "you (pl.) were loosing",
+     "answer": [
+      "Active",
+      "Second Plural"
+     ],
+     "audio": "chapt_12_l_ap2",
+     "hintRef": "luoParadigms"
+    },
+    {
+     "greek": "εἶχε",
+     "translate": "he/she/it was having",
+     "answer": [
+      "Active",
+      "Third Singular"
+     ],
+     "audio": "chapt_12_l_eixs3",
+     "hintRef": "eimiEchoParadigms"
+    },
+    {
+     "greek": "ἐλύεσθε",
+     "translate": "you (pl.) were being loosed",
+     "answer": [
+      "Middle/Passive",
+      "Second Plural"
+     ],
+     "audio": "chapt_12_l_mp2",
+     "hintRef": "luoParadigms"
+    },
+    {
+     "greek": "ἦτε",
+     "translate": "you (pl.) were",
+     "answer": [
+      "Active",
+      "Second Plural"
+     ],
+     "audio": "chapt_12_l_eip2",
+     "hintRef": "eimiEchoParadigms"
+    },
+    {
+     "greek": "εἴχομεν",
+     "translate": "we were having",
+     "answer": [
+      "Active",
+      "First Plural"
+     ],
+     "audio": "chapt_12_l_eixp1",
+     "hintRef": "eimiEchoParadigms"
+    },
+    {
+     "greek": "ἐλυόμην",
+     "translate": "I was being loosed",
+     "answer": [
+      "Middle/Passive",
+      "First Singular"
+     ],
+     "audio": "chapt_12_l_ms1",
+     "hintRef": "luoParadigms"
+    },
+    {
+     "greek": "ἔλυες",
+     "translate": "you (sg.) were loosing",
+     "answer": [
+      "Active",
+      "Second Singular"
+     ],
+     "audio": "chapt_12_l_as2",
+     "hintRef": "luoParadigms"
+    },
+    {
+     "greek": "ἐλύομεν",
+     "translate": "we were loosing",
+     "answer": [
+      "Active",
+      "First Plural"
+     ],
+     "audio": "chapt_12_l_ap1",
+     "hintRef": "luoParadigms",
+     "_audio_note": "SayWord entry BLANK in the original (the ch10 item-18 class); the form is item 5's, wired to l_ap1."
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Translate",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "luoParadigms"
+   },
+   "_stage_note": "Keys (voice x person/number, with BOTH readings of eluon/eichon) read from the AnalyzeAnswer script at 0xab000-0xacb9e; clips from the SayWord table at 0xacb9e. Hint is FORM-DEPENDENT per item (D-46): luo forms -> luoParadigms, eimi/echo forms -> eimiEchoParadigms. Menu prints \"Imperfect Parsing Indicative Drill\"; the page title is used.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c12_drill_augment",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Augment Drill",
+   "instructions": "Click on the correctly augmented verb",
+   "promptIsGreek": true,
+   "promptGloss": true,
+   "options": "perItem",
+   "optionsAreGreek": true,
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "γινώσκω",
+     "gloss": "I know",
+     "ref": "Mat 1:25",
+     "options": [
+      "ἠγίνωσκεν",
+      "ἐγίνωσκεν",
+      "ἀγίνωσκεν"
+     ],
+     "answer": "ἐγίνωσκεν",
+     "audio": "chapt_12_l_ad1"
+    },
+    {
+     "greek": "ἔχω",
+     "gloss": "I have",
+     "ref": "Mat 3:4",
+     "options": [
+      "ἦχεν",
+      "ἆχεν",
+      "εἶχεν"
+     ],
+     "answer": "εἶχεν",
+     "audio": "chapt_12_l_ad2"
+    },
+    {
+     "greek": "ἐκπορεύομαι",
+     "gloss": "I go out",
+     "ref": "Mat 3:5",
+     "options": [
+      "ἐξεπορεύετο",
+      "ἐκεπορεύετο",
+      "ἐκηπορεύετο"
+     ],
+     "answer": "ἐξεπορεύετο",
+     "audio": "chapt_12_l_ad3"
+    },
+    {
+     "greek": "βαπτίζω",
+     "gloss": "I baptize",
+     "ref": "Mat 3:6",
+     "options": [
+      "ἐβαπτίζοντο",
+      "ἠβαπτίζοντο",
+      "ἀβαπτίζοντο"
+     ],
+     "answer": "ἐβαπτίζοντο",
+     "audio": "chapt_12_l_ad4"
+    },
+    {
+     "greek": "ἐκπλήσσω",
+     "gloss": "I amaze",
+     "ref": "Mat 7:28",
+     "options": [
+      "ἠκπλήσσοντο",
+      "ἐκεπλήσσοντο",
+      "ἐξεπλήσσοντο"
+     ],
+     "answer": "ἐξεπλήσσοντο",
+     "audio": "chapt_12_l_ad5"
+    },
+    {
+     "greek": "προσφέρω",
+     "gloss": "I bring",
+     "ref": "Mat 9:2",
+     "options": [
+      "ἐπροσέφερον",
+      "προσέφερον",
+      "πρώφερον"
+     ],
+     "answer": "προσέφερον",
+     "audio": "chapt_12_l_ad6"
+    },
+    {
+     "greek": "διδάσκω",
+     "gloss": "I teach",
+     "ref": "Mat 13:54",
+     "options": [
+      "ἀδίδασκεν",
+      "ἐδίδασκεν",
+      "ἠδίδασκεν"
+     ],
+     "answer": "ἐδίδασκεν",
+     "audio": "chapt_12_l_ad7"
+    },
+    {
+     "greek": "θέλω",
+     "gloss": "I will",
+     "ref": "Mat 18:30",
+     "options": [
+      "ἄθελεν",
+      "ἔθελεν",
+      "ἤθελεν"
+     ],
+     "answer": "ἤθελεν",
+     "audio": "chapt_12_l_ad8"
+    },
+    {
+     "greek": "διαλογίζομαι",
+     "gloss": "I reason",
+     "ref": "Mat 21:25",
+     "options": [
+      "διελογίζοντο",
+      "ἐδιαλογίζοντο",
+      "διηλογίζοντο"
+     ],
+     "answer": "διελογίζοντο",
+     "audio": "chapt_12_l_ad9"
+    },
+    {
+     "greek": "πορεύομαι",
+     "gloss": "I go",
+     "ref": "Mat 24:1",
+     "options": [
+      "ἀπορεύετο",
+      "ἐπορεύετο",
+      "ἠπορεύετο"
+     ],
+     "answer": "ἐπορεύετο",
+     "audio": "chapt_12_l_ad10"
+    },
+    {
+     "greek": "ὀνειδίζω",
+     "gloss": "I insult",
+     "ref": "Mat 27:44",
+     "options": [
+      "ὀνήδιζον",
+      "ἐονείδιζον",
+      "ὠνείδιζον"
+     ],
+     "answer": "ὠνείδιζον",
+     "audio": "chapt_12_l_ad11"
+    },
+    {
+     "greek": "ἀπολύω",
+     "gloss": "I release",
+     "ref": "Mar 15:6",
+     "options": [
+      "ἠπόλυεν",
+      "ἀποέλυεν",
+      "ἀπέλυεν"
+     ],
+     "answer": "ἀπέλυεν",
+     "audio": "chapt_12_l_ad12"
+    },
+    {
+     "greek": "πιστεύω",
+     "gloss": "I believe",
+     "ref": "Jn 2:24",
+     "options": [
+      "ἐπίστευεν",
+      "ἠπίστευεν",
+      "ἀπίστευεν"
+     ],
+     "answer": "ἐπίστευεν",
+     "audio": "chapt_12_l_ad13"
+    },
+    {
+     "greek": "διατρίβω",
+     "gloss": "I continue",
+     "ref": "Jn 3:22",
+     "options": [
+      "ἐδιέτριβεν",
+      "διήτριβεν",
+      "διέτριβεν"
+     ],
+     "answer": "διέτριβεν",
+     "audio": "chapt_12_l_ad14"
+    },
+    {
+     "greek": "ἔρχομαι",
+     "gloss": "I come",
+     "ref": "Jn 4:30",
+     "options": [
+      "ἤρχοντο",
+      "ἄρχοντο",
+      "ἔρχοντο"
+     ],
+     "answer": "ἤρχοντο",
+     "audio": "chapt_12_l_ad15"
+    },
+    {
+     "greek": "γράφω",
+     "gloss": "I write",
+     "ref": "Jn 8:8",
+     "options": [
+      "ἄγραφεν",
+      "ἔγραφεν",
+      "ἤγραφεν"
+     ],
+     "answer": "ἔγραφεν",
+     "audio": "chapt_12_l_ad16"
+    },
+    {
+     "greek": "ἐξέρχομαι",
+     "gloss": "I go out",
+     "ref": "Jn 8:9",
+     "options": [
+      "ἐκήρχοντο",
+      "ἐξέρχοντο",
+      "ἐξήρχοντο"
+     ],
+     "answer": "ἐξήρχοντο",
+     "audio": "chapt_12_l_ad17"
+    },
+    {
+     "greek": "βλέπω",
+     "gloss": "I see",
+     "ref": "Jn 13:22",
+     "options": [
+      "ἄβλεπον",
+      "ἔβλεπον",
+      "ἤβλεπον"
+     ],
+     "answer": "ἔβλεπον",
+     "audio": "chapt_12_l_ad18"
+    },
+    {
+     "greek": "περιά́γω κ͂όσμου τούτου βλέπει",
+     "gloss": "I go about",
+     "ref": "Mat 9:35",
+     "options": [
+      "περῆγεν ξιπλεσ",
+      "περιῆγεν Ι σαψ το ψου τηατ Σοδομ ιν τηισ δαψ",
+      "περιέγεν ιπλεσ"
+     ],
+     "answer": "περιῆγεν Ι σαψ το ψου τηατ Σοδομ ιν τηισ δαψ",
+     "audio": "chapt_12_l_ad19"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "hint": {
+    "title": "The augment is added in 4 ways:",
+    "content": [
+     {
+      "type": "numbered",
+      "items": [
+       "before consonants it is \"ε\"",
+       "before vowels the augment contracts with the vowel according to the following rules:\nα + ε = η      ε + ε = η      ο + ε = ω\nει + ε = ῃ     αι + ε = ῃ     οι + ε = ῳ\nαυ + ε = ηυ    ευ + ε = ηυ",
+       "Compound verbs with prepositions ending in a consonant: insert the augment between the prepositional prefix and the verb stem.\nἐκβάλλω becomes ἐξεβάλλον",
+       "Compound verbs with prepositions ending in a vowel: the final vowel of the preposition is dropped and the ε augment inserted in its place.\nἀποκτείνω becomes ἀπέκτεινον"
+      ],
+      "_source": "Transcribed from the hint's own field 0x10fae6 (§4.7)."
+     }
+    ]
+   },
+   "_shape_note": "NEW DRILL SHAPE (5H-SPEC1 §3.5): prompt panel shows the present lemma (Greek), its gloss and a reference; three GREEK options stacked. The correct column per item (A/B/C) is read from the AnalyzeAnswer script at 0xa3000-0xa4728.",
+   "_audio_note": "l_ad1-19 record the AUGMENTED ANSWER form, not the lemma shown (Nathanael, DOSBox 2026-08-25). The clip plays AFTER the guess; the prompt lemma is not a tap and Pronounce is disabled until the item is answered (5H-SPEC1 §3.5, proposed D-50).",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c12_drill_translation",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Imperfect Indicative Translation Drill",
+   "instructions": "Click on the correct translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "καὶ οὐκ ἐγίνωσκεν αὐτὴν",
+     "ref": "Mat 1:25",
+     "options": [
+      "and they were not knowing her",
+      "and he was not knowing her",
+      "and she was not knowing him"
+     ],
+     "answer": "and he was not knowing her",
+     "audio": "chapt_12_l_td1"
+    },
+    {
+     "greek": "τότε ἐξεπορεύετο πρὸς αὐτὸν Ἱεροσόλυμα",
+     "ref": "Mat 3:5",
+     "options": [
+      "then Jerusalem was going out to him",
+      "then he was going out to Jerusalem",
+      "then they were going out to Jersualem"
+     ],
+     "answer": "then Jerusalem was going out to him",
+     "audio": "chapt_12_l_td2"
+    },
+    {
+     "greek": "καὶ ἐβαπτίζοντο ἐν τῷ Ἰορδάνῃ ποταμῷ ὑπ' αὐτοῦ",
+     "ref": "Mat 3:6",
+     "options": [
+      "and they were baptizing in the Jordan river with him",
+      "and they were being baptized by him in the Jordan river",
+      "and he was being baptized by him in the Jordan river"
+     ],
+     "answer": "and they were being baptized by him in the Jordan river",
+     "audio": "chapt_12_l_td3"
+    },
+    {
+     "greek": "ἔλεγον τοῖς μαθηταῖς αὐτοῦ",
+     "ref": "Mat 9:11",
+     "options": [
+      "you were saying to his disciples",
+      "he was saying to his disciples",
+      "they were saying to his disciples"
+     ],
+     "answer": "they were saying to his disciples",
+     "audio": "chapt_12_l_td4"
+    },
+    {
+     "greek": "ἐδίδασκεν αὐτοὺς ἐν τῇ συναγωγῇ αὐτῶν",
+     "ref": "Mat 13:54",
+     "options": [
+      "I was teaching them in their synagogue",
+      "they were teaching them in their synagogue",
+      "he was teaching them in their synagogue"
+     ],
+     "answer": "he was teaching them in their synagogue",
+     "audio": "chapt_12_l_td5"
+    },
+    {
+     "greek": "ὅτι ὡς προφήτην αὐτὸν εἶχον",
+     "ref": "Mat 14:5",
+     "options": [
+      "because they were regarding him as a prophet",
+      "because you were regarding him as a prophet",
+      "because he was regarding him as a prophet"
+     ],
+     "answer": "because they were regarding him as a prophet",
+     "audio": "chapt_12_l_td6"
+    },
+    {
+     "greek": "οἱ δὲ ὄχλοι ἔλεγον, Οὗτός ἐστιν ὁ προφήτης",
+     "ref": "Mat 21:11",
+     "options": [
+      "and they were saying to the crowds, \"This is the prophet, Jesus\"",
+      "and the crowds were saying, \"This is the prophet, Jesus\"",
+      "and he was saying to the crowds, \"This is the prophet, Jesus\""
+     ],
+     "answer": "and the crowds were saying, \"This is the prophet, Jesus\"",
+     "audio": "chapt_12_l_td7",
+     "greek2": "Ἰησοῦς"
+    },
+    {
+     "greek": "ἦσαν δὲ παρ' ἡμῖν ἑπτὰ ἀδελφοί",
+     "ref": "Mat 22:25",
+     "options": [
+      "now I had seven brothers with me",
+      "now we had seven brothers with us",
+      "now there were seven brothers with us"
+     ],
+     "answer": "now there were seven brothers with us",
+     "audio": "chapt_12_l_td8"
+    },
+    {
+     "greek": "ὁ Ἰησοῦς ἀπὸ τοῦ ἱεροῦ ἐπορεύετο",
+     "ref": "Mat 24:1",
+     "options": [
+      "Jesus was going away from the temple",
+      "he was going away from the temple to Jesus",
+      "Jesus and they were going away from of the temple"
+     ],
+     "answer": "Jesus was going away from the temple",
+     "audio": "chapt_12_l_td9"
+    },
+    {
+     "greek": "ἐκεῖνος δὲ ἔλεγεν περὶ τοῦ ναοῦ τοῦ σώματος",
+     "ref": "Jn 2:21",
+     "options": [
+      "but they were speaking concerning the temple of his body",
+      "but you were speaking concerning the temple of his body",
+      "but he was speaking concerning the temple of his body"
+     ],
+     "answer": "but he was speaking concerning the temple of his body",
+     "audio": "chapt_12_l_td10",
+     "greek2": "αὐτοῦ"
+    },
+    {
+     "greek": "αὐτὸς γὰρ ἐγίνωσκεν τί ἦν ἐν τῷ ἀνθρώπῳ",
+     "ref": "Jn 2:25",
+     "options": [
+      "for he was knowing him and what was in man",
+      "for he was knowing what was in man",
+      "for what was in man was being known by him"
+     ],
+     "answer": "for he was knowing what was in man",
+     "audio": "chapt_12_l_td11"
+    },
+    {
+     "greek": "Ἦν δὲ ἄνθρωπος ἐκ τῶν Φαρισαίων",
+     "ref": "Jn 3:1",
+     "options": [
+      "Now a man was coming from the Pharisees",
+      "Now they were men of the Pharisees",
+      "Now there was a man of the Pharisees"
+     ],
+     "answer": "Now there was a man of the Pharisees",
+     "audio": "chapt_12_l_td12"
+    },
+    {
+     "greek": "οὖν ὁ Ἰησοῦς ... ἔλεγεν αὐτοῖς, Ἀμὴν ἀμὴν",
+     "ref": "Jn 5:19",
+     "options": [
+      "therefore they were saying to Jesus, \"Truly, truly I say to you\"",
+      "therefore Jesus was saying to us, \"Truly, truly I say to you\"",
+      "therefore Jesus was saying to them, \"Truly, truly I say to you\""
+     ],
+     "answer": "therefore Jesus was saying to them, \"Truly, truly I say to you\"",
+     "audio": "chapt_12_l_td13",
+     "greek2": "λέγω ὑμῖν"
+    },
+    {
+     "greek": "ἔλεγον οὖν αὐτῷ, Ποῦ ἐστιν ὁ πατήρ σου;",
+     "ref": "Jn 8:19",
+     "options": [
+      "So they were saying to him, \"Where is your father?\"",
+      "So he was saying to them, \"Where is your father?\"",
+      "So we were saying to him, \"Where is your father?\""
+     ],
+     "answer": "So they were saying to him, \"Where is your father?\"",
+     "audio": "chapt_12_l_td14"
+    },
+    {
+     "greek": "τότε μὲν ἔμεινεν ἐν ᾧ ἦν τόπῳ δύο ἡμέρας",
+     "ref": "Jn 11:6",
+     "options": [
+      "then they were staying two days in the place where they were",
+      "then he was staying two days in the place where he was",
+      "then we were staying two days in the place where he was"
+     ],
+     "answer": "then he was staying two days in the place where he was",
+     "audio": "chapt_12_l_td15"
+    },
+    {
+     "greek": "καὶ ἤρχετο πρὸς αὐτόν",
+     "ref": "Jn 11:29",
+     "options": [
+      "and she was coming to him",
+      "and they were coming to him",
+      "and you were coming to him"
+     ],
+     "answer": "and she was coming to him",
+     "audio": "chapt_12_l_td16"
+    },
+    {
+     "greek": "ἔβλεπον εἰς ἀλλήλους οἱ μαθηταὶ",
+     "ref": "Jn 13:22",
+     "options": [
+      "each one was looking at the disciples",
+      "they were looking at the disciples",
+      "the disciples were looking at one another"
+     ],
+     "answer": "the disciples were looking at one another",
+     "audio": "chapt_12_l_td17"
+    },
+    {
+     "greek": "ἁμαρτίαν οὐκ εἴχοσαν",
+     "ref": "Jn 15:22",
+     "options": [
+      "we were not having sin",
+      "they were not having sin",
+      "he was not having sin"
+     ],
+     "answer": "they were not having sin",
+     "audio": "chapt_12_l_td18"
+    },
+    {
+     "greek": "καὶ διὰ τὴν μαρτυρίαν ἥν εἶχον",
+     "ref": "Rev 6:9",
+     "options": [
+      "and because of the testimony which we were having",
+      "and because of the testimony which he was having",
+      "and because of the testimony which they were having"
+     ],
+     "answer": "and because of the testimony which they were having",
+     "audio": "chapt_12_l_td19"
+    },
+    {
+     "greek": "καὶ εἶχεν κέρατα δύο ὅμοια ἀρνίῳ καὶ ἐλάλει",
+     "ref": "Rev 13:11",
+     "options": [
+      "and they were having two horns like a lamb, and they were speaking as a dragon",
+      "and he was having two horns like a lamb, and he was speaking as a dragon",
+      "and we were having two horns like a lamb, and we were speaking as a dragon"
+     ],
+     "answer": "and he was having two horns like a lamb, and he was speaking as a dragon",
+     "audio": "chapt_12_l_td20",
+     "greek2": "ὡς δράκων"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "luoParadigms"
+   },
+   "_answer_note": "Answers are the BLUE options on ch12railwalk.pdf p9-p14, all 20 items captured. The SayWord table at 0x9ede0 lists a 21st entry (l_td21) for a clip that never shipped; ignored. Second Greek lines (items 7, 10, 13, 20) from the positional pool at 0x7b38c, indexed at item minus 7 in the original's script.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c12_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "I die",
+    "there",
+    "until",
+    "behold",
+    "in order that",
+    "John",
+    "indeed",
+    "whole",
+    "when",
+    "with"
+   ],
+   "items": [
+    {
+     "greek": "ἀποθνῄσκω",
+     "note": null,
+     "answer": "I die",
+     "audio": "chapt_12_l_voc1"
+    },
+    {
+     "greek": "ἐκεῖ",
+     "note": null,
+     "answer": "there",
+     "audio": "chapt_12_l_voc2"
+    },
+    {
+     "greek": "ἕως",
+     "note": null,
+     "answer": "until",
+     "audio": "chapt_12_l_voc3"
+    },
+    {
+     "greek": "ἰδού",
+     "note": null,
+     "answer": "behold",
+     "audio": "chapt_12_l_voc4"
+    },
+    {
+     "greek": "ἵνα",
+     "note": null,
+     "answer": "in order that",
+     "audio": "chapt_12_l_voc5"
+    },
+    {
+     "greek": "Ἰωάννης",
+     "note": null,
+     "answer": "John",
+     "audio": "chapt_12_l_voc6"
+    },
+    {
+     "greek": "μέν",
+     "note": null,
+     "answer": "indeed",
+     "audio": "chapt_12_l_voc7"
+    },
+    {
+     "greek": "ὅλος",
+     "note": null,
+     "answer": "whole",
+     "audio": "chapt_12_l_voc8"
+    },
+    {
+     "greek": "ὅτε",
+     "note": null,
+     "answer": "when",
+     "audio": "chapt_12_l_voc9"
+    },
+    {
+     "greek": "σύν",
+     "note": null,
+     "answer": "with",
+     "audio": "chapt_12_l_voc10"
+    }
+   ],
+   "audioTiming": "beforeGuess",
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "poolKind": "vocabulary",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c12_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary: English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "options": "static",
+   "optionsAreGreek": true,
+   "optionValues": [
+    "ἀποθνῄσκω",
+    "ἐκεῖ",
+    "ἕως",
+    "ἰδού",
+    "ἵνα",
+    "Ἰωάννης, -ου, ὁ",
+    "μέν",
+    "ὅλος, -η, -ον",
+    "ὅτε",
+    "σύν"
+   ],
+   "items": [
+    {
+     "prompt": "I die",
+     "answer": "ἀποθνῄσκω",
+     "audio": "chapt_12_l_voc1"
+    },
+    {
+     "prompt": "there",
+     "answer": "ἐκεῖ",
+     "audio": "chapt_12_l_voc2"
+    },
+    {
+     "prompt": "until",
+     "answer": "ἕως",
+     "audio": "chapt_12_l_voc3"
+    },
+    {
+     "prompt": "behold",
+     "answer": "ἰδού",
+     "audio": "chapt_12_l_voc4"
+    },
+    {
+     "prompt": "in order that",
+     "answer": "ἵνα",
+     "audio": "chapt_12_l_voc5"
+    },
+    {
+     "prompt": "John",
+     "answer": "Ἰωάννης, -ου, ὁ",
+     "audio": "chapt_12_l_voc6"
+    },
+    {
+     "prompt": "indeed",
+     "answer": "μέν",
+     "audio": "chapt_12_l_voc7"
+    },
+    {
+     "prompt": "whole",
+     "answer": "ὅλος, -η, -ον",
+     "audio": "chapt_12_l_voc8"
+    },
+    {
+     "prompt": "when",
+     "answer": "ὅτε",
+     "audio": "chapt_12_l_voc9"
+    },
+    {
+     "prompt": "with",
+     "answer": "σύν",
+     "audio": "chapt_12_l_voc10"
+    }
+   ],
+   "audioTiming": "afterGuess",
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "poolKind": "vocabulary",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c12_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "father",
+    "name",
+    "hallowed",
+    "our",
+    "heavens",
+    "your",
+    "in"
+   ],
+   "items": [
+    {
+     "greek": "Πάτερ",
+     "answer": "father",
+     "audio": "chapt_12_l_sm1"
+    },
+    {
+     "greek": "ἡμῶν",
+     "answer": "our",
+     "audio": "chapt_12_l_sm2"
+    },
+    {
+     "greek": "ἐν",
+     "answer": "in",
+     "audio": "chapt_12_l_sm4"
+    },
+    {
+     "greek": "οὐρανοῖς",
+     "answer": "heavens",
+     "audio": "chapt_12_l_sm6"
+    },
+    {
+     "greek": "ἁγιασθήτω",
+     "answer": "hallowed",
+     "audio": "chapt_12_l_sm7"
+    },
+    {
+     "greek": "ὄνομά",
+     "answer": "name",
+     "audio": "chapt_12_l_sm9"
+    },
+    {
+     "greek": "σου",
+     "answer": "your",
+     "audio": "chapt_12_l_sm10"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "_audio_note": "Seven prompts (the articles are not drilled); verse-position clips l_sm1,2,4,6,7,9,10 from the SayWord table at 0xa6990. The original's 8-cell grid leaves one cell empty.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c12_ex_speller",
+   "type": "spell",
+   "title": "Imperfect Indicative Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "I was loosing",
+     "answer": "ἔλυον",
+     "audio": "chapt_12_l_as1"
+    },
+    {
+     "prompt": "you (pl.) were having",
+     "answer": "εἴχετε",
+     "audio": "chapt_12_l_eixp2"
+    },
+    {
+     "prompt": "she was loosing for herself",
+     "answer": "ἐλύετο",
+     "audio": "chapt_12_l_ms3"
+    },
+    {
+     "prompt": "you (sg.) were",
+     "answer": "ἦς",
+     "audio": "chapt_12_l_eis2"
+    },
+    {
+     "prompt": "we were loosing",
+     "answer": "ἐλύομεν",
+     "audio": "chapt_12_l_ap1"
+    },
+    {
+     "prompt": "they were",
+     "answer": "ἦσαν",
+     "audio": "chapt_12_l_eip3"
+    },
+    {
+     "prompt": "you (sg.) were being loosed",
+     "answer": "ἐλύου",
+     "audio": "chapt_12_l_ms2"
+    },
+    {
+     "prompt": "it was",
+     "answer": "ἦν",
+     "audio": "chapt_12_l_eis3"
+    },
+    {
+     "prompt": "you (sg.) were having",
+     "answer": "εἶχες",
+     "audio": "chapt_12_l_eixs2"
+    },
+    {
+     "prompt": "he was loosing",
+     "answer": "ἔλυε",
+     "audio": "chapt_12_l_as3",
+     "answerAlt": "ἔλυεν",
+     "_alt_note": "Movable nu: either spelling is accepted (D-33)."
+    },
+    {
+     "prompt": "we were",
+     "answer": "ἦμεν",
+     "audio": "chapt_12_l_eip1"
+    },
+    {
+     "prompt": "we were loosing for ourselves",
+     "answer": "ἐλυόμεθα",
+     "audio": "chapt_12_l_mp1"
+    },
+    {
+     "prompt": "they were being loosed",
+     "answer": "ἐλύοντο",
+     "audio": "chapt_12_l_mp3"
+    },
+    {
+     "prompt": "I was",
+     "answer": "ἤμην",
+     "audio": "chapt_12_l_eis1"
+    },
+    {
+     "prompt": "they were having",
+     "answer": "εἶχον",
+     "audio": "chapt_12_l_eixs1"
+    },
+    {
+     "prompt": "you (pl.) were loosing",
+     "answer": "ἐλύετε",
+     "audio": "chapt_12_l_ap2"
+    },
+    {
+     "prompt": "she was having",
+     "answer": "εἶχε",
+     "audio": "chapt_12_l_eixs3",
+     "answerAlt": "εἶχεν",
+     "_alt_note": "Movable nu: either spelling is accepted (D-33)."
+    },
+    {
+     "prompt": "you (pl.) were being loosed",
+     "answer": "ἐλύεσθε",
+     "audio": "chapt_12_l_mp2"
+    },
+    {
+     "prompt": "you (pl.) were",
+     "answer": "ἦτε",
+     "audio": "chapt_12_l_eip2"
+    },
+    {
+     "prompt": "we were having",
+     "answer": "εἴχομεν",
+     "audio": "chapt_12_l_eixp1"
+    },
+    {
+     "prompt": "I was loosing for myself",
+     "answer": "ἐλυόμην",
+     "audio": "chapt_12_l_ms1"
+    },
+    {
+     "prompt": "you (sg.) were loosing",
+     "answer": "ἔλυες",
+     "audio": "chapt_12_l_as2"
+    },
+    {
+     "prompt": "we were loosing",
+     "answer": "ἐλύομεν",
+     "audio": "chapt_12_l_ap1"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English",
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "The 23 answers ARE the parsing pool (0x36bec) in order -- the speller's SayWord table (0xf6c47) is the parsing table verbatim; prompts from 0x8caf6.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c12_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Meaning",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "I die",
+     "answer": "ἀποθνῄσκω",
+     "audio": "chapt_12_l_voc1"
+    },
+    {
+     "prompt": "there",
+     "answer": "ἐκεῖ",
+     "audio": "chapt_12_l_voc2"
+    },
+    {
+     "prompt": "until",
+     "answer": "ἕως",
+     "audio": "chapt_12_l_voc3"
+    },
+    {
+     "prompt": "behold",
+     "answer": "ἰδού",
+     "audio": "chapt_12_l_voc4"
+    },
+    {
+     "prompt": "in order that",
+     "answer": "ἵνα",
+     "audio": "chapt_12_l_voc5"
+    },
+    {
+     "prompt": "John",
+     "answer": "Ἰωάννης",
+     "audio": "chapt_12_l_voc6"
+    },
+    {
+     "prompt": "indeed",
+     "answer": "μέν",
+     "audio": "chapt_12_l_voc7"
+    },
+    {
+     "prompt": "whole",
+     "answer": "ὅλος",
+     "audio": "chapt_12_l_voc8"
+    },
+    {
+     "prompt": "when",
+     "answer": "ὅτε",
+     "audio": "chapt_12_l_voc9"
+    },
+    {
+     "prompt": "with",
+     "answer": "σύν",
+     "audio": "chapt_12_l_voc10"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "Prompts from the short gloss pool 0x1d2a (the rail walk shows \"I die\"); Ioannes is spelled by its first form.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c12_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of Mat 6:9 then click \"Check Answer\"",
+   "reference": "Mat 6:9",
+   "answerWords": [
+    "Πάτερ",
+    "ἡμῶν",
+    "ὁ",
+    "ἐν",
+    "τοῖς",
+    "οὐρανοῖς·",
+    "ἁγιασθήτω",
+    "τὸ",
+    "ὄνομά",
+    "σου·"
+   ],
+   "translation": "Our Father which art in heaven, hallowed be your name,",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "audio": "chapt_12_l_mt6_9",
+   "spellerTilesRef": "chapt_1",
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents"
+    ],
+    "_reveal_note": "RULES C8 / D-30."
+   },
+   "_repeat_note": "\"Repeat This Exercise\" NOT ported (D-42 retired).",
+   "_punct_note": "The ano teleia after ouranois and sou is U+00B7 (NFC); optional (C6/D-18).",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c12_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "senses",
+   "columns": 2,
+   "showNtFreq": true,
+   "footnote": "The number after the translation is the number of times the word occurs in the New Testament.",
+   "playAll": {
+    "label": "Say Whole List",
+    "audio": "chapt_12_l_vocl"
+   },
+   "_verify": "men prints \"one the one hand, indeed (179)\" in the original (typo); verbatim, VERIFY-5H (g)."
+  },
+  {
+   "id": "c12_qr_paradigms",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Imperfect Paradigms",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "id": "qrImperfectActive",
+     "title": "Imperfect Active Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "ἔλυον",
+         "gloss": "I was loosing",
+         "audio": "chapt_12_l_as1"
+        },
+        {
+         "greek": "ἐλύομεν",
+         "gloss": "We were loosing",
+         "audio": "chapt_12_l_ap1"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "ἔλυες",
+         "gloss": "You were loosing",
+         "audio": "chapt_12_l_as2"
+        },
+        {
+         "greek": "ἐλύετε",
+         "gloss": "You were loosing",
+         "audio": "chapt_12_l_ap2"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "ἔλυε(ν)",
+         "gloss": "He/she/it was loosing",
+         "audio": "chapt_12_l_as3"
+        },
+        {
+         "greek": "ἔλυον",
+         "gloss": "They were loosing",
+         "audio": "chapt_12_l_ap3"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_12_l_ipfpar"
+     }
+    },
+    {
+     "type": "paradigm",
+     "id": "qrImperfectMiddlePassive",
+     "title": "Imperfect Middle/Passive Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "ἐλυόμην",
+         "gloss": "I was being loosed",
+         "audio": "chapt_12_l_ms1"
+        },
+        {
+         "greek": "ἐλυόμεθα",
+         "gloss": "We were being loosed",
+         "audio": "chapt_12_l_mp1"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "ἐλύου",
+         "gloss": "You were being loosed",
+         "audio": "chapt_12_l_ms2"
+        },
+        {
+         "greek": "ἐλύεσθε",
+         "gloss": "You were being loosed",
+         "audio": "chapt_12_l_mp2"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "ἐλύετο",
+         "gloss": "He/she/it was being loosed",
+         "audio": "chapt_12_l_ms3"
+        },
+        {
+         "greek": "ἐλύοντο",
+         "gloss": "They were being loosed",
+         "audio": "chapt_12_l_mp3"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_12_l_ipmpar"
+     },
+     "note": "The above paradigm is translated using the passive voice. The middle uses exactly the same forms, which would be translated—I was loosing (for myself), you were loosing (for yourself), he was loosing (for himself), etc. Context will determine whether the form should be translated middle or passive."
+    }
+   ],
+   "_disclosure": "C9 (§4.6): the original pages Active/Middle-Passive with a toggle and titles the page \"Review Imperfect Paradigm\"; stacked, plural title per the Quick Review Menu. VERIFY-5H (l)."
+  },
+  {
+   "id": "c12_qr_eimi",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Imperfect Indicative of εἰμί",
+   "titleAudio": "chapt_12_l_eimi",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "id": "qrImperfectEimi",
+     "title": "Imperfect Active Indicative of εἰμί",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "ἤμην",
+         "gloss": "I was",
+         "audio": "chapt_12_l_eis1"
+        },
+        {
+         "greek": "ἦμεν",
+         "gloss": "We were",
+         "audio": "chapt_12_l_eip1"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "ἦς",
+         "gloss": "You were",
+         "audio": "chapt_12_l_eis2"
+        },
+        {
+         "greek": "ἦτε",
+         "gloss": "You were",
+         "audio": "chapt_12_l_eip2"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "ἦν",
+         "gloss": "He/she/it was",
+         "audio": "chapt_12_l_eis3"
+        },
+        {
+         "greek": "ἦσαν",
+         "gloss": "They were",
+         "audio": "chapt_12_l_eip3"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_12_l_eimpar"
+     }
+    }
+   ],
+   "_note": "echo is NOT reviewed in the original; not added."
+  },
+  {
+   "id": "c12_qr_scripture_jn11",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 1:1",
+   "reference": "Jn 1:1",
+   "words": [
+    {
+     "greek": "Ἐν",
+     "gloss": "in",
+     "audio": "chapt_12_f_sm1"
+    },
+    {
+     "greek": "ἀρχῇ",
+     "gloss": "beginning",
+     "audio": "chapt_12_f_sm2"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_12_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_12_f_sm4"
+    },
+    {
+     "greek": "λόγος,",
+     "gloss": "word",
+     "audio": "chapt_12_f_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_12_f_sm6"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_12_f_sm7"
+    },
+    {
+     "greek": "λόγος",
+     "gloss": "word",
+     "audio": "chapt_12_f_sm8"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_12_f_sm9"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "with",
+     "audio": "chapt_12_f_sm10"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_12_f_sm11"
+    },
+    {
+     "greek": "θεόν,",
+     "gloss": "God",
+     "audio": "chapt_12_f_sm12"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_12_f_sm6"
+    },
+    {
+     "greek": "θεὸς",
+     "gloss": "God",
+     "audio": "chapt_12_f_sm13"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_12_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_12_f_sm4"
+    },
+    {
+     "greek": "λόγος.",
+     "gloss": "word.",
+     "audio": "chapt_12_f_sm5"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_12_f_jn1_1"
+   }
+  },
+  {
+   "id": "c12_qr_scripture_rom623a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 6:23a",
+   "reference": "Rom 6:23a",
+   "words": [
+    {
+     "greek": "τὰ",
+     "gloss": "the",
+     "audio": "chapt_12_h_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_12_h_sm2"
+    },
+    {
+     "greek": "ὀψώνια",
+     "gloss": "wages",
+     "audio": "chapt_12_h_sm3"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "the",
+     "audio": "chapt_12_h_sm4"
+    },
+    {
+     "greek": "ἁμαρτίας",
+     "gloss": "of  sin",
+     "audio": "chapt_12_h_sm5"
+    },
+    {
+     "greek": "θάνατος,",
+     "gloss": "[is]      death",
+     "audio": "chapt_12_h_sm6"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_12_h_rm623a"
+   }
+  },
+  {
+   "id": "c12_qr_scripture_rom623b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 6:23b",
+   "reference": "Rom 6:23b",
+   "words": [
+    {
+     "greek": "τὸ",
+     "gloss": "the",
+     "audio": "chapt_12_i_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "gloss": "but",
+     "audio": "chapt_12_i_sm2"
+    },
+    {
+     "greek": "χάρισμα",
+     "gloss": "gift",
+     "audio": "chapt_12_i_sm3"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "the",
+     "audio": "chapt_12_i_sm4"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "of God",
+     "audio": "chapt_12_i_sm5"
+    },
+    {
+     "greek": "ζωὴ",
+     "gloss": "[is] life",
+     "audio": "chapt_12_i_sm6"
+    },
+    {
+     "greek": "αἰώνιος",
+     "gloss": "eternal",
+     "audio": "chapt_12_i_sm7"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_12_i_sm8"
+    },
+    {
+     "greek": "Χριστῷ",
+     "gloss": "Christ",
+     "audio": "chapt_12_i_sm9"
+    },
+    {
+     "greek": "Ἰησοῦ",
+     "gloss": "Jesus",
+     "audio": "chapt_12_i_sm10"
+    },
+    {
+     "greek": "τῷ",
+     "gloss": "the",
+     "audio": "chapt_12_i_sm11"
+    },
+    {
+     "greek": "κυρίῳ",
+     "gloss": "Lord",
+     "audio": "chapt_12_i_sm12"
+    },
+    {
+     "greek": "ἡμῶν.",
+     "gloss": "our",
+     "audio": "chapt_12_i_sm13"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_12_i_rm623b"
+   }
+  },
+  {
+   "id": "c12_qr_scripture_mat633a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:33a",
+   "reference": "Mat 6:33a",
+   "words": [
+    {
+     "greek": "ζητεῖτε",
+     "gloss": "Seek",
+     "audio": "chapt_12_j_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "gloss": "but",
+     "audio": "chapt_12_j_sm2"
+    },
+    {
+     "greek": "πρῶτον",
+     "gloss": "first",
+     "audio": "chapt_12_j_sm3"
+    },
+    {
+     "greek": "τὴν",
+     "gloss": "the",
+     "audio": "chapt_12_j_sm4"
+    },
+    {
+     "greek": "βασιλείαν",
+     "gloss": "kingdom",
+     "audio": "chapt_12_j_sm5"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of",
+     "audio": "chapt_12_j_sm6"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_12_j_sm7"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_12_j_sm8"
+    },
+    {
+     "greek": "τὴν",
+     "gloss": "the",
+     "audio": "chapt_12_j_sm9"
+    },
+    {
+     "greek": "δικαιοσύνην",
+     "gloss": "righteousness",
+     "audio": "chapt_12_j_sm10"
+    },
+    {
+     "greek": "αὐτοῦ,",
+     "gloss": "his",
+     "audio": "chapt_12_j_sm11"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_12_j_mt633a"
+   }
+  },
+  {
+   "id": "c12_qr_scripture_mat633b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:33b",
+   "reference": "Mat 6:33b",
+   "words": [
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_12_k_sm1"
+    },
+    {
+     "greek": "ταῦτα",
+     "gloss": "these",
+     "audio": "chapt_12_k_sm2"
+    },
+    {
+     "greek": "πάντα",
+     "gloss": "all",
+     "audio": "chapt_12_k_sm3"
+    },
+    {
+     "greek": "προστεθήσεται",
+     "gloss": "will be added",
+     "audio": "chapt_12_k_sm4"
+    },
+    {
+     "greek": "ὑμῖν.",
+     "gloss": "to you.",
+     "audio": "chapt_12_k_sm5"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_12_k_mt633b"
+   }
+  },
+  {
+   "id": "c12_qr_scripture_mat69",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:9",
+   "reference": "Mat 6:9",
+   "words": [
+    {
+     "greek": "Πάτερ",
+     "gloss": "Father",
+     "audio": "chapt_12_l_sm1"
+    },
+    {
+     "greek": "ἡμῶν",
+     "gloss": "our",
+     "audio": "chapt_12_l_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_12_l_sm3"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_12_l_sm4"
+    },
+    {
+     "greek": "τοῖς",
+     "gloss": "the",
+     "audio": "chapt_12_l_sm5"
+    },
+    {
+     "greek": "οὐρανοῖς·",
+     "gloss": "heavens",
+     "audio": "chapt_12_l_sm6"
+    },
+    {
+     "greek": "ἁγιασθήτω",
+     "gloss": "hallowed",
+     "audio": "chapt_12_l_sm7"
+    },
+    {
+     "greek": "τὸ",
+     "gloss": "the",
+     "audio": "chapt_12_l_sm8"
+    },
+    {
+     "greek": "ὄνομά",
+     "gloss": "name",
+     "audio": "chapt_12_l_sm9"
+    },
+    {
+     "greek": "σου·",
+     "gloss": "your",
+     "audio": "chapt_12_l_sm10"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_12_l_mt6_9"
+   }
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Great!",
+   "Congratulations",
+   "Perfect!",
+   "Right On!",
+   "Fantastic!",
+   "Yes"
+  ],
+  "incorrect": [
+   "Try again",
+   "Swing and a miss",
+   "Repetition will get it",
+   "Never give up",
+   "Keep trying"
+  ]
+ },
+ "sequence": [
+  "c12_learn_objectives",
+  "c12_learn_english_concepts",
+  "c12_learn_imperfect",
+  "c12_drill_parsing",
+  "c12_drill_augment",
+  "c12_drill_translation",
+  "c12_ex_speller",
+  "c12_learn_vocab",
+  "c12_drill_vocab_gk_en",
+  "c12_drill_vocab_en_gk",
+  "c12_ex_vocab_speller",
+  "c12_learn_scripture",
+  "c12_drill_scripture_memory",
+  "c12_ex_scripture_speller",
+  "c12_qr_vocab",
+  "c12_qr_paradigms",
+  "c12_qr_eimi",
+  "c12_qr_scripture_jn11",
+  "c12_qr_scripture_rom623a",
+  "c12_qr_scripture_rom623b",
+  "c12_qr_scripture_mat633a",
+  "c12_qr_scripture_mat633b",
+  "c12_qr_scripture_mat69",
+  "c12_learn_bibliography"
+ ],
+ "_menu_note": "Drill Menu prints \"Imperfect Parsing Indicative Drill\"; the page title \"Imperfect Indicative Parsing Drill\" is used on both surfaces (5G precedent).",
+ "_audioVerify": "CHAPT_12 ships 163 WAVs. Listens: l_ap3 (third plural eluon vs l_a1s / l_ap9, both unreferenced), l_ad1 (the augmented form, confirmed), l_ex1-14 order (contraction rows then compound examples). Unreferenced: l_a1s, l_ap9, l_td21 (never shipped).",
+ "_sequence_note": "Rail order from ch12railwalk.pdf (Nathanael, 2026-08-25).",
+ "hintCharts": {
+  "luoParadigms": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "id": "hintImperfectActive",
+     "title": "Imperfect Active Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "ἔλυον",
+         "gloss": "I was loosing",
+         "audio": "chapt_12_l_as1"
+        },
+        {
+         "greek": "ἐλύομεν",
+         "gloss": "We were loosing",
+         "audio": "chapt_12_l_ap1"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "ἔλυες",
+         "gloss": "You were loosing",
+         "audio": "chapt_12_l_as2"
+        },
+        {
+         "greek": "ἐλύετε",
+         "gloss": "You were loosing",
+         "audio": "chapt_12_l_ap2"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "ἔλυε(ν)",
+         "gloss": "He/she/it was loosing",
+         "audio": "chapt_12_l_as3"
+        },
+        {
+         "greek": "ἔλυον",
+         "gloss": "They were loosing",
+         "audio": "chapt_12_l_ap3"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "id": "hintImperfectMiddlePassive",
+     "title": "Imperfect Middle/Passive Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "ἐλυόμην",
+         "gloss": "I was being loosed",
+         "audio": "chapt_12_l_ms1"
+        },
+        {
+         "greek": "ἐλυόμεθα",
+         "gloss": "We were being loosed",
+         "audio": "chapt_12_l_mp1"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "ἐλύου",
+         "gloss": "You were being loosed",
+         "audio": "chapt_12_l_ms2"
+        },
+        {
+         "greek": "ἐλύεσθε",
+         "gloss": "You were being loosed",
+         "audio": "chapt_12_l_mp2"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "ἐλύετο",
+         "gloss": "He/she/it was being loosed",
+         "audio": "chapt_12_l_ms3"
+        },
+        {
+         "greek": "ἐλύοντο",
+         "gloss": "They were being loosed",
+         "audio": "chapt_12_l_mp3"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "_note": "Field 0x38fda (both luo charts on one hint screen, no note, no say-all): the §4.1 toggle Active / Middle/Passive."
+  },
+  "eimiEchoParadigms": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "id": "hintImperfectEimi",
+     "title": "Imperfect of εἰμί",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "ἤμην",
+         "gloss": "i was",
+         "audio": "chapt_12_l_eis1"
+        },
+        {
+         "greek": "ἦμεν",
+         "gloss": "we were",
+         "audio": "chapt_12_l_eip1"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "ἦς",
+         "gloss": "you were",
+         "audio": "chapt_12_l_eis2"
+        },
+        {
+         "greek": "ἦτε",
+         "gloss": "you were",
+         "audio": "chapt_12_l_eip2"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "ἦν",
+         "gloss": "he/she/it was",
+         "audio": "chapt_12_l_eis3"
+        },
+        {
+         "greek": "ἦσαν",
+         "gloss": "they were",
+         "audio": "chapt_12_l_eip3"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "id": "hintImperfectEcho",
+     "title": "Imperfect of ἔχω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1.",
+       "cells": [
+        {
+         "greek": "εἶχον",
+         "gloss": "i was having",
+         "audio": "chapt_12_l_eixs1"
+        },
+        {
+         "greek": "εἴχομεν",
+         "gloss": "we were having",
+         "audio": "chapt_12_l_eixp1"
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "cells": [
+        {
+         "greek": "εἶχες",
+         "gloss": "you were having",
+         "audio": "chapt_12_l_eixs2"
+        },
+        {
+         "greek": "εἴχετε",
+         "gloss": "you were having",
+         "audio": "chapt_12_l_eixp2"
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "cells": [
+        {
+         "greek": "εἶχε(ν)",
+         "gloss": "he/she/it was having",
+         "audio": "chapt_12_l_eixs3"
+        },
+        {
+         "greek": "εἶχον",
+         "gloss": "they were having",
+         "audio": "chapt_12_l_eixp3"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "_note": "Field 0x370c6, the hint's OWN titles and lowercase glosses (§4.7); no exception note; toggle eimi / echo."
+  }
+ }
+}

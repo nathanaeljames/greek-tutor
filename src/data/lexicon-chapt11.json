@@ -1,0 +1,209 @@
+{
+ "_comment": "Chapter 11 lexicon, assembled from 11_DEMON.TBK (cohort 5H). ELEVEN entries: huper is case-split into huper_gen (\"for, about\", 150) and huper_acc (\"above, beyond\", no count printed) exactly as the Review Vocabulary Chart at 0x119102 prints them. gloss = the chart's printed gloss; glossShort = the flashcard pool (0xbb4c0); senses[].glossShort = the drill gloss pool (0x54db2).",
+ "lemmas": {
+  "aperchomai": {
+   "greek": "ἀπέρχομαι",
+   "translit": "aperchomai",
+   "lexicalForm": "ἀπέρχομαι",
+   "gloss": "I go away",
+   "glossShort": "I go away",
+   "audio": "chapt_11_k_voc1",
+   "ntFreq": 117,
+   "senses": [
+    {
+     "greek": "ἀπέρχομαι",
+     "caseTag": null,
+     "glossShort": "I go away",
+     "audio": "chapt_11_k_voc1"
+    }
+   ]
+  },
+  "ekeinos": {
+   "greek": "ἐκεῖνος",
+   "translit": "ekeinos",
+   "lexicalForm": "ἐκεῖνος, -η, -ο",
+   "gloss": "that",
+   "glossShort": "that",
+   "audio": "chapt_11_k_voc2",
+   "ntFreq": 265,
+   "senses": [
+    {
+     "greek": "ἐκεῖνος",
+     "caseTag": null,
+     "glossShort": "that/those",
+     "audio": "chapt_11_k_voc2"
+    }
+   ]
+  },
+  "ioudaios": {
+   "greek": "Ἰουδαῖος",
+   "translit": "ioudaios",
+   "lexicalForm": "Ἰουδαῖος, -α, -ον",
+   "gloss": "Jewish",
+   "glossShort": "Jewish",
+   "audio": "chapt_11_k_voc3",
+   "ntFreq": 195,
+   "senses": [
+    {
+     "greek": "Ἰουδαῖος",
+     "caseTag": null,
+     "glossShort": "Jewish, Jew",
+     "audio": "chapt_11_k_voc3"
+    }
+   ]
+  },
+  "kathos": {
+   "greek": "καθώς",
+   "translit": "kathos",
+   "lexicalForm": "καθώς",
+   "gloss": "as, just as",
+   "glossShort": "as, just as",
+   "audio": "chapt_11_k_voc4",
+   "ntFreq": 182,
+   "senses": [
+    {
+     "greek": "καθώς",
+     "caseTag": null,
+     "glossShort": "as, just as",
+     "audio": "chapt_11_k_voc4"
+    }
+   ]
+  },
+  "hos": {
+   "greek": "ὅς",
+   "translit": "hos",
+   "lexicalForm": "ὅς, ἥ, ὅ",
+   "gloss": "who, which",
+   "glossShort": "who",
+   "audio": "chapt_11_k_voc5",
+   "ntFreq": 1365,
+   "senses": [
+    {
+     "greek": "ὅς",
+     "caseTag": null,
+     "glossShort": "who/which",
+     "audio": "chapt_11_k_voc5"
+    }
+   ]
+  },
+  "hotan": {
+   "greek": "ὅταν",
+   "translit": "hotan",
+   "lexicalForm": "ὅταν",
+   "gloss": "when",
+   "glossShort": "when",
+   "audio": "chapt_11_k_voc6",
+   "ntFreq": 123,
+   "senses": [
+    {
+     "greek": "ὅταν",
+     "caseTag": null,
+     "glossShort": "when",
+     "audio": "chapt_11_k_voc6"
+    }
+   ]
+  },
+  "houtos": {
+   "greek": "οὗτος",
+   "translit": "houtos",
+   "lexicalForm": "οὗτος, αὕτη, τοῦτο",
+   "gloss": "this",
+   "glossShort": "this",
+   "audio": "chapt_11_k_voc7a",
+   "ntFreq": 1388,
+   "senses": [
+    {
+     "greek": "οὗτος",
+     "caseTag": null,
+     "glossShort": "this/these",
+     "audio": "chapt_11_k_voc7a"
+    }
+   ],
+   "parts": [
+    {
+     "greek": "οὗτος",
+     "audio": "chapt_11_k_voc7a"
+    },
+    {
+     "greek": "αὕτη",
+     "audio": "chapt_11_k_voc7b"
+    },
+    {
+     "greek": "τοῦτο",
+     "audio": "chapt_11_k_voc7c"
+    }
+   ],
+   "audioFull": "chapt_11_k_voc7",
+   "_audio_note": "k_voc7 recites all three forms (flashcard table 0x12856f); k_voc7a/b/c are the single forms (drill tables)."
+  },
+  "palin": {
+   "greek": "πάλιν",
+   "translit": "palin",
+   "lexicalForm": "πάλιν",
+   "gloss": "back, again",
+   "glossShort": "back, again",
+   "audio": "chapt_11_k_voc8",
+   "ntFreq": 141,
+   "senses": [
+    {
+     "greek": "πάλιν",
+     "caseTag": null,
+     "glossShort": "back, again",
+     "audio": "chapt_11_k_voc8"
+    }
+   ]
+  },
+  "petros": {
+   "greek": "Πέτρος",
+   "translit": "petros",
+   "lexicalForm": "Πέτρος, -ου, ὁ",
+   "gloss": "Peter",
+   "glossShort": "Peter",
+   "audio": "chapt_11_k_voc9",
+   "ntFreq": 150,
+   "senses": [
+    {
+     "greek": "Πέτρος",
+     "caseTag": null,
+     "glossShort": "Peter",
+     "audio": "chapt_11_k_voc9"
+    }
+   ]
+  },
+  "huper_gen": {
+   "greek": "ὑπέρ",
+   "translit": "huper_gen",
+   "lexicalForm": "ὑπέρ",
+   "gloss": "for, about",
+   "glossShort": "for, about",
+   "audio": "chapt_11_k_voc10",
+   "ntFreq": 150,
+   "senses": [
+    {
+     "greek": "ὑπέρ",
+     "caseTag": "(gen.)",
+     "glossShort": "for, about",
+     "audio": "chapt_11_k_voc10"
+    }
+   ]
+  },
+  "huper_acc": {
+   "greek": "ὑπέρ",
+   "translit": "huper_acc",
+   "lexicalForm": "ὑπέρ",
+   "gloss": "above, beyond",
+   "glossShort": "above",
+   "audio": "chapt_11_k_voc11",
+   "ntFreq": null,
+   "senses": [
+    {
+     "greek": "ὑπέρ",
+     "caseTag": "(acc.)",
+     "glossShort": "above, beyond",
+     "audio": "chapt_11_k_voc11"
+    }
+   ]
+  }
+ },
+ "exampleWords": {}
+}

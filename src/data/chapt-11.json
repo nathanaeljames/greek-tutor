@@ -1,0 +1,5349 @@
+{
+ "_comment": "Chapter 11 (Demonstrative and Relative Pronouns), assembled from 11_DEMON.TBK + CHAPT_11 audio + ch11railwalk.pdf under PIPELINE-INSIGHTS-v3 Stage 8 and DISCLOSURE-RULES. Behavior fields per DRILLBEHAVIORLEDGER.csv rows 96-106 (CONFIRMED 2026-08-25).",
+ "id": "chapt_11",
+ "number": 11,
+ "title": "Demonstrative and Relative Pronouns",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "recognize the various forms of the demonstrative pronouns ἐκεῖνος (that) and οὗτος (this),",
+  "translate demonstrative pronouns and identify how they function within the syntax of the sentence,",
+  "recognize the various forms of the relative pronoun,",
+  "translate relative pronouns and identify how they function within the syntax of the sentence,",
+  "gain more practice in translating and working with Greek,",
+  "master 10 more high frequency vocabulary words,",
+  "memorize Mat 6:33b in Greek."
+ ],
+ "vocab": [
+  "aperchomai",
+  "ekeinos",
+  "ioudaios",
+  "kathos",
+  "hos",
+  "hotan",
+  "houtos",
+  "palin",
+  "petros",
+  "huper_gen",
+  "huper_acc"
+ ],
+ "learn": [
+  {
+   "id": "c11_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives",
+   "instructions": ""
+  },
+  {
+   "id": "c11_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "We will explore three types of pronouns in this chapter. Pronouns are words used in place of one or more nouns. We have already looked at personal pronouns (he, she, it, I, you, they)."
+      },
+      {
+       "type": "para",
+       "text": "In this chapter we will examine four new types of pronouns: demonstrative, relative, reflexive and reciprocal.",
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "demonstratives",
+     "title": "Demonstratives",
+     "content": [
+      {
+       "type": "para",
+       "text": "[[u]]Demonstratives[[/u]] are pointers. They point to things near (\"this/these\") or things far (\"that/those\"). \"These\" and \"those\" are the plural forms."
+      },
+      {
+       "type": "para",
+       "text": "Demonstratives may function like [[u]]adjectives[[/u]] when they modify a word, or like [[u]]pronouns[[/u]] when they stand alone.",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "Adjective: \"He bought [[u]]this[[/u]] computer.\"\nPronoun: \"[[u]]This[[/u]] is the computer.\"",
+       "gapBefore": true,
+       "flush": true
+      }
+     ]
+    },
+    {
+     "id": "relatives",
+     "title": "Relatives",
+     "content": [
+      {
+       "type": "para",
+       "text": "Relative pronouns are words like: who, whom, which, that and whose."
+      },
+      {
+       "type": "para",
+       "text": "They are often embedded in clauses that modify a noun. \"Who\" is usually used for humans and \"which\" for non-humans. \"Whose\" is used for both.",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "The student [[u]]who[[/u]] loves Greek will succeed.\nThe keys [[u]]which[[/u]] were lost in the river are gone forever.",
+       "gapBefore": true,
+       "flush": true
+      }
+     ]
+    },
+    {
+     "id": "reflexives",
+     "title": "Reflexives/Reciprocals",
+     "content": [
+      {
+       "type": "para",
+       "text": "[[u]]Reflexive[[/u]] pronouns are used to indicate that the antecedent is acting on itself. This is similar to one of the functions of the middle voice in Greek.\nTerry threw [[u]]himself[[/u]] into the water from the bridge."
+      },
+      {
+       "type": "para",
+       "text": "[[u]]Reciprocal[[/u]] pronouns are used to indicate that several subjects are acting on each other.\nThey loved [[u]]one another[[/u]].",
+       "gapBefore": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c11_learn_demonstratives",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Demonstrative Pronouns",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "Greek has two demonstratives:"
+      },
+      {
+       "type": "greekRows",
+       "rows": [
+        {
+         "greek": "ἐκεῖνος",
+         "gloss": "that (plural = those)",
+         "audio": "chapt_11_k_ekemns"
+        },
+        {
+         "greek": "οὗτος/αὕτη/τοῦτο",
+         "gloss": "this (plural = these)",
+         "audio": "chapt_11_k_outmfn",
+         "_verify": "k_outmfn assumed to be the three-form entry."
+        }
+       ]
+      },
+      {
+       "type": "para",
+       "text": "These can function either like a pronoun (when they stand alone) or like an adjective (thus agreeing with their antecedent in gender, number and case).",
+       "gapBefore": true
+      },
+      {
+       "type": "expander",
+       "label": "Demonstratives",
+       "content": [
+        {
+         "type": "para",
+         "text": "When they are adjectival, the noun has the definite article and the demonstrative does not. It is then translated as an attributive adjective (e.g. \"this book\")."
+        },
+        {
+         "type": "para",
+         "text": "Note that this is the opposite of other adjectives which when found without the article are translated as predicate adjectives (e.g. \"The book is red\").",
+         "gapBefore": true
+        },
+        {
+         "type": "para",
+         "gapBefore": true,
+         "text": "[[link:demonstrativeExamples]]Greek Examples[[/link]]"
+        }
+       ],
+       "_disclosure": "C6: the More page carries its own header."
+      }
+     ]
+    },
+    {
+     "id": "thatParadigm",
+     "title": "\"That\" Paradigm",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "thatParadigmChart",
+       "switch": "named",
+       "charts": [
+        {
+         "type": "paradigm",
+         "name": "Singular",
+         "title": "ἐκεῖνος — that/those",
+         "subtitle": "Singular",
+         "columns": [
+          "Masc.",
+          "Fem.",
+          "Neut."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "N",
+           "cells": [
+            {
+             "greek": "ἐκεῖνος",
+             "audio": "chapt_11_k_ekemns"
+            },
+            {
+             "greek": "ἐκείνη",
+             "audio": "chapt_11_k_ekefns"
+            },
+            {
+             "greek": "ἐκεῖνο",
+             "audio": "chapt_11_k_ekenns"
+            }
+           ]
+          },
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "ἐκείνου",
+             "audio": "chapt_11_k_ekemgs"
+            },
+            {
+             "greek": "ἐκείνης",
+             "audio": "chapt_11_k_ekefgs"
+            },
+            {
+             "greek": "ἐκείνου",
+             "audio": "chapt_11_k_ekengs"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "ἐκείνῳ",
+             "audio": "chapt_11_k_ekemds"
+            },
+            {
+             "greek": "ἐκείνῃ",
+             "audio": "chapt_11_k_ekefds"
+            },
+            {
+             "greek": "ἐκείνῳ",
+             "audio": "chapt_11_k_ekends"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "ἐκεῖνον",
+             "audio": "chapt_11_k_ekemas"
+            },
+            {
+             "greek": "ἐκείνην",
+             "audio": "chapt_11_k_ekefas"
+            },
+            {
+             "greek": "ἐκεῖνο",
+             "audio": "chapt_11_k_ekenas"
+            }
+           ]
+          }
+         ],
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_ekepar"
+         }
+        },
+        {
+         "type": "paradigm",
+         "name": "Plural",
+         "title": "ἐκεῖνος — that/those",
+         "subtitle": "Plural",
+         "columns": [
+          "Masc.",
+          "Fem.",
+          "Neut."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "N",
+           "cells": [
+            {
+             "greek": "ἐκεῖνοι",
+             "audio": "chapt_11_k_ekemnp"
+            },
+            {
+             "greek": "ἐκεῖναι",
+             "audio": "chapt_11_k_ekefnp"
+            },
+            {
+             "greek": "ἐκεῖνα",
+             "audio": "chapt_11_k_ekennp"
+            }
+           ]
+          },
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "ἐκείνων",
+             "audio": "chapt_11_k_ekemgp"
+            },
+            {
+             "greek": "ἐκείνων",
+             "audio": "chapt_11_k_ekefgp"
+            },
+            {
+             "greek": "ἐκείνων",
+             "audio": "chapt_11_k_ekengp"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "ἐκείνοις",
+             "audio": "chapt_11_k_ekemdp"
+            },
+            {
+             "greek": "ἐκείναις",
+             "audio": "chapt_11_k_ekefdp"
+            },
+            {
+             "greek": "ἐκείνοις",
+             "audio": "chapt_11_k_ekendp"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "ἐκείνους",
+             "audio": "chapt_11_k_ekemap"
+            },
+            {
+             "greek": "ἐκείνας",
+             "audio": "chapt_11_k_ekefap"
+            },
+            {
+             "greek": "ἐκεῖνα",
+             "audio": "chapt_11_k_ekenap"
+            }
+           ]
+          }
+         ],
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_ekepar"
+         }
+        }
+       ],
+       "_split_note": "Six Greek columns in the original; split Singular/Plural per DISCLOSURE-RULES §4.1 (the ch5 article / ch7 adjective precedent). One say-all clip covers both halves."
+      }
+     ]
+    },
+    {
+     "id": "thisParadigm",
+     "title": "\"This\" Paradigm",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "thisParadigmChart",
+       "switch": "named",
+       "charts": [
+        {
+         "type": "paradigm",
+         "name": "Singular",
+         "title": "οὗτος — this/these",
+         "subtitle": "Singular",
+         "columns": [
+          "Masc.",
+          "Fem.",
+          "Neut."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "N",
+           "cells": [
+            {
+             "greek": "οὗτος",
+             "audio": "chapt_11_k_outmns"
+            },
+            {
+             "greek": "αὕτη",
+             "audio": "chapt_11_k_outfns"
+            },
+            {
+             "greek": "τοῦτο",
+             "audio": "chapt_11_k_outnns"
+            }
+           ]
+          },
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "τούτου",
+             "audio": "chapt_11_k_outmgs"
+            },
+            {
+             "greek": "ταύτης",
+             "audio": "chapt_11_k_outfgs"
+            },
+            {
+             "greek": "τούτου",
+             "audio": "chapt_11_k_outngs"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "τούτῳ",
+             "audio": "chapt_11_k_outmds"
+            },
+            {
+             "greek": "ταύτῃ",
+             "audio": "chapt_11_k_outfds"
+            },
+            {
+             "greek": "τούτῳ",
+             "audio": "chapt_11_k_outnds"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "τοῦτον",
+             "audio": "chapt_11_k_outmas"
+            },
+            {
+             "greek": "ταύτην",
+             "audio": "chapt_11_k_outfas"
+            },
+            {
+             "greek": "τοῦτο",
+             "audio": "chapt_11_k_outnas"
+            }
+           ]
+          }
+         ],
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_outpar"
+         },
+         "note": "Note: When there is an α or η in the ending, the stem will have an αυ, otherwise it is ου."
+        },
+        {
+         "type": "paradigm",
+         "name": "Plural",
+         "title": "οὗτος — this/these",
+         "subtitle": "Plural",
+         "columns": [
+          "Masc.",
+          "Fem.",
+          "Neut."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "N",
+           "cells": [
+            {
+             "greek": "οὗτοι",
+             "audio": "chapt_11_k_outmnp"
+            },
+            {
+             "greek": "αὗται",
+             "audio": "chapt_11_k_outfnp"
+            },
+            {
+             "greek": "ταῦτα",
+             "audio": "chapt_11_k_outnnp"
+            }
+           ]
+          },
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "τούτων",
+             "audio": "chapt_11_k_outmgp"
+            },
+            {
+             "greek": "τούτων",
+             "audio": "chapt_11_k_outfgp"
+            },
+            {
+             "greek": "τούτων",
+             "audio": "chapt_11_k_outngp"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "τούτοις",
+             "audio": "chapt_11_k_outmdp"
+            },
+            {
+             "greek": "ταύταις",
+             "audio": "chapt_11_k_outfdp"
+            },
+            {
+             "greek": "τούτοις",
+             "audio": "chapt_11_k_outndp"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "τούτους",
+             "audio": "chapt_11_k_outmap"
+            },
+            {
+             "greek": "ταύτας",
+             "audio": "chapt_11_k_outfap"
+            },
+            {
+             "greek": "ταῦτα",
+             "audio": "chapt_11_k_outnap"
+            }
+           ]
+          }
+         ],
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_outpar"
+         },
+         "note": "Note: When there is an α or η in the ending, the stem will have an αυ, otherwise it is ου."
+        }
+       ],
+       "_split_note": "Six Greek columns in the original; split Singular/Plural per DISCLOSURE-RULES §4.1 (the ch5 article / ch7 adjective precedent). One say-all clip covers both halves."
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "id": "demonstrativeExamples",
+     "title": "Demonstrative Examples",
+     "content": [
+      {
+       "type": "greekRows",
+       "layout": "verseExamples",
+       "rows": [
+        {
+         "greek": "ἔσονται γὰρ αἱ ἡμέραι ἐκεῖναι",
+         "greek2": null,
+         "gloss": "for in those days there will be",
+         "ref": "Mk 13:19",
+         "audio": "chapt_11_k_ex1"
+        },
+        {
+         "greek": "ἐγὼ οὐκ εἰμὶ ἐκ τοῦ κόσμου τοὺτου.",
+         "greek2": null,
+         "gloss": "I am not of this world",
+         "ref": "Jn 8:23",
+         "audio": "chapt_11_k_ex2",
+         "_verify": "The field types a GRAVE on toutou (tou>tou); the drill pool has the acute. Verbatim, VERIFY-5H keep-or-fix."
+        },
+        {
+         "greek": "ἐν τούτῳ γνώσονται πάντες ὅτι ἐμοὶ",
+         "greek2": "μαθηταί ἐστε",
+         "gloss": "by this everyone will know that you are my disciples",
+         "ref": "Jn 13:35",
+         "audio": "chapt_11_k_ex3"
+        },
+        {
+         "greek": "μακάριοί εἰσιν ἐκεῖνοι",
+         "greek2": null,
+         "gloss": "blessed are those",
+         "ref": "Lk 12:38",
+         "audio": "chapt_11_k_ex4"
+        }
+       ]
+      }
+     ],
+     "_disclosure": "C3: in-text link -> modal (verses, not a chart)."
+    }
+   ],
+   "greekTaps": true
+  },
+  {
+   "id": "c11_learn_relatives",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Relative Pronouns",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "A relative pronoun often introduces a subordinate clause relating one word or idea to this clause. They agree with their antecedent in gender and number. Their case is determined by their role in the sentence or clause. Relatives are usually translated as \"who\" or \"whom\" for humans and \"which\" for neuter. \"That\" and \"whose\" can be used for either humans or non-humans. (Mounce, p. 109)"
+      },
+      {
+       "type": "numbered",
+       "items": [
+        "Sometimes the relative pronoun will have the case of its antecedent rather than the case that it should have within its own clause.",
+        "Sometimes the antecedent is understood in the context and not explicitly stated."
+       ],
+       "gapBefore": true
+      }
+     ],
+     "_verify": "VERIFY-5H (a): in the rail walk the Introduction radio shows the Reflexive/Reciprocal box. This text is the TBK's own \"Relative Pronouns\" field (0x4136e) plus its (cont.) page (0x420fc) merged as C5. Six clips (k_agree1-4, k_under1-2) exist for examples this page never shows and are NOT wired."
+    },
+    {
+     "id": "relativesParadigm",
+     "title": "Relatives Paradigm",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "relativeParadigmChart",
+       "switch": "named",
+       "charts": [
+        {
+         "type": "paradigm",
+         "name": "Singular",
+         "title": "ὅς — who/which",
+         "subtitle": "Singular",
+         "columns": [
+          "Masc.",
+          "Fem.",
+          "Neut."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "N",
+           "cells": [
+            {
+             "greek": "ὅς",
+             "audio": "chapt_11_k_osmns"
+            },
+            {
+             "greek": "ἥ",
+             "audio": "chapt_11_k_osfns"
+            },
+            {
+             "greek": "ὅ",
+             "audio": "chapt_11_k_osnns"
+            }
+           ]
+          },
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "οὗ",
+             "audio": "chapt_11_k_osmgs"
+            },
+            {
+             "greek": "ἧς",
+             "audio": "chapt_11_k_osfgs"
+            },
+            {
+             "greek": "οὗ",
+             "audio": "chapt_11_k_osngs"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "ᾧ",
+             "audio": "chapt_11_k_osmds"
+            },
+            {
+             "greek": "ᾗ",
+             "audio": "chapt_11_k_osfds"
+            },
+            {
+             "greek": "ᾧ",
+             "audio": "chapt_11_k_osnds"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "ὅν",
+             "audio": "chapt_11_k_osmas"
+            },
+            {
+             "greek": "ἥν",
+             "audio": "chapt_11_k_osfas"
+            },
+            {
+             "greek": "ὅ",
+             "audio": "chapt_11_k_osnas"
+            }
+           ]
+          }
+         ],
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_ospar"
+         },
+         "note": "Note how similar these are to the noun endings and to the definite article."
+        },
+        {
+         "type": "paradigm",
+         "name": "Plural",
+         "title": "ὅς — who/which",
+         "subtitle": "Plural",
+         "columns": [
+          "Masc.",
+          "Fem.",
+          "Neut."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "N",
+           "cells": [
+            {
+             "greek": "οἵ",
+             "audio": "chapt_11_k_osmnp"
+            },
+            {
+             "greek": "αἵ",
+             "audio": "chapt_11_k_osfnp"
+            },
+            {
+             "greek": "ἅ",
+             "audio": "chapt_11_k_osnnp"
+            }
+           ]
+          },
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "ὧν",
+             "audio": "chapt_11_k_osmgp"
+            },
+            {
+             "greek": "ὧν",
+             "audio": "chapt_11_k_osfgp"
+            },
+            {
+             "greek": "ὧν",
+             "audio": "chapt_11_k_osngp"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "οἷς",
+             "audio": "chapt_11_k_osmdp"
+            },
+            {
+             "greek": "αἷς",
+             "audio": "chapt_11_k_osfdp"
+            },
+            {
+             "greek": "οἷς",
+             "audio": "chapt_11_k_osndp"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "οὕς",
+             "audio": "chapt_11_k_osmap"
+            },
+            {
+             "greek": "ἅς",
+             "audio": "chapt_11_k_osfap"
+            },
+            {
+             "greek": "ἅ",
+             "audio": "chapt_11_k_osnap"
+            }
+           ]
+          }
+         ],
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_ospar"
+         },
+         "note": "Note how similar these are to the noun endings and to the definite article."
+        }
+       ],
+       "_split_note": "Six Greek columns in the original; split Singular/Plural per DISCLOSURE-RULES §4.1 (the ch5 article / ch7 adjective precedent). One say-all clip covers both halves."
+      }
+     ]
+    },
+    {
+     "id": "reflexiveReciprocal",
+     "title": "Reflexive/Reciprocal",
+     "content": [
+      {
+       "type": "para",
+       "text": "Reflexive pronouns specify an action the subject makes on itself. Because αὐτός is used in the nominative in this regard the reflexive pronouns are found only in the genitive, dative and accusative cases. These are translated \"myself, yourself...\""
+      },
+      {
+       "type": "para",
+       "text": "ἀλλήλων (\"one another\") is the reciprocal pronoun. It specifies interaction of members within a group.",
+       "gapBefore": true
+      }
+     ],
+     "audioMap": {
+      "αὐτός": "chapt_11_k_autos",
+      "ἀλλήλων": "chapt_11_k_allhlw"
+     },
+     "_tap_note": "Hand cursors on autos and allelon (rail walk p11-p12)."
+    },
+    {
+     "id": "reflexiveParadigm",
+     "title": "Reflexive Paradigm",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "reflexiveParadigms",
+       "switch": "moreBack",
+       "charts": [
+        {
+         "type": "paradigm",
+         "name": "First Person Singular",
+         "title": "Reflexive Pronouns: First Person",
+         "subtitle": "Singular \"myself\"",
+         "columns": [
+          "Masc.",
+          "Fem."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "ἐμαυτοῦ",
+             "audio": "chapt_11_k_autmgs"
+            },
+            {
+             "greek": "ἐμαυτῆς",
+             "audio": "chapt_11_k_autfgs"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "ἐμαυτῷ",
+             "audio": "chapt_11_k_autmds"
+            },
+            {
+             "greek": "ἐμαυτῇ",
+             "audio": "chapt_11_k_autfds"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "ἐμαυτόν",
+             "audio": "chapt_11_k_autmas"
+            },
+            {
+             "greek": "ἐμαυτήν",
+             "audio": "chapt_11_k_autfas"
+            }
+           ]
+          }
+         ],
+         "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_autpar"
+         }
+        },
+        {
+         "type": "paradigm",
+         "name": "First Person Plural",
+         "title": "Reflexive Pronouns: First Person",
+         "subtitle": "Plural \"myself\"",
+         "columns": [
+          "Masc.",
+          "Fem."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "ἑαυτῶν",
+             "audio": "chapt_11_k_autmgp"
+            },
+            {
+             "greek": "ἑαυτῶν",
+             "audio": "chapt_11_k_autfgp"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "ἑαυτοῖς",
+             "audio": "chapt_11_k_autmdp"
+            },
+            {
+             "greek": "ἑαυταῖς",
+             "audio": "chapt_11_k_autfdp"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "ἑαυτούς",
+             "audio": "chapt_11_k_autmap"
+            },
+            {
+             "greek": "ἑαυτάς",
+             "audio": "chapt_11_k_autfap"
+            }
+           ]
+          }
+         ],
+         "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_autpar"
+         }
+        },
+        {
+         "type": "paradigm",
+         "name": "Second Person Singular",
+         "title": "Reflexive Pronouns: Second Person",
+         "subtitle": "Singular \"yourself\"",
+         "columns": [
+          "Masc.",
+          "Fem."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "σεαυτοῦ",
+             "audio": "chapt_11_k_seamgs"
+            },
+            {
+             "greek": "σεαυτῆς",
+             "audio": "chapt_11_k_seafgs"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "σεαυτῷ",
+             "audio": "chapt_11_k_seamds"
+            },
+            {
+             "greek": "σεαυτῇ",
+             "audio": "chapt_11_k_seafds"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "σεαυτόν",
+             "audio": "chapt_11_k_seamas"
+            },
+            {
+             "greek": "σεαυτήν",
+             "audio": "chapt_11_k_seafas"
+            }
+           ]
+          }
+         ],
+         "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_seapar"
+         }
+        },
+        {
+         "type": "paradigm",
+         "name": "Second Person Plural",
+         "title": "Reflexive Pronouns: Second Person",
+         "subtitle": "Plural \"yourself\"",
+         "columns": [
+          "Masc.",
+          "Fem."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "ἑαυτῶν",
+             "audio": "chapt_11_k_seamgp"
+            },
+            {
+             "greek": "ἑαυτῶν",
+             "audio": "chapt_11_k_seafgp"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "ἑαυτοῖς",
+             "audio": "chapt_11_k_seamdp"
+            },
+            {
+             "greek": "ἑαυταῖς",
+             "audio": "chapt_11_k_seafdp"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "ἑαυτούς",
+             "audio": "chapt_11_k_seamap"
+            },
+            {
+             "greek": "ἑαυτάς",
+             "audio": "chapt_11_k_seafap"
+            }
+           ]
+          }
+         ],
+         "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_seapar"
+         }
+        },
+        {
+         "type": "paradigm",
+         "name": "Third Person Singular",
+         "title": "Reflexive Pronouns: Third Person",
+         "subtitle": "Singular \"him/her/itself\"",
+         "columns": [
+          "Masc.",
+          "Fem.",
+          "Neut."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "ἑαυτοῦ",
+             "audio": "chapt_11_k_eaumgs"
+            },
+            {
+             "greek": "ἑαυτῆς",
+             "audio": "chapt_11_k_eaufgs"
+            },
+            {
+             "greek": "ἑαυτοῦ",
+             "audio": "chapt_11_k_eaungs"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "ἑαυτῷ",
+             "audio": "chapt_11_k_eaumds"
+            },
+            {
+             "greek": "ἑαυτῇ",
+             "audio": "chapt_11_k_eaufds"
+            },
+            {
+             "greek": "ἑαυτῷ",
+             "audio": "chapt_11_k_eaunds"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "ἑαυτόν",
+             "audio": "chapt_11_k_eaumas"
+            },
+            {
+             "greek": "ἑαυτήν",
+             "audio": "chapt_11_k_eaufas"
+            },
+            {
+             "greek": "ἑαυτό",
+             "audio": "chapt_11_k_eaunas"
+            }
+           ]
+          }
+         ],
+         "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_eaupar"
+         }
+        },
+        {
+         "type": "paradigm",
+         "name": "Third Person Plural",
+         "title": "Reflexive Pronouns: Third Person",
+         "subtitle": "Plural \"him/her/itself\"",
+         "columns": [
+          "Masc.",
+          "Fem.",
+          "Neut."
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "G",
+           "cells": [
+            {
+             "greek": "ἑαυτῶν",
+             "audio": "chapt_11_k_eaumgp"
+            },
+            {
+             "greek": "ἑαυτῶν",
+             "audio": "chapt_11_k_eaufgp"
+            },
+            {
+             "greek": "ἑαυτῶν",
+             "audio": "chapt_11_k_eaungp"
+            }
+           ]
+          },
+          {
+           "label": "D",
+           "cells": [
+            {
+             "greek": "ἑαυτοῖς",
+             "audio": "chapt_11_k_eaumdp"
+            },
+            {
+             "greek": "ἑαυταῖς",
+             "audio": "chapt_11_k_eaufdp"
+            },
+            {
+             "greek": "ἑαυτοῖς",
+             "audio": "chapt_11_k_eaundp"
+            }
+           ]
+          },
+          {
+           "label": "A",
+           "cells": [
+            {
+             "greek": "ἑαυτούς",
+             "audio": "chapt_11_k_eaumap"
+            },
+            {
+             "greek": "ἑαυτάς",
+             "audio": "chapt_11_k_eaufap"
+            },
+            {
+             "greek": "ἑαυτά",
+             "audio": "chapt_11_k_eaunap"
+            }
+           ]
+          }
+         ],
+         "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_11_k_eaupar"
+         }
+        }
+       ],
+       "_stack_note": "The original pages three persons via in-page First/Second/Third Person links; each person is split Singular/Plural for 320px, giving a six-chart §4.2 Back/More stack. The person's one say-all clip repeats on both of its halves. VERIFY-5H veto item (l)."
+      }
+     ]
+    }
+   ],
+   "greekTaps": true
+  },
+  {
+   "id": "c11_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "senses"
+  },
+  {
+   "id": "c11_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory",
+   "reference": "Mat 6:33b",
+   "words": [
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_11_k_sm1"
+    },
+    {
+     "greek": "ταῦτα",
+     "gloss": "these",
+     "audio": "chapt_11_k_sm2"
+    },
+    {
+     "greek": "πάντα",
+     "gloss": "all",
+     "audio": "chapt_11_k_sm3"
+    },
+    {
+     "greek": "προστεθήσεται",
+     "gloss": "will be added",
+     "audio": "chapt_11_k_sm4"
+    },
+    {
+     "greek": "ὑμῖν.",
+     "gloss": "to you.",
+     "audio": "chapt_11_k_sm5"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_11_k_mt633b"
+   }
+  },
+  {
+   "id": "c11_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham. New Testament Greek for Beginners (Toronto: The Macmillan Company, 1923), pp. 52-53, 173-175.",
+      "Mounce, William D. Basics of Biblical Greek: Grammar (Grand Rapids: Zondervan, 1993), pp. 101-114.",
+      "Summers, Ray and Thomas Sawyer. Essentials of New Testament Greek (Nashville: Broadman & Holman, 1995), pp. 45-47, 136-139.",
+      "Wenham, J. W. The Elements of New Testament Greek (Cambridge: Cambridge University Press, 1965), pp. 57-62, 72-73."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c11_drill_this_that",
+   "type": "select",
+   "mode": "twoStageGrid",
+   "title": "This and That Drill",
+   "instructions": "Click on the translation, gender then case/number",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionStages": [
+    {
+     "label": "translation",
+     "values": [
+      "This",
+      "That"
+     ]
+    },
+    {
+     "label": "gender",
+     "values": [
+      "Masculine",
+      "Feminine",
+      "Neuter"
+     ]
+    },
+    {
+     "label": "caseNumber",
+     "values": [
+      "Nominative Singular",
+      "Nominative Plural",
+      "Genitive Singular",
+      "Genitive Plural",
+      "Dative Singular",
+      "Dative Plural",
+      "Accusative Singular",
+      "Accusative Plural"
+     ],
+     "layout": "paradigm2col"
+    }
+   ],
+   "items": [
+    {
+     "greek": "οὗτος",
+     "answer": [
+      "This",
+      "Masculine",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_k_outmns",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "τούτου",
+     "answer": [
+      "This",
+      "Masculine",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_11_k_outmgs",
+     "hintRef": "thisParadigm",
+     "answerAlt": [
+      [
+       "This",
+       "Neuter",
+       "Genitive Singular"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ἐκείνοις",
+     "answer": [
+      "That",
+      "Masculine",
+      "Dative Plural"
+     ],
+     "audio": "chapt_11_k_ekemdp",
+     "hintRef": "thatParadigm",
+     "answerAlt": [
+      [
+       "That",
+       "Neuter",
+       "Dative Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "τούτους",
+     "answer": [
+      "This",
+      "Masculine",
+      "Accusative Plural"
+     ],
+     "audio": "chapt_11_k_outmap",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "οὗτοι",
+     "answer": [
+      "This",
+      "Masculine",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_k_outmnp",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "ἐκείνῳ",
+     "answer": [
+      "That",
+      "Masculine",
+      "Dative Singular"
+     ],
+     "audio": "chapt_11_k_ekends",
+     "hintRef": "thatParadigm",
+     "answerAlt": [
+      [
+       "That",
+       "Neuter",
+       "Dative Singular"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ἐκεῖνο",
+     "answer": [
+      "That",
+      "Neuter",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_k_ekenns",
+     "hintRef": "thatParadigm",
+     "answerAlt": [
+      [
+       "That",
+       "Neuter",
+       "Accusative Singular"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ἐκείναις",
+     "answer": [
+      "That",
+      "Feminine",
+      "Dative Plural"
+     ],
+     "audio": "chapt_11_k_ekefdp",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "ταύτῃ",
+     "answer": [
+      "This",
+      "Feminine",
+      "Dative Singular"
+     ],
+     "audio": "chapt_11_k_outfds",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "ἐκείνας",
+     "answer": [
+      "That",
+      "Feminine",
+      "Accusative Plural"
+     ],
+     "audio": "chapt_11_k_ekefap",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "αὕτη",
+     "answer": [
+      "This",
+      "Feminine",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_k_outfns",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "ταῦτα",
+     "answer": [
+      "This",
+      "Neuter",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_k_outnnp",
+     "hintRef": "thisParadigm",
+     "answerAlt": [
+      [
+       "This",
+       "Neuter",
+       "Accusative Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ταύτην",
+     "answer": [
+      "This",
+      "Feminine",
+      "Accusative Singular"
+     ],
+     "audio": "chapt_11_k_outfas",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "ἐκείνου",
+     "answer": [
+      "That",
+      "Neuter",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_11_k_ekemgs",
+     "hintRef": "thatParadigm",
+     "answerAlt": [
+      [
+       "That",
+       "Masculine",
+       "Genitive Singular"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ἐκεῖνα",
+     "answer": [
+      "That",
+      "Neuter",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_k_ekennp",
+     "hintRef": "thatParadigm",
+     "answerAlt": [
+      [
+       "That",
+       "Neuter",
+       "Accusative Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ἐκείνων",
+     "answer": [
+      "That",
+      "Masculine",
+      "Genitive Plural"
+     ],
+     "audio": "chapt_11_k_ekemgp",
+     "hintRef": "thatParadigm",
+     "answerAlt": [
+      [
+       "That",
+       "Neuter",
+       "Genitive Plural"
+      ],
+      [
+       "That",
+       "Feminine",
+       "Genitive Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "τούτῳ",
+     "answer": [
+      "This",
+      "Masculine",
+      "Dative Singular"
+     ],
+     "audio": "chapt_11_k_outmds",
+     "hintRef": "thisParadigm",
+     "answerAlt": [
+      [
+       "This",
+       "Neuter",
+       "Dative Singular"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "τούτους",
+     "answer": [
+      "This",
+      "Masculine",
+      "Accusative Plural"
+     ],
+     "audio": "chapt_11_k_outmap",
+     "hintRef": "thisParadigm",
+     "_audio_note": "SayWord entry BLANK in the original; wired to the form's own cell clip."
+    },
+    {
+     "greek": "τούτοις",
+     "answer": [
+      "This",
+      "Masculine",
+      "Dative Plural"
+     ],
+     "audio": "chapt_11_k_outmdp",
+     "hintRef": "thisParadigm",
+     "answerAlt": [
+      [
+       "This",
+       "Neuter",
+       "Dative Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ἐκεῖνοι",
+     "answer": [
+      "That",
+      "Masculine",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_k_ekemnp",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "ἐκείνης",
+     "answer": [
+      "That",
+      "Feminine",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_11_k_ekefgs",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "ἐκεῖνον",
+     "answer": [
+      "That",
+      "Masculine",
+      "Accusative Singular"
+     ],
+     "audio": "chapt_11_k_ekemas",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "ἐκεῖνος",
+     "answer": [
+      "That",
+      "Masculine",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_k_ekemns",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "τοῦτο",
+     "answer": [
+      "This",
+      "Neuter",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_k_outnns",
+     "hintRef": "thisParadigm",
+     "answerAlt": [
+      [
+       "This",
+       "Neuter",
+       "Accusative Singular"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "αὗται",
+     "answer": [
+      "This",
+      "Feminine",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_k_outfnp",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "τοῦτον",
+     "answer": [
+      "This",
+      "Masculine",
+      "Accusative Singular"
+     ],
+     "audio": "chapt_11_k_outmas",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "ταύτης",
+     "answer": [
+      "This",
+      "Feminine",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_11_k_outfgs",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "ἐκείνους",
+     "answer": [
+      "That",
+      "Masculine",
+      "Accusative Plural"
+     ],
+     "audio": "chapt_11_k_ekemap",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "ἐκείνη",
+     "answer": [
+      "That",
+      "Feminine",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_k_ekefns",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "ἐκεῖναι",
+     "answer": [
+      "That",
+      "Feminine",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_k_ekefnp",
+     "hintRef": "thatParadigm"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "thisParadigm"
+   },
+   "_stage_note": "THREE optionStages (the ch10 generalisation); the guess commits on the final (case/number) click. Answer keys, including every accepted alternative, are read from the page's AnalyzeAnswer script (0xd5c00-0xd7dc6); clips from the SayWord table (0xd7dc6-0xd8500). Hint is FORM-DEPENDENT per item (D-46).",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c11_drill_who_the",
+   "type": "select",
+   "mode": "twoStageGrid",
+   "title": "Who and The Drill",
+   "instructions": "Click on the translation, gender then case/number",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionStages": [
+    {
+     "label": "translation",
+     "values": [
+      "Who/which",
+      "The"
+     ]
+    },
+    {
+     "label": "gender",
+     "values": [
+      "Masculine",
+      "Feminine",
+      "Neuter"
+     ]
+    },
+    {
+     "label": "caseNumber",
+     "values": [
+      "Nominative Singular",
+      "Nominative Plural",
+      "Genitive Singular",
+      "Genitive Plural",
+      "Dative Singular",
+      "Dative Plural",
+      "Accusative Singular",
+      "Accusative Plural"
+     ],
+     "layout": "paradigm2col"
+    }
+   ],
+   "items": [
+    {
+     "greek": "ὁ",
+     "answer": [
+      "The",
+      "Masculine",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_e_ho",
+     "hintRef": "articleParadigm"
+    },
+    {
+     "greek": "ὅν",
+     "answer": [
+      "Who/which",
+      "Masculine",
+      "Accusative Singular"
+     ],
+     "audio": "chapt_11_k_osmas",
+     "hintRef": "relativeParadigm"
+    },
+    {
+     "greek": "οἱ",
+     "answer": [
+      "The",
+      "Masculine",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_e_hoi",
+     "hintRef": "articleParadigm"
+    },
+    {
+     "greek": "ὅ",
+     "answer": [
+      "Who/which",
+      "Neuter",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_k_osnns",
+     "hintRef": "relativeParadigm",
+     "answerAlt": [
+      [
+       "Who/which",
+       "Neuter",
+       "Accusative Singular"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "τῷ",
+     "answer": [
+      "The",
+      "Masculine",
+      "Dative Singular"
+     ],
+     "audio": "chapt_11_e_tw",
+     "hintRef": "articleParadigm",
+     "answerAlt": [
+      [
+       "The",
+       "Neuter",
+       "Dative Singular"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "οἵ",
+     "answer": [
+      "Who/which",
+      "Masculine",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_k_osmnp",
+     "hintRef": "relativeParadigm"
+    },
+    {
+     "greek": "οὗ",
+     "answer": [
+      "Who/which",
+      "Neuter",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_11_k_osmgs",
+     "hintRef": "relativeParadigm",
+     "answerAlt": [
+      [
+       "Who/which",
+       "Masculine",
+       "Genitive Singular"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "τάς",
+     "answer": [
+      "The",
+      "Feminine",
+      "Accusative Plural"
+     ],
+     "audio": "chapt_11_e_tas",
+     "hintRef": "articleParadigm"
+    },
+    {
+     "greek": "αἵ",
+     "answer": [
+      "Who/which",
+      "Feminine",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_k_osfnp",
+     "hintRef": "relativeParadigm"
+    },
+    {
+     "greek": "ᾗ",
+     "answer": [
+      "Who/which",
+      "Feminine",
+      "Dative Singular"
+     ],
+     "audio": "chapt_11_k_osfds",
+     "hintRef": "relativeParadigm"
+    },
+    {
+     "greek": "ἅ",
+     "answer": [
+      "Who/which",
+      "Neuter",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_k_osnnp",
+     "hintRef": "relativeParadigm",
+     "answerAlt": [
+      [
+       "Who/which",
+       "Neuter",
+       "Accusative Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "αἱ",
+     "answer": [
+      "The",
+      "Feminine",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_e_hai",
+     "hintRef": "articleParadigm"
+    },
+    {
+     "greek": "τά",
+     "answer": [
+      "The",
+      "Neuter",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_e_ta",
+     "hintRef": "articleParadigm",
+     "_audio_note": "SayWord entry BLANK in the original; wired to the form's own cell clip.",
+     "answerAlt": [
+      [
+       "The",
+       "Neuter",
+       "Accusative Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ὧν",
+     "answer": [
+      "Who/which",
+      "Neuter",
+      "Genitive Plural"
+     ],
+     "audio": "chapt_11_k_osmgp",
+     "hintRef": "relativeParadigm",
+     "answerAlt": [
+      [
+       "Who/which",
+       "Masculine",
+       "Genitive Plural"
+      ],
+      [
+       "Who/which",
+       "Feminine",
+       "Genitive Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "τῶν",
+     "answer": [
+      "The",
+      "Neuter",
+      "Genitive Plural"
+     ],
+     "audio": "chapt_11_e_twn",
+     "hintRef": "articleParadigm",
+     "answerAlt": [
+      [
+       "The",
+       "Masculine",
+       "Genitive Plural"
+      ],
+      [
+       "The",
+       "Feminine",
+       "Genitive Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "οἵ",
+     "answer": [
+      "Who/which",
+      "Masculine",
+      "Nominative Plural"
+     ],
+     "audio": "chapt_11_k_osmnp",
+     "hintRef": "relativeParadigm",
+     "_audio_note": "SayWord entry BLANK in the original; wired to the form's own cell clip."
+    },
+    {
+     "greek": "ἡ",
+     "answer": [
+      "The",
+      "Feminine",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_e_hn",
+     "hintRef": "articleParadigm"
+    },
+    {
+     "greek": "ᾧ",
+     "answer": [
+      "Who/which",
+      "Masculine",
+      "Dative Singular"
+     ],
+     "audio": "chapt_11_k_osmds",
+     "hintRef": "relativeParadigm",
+     "answerAlt": [
+      [
+       "Who/which",
+       "Neuter",
+       "Dative Singular"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ἥ",
+     "answer": [
+      "Who/which",
+      "Feminine",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_k_osfns",
+     "hintRef": "relativeParadigm"
+    },
+    {
+     "greek": "ἅς",
+     "answer": [
+      "Who/which",
+      "Feminine",
+      "Accusative Plural"
+     ],
+     "audio": "chapt_11_k_osfap",
+     "hintRef": "relativeParadigm"
+    },
+    {
+     "greek": "τῇ",
+     "answer": [
+      "The",
+      "Feminine",
+      "Dative Singular"
+     ],
+     "audio": "chapt_11_e_tn",
+     "hintRef": "articleParadigm"
+    },
+    {
+     "greek": "ὅς",
+     "answer": [
+      "Who/which",
+      "Masculine",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_k_osmns",
+     "hintRef": "relativeParadigm"
+    },
+    {
+     "greek": "τοῦ",
+     "answer": [
+      "The",
+      "Masculine",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_11_e_tou",
+     "hintRef": "articleParadigm"
+    },
+    {
+     "greek": "ἧς",
+     "answer": [
+      "Who/which",
+      "Feminine",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_11_k_osfgs",
+     "hintRef": "relativeParadigm"
+    },
+    {
+     "greek": "τῆς",
+     "answer": [
+      "The",
+      "Feminine",
+      "Genitive Singular"
+     ],
+     "audio": "chapt_11_e_tns",
+     "hintRef": "articleParadigm"
+    },
+    {
+     "greek": "ἥν",
+     "answer": [
+      "Who/which",
+      "Feminine",
+      "Accusative Singular"
+     ],
+     "audio": "chapt_11_k_osfas",
+     "hintRef": "relativeParadigm"
+    },
+    {
+     "greek": "οἷς",
+     "answer": [
+      "Who/which",
+      "Masculine",
+      "Dative Plural"
+     ],
+     "audio": "chapt_11_k_osmdp",
+     "hintRef": "relativeParadigm",
+     "answerAlt": [
+      [
+       "Who/which",
+       "Neuter",
+       "Dative Plural"
+      ]
+     ],
+     "_ambiguous_note": "The original's key accepts every combination listed; ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ἡ",
+     "answer": [
+      "The",
+      "Feminine",
+      "Nominative Singular"
+     ],
+     "audio": "chapt_11_e_hn",
+     "hintRef": "articleParadigm",
+     "_audio_note": "SayWord entry BLANK in the original; wired to the form's own cell clip."
+    },
+    {
+     "greek": "οὕς",
+     "answer": [
+      "Who/which",
+      "Masculine",
+      "Accusative Plural"
+     ],
+     "audio": "chapt_11_k_osmap",
+     "hintRef": "relativeParadigm"
+    },
+    {
+     "greek": "αἷς",
+     "answer": [
+      "Who/which",
+      "Feminine",
+      "Dative Plural"
+     ],
+     "audio": "chapt_11_k_osfdp",
+     "hintRef": "relativeParadigm"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "relativeParadigm"
+   },
+   "_stage_note": "THREE optionStages (the ch10 generalisation); the guess commits on the final (case/number) click. Answer keys, including every accepted alternative, are read from the page's AnalyzeAnswer script (0xd9800-0xdb640); clips from the SayWord table (0xdb640-0xdbd00). Hint is FORM-DEPENDENT per item (D-46).",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c11_drill_translation_this_that",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "This and That Translation Drill",
+   "instructions": "Click on the correct translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "ἐπὶ τὰς δούλας μου ἐν ταῖς ἡμέραις ἐκείνας",
+     "ref": "Acts 2:18",
+     "options": [
+      "upon my servants in these days",
+      "upon my servants in those days",
+      "upon my servants in this day"
+     ],
+     "answer": "upon my servants in those days",
+     "audio": "chapt_11_k_td1",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "περὶ τούτου ... εἶπεν αὐτοῖς",
+     "ref": "Jn 6:61",
+     "options": [
+      "about this he said to them",
+      "about that he said to them",
+      "about him he said to them"
+     ],
+     "answer": "about this he said to them",
+     "audio": "chapt_11_k_td2",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "μετὰ τὰς ἡμέρας ἐκείνας, λέγει κύριος",
+     "ref": "Heb 10:16",
+     "options": [
+      "after the days the Lord says that",
+      "after these days, says the Lord",
+      "after those days, says the Lord"
+     ],
+     "answer": "after those days, says the Lord",
+     "audio": "chapt_11_k_td3",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "ἐγὼ οὐκ εἰμὶ ἐκ τοῦ κόσμου τούτου",
+     "ref": "Jn 8:23",
+     "options": [
+      "I am not of the world",
+      "I am not of that world",
+      "I am not of this world"
+     ],
+     "answer": "I am not of this world",
+     "audio": "chapt_11_k_td4",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "ἐν ... τῇ γῇ ἐκείνῃ",
+     "ref": "Mat 9:31",
+     "options": [
+      "in that land",
+      "in this land",
+      "in the land this"
+     ],
+     "answer": "in that land",
+     "audio": "chapt_11_k_td5",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "ὅτι τὸ φῶς τοῦ κόσμου τούτου βλέπει",
+     "ref": "Jn 11:9",
+     "options": [
+      "because of this he sees the light of the world",
+      "because he sees the light of that world",
+      "because he sees the light of this world"
+     ],
+     "answer": "because he sees the light of this world",
+     "audio": "chapt_11_k_td6",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "Ἐν ἐκείνῃ τῇ ὥρᾳ εἶπεν ὁ Ἰησοῦς τοῖς ὄχλοις",
+     "ref": "Mat 26:55",
+     "options": [
+      "at this hour Jesus said to the crowds",
+      "at that hour Jesus said to the crowds",
+      "in an hour Jesus said this to the crowds"
+     ],
+     "answer": "at that hour Jesus said to the crowds",
+     "audio": "chapt_11_k_td7",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "ἐν τούτῳ γνώσονται πάντες ὅτι ἐμοὶ μαθηταί",
+     "ref": "Jn 13:35",
+     "options": [
+      "by that everyone will know that you are my disciples",
+      "by this everyone will know that you are my disciples",
+      "by which everyone will know that you are my disciples"
+     ],
+     "answer": "by this everyone will know that you are my disciples",
+     "audio": "chapt_11_k_td8",
+     "greek2": "ἐστε",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "λέγω ὑμῖν ὅτι Σοδόμοις ἐν τῇ ἡμέρᾳ ἐκείνῃ",
+     "ref": "Luk 10:12",
+     "options": [
+      "I say to you that Sodom in that day",
+      "I say to you that Sodom in this day",
+      "I say to you that in the day of Sodom"
+     ],
+     "answer": "I say to you that Sodom in that day",
+     "audio": "chapt_11_k_td9",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "οὗτός ἐστιν ὁ ἄρτος",
+     "ref": "Jn 6:58",
+     "options": [
+      "This bread is",
+      "That bread is",
+      "This is the bread"
+     ],
+     "answer": "This is the bread",
+     "audio": "chapt_11_k_td10",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "παρὰ κυρίου ἐν ἐκείνῃ τῇ ἡμέρᾳ",
+     "ref": "2 Tim. 1:18",
+     "options": [
+      "from the Lord on that day",
+      "from the Lord on this day",
+      "this day is from the Lord"
+     ],
+     "answer": "from the Lord on that day",
+     "audio": "chapt_11_k_td11",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "Τοῦτό ἐστιν τὸ ἔργον τοῦ θεοῦ",
+     "ref": "Jn 6:29",
+     "options": [
+      "that is the work of God",
+      "this is the work of God",
+      "they are the work of God"
+     ],
+     "answer": "this is the work of God",
+     "audio": "chapt_11_k_td12",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "καὶ εκεῖνοί εἰσιν οἱ ἐπὶ τὴν γῆν",
+     "ref": "Mar 4:20",
+     "options": [
+      "and these are the ones upon the ground",
+      "and those are the ones upon the ground",
+      "and you are the ones upon the ground"
+     ],
+     "answer": "and those are the ones upon the ground",
+     "audio": "chapt_11_k_td13",
+     "_verify": "The original types ekeinoi WITHOUT its smooth breathing (ekei?noi<); verbatim, keep-or-fix.",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "μετὰ τοῦτο λέγει τοῖς μαθηταῖς",
+     "ref": "Jn 11:7",
+     "options": [
+      "after this he said to the disciples",
+      "after that he said to the disciples",
+      "with his disciples he said this"
+     ],
+     "answer": "after this he said to the disciples",
+     "audio": "chapt_11_k_td14",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "μακάριοι οἱ δοῦλοι ἐκεῖνοι",
+     "ref": "Luk 12:37",
+     "options": [
+      "blessed are these servants",
+      "blessed are my servants",
+      "blessed are those servants"
+     ],
+     "answer": "blessed are those servants",
+     "audio": "chapt_11_k_td15",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "καὶ μετὰ τοῦτο λέγει αὐτοῖς",
+     "ref": "Jn 11:11",
+     "options": [
+      "and after this he said to them",
+      "and after that he said to them",
+      "and after he said to them that"
+     ],
+     "answer": "and after this he said to them",
+     "audio": "chapt_11_k_td16",
+     "hintRef": "thisParadigm"
+    },
+    {
+     "greek": "τὸ γὰρ τέλος ἐκείνων θάνατος",
+     "ref": "Rom 6:21",
+     "options": [
+      "for the end of all things is death",
+      "for the end of those things is death",
+      "for the end of these things is death"
+     ],
+     "answer": "for the end of those things is death",
+     "audio": "chapt_11_k_td17",
+     "hintRef": "thatParadigm"
+    },
+    {
+     "greek": "λέγω ὅτι σὺ εἶ Πέτρος, καὶ ἐπὶ ταύτῃ τῇ πέτρᾳ",
+     "ref": "Mat 16:18",
+     "options": [
+      "I say that you are Peter, and upon that rock",
+      "I say that you are Peter, and upon this rock",
+      "I say this, you are Peter, and upon the rock"
+     ],
+     "answer": "I say that you are Peter, and upon this rock",
+     "audio": "chapt_11_k_td18",
+     "hintRef": "thisParadigm"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "thisParadigm"
+   },
+   "_answer_note": "Answers are the BLUE (correct) options on the answered screens in ch11railwalk.pdf p6-p10, all 18 items captured; each asserted to exist among the item's three option-column entries. Hint is form-dependent (Hinteke/Hintout on the page object list at 0x3c0f).",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c11_drill_translation_relative",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Relative Pronoun Translation Drill",
+   "instructions": "Click on the correct translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "Ἔστιν παιδάριον ὧδε ὅς ἔχει πέντε ἄρτους",
+     "ref": "Jn 6:9",
+     "options": [
+      "there is a boy here having 5 loaves",
+      "there is a boy here he has 5 loaves",
+      "there is a boy here who has 5 loaves"
+     ],
+     "answer": "there is a boy here who has 5 loaves",
+     "audio": "chapt_11_k_trd1"
+    },
+    {
+     "greek": "Ἰσραηλίτης ἐν ᾧ δόλος οὐκ ἔστιν",
+     "ref": "Jn 1:47",
+     "options": [
+      "an Israelite in whom there is no deceit",
+      "an Israelite, there is no deceit in him",
+      "an Israelite in whom there is deceit"
+     ],
+     "answer": "an Israelite in whom there is no deceit",
+     "audio": "chapt_11_k_trd2"
+    },
+    {
+     "greek": "Ἐκεῖνός ἐστιν ᾧ ἐγὼ βάψω τό ψωμίον",
+     "ref": "Jn 13:26",
+     "options": [
+      "it is who I dip that morsel with",
+      "it is that one with whom I dip the morsel",
+      "it is that one I dip the morsel with"
+     ],
+     "answer": "it is that one with whom I dip the morsel",
+     "audio": "chapt_11_k_trd3"
+    },
+    {
+     "greek": "μακάριος ὁ δοῦλος ἐκεῖνος ὅν",
+     "ref": "Mat 24:46",
+     "options": [
+      "Blessed is that slave who",
+      "Blessed is the one who is a slave",
+      "Blessed is the slave that"
+     ],
+     "answer": "Blessed is that slave who",
+     "audio": "chapt_11_k_trd4"
+    },
+    {
+     "greek": "καὶ νῦν ὅν ἔχεις οὐκ ἔστιν σου ἀνήρ",
+     "ref": "Jn 4:18",
+     "options": [
+      "and now you have a man who is not your husband",
+      "and now a man who is not your husband has you",
+      "and the one who you have now is not your husband"
+     ],
+     "answer": "and the one who you have now is not your husband",
+     "audio": "chapt_11_k_trd5"
+    },
+    {
+     "greek": "ὅν ὑμεῖς λέγετε ὅτι θεὸς ἡμῶν ἐστιν",
+     "ref": "Jn 8:54",
+     "options": [
+      "whom you yourselves say that \"he is our God\"",
+      "you yourselves say that \"he who is our God\"",
+      "you yourselves say \"who is our God?\""
+     ],
+     "answer": "whom you yourselves say that \"he is our God\"",
+     "audio": "chapt_11_k_trd6"
+    },
+    {
+     "greek": "ὁ λόγος ὅν ἀκούετε οὐκ ἔστιν ἐμὸς",
+     "ref": "Jn 14:24",
+     "options": [
+      "my word you hear is not that which",
+      "the word which you hear is not mine",
+      "whose word you hear is not mine"
+     ],
+     "answer": "the word which you hear is not mine",
+     "audio": "chapt_11_k_trd7"
+    },
+    {
+     "greek": "ἥν ὁ υἱὸς τοῦ ἀνθρώπου ὑμῖν δώσει",
+     "ref": "Jn 6:27",
+     "options": [
+      "to whom the son of man will give you",
+      "of whom the son of man will give you",
+      "which the son of man will give to you"
+     ],
+     "answer": "which the son of man will give to you",
+     "audio": "chapt_11_k_trd8"
+    },
+    {
+     "greek": "καὶ ὅ εἰς τὸ οὖς ἀκούετε",
+     "ref": "Mat 10:27",
+     "options": [
+      "and that which you hear in the ear",
+      "and that which we hear in the ear",
+      "and that which they hear in the ear"
+     ],
+     "answer": "and that which you hear in the ear",
+     "audio": "chapt_11_k_trd9"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "relativeParadigm"
+   },
+   "_answer_note": "Answers are the BLUE options on ch11railwalk.pdf p14-p17 (all 9 items captured). Single hint: the os chart (one Hint on the page object list at 0x6547e).",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c11_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "I go away",
+    "that/those",
+    "Jewish, Jew",
+    "as, just as",
+    "who/which",
+    "when",
+    "this/these",
+    "back, again",
+    "Peter",
+    "for, about",
+    "above, beyond"
+   ],
+   "items": [
+    {
+     "greek": "ἀπέρχομαι",
+     "note": null,
+     "answer": "I go away",
+     "audio": "chapt_11_k_voc1"
+    },
+    {
+     "greek": "ἐκεῖνος, -η, -ο",
+     "note": null,
+     "answer": "that/those",
+     "audio": "chapt_11_k_voc2"
+    },
+    {
+     "greek": "Ἰουδαῖος, -α, -ον",
+     "note": null,
+     "answer": "Jewish, Jew",
+     "audio": "chapt_11_k_voc3"
+    },
+    {
+     "greek": "καθώς",
+     "note": null,
+     "answer": "as, just as",
+     "audio": "chapt_11_k_voc4"
+    },
+    {
+     "greek": "ὅς, ἥ, ὅ",
+     "note": null,
+     "answer": "who/which",
+     "audio": "chapt_11_k_voc5"
+    },
+    {
+     "greek": "ὅταν",
+     "note": null,
+     "answer": "when",
+     "audio": "chapt_11_k_voc6"
+    },
+    {
+     "greek": "οὗτος, αὕτη, τοῦτο",
+     "note": null,
+     "answer": "this/these",
+     "audio": "chapt_11_k_voc7a"
+    },
+    {
+     "greek": "πάλιν",
+     "note": null,
+     "answer": "back, again",
+     "audio": "chapt_11_k_voc8"
+    },
+    {
+     "greek": "Πέτρος, -ου, ὁ",
+     "note": null,
+     "answer": "Peter",
+     "audio": "chapt_11_k_voc9"
+    },
+    {
+     "greek": "ὑπέρ",
+     "note": "(gen.)",
+     "answer": "for, about",
+     "audio": "chapt_11_k_voc10"
+    },
+    {
+     "greek": "ὑπέρ",
+     "note": "(acc.)",
+     "answer": "above, beyond",
+     "audio": "chapt_11_k_voc11"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "poolKind": "vocabulary",
+   "pool": "senses",
+   "_pool_note": "ELEVEN entries: huper is case-split (gen./acc.) and the original's 12-cell grid leaves one cell empty. Dispatch tables at 0x12b74c/0x130e61 map k_voc1-11 (7 -> k_voc7a).",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c11_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary: English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "options": "static",
+   "optionsAreGreek": true,
+   "optionValues": [
+    "ἀπέρχομαι",
+    "ἐκεῖνος, -η, -ο",
+    "Ἰουδαῖος, -α, -ον",
+    "καθώς",
+    "ὅς, ἥ, ὅ",
+    "ὅταν",
+    "οὗτος, αὕτη, τοῦτο",
+    "πάλιν",
+    "Πέτρος, -ου, ὁ",
+    "ὑπέρ (gen.)",
+    "ὑπέρ (acc.)"
+   ],
+   "items": [
+    {
+     "prompt": "I go away",
+     "answer": "ἀπέρχομαι",
+     "audio": "chapt_11_k_voc1"
+    },
+    {
+     "prompt": "that/those",
+     "answer": "ἐκεῖνος, -η, -ο",
+     "audio": "chapt_11_k_voc2"
+    },
+    {
+     "prompt": "Jewish, Jew",
+     "answer": "Ἰουδαῖος, -α, -ον",
+     "audio": "chapt_11_k_voc3"
+    },
+    {
+     "prompt": "as, just as",
+     "answer": "καθώς",
+     "audio": "chapt_11_k_voc4"
+    },
+    {
+     "prompt": "who/which",
+     "answer": "ὅς, ἥ, ὅ",
+     "audio": "chapt_11_k_voc5"
+    },
+    {
+     "prompt": "when",
+     "answer": "ὅταν",
+     "audio": "chapt_11_k_voc6"
+    },
+    {
+     "prompt": "this/these",
+     "answer": "οὗτος, αὕτη, τοῦτο",
+     "audio": "chapt_11_k_voc7a"
+    },
+    {
+     "prompt": "back, again",
+     "answer": "πάλιν",
+     "audio": "chapt_11_k_voc8"
+    },
+    {
+     "prompt": "Peter",
+     "answer": "Πέτρος, -ου, ὁ",
+     "audio": "chapt_11_k_voc9"
+    },
+    {
+     "prompt": "for, about",
+     "answer": "ὑπέρ (gen.)",
+     "audio": "chapt_11_k_voc10"
+    },
+    {
+     "prompt": "above, beyond",
+     "answer": "ὑπέρ (acc.)",
+     "audio": "chapt_11_k_voc11"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "poolKind": "vocabulary",
+   "pool": "senses",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c11_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "all",
+    "righteousness",
+    "and",
+    "the",
+    "but",
+    "these",
+    "first",
+    "to you",
+    "his",
+    "you seek",
+    "kingdom",
+    "will be added"
+   ],
+   "items": [
+    {
+     "greek": "ζητεῖτε",
+     "answer": "you seek",
+     "audio": "chapt_11_j_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "answer": "but",
+     "audio": "chapt_11_j_sm2"
+    },
+    {
+     "greek": "πρῶτον",
+     "answer": "first",
+     "audio": "chapt_11_j_sm3"
+    },
+    {
+     "greek": "τὴν",
+     "answer": "the",
+     "audio": "chapt_11_j_sm4"
+    },
+    {
+     "greek": "βασιλείαν",
+     "answer": "kingdom",
+     "audio": "chapt_11_j_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "answer": "and",
+     "audio": "chapt_11_j_sm8"
+    },
+    {
+     "greek": "δικαιοσύνην",
+     "answer": "righteousness",
+     "audio": "chapt_11_j_sm10"
+    },
+    {
+     "greek": "αὐτοῦ",
+     "answer": "his",
+     "audio": "chapt_11_j_sm11"
+    },
+    {
+     "greek": "ταῦτα",
+     "answer": "these",
+     "audio": "chapt_11_k_sm2"
+    },
+    {
+     "greek": "πάντα",
+     "answer": "all",
+     "audio": "chapt_11_k_sm3"
+    },
+    {
+     "greek": "προστεθήσεται",
+     "answer": "will be added",
+     "audio": "chapt_11_k_sm4"
+    },
+    {
+     "greek": "ὑμῖν",
+     "answer": "to you",
+     "audio": "chapt_11_k_sm5"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "_audio_note": "CUMULATIVE pool: the twelve prompts span Mat 6:33a and 6:33b (tou theou omitted); the SayWord table at 0xa2ba4 dispatches j_sm1,2,3,4,5,8,10,11 (6:33a positions, shipped forward) and k_sm2-5.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c11_ex_speller_this_that",
+   "type": "spell",
+   "title": "This and That Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "those (masc. nom. pl.)",
+     "answer": "ἐκεῖνοι",
+     "audio": "chapt_11_k_ekemnp"
+    },
+    {
+     "prompt": "that (masc. acc. sg.)",
+     "answer": "ἐκεῖνον",
+     "audio": "chapt_11_k_ekemas"
+    },
+    {
+     "prompt": "this (fem. gen. sg.)",
+     "answer": "ταύτης",
+     "audio": "chapt_11_k_outfgs"
+    },
+    {
+     "prompt": "these (neut. nom. pl.)",
+     "answer": "ταῦτα",
+     "audio": "chapt_11_k_outnnp"
+    },
+    {
+     "prompt": "that (neut. gen. sg.)",
+     "answer": "ἐκείνου",
+     "audio": "chapt_11_k_ekengs"
+    },
+    {
+     "prompt": "those (fem. acc. pl.)",
+     "answer": "ἐκείνας",
+     "audio": "chapt_11_k_ekefap"
+    },
+    {
+     "prompt": "this (masc. acc. sg.)",
+     "answer": "τοῦτον",
+     "audio": "chapt_11_k_outmas"
+    },
+    {
+     "prompt": "this (neut. gen. sg.)",
+     "answer": "τούτου",
+     "audio": "chapt_11_k_outngs"
+    },
+    {
+     "prompt": "that (fem. nom. sg.)",
+     "answer": "ἐκείνη",
+     "audio": "chapt_11_k_ekefns"
+    },
+    {
+     "prompt": "this (fem. nom. sg.)",
+     "answer": "αὕτη",
+     "audio": "chapt_11_k_outfns"
+    },
+    {
+     "prompt": "that (neut. gen. sg.)",
+     "answer": "ἐκείνου",
+     "audio": "chapt_11_k_ekengs"
+    },
+    {
+     "prompt": "those (fem. gen. pl.)",
+     "answer": "ἐκείνων",
+     "audio": "chapt_11_k_ekefgp"
+    },
+    {
+     "prompt": "these (fem. nom. pl.)",
+     "answer": "αὗται",
+     "audio": "chapt_11_k_outfnp"
+    },
+    {
+     "prompt": "these (masc. nom. pl.)",
+     "answer": "οὗτοι",
+     "audio": "chapt_11_k_outmnp"
+    },
+    {
+     "prompt": "this (fem. acc. sg.)",
+     "answer": "ταύτην",
+     "audio": "chapt_11_k_outfas"
+    },
+    {
+     "prompt": "those (neut. nom. pl.)",
+     "answer": "ἐκεῖνα",
+     "audio": "chapt_11_k_ekennp"
+    },
+    {
+     "prompt": "these (fem. gen. pl.)",
+     "answer": "τούτων",
+     "audio": "chapt_11_k_outfgp"
+    },
+    {
+     "prompt": "this (masc. nom. sg.)",
+     "answer": "οὗτος",
+     "audio": "chapt_11_k_outmns"
+    },
+    {
+     "prompt": "that (masc. nom. sg.)",
+     "answer": "ἐκεῖνος",
+     "audio": "chapt_11_k_ekemns"
+    },
+    {
+     "prompt": "that (neut. nom. sg.)",
+     "answer": "ἐκεῖνο",
+     "audio": "chapt_11_k_ekenns"
+    },
+    {
+     "prompt": "these (masc. dat. pl.)",
+     "answer": "τούτοις",
+     "audio": "chapt_11_k_outmdp"
+    },
+    {
+     "prompt": "that (masc. dat. sg.)",
+     "answer": "ἐκείνῳ",
+     "audio": "chapt_11_k_ekemds"
+    },
+    {
+     "prompt": "this (fem. dat. sg.)",
+     "answer": "ταύτῃ",
+     "audio": "chapt_11_k_outfds"
+    },
+    {
+     "prompt": "this (neut. acc. sg.)",
+     "answer": "τοῦτο",
+     "audio": "chapt_11_k_outnas"
+    },
+    {
+     "prompt": "those (masc. acc. pl.)",
+     "answer": "ἐκείνους",
+     "audio": "chapt_11_k_ekemap"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English",
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "Answers derived from the two demonstrative charts by the prompt's parse tag and asserted against the SayWord table at 0x9688a, whose clip names encode gender/case/number.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c11_ex_speller_relative",
+   "type": "spell",
+   "title": "Relative and Reflexive Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "who (masc. nom. sg.)",
+     "answer": "ὅς",
+     "audio": "chapt_11_k_osmns"
+    },
+    {
+     "prompt": "who (fem. nom. pl.)",
+     "answer": "αἵ",
+     "audio": "chapt_11_k_osfnp"
+    },
+    {
+     "prompt": "myself (masc. gen. sg.)",
+     "answer": "ἐμαυτοῦ",
+     "audio": "chapt_11_k_autmgs"
+    },
+    {
+     "prompt": "herself (fem. acc. sg.)",
+     "answer": "ἑαυτήν",
+     "audio": "chapt_11_k_eaufas"
+    },
+    {
+     "prompt": "yourselves (masc. dat. pl.)",
+     "answer": "ἑαυτοῖς",
+     "audio": "chapt_11_k_seamdp"
+    },
+    {
+     "prompt": "of whom (fem. gen. sg.)",
+     "answer": "ἧς",
+     "audio": "chapt_11_k_osfgs"
+    },
+    {
+     "prompt": "of whom (neut. gen. pl.)",
+     "answer": "ὧν",
+     "audio": "chapt_11_k_osngp"
+    },
+    {
+     "prompt": "whom (masc. acc. pl.)",
+     "answer": "οὕς",
+     "audio": "chapt_11_k_osmap"
+    },
+    {
+     "prompt": "ourselves (fem. acc. pl.)",
+     "answer": "ἑαυτάς",
+     "audio": "chapt_11_k_autfap"
+    },
+    {
+     "prompt": "itself (neut. acc. sg.)",
+     "answer": "ἑαυτό",
+     "audio": "chapt_11_k_eaunas"
+    },
+    {
+     "prompt": "yourself (masc. gen. sg.)",
+     "answer": "σεαυτοῦ",
+     "audio": "chapt_11_k_seamgs"
+    },
+    {
+     "prompt": "to whom (neut. dat. sg.)",
+     "answer": "ᾧ",
+     "audio": "chapt_11_k_osnds"
+    },
+    {
+     "prompt": "whom (masc. acc. sg.)",
+     "answer": "ὅν",
+     "audio": "chapt_11_k_osmas"
+    },
+    {
+     "prompt": "whom (masc. acc. pl.)",
+     "answer": "οὕς",
+     "audio": "chapt_11_k_osmap",
+     "_audio_note": "The original dispatches k_osnap here, which is a different cell from the answer οὕς; wired to the answer's own cell clip (fidelity restoration)."
+    },
+    {
+     "prompt": "yourselves (fem. gen. pl.)",
+     "answer": "ἑαυτῶν",
+     "audio": "chapt_11_k_seafgp"
+    },
+    {
+     "prompt": "himself (masc. acc. sg.)",
+     "answer": "ἑαυτόν",
+     "audio": "chapt_11_k_eaumas"
+    },
+    {
+     "prompt": "ourselves (masc. gen. pl.)",
+     "answer": "ἑαυτῶν",
+     "audio": "chapt_11_k_autmgp"
+    },
+    {
+     "prompt": "of whom (masc. gen. sg.)",
+     "answer": "οὗ",
+     "audio": "chapt_11_k_osmgs"
+    },
+    {
+     "prompt": "who (fem. nom. sg.)",
+     "answer": "ἥ",
+     "audio": "chapt_11_k_osfns"
+    },
+    {
+     "prompt": "whom (neut. acc. sg.)",
+     "answer": "ὅ",
+     "audio": "chapt_11_k_osnas"
+    },
+    {
+     "prompt": "yourselves (masc. acc. pl.)",
+     "answer": "ἑαυτούς",
+     "audio": "chapt_11_k_seamap"
+    },
+    {
+     "prompt": "myself (fem. gen. sg.)",
+     "answer": "ἐμαυτῆς",
+     "audio": "chapt_11_k_autfgs"
+    },
+    {
+     "prompt": "themselves (neut. gen. pl.)",
+     "answer": "ἑαυτῶν",
+     "audio": "chapt_11_k_eaungp"
+    },
+    {
+     "prompt": "whom (masc. nom. pl.)",
+     "answer": "οἵ",
+     "audio": "chapt_11_k_osmnp"
+    },
+    {
+     "prompt": "whom (fem. acc. pl.)",
+     "answer": "ἅς",
+     "audio": "chapt_11_k_osfap"
+    },
+    {
+     "prompt": "to whom (masc. dat. pl.)",
+     "answer": "οἷς",
+     "audio": "chapt_11_k_osmdp"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English",
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "26 prompts mixing relative and reflexive forms; answers derived from the charts and asserted against the SayWord table (0x974c0 region). Prompt 24 prints \"whom (masc. nom. pl.)\" in the original (expected \"who\"); kept verbatim, VERIFY-5H (h).",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c11_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Meaning",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "I go away",
+     "answer": "ἀπέρχομαι",
+     "audio": "chapt_11_k_voc1"
+    },
+    {
+     "prompt": "that (masc.)",
+     "answer": "ἐκεῖνος",
+     "audio": "chapt_11_k_voc2"
+    },
+    {
+     "prompt": "Jewish",
+     "answer": "Ἰουδαῖος",
+     "audio": "chapt_11_k_voc3"
+    },
+    {
+     "prompt": "as, just as",
+     "answer": "καθώς",
+     "audio": "chapt_11_k_voc4"
+    },
+    {
+     "prompt": "who (masc.)",
+     "answer": "ὅς",
+     "audio": "chapt_11_k_voc5"
+    },
+    {
+     "prompt": "when",
+     "answer": "ὅταν",
+     "audio": "chapt_11_k_voc6"
+    },
+    {
+     "prompt": "this (masc.)",
+     "answer": "οὗτος",
+     "audio": "chapt_11_k_voc7a"
+    },
+    {
+     "prompt": "back, again",
+     "answer": "πάλιν",
+     "audio": "chapt_11_k_voc8"
+    },
+    {
+     "prompt": "Peter",
+     "answer": "Πέτρος",
+     "audio": "chapt_11_k_voc9"
+    },
+    {
+     "prompt": "for, about (gen.)",
+     "answer": "ὑπέρ",
+     "audio": "chapt_11_k_voc10"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "TEN items (pool 0xa5c4a): huper appears once, prompted \"for, about (gen.)\"; multi-form entries are spelled by their first form (ekeinos, hos, houtos, Petros), as the flashcard prompts.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c11_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of Mat 6:33b then click \"Check Answer\"",
+   "reference": "Mat 6:33b",
+   "answerWords": [
+    "καὶ",
+    "ταῦτα",
+    "πάντα",
+    "προστεθήσεται",
+    "ὑμῖν."
+   ],
+   "translation": "and all these things will be added to you",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "audio": "chapt_11_k_mt633b",
+   "spellerTilesRef": "chapt_1",
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents"
+    ],
+    "_reveal_note": "RULES C8 / D-30."
+   },
+   "_repeat_note": "\"Repeat This Exercise\" NOT ported (D-42 retired).",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c11_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "senses",
+   "columns": 2,
+   "showNtFreq": true,
+   "footnote": "The number after the translation is the number of times the word occurs in the New Testament.",
+   "playAll": {
+    "label": "Say Whole List",
+    "audio": "chapt_11_k_vocl11"
+   }
+  },
+  {
+   "id": "c11_qr_this_that",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review This and That Paradigms",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "name": "Singular",
+     "title": "ἐκεῖνος — that/those",
+     "subtitle": "Singular",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "ἐκεῖνος",
+         "audio": "chapt_11_k_ekemns"
+        },
+        {
+         "greek": "ἐκείνη",
+         "audio": "chapt_11_k_ekefns"
+        },
+        {
+         "greek": "ἐκεῖνο",
+         "audio": "chapt_11_k_ekenns"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "ἐκείνου",
+         "audio": "chapt_11_k_ekemgs"
+        },
+        {
+         "greek": "ἐκείνης",
+         "audio": "chapt_11_k_ekefgs"
+        },
+        {
+         "greek": "ἐκείνου",
+         "audio": "chapt_11_k_ekengs"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "ἐκείνῳ",
+         "audio": "chapt_11_k_ekemds"
+        },
+        {
+         "greek": "ἐκείνῃ",
+         "audio": "chapt_11_k_ekefds"
+        },
+        {
+         "greek": "ἐκείνῳ",
+         "audio": "chapt_11_k_ekends"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "ἐκεῖνον",
+         "audio": "chapt_11_k_ekemas"
+        },
+        {
+         "greek": "ἐκείνην",
+         "audio": "chapt_11_k_ekefas"
+        },
+        {
+         "greek": "ἐκεῖνο",
+         "audio": "chapt_11_k_ekenas"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_ekepar"
+     }
+    },
+    {
+     "type": "paradigm",
+     "name": "Plural",
+     "title": "ἐκεῖνος — that/those",
+     "subtitle": "Plural",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "ἐκεῖνοι",
+         "audio": "chapt_11_k_ekemnp"
+        },
+        {
+         "greek": "ἐκεῖναι",
+         "audio": "chapt_11_k_ekefnp"
+        },
+        {
+         "greek": "ἐκεῖνα",
+         "audio": "chapt_11_k_ekennp"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "ἐκείνων",
+         "audio": "chapt_11_k_ekemgp"
+        },
+        {
+         "greek": "ἐκείνων",
+         "audio": "chapt_11_k_ekefgp"
+        },
+        {
+         "greek": "ἐκείνων",
+         "audio": "chapt_11_k_ekengp"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "ἐκείνοις",
+         "audio": "chapt_11_k_ekemdp"
+        },
+        {
+         "greek": "ἐκείναις",
+         "audio": "chapt_11_k_ekefdp"
+        },
+        {
+         "greek": "ἐκείνοις",
+         "audio": "chapt_11_k_ekendp"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "ἐκείνους",
+         "audio": "chapt_11_k_ekemap"
+        },
+        {
+         "greek": "ἐκείνας",
+         "audio": "chapt_11_k_ekefap"
+        },
+        {
+         "greek": "ἐκεῖνα",
+         "audio": "chapt_11_k_ekenap"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_ekepar"
+     }
+    },
+    {
+     "type": "paradigm",
+     "name": "Singular",
+     "title": "οὗτος — this/these",
+     "subtitle": "Singular",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "οὗτος",
+         "audio": "chapt_11_k_outmns"
+        },
+        {
+         "greek": "αὕτη",
+         "audio": "chapt_11_k_outfns"
+        },
+        {
+         "greek": "τοῦτο",
+         "audio": "chapt_11_k_outnns"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "τούτου",
+         "audio": "chapt_11_k_outmgs"
+        },
+        {
+         "greek": "ταύτης",
+         "audio": "chapt_11_k_outfgs"
+        },
+        {
+         "greek": "τούτου",
+         "audio": "chapt_11_k_outngs"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "τούτῳ",
+         "audio": "chapt_11_k_outmds"
+        },
+        {
+         "greek": "ταύτῃ",
+         "audio": "chapt_11_k_outfds"
+        },
+        {
+         "greek": "τούτῳ",
+         "audio": "chapt_11_k_outnds"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "τοῦτον",
+         "audio": "chapt_11_k_outmas"
+        },
+        {
+         "greek": "ταύτην",
+         "audio": "chapt_11_k_outfas"
+        },
+        {
+         "greek": "τοῦτο",
+         "audio": "chapt_11_k_outnas"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_outpar"
+     },
+     "note": "Note: When there is an α or η in the ending, the stem will have an αυ, otherwise it is ου."
+    },
+    {
+     "type": "paradigm",
+     "name": "Plural",
+     "title": "οὗτος — this/these",
+     "subtitle": "Plural",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "οὗτοι",
+         "audio": "chapt_11_k_outmnp"
+        },
+        {
+         "greek": "αὗται",
+         "audio": "chapt_11_k_outfnp"
+        },
+        {
+         "greek": "ταῦτα",
+         "audio": "chapt_11_k_outnnp"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "τούτων",
+         "audio": "chapt_11_k_outmgp"
+        },
+        {
+         "greek": "τούτων",
+         "audio": "chapt_11_k_outfgp"
+        },
+        {
+         "greek": "τούτων",
+         "audio": "chapt_11_k_outngp"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "τούτοις",
+         "audio": "chapt_11_k_outmdp"
+        },
+        {
+         "greek": "ταύταις",
+         "audio": "chapt_11_k_outfdp"
+        },
+        {
+         "greek": "τούτοις",
+         "audio": "chapt_11_k_outndp"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "τούτους",
+         "audio": "chapt_11_k_outmap"
+        },
+        {
+         "greek": "ταύτας",
+         "audio": "chapt_11_k_outfap"
+        },
+        {
+         "greek": "ταῦτα",
+         "audio": "chapt_11_k_outnap"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_outpar"
+     },
+     "note": "Note: When there is an α or η in the ending, the stem will have an αυ, otherwise it is ου."
+    }
+   ],
+   "_disclosure": "C9 (§4.6): every chart stacks, one say-all per chart, no toggles; a demonstrative's two halves share its one clip."
+  },
+  {
+   "id": "c11_qr_relative",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Relative Pronoun Paradigm",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "name": "Singular",
+     "title": "ὅς — who/which",
+     "subtitle": "Singular",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "ὅς",
+         "audio": "chapt_11_k_osmns"
+        },
+        {
+         "greek": "ἥ",
+         "audio": "chapt_11_k_osfns"
+        },
+        {
+         "greek": "ὅ",
+         "audio": "chapt_11_k_osnns"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "οὗ",
+         "audio": "chapt_11_k_osmgs"
+        },
+        {
+         "greek": "ἧς",
+         "audio": "chapt_11_k_osfgs"
+        },
+        {
+         "greek": "οὗ",
+         "audio": "chapt_11_k_osngs"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "ᾧ",
+         "audio": "chapt_11_k_osmds"
+        },
+        {
+         "greek": "ᾗ",
+         "audio": "chapt_11_k_osfds"
+        },
+        {
+         "greek": "ᾧ",
+         "audio": "chapt_11_k_osnds"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "ὅν",
+         "audio": "chapt_11_k_osmas"
+        },
+        {
+         "greek": "ἥν",
+         "audio": "chapt_11_k_osfas"
+        },
+        {
+         "greek": "ὅ",
+         "audio": "chapt_11_k_osnas"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_ospar"
+     },
+     "note": "Note how similar these are to the noun endings and to the definite article."
+    },
+    {
+     "type": "paradigm",
+     "name": "Plural",
+     "title": "ὅς — who/which",
+     "subtitle": "Plural",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "οἵ",
+         "audio": "chapt_11_k_osmnp"
+        },
+        {
+         "greek": "αἵ",
+         "audio": "chapt_11_k_osfnp"
+        },
+        {
+         "greek": "ἅ",
+         "audio": "chapt_11_k_osnnp"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "ὧν",
+         "audio": "chapt_11_k_osmgp"
+        },
+        {
+         "greek": "ὧν",
+         "audio": "chapt_11_k_osfgp"
+        },
+        {
+         "greek": "ὧν",
+         "audio": "chapt_11_k_osngp"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "οἷς",
+         "audio": "chapt_11_k_osmdp"
+        },
+        {
+         "greek": "αἷς",
+         "audio": "chapt_11_k_osfdp"
+        },
+        {
+         "greek": "οἷς",
+         "audio": "chapt_11_k_osndp"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "οὕς",
+         "audio": "chapt_11_k_osmap"
+        },
+        {
+         "greek": "ἅς",
+         "audio": "chapt_11_k_osfap"
+        },
+        {
+         "greek": "ἅ",
+         "audio": "chapt_11_k_osnap"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_ospar"
+     },
+     "note": "Note how similar these are to the noun endings and to the definite article."
+    }
+   ],
+   "_disclosure": "C9 (§4.6): every chart stacks, one say-all per chart, no toggles; a demonstrative's two halves share its one clip."
+  },
+  {
+   "id": "c11_qr_reflexive",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Reflexive Pronouns Paradigms",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "name": "First Person Singular",
+     "title": "Reflexive Pronouns: First Person",
+     "subtitle": "Singular \"myself\"",
+     "columns": [
+      "Masc.",
+      "Fem."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "ἐμαυτοῦ",
+         "audio": "chapt_11_k_autmgs"
+        },
+        {
+         "greek": "ἐμαυτῆς",
+         "audio": "chapt_11_k_autfgs"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "ἐμαυτῷ",
+         "audio": "chapt_11_k_autmds"
+        },
+        {
+         "greek": "ἐμαυτῇ",
+         "audio": "chapt_11_k_autfds"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "ἐμαυτόν",
+         "audio": "chapt_11_k_autmas"
+        },
+        {
+         "greek": "ἐμαυτήν",
+         "audio": "chapt_11_k_autfas"
+        }
+       ]
+      }
+     ],
+     "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_autpar"
+     }
+    },
+    {
+     "type": "paradigm",
+     "name": "First Person Plural",
+     "title": "Reflexive Pronouns: First Person",
+     "subtitle": "Plural \"myself\"",
+     "columns": [
+      "Masc.",
+      "Fem."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "ἑαυτῶν",
+         "audio": "chapt_11_k_autmgp"
+        },
+        {
+         "greek": "ἑαυτῶν",
+         "audio": "chapt_11_k_autfgp"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "ἑαυτοῖς",
+         "audio": "chapt_11_k_autmdp"
+        },
+        {
+         "greek": "ἑαυταῖς",
+         "audio": "chapt_11_k_autfdp"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "ἑαυτούς",
+         "audio": "chapt_11_k_autmap"
+        },
+        {
+         "greek": "ἑαυτάς",
+         "audio": "chapt_11_k_autfap"
+        }
+       ]
+      }
+     ],
+     "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_autpar"
+     }
+    },
+    {
+     "type": "paradigm",
+     "name": "Second Person Singular",
+     "title": "Reflexive Pronouns: Second Person",
+     "subtitle": "Singular \"yourself\"",
+     "columns": [
+      "Masc.",
+      "Fem."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "σεαυτοῦ",
+         "audio": "chapt_11_k_seamgs"
+        },
+        {
+         "greek": "σεαυτῆς",
+         "audio": "chapt_11_k_seafgs"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "σεαυτῷ",
+         "audio": "chapt_11_k_seamds"
+        },
+        {
+         "greek": "σεαυτῇ",
+         "audio": "chapt_11_k_seafds"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "σεαυτόν",
+         "audio": "chapt_11_k_seamas"
+        },
+        {
+         "greek": "σεαυτήν",
+         "audio": "chapt_11_k_seafas"
+        }
+       ]
+      }
+     ],
+     "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_seapar"
+     }
+    },
+    {
+     "type": "paradigm",
+     "name": "Second Person Plural",
+     "title": "Reflexive Pronouns: Second Person",
+     "subtitle": "Plural \"yourself\"",
+     "columns": [
+      "Masc.",
+      "Fem."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "ἑαυτῶν",
+         "audio": "chapt_11_k_seamgp"
+        },
+        {
+         "greek": "ἑαυτῶν",
+         "audio": "chapt_11_k_seafgp"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "ἑαυτοῖς",
+         "audio": "chapt_11_k_seamdp"
+        },
+        {
+         "greek": "ἑαυταῖς",
+         "audio": "chapt_11_k_seafdp"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "ἑαυτούς",
+         "audio": "chapt_11_k_seamap"
+        },
+        {
+         "greek": "ἑαυτάς",
+         "audio": "chapt_11_k_seafap"
+        }
+       ]
+      }
+     ],
+     "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_seapar"
+     }
+    },
+    {
+     "type": "paradigm",
+     "name": "Third Person Singular",
+     "title": "Reflexive Pronouns: Third Person",
+     "subtitle": "Singular \"him/her/itself\"",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "ἑαυτοῦ",
+         "audio": "chapt_11_k_eaumgs"
+        },
+        {
+         "greek": "ἑαυτῆς",
+         "audio": "chapt_11_k_eaufgs"
+        },
+        {
+         "greek": "ἑαυτοῦ",
+         "audio": "chapt_11_k_eaungs"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "ἑαυτῷ",
+         "audio": "chapt_11_k_eaumds"
+        },
+        {
+         "greek": "ἑαυτῇ",
+         "audio": "chapt_11_k_eaufds"
+        },
+        {
+         "greek": "ἑαυτῷ",
+         "audio": "chapt_11_k_eaunds"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "ἑαυτόν",
+         "audio": "chapt_11_k_eaumas"
+        },
+        {
+         "greek": "ἑαυτήν",
+         "audio": "chapt_11_k_eaufas"
+        },
+        {
+         "greek": "ἑαυτό",
+         "audio": "chapt_11_k_eaunas"
+        }
+       ]
+      }
+     ],
+     "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_eaupar"
+     }
+    },
+    {
+     "type": "paradigm",
+     "name": "Third Person Plural",
+     "title": "Reflexive Pronouns: Third Person",
+     "subtitle": "Plural \"him/her/itself\"",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "ἑαυτῶν",
+         "audio": "chapt_11_k_eaumgp"
+        },
+        {
+         "greek": "ἑαυτῶν",
+         "audio": "chapt_11_k_eaufgp"
+        },
+        {
+         "greek": "ἑαυτῶν",
+         "audio": "chapt_11_k_eaungp"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "ἑαυτοῖς",
+         "audio": "chapt_11_k_eaumdp"
+        },
+        {
+         "greek": "ἑαυταῖς",
+         "audio": "chapt_11_k_eaufdp"
+        },
+        {
+         "greek": "ἑαυτοῖς",
+         "audio": "chapt_11_k_eaundp"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "ἑαυτούς",
+         "audio": "chapt_11_k_eaumap"
+        },
+        {
+         "greek": "ἑαυτάς",
+         "audio": "chapt_11_k_eaufap"
+        },
+        {
+         "greek": "ἑαυτά",
+         "audio": "chapt_11_k_eaunap"
+        }
+       ]
+      }
+     ],
+     "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_11_k_eaupar"
+     }
+    }
+   ],
+   "_disclosure": "C9 (§4.6): every chart stacks, one say-all per chart, no toggles; a demonstrative's two halves share its one clip."
+  },
+  {
+   "id": "c11_qr_scripture_jn11",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Jn 1:1",
+   "reference": "Jn 1:1",
+   "words": [
+    {
+     "greek": "Ἐν",
+     "gloss": "in",
+     "audio": "chapt_11_f_sm1"
+    },
+    {
+     "greek": "ἀρχῇ",
+     "gloss": "beginning",
+     "audio": "chapt_11_f_sm2"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_11_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_11_f_sm4"
+    },
+    {
+     "greek": "λόγος,",
+     "gloss": "word",
+     "audio": "chapt_11_f_sm5"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_11_f_sm6"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_11_f_sm7"
+    },
+    {
+     "greek": "λόγος",
+     "gloss": "word",
+     "audio": "chapt_11_f_sm8"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_11_f_sm9"
+    },
+    {
+     "greek": "πρὸς",
+     "gloss": "with",
+     "audio": "chapt_11_f_sm10"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_11_f_sm11"
+    },
+    {
+     "greek": "θεόν,",
+     "gloss": "God",
+     "audio": "chapt_11_f_sm12"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_11_f_sm6"
+    },
+    {
+     "greek": "θεὸς",
+     "gloss": "God",
+     "audio": "chapt_11_f_sm13"
+    },
+    {
+     "greek": "ἦν",
+     "gloss": "was",
+     "audio": "chapt_11_f_sm3"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_11_f_sm4"
+    },
+    {
+     "greek": "λόγος.",
+     "gloss": "word.",
+     "audio": "chapt_11_f_sm5"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_11_f_jn1_1"
+   }
+  },
+  {
+   "id": "c11_qr_scripture_rom623a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 6:23a",
+   "reference": "Rom 6:23a",
+   "words": [
+    {
+     "greek": "τὰ",
+     "gloss": "the",
+     "audio": "chapt_11_h_sm1"
+    },
+    {
+     "greek": "γὰρ",
+     "gloss": "for",
+     "audio": "chapt_11_h_sm2"
+    },
+    {
+     "greek": "ὀψώνια",
+     "gloss": "wages",
+     "audio": "chapt_11_h_sm3"
+    },
+    {
+     "greek": "τῆς",
+     "gloss": "the",
+     "audio": "chapt_11_h_sm4"
+    },
+    {
+     "greek": "ἁμαρτίας",
+     "gloss": "of  sin",
+     "audio": "chapt_11_h_sm5"
+    },
+    {
+     "greek": "θάνατος,",
+     "gloss": "[is]      death",
+     "audio": "chapt_11_h_sm6"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_11_h_rm623a"
+   }
+  },
+  {
+   "id": "c11_qr_scripture_rom623b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Rom 6:23b",
+   "reference": "Rom 6:23b",
+   "words": [
+    {
+     "greek": "τὸ",
+     "gloss": "the",
+     "audio": "chapt_11_i_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "gloss": "but",
+     "audio": "chapt_11_i_sm2"
+    },
+    {
+     "greek": "χάρισμα",
+     "gloss": "gift",
+     "audio": "chapt_11_i_sm3"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "the",
+     "audio": "chapt_11_i_sm4"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "of God",
+     "audio": "chapt_11_i_sm5"
+    },
+    {
+     "greek": "ζωὴ",
+     "gloss": "[is] life",
+     "audio": "chapt_11_i_sm6"
+    },
+    {
+     "greek": "αἰώνιος",
+     "gloss": "eternal",
+     "audio": "chapt_11_i_sm7"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_11_i_sm8"
+    },
+    {
+     "greek": "Χριστῷ",
+     "gloss": "Christ",
+     "audio": "chapt_11_i_sm9"
+    },
+    {
+     "greek": "Ἰησοῦ",
+     "gloss": "Jesus",
+     "audio": "chapt_11_i_sm10"
+    },
+    {
+     "greek": "τῷ",
+     "gloss": "the",
+     "audio": "chapt_11_i_sm11"
+    },
+    {
+     "greek": "κυρίῳ",
+     "gloss": "Lord",
+     "audio": "chapt_11_i_sm12"
+    },
+    {
+     "greek": "ἡμῶν.",
+     "gloss": "our",
+     "audio": "chapt_11_i_sm13"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_11_i_rm623b"
+   }
+  },
+  {
+   "id": "c11_qr_scripture_mat633a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:33a",
+   "reference": "Mat 6:33a",
+   "words": [
+    {
+     "greek": "ζητεῖτε",
+     "gloss": "Seek",
+     "audio": "chapt_11_j_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "gloss": "but",
+     "audio": "chapt_11_j_sm2"
+    },
+    {
+     "greek": "πρῶτον",
+     "gloss": "first",
+     "audio": "chapt_11_j_sm3"
+    },
+    {
+     "greek": "τὴν",
+     "gloss": "the",
+     "audio": "chapt_11_j_sm4"
+    },
+    {
+     "greek": "βασιλείαν",
+     "gloss": "kingdom",
+     "audio": "chapt_11_j_sm5"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of",
+     "audio": "chapt_11_j_sm6"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_11_j_sm7"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_11_j_sm8"
+    },
+    {
+     "greek": "τὴν",
+     "gloss": "the",
+     "audio": "chapt_11_j_sm9"
+    },
+    {
+     "greek": "δικαιοσύνην",
+     "gloss": "righteousness",
+     "audio": "chapt_11_j_sm10"
+    },
+    {
+     "greek": "αὐτοῦ,",
+     "gloss": "his",
+     "audio": "chapt_11_j_sm11"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_11_j_mt633a"
+   }
+  },
+  {
+   "id": "c11_qr_scripture_mat633b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:33b",
+   "reference": "Mat 6:33b",
+   "words": [
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_11_k_sm1"
+    },
+    {
+     "greek": "ταῦτα",
+     "gloss": "these",
+     "audio": "chapt_11_k_sm2"
+    },
+    {
+     "greek": "πάντα",
+     "gloss": "all",
+     "audio": "chapt_11_k_sm3"
+    },
+    {
+     "greek": "προστεθήσεται",
+     "gloss": "will be added",
+     "audio": "chapt_11_k_sm4"
+    },
+    {
+     "greek": "ὑμῖν.",
+     "gloss": "to you.",
+     "audio": "chapt_11_k_sm5"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_11_k_mt633b"
+   }
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Great!",
+   "Congratulations",
+   "Perfect!",
+   "Right On!",
+   "Fantastic!",
+   "Yes"
+  ],
+  "incorrect": [
+   "Try again",
+   "Swing and a miss",
+   "Repetition will get it",
+   "Never give up",
+   "Keep trying"
+  ]
+ },
+ "sequence": [
+  "c11_learn_objectives",
+  "c11_learn_english_concepts",
+  "c11_learn_demonstratives",
+  "c11_drill_this_that",
+  "c11_drill_translation_this_that",
+  "c11_ex_speller_this_that",
+  "c11_learn_relatives",
+  "c11_drill_who_the",
+  "c11_drill_translation_relative",
+  "c11_ex_speller_relative",
+  "c11_learn_vocab",
+  "c11_drill_vocab_gk_en",
+  "c11_drill_vocab_en_gk",
+  "c11_ex_vocab_speller",
+  "c11_learn_scripture",
+  "c11_drill_scripture_memory",
+  "c11_ex_scripture_speller",
+  "c11_qr_vocab",
+  "c11_qr_this_that",
+  "c11_qr_relative",
+  "c11_qr_reflexive",
+  "c11_qr_scripture_jn11",
+  "c11_qr_scripture_rom623a",
+  "c11_qr_scripture_rom623b",
+  "c11_qr_scripture_mat633a",
+  "c11_qr_scripture_mat633b",
+  "c11_learn_bibliography"
+ ],
+ "_menu_note": "The TBK page name is \"Relative/Reflexive Spelling Exercise\"; the page and the Exercise Menu both print \"Relative and Reflexive\" -- the printed form is used.",
+ "_audioVerify": "CHAPT_11 ships 245 WAVs. Listens: k_outmfn (the outos/aute/touto entry?), k_autos, k_allhlw, k_voc7/7a/7b/7c, k_voc10 vs k_voc11 (which huper sense), k_autpar/k_seapar/k_eaupar (which person). Unwired: k_agree1-4, k_under1-2 (VERIFY-5H (a)).",
+ "_sequence_note": "Rail order from ch11railwalk.pdf (Nathanael, 2026-08-25).",
+ "hintCharts": {
+  "thisParadigm": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "name": "Singular",
+     "title": "οὗτος — this/these, Singular",
+     "subtitle": "Singular",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "οὗτος",
+         "audio": "chapt_11_k_outmns"
+        },
+        {
+         "greek": "αὕτη",
+         "audio": "chapt_11_k_outfns"
+        },
+        {
+         "greek": "τοῦτο",
+         "audio": "chapt_11_k_outnns"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "τούτου",
+         "audio": "chapt_11_k_outmgs"
+        },
+        {
+         "greek": "ταύτης",
+         "audio": "chapt_11_k_outfgs"
+        },
+        {
+         "greek": "τούτου",
+         "audio": "chapt_11_k_outngs"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "τούτῳ",
+         "audio": "chapt_11_k_outmds"
+        },
+        {
+         "greek": "ταύτῃ",
+         "audio": "chapt_11_k_outfds"
+        },
+        {
+         "greek": "τούτῳ",
+         "audio": "chapt_11_k_outnds"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "τοῦτον",
+         "audio": "chapt_11_k_outmas"
+        },
+        {
+         "greek": "ταύτην",
+         "audio": "chapt_11_k_outfas"
+        },
+        {
+         "greek": "τοῦτο",
+         "audio": "chapt_11_k_outnas"
+        }
+       ]
+      }
+     ],
+     "note": "Note: When there is an α or η in the ending, the stem will have an αυ, otherwise it is ου."
+    },
+    {
+     "type": "paradigm",
+     "name": "Plural",
+     "title": "οὗτος — this/these, Plural",
+     "subtitle": "Plural",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "οὗτοι",
+         "audio": "chapt_11_k_outmnp"
+        },
+        {
+         "greek": "αὗται",
+         "audio": "chapt_11_k_outfnp"
+        },
+        {
+         "greek": "ταῦτα",
+         "audio": "chapt_11_k_outnnp"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "τούτων",
+         "audio": "chapt_11_k_outmgp"
+        },
+        {
+         "greek": "τούτων",
+         "audio": "chapt_11_k_outfgp"
+        },
+        {
+         "greek": "τούτων",
+         "audio": "chapt_11_k_outngp"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "τούτοις",
+         "audio": "chapt_11_k_outmdp"
+        },
+        {
+         "greek": "ταύταις",
+         "audio": "chapt_11_k_outfdp"
+        },
+        {
+         "greek": "τούτοις",
+         "audio": "chapt_11_k_outndp"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "τούτους",
+         "audio": "chapt_11_k_outmap"
+        },
+        {
+         "greek": "ταύτας",
+         "audio": "chapt_11_k_outfap"
+        },
+        {
+         "greek": "ταῦτα",
+         "audio": "chapt_11_k_outnap"
+        }
+       ]
+      }
+     ],
+     "note": "Note: When there is an α or η in the ending, the stem will have an αυ, otherwise it is ου."
+    }
+   ]
+  },
+  "thatParadigm": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "name": "Singular",
+     "title": "ἐκεῖνος — that/those, Singular",
+     "subtitle": "Singular",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "ἐκεῖνος",
+         "audio": "chapt_11_k_ekemns"
+        },
+        {
+         "greek": "ἐκείνη",
+         "audio": "chapt_11_k_ekefns"
+        },
+        {
+         "greek": "ἐκεῖνο",
+         "audio": "chapt_11_k_ekenns"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "ἐκείνου",
+         "audio": "chapt_11_k_ekemgs"
+        },
+        {
+         "greek": "ἐκείνης",
+         "audio": "chapt_11_k_ekefgs"
+        },
+        {
+         "greek": "ἐκείνου",
+         "audio": "chapt_11_k_ekengs"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "ἐκείνῳ",
+         "audio": "chapt_11_k_ekemds"
+        },
+        {
+         "greek": "ἐκείνῃ",
+         "audio": "chapt_11_k_ekefds"
+        },
+        {
+         "greek": "ἐκείνῳ",
+         "audio": "chapt_11_k_ekends"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "ἐκεῖνον",
+         "audio": "chapt_11_k_ekemas"
+        },
+        {
+         "greek": "ἐκείνην",
+         "audio": "chapt_11_k_ekefas"
+        },
+        {
+         "greek": "ἐκεῖνο",
+         "audio": "chapt_11_k_ekenas"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "name": "Plural",
+     "title": "ἐκεῖνος — that/those, Plural",
+     "subtitle": "Plural",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "ἐκεῖνοι",
+         "audio": "chapt_11_k_ekemnp"
+        },
+        {
+         "greek": "ἐκεῖναι",
+         "audio": "chapt_11_k_ekefnp"
+        },
+        {
+         "greek": "ἐκεῖνα",
+         "audio": "chapt_11_k_ekennp"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "ἐκείνων",
+         "audio": "chapt_11_k_ekemgp"
+        },
+        {
+         "greek": "ἐκείνων",
+         "audio": "chapt_11_k_ekefgp"
+        },
+        {
+         "greek": "ἐκείνων",
+         "audio": "chapt_11_k_ekengp"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "ἐκείνοις",
+         "audio": "chapt_11_k_ekemdp"
+        },
+        {
+         "greek": "ἐκείναις",
+         "audio": "chapt_11_k_ekefdp"
+        },
+        {
+         "greek": "ἐκείνοις",
+         "audio": "chapt_11_k_ekendp"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "ἐκείνους",
+         "audio": "chapt_11_k_ekemap"
+        },
+        {
+         "greek": "ἐκείνας",
+         "audio": "chapt_11_k_ekefap"
+        },
+        {
+         "greek": "ἐκεῖνα",
+         "audio": "chapt_11_k_ekenap"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "relativeParadigm": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "name": "Singular",
+     "title": "ὅς — who/which, Singular",
+     "subtitle": "Singular",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "ὅς",
+         "audio": "chapt_11_k_osmns"
+        },
+        {
+         "greek": "ἥ",
+         "audio": "chapt_11_k_osfns"
+        },
+        {
+         "greek": "ὅ",
+         "audio": "chapt_11_k_osnns"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "οὗ",
+         "audio": "chapt_11_k_osmgs"
+        },
+        {
+         "greek": "ἧς",
+         "audio": "chapt_11_k_osfgs"
+        },
+        {
+         "greek": "οὗ",
+         "audio": "chapt_11_k_osngs"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "ᾧ",
+         "audio": "chapt_11_k_osmds"
+        },
+        {
+         "greek": "ᾗ",
+         "audio": "chapt_11_k_osfds"
+        },
+        {
+         "greek": "ᾧ",
+         "audio": "chapt_11_k_osnds"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "ὅν",
+         "audio": "chapt_11_k_osmas"
+        },
+        {
+         "greek": "ἥν",
+         "audio": "chapt_11_k_osfas"
+        },
+        {
+         "greek": "ὅ",
+         "audio": "chapt_11_k_osnas"
+        }
+       ]
+      }
+     ],
+     "note": "Note how similar these are to the noun endings and to the definite article."
+    },
+    {
+     "type": "paradigm",
+     "name": "Plural",
+     "title": "ὅς — who/which, Plural",
+     "subtitle": "Plural",
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "N",
+       "cells": [
+        {
+         "greek": "οἵ",
+         "audio": "chapt_11_k_osmnp"
+        },
+        {
+         "greek": "αἵ",
+         "audio": "chapt_11_k_osfnp"
+        },
+        {
+         "greek": "ἅ",
+         "audio": "chapt_11_k_osnnp"
+        }
+       ]
+      },
+      {
+       "label": "G",
+       "cells": [
+        {
+         "greek": "ὧν",
+         "audio": "chapt_11_k_osmgp"
+        },
+        {
+         "greek": "ὧν",
+         "audio": "chapt_11_k_osfgp"
+        },
+        {
+         "greek": "ὧν",
+         "audio": "chapt_11_k_osngp"
+        }
+       ]
+      },
+      {
+       "label": "D",
+       "cells": [
+        {
+         "greek": "οἷς",
+         "audio": "chapt_11_k_osmdp"
+        },
+        {
+         "greek": "αἷς",
+         "audio": "chapt_11_k_osfdp"
+        },
+        {
+         "greek": "οἷς",
+         "audio": "chapt_11_k_osndp"
+        }
+       ]
+      },
+      {
+       "label": "A",
+       "cells": [
+        {
+         "greek": "οὕς",
+         "audio": "chapt_11_k_osmap"
+        },
+        {
+         "greek": "ἅς",
+         "audio": "chapt_11_k_osfap"
+        },
+        {
+         "greek": "ἅ",
+         "audio": "chapt_11_k_osnap"
+        }
+       ]
+      }
+     ],
+     "note": "Note how similar these are to the noun endings and to the definite article."
+    }
+   ]
+  },
+  "articleParadigm": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "name": "Singular",
+     "title": "Definite Article \"the\", Singular",
+     "headerUnderline": true,
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "Nom.",
+       "cells": [
+        {
+         "greek": "ὁ",
+         "audio": "chapt_11_e_ho"
+        },
+        {
+         "greek": "ἡ",
+         "audio": "chapt_11_e_hn"
+        },
+        {
+         "greek": "τό",
+         "audio": "chapt_11_e_to"
+        }
+       ]
+      },
+      {
+       "label": "Gen.",
+       "cells": [
+        {
+         "greek": "τοῦ",
+         "audio": "chapt_11_e_tou"
+        },
+        {
+         "greek": "τῆς",
+         "audio": "chapt_11_e_tns"
+        },
+        {
+         "greek": "τοῦ",
+         "audio": "chapt_11_e_tou"
+        }
+       ]
+      },
+      {
+       "label": "Dat.",
+       "cells": [
+        {
+         "greek": "τῷ",
+         "audio": "chapt_11_e_tw"
+        },
+        {
+         "greek": "τῇ",
+         "audio": "chapt_11_e_tn"
+        },
+        {
+         "greek": "τῷ",
+         "audio": "chapt_11_e_tw"
+        }
+       ]
+      },
+      {
+       "label": "Acc.",
+       "cells": [
+        {
+         "greek": "τόν",
+         "audio": "chapt_11_e_ton"
+        },
+        {
+         "greek": "τήν",
+         "audio": "chapt_11_e_tnn"
+        },
+        {
+         "greek": "τό",
+         "audio": "chapt_11_e_to"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "name": "Plural",
+     "title": "Definite Article \"the\", Plural",
+     "headerUnderline": true,
+     "columns": [
+      "Masc.",
+      "Fem.",
+      "Neut."
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "Nom.",
+       "cells": [
+        {
+         "greek": "οἱ",
+         "audio": "chapt_11_e_hoi"
+        },
+        {
+         "greek": "αἱ",
+         "audio": "chapt_11_e_hai"
+        },
+        {
+         "greek": "τά",
+         "audio": "chapt_11_e_ta"
+        }
+       ]
+      },
+      {
+       "label": "Gen.",
+       "cells": [
+        {
+         "greek": "τῶν",
+         "audio": "chapt_11_e_twn"
+        },
+        {
+         "greek": "τῶν",
+         "audio": "chapt_11_e_twn"
+        },
+        {
+         "greek": "τῶν",
+         "audio": "chapt_11_e_twn"
+        }
+       ]
+      },
+      {
+       "label": "Dat.",
+       "cells": [
+        {
+         "greek": "τοῖς",
+         "audio": "chapt_11_e_tois"
+        },
+        {
+         "greek": "ταῖς",
+         "audio": "chapt_11_e_tais"
+        },
+        {
+         "greek": "τοῖς",
+         "audio": "chapt_11_e_tois"
+        }
+       ]
+      },
+      {
+       "label": "Acc.",
+       "cells": [
+        {
+         "greek": "τούς",
+         "audio": "chapt_11_e_tous"
+        },
+        {
+         "greek": "τάς",
+         "audio": "chapt_11_e_tas"
+        },
+        {
+         "greek": "τά",
+         "audio": "chapt_11_e_ta"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "_hint_note": "Every hint is a Singular/Plural two-state toggle with NO say-all (the original hints carry Cancel only), centred per §4.5. Charts are transcribed from the hint fields (0x1845a outos, 0xc1660 article with Nom./Gen./Dat./Acc. labels and underlined Singular/Plural headers, 0x2bfb2/0xc329a os). FORM-DEPENDENT per item (D-46)."
+}

@@ -1,0 +1,176 @@
+{
+ "_comment": "Chapter 12 lexicon, assembled from 12_IMPF.TBK (cohort 5H). Ten lemmas, no case splits. gloss = Review Vocabulary Chart (0x65d74, verbatim incl. the men typo); glossShort = flashcard pool (0x1a59a); senses[].glossShort = drill pool (0x1d2a).",
+ "lemmas": {
+  "apothnesko": {
+   "greek": "ἀποθνῄσκω",
+   "translit": "apothnesko",
+   "lexicalForm": "ἀποθνῄσκω",
+   "gloss": "I die",
+   "glossShort": "I die",
+   "audio": "chapt_12_l_voc1",
+   "ntFreq": 111,
+   "senses": [
+    {
+     "greek": "ἀποθνῄσκω",
+     "caseTag": null,
+     "glossShort": "I die",
+     "audio": "chapt_12_l_voc1"
+    }
+   ]
+  },
+  "ekei": {
+   "greek": "ἐκεῖ",
+   "translit": "ekei",
+   "lexicalForm": "ἐκεῖ",
+   "gloss": "there",
+   "glossShort": "there",
+   "audio": "chapt_12_l_voc2",
+   "ntFreq": 105,
+   "senses": [
+    {
+     "greek": "ἐκεῖ",
+     "caseTag": null,
+     "glossShort": "there",
+     "audio": "chapt_12_l_voc2"
+    }
+   ]
+  },
+  "heos": {
+   "greek": "ἕως",
+   "translit": "heos",
+   "lexicalForm": "ἕως",
+   "gloss": "until",
+   "glossShort": "until, while",
+   "audio": "chapt_12_l_voc3",
+   "ntFreq": 146,
+   "senses": [
+    {
+     "greek": "ἕως",
+     "caseTag": null,
+     "glossShort": "until",
+     "audio": "chapt_12_l_voc3"
+    }
+   ]
+  },
+  "idou": {
+   "greek": "ἰδού",
+   "translit": "idou",
+   "lexicalForm": "ἰδού",
+   "gloss": "behold",
+   "glossShort": "behold",
+   "audio": "chapt_12_l_voc4",
+   "ntFreq": 200,
+   "senses": [
+    {
+     "greek": "ἰδού",
+     "caseTag": null,
+     "glossShort": "behold",
+     "audio": "chapt_12_l_voc4"
+    }
+   ]
+  },
+  "hina": {
+   "greek": "ἵνα",
+   "translit": "hina",
+   "lexicalForm": "ἵνα",
+   "gloss": "in order that",
+   "glossShort": "in order that",
+   "audio": "chapt_12_l_voc5",
+   "ntFreq": 663,
+   "senses": [
+    {
+     "greek": "ἵνα",
+     "caseTag": null,
+     "glossShort": "in order that",
+     "audio": "chapt_12_l_voc5"
+    }
+   ]
+  },
+  "ioannes": {
+   "greek": "Ἰωάννης",
+   "translit": "ioannes",
+   "lexicalForm": "Ἰωάννης, -ου, ὁ",
+   "gloss": "John",
+   "glossShort": "John",
+   "audio": "chapt_12_l_voc6",
+   "ntFreq": 135,
+   "senses": [
+    {
+     "greek": "Ἰωάννης",
+     "caseTag": null,
+     "glossShort": "John",
+     "audio": "chapt_12_l_voc6"
+    }
+   ]
+  },
+  "men": {
+   "greek": "μέν",
+   "translit": "men",
+   "lexicalForm": "μέν",
+   "gloss": "one the one hand, indeed",
+   "glossShort": "indeed",
+   "audio": "chapt_12_l_voc7",
+   "ntFreq": 179,
+   "senses": [
+    {
+     "greek": "μέν",
+     "caseTag": null,
+     "glossShort": "indeed",
+     "audio": "chapt_12_l_voc7"
+    }
+   ]
+  },
+  "holos": {
+   "greek": "ὅλος",
+   "translit": "holos",
+   "lexicalForm": "ὅλος, -η, -ον",
+   "gloss": "whole, entire",
+   "glossShort": "whole, entire",
+   "audio": "chapt_12_l_voc8",
+   "ntFreq": 109,
+   "senses": [
+    {
+     "greek": "ὅλος",
+     "caseTag": null,
+     "glossShort": "whole",
+     "audio": "chapt_12_l_voc8"
+    }
+   ]
+  },
+  "hote": {
+   "greek": "ὅτε",
+   "translit": "hote",
+   "lexicalForm": "ὅτε",
+   "gloss": "when",
+   "glossShort": "when",
+   "audio": "chapt_12_l_voc9",
+   "ntFreq": 103,
+   "senses": [
+    {
+     "greek": "ὅτε",
+     "caseTag": null,
+     "glossShort": "when",
+     "audio": "chapt_12_l_voc9"
+    }
+   ]
+  },
+  "sun": {
+   "greek": "σύν",
+   "translit": "sun",
+   "lexicalForm": "σύν",
+   "gloss": "with",
+   "glossShort": "with",
+   "audio": "chapt_12_l_voc10",
+   "ntFreq": 128,
+   "senses": [
+    {
+     "greek": "σύν",
+     "caseTag": null,
+     "glossShort": "with",
+     "audio": "chapt_12_l_voc10"
+    }
+   ]
+  }
+ },
+ "exampleWords": {}
+}

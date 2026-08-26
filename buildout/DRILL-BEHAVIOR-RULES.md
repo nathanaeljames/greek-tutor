@@ -17,6 +17,12 @@ and `DRILL-BEHAVIOR-LEDGER.csv` together replace DRILL-MATRIX.md**,
 which was built from screenshots and inference and was wrong on 23 of
 50 rows.
 
+Extended 2026-08-25 with Nathanael's DOSBox pass over chapters 11-12
+(ledger rows 96-115, CONFIRMED). Nineteen of twenty pre-recon
+extrapolations held; the one that failed, the chapter-12 Augment Drill,
+produced sub-rule A1b below: the recording is the ANSWER form, not the
+prompt, so it plays after the guess whatever language the prompt is in.
+
 The ledger is the per-activity record. This document is the ruleset:
 when a future chapter's behavior has not been observed in DOSBox, these
 rules are the default, and a spec may only depart from them by naming
@@ -66,6 +72,20 @@ word or short paradigm form stays `beforeGuess` (every Case Drill and
 every Vocabulary Greek-to-English drill in chapters 1-8 confirms this);
 a drill whose Greek prompt is a multi-word phrase is `afterGuess`
 regardless of which language is textually first.
+
+**A1b. Audio timing follows what the CLIP contains, not what the prompt
+displays.** A1 and A1a both assume the recording is of the prompt. The
+chapter-12 Augment Drill (ledger row 108) prompts with a present-tense
+lemma in Greek (γινώσκω) and asks for the correctly augmented form, but
+its clips `l_ad1..19` record the AUGMENTED ANSWER (ἐγίνωσκεν). Playing
+that before the guess would hand over the augment, so the original plays
+it after the guess, and the port matches: `afterGuess`. The rule, stated
+once: when a clip records the answer form rather than the prompt, the
+activity is `afterGuess` regardless of prompt language, and the prompt
+must not carry a tap or a live Pronounce button before the item is
+answered (that is the same leak by another route; see 5H-SPEC1 section
+3.5 and the proposed D-50). Check what the clip SAYS before applying
+A1; a name like `l_ad` ("augment drill") does not tell you.
 
 **A2. `afterGuess` audio must FINISH before the next item appears.** The
 advance delay is `max(class minimum, audio duration)` — never shorter
@@ -305,7 +325,8 @@ written.** The 5E round proved the alternative: 23 of 50 rows wrong,
 carried into shipped data, corrected a round later.
 
 **E3. When a rule and an observation disagree, the observation wins and
-the rule gets amended here**, with the row that broke it named.
+the rule gets amended here**, with the row that broke it named. (Applied
+2026-08-25: row 108 broke A1's prompt-language assumption; A1b names it.)
 
 **E4b. A same-chapter precedent is not enough when more than one shape
 exists in that chapter.** Chapter 3 has two verb drills with opposite
