@@ -1,4 +1,4 @@
-# 5H-SPEC2 -- Cohort 5H closure + LOOKBACK pass (chapters 3-12)
+# 5H-SPEC2 -- Cohort 5H closure + LOOKBACK pass (chapters 3-12) -- Revision 1a
 
 Produced by Fable (chat pipeline) 2026-08-26 from VERIFY-5H-RESPONSE.pdf,
 5H-SPEC1-RESULTS-OPUS.md and 5H-VISUAL-CHECKLIST-OPUS.md (all three in
@@ -92,8 +92,9 @@ must do.
     and wraps each `audioMap` key as a standard Greek tap (blue, plays
     the clip; directive 9). Data already carries: ch11 objective 1
     (ἐκεῖνος -> k_ekemns, οὗτος -> k_outmns, from the Objectives page's
-    own WordSelection table) and ch7 objective 4 (εἰμί -> g_eimi1s,
-    same source). Harness: assert both ch11 words and the ch7 word
+    own WordSelection table) and ch7 objective 5 (εἰμί -> g_eimi1s,
+    same source; Revision 1a corrects a pipeline off-by-one that had
+    put the map on objective 4). Harness: assert both ch11 words and the ch7 word
     play, and that every other objective string in twelve chapters
     renders unchanged. Scan result for the record: those are the ONLY
     objectives with Greek in chapters 1-12.
@@ -145,8 +146,16 @@ must do.
       19 open `threeUses` -- the Learn topic "Three Uses" reused as a
       hint page by topic id (the content.js topic-id hint path); item 21
       has no dispatch entry in the original's 20-entry table and takes
-      the drill default. Before: NO Hint button at all; the ui buttons
-      now include Hint. Harness: modal-title switch assertions on both
+      the drill default. CORRECTION (Revision 1a, 2026-08-26): the
+      port did NOT lack a Hint here; it stacked BOTH payloads as a
+      two-page `ui.hintPages` (paradigm, then Three Uses). That key is
+      now REMOVED from the data because it takes renderer precedence
+      over per-item `hintRef`; the per-item routing is the original's.
+      Renderer: per-item `hintRef: "threeUses"` must resolve the Learn
+      TOPIC id as a hint page (the same blocks the old `contentRef:
+      "threeUses"` produced); if `resolveHintRef` does not fall through
+      to the topic-id path today, add that fall-through (one branch)
+      rather than re-introducing `hintPages`. Harness: modal-title switch assertions on both
       drills, the ch10/ch11 pattern; visual check both hint surfaces at
       320 px (the Three Uses page is prose, C7 flowing).
 3.2 **Objectives contract** -- section 2.5 covers chapters 7 and 11;
@@ -273,3 +282,17 @@ Nathanael, VERIFY-5H (d), 2026-08-26.
 - DRILL-BEHAVIOR-RULES A1c (section 4.1) and the cursor rule (0.3) into
   TITLE-SWEEP-RULES / CHAT-HANDOFF.
 - 5H-SPEC1 section 0.5 amended by 0.3 above.
+
+## 9. Revision 1a (2026-08-26) -- two delivered-data mismatches, both pipeline errors
+
+The Codex implementer STOPPED correctly on the first delivery (section 1
+says STOP, not edit). Both files are re-delivered as full replacements;
+nothing else changed. Wall clock: the implementer's 4m 3s on the blocked
+attempt counts toward the round total per the standing rule.
+
+- `chapt-07.json`: the εἰμί `audioMap` sat on objective 4; the word is
+  in objective 5. Fixed (objective 4 is a plain string again).
+- `chapt-08.json`: `c8_drill_translation_autos` kept its old two-page
+  `ui.hintPages`, which outranks per-item `hintRef`. Removed; the
+  removed value is preserved in the activity as `_hint_pages_removed`
+  for provenance. See section 3.1's correction for the renderer note.

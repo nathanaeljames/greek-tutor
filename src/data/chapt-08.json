@@ -1626,15 +1626,6 @@
      "pronounceEach": true
     },
     "liveScore": true,
-    "hintPages": [
-     {
-      "hintRef": "thirdPersonParadigm"
-     },
-     {
-      "contentRef": "threeUses",
-      "title": "Three Uses"
-     }
-    ],
     "hintRef": "thirdPersonParadigm"
    },
    "audioTiming": "afterGuess",
@@ -1642,7 +1633,16 @@
     "advanceClass": "manualOnIncorrect",
     "attemptsPerItem": 1
    },
-   "_hint_note": "FORM-DEPENDENT HINT (D-46 class), read 2026-08-26 from the WordCounter dispatch at 8_PRONS.TBK 0x7bf39: Hint = Third Person Paradigm (field 0xa79c8), Hint2 = the Three Uses page (0xa918e); LOOKBACK item, 5H-SPEC2."
+   "_hint_note": "FORM-DEPENDENT HINT (D-46 class), read 2026-08-26 from the WordCounter dispatch at 8_PRONS.TBK 0x7bf39. The port previously stacked BOTH payloads as a two-page hint (ui.hintPages: the Third Person Paradigm, then the Three Uses page); the original shows ONE of them per item. hintPages REMOVED so per-item hintRef governs: thirdPersonParadigm (paradigm, field 0xa79c8) or threeUses (the Learn topic id, rendered as a hint page by the topic-id path; formerly reached as contentRef \"threeUses\"). Item 21 has no dispatch entry in the original's 20-entry table and takes the drill default. 5H-SPEC2 section 3.1.",
+   "_hint_pages_removed": [
+    {
+     "hintRef": "thirdPersonParadigm"
+    },
+    {
+     "contentRef": "threeUses",
+     "title": "Three Uses"
+    }
+   ]
   },
   {
    "id": "c8_drill_case",
