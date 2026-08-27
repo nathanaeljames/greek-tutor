@@ -11,7 +11,7 @@ Now please give me the data and assembly script for chapter XX.
 
 --------
 
-Now please draft the final XX-SPEC1.md document. Remember, specs should contain instructions for full visual walkthrough, instructions to consider the rail walk documents I will be attaching but defer to the specs, instructions to generate a RESULTS and a BUILD document and the BUILD document MUST contain the full git diff for the assessment pipeline. The spec should also keep track of implementation time via wall clock.
+Now please draft the final XX-SPEC1.md document. Remember, specs should contain instructions for full visual walkthrough, instructions to consider the rail walk documents I will be attaching but defer to the specs, instructions to generate a RESULTS document, a BUILD document (and the BUILD document MUST contain the full git diff for the assessment pipeline), and a VERIFY document. The spec should also keep track of implementation time via wall clock. To accommodate for downtimes the wall clock should record the start and stop time of each TURN rather than the entire implementation and the final BUILD document should return the cumulative active time spent across all TURNS required to produce the full spec, not including downtime.
 
 --------
 

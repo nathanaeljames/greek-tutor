@@ -84,7 +84,22 @@
      "glossShort": "who/which",
      "audio": "chapt_11_k_voc5"
     }
-   ]
+   ],
+   "parts": [
+    {
+     "greek": "ὅς",
+     "audio": "chapt_11_k_osmns"
+    },
+    {
+     "greek": "ἥ",
+     "audio": "chapt_11_k_osfns"
+    },
+    {
+     "greek": "ὅ",
+     "audio": "chapt_11_k_osnns"
+    }
+   ],
+   "_audio_note": "VERIFY-5H-RESPONSE 7: parts wired to the paradigm cells; whether k_voc5 recites all three is a VERIFY listen."
   },
   "hotan": {
    "greek": "ὅταν",
@@ -109,7 +124,7 @@
    "lexicalForm": "οὗτος, αὕτη, τοῦτο",
    "gloss": "this",
    "glossShort": "this",
-   "audio": "chapt_11_k_voc7a",
+   "audio": "chapt_11_k_voc7",
    "ntFreq": 1388,
    "senses": [
     {
@@ -134,7 +149,7 @@
     }
    ],
    "audioFull": "chapt_11_k_voc7",
-   "_audio_note": "k_voc7 recites all three forms (flashcard table 0x12856f); k_voc7a/b/c are the single forms (drill tables)."
+   "_audio_note": "k_voc7 recites all three forms: flashcard and Review chart row (VERIFY-5H-RESPONSE 6); k_voc7a/b/c back the drills (senses) and the parts."
   },
   "palin": {
    "greek": "πάλιν",

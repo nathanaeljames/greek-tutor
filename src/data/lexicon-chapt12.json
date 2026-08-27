@@ -107,7 +107,7 @@
    "greek": "μέν",
    "translit": "men",
    "lexicalForm": "μέν",
-   "gloss": "one the one hand, indeed",
+   "gloss": "on the one hand, indeed",
    "glossShort": "indeed",
    "audio": "chapt_12_l_voc7",
    "ntFreq": 179,
@@ -118,7 +118,8 @@
      "glossShort": "indeed",
      "audio": "chapt_12_l_voc7"
     }
-   ]
+   ],
+   "_note": "D-55: \"one the one hand\" corrected (VERIFY-5H (g))."
   },
   "holos": {
    "greek": "ὅλος",

@@ -1345,7 +1345,8 @@
       "according to your spirit"
      ],
      "answer": "according to the same spirit",
-     "audio": "chapt_8_h_d3_1"
+     "audio": "chapt_8_h_d3_1",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "λέγει αὐτοῖς ὁ Ἰησοῦς",
@@ -1357,7 +1358,8 @@
       "They said to Jesus"
      ],
      "answer": "Jesus said to them",
-     "audio": "chapt_8_h_d3_2"
+     "audio": "chapt_8_h_d3_2",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "ἐγὼ ἐν αὐτοῖς καὶ σὺ",
@@ -1369,7 +1371,8 @@
       "I in them and you in me"
      ],
      "answer": "I in them and you in me",
-     "audio": "chapt_8_h_d3_3"
+     "audio": "chapt_8_h_d3_3",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "λέγει ἡ μήτηρ τοῦ",
@@ -1381,7 +1384,8 @@
       "the mother of Jesus said to him"
      ],
      "answer": "the mother of Jesus said to him",
-     "audio": "chapt_8_h_d3_4"
+     "audio": "chapt_8_h_d3_4",
+     "hintRef": "threeUses"
     },
     {
      "greek": "ἡ ὥρα αὐτοῦ",
@@ -1393,7 +1397,8 @@
       "my hour"
      ],
      "answer": "his hour",
-     "audio": "chapt_8_h_d3_5"
+     "audio": "chapt_8_h_d3_5",
+     "hintRef": "threeUses"
     },
     {
      "greek": "ὁ Ἰησοῦς καὶ λέγει",
@@ -1405,7 +1410,8 @@
       "and Jesus said to her"
      ],
      "answer": "and Jesus said to them",
-     "audio": "chapt_8_h_d3_6"
+     "audio": "chapt_8_h_d3_6",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "οἱ δοῦλοι αὐτοῦ",
@@ -1417,7 +1423,8 @@
       "his servants"
      ],
      "answer": "his servants",
-     "audio": "chapt_8_h_d3_7"
+     "audio": "chapt_8_h_d3_7",
+     "hintRef": "threeUses"
     },
     {
      "greek": "καὶ ὁ λόγος αὐτοῦ",
@@ -1429,7 +1436,8 @@
       "and the word itself is not in us"
      ],
      "answer": "and his word is not in us",
-     "audio": "chapt_8_h_d3_8"
+     "audio": "chapt_8_h_d3_8",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "κἀγὼ γινώσκω αὐτὰ",
@@ -1441,7 +1449,8 @@
       "and I know them"
      ],
      "answer": "and I know them",
-     "audio": "chapt_8_h_d3_9"
+     "audio": "chapt_8_h_d3_9",
+     "hintRef": "threeUses"
     },
     {
      "greek": "ἐν αὐτῇ τῇ ὥρᾳ",
@@ -1453,7 +1462,8 @@
       "in his hour"
      ],
      "answer": "in that very hour",
-     "audio": "chapt_8_h_d3_10"
+     "audio": "chapt_8_h_d3_10",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "ἐν αὐτῇ τῇ ἡμέρᾳ",
@@ -1465,7 +1475,8 @@
       "on that very day"
      ],
      "answer": "on that very day",
-     "audio": "chapt_8_h_d3_11"
+     "audio": "chapt_8_h_d3_11",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "εἶπέν τε πρὸς αὐτούς",
@@ -1477,7 +1488,8 @@
       "then he said to them"
      ],
      "answer": "then he said to them",
-     "audio": "chapt_8_h_d3_12"
+     "audio": "chapt_8_h_d3_12",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "κύριος ὁ θεὸς",
@@ -1489,7 +1501,8 @@
       "the Lord God will shine upon her"
      ],
      "answer": "the Lord God will shine upon them",
-     "audio": "chapt_8_h_d3_13"
+     "audio": "chapt_8_h_d3_13",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "οἱ μαθηταὶ αὐτοῦ",
@@ -1501,7 +1514,8 @@
       "their disciples"
      ],
      "answer": "his disciples",
-     "audio": "chapt_8_h_d3_14"
+     "audio": "chapt_8_h_d3_14",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "τότε λέγει αὐταῖς ὁ",
@@ -1513,7 +1527,8 @@
       "then Jesus said to her"
      ],
      "answer": "then Jesus said to them",
-     "audio": "chapt_8_h_d3_15"
+     "audio": "chapt_8_h_d3_15",
+     "hintRef": "threeUses"
     },
     {
      "greek": "λέγει αὐτῇ",
@@ -1525,7 +1540,8 @@
       "she said to him"
      ],
      "answer": "he said to her",
-     "audio": "chapt_8_h_d3_16"
+     "audio": "chapt_8_h_d3_16",
+     "hintRef": "threeUses"
     },
     {
      "greek": "ὁ γὰρ αὐτὸς κύριος",
@@ -1537,7 +1553,8 @@
       "for the same Lord"
      ],
      "answer": "for the same Lord",
-     "audio": "chapt_8_h_d3_17"
+     "audio": "chapt_8_h_d3_17",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "καὶ οἱ ἁμαρτωλοὶ",
@@ -1549,7 +1566,8 @@
       "even sinners themselves do it"
      ],
      "answer": "even sinners do the same",
-     "audio": "chapt_8_h_d3_18"
+     "audio": "chapt_8_h_d3_18",
+     "hintRef": "threeUses"
     },
     {
      "greek": "αὐτός μου ἀδελφὸς",
@@ -1561,7 +1579,8 @@
       "he is your brother"
      ],
      "answer": "he is my brother",
-     "audio": "chapt_8_h_d3_19"
+     "audio": "chapt_8_h_d3_19",
+     "hintRef": "threeUses"
     },
     {
      "greek": "αὐτοὶ ὑμεῖς μοι",
@@ -1573,7 +1592,8 @@
       "you testify for him"
      ],
      "answer": "you yourselves testify for me",
-     "audio": "chapt_8_h_d3_20"
+     "audio": "chapt_8_h_d3_20",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "καὶ ἐγὼ αὐτὸς",
@@ -1585,7 +1605,9 @@
       "and he is a man"
      ],
      "answer": "and I myself am a man",
-     "audio": "chapt_8_h_d3_21"
+     "audio": "chapt_8_h_d3_21",
+     "hintRef": "thirdPersonParadigm",
+     "_hint_note": "No dispatch entry for item 21 in the table at 0x7bf39 (20 entries); drill-level default (paradigm)."
     }
    ],
    "scored": true,
@@ -1612,13 +1634,15 @@
       "contentRef": "threeUses",
       "title": "Three Uses"
      }
-    ]
+    ],
+    "hintRef": "thirdPersonParadigm"
    },
    "audioTiming": "afterGuess",
    "answerPolicy": {
     "advanceClass": "manualOnIncorrect",
     "attemptsPerItem": 1
-   }
+   },
+   "_hint_note": "FORM-DEPENDENT HINT (D-46 class), read 2026-08-26 from the WordCounter dispatch at 8_PRONS.TBK 0x7bf39: Hint = Third Person Paradigm (field 0xa79c8), Hint2 = the Three Uses page (0xa918e); LOOKBACK item, 5H-SPEC2."
   },
   {
    "id": "c8_drill_case",
@@ -1659,7 +1683,8 @@
       "Third Person",
       "Nominative Singular"
      ],
-     "audio": "chapt_8_h_3fns"
+     "audio": "chapt_8_h_3fns",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "ἡμεῖς",
@@ -1667,7 +1692,8 @@
       "First Person",
       "Nominative Plural"
      ],
-     "audio": "chapt_8_h_1np"
+     "audio": "chapt_8_h_1np",
+     "hintRef": "firstPersonParadigm"
     },
     {
      "greek": "σοι",
@@ -1675,7 +1701,8 @@
       "Second Person",
       "Dative Singular"
      ],
-     "audio": "chapt_8_h_2ds"
+     "audio": "chapt_8_h_2ds",
+     "hintRef": "secondPersonParadigm"
     },
     {
      "greek": "αὐτῶν",
@@ -1683,7 +1710,8 @@
       "Third Person",
       "Genitive Plural"
      ],
-     "audio": "chapt_8_h_3mgp"
+     "audio": "chapt_8_h_3mgp",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "μου",
@@ -1691,7 +1719,8 @@
       "First Person",
       "Genitive Singular"
      ],
-     "audio": "chapt_8_h_1gs"
+     "audio": "chapt_8_h_1gs",
+     "hintRef": "firstPersonParadigm"
     },
     {
      "greek": "αὐτοῖς",
@@ -1699,7 +1728,8 @@
       "Third Person",
       "Dative Plural"
      ],
-     "audio": "chapt_8_h_3mdp"
+     "audio": "chapt_8_h_3mdp",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "ἡμῖν",
@@ -1707,7 +1737,8 @@
       "First Person",
       "Dative Plural"
      ],
-     "audio": "chapt_8_h_1dp"
+     "audio": "chapt_8_h_1dp",
+     "hintRef": "firstPersonParadigm"
     },
     {
      "greek": "ὑμῶν",
@@ -1715,7 +1746,8 @@
       "Second Person",
       "Genitive Plural"
      ],
-     "audio": "chapt_8_h_2gp"
+     "audio": "chapt_8_h_2gp",
+     "hintRef": "secondPersonParadigm"
     },
     {
      "greek": "αὐταῖς",
@@ -1723,7 +1755,8 @@
       "Third Person",
       "Dative Plural"
      ],
-     "audio": "chapt_8_h_3fdp"
+     "audio": "chapt_8_h_3fdp",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "σε",
@@ -1731,7 +1764,8 @@
       "Second Person",
       "Accusative Singular"
      ],
-     "audio": "chapt_8_h_2as"
+     "audio": "chapt_8_h_2as",
+     "hintRef": "secondPersonParadigm"
     },
     {
      "greek": "ὑμᾶς",
@@ -1739,7 +1773,8 @@
       "Second Person",
       "Accusative Plural"
      ],
-     "audio": "chapt_8_h_2ap"
+     "audio": "chapt_8_h_2ap",
+     "hintRef": "secondPersonParadigm"
     },
     {
      "greek": "ἐγώ",
@@ -1747,7 +1782,8 @@
       "First Person",
       "Nominative Singular"
      ],
-     "audio": "chapt_8_h_1ns"
+     "audio": "chapt_8_h_1ns",
+     "hintRef": "firstPersonParadigm"
     },
     {
      "greek": "αὐτόν",
@@ -1755,7 +1791,8 @@
       "Third Person",
       "Accusative Singular"
      ],
-     "audio": "chapt_8_h_3mas"
+     "audio": "chapt_8_h_3mas",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "αὐτά",
@@ -1770,7 +1807,8 @@
        "Accusative Plural"
       ]
      ],
-     "_ambiguous_note": "This form prints in more than one cell of the chart. ACCEPT ANY of answer + answerAlt."
+     "_ambiguous_note": "This form prints in more than one cell of the chart. ACCEPT ANY of answer + answerAlt.",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "ὑμεῖς",
@@ -1778,7 +1816,8 @@
       "Second Person",
       "Nominative Plural"
      ],
-     "audio": "chapt_8_h_2np"
+     "audio": "chapt_8_h_2np",
+     "hintRef": "secondPersonParadigm"
     },
     {
      "greek": "σου",
@@ -1786,7 +1825,8 @@
       "Second Person",
       "Genitive Singular"
      ],
-     "audio": "chapt_8_h_2gs"
+     "audio": "chapt_8_h_2gs",
+     "hintRef": "secondPersonParadigm"
     },
     {
      "greek": "αὐτοῦ",
@@ -1794,7 +1834,8 @@
       "Third Person",
       "Genitive Singular"
      ],
-     "audio": "chapt_8_h_3mgs"
+     "audio": "chapt_8_h_3mgs",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "αὐτάς",
@@ -1802,7 +1843,8 @@
       "Third Person",
       "Accusative Plural"
      ],
-     "audio": "chapt_8_h_3fap"
+     "audio": "chapt_8_h_3fap",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "ἡμῶν",
@@ -1810,7 +1852,8 @@
       "First Person",
       "Genitive Plural"
      ],
-     "audio": "chapt_8_h_1gp"
+     "audio": "chapt_8_h_1gp",
+     "hintRef": "firstPersonParadigm"
     },
     {
      "greek": "αὐτῇ",
@@ -1818,7 +1861,8 @@
       "Third Person",
       "Dative Singular"
      ],
-     "audio": "chapt_8_h_3fds"
+     "audio": "chapt_8_h_3fds",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "με",
@@ -1826,7 +1870,8 @@
       "First Person",
       "Accusative Singular"
      ],
-     "audio": "chapt_8_h_1as"
+     "audio": "chapt_8_h_1as",
+     "hintRef": "firstPersonParadigm"
     },
     {
      "greek": "αὐτούς",
@@ -1834,7 +1879,8 @@
       "Third Person",
       "Accusative Plural"
      ],
-     "audio": "chapt_8_h_3map"
+     "audio": "chapt_8_h_3map",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "αὐταί",
@@ -1842,7 +1888,8 @@
       "Third Person",
       "Nominative Plural"
      ],
-     "audio": "chapt_8_h_3fnp"
+     "audio": "chapt_8_h_3fnp",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "ὑμῖν",
@@ -1850,7 +1897,8 @@
       "Second Person",
       "Dative Plural"
      ],
-     "audio": "chapt_8_h_2dp"
+     "audio": "chapt_8_h_2dp",
+     "hintRef": "secondPersonParadigm"
     },
     {
      "greek": "μοι",
@@ -1858,7 +1906,8 @@
       "First Person",
       "Dative Singular"
      ],
-     "audio": "chapt_8_h_1ds"
+     "audio": "chapt_8_h_1ds",
+     "hintRef": "firstPersonParadigm"
     },
     {
      "greek": "αὐτός",
@@ -1866,7 +1915,8 @@
       "Third Person",
       "Nominative Singular"
      ],
-     "audio": "chapt_8_h_3mns"
+     "audio": "chapt_8_h_3mns",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "αὐτῆς",
@@ -1874,7 +1924,8 @@
       "Third Person",
       "Genitive Singular"
      ],
-     "audio": "chapt_8_h_3fgs"
+     "audio": "chapt_8_h_3fgs",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "ἡμᾶς",
@@ -1882,7 +1933,8 @@
       "First Person",
       "Accusative Plural"
      ],
-     "audio": "chapt_8_h_1ap"
+     "audio": "chapt_8_h_1ap",
+     "hintRef": "firstPersonParadigm"
     },
     {
      "greek": "αὐτήν",
@@ -1890,7 +1942,8 @@
       "Third Person",
       "Accusative Singular"
      ],
-     "audio": "chapt_8_h_3fas"
+     "audio": "chapt_8_h_3fas",
+     "hintRef": "thirdPersonParadigm"
     },
     {
      "greek": "σύ",
@@ -1898,7 +1951,8 @@
       "Second Person",
       "Nominative Singular"
      ],
-     "audio": "chapt_8_h_2ns"
+     "audio": "chapt_8_h_2ns",
+     "hintRef": "secondPersonParadigm"
     },
     {
      "greek": "ἐμοί",
@@ -1906,7 +1960,8 @@
       "First Person",
       "Dative Singular"
      ],
-     "audio": "chapt_8_h_1dse"
+     "audio": "chapt_8_h_1dse",
+     "hintRef": "firstPersonParadigm"
     }
    ],
    "scored": true,
@@ -1932,7 +1987,8 @@
    "answerPolicy": {
     "advanceClass": "manualOnIncorrect",
     "attemptsPerItem": 1
-   }
+   },
+   "_hint_note": "FORM-DEPENDENT HINT (D-46 class), read 2026-08-26 from the dispatch at 0x10d820: first person -> Hint (0xc5d4a), second -> Hint2 (0xc6cd4), autos -> Hint3 (0xc4676); LOOKBACK item, 5H-SPEC2."
   },
   {
    "id": "c8_drill_vocab_gk_en",

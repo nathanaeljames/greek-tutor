@@ -2257,6 +2257,24 @@ async function fiveFItemOnScreen(chapterId, activity) {
   const answers = new Set(hits.map(item => normalizeText(item.answer)));
   return answers.size === 1 ? { prompt, note, answer: hits[0].answer, options: hits[0].options } : null;
 }
+// THE ADVANCE WINDOW HAS TO FOLLOW THE CLIP, because the rule under test is
+// max(2000ms, clip) and rule A2 says an afterGuess clip FINISHES before the
+// next item. A fixed multiple of the class minimum is only wide enough while
+// every clip is short: chapters 11 and 12 record whole translated sentences,
+// and `l_td11` is exactly 7000ms against a 7000ms ceiling -- so this check
+// passed or failed depending on which item `fiveFFreshItem` happened to draw,
+// which is the flake 5H-SPEC1 section 6 warned about ("the multi-word
+// translation clips in both chapters are the long ones -- watch for overlap").
+// The window now stays open while a clip is still playing, with a hard backstop
+// so a stuck surface still fails rather than hanging.
+const ADVANCE_BACKSTOP_MS = 30000;
+async function stillAdvancing(answeredAt, floorMs) {
+  const waited = Date.now() - answeredAt;
+  if (waited >= ADVANCE_BACKSTOP_MS) return false;
+  if (waited < floorMs) return true;
+  return await clipsPlaying() > 0;
+}
+
 async function fiveFFreshItem(hash, chapterId, activity, tries = 12) {
   for (let attempt = 0; attempt < tries; attempt++) {
     await go(hash);
@@ -2284,7 +2302,7 @@ for (const [chapterId, chapter] of Object.entries(CH_5F)) {
       const kind = await feedbackKind();
       const said = await awaitNextShown();
       let late = await itemNumber();
-      while (late === before && Date.now() - answeredAt < CORRECT_MS * 3.5) {
+      while (late === before && await stillAdvancing(answeredAt, CORRECT_MS * 3.5)) {
         await page.waitForTimeout(50);
         late = await itemNumber();
       }
@@ -2318,7 +2336,7 @@ for (const [chapterId, chapter] of Object.entries(CH_5F)) {
           `revealed ${JSON.stringify(revealed)} for ${JSON.stringify(item.answer)}, waiting ${said}, item ${before} -> ${await itemNumber()}`);
       } else if (advanceClass === 'autoBoth') {
         let late = await itemNumber();
-        while (late === before && Date.now() - answeredAt < INCORRECT_MS * 2) {
+        while (late === before && await stillAdvancing(answeredAt, INCORRECT_MS * 2)) {
           await page.waitForTimeout(60);
           late = await itemNumber();
         }

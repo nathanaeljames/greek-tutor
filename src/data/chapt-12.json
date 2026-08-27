@@ -1205,7 +1205,14 @@
       ],
       "_source": "Transcribed from the hint's own field 0x10fae6 (§4.7)."
      }
-    ]
+    ],
+    "audioMap": {
+     "ἐκβάλλω": "chapt_12_l_ex11",
+     "ἐξεβάλλον": "chapt_12_l_ex12",
+     "ἀποκτείνω": "chapt_12_l_ex13",
+     "ἀπέκτεινον": "chapt_12_l_ex14"
+    },
+    "_tap_note": "VERIFY-5H-RESPONSE 5: the four compound-verb forms in points 3 and 4 tap (same clips as the Augments topic)."
    },
    "_shape_note": "NEW DRILL SHAPE (5H-SPEC1 §3.5): prompt panel shows the present lemma (Greek), its gloss and a reference; three GREEK options stacked. The correct column per item (A/B/C) is read from the AnalyzeAnswer script at 0xa3000-0xa4728.",
    "_audio_note": "l_ad1-19 record the AUGMENTED ANSWER form, not the lemma shown (Nathanael, DOSBox 2026-08-25). The clip plays AFTER the guess; the prompt lemma is not a tap and Pronounce is disabled until the item is answered (5H-SPEC1 §3.5, proposed D-50).",
@@ -2059,7 +2066,7 @@
     "label": "Say Whole List",
     "audio": "chapt_12_l_vocl"
    },
-   "_verify": "men prints \"one the one hand, indeed (179)\" in the original (typo); verbatim, VERIFY-5H (g)."
+   "_note": "D-55 applied in lexicon-chapt12.json."
   },
   {
    "id": "c12_qr_paradigms",

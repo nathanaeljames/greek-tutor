@@ -8,7 +8,13 @@
   "understand English adjectives and their various uses",
   "learn and translate various Greek adjectives",
   "identify attributive, predicate, and substantive uses of Greek adjectives",
-  "properly identify the grammatical agreement between an adjective and its accompanying substantive",
+  {
+   "text": "properly identify the grammatical agreement between an adjective and its accompanying substantive",
+   "audioMap": {
+    "εἰμί": "chapt_7_g_eimi1s"
+   },
+   "_source": "Objectives page WordSelection table dispatches g_eimi1s (7_ADJS.TBK, 0xf34b6 region); LOOKBACK item, 5H-SPEC2."
+  },
   "identify the various forms of the verb εἰμί in the present active indicative",
   "master 10 more high frequency vocabulary words",
   "finish memorizing Jn 1:1 in Greek"

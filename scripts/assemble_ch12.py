@@ -33,6 +33,11 @@ import re
 import sys
 import unicodedata
 
+# RENDERER CONTRACT (learned 2026-08-26): a `_verify` key at TOPIC, block or
+# page level draws a learner-facing "pending verification" banner
+# (ContentAudio.svelte / RichContent.svelte). Pipeline provenance goes in
+# `_verify_note` / `_audio_note` / `_note`, never in `_verify`.
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import underline
 from assemble_ch9 import (Tbk, para_blocks, conv_mixed, dash, sq, stepper_ui,
@@ -766,7 +771,7 @@ def qr_vocab(tbk, conv):
             'footnote': ('The number after the translation is the number of '
                          'times the word occurs in the New Testament.'),
             'playAll': {'label': 'Say Whole List', 'audio': aud('l_vocl')},
-            '_verify': ('men prints "one the one hand, indeed (179)" in the '
+            '_verify_note': ('men prints "one the one hand, indeed (179)" in the '
                         'original (typo); verbatim, VERIFY-5H (g).')}
 
 

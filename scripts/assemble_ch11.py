@@ -34,6 +34,11 @@ import struct
 import sys
 import unicodedata
 
+# RENDERER CONTRACT (learned 2026-08-26): a `_verify` key at TOPIC, block or
+# page level draws a learner-facing "pending verification" banner
+# (ContentAudio.svelte / RichContent.svelte). Pipeline provenance goes in
+# `_verify_note` / `_audio_note` / `_note`, never in `_verify`.
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import underline
 from assemble_ch9 import (Tbk, make_conv, conv_mixed, para_blocks, dash, sq,
@@ -864,7 +869,7 @@ def relatives(tbk, conv):
             raise SystemExit(f'STOP: {c} not in TBK')
     topics = [
         {'id': 'introduction', 'title': 'Introduction', 'content': intro,
-         '_verify': ('VERIFY-5H (a): in the rail walk the Introduction radio '
+         '_verify_note': ('VERIFY-5H (a): in the rail walk the Introduction radio '
                      'shows the Reflexive/Reciprocal box. This text is the '
                      'TBK\'s own "Relative Pronouns" field (0x4136e) plus its '
                      '(cont.) page (0x420fc) merged as C5. Six clips '

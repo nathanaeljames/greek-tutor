@@ -5,7 +5,14 @@
  "title": "Demonstrative and Relative Pronouns",
  "objectivesPreamble": "You will be able to:",
  "objectives": [
-  "recognize the various forms of the demonstrative pronouns ἐκεῖνος (that) and οὗτος (this),",
+  {
+   "text": "recognize the various forms of the demonstrative pronouns ἐκεῖνος (that) and οὗτος (this),",
+   "audioMap": {
+    "ἐκεῖνος": "chapt_11_k_ekemns",
+    "οὗτος": "chapt_11_k_outmns"
+   },
+   "_source": "Objectives page WordSelection table, 11_DEMON.TBK 0x5e176 region (VERIFY-5H (o): both speak in the original)."
+  },
   "translate demonstrative pronouns and identify how they function within the syntax of the sentence,",
   "recognize the various forms of the relative pronoun,",
   "translate relative pronouns and identify how they function within the syntax of the sentence,",
@@ -564,19 +571,19 @@
          "audio": "chapt_11_k_ex1"
         },
         {
-         "greek": "ἐγὼ οὐκ εἰμὶ ἐκ τοῦ κόσμου τοὺτου.",
+         "greek": "ἐγὼ οὐκ εἰμὶ ἐκ τοῦ κόσμου τούτου.",
          "greek2": null,
          "gloss": "I am not of this world",
          "ref": "Jn 8:23",
          "audio": "chapt_11_k_ex2",
-         "_verify": "The field types a GRAVE on toutou (tou>tou); the drill pool has the acute. Verbatim, VERIFY-5H keep-or-fix."
+         "_note": "D-53: grave on toutou corrected to acute (VERIFY-5H (m))."
         },
         {
-         "greek": "ἐν τούτῳ γνώσονται πάντες ὅτι ἐμοὶ",
-         "greek2": "μαθηταί ἐστε",
+         "greek": "ἐν τούτῳ γνώσονται πάντες ὅτι ἐμοὶ μαθηταί ἐστε",
          "gloss": "by this everyone will know that you are my disciples",
          "ref": "Jn 13:35",
-         "audio": "chapt_11_k_ex3"
+         "audio": "chapt_11_k_ex3",
+         "_note": "Line merged per VERIFY-5H-RESPONSE item 1 (the original wrapped for width only)."
         },
         {
          "greek": "μακάριοί εἰσιν ἐκεῖνοι",
@@ -616,7 +623,7 @@
        "gapBefore": true
       }
      ],
-     "_verify": "VERIFY-5H (a): in the rail walk the Introduction radio shows the Reflexive/Reciprocal box. This text is the TBK's own \"Relative Pronouns\" field (0x4136e) plus its (cont.) page (0x420fc) merged as C5. Six clips (k_agree1-4, k_under1-2) exist for examples this page never shows and are NOT wired."
+     "_verify_note": "D-52 RESTORE (VERIFY-5H (a)): the original's Introduction radio shows the Reflexive/Reciprocal box; this is the TBK's own unshown Relative Pronouns text (0x4136e + 0x420fc)."
     },
     {
      "id": "relativesParadigm",
@@ -790,7 +797,7 @@
             },
             {
              "greek": "ἅ",
-             "audio": "chapt_11_k_osnap"
+             "audio": "chapt_11_k_osnns"
             }
            ]
           }
@@ -2342,7 +2349,7 @@
      "hintRef": "thisParadigm"
     },
     {
-     "greek": "καὶ εκεῖνοί εἰσιν οἱ ἐπὶ τὴν γῆν",
+     "greek": "καὶ ἐκεῖνοί εἰσιν οἱ ἐπὶ τὴν γῆν",
      "ref": "Mar 4:20",
      "options": [
       "and these are the ones upon the ground",
@@ -2351,8 +2358,8 @@
      ],
      "answer": "and those are the ones upon the ground",
      "audio": "chapt_11_k_td13",
-     "_verify": "The original types ekeinoi WITHOUT its smooth breathing (ekei?noi<); verbatim, keep-or-fix.",
-     "hintRef": "thatParadigm"
+     "hintRef": "thatParadigm",
+     "_note": "D-53: smooth breathing restored on ekeinoi (VERIFY-5H (m))."
     },
     {
      "greek": "μετὰ τοῦτο λέγει τοῖς μαθηταῖς",
@@ -3137,8 +3144,8 @@
     {
      "prompt": "whom (masc. acc. pl.)",
      "answer": "οὕς",
-     "audio": "chapt_11_k_osmap",
-     "_audio_note": "The original dispatches k_osnap here, which is a different cell from the answer οὕς; wired to the answer's own cell clip (fidelity restoration)."
+     "audio": "chapt_11_k_osnap",
+     "_audio_note": "Mirrors the original dispatch k_osnap, which RECORDS ous (VERIFY-5H (q)); k_osnap is not the neuter cell and is wired nowhere else."
     },
     {
      "prompt": "yourselves (fem. gen. pl.)",
@@ -3186,9 +3193,10 @@
      "audio": "chapt_11_k_eaungp"
     },
     {
-     "prompt": "whom (masc. nom. pl.)",
+     "prompt": "who (masc. nom. pl.)",
      "answer": "οἵ",
-     "audio": "chapt_11_k_osmnp"
+     "audio": "chapt_11_k_osmnp",
+     "_note": "D-54: \"whom\" corrected to \"who\" (VERIFY-5H (h))."
     },
     {
      "prompt": "whom (fem. acc. pl.)",
@@ -3464,10 +3472,7 @@
        ]
       }
      ],
-     "sayWhole": {
-      "label": "Say Paradigm",
-      "audio": "chapt_11_k_ekepar"
-     }
+     "_say_note": "One recording covers both halves; the button sits after the Plural half (VERIFY-5H (p) ruling; NIT-LOG N-1)."
     },
     {
      "type": "paradigm",
@@ -3636,11 +3641,8 @@
        ]
       }
      ],
-     "sayWhole": {
-      "label": "Say Paradigm",
-      "audio": "chapt_11_k_outpar"
-     },
-     "note": "Note: When there is an α or η in the ending, the stem will have an αυ, otherwise it is ου."
+     "note": "Note: When there is an α or η in the ending, the stem will have an αυ, otherwise it is ου.",
+     "_say_note": "One recording covers both halves; the button sits after the Plural half (VERIFY-5H (p) ruling; NIT-LOG N-1)."
     },
     {
      "type": "paradigm",
@@ -3730,7 +3732,7 @@
      "note": "Note: When there is an α or η in the ending, the stem will have an αυ, otherwise it is ου."
     }
    ],
-   "_disclosure": "C9 (§4.6): every chart stacks, one say-all per chart, no toggles; a demonstrative's two halves share its one clip."
+   "_disclosure": "C9 (§4.6): every chart stacks, one say-all per chart, no toggles; a demonstrative's two halves share its one clip. Say-all: one button per recording, placed after the Plural half (2026-08-26 ruling)."
   },
   {
    "id": "c11_qr_relative",
@@ -3819,11 +3821,8 @@
        ]
       }
      ],
-     "sayWhole": {
-      "label": "Say Paradigm",
-      "audio": "chapt_11_k_ospar"
-     },
-     "note": "Note how similar these are to the noun endings and to the definite article."
+     "note": "Note how similar these are to the noun endings and to the definite article.",
+     "_say_note": "One recording covers both halves; the button sits after the Plural half (VERIFY-5H (p) ruling; NIT-LOG N-1)."
     },
     {
      "type": "paradigm",
@@ -3901,7 +3900,7 @@
         },
         {
          "greek": "ἅ",
-         "audio": "chapt_11_k_osnap"
+         "audio": "chapt_11_k_osnns"
         }
        ]
       }
@@ -3913,7 +3912,7 @@
      "note": "Note how similar these are to the noun endings and to the definite article."
     }
    ],
-   "_disclosure": "C9 (§4.6): every chart stacks, one say-all per chart, no toggles; a demonstrative's two halves share its one clip."
+   "_disclosure": "C9 (§4.6): every chart stacks, one say-all per chart, no toggles; a demonstrative's two halves share its one clip. Say-all: one button per recording, placed after the Plural half (2026-08-26 ruling)."
   },
   {
    "id": "c11_qr_reflexive",
@@ -3973,10 +3972,7 @@
       }
      ],
      "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
-     "sayWhole": {
-      "label": "Say Paradigm",
-      "audio": "chapt_11_k_autpar"
-     }
+     "_say_note": "One recording covers both halves; the button sits after the Plural half (VERIFY-5H (p) ruling; NIT-LOG N-1)."
     },
     {
      "type": "paradigm",
@@ -4087,10 +4083,7 @@
       }
      ],
      "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
-     "sayWhole": {
-      "label": "Say Paradigm",
-      "audio": "chapt_11_k_seapar"
-     }
+     "_say_note": "One recording covers both halves; the button sits after the Plural half (VERIFY-5H (p) ruling; NIT-LOG N-1)."
     },
     {
      "type": "paradigm",
@@ -4214,10 +4207,7 @@
       }
      ],
      "note": "Note: There are no nominative forms since the personal pronouns fill that role.",
-     "sayWhole": {
-      "label": "Say Paradigm",
-      "audio": "chapt_11_k_eaupar"
-     }
+     "_say_note": "One recording covers both halves; the button sits after the Plural half (VERIFY-5H (p) ruling; NIT-LOG N-1)."
     },
     {
      "type": "paradigm",
@@ -4290,7 +4280,7 @@
      }
     }
    ],
-   "_disclosure": "C9 (§4.6): every chart stacks, one say-all per chart, no toggles; a demonstrative's two halves share its one clip."
+   "_disclosure": "C9 (§4.6): every chart stacks, one say-all per chart, no toggles; a demonstrative's two halves share its one clip. Say-all: one button per recording, placed after the Plural half (2026-08-26 ruling)."
   },
   {
    "id": "c11_qr_scripture_jn11",
@@ -5167,7 +5157,7 @@
         },
         {
          "greek": "ἅ",
-         "audio": "chapt_11_k_osnap"
+         "audio": "chapt_11_k_osnns"
         }
        ]
       }
