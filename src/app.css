@@ -724,6 +724,23 @@ button { font: inherit; cursor: pointer; }
    translation keeps the table's two columns so its gloss aligns with the
    gloss column of the rows around it. */
 .rc-greekrows.gloss-only .rc-greekrow.parts-row:not(.has-gloss) { grid-template-columns: minmax(0, 1fr); }
+/* 5H: the ch12 contraction examples. Rule and augmented form pair up on the
+   first line and the derivation ("ἀκούω + ε augment") takes the row beneath
+   at phone widths -- οἰκοδομέω at the equation size overruns 320px beside
+   anything. From 560px up the original's three columns fit on one line. */
+.rc-greekrows.contraction .rc-greekrow { grid-template-columns: minmax(4.5em, auto) minmax(0, 1fr);
+  gap: 4px 10px; }
+.rc-greekrows.contraction .rc-contraction-rule { color: var(--teal-dark); font-size: 0.95rem;
+  white-space: nowrap; }
+.rc-greekrows.contraction .rc-contraction-form { min-width: 0; font-size: 1.3rem; text-align: left; }
+.rc-greekrows.contraction .rc-contraction-form.greek-say { width: auto; color: var(--link); }
+.rc-greekrows.contraction .rc-parts { grid-column: 1 / -1; }
+.rc-greekrows.contraction .rc-part { font-size: 1.15rem; }
+@media (min-width: 560px) {
+  .rc-greekrows.contraction .rc-greekrow {
+    grid-template-columns: minmax(4.5em, auto) minmax(0, 0.8fr) minmax(0, 1.2fr); }
+  .rc-greekrows.contraction .rc-parts { grid-column: auto; }
+}
 .rc-greekrows.english-pairs .rc-greekrow { text-align: center; }
 .rc-english-cell { min-width: 0; overflow-wrap: break-word; }
 .rc-greeklabel { font-weight: 600; overflow-wrap: anywhere; }
@@ -1174,6 +1191,15 @@ button { font: inherit; cursor: pointer; }
 
 /* ---- Drill additions ---- */
 /* The scripture citation the original prints with the drill word. */
+/* 5H: the Augment Drill's prompt panel prints the lemma's English gloss on
+   its own line under the Greek, above the reference (5H-SPEC1 3.5). English,
+   ink, never a tap target. */
+.prompt-gloss { text-align: center; color: var(--ink); font-size: 1rem; margin: -10px 0 4px; }
+/* The citation's own -10px top margin exists to tuck it under a prompt that
+   has 18px of padding beneath it. With a gloss line between them there is no
+   such padding to reclaim, so the pull is cancelled and the three lines stack
+   as the original's panel does. */
+.prompt-gloss + .prompt-citation { margin-top: 0; }
 .prompt-citation { text-align: center; color: var(--teal-dark); font-size: 0.82rem;
   font-weight: 700; margin: -10px 0 6px; }
 /* advanceClass manualOnIncorrect: the item is final and nothing is moving. */

@@ -415,7 +415,9 @@ const shot = async name => {
     if (narrow !== 2 || broad !== 4) failures.push(`${chapterId}/${id} ${narrow}/${broad}`);
   }
   check(`D6.1 W9 all ${pool.length} poolKind drills are two-up at 390px and four-up at 820px`,
-    pool.length === 8 && failures.length === 0, failures.join(', ') || `${pool.length} drills`);
+    // 5H: chapters 11 and 12 declare `poolKind` on both of their vocabulary
+    // drills each, so the census is twelve.
+    pool.length === 12 && failures.length === 0, failures.join(', ') || `${pool.length} drills`);
   const controlNarrow = await columnsAt(page, '#/activity/chapt_2/c2_drill_part_of_speech');
   const controlBroad = await columnsAt(widePage, '#/activity/chapt_2/c2_drill_part_of_speech');
   check('D6.2 W9 a non-vocabulary AUTHORED grid stays two-up at both widths',
@@ -599,6 +601,19 @@ const shot = async name => {
     ['ch9 Parsing hint (composite, 2 states)', '#/activity/chapt_9/c9_drill_parsing', 'hint', 'toggle', 1],
     // §4.5's lone centred toggle: the one state in the app with no say button.
     ['ch10 Parsing hint (εἰμί, no say button)', '#/activity/chapt_10/c10_drill_parsing', 'hint', 'toggle', 1],
+    // 5H. Chapter 11's four drill hints are all the §4.5 lone centred toggle
+    // (a two-state sg/pl pair with NO say-all -- the original's hint has
+    // Cancel only), and chapter 12's parsing and translation hints are the
+    // same shape with Active/Middle-Passive and εἰμί/ἔχω labels. The Augment
+    // Drill's hint is inline prose with no navigation at all.
+    ['ch11 This and That hint (sg/pl toggle, no say)', '#/activity/chapt_11/c11_drill_this_that', 'hint', 'toggle', 1],
+    ['ch11 Who and The hint (article/ὅς, sg/pl toggle)', '#/activity/chapt_11/c11_drill_who_the', 'hint', 'toggle', 1],
+    ['ch11 This and That Translation hint (sg/pl toggle)', '#/activity/chapt_11/c11_drill_translation_this_that', 'hint', 'toggle', 1],
+    ['ch11 Relative Translation hint (ὅς, sg/pl toggle)', '#/activity/chapt_11/c11_drill_translation_relative', 'hint', 'toggle', 1],
+    ['ch12 Parsing hint (composite, 2 states)', '#/activity/chapt_12/c12_drill_parsing', 'hint', 'toggle', 1],
+    ['ch12 Translation hint (λύω, 2 states)', '#/activity/chapt_12/c12_drill_translation', 'hint', 'toggle', 1],
+    ['ch12 Augment Drill hint (inline prose, no nav)', '#/activity/chapt_12/c12_drill_augment', 'hint', 'none', 0],
+    ['ch11 Demonstrative Examples popup (no nav)', '#/activity/chapt_11/c11_learn_demonstratives', 'expanderlink', 'none', 0],
     ['ch2 Syllable Division hint (prose, no nav)', '#/activity/chapt_2/c2_ex_syllable_division', 'hint', 'none', 0],
     ['ch3 Learn Verbs Endings modal (no nav)', '#/activity/chapt_3/c3_learn_verbs', 'endings', 'none', 0],
     ['ch6 preposition popup (no nav)', '#/activity/chapt_6/c6_learn_prepositions', 'popup', 'none', 0],
@@ -718,6 +733,12 @@ const shot = async name => {
       await page.locator('.rail-next').click();
     } else if (how === 'settings') {
       await page.getByRole('button', { name: 'Clear downloaded audio', exact: true }).click();
+    } else if (how === 'expanderlink') {
+      // 5H: the C3 link lives INSIDE the C6 accordion it belongs to, so the
+      // accordion opens first and the green link under it opens the modal.
+      await page.locator('.card details summary').first().click();
+      await page.waitForTimeout(150);
+      await page.locator('.card .popup-link').first().click();
     } else {
       await gotoTopic(1);
       await page.locator('.rc-sense-link').first().click();

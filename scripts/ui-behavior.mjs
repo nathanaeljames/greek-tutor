@@ -49,6 +49,8 @@ const ch7 = JSON.parse(readFileSync('src/data/chapt-07.json', 'utf8'));
 const ch8 = JSON.parse(readFileSync('src/data/chapt-08.json', 'utf8'));
 const ch9 = JSON.parse(readFileSync('src/data/chapt-09.json', 'utf8'));
 const ch10 = JSON.parse(readFileSync('src/data/chapt-10.json', 'utf8'));
+const ch11 = JSON.parse(readFileSync('src/data/chapt-11.json', 'utf8'));
+const ch12 = JSON.parse(readFileSync('src/data/chapt-12.json', 'utf8'));
 const verse = (ch3.exercise.find(a => a.type === 'spellVerse').answerWords || []).join(' ');
 // UNACCENTED, not unmarked (5E-SPEC2 §4.2). "With Accents" OFF forgives the
 // acute, the grave and the circumflex and NOTHING else, so a fixture that
@@ -761,7 +763,8 @@ await page.setViewportSize({ width: 390, height: 900 });
 // That is the point of writing them as sweeps rather than as lists.
 // 5G: chapters 9 and 10 join it in turn, for the same reason.
 const CHAPTERS = { chapt_1: ch1, chapt_2: ch2, chapt_3: ch3, chapt_4: ch4, chapt_5: ch5,
-                   chapt_6: ch6, chapt_7: ch7, chapt_8: ch8, chapt_9: ch9, chapt_10: ch10 };
+                   chapt_6: ch6, chapt_7: ch7, chapt_8: ch8, chapt_9: ch9, chapt_10: ch10,
+                   chapt_11: ch11, chapt_12: ch12 };
 const LEXICON = id => JSON.parse(readFileSync(`src/data/lexicon-chapt${String(id.split('_')[1]).padStart(2, '0')}.json`, 'utf8'));
 const promptGloss = () => page.locator('.card.speller .flash-pane .value').first().innerText();
 // WHICH ITEM the word speller is on. Not the prompt: chapter 7's adjective
@@ -1790,23 +1793,34 @@ await page.setViewportSize({ width: 390, height: 900 });
     return true;
   };
   const mismatches = [];
+  const replaced = [];
   const covered = [];
   for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
     for (const activity of activitiesOf(chapter)) {
       for (const topic of (activity && activity.topics) || []) {
         for (const block of topic.content || []) {
-          const titles = [block.title, ...((block.charts || []).map(c => c.title))].filter(Boolean);
-          for (const title of titles) {
-            if (!topic.title || normalizeText(title) === normalizeText(topic.title)) continue;
+          // The heading the SURFACE prints for this block is the first one: a
+          // charts[] stack shows chart 1 at rest and renames itself only as
+          // More/Back steps, so asserting chart 3's title against the resting
+          // page would be asserting a state nobody is looking at.
+          const titles = [block.title, ...((block.charts || []).map(c => c && c.title))].filter(Boolean);
+          for (const title of titles.slice(0, 1)) {
+            // Fold through the RENDERER's key, not raw text: the Masc/Masculine
+            // pair is one heading spelled two ways, RichContent drops the
+            // chart's copy, and the topic's own heading is what prints.
+            if (!topic.title || headingKey(title) === headingKey(topic.title)) continue;
             // 5G: the chart title may say the topic's heading AND MORE of it
             // ("Present Middle Paradigm" -> "Present Middle Indicative
-            // Paradigm"). That is the same heading at two lengths, like the
-            // Masc/Masculine pair, and the host drops its own so one prints.
-            if (headingCovers(title, topic.title)) {
-              covered.push([chapterId, activity.id, topic.title, title]);
-              continue;
+            // Paradigm"). 5H widens that to any DIFFERENT panel heading: the
+            // chapter-11 paradigm topics are named for the original's radio
+            // labels ('"That" Paradigm') while the panel is headed with the
+            // lemma, and the original drops the radio column on those screens.
+            // Either way the host drops its own heading so exactly one prints,
+            // which the surface loop below asserts pair by pair.
+            covered.push([chapterId, activity.id, topic.title, title]);
+            if (!headingCovers(title, topic.title)) {
+              replaced.push(`${chapterId} ${JSON.stringify(topic.title)} vs ${JSON.stringify(title)}`);
             }
-            mismatches.push(`${chapterId} ${JSON.stringify(topic.title)} vs ${JSON.stringify(title)}`);
           }
         }
       }
@@ -1815,8 +1829,16 @@ await page.setViewportSize({ width: 390, height: 900 });
   // Every remaining mismatch must be an abbreviation of the same heading, and
   // the only one the renderer's key expands is "masc".
   const unhandled = mismatches.filter(m => !/masc/i.test(m) || !ABBREVIATIONS.test(m));
-  check('5E-R1 the only topic/chart title mismatch in chapters 1-5 is the one the dedup key handles',
+  check('5E-R1 no topic/chart title pair reaches the surface unresolved by the fold',
     unhandled.length === 0, mismatches.length ? mismatches.join('; ') : 'no mismatches at all');
+  // The fold key exists for exactly one abbreviation pair, and a second one
+  // appearing in the data would silently double a heading again.
+  check('5E-R1 the heading fold still equalises the one abbreviation pair it was written for',
+    headingKey('First Declension—Masc') === headingKey('First Declension—Masculine')
+      && ABBREVIATIONS.test('First Declension—Masc'),
+    'masc -> masculine');
+  check(`5E-R1 every REPLACED heading pair is a chapter-11 radio-label/panel-heading pair`,
+    replaced.every(pair => pair.startsWith('chapt_11')), replaced.join('; ') || 'none');
 
   // ...and on the SURFACE: a covered pair prints ONE heading, the fuller one,
   // which is the heading the original prints in its panel. Two stacked
@@ -2151,7 +2173,12 @@ for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
 // 5G: the ledger read-back sweep covers chapters 9 and 10 too — rows 79-95 of
 // DRILLBEHAVIORLEDGER.csv were CONFIRMED before either chapter was built, so
 // this is the assertion that the shipped surfaces agree with the stamp.
-const CH_5F = { chapt_6: ch6, chapt_7: ch7, chapt_8: ch8, chapt_9: ch9, chapt_10: ch10 };
+// 5H: chapters 11 and 12 join the ledger read-back for the same reason —
+// DRILLBEHAVIORLEDGER.csv rows 96-115 were CONFIRMED before either chapter was
+// built, so this sweep is what proves the shipped surfaces agree with the
+// stamp rather than with a component default.
+const CH_5F = { chapt_6: ch6, chapt_7: ch7, chapt_8: ch8, chapt_9: ch9, chapt_10: ch10,
+                chapt_11: ch11, chapt_12: ch12 };
 
 // ---- the ledger, read off the SURFACE, activity by activity --------------
 // `audioTiming`, the Pronounce-Each default and the Previous/Next pair are
@@ -4593,6 +4620,173 @@ for (const [itemIndex, greek, personNumber] of [
   await shot('w1-ch8-reflexive-clips');
 }
 
+// ===================================================================
+// 5H-SPEC1 W9 / 7.3: chapters 11 and 12
+// ===================================================================
+// Everything above already sweeps both chapters (they are in CHAPTERS and in
+// CH_5F). What follows is what only they have.
+{
+  const cardButton = name => page.locator('.card').getByRole('button', { name, exact: true });
+  const seekPrompt = async (chapterId, activityId, prompt, limit) => {
+    await go(`#/activity/${chapterId}/${activityId}`);
+    for (let step = 0; step < limit; step += 1) {
+      const shown = normalizeText(await page.locator('.card .prompt').first().innerText());
+      if (shown === normalizeText(prompt)) return true;
+      const next = cardButton('Next');
+      if (!await next.count() || await next.isDisabled()) return false;
+      await next.click();
+      await page.waitForTimeout(40);
+    }
+    return false;
+  };
+  const modalTitle = async () => normalizeText(
+    await page.locator('.modal .pg-title, .modal .modal-title').first().innerText());
+
+  // ---- 7.3(a) the three-stage grid with an EIGHT-value final stage --------
+  // Chapter 10 generalised twoStageGrid to N stages; chapter 11 is the first
+  // data to use three, and its last stage is the original's 2x4 case block.
+  await go('#/activity/chapt_11/c11_drill_this_that');
+  const stageInfo = await page.evaluate(() => [...document.querySelectorAll('.card .stage-grid')]
+    .map(s => ({ count: s.querySelectorAll('.tile').length,
+      paradigm2col: !!s.querySelector('.paradigm2col') })));
+  check('5H ch11 This and That Drill: three option stages of 2 / 3 / 8',
+    stageInfo.length === 3 && stageInfo[0].count === 2 && stageInfo[1].count === 3
+      && stageInfo[2].count === 8,
+    JSON.stringify(stageInfo));
+
+  // ---- 7.3(b) answerAlt on a THREE-stage item ---------------------------
+  // The 5F check covered a two-stage tuple. Chapter 11's ambiguous forms are
+  // three-stage: the original's key grades masculine AND neuter right for
+  // toutou, so the alternate tuple has to commit as correct here too.
+  const threeStage = ch11.drill.find(a => a.id === 'c11_drill_this_that');
+  const altItem = threeStage.items.find(item => Array.isArray(item.answerAlt) && item.answerAlt.length);
+  {
+    const found = await seekPrompt('chapt_11', 'c11_drill_this_that', altItem.greek, threeStage.items.length);
+    check(`5H ch11 answerAlt: reached the ambiguous form "${altItem.greek}"`, found);
+    if (found) {
+      const alt = altItem.answerAlt[0];
+      for (let stage = 0; stage < alt.length; stage += 1) {
+        await page.locator('.card .stage-grid').nth(stage)
+          .getByRole('button', { name: alt[stage], exact: true }).click();
+        await page.waitForTimeout(80);
+      }
+      const kind = await feedbackKind();
+      check(`5H ch11 answerAlt: the alternate tuple [${alt.join(' / ')}] grades CORRECT`,
+        kind === 'ok', `feedback ${kind}`);
+    }
+  }
+
+  // ---- 7.3(c) per-item hintRef switching, both chapters ------------------
+  // The assertion the spec asks for in as many words: the modal TITLE changes
+  // between an houtos item and an ekeinos item, and between a luo item and an
+  // eimi item.
+  for (const [chapterId, activityId, limit, formA, formB] of [
+    ['chapt_11', 'c11_drill_this_that', 30, 'οὗτος', 'ἐκεῖνος'],
+    ['chapt_12', 'c12_drill_parsing', 23, 'ἔλυες', 'ἦμεν']
+  ]) {
+    const titles = [];
+    for (const form of [formA, formB]) {
+      const found = await seekPrompt(chapterId, activityId, form, limit);
+      if (!found) { titles.push(null); continue; }
+      await cardButton('Hint').click();
+      await page.waitForSelector('.modal', { timeout: 8000 });
+      await page.waitForTimeout(180);
+      titles.push(await modalTitle());
+      await page.locator('.modal').getByRole('button', { name: 'Close', exact: true }).click();
+      await page.waitForTimeout(140);
+    }
+    check(`5H D-46 ${activityId}: the Hint chart differs between "${formA}" and "${formB}"`,
+      !!titles[0] && !!titles[1] && titles[0] !== titles[1], JSON.stringify(titles));
+  }
+
+  // ---- 7.3(d) a named toggle keeps its say-all across states -------------
+  // Both halves of a demonstrative paradigm share ONE recording, so the button
+  // must still be present and still live after the toggle.
+  await go('#/activity/chapt_11/c11_learn_demonstratives');
+  await gotoTopic(1);
+  const sayAcross = () => page.evaluate(() => {
+    const say = [...document.querySelectorAll('.card button')]
+      .find(b => b.innerText.trim() === 'Say Paradigm');
+    const sub = document.querySelector('.card .pg-subtitle');
+    return { present: !!say, disabled: say ? say.disabled : null, sub: sub && sub.innerText.trim() };
+  });
+  const sayBefore = await sayAcross();
+  await page.locator('.card [data-paradigm-switch="named"]').first().click();
+  await page.waitForTimeout(180);
+  const sayAfter = await sayAcross();
+  check('5H ch11 named toggle: Say Paradigm survives the Singular/Plural switch',
+    sayBefore.present && sayAfter.present && !sayBefore.disabled && !sayAfter.disabled
+      && sayBefore.sub !== sayAfter.sub,
+    `${JSON.stringify(sayBefore)} -> ${JSON.stringify(sayAfter)}`);
+
+  // ---- 7.3(e) the six-chart More/Back stack and its bounds ---------------
+  await go('#/activity/chapt_11/c11_learn_relatives');
+  await gotoTopic(3);
+  const stack = [];
+  for (let step = 0; step < 8; step += 1) {
+    stack.push(await page.evaluate(() => {
+      const btn = name => [...document.querySelectorAll('.card button')]
+        .find(b => b.innerText.trim() === name);
+      const back = btn('Back'), more = btn('More');
+      const title = document.querySelector('.card .pg-title');
+      const sub = document.querySelector('.card .pg-subtitle');
+      return { title: title && title.innerText.trim(), sub: sub && sub.innerText.trim(),
+        back: back ? back.disabled : null, more: more ? more.disabled : null };
+    }));
+    const more = page.locator('.card button', { hasText: /^More$/ }).first();
+    if (!await more.count() || await more.isDisabled()) break;
+    await more.click();
+    await page.waitForTimeout(140);
+  }
+  check('5H ch11 reflexive stack: SIX charts, Back disabled at the first and More at the last',
+    stack.length === 6 && stack[0].back === true && stack[0].more === false
+      && stack[5].more === true && stack[5].back === false
+      && new Set(stack.map(s => `${s.title} ${s.sub}`)).size === 6,
+    JSON.stringify(stack));
+
+  // ---- 7.3(f) Greek perItem options on the Augment Drill, and its gate ---
+  // Rule B-last plus the answer-clip gate (5H-SPEC1 3.5): the drill mounts
+  // item 1, mounts SILENT because it is afterGuess, the lemma is INK and
+  // Pronounce is dead until the guess, and both go live afterwards.
+  await go('#/activity/chapt_12/c12_drill_augment');
+  await page.waitForTimeout(450);
+  const augmentPanel = () => page.evaluate(() => {
+    const card = document.querySelector('.card');
+    const prompt = card.querySelector('.prompt');
+    const pron = [...card.querySelectorAll('.btn')].find(b => b.innerText.trim() === 'Pronounce');
+    return { tag: prompt.tagName, tappable: prompt.classList.contains('greek-say'),
+      gloss: !!card.querySelector('.prompt-gloss'), cite: !!card.querySelector('.prompt-citation'),
+      options: [...card.querySelectorAll('.options .tile')].map(t => t.innerText.trim()),
+      greekOptions: [...card.querySelectorAll('.options .tile')].every(t => t.classList.contains('greek')),
+      pronounceDisabled: pron ? pron.disabled : null };
+  });
+  const augmentBefore = await augmentPanel();
+  const augmentClips = await clips();
+  check('5H ch12 Augment Drill: three GREEK options and a three-line prompt panel',
+    augmentBefore.options.length === 3 && augmentBefore.greekOptions
+      && augmentBefore.gloss && augmentBefore.cite, JSON.stringify(augmentBefore));
+  check('5H ch12 Augment Drill: mounts SILENT (afterGuess, B-last)',
+    !augmentClips.some(c => c.startedAt), JSON.stringify(augmentClips));
+  check('5H ch12 Augment Drill: before the guess the lemma is INK and Pronounce is disabled',
+    augmentBefore.tag === 'DIV' && !augmentBefore.tappable
+      && augmentBefore.pronounceDisabled === true, JSON.stringify(augmentBefore));
+  await page.locator('.card .options .tile').first().click();
+  await page.waitForTimeout(600);
+  const augmentAfter = await augmentPanel();
+  check('5H ch12 Augment Drill: after the guess the lemma taps and Pronounce is live',
+    augmentAfter.tag === 'BUTTON' && augmentAfter.tappable
+      && augmentAfter.pronounceDisabled === false, JSON.stringify(augmentAfter));
+
+  // ---- 7.3(g) the cumulative 12-word Scripture Memory grid ---------------
+  // New relative to chapter 10: the pool spans BOTH halves of Mat 6:33.
+  await go('#/activity/chapt_11/c11_drill_scripture_memory');
+  const smOptions = await page.evaluate(() =>
+    [...document.querySelectorAll('.card .options .tile')].map(t => t.innerText.trim()));
+  const smItems = ch11.drill.find(a => a.id === 'c11_drill_scripture_memory').items;
+  check('5H ch11 Scripture Memory Drill: one static 12-option grid over both halves of Mat 6:33',
+    smOptions.length === 12 && smItems.length === 12,
+    `${smOptions.length} options / ${smItems.length} items`);
+}
 
 await browser.close();
 const failed = results.filter(r => !r.ok);

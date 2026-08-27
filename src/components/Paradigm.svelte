@@ -14,12 +14,31 @@
   // audio clip. Endings rows are bare morphemes with no clips of their own, so
   // they render in ink rather than tappable blue.
   import { play, stop as stopAudio } from '../lib/audio.js';
-  import { splitTaps } from '../lib/greek.js';
+  import { headingKey } from '../lib/content.js';
+  import { splitGreekRuns, splitTaps } from '../lib/greek.js';
   import EndingsGrid from './EndingsGrid.svelte';
   import MeaningsCard from './MeaningsCard.svelte';
   import ParadigmActions from './ParadigmActions.svelte';
   export let paradigm;
   export let title = null;
+  // The heading the HOST already printed above this chart, so a chart title
+  // that repeats it prints once (the same contract RichContent applies to a
+  // block title). Only the `charts[]` fallback below consults it: a title the
+  // host passed in explicitly has already been folded.
+  export let suppressTitle = null;
+  // D-40: the panel heading is itself a Greek tap where the original wires one
+  // ("Imperfect Active Indicative of λύω" plays λύω). The HOST supplies the
+  // clip -- chapter 12 declares it on the topic (or on the Quick Review
+  // activity) and the chart title is what ends up printing that heading, so
+  // the tap follows the heading rather than the block it was declared on.
+  export let titleAudio = null;
+  // A form -> clip map the HOST declared FOR THIS PAGE'S OWN TEXT (chapter
+  // 12's topic-level `audioMap`, which names θέλω and ἤθελεν because the ἔχω
+  // note is where they are displayed). A chart's own `noteTaps` still wins.
+  // Deliberately not the chapter-wide tap map: that would silently blue words
+  // in older chapters' notes that the original prints as plain notation
+  // (chapter 5's "Note ὁ and ἡ are enclitics").
+  export let noteTaps = null;
   // The control row (Say Paradigm, and the switch where a chart has one)
   // normally lives inside the chart body. A host that pins its own row —
   // the composite two-state Hint modal, whose footer holds Say + toggle +
@@ -65,6 +84,18 @@
     ? paradigm.charts
     : [paradigm || {}];
   $: chart = charts[chartIndex] || charts[0] || {};
+  // 5H W3: a `charts[]` block carries its heading on each CHART, not on the
+  // wrapper — chapter 11 pages "ἐκεῖνος — that/those" over a topic whose radio
+  // label is '"That" Paradigm', and the reflexive stack renames itself First /
+  // Second / Third Person as More/Back steps. A host that has its own title
+  // still wins (chapter 8's "Third Person Paradigm" sits on the wrapper), and a
+  // chart title that only repeats the heading the host already printed is
+  // dropped rather than stacked under it — chapters 4/5/7 title their charts
+  // exactly as their topics are titled and must keep printing ONE heading.
+  $: chartHeading = title
+    || (charts.length > 1 && chart.title
+      && !(suppressTitle && headingKey(chart.title) === headingKey(suppressTitle))
+      ? chart.title : null);
   // TWO LEMMA SHAPES. Chapters 4 and 5 ship an object ({greek, gloss, audio});
   // chapter 7 ships the headword as a bare STRING with the gloss beside it on
   // the chart ("lemma": "ἀγαθός", "gloss": "good"), which printed the lemma
@@ -240,8 +271,12 @@
          the same. -->
     {#if showingEndings}
       <div class="pg-title">{chart.endings.label || 'Endings'}</div>
-    {:else if title}
-      <div class="pg-title">{title}</div>
+    {:else if chartHeading}
+      <div class="pg-title">
+        {#if titleAudio}
+          {#each splitGreekRuns(chartHeading) as run}{#if run.greek}<button class="greek-tap greek" on:click={() => play(titleAudio)}>{run.t}</button>{:else}{run.t}{/if}{/each}
+        {:else}{chartHeading}{/if}
+      </div>
     {/if}
     <!-- 5F-FEEDBACK.pdf item 8/9: a per-chart secondary heading, changing as
          chartIndex changes -- unlike `title` (an outer, static prop), this
@@ -361,7 +396,7 @@
            chart.noteTaps is tappable inside the note, same contract as
            RichContent's greekTaps — chapter 8's emphatic forms ἐμοῦ, ἐμοί,
            ἐμέ each play their own clip. Unlisted text stays ink. -->
-      <div class="pg-note">{#each splitTaps(chart.note, chart.noteTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => play(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}</div>
+      <div class="pg-note">{#each splitTaps(chart.note, chart.noteTaps || noteTaps) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => play(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}</div>
     {/if}
 
     <!-- THE SAY-ALL ROW, IN FLOW. It scrolls with its chart everywhere except

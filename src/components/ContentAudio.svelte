@@ -7,7 +7,7 @@
   // modes are pedagogical layouts reconstructed from the original's yellow
   // panels; their per-mode data contracts are documented in HANDOFF-4 §5 (B1).
   import { onDestroy } from 'svelte';
-  import { getGreekTapMap, headingCovers, resolveItems, shuffle } from '../lib/content.js';
+  import { getGreekTapMap, headingKey, resolveItems, shuffle } from '../lib/content.js';
   import { splitGreekRuns } from '../lib/greek.js';
   import { play, playOnLoad, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
@@ -94,8 +94,21 @@
   // the chart's title stands and this heading steps aside. The reverse case
   // (the chart title is an abbreviation of the topic's, chapter 5) is handled
   // the other way round inside RichContent and is untouched.
+  // 5H generalises the rule from "the chart says the topic's heading and MORE"
+  // to "the chart prints a panel heading of its own". Chapter 11's paradigm
+  // topics are named for the original's RADIO LABELS ('"That" Paradigm') while
+  // the yellow panel is headed with the lemma (ἐκεῖνος — that/those) — and the
+  // original drops the radio column entirely on those screens, so the panel
+  // heading is the only heading there. A chart titled exactly as its topic is
+  // (chapters 4, 5, 7, 8) is NOT a second heading: RichContent drops the
+  // chart's copy and this one stays, which is why the comparison folds through
+  // the same headingKey the renderer uses.
   $: topicTitleCovered = !!currentTopic && (currentTopic.content || [])
-    .some(block => block && headingCovers(block.title, currentTopic.title));
+    .some(block => block && printsOwnHeading(block, currentTopic.title));
+  function printsOwnHeading(block, topicTitle) {
+    const titles = [block.title, ...((block.charts || []).map(chart => chart && chart.title))];
+    return titles.some(title => title && headingKey(title) !== headingKey(topicTitle));
+  }
   $: activityGreekTaps = activity.greekTaps === true
     ? getGreekTapMap(chapter.id)
     : activity.greekTaps;
@@ -288,6 +301,8 @@
       <RichContent
         blocks={currentTopic.content || []}
         suppressTitle={currentTopic.title}
+        titleAudio={topicTitleCovered ? currentTopic.titleAudio || null : null}
+        noteTaps={currentTopic.audioMap || null}
         greekTaps={currentTopic.greekTaps === true
           ? getGreekTapMap(chapter.id)
           : (currentTopic.greekTaps || activityGreekTaps)} />
@@ -329,7 +344,8 @@
            anywhere), so this reads title off the PAGE the same way every
            other paradigmChart activity does -- no per-shape branch left to
            drift out of sync with the data. -->
-      <Paradigm paradigm={page} title={activity.chartTitle || page.title || null} />
+      <Paradigm paradigm={page} title={activity.chartTitle || page.title || null}
+                titleAudio={activity.titleAudio || null} />
       <!-- Paradigm.svelte already draws chart.sayWhole INSIDE the card when
            the chart carries one (every chart here does). This block adds
            only the More/Back stepper beside it -- an EXTERNAL sayWhole is

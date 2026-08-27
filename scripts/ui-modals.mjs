@@ -223,6 +223,42 @@ const SURFACES = [
     await page.waitForTimeout(180);
   }],
   ['ch7-adjective-case-hint', hint('chapt_7', 'c7_drill_case', false)],
+  // 5H: chapter 11's four hints are form-dependent (D-46), so the two that
+  // route to two different charts are sought by FORM rather than trusted to
+  // shuffle -- an οὗτος item and an ἐκεῖνος item open different modals, and
+  // both have to fit at every height. Chapter 12's parsing hint does the same
+  // across λύω and εἰμί. Each is a §4.5 lone centred toggle with no say-all,
+  // so the hint-say column of the assertion is false throughout.
+  ['ch11-this-that-hint-this', hintAtPrompt('chapt_11', 'c11_drill_this_that', 'οὗτος', 30, 0), true, false],
+  ['ch11-this-that-hint-this-plural', hintAtPrompt('chapt_11', 'c11_drill_this_that', 'οὗτος', 30, 1), true, false],
+  ['ch11-this-that-hint-that', hintAtPrompt('chapt_11', 'c11_drill_this_that', 'ἐκεῖνος', 30, 0), true, false],
+  ['ch11-who-the-hint-article', hintAtPrompt('chapt_11', 'c11_drill_who_the', 'τῆς', 30, 0), true, false],
+  ['ch11-who-the-hint-relative', hintAtPrompt('chapt_11', 'c11_drill_who_the', 'ὅς', 30, 0), true, false],
+  ['ch11-translation-this-that-hint', hint('chapt_11', 'c11_drill_translation_this_that', false, 0), true, false],
+  ['ch11-translation-relative-hint', hint('chapt_11', 'c11_drill_translation_relative', false, 0), true, false],
+  ['ch11-demonstrative-examples-popup', async () => {
+    await go('#/activity/chapt_11/c11_learn_demonstratives');
+    await page.locator('.card details summary').first().click();
+    await page.waitForTimeout(150);
+    await page.locator('.card .popup-link').first().click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch11-verse-speller-greek-keyboard', async () => {
+    await go('#/activity/chapt_11/c11_ex_scripture_speller');
+    await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch12-parsing-hint-luo', hintAtPrompt('chapt_12', 'c12_drill_parsing', 'ἔλυες', 23, 0), true, false],
+  ['ch12-parsing-hint-luo-mp', hintAtPrompt('chapt_12', 'c12_drill_parsing', 'ἔλυες', 23, 1), true, false],
+  ['ch12-parsing-hint-eimi', hintAtPrompt('chapt_12', 'c12_drill_parsing', 'ἦμεν', 23, 0), true, false],
+  ['ch12-parsing-hint-echo', hintAtPrompt('chapt_12', 'c12_drill_parsing', 'ἦμεν', 23, 1), true, false],
+  ['ch12-translation-hint', hint('chapt_12', 'c12_drill_translation', false, 0), true, false],
+  ['ch12-augment-hint', hint('chapt_12', 'c12_drill_augment', false)],
+  ['ch12-verse-speller-greek-keyboard', async () => {
+    await go('#/activity/chapt_12/c12_ex_scripture_speller');
+    await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();
+    await page.waitForTimeout(180);
+  }],
   ['ch1-speller-greek-keyboard', async () => {
     await go('#/activity/chapt_1/c1_ex_speller');
     await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();

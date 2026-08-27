@@ -14,7 +14,7 @@ import { readFileSync } from 'node:fs';
 const args = Object.fromEntries(process.argv.slice(2)
   .filter(a => a.startsWith('--'))
   .map(a => { const i = a.indexOf('='); return i === -1 ? [a.slice(2), true] : [a.slice(2, i), a.slice(i + 1)]; }));
-const CHAPTERS = String(args.chapters || 'chapt_9,chapt_10').split(',');
+const CHAPTERS = String(args.chapters || 'chapt_11,chapt_12').split(',');
 const BASE = process.env.BASE || `http://localhost:${args.port || 4173}`;
 async function launch() {
   try { return await chromium.launch(); } catch {

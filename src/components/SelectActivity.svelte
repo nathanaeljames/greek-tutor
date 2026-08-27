@@ -311,6 +311,25 @@
   // on arrival) rather than falling silent; check:shapes rejects any value
   // outside the five, and apply-behavior-matrix.py stamps every shipped drill.
   $: audioTiming = activity.audioTiming || 'beforeGuess';
+  // 5H-SPEC1 3.5 / proposed D-50 -- THE ANSWER-CLIP PROMPT GATE. Chapter 12's
+  // Augment Drill shows a present-tense lemma and asks which of three GREEK
+  // forms is its correctly augmented imperfect; the item's clip (ledger row
+  // 108, CONFIRMED) records the AUGMENTED ANSWER, not the lemma on screen, so
+  // the prompt tap and Pronounce would hand the answer over before the guess.
+  //
+  // Stated structurally rather than by activity id: when the prompt is Greek
+  // AND the options are Greek AND the clip is afterGuess, that clip cannot be
+  // the prompt's own -- the answer is one of the displayed forms and the
+  // recording is of it. Until the item is answered the lemma renders in INK
+  // (the Syllable Division exception treatment, directive 9) and Pronounce is
+  // disabled; afterwards both go live and replay the clip. The triple matches
+  // exactly one activity across all twelve chapters today and covers the next
+  // drill built this way without an edit here. English-prompt Greek-option
+  // drills (every Vocabulary: English to Greek) are untouched -- their prompt
+  // is not Greek.
+  $: answerClipPrompt = promptIsGreek && greekOptions && audioTiming === 'afterGuess';
+  // Whether the prompt tap and Pronounce may speak the clip right now.
+  $: promptClipLive = !answerClipPrompt || answered;
   // §5.5: the item is final and nothing is going to move it. Which outcomes
   // those are is the class's business, not this component's.
   $: waitingForNext = answered && waitsForNext(advancePolicy, answeredCorrect);
@@ -526,7 +545,11 @@
       : [...shownReveals, field];
   }
 
-  $: glossRevealed = !!current && shownReveals.some(field => revealValue(field) === current.gloss);
+  // ...or, on a `promptGloss` drill, already standing in the prompt panel from
+  // the moment the item mounted. Either way the answer reveal does not print
+  // the same English a second time.
+  $: glossRevealed = !!current && (!!activity.promptGloss
+    || shownReveals.some(field => revealValue(field) === current.gloss));
 
   // §2.3: pressing Previous/Next stops the clip and shows the item AT ONCE.
   // The afterGuess wait is a courtesy, not a lock.
@@ -577,7 +600,7 @@
            what made marks ride low: its origin depends on line-height and on
            which metric the browser picks for the strut. -->
       <button class="prompt greek greek-say red-mark" aria-label={current.prompt} disabled={!current.promptAudio} on:click={() => current.promptAudio && play(current.promptAudio)}>{#each redParts as part}{#if part.marks}<span class="rm-cluster" class:legacy={part.layout} style={part.bx || part.aw ? `--bx:${part.bx || 0}em; --aw:${part.aw || 0}em` : null}><span class="rm-marks {part.layout || ''}" class:capital={part.capital} aria-hidden="true">{#each part.marks as mark}<span class="rm-mark {mark.slot || ''}" class:red={mark.red} style={mark.x != null ? `--mx:${mark.x}em; --my:${mark.y}em${mark.clip ? `; clip-path:polygon(${mark.clip[0]}em -3em, ${mark.clip[1]}em -3em, ${mark.clip[1]}em 3em, ${mark.clip[0]}em 3em)` : ''}` : null}>{mark.glyph}</span>{/each}</span><span class="rm-base">{part.base}</span></span>{:else if part.red}<span class="mark-red">{part.text}</span>{:else}{part.text}{/if}{/each}</button>
-    {:else if promptIsGreek && current.promptAudio}
+    {:else if promptIsGreek && current.promptAudio && promptClipLive}
       <!-- The red-mark branch above deliberately does NOT take this class: its
            mark offsets are em-relative and correct, and nothing about mark
            geometry moves in this round.
@@ -594,7 +617,10 @@
       {@const parts = sentenceParts(current.prompt, current.underline)}
       <div class="prompt select-sentence">{parts[0]}<u>{parts[1]}</u>{parts[2]}</div>
     {:else}
-      <div class="prompt" class:greek={promptIsGreek}>{current.prompt}</div>
+      <!-- INK, not link blue: either the prompt carries no clip at all, or the
+           answer-clip gate above is holding its clip until the guess. `long`
+           rides along so the type does not jump size when the gate opens. -->
+      <div class="prompt" class:greek={promptIsGreek} class:long={promptIsGreek && longPrompt}>{current.prompt}</div>
     {/if}
     <!-- 5F §2.5: the case tag / parse tag / disambiguator sits BESIDE the
          prompt, on the same line, in plain ink at a smaller size — "πρός (to)",
@@ -605,6 +631,13 @@
     {#if current.note && !(promptIsGreek && current.promptAudio)}
       <div class="prompt-note standalone">{current.note}</div>
     {/if}
+    <!-- 5H-SPEC1 3.5: the Augment Drill's prompt panel is THREE lines -- the
+         present lemma, its English gloss beneath it, and the reference in the
+         corner. `promptGloss` says the item's gloss belongs to the PROMPT
+         PANEL rather than to a Translate reveal (this drill has no Translate
+         control), so it prints under the lemma from the moment the item
+         mounts. It is English and never a tap target. -->
+    {#if activity.promptGloss && current.gloss}<div class="prompt-gloss">{current.gloss}</div>{/if}
     <!-- The scripture citation the original prints beside the drill word. -->
     {#if current.citation}<div class="prompt-citation">{current.citation}</div>{/if}
     {#if current.pending}
@@ -733,7 +766,7 @@
         <!-- Speaks the prompt where the prompt is the Greek; on the Greek Verb
              Drill (English prompt) it speaks the answer form, which is what
              the original's Pronounce does there. -->
-        {@const say = current.promptAudio || current.answerAudio}
+        {@const say = promptClipLive ? (current.promptAudio || current.answerAudio) : null}
         <button class="btn" disabled={!say} on:click={() => say && play(say)}>Pronounce</button>
       {/if}
       {#each orderedRevealControls as control}

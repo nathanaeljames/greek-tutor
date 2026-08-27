@@ -12,3 +12,7 @@ Now please give me the data and assembly script for chapter XX.
 --------
 
 Now please draft the final XX-SPEC1.md document. Remember, specs should contain instructions for full visual walkthrough, instructions to consider the rail walk documents I will be attaching but defer to the specs, instructions to generate a RESULTS and a BUILD document and the BUILD document MUST contain the full git diff for the assessment pipeline. The spec should also keep track of implementation time via wall clock.
+
+--------
+
+Implement buildout/XX-SPEC1.md. I am attaching the associated railwalks here for reference. As usual, do not commit or push anything to the remote repo.

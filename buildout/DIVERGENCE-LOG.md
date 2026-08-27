@@ -531,6 +531,23 @@ D-50 | process | THREE PERMANENT PROCESS RULES (2026-08-25):
      (2). Recorded here because repeated requests were repeatedly
      missed by both implementers. | Nathanael, 5H prep message.
 
+D-51 | ch12 | AUGMENT DRILL: THE ANSWER-CLIP PROMPT GATE. The drill's
+     clips (l_ad1-19, ledger row 108 CONFIRMED afterGuess) record the
+     AUGMENTED ANSWER, not the present-tense lemma on screen, so the
+     ordinary Greek-tap contract and the Pronounce button would both
+     hand the answer over before the guess. The port renders the
+     prompt lemma in INK (the Syllable Division exception treatment of
+     directive 9) and DISABLES Pronounce until the item is answered;
+     after the guess both go live and replay the clip. Derived
+     structurally in SelectActivity: prompt Greek + Greek options +
+     afterGuess timing, which matches this activity and no other in
+     twelve chapters. 5H-SPEC1 3.5 proposed this as "D-50"; that
+     number was already spent on the 2026-08-25 process rules, so it
+     is filed here. VERIFY-5H (d) decides whether the original leaks
+     the answer through Pronounce, i.e. whether the disabled-Pronounce
+     half is a deliberate improvement or a mirror. | 5H-SPEC1 3.5,
+     implementer.
+
 ## Auto-progress / advance rule matrix
 
 MOVED. The full exercise-by-exercise, chapter-by-chapter matrix —

@@ -39,6 +39,12 @@
   // chart. Same principle as dedupeExpanders below: the data is not ours to
   // edit, so the renderer declines to say it twice.
   export let suppressTitle = null;
+  // The clip for the heading a chart block prints, when the HOST has stepped
+  // aside and that title is the page's only heading (D-40, chapter 12).
+  export let titleAudio = null;
+  // Clips for Greek printed in a chart's `note` line, where the host declared
+  // them for this page's own text (chapter 12's topic `audioMap`).
+  export let noteTaps = null;
   // One delivered topic abbreviates Masculine to Masc while its chart spells
   // the word out ("First Declension—Masc" over "First Declension—Masculine",
   // chapter 5). They are the same heading in the original, not two stacked
@@ -411,6 +417,7 @@
       <div class="rc-greekrows" class:syllable-matrix={syllableMatrix} class:row-labels={rowLabels}
            class:gloss-only={b.layout === 'glossOnly'} class:english-pairs={b.layout === 'englishPairs'}
            class:compound-verbs={b.layout === 'compoundVerbs'}
+           class:contraction={b.layout === 'contraction'}
            class:titled={b.title} class:centered={b.centered} class:rc-gap-before={b.gapBefore}
            class:paired-gutter={b.pairedGutter}>
         <!-- `headerUnderline` USED TO BIND `head-underline` HERE, and does not
@@ -484,6 +491,36 @@
                 {/each}
               </span>
             </div>
+          {:else if b.layout === 'contraction'}
+            <!-- 5H §4 (ch12 Augments > Contraction Examples): the original
+                 prints each example as one line reading rule, augmented form,
+                 then the lemma the augment was added to -- "ε + α = η
+                 ἤκουον   ἀκούω + ε augment". BOTH Greek forms carry their own
+                 clip and tap; the rule is notation and stays ink. The
+                 derivation is one unit, so at phone widths it drops to its own
+                 line under the pair rather than splitting mid-equation. -->
+            <div class="rc-greekrow rc-contraction-row" style="--greek-cols:2">
+              <span class="rc-contraction-rule">{row.gloss}</span>
+              {#if row.audio}
+                <button class="rc-contraction-form greek greek-say" on:click={() => playAudio(row.audio)}>{row.greek}</button>
+              {:else}
+                <span class="rc-contraction-form greek">{row.greek}</span>
+              {/if}
+              <span class="rc-parts">
+                {#each equationParts(row) as part}
+                  {#if part.greek}
+                    {#if part.audio}
+                      <button class="rc-part greek greek-say" on:click={() => playAudio(part.audio)}>{part.greek}</button>
+                    {:else}
+                      <span class="rc-part greek">{part.greek}</span>
+                    {/if}
+                  {:else}
+                    <span class="rc-parttext">{part.text}</span>
+                  {/if}
+                {/each}
+              </span>
+            </div>
+
           {:else if row.parts}
             <!-- C6: an equation row (\u03b4\u03b9\u03ac + \u03b1\u1f50\u03c4\u03bf\u1fe6 becomes \u03b4\u03b9\u1fbd \u03b1\u1f50\u03c4\u03bf\u1fe6). Each Greek
                  part is its OWN tap target with its own clip; the connecting
@@ -626,7 +663,8 @@
       <!-- A conjugation/declension chart. Its own component because the same
            grid is ALSO a full-page contentAudio mode (paradigmChart) and the
            Hint popup on three chapter-3 drills — one renderer, three hosts. -->
-      <Paradigm paradigm={b} title={sameTitle(b.title) ? null : b.title} />
+      <Paradigm paradigm={b} title={sameTitle(b.title) ? null : b.title} {suppressTitle} {titleAudio}
+                noteTaps={b.noteTaps || noteTaps} />
 
     {:else if b.type === 'prepositionsChart'}
       <!-- 5F §2.1: chapter 6's ten prepositions as a DIAGRAM. The same block

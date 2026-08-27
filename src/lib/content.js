@@ -166,14 +166,23 @@ export function getGreekTapMap(chapterId) {
 
 // Every activity-level `audioMap` in a chapter, merged. First declaration wins,
 // so a form declared once cannot mean two clips on two pages.
+// 5H: chapters 11 and 12 declare the same map one level DOWN, on the topic
+// that prints the forms (the reflexive prose's αὐτός/ἀλλήλων, chapter 12's
+// compound-verb and θέλω lines), because only one topic of a seven-topic page
+// needs them. Both levels are read here, activity first, so a form still means
+// one clip chapter-wide and neither placement is a special case downstream.
 export function chapterAudioMap(chapter) {
   const map = {};
   if (!chapter) return map;
+  const absorb = source => {
+    for (const [form, audio] of Object.entries(source || {})) {
+      if (form && audio && !map[form]) map[form] = audio;
+    }
+  };
   for (const section of SECTIONS) {
     for (const activity of chapter[section] || []) {
-      for (const [form, audio] of Object.entries(activity.audioMap || {})) {
-        if (form && audio && !map[form]) map[form] = audio;
-      }
+      absorb(activity.audioMap);
+      for (const topic of activity.topics || []) absorb(topic.audioMap);
     }
   }
   return map;
@@ -373,6 +382,19 @@ function sensePool(chapter) {
     if (!lemma) continue;
     const senses = Array.isArray(lemma.senses) && lemma.senses.length ? lemma.senses : [null];
     let untaggedTaken = false;
+    // 5H: the Review Vocabulary Chart prints each word's NT frequency after
+    // its translation, and `showNtFreq` says so — but the number lives on the
+    // LEMMA and this pool hands the surface a CARD, so every senses-pool
+    // review chart (chapters 9, 10, 11 and 12) has been printing glosses with
+    // no numbers at all. A case-split lemma carries the count ONCE, on its
+    // first card: the original sets "ὑπέρ  for, about (gen.)(150)" over
+    // "above, beyond (acc.)" with no second number (ch11railwalk p20).
+    let freqTaken = false;
+    const freqFor = () => {
+      if (freqTaken || lemma.ntFreq == null) return null;
+      freqTaken = true;
+      return lemma.ntFreq;
+    };
     for (const sense of senses) {
       if (!sense || !sense.caseTag) {
         if (untaggedTaken) continue;          // the paired forms share one card
@@ -382,6 +404,7 @@ function sensePool(chapter) {
           display: lemma.lexicalForm || lemma.greek,
           greek: lemma.greek,
           gloss: lemma.gloss || lemma.glossShort || '',
+          ntFreq: freqFor(),
           audio: (sense && sense.audio) || lemma.audio || null
         });
         continue;
@@ -400,6 +423,7 @@ function sensePool(chapter) {
         greek: sense.greek || lemma.greek,
         caseTag: sense.caseTag || null,
         gloss: sense.gloss || sense.glossShort || '',
+        ntFreq: freqFor(),
         audio: sense.audio || lemma.audio || null
       });
     }

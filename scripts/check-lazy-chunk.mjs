@@ -28,7 +28,9 @@ const expected = [
   { chapterPattern: /^chapt-07-.*\.js$/, lexiconPattern: /^lexicon-chapt07-.*\.js$/, needle: 'An adjective is a word used to modify' },
   { chapterPattern: /^chapt-08-.*\.js$/, lexiconPattern: /^lexicon-chapt08-.*\.js$/, needle: 'A pronoun is a word that stands in place' },
   { chapterPattern: /^chapt-09-.*\.js$/, lexiconPattern: /^lexicon-chapt09-.*\.js$/, needle: 'There are two voices in English.' },
-  { chapterPattern: /^chapt-10-.*\.js$/, lexiconPattern: /^lexicon-chapt10-.*\.js$/, needle: 'In English we have several tenses.' }
+  { chapterPattern: /^chapt-10-.*\.js$/, lexiconPattern: /^lexicon-chapt10-.*\.js$/, needle: 'In English we have several tenses.' },
+  { chapterPattern: /^chapt-11-.*\.js$/, lexiconPattern: /^lexicon-chapt11-.*\.js$/, needle: 'We will explore three types of pronouns in this chapter.' },
+  { chapterPattern: /^chapt-12-.*\.js$/, lexiconPattern: /^lexicon-chapt12-.*\.js$/, needle: 'In English we have only one official past tense' }
 ];
 
 // 2. Chapter DATA must be ABSENT from the main bundle and PRESENT in its chunk.
