@@ -87,6 +87,21 @@ answered (that is the same leak by another route; see 5H-SPEC1 section
 3.5 and the proposed D-50). Check what the clip SAYS before applying
 A1; a name like `l_ad` ("augment drill") does not tell you.
 
+
+**A1c. The audio-leak gate (ratified 2026-08-27, VERIFY-5H (d) +
+VERIFY-5H-2).** When `audioTiming` is `afterGuess` AND the options are
+Greek AND the advance class is not `autoBoth`, the activity's prompt
+carries no tap and its Pronounce button is disabled until the item is
+answered; after the guess the clip plays (A2) and both become live.
+Rationale: in that shape the clip IS the answer, and a live Pronounce
+is a leak. Exclusions by ruling: every English-to-Greek vocabulary
+drill (autoBoth: a gated Pronounce beside auto-advance is a dead
+button) and every speller (pronouncing the target is the exercise's
+design). Applies across twelve chapters to exactly four activities:
+ch12 Augment Drill (row 108) and the ch3 Greek Verb Drill, ch4 Greek
+Noun Drill and ch5 First Declension Noun Drill (rows 25, 33, 41). The
+renderer states the condition structurally; no per-activity flag.
+
 **A2. `afterGuess` audio must FINISH before the next item appears.** The
 advance delay is `max(class minimum, audio duration)` — never shorter
 than the class minimum, longer whenever the clip needs it. Audio playing

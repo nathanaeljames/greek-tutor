@@ -950,15 +950,38 @@ def main():
         json.dump(ch, f, ensure_ascii=False, indent=1)
     with open(os.path.join(outdir, 'lexicon-chapt12.json'), 'w',
               encoding='utf-8') as f:
-        json.dump(build_lexicon(tbk, conv), f, ensure_ascii=False, indent=1)
+        json.dump(post_patches_lexicon(build_lexicon(tbk, conv)), f,
+                  ensure_ascii=False, indent=1)
     print(f'chapter 12: {len(ids)} distinct clips, '
           f'{len(ch["sequence"])} rail pages. OK.')
 
 
 def post_patches(doc):
+    """Stage 8.7: ratified rulings re-applied on rebuild (2026-08-26/27):
+    the Augment hint taps (RESPONSE 5) and the reviewVocab banner-key fix."""
     sp = [a for a in doc['exercise'] if a['id'] == 'c12_ex_scripture_speller'][0]
     assert 'Repeat This Exercise' not in sp['ui']['checkboxes']
+    qr = doc['quickReview'][0]
+    qr.pop('_verify', None)
+    qr.pop('_verify_note', None)
+    qr['_note'] = 'D-55 applied in lexicon-chapt12.json.'
+    ad = [a for a in doc['drill'] if a['id'] == 'c12_drill_augment'][0]
+    ad['hint']['audioMap'] = {'ἐκβάλλω': 'chapt_12_l_ex11',
+                              'ἐξεβάλλον': 'chapt_12_l_ex12',
+                              'ἀποκτείνω': 'chapt_12_l_ex13',
+                              'ἀπέκτεινον': 'chapt_12_l_ex14'}
+    ad['hint']['_tap_note'] = ('VERIFY-5H-RESPONSE 5: the four compound-verb '
+                               'forms in points 3 and 4 tap (same clips as '
+                               'the Augments topic).')
     return doc
+
+
+def post_patches_lexicon(lex):
+    """D-55 (VERIFY-5H (g))."""
+    m = lex['lemmas']['men']
+    m['gloss'] = 'on the one hand, indeed'
+    m['_note'] = 'D-55: "one the one hand" corrected (VERIFY-5H (g)).'
+    return lex
 
 
 if __name__ == '__main__':

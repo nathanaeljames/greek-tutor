@@ -157,7 +157,12 @@ header in the original?** Header → C6. No header → C5.
      the noun, the button toggles between those words
      (Singular/Plural, Paradigm/Endings, Middle/Passive,
      Active/Middle). Otherwise the label toggles More/Back
-     (λόγος/ἄνθρωπος, whose contrast is lexical).
+     (λόγος/ἄνθρωπος, whose contrast is lexical). A GREEK-ONLY
+     contrast is lexical for this purpose: whenever the one word that
+     differs between the two states is Greek, the label is More/Back,
+     never the Greek pair (ratified 2026-08-27, VERIFY-5H-2 (t); the
+     instance is the ch12 Imperfect Parsing Drill's εἰμί/ἔχω hint,
+     NIT-LOG N-2 RESOLVED).
 2. **Three or more screens** (ch8 Third Person Paradigm): Back and
    More as a pair on their own centered line beneath the say-all
    button. BOTH always visible; Back disabled on the first page, More

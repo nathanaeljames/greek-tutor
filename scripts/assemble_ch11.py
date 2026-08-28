@@ -1219,7 +1219,7 @@ def main():
     if errs:
         raise SystemExit('STOP: self-audit failed:\n' + '\n'.join(errs))
     ch = post_patches(ch)
-    lex = build_lexicon(tbk, conv)
+    lex = post_patches_lexicon(build_lexicon(tbk, conv))
     os.makedirs(outdir, exist_ok=True)
     with open(outfile, 'w', encoding='utf-8') as f:
         json.dump(ch, f, ensure_ascii=False, indent=1)
@@ -1231,12 +1231,93 @@ def main():
 
 
 def post_patches(doc):
-    """Ratified divergences re-applied on top of the verbatim build.
-    None yet for chapter 11 (D-42 is enforced at authoring: no Repeat
-    control is ever emitted)."""
+    """Stage 8.7: re-applies every ratified divergence so a regeneration
+    cannot regress a hand-approved fix. D-52..D-54, D-56, the (p) say-all
+    ruling, the (o) objectives contract and the _verify banner fix
+    (2026-08-26/27). Update THIS function when a new ruling lands."""
+    import json as _json
     sp = [a for a in doc['exercise'] if a['id'] == 'c11_ex_scripture_speller'][0]
     assert 'Repeat This Exercise' not in sp['ui']['checkboxes']
+    # banner fix + D-52: topic-level _verify draws a learner-facing banner
+    intro = doc['learn'][3]['topics'][0]
+    intro.pop('_verify', None)
+    intro['_verify_note'] = ('D-52 RESTORE (VERIFY-5H (a)): the original\'s '
+                             'Introduction radio shows the Reflexive/Reciprocal '
+                             'box; this is the TBK\'s own unshown Relative '
+                             'Pronouns text (0x4136e + 0x420fc).')
+    # D-53: examples modal -- one line for Jn 13:35, acute on toutou
+    rows = doc['learn'][2]['popups'][0]['content'][0]['rows']
+    if rows[2].get('greek2'):
+        rows[2]['greek'] += ' ' + rows[2].pop('greek2')
+        rows[2]['_note'] = ('Line merged per VERIFY-5H-RESPONSE item 1 (the '
+                            'original wrapped for width only).')
+    rows[1]['greek'] = rows[1]['greek'].replace('\u03c4\u03bf\u1f7a\u03c4\u03bf\u03c5', 'τούτου')
+    rows[1].pop('_verify', None)
+    rows[1]['_note'] = 'D-53: grave on toutou corrected to acute (VERIFY-5H (m)).'
+    # D-53: breathing on ekeinoi (translation item 13)
+    it = doc['drill'][2]['items'][12]
+    it['greek'] = it['greek'].replace('\u03b5\u03ba\u03b5\u1fd6\u03bd\u03bf\u03af', 'ἐκεῖνοί')
+    it.pop('_verify', None)
+    it['_note'] = 'D-53: smooth breathing restored on ekeinoi (VERIFY-5H (m)).'
+    # D-56: k_osnap RECORDS ous; every neuter-a cell plays k_osnns instead
+    s = _json.dumps(doc, ensure_ascii=False).replace('chapt_11_k_osnap',
+                                                     'chapt_11_k_osnns')
+    doc = _json.loads(s)
+    sp2 = [a for a in doc['exercise'] if a['id'] == 'c11_ex_speller_relative'][0]
+    i24 = sp2['items'][23]
+    if i24['prompt'].startswith('whom (masc. nom. pl.)'):
+        i24['prompt'] = 'who (masc. nom. pl.)'
+        i24['_note'] = 'D-54: "whom" corrected to "who" (VERIFY-5H (h)).'
+    i14 = sp2['items'][13]
+    assert i14['answer'] == 'οὕς'
+    i14['audio'] = 'chapt_11_k_osnap'
+    i14.pop('_audio_note', None)
+    i14['_audio_note'] = ('Mirrors the original dispatch k_osnap, which RECORDS '
+                          'ous (VERIFY-5H (q)); wired nowhere else.')
+    # (o) objectives contract
+    if isinstance(doc['objectives'][0], str):
+        doc['objectives'][0] = {
+            'text': doc['objectives'][0],
+            'audioMap': {'ἐκεῖνος': 'chapt_11_k_ekemns',
+                         'οὗτος': 'chapt_11_k_outmns'},
+            '_source': ('Objectives page WordSelection table, 11_DEMON.TBK '
+                        '0x5e176 region (VERIFY-5H (o): both speak in the '
+                        'original).')}
+    # (p) one say-all per recording on Quick Review pages
+    for a in doc['quickReview']:
+        if a.get('mode') != 'paradigmChart':
+            continue
+        ps = a['paradigms']
+        for i in range(len(ps) - 1):
+            if (ps[i].get('subtitle', '').startswith('Singular')
+                    and ps[i + 1].get('subtitle', '').startswith('Plural')
+                    and ps[i].get('sayWhole', {}).get('audio')
+                    == ps[i + 1].get('sayWhole', {}).get('audio')):
+                ps[i].pop('sayWhole')
+                ps[i]['_say_note'] = ('One recording covers both halves; the '
+                                      'button sits after the Plural half '
+                                      '(VERIFY-5H (p) ruling; NIT-LOG N-1).')
+        a['_disclosure'] = (a.get('_disclosure', '')
+                            + ' Say-all: one button per recording, placed '
+                              'after the Plural half (2026-08-26 ruling).')
     return doc
+
+
+def post_patches_lexicon(lex):
+    """Ratified vocabulary-audio rulings (VERIFY-5H-RESPONSE 6/7,
+    VERIFY-5H-2 (r)/(v))."""
+    h = lex['lemmas']['houtos']
+    h['audio'] = 'chapt_11_k_voc7'
+    h['_audio_note'] = ('k_voc7 recites all three forms: flashcard and Review '
+                        'chart row lemma clip (VERIFY-5H-RESPONSE 6).')
+    h['_parts_note'] = ('VERIFY-5H-2 (v) ruling: the chart row taps '
+                        'k_voc7a/b/c per form; the flashcard plays k_voc7.')
+    o = lex['lemmas']['hos']
+    o.pop('parts', None)
+    o['_audio_note'] = ('VERIFY-5H-2 (r) ruling: k_voc5 says only os and is '
+                        'SUPPOSED to; the RESPONSE-7 parts ask was struck '
+                        'through. Row and card both play k_voc5; no parts.')
+    return lex
 
 
 if __name__ == '__main__':

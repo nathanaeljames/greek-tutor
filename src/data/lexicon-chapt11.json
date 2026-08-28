@@ -85,21 +85,7 @@
      "audio": "chapt_11_k_voc5"
     }
    ],
-   "parts": [
-    {
-     "greek": "ὅς",
-     "audio": "chapt_11_k_osmns"
-    },
-    {
-     "greek": "ἥ",
-     "audio": "chapt_11_k_osfns"
-    },
-    {
-     "greek": "ὅ",
-     "audio": "chapt_11_k_osnns"
-    }
-   ],
-   "_audio_note": "VERIFY-5H-RESPONSE 7: parts wired to the paradigm cells; whether k_voc5 recites all three is a VERIFY listen."
+   "_audio_note": "VERIFY-5H-2 (r) ruling: k_voc5 says only os and is SUPPOSED to; the RESPONSE-7 parts ask was struck through. Row and card both play k_voc5; no parts."
   },
   "hotan": {
    "greek": "ὅταν",
@@ -149,7 +135,8 @@
     }
    ],
    "audioFull": "chapt_11_k_voc7",
-   "_audio_note": "k_voc7 recites all three forms: flashcard and Review chart row (VERIFY-5H-RESPONSE 6); k_voc7a/b/c back the drills (senses) and the parts."
+   "_audio_note": "k_voc7 recites all three forms: flashcard and Review chart row lemma clip (VERIFY-5H-RESPONSE 6).",
+   "_parts_note": "VERIFY-5H-2 (v) ruling: the chart row taps k_voc7a/b/c per form; the flashcard plays k_voc7."
   },
   "palin": {
    "greek": "πάλιν",

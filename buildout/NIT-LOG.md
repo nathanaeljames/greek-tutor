@@ -47,26 +47,6 @@ Instances to date (clip -> halves):
   chapters 1-10 or 12 joins them. This is the complete record Nathanael asked
   for before deciding whether to cut the clips.
 
-**N-2 | Two-state toggles whose only contrast is a Greek word.**
-DISCLOSURE-RULES §4.1 sends a lexical contrast to More/Back
-(λόγος/ἄνθρωπος). ch12's Parsing Drill hint for εἰμί/ἔχω forms shipped
-with the toggle labelled εἰμί / ἔχω (5H-SPEC1). Matrix of every
-two-form pair in chapters 1-12 supplied with 5H-SPEC2 section 3.3;
-decision pending Nathanael. Instances: ch4 Learn Nouns λόγος/ἄνθρωπος
-(More/Back), ch5 Learn Nouns ὥρα/δόξα (More/Back), ch12 Parsing Drill
-hint εἰμί/ἔχω (Greek labels).
-
-DEFAULT APPLIED 2026-08-27 (5H-SPEC2 3.3, no kickoff ruling to the
-contrary). `paradigmToggleLabels` falls back to More/Back whenever the one
-differing word of the two titles is GREEK, so the ch12 εἰμί/ἔχω hint now
-reads More / Back and joins the other two lexical contrasts. Stated as the
-§4.1 rule rather than as a chapter-12 exception, so it is one rule in one
-place. The five English contrasts in the section 3.3 matrix are asserted
-UNCHANGED in the same ui-behavior pass (Present/Future on ch10,
-Middle/Passive on ch12's λύω pair, Singular/Plural on ch11). Reversing it is
-a one-line revert plus those assertions; VERIFY-5H-2 (t) asks Nathanael to
-confirm or reverse.
-
 **N-3 | Interlinear verses flow instead of breaking at the original's
 three fixed lines** (5H RESULTS 5.6; the shape has flowed since ch1).
 Instances: every Learn Scripture Memory and Review Scripture Memory
@@ -78,6 +58,14 @@ English drill, ch12 Scripture Memory Drill); the port's responsive
 grid draws none (5H RESULTS 4.4). Recorded as a deliberate difference.
 
 ## RESOLVED
+
+**N-2 | Two-state toggles whose only contrast is a Greek word --
+RESOLVED 2026-08-27.** DISCLOSURE-RULES §4.1 now states it as its own
+rule: a Greek-only contrast is lexical, so the label is More/Back,
+never the Greek pair (VERIFY-5H-2 (t)). The ch12 εἰμί/ἔχω hint was
+converted in 5H-SPEC2 and the other five matrix rows are asserted
+unchanged. Original instances: ch4 λόγος/ἄνθρωπος, ch5 ὥρα/δόξα (both
+already More/Back), ch12 εἰμί/ἔχω (converted).
 
 **N-0 | Vocabulary drills did not load their first item on mount.**
 Rode for several chapters before becoming intolerable; resolved by
