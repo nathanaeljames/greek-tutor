@@ -576,6 +576,25 @@ D-56 | ch11 | K_OSNAP records οὕς, not the neuter ἅ its name implies;
      answer is οὕς mirrors the original and keeps K_OSNAP. | Nathanael
      listen, VERIFY-5H (q) + RESPONSE 2.
 
+D-57 | ch8 | AΥΤΟΣ TRANSLATION DRILL HINT: FOUR PAGES WHERE THE
+     ORIGINAL SHOWS TWO. The original opens the SAME Hint on every item
+     of this drill -- one paged stack whose first page carries the
+     Third Person Masculine AND Feminine charts together and whose
+     second is the "Three Uses" teaching page (ch8railwalk p7
+     bottom-right, p8 top-left). The port splits that first page into
+     one chart per page and ADDS the Neuter chart, giving Masculine ->
+     Feminine -> Neuter -> Three Uses on the §4.2 Back/More pair with
+     Close throughout. Both halves are Nathanael's instruction in the
+     same answer; the neuter page is kept because the drill's own items
+     use neuter forms (item 1 κατὰ τὸ αὐτὸ πνεῦμα, item 9 κἀγὼ γινώσκω
+     αὐτὰ), which was the condition he attached to it. The WordCounter
+     dispatch at 8_PRONS.TBK 0x7bf39 does not choose the opening page in
+     practice and no longer governs anything here; the Personal Pronoun
+     Case Drill's per-item routing is confirmed and unchanged.
+     Appended by the implementer per this log's standing rule; renumber
+     if the pipeline has already spent D-57. | Nathanael, VERIFY-5H-2
+     (s) response, 2026-08-27.
+
 ## Auto-progress / advance rule matrix
 
 MOVED. The full exercise-by-exercise, chapter-by-chapter matrix —

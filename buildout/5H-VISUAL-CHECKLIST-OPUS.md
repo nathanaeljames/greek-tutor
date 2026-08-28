@@ -204,3 +204,71 @@ and `ui-behavior.mjs` all seek).
 `ui-disclosure.mjs` D13 covers the same two translation routes at 390x520
 under forced scroll: the paradigm route keeps the §4.2 pinned pair, the Three
 Uses route pins nothing, and each seeks its own form first.
+
+# 5H-VISUAL-CHECKLIST-3 (5H-SPEC3, section 7)
+
+Every page whose DATA or RENDERER changed in 5H-SPEC3, at 320 px and 768 px,
+compared against its rail-walk panel. Appended to this file rather than opened
+as a new one, per the 5H-SPEC2 precedent.
+
+METHOD. `npm run preview`, then
+`node scripts/ui-walk.mjs --chapters=chapt_7,chapt_8,chapt_11` and
+`node scripts/ui-modals.mjs`, plus one hand walk of the ch8 hint's four pages
+and one hand capture of chapter 1's objectives (ch1 is not in this round's
+walked set and is the plain-string branch of the item-1 regression). The
+rail-walk panels were rendered from the PDFs with pymupdf at 200 dpi and
+cropped to the quadrant named in each row — `ch1railwalk.pdf` (18 pages),
+`ch7railwalk.pdf` (16), `ch8railwalk.pdf` (15), `ch11railwalk.pdf` (24).
+
+CORPUS. `buildout/screenshots/5h3-walk-opus/{320,768}/<chapter>/<stop>.png`
+(293 files) and `buildout/screenshots/5h3-modals-opus/` (541 files, five device
+heights, at rest and content-scrolled), plus
+`buildout/screenshots/5h3-hint-pages/autos-hint-p1..p4.png` and
+`buildout/screenshots/5h3-ch1-objectives-{320,768}.png`. Both harness runs were
+made with their output on C: because the volume was out of space at the time
+(RESULTS section 7); the images were copied here once it was not.
+
+320 px OVERFLOW: **zero stops overflow** in any of the three chapters
+(`ui-walk.mjs`: "no horizontal overflow in chapt_7, chapt_8, chapt_11"). The
+walk also reports zero interaction errors, all rail counts and Next actions
+live, and all authored expanders and chart states opened.
+
+Status: PASS / PASS+note / FAIL. Every row is PASS at the state delivered.
+
+| # | Page or state | Rail walk | What was compared | Status |
+| --- | --- | --- | --- | --- |
+| 3.1 | `chapt_1/c1_learn_objectives` (the plain-string branch) | ch1 p1 top-right | Eight objectives, house "1. 2. 3." markers, wrapped continuations indented under their text, and **NO blank line between objectives** — the original's list is single-spaced throughout | PASS (measured: seven inter-item gaps, all 0 px; list height 347 px = the sum of the eight item heights) |
+| 3.2 | `chapt_7/c7_learn_objectives` (the audioMap branch) | ch7 p1 top-right | Seven objectives at the same single spacing; **εἰμί** on objective 5 still a blue tap and still plays `g_eimi1s` | PASS |
+| 3.3 | `chapt_11/c11_learn_objectives` (the audioMap branch) | ch11 p1 top-right | Seven objectives at the same single spacing; **ἐκεῖνος** and **οὗτος** still blue taps with "(that)" and "(this)" in ink beside them | PASS (measured: six gaps, all 0 px; list height 404 px = the sum of the seven item heights) |
+| 3.4 | ...every other objectives page, chapters 1-12 | — | No page gained a tap, lost a line, or kept the gap | PASS (machine census, `ui-behavior` 5H-SPEC2 2.5 unchanged + 5H-SPEC3 1) |
+| 3.5 | `chapt_8/c8_drill_translation_autos` Hint page 1 | ch8 p7 bottom-right | Third Person Paradigm, **Masculine**: N/G/D/A rows, Singular and Plural columns, the English glosses under each cell, Say Whole Paradigm; **Back greyed, More live**, Close last | PASS+note (the heading reads "Third Person Paradigm: Masculine" where the original's panel reads "Third Person Paradigm" with Masculine as a section label — VERIFY-5H-3 (y)) |
+| 3.6 | ...page 2 | ch8 p7 bottom-right (lower half of the same panel) / ch8 p13 top-left | **Feminine**: the αὐτή set, same column and row structure | PASS+note (same heading question) |
+| 3.7 | ...page 3 | ch8 p13 top-right | **Neuter**: the αὐτό set. The original's HINT does not show this chart at all; its Review page does, and it is here because your (s) answer said to keep it once the drill turned out to use neuter forms (items 1 and 9) | PASS+note (a deliberate departure — DIVERGENCE-LOG D-57) |
+| 3.8 | ...page 4 | ch8 p8 top-left | **Three Uses**: title, the "αὐτός can be used in three ways" line, three numbered points with hanging indents and their underlined lead terms, the three Examples accordions; **Back live, More greyed**, Close last | PASS |
+| 3.9 | ...all four pages at 320x360 and 768x1024 | — | Each fits with the overlay unscrolled and Close pinned; the body scrolls inside the modal, the shell does not; exactly one divider, and the strip above it equals the strip below at forced scroll | PASS (`ui-modals` 270/270 states, `ui-disclosure` D13 four states) |
+| 3.10 | `chapt_7/c7_qr_vocab`, the οὐ row | ch7 p14 top-left | Row text **οὐ, οὐκ, οὐχ** and gloss "no, not (1606)" unchanged; the three forms are now separate blue taps and **the commas between them are ink** | PASS |
+| 3.11 | `chapt_8/c8_qr_vocab`, the ἐγώ and σύ rows | ch8 p12 top-left | Row texts **ἐγώ / ἡμεῖς** "I / we (2666)" and **σύ / ὑμεῖς** "you / you (pl) (2905)" unchanged; two blue taps each and **the slash between them is ink** (sampled at 768 px: forms rgb(22,99,199), separator rgb(34,37,42)) | PASS |
+| 3.12 | `chapt_11/c11_qr_vocab`, the οὗτος row | ch11 p20 top-right | Row text **οὗτος, αὕτη, τοῦτο** and "(1388)" unchanged; three blue taps, commas ink | PASS |
+| 3.13 | ...the four rows' BOX METRICS at 320 px | — | The multi-tap cell occupies the identical box as the single button it replaces, row for row: 112x66, 112x66, 112x33, 112x99. Nothing re-wrapped and no row grew | PASS (A/B measured in one page load) |
+| 3.14 | `chapt_11/c11_qr_vocab`, the ὅς row | ch11 p20 top-right | **Unchanged**: ὅς, ἥ, ὅ is ONE tap over the whole row and plays `k_voc5`, per (r) | PASS |
+| 3.15 | `chapt_7`, `chapt_8`, `chapt_11` Learn Vocabulary cards | ch7 p?, ch8 p11 bottom-right, ch11 p17 bottom-left | **Unchanged on screen**: each card is one tap over the whole printed form. The clip behind ch7's is now `g_voc8a` (audible, not visible) | PASS |
+| 3.16 | `chapt_8/c8_drill_case` Hint, three routes | ch8 p8 bottom-left | **Unchanged**: a first-person form opens the First Person paradigm, a second-person form the Second, an αὐτ- form the Third, each with Cancel only | PASS (regression row for the (s) ruling's other half) |
+
+## Modal states added this round
+
+| # | Modal state | Route | Status |
+| --- | --- | --- | --- |
+| S3.1 | ch8 translation hint page 1, Masculine | `chapt_8/c8_drill_translation_autos` -> Hint | PASS |
+| S3.2 | ...page 2, Feminine | ...-> More | PASS |
+| S3.3 | ...page 3, Neuter | ...-> More -> More | PASS |
+| S3.4 | ...page 4, Three Uses | ...-> More -> More -> More | PASS |
+
+These four REPLACE the two form-sought states 5H-SPEC2 added
+(`ch8-autos-translation-hint-paradigm` and `-three-uses`). Nothing is sought by
+form on this drill any more, because nothing depends on the form any more:
+that is the whole of the (s) ruling. `ui-modals.mjs` now holds 54 surfaces
+(52 before), which is 270 modal states at five device heights, all clean.
+
+`ui-disclosure.mjs` D13 covers the same four pages at 390x520 under forced
+scroll, as ONE entry with three navigation steps rather than the two
+form-sought entries it had; 303 disclosure checks pass.

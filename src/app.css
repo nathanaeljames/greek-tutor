@@ -249,6 +249,19 @@ button { font: inherit; cursor: pointer; }
 /* D-20 exception: chapter objectives keep "1. 2. 3." in every chapter, while
    teaching lists print "1) 2) 3)" (.rc-list). */
 .objectives-list { list-style-type: decimal; }
+/* 5H-SPEC3 1 (VERIFY-5H2-RESPONSE item 1): THE CARD IS `white-space: pre-wrap`,
+   so whitespace BETWEEN the list items is content. The objectives markup was
+   one unbroken line until 5H-SPEC2 2.5 gave an objective an audioMap and the
+   template grew the `{@const}` lines it needed; the newline-plus-indent that
+   reflow left between every `</li>` and the next `<li>` collapses to a single
+   space, and a space under pre-wrap draws a whole line box inside the `ol` --
+   24.8px, one line-height, between every objective in EVERY chapter, which is
+   what the response's BAD screenshot shows. The spacing is restored here
+   rather than by re-joining the markup: `normal` on the list drops the
+   whitespace-only boxes whatever shape the template takes, and each item keeps
+   pre-wrap so an objective's own text still renders exactly as authored. */
+.objectives-list { white-space: normal; }
+.objectives-list > li { white-space: pre-wrap; }
 .flash-pane { background: white; border-radius: 10px; padding: 14px; margin-bottom: 10px; min-height: 74px; }
 .flash-pane .label { font-size: 0.75rem; color: var(--teal-dark); font-weight: 700; text-transform: uppercase; }
 .flash-pane .value { font-size: 2rem; }
@@ -1386,7 +1399,7 @@ button { font: inherit; cursor: pointer; }
 html, body { touch-action: manipulation; }
 button, a, input, select, textarea, label,
 .tile, .tk-key, .chip, .act-row, .menu-item, .eq-cell, .diph-tile, .diph-ex,
-.rv-greek, .lm-row, .rc-defrow, .rc-example, .greek-chip, .greek-tap,
+.rv-greek, .rv-form, .lm-row, .rc-defrow, .rc-example, .greek-chip, .greek-tap,
 .seg, .flash-hidden, .icon-btn, .bb-item, .section-head,
 .rc-expander summary, .pg-meanings-toggle, .accent-slot,
 .pg-greek-tap, .pg-lemma, .ilv-word,
@@ -1438,6 +1451,16 @@ button, a, input, select, textarea, label,
 .rv-greek { text-align: left; background: transparent; border: none; padding: 0; }
 .rv-greek:active { opacity: 0.6; }
 .rv-gloss { color: var(--teal-dark); }
+/* 5H-SPEC3 4.2 (VERIFY-5H-2 (v)): a row whose lemma prints several forms taps
+   each form on its own. The CELL is no longer the button, so it gives its blue
+   back -- the commas and slashes between the forms are not tappable and must
+   not read as though they were (directive 8) -- and each form inside it is the
+   tap target instead, at the cell's own size rather than .greek-tap's inline
+   1.15em. */
+.rv-greek.rv-forms { color: var(--ink); }
+.rv-form { font: inherit; font-family: var(--greek-font); color: var(--link);
+  background: transparent; border: none; padding: 0; text-align: left; }
+.rv-form:active { opacity: 0.6; }
 
 /* ---- P4-P9: the Greek-tap rule — any DISPLAYED Greek (prompts, flashcard
    words, reading panes) is tappable and pronounces itself, blue per A6.

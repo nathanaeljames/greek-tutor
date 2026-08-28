@@ -2268,11 +2268,26 @@ async function fiveFItemOnScreen(chapterId, activity) {
 // The window now stays open while a clip is still playing, with a hard backstop
 // so a stuck surface still fails rather than hanging.
 const ADVANCE_BACKSTOP_MS = 30000;
-async function stillAdvancing(answeredAt, floorMs) {
+// ...AND THE TAIL AFTER THE CLIP, found 2026-08-28 in the 5H-SPEC3 pass. The
+// window above closed the ceiling half of the flake and left the other half:
+// the app schedules the advance ON the clip's own `ended` event, so for a few
+// dozen milliseconds after the last clip stops the surface is behaving exactly
+// as the rule says and simply has not moved yet -- and this loop, polling
+// every 50ms, could exit in precisely that gap and report "did not advance".
+// Measured on `c12_drill_translation`, whose sentence clips are the longest in
+// the app: advance lands 43-92ms after the clip ends (7194ms after a 7102ms
+// clip, 5735 after 5659, 5007 after 4904). Only clips longer than the floor
+// can reach the gap at all, which is why exactly one chapter-12 item failed a
+// pass that was otherwise green. 750ms is an order of magnitude more than the
+// observed tail and still an order of magnitude less than the backstop, so a
+// genuinely stuck surface still fails.
+const ADVANCE_TAIL_MS = 750;
+async function stillAdvancing(answeredAt, floorMs, state) {
   const waited = Date.now() - answeredAt;
   if (waited >= ADVANCE_BACKSTOP_MS) return false;
   if (waited < floorMs) return true;
-  return await clipsPlaying() > 0;
+  if (await clipsPlaying() > 0) { state.lastPlaying = Date.now(); return true; }
+  return Date.now() - state.lastPlaying < ADVANCE_TAIL_MS;
 }
 
 async function fiveFFreshItem(hash, chapterId, activity, tries = 12) {
@@ -2302,7 +2317,8 @@ for (const [chapterId, chapter] of Object.entries(CH_5F)) {
       const kind = await feedbackKind();
       const said = await awaitNextShown();
       let late = await itemNumber();
-      while (late === before && await stillAdvancing(answeredAt, CORRECT_MS * 3.5)) {
+      const advanceState = { lastPlaying: answeredAt };
+      while (late === before && await stillAdvancing(answeredAt, CORRECT_MS * 3.5, advanceState)) {
         await page.waitForTimeout(50);
         late = await itemNumber();
       }
@@ -2336,7 +2352,8 @@ for (const [chapterId, chapter] of Object.entries(CH_5F)) {
           `revealed ${JSON.stringify(revealed)} for ${JSON.stringify(item.answer)}, waiting ${said}, item ${before} -> ${await itemNumber()}`);
       } else if (advanceClass === 'autoBoth') {
         let late = await itemNumber();
-        while (late === before && await stillAdvancing(answeredAt, INCORRECT_MS * 2)) {
+        const advanceState = { lastPlaying: answeredAt };
+        while (late === before && await stillAdvancing(answeredAt, INCORRECT_MS * 2, advanceState)) {
           await page.waitForTimeout(60);
           late = await itemNumber();
         }
@@ -3204,27 +3221,18 @@ for (const [chapterId, activityId, expected] of [
     // there is no .pg-nav on that page to measure. The ContentAudio copy of
     // this layout went with it — Paradigm.svelte is the only renderer of the
     // pair now, which is one fewer place for the markup to drift.
-    // 5H-SPEC2 3.1 RENAMED, because the label had stopped describing what the
-    // loop measures. It said "modal pager" and meant the hint's own
-    // `ui.hintPages` More/Back. That key is gone: the original dispatches one
-    // page per item. The `.pg-nav` this still finds inside the modal is the
-    // PARADIGM's own three-chart pager (Masculine / Feminine / Neuter), which
-    // is a real surface worth measuring and is what the numbers below have
-    // actually described since the data changed -- but a check whose name
-    // outlives its subject is how a green harness proves nothing (ONBOARD §7).
-    // 5H-SPEC2 3.1 RENAMED AND PINNED TO AN ITEM. The label said "modal pager"
-    // and meant the hint's own `ui.hintPages` More/Back; that key is gone,
-    // because the original dispatches one page per item. The `.pg-nav` this
-    // still finds inside the modal is the PARADIGM's own three-chart pager
-    // (Masculine / Feminine / Neuter) -- a real surface worth measuring, and
-    // what these numbers have described since the data changed. A check whose
-    // name outlives its subject is how a green harness proves nothing
-    // (ONBOARD §7). `seek` is the other half: the drill's items are shuffled
-    // and only SOME of them route to the paradigm now, so without it this
-    // passes or fails on the draw.
-    ['ch8 Aὐτός Translation Drill Hint (the paradigm chart pager inside the modal)',
-      '#/activity/chapt_8/c8_drill_translation_autos',
-      { hint: true, seek: 'κατὰ τὸ αὐτὸ πνεῦμα', seekLimit: 21 }]
+    // RENAMED TWICE, ONCE PER SHAPE, and this is the third shape. It began as
+    // "modal pager" measuring the hint's own `ui.hintPages` More/Back; 5H-SPEC2
+    // removed that key on a dispatch reading, and the `.pg-nav` the loop then
+    // found was the PARADIGM's own three-chart pager under a name that no
+    // longer described it (ONBOARD §7: a check whose name outlives its subject
+    // is how a green harness proves nothing). VERIFY-5H-2 (s) settled it in
+    // DOSBox and 5H-SPEC3 2 put the hint's own pager back, four pages deep, so
+    // the `.pg-nav` here is the MODAL's again. No `seek`: every item opens the
+    // same hint now, which is the whole of the (s) ruling, so this passes or
+    // fails on the shape rather than on the draw.
+    ['ch8 Aὐτός Translation Drill Hint (the hint modal four-page pager)',
+      '#/activity/chapt_8/c8_drill_translation_autos', { hint: true }]
   ];
   for (const [label, hash, opts] of navSurfaces) {
     await go(hash);
@@ -4642,36 +4650,32 @@ for (const [itemIndex, greek, personNumber] of [
   }
   // Surface 2: the same topic, reached through the drill hint.
   //
-  // 5H-SPEC2 3.1 UPDATES THE ROUTE THIS CHECK WALKS, not what it asserts. The
-  // hint used to be a two-page stack (`ui.hintPages`: the Third Person
-  // Paradigm, then Three Uses reached with More), so this loop pressed More
-  // until the topic appeared. The original dispatches ONE page per item
-  // instead, so the topic is now reached by standing on an item that routes to
-  // it -- per-item `hintRef: "threeUses"` -- and there is no More to press.
-  // What is under test is unchanged and is the reason the check exists: the
-  // two crossed clips must be right on BOTH surfaces that render this topic.
+  // THE ROUTE THIS CHECK WALKS HAS NOW CHANGED TWICE; what it asserts has not.
+  // Three Uses was the second page of a two-page `ui.hintPages` stack, so the
+  // loop pressed More once; 5H-SPEC2 read a per-item dispatch out of the TBK
+  // and the topic became an item-level `hintRef` with no More at all; VERIFY-
+  // 5H-2 (s) then settled it in DOSBox -- every item opens the same hint, and
+  // Three Uses is its LAST page. So the route is a walk to the end of the
+  // pager again, from whichever item the shuffle drew, and it is written as
+  // "press More until it greys out" rather than "press it three times" so the
+  // page COUNT lives in the 5H-SPEC3 block that owns it. What is under test is
+  // unchanged and is why the check exists: the two crossed clips must be right
+  // on BOTH surfaces that render this topic.
   {
-    const threeUsesItem = ch8.drill.find(a => a.id === 'c8_drill_translation_autos')
-      .items.find(item => item.hintRef === 'threeUses' && !item.greek2);
     await go('#/activity/chapt_8/c8_drill_translation_autos');
-    let onItem = false;
-    for (let step = 0; step < 21; step += 1) {
-      const shown = normalizeText(await page.locator('.card .prompt').first().innerText());
-      if (shown === normalizeText(threeUsesItem.greek)) { onItem = true; break; }
-      const next = page.locator('.card').getByRole('button', { name: 'Next', exact: true });
-      if (!await next.count() || await next.isDisabled()) break;
-      await next.click();
-      await page.waitForTimeout(40);
-    }
-    check(`W1 reached a Three Uses item ("${threeUsesItem.greek}") in the ch8 Aὐτός Translation Drill`, onItem);
-    if (onItem) {
-      await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
-      await page.waitForSelector('.modal', { timeout: 8000 });
-      await page.waitForTimeout(200);
+    await page.waitForTimeout(200);
+    await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
+    await page.waitForSelector('.modal', { timeout: 8000 });
+    await page.waitForTimeout(200);
+    for (let step = 0; step < 8; step += 1) {
+      const more = page.locator('.modal [data-hint-page-nav="more"]');
+      if (!await more.count() || await more.isDisabled()) break;
+      await more.click();
+      await page.waitForTimeout(150);
     }
   }
   const reached = await page.locator('.modal details.rc-expander summary', { hasText: 'Reflexive Intensifier' }).count() > 0;
-  check('W1 the ch8 Aὐτός Translation hint reaches the Three Uses topic through its per-item hintRef', reached);
+  check('W1 the ch8 Aὐτός Translation hint reaches the Three Uses topic on its last page', reached);
   if (reached) {
     await page.locator('.modal details.rc-expander summary', { hasText: 'Reflexive Intensifier' }).first().click();
     await page.waitForTimeout(150);
@@ -4977,12 +4981,16 @@ for (const [itemIndex, greek, personNumber] of [
     await closeModal();
   }
 
-  // ---- 3.1 CHAPTER 8's TWO FORM-DEPENDENT HINTS (LOOKBACK) --------------
-  // The D-46 mechanism, applied to two drills the port shipped with a single
-  // hint (the Case Drill) and with a two-page stack that showed every item
-  // both answers (the Autos Translation Drill). The original dispatches ONE
-  // page per form: the Case Drill's three routes are three different persons,
-  // and the translation drill's two are a chart and a teaching PAGE.
+  // ---- 3.1 CHAPTER 8's FORM-DEPENDENT CASE DRILL HINT (LOOKBACK) --------
+  // The D-46 mechanism. This block asserted it on BOTH of chapter 8's drills;
+  // the Aὐτός Translation Drill's half is GONE, removed by 5H-SPEC3 2 rather
+  // than left to pass on stale data. Nathanael's DOSBox answer to VERIFY-5H-2
+  // (s) is that the original opens the SAME hint on every item of that drill,
+  // so a check that a paradigm item and a Three Uses item reach different
+  // surfaces was pinning exactly the behaviour the round removed. The Case
+  // Drill's routing was confirmed in the same pass -- each person opens its
+  // own chart, Cancel only -- so what is left here is what still holds. The
+  // translation drill's four-page hint is asserted in the 5H-SPEC3 block.
   {
     const hintHeading = () => page.evaluate(() => {
       const modal = document.querySelector('.modal');
@@ -5011,17 +5019,6 @@ for (const [itemIndex, greek, personNumber] of [
       caseHeadings.every(Boolean) && new Set(caseHeadings).size === 3,
       JSON.stringify(caseRoutes));
 
-    const autosParadigm = await openHint('chapt_8', 'c8_drill_translation_autos', 'κατὰ τὸ αὐτὸ πνεῦμα', 21);
-    const autosPage = await openHint('chapt_8', 'c8_drill_translation_autos', 'ἡ ὥρα αὐτοῦ', 21);
-    check('5H-SPEC2 3.1 ch8 Autos Translation Drill: a paradigm item opens the CHART',
-      !!autosParadigm && autosParadigm.chart && !autosParadigm.pageRef,
-      JSON.stringify(autosParadigm));
-    check('5H-SPEC2 3.1 ch8 Autos Translation Drill: a Three Uses item opens the TEACHING PAGE',
-      !!autosPage && autosPage.pageRef === 'threeUses' && autosPage.heading === 'Three Uses',
-      JSON.stringify(autosPage));
-    check('5H-SPEC2 3.1 ch8 Autos Translation Drill: the two routes are different surfaces',
-      !!autosParadigm && !!autosPage && autosParadigm.heading !== autosPage.heading,
-      `${JSON.stringify(autosParadigm)} vs ${JSON.stringify(autosPage)}`);
   }
 
   // ---- 4.2 THE AUDIO-LEAK GATE, AS A CENSUS -----------------------------
@@ -5148,17 +5145,15 @@ for (const [itemIndex, greek, personNumber] of [
   }
 
   // ---- 2.7 A CARD THAT PRINTS THREE FORMS SPEAKS THREE FORMS ------------
-  // VERIFY-5H-RESPONSE 6. The Learn Vocabulary flashcard and the Review
-  // Vocabulary Chart print the whole lexicalForm, so the clip is the lemma's
-  // own recitation; k_voc7a speaks the first form alone and belongs to the
-  // drills, which reach it through their own authored items.
+  // VERIFY-5H-RESPONSE 6, narrowed to the FLASHCARD by VERIFY-5H-2 (v). The
+  // review-chart half of this block is gone: Nathanael's answer is that the
+  // original's two surfaces deliberately differ -- the flashcard plays the
+  // lemma clip that recites every printed form, and the CHART taps each form
+  // on its own -- so the assertion that the chart row plays the whole-set clip
+  // was pinning the wrong half of a rule that had only ever been read off one
+  // surface. The chart's per-form taps are asserted in the 5H-SPEC3 block; the
+  // flashcard rule is unchanged and stays here, where it was settled.
   {
-    await go('#/activity/chapt_11/c11_qr_vocab');
-    const row = page.locator('.review-vocab .rv-greek', { hasText: 'αὕτη' }).first();
-    const rowPlayed = await exactAudioTap(row, 'chapt_11_k_voc7');
-    check('5H-SPEC2 2.7 ch11 Review chart: the three-form row plays k_voc7',
-      rowPlayed.clipCount === 1 && rowPlayed.fetched.join(' ').includes(rowPlayed.path),
-      `${rowPlayed.clipCount} clip(s), fetched ${JSON.stringify(rowPlayed.fetched)}`);
     // The flashcard is the same card in stepper form; step to it by its
     // printed lexicalForm rather than by index.
     await go('#/activity/chapt_11/c11_learn_vocab');
@@ -5181,20 +5176,10 @@ for (const [itemIndex, greek, personNumber] of [
     }
     // THE RULE IS NOT CHAPTER 11's ALONE, and chapter 8 is where it shows.
     // Its ἐγώ / ἡμεῖς card is the same shape -- one card, two printed forms, a
-    // lemma clip and per-form sense clips -- and its two surfaces DISAGREED:
-    // c8_qr_vocab draws from the `lemmas` pool and has always played h_voc3,
-    // while c8_learn_vocab draws from `senses` and played h_voc3a, one of the
-    // two words on the card. Both now play h_voc3. Asserted as a pair,
-    // because the pair is the argument: the fix aligns the flashcard with the
-    // Review chart's own shipped, device-verified behaviour rather than
-    // inventing a third. VERIFY-5H-2 (v) asks Nathanael to confirm by ear
-    // that h_voc3 recites both forms.
-    await go('#/activity/chapt_8/c8_qr_vocab');
-    const egoRow = page.locator('.review-vocab .rv-greek', { hasText: 'ἡμεῖς' }).first();
-    const egoPlayed = await exactAudioTap(egoRow, 'chapt_8_h_voc3');
-    check('5H-SPEC2 2.7 ch8 Review chart: the two-form first-person row plays h_voc3 (unchanged)',
-      egoPlayed.clipCount === 1 && egoPlayed.fetched.join(' ').includes(egoPlayed.path),
-      `${egoPlayed.clipCount} clip(s), fetched ${JSON.stringify(egoPlayed.fetched)}`);
+    // lemma clip and per-form sense clips -- and its flashcard used to play
+    // h_voc3a, one of the two words on it, because that surface reads `senses`
+    // while the chart reads `lemmas`. It plays the both-form clip now, which
+    // (v) confirms is what the original's flashcard does.
     await go('#/activity/chapt_8/c8_learn_vocab');
     let reachedEgo = false;
     for (let step = 0; step < 16; step += 1) {
@@ -5209,10 +5194,297 @@ for (const [itemIndex, greek, personNumber] of [
     if (reachedEgo) {
       const egoCard = await exactAudioTap(
         page.locator('.card .flash-pane .value.greek-say').first(), 'chapt_8_h_voc3');
-      check('5H-SPEC2 2.7 ch8 flashcard: now agrees with its Review chart and plays h_voc3',
+      check('5H-SPEC2 2.7 ch8 flashcard: the two-form card plays the both-form clip h_voc3',
         egoCard.clipCount === 1 && egoCard.fetched.join(' ').includes(egoCard.path),
         `${egoCard.clipCount} clip(s), fetched ${JSON.stringify(egoCard.fetched)}`);
     }
+  }
+}
+
+// ===================================================================
+// 5H-SPEC3: the VERIFY-5H-2 closure round (chapters 1, 7, 8, 11)
+// ===================================================================
+// Three rulings and one regression. Each check states the rule and then names
+// the whole set it covers, so the census rather than the sample is what turns
+// green.
+{
+  const cardButton = name => page.locator('.card').getByRole('button', { name, exact: true });
+
+  // ---- 1 THE OBJECTIVES PAGE HAS NO SPACE BETWEEN ITS OBJECTIVES --------
+  // VERIFY-5H2-RESPONSE item 1. The card is `white-space: pre-wrap`, so the
+  // whitespace BETWEEN list items is content: when 5H-SPEC2 2.5 broke the
+  // one-line objectives markup across several lines to make room for the
+  // audioMap branch, the newline it left between every `</li>` and the next
+  // `<li>` collapsed to a space and that space drew a whole line box -- one
+  // line-height of gap under every objective, in EVERY chapter, the string
+  // branch included. So the assertion is pinned to line-box metrics, on one
+  // chapter of each branch, and it is the same assertion for both: the gap
+  // between consecutive items is ZERO, and the list's height is exactly the
+  // sum of its items' heights, which is the structural way of saying there is
+  // no box between them at all. The two branches cannot diverge again without
+  // one of these two chapters failing.
+  {
+    const SPACING = [
+      ['chapt_1', 'c1_learn_objectives', 'plain strings'],
+      ['chapt_11', 'c11_learn_objectives', '{ text, audioMap }']
+    ];
+    for (const [chapterId, activityId, branch] of SPACING) {
+      await go(`#/activity/${chapterId}/${activityId}`);
+      await page.waitForSelector('.objectives-list li');
+      await page.waitForTimeout(150);
+      const metrics = await page.evaluate(() => {
+        const list = document.querySelector('.objectives-list');
+        const boxes = [...list.querySelectorAll('li')].map(li => li.getBoundingClientRect());
+        return {
+          items: boxes.length,
+          gaps: boxes.slice(1).map((box, index) => Math.round((box.top - boxes[index].bottom) * 100) / 100),
+          listHeight: Math.round(list.getBoundingClientRect().height),
+          itemsHeight: Math.round(boxes.reduce((total, box) => total + box.height, 0))
+        };
+      });
+      check(`5H-SPEC3 1 ${chapterId} objectives (${branch}): no vertical gap between objectives`,
+        metrics.items > 1 && metrics.gaps.every(gap => gap === 0)
+          && metrics.listHeight === metrics.itemsHeight,
+        JSON.stringify(metrics));
+    }
+    // ...and the taps 5H-SPEC2 2.5 added are still taps, which is the half of
+    // item 1 that says "keep the terms clickable". The 2.5 census above proves
+    // they play; this proves the spacing fix did not cost them their buttons.
+    await go('#/activity/chapt_11/c11_learn_objectives');
+    const stillTaps = await page.locator('.objectives-list .greek-tap').count();
+    check('5H-SPEC3 1 ch11 objectives: the two Greek words are still taps after the spacing fix',
+      stillTaps === 2, `${stillTaps} tap(s)`);
+    await go('#/activity/chapt_7/c7_learn_objectives');
+    const ch7Taps = await page.locator('.objectives-list .greek-tap').count();
+    check('5H-SPEC3 1 ch7 objectives: the Greek word is still a tap after the spacing fix',
+      ch7Taps === 1, `${ch7Taps} tap(s)`);
+  }
+
+  // ---- 2 THE ch8 TRANSLATION HINT IS ONE FOUR-PAGE STACK, ON EVERY ITEM -
+  // VERIFY-5H-2 (s), answered in DOSBox: the original shows the SAME hint on
+  // every item of this drill, so the WordCounter dispatch at 0x7bf39 does not
+  // choose the opening page in practice. Four pages -- the Third Person
+  // Paradigm's Masculine, Feminine and Neuter charts, then the Three Uses
+  // teaching page -- reached with the §4.2 Back/More pair, Close throughout.
+  // Read from TWO items on purpose: item 1 was a paradigm item and item 5 a
+  // Three Uses item under the routing this replaces, so if any per-item
+  // dispatch survived anywhere they would differ here.
+  {
+    const walkHint = async prompt => {
+      await go('#/activity/chapt_8/c8_drill_translation_autos');
+      let onItem = false;
+      for (let step = 0; step < 21; step += 1) {
+        const shown = normalizeText(await page.locator('.card .prompt').first().innerText());
+        if (shown === normalizeText(prompt)) { onItem = true; break; }
+        const next = cardButton('Next');
+        if (!await next.count() || await next.isDisabled()) break;
+        await next.click();
+        await page.waitForTimeout(40);
+      }
+      if (!onItem) return null;
+      await cardButton('Hint').click();
+      await page.waitForSelector('.modal', { timeout: 8000 });
+      await page.waitForTimeout(200);
+      const pages = [];
+      for (let index = 0; index < 8; index += 1) {
+        pages.push(await page.evaluate(() => {
+          const modal = document.querySelector('.modal');
+          const heading = modal.querySelector('.pg-title, .rc-heading');
+          const back = modal.querySelector('[data-hint-page-nav="back"]');
+          const more = modal.querySelector('[data-hint-page-nav="more"]');
+          return {
+            heading: heading ? heading.innerText.trim() : null,
+            chart: !!modal.querySelector('.pg-row, .pg-cell'),
+            back: back ? (back.disabled ? 'off' : 'on') : null,
+            more: more ? (more.disabled ? 'off' : 'on') : null,
+            closes: [...modal.querySelectorAll('.modal-actions button')]
+              .map(button => button.innerText.trim()).filter(label => label === 'Close').length
+          };
+        }));
+        const more = page.locator('.modal [data-hint-page-nav="more"]');
+        if (!await more.count() || await more.isDisabled()) break;
+        await more.click();
+        await page.waitForTimeout(160);
+      }
+      await page.locator('.modal').getByRole('button', { name: 'Close', exact: true }).click();
+      await page.waitForTimeout(140);
+      return pages;
+    };
+    const ORDER = ['Third Person Paradigm: Masculine', 'Third Person Paradigm: Feminine',
+      'Third Person Paradigm: Neuter', 'Three Uses'];
+    const fromItem1 = await walkHint('κατὰ τὸ αὐτὸ πνεῦμα');
+    const fromItem5 = await walkHint('ἡ ὥρα αὐτοῦ');
+    for (const [label, pages] of [['item 1 (a former paradigm item)', fromItem1],
+      ['item 5 (a former Three Uses item)', fromItem5]]) {
+      check(`5H-SPEC3 2 ch8 translation hint from ${label}: four pages, Masc then Fem then Neut then Three Uses`,
+        !!pages && pages.length === ORDER.length
+          && pages.every((state, index) => state.heading === ORDER[index]),
+        JSON.stringify(pages && pages.map(state => state.heading)));
+      check(`5H-SPEC3 2 ch8 translation hint from ${label}: three charts then a teaching page`,
+        !!pages && pages.length === 4 && pages.slice(0, 3).every(state => state.chart)
+          && pages[3].chart === false,
+        JSON.stringify(pages && pages.map(state => state.chart)));
+      // §4.2's bounds: both buttons on every page, the invalid direction greyed
+      // rather than gone, and Close on all four.
+      check(`5H-SPEC3 2 ch8 translation hint from ${label}: Back greyed on page 1, More on page 4, Close throughout`,
+        !!pages && pages.length === 4
+          && pages.every(state => state.back && state.more && state.closes === 1)
+          && pages[0].back === 'off' && pages[0].more === 'on'
+          && pages[3].more === 'off' && pages[3].back === 'on'
+          && pages.slice(1, 3).every(state => state.back === 'on' && state.more === 'on'),
+        JSON.stringify(pages && pages.map(state => `${state.back}/${state.more}/${state.closes}`)));
+    }
+    // The same hint on every item is the whole of the (s) ruling, so the two
+    // walks are compared with each other as well as with the expected order.
+    check('5H-SPEC3 2 ch8 translation hint: the two items open the IDENTICAL hint',
+      !!fromItem1 && !!fromItem5
+        && JSON.stringify(fromItem1) === JSON.stringify(fromItem5),
+      `${JSON.stringify(fromItem1 && fromItem1.map(s => s.heading))} vs ${JSON.stringify(fromItem5 && fromItem5.map(s => s.heading))}`);
+    // ...and no item carries a hint reference of its own any more, which is
+    // the data half of the same ruling, stated over all 21 items rather than
+    // the two the walks stood on.
+    const autos = activityById(ch8, 'c8_drill_translation_autos');
+    check('5H-SPEC3 2 ch8 translation drill: not one of the 21 items carries a per-item hintRef',
+      autos.items.length === 21 && autos.items.every(item => !item.hintRef),
+      `${autos.items.filter(item => item.hintRef).length} of ${autos.items.length} still routed`);
+    // The Case Drill is the control: its dispatch WAS confirmed, so its
+    // per-item routing must be untouched by all of this. The 5H-SPEC2 3.1
+    // check above walks its three persons on screen; this states the data
+    // relation that check depends on.
+    const caseDrill = activityById(ch8, 'c8_drill_case');
+    check('5H-SPEC3 2 ch8 Case Drill: every item still routes to its own person chart',
+      caseDrill.items.every(item => item.hintRef)
+        && new Set(caseDrill.items.map(item => item.hintRef)).size === 3
+        && !caseDrill.ui.hintPages,
+      JSON.stringify([...new Set(caseDrill.items.map(item => item.hintRef))]));
+  }
+
+  // ---- 4.2 / 4.3 A CHART ROW TAPS EACH PRINTED FORM --------------------
+  // VERIFY-5H-2 (v), Nathanael's ruling from the original: the two vocabulary
+  // surfaces DIFFER on purpose. The Learn flashcard plays the lemma clip that
+  // recites every printed form; the Review Vocabulary Chart taps each form
+  // independently. The lexicon says which forms have their own clip (`parts`)
+  // and every tap below is evict-and-refetch, so a row that happens to be
+  // right for the wrong reason -- a clip already in the store from an earlier
+  // tap in this run -- cannot pass.
+  {
+    const ROWS = [
+      ['chapt_7', 'c7_qr_vocab', 'οὐ, οὐκ, οὐχ',
+        [['οὐ', 'chapt_7_g_voc8'], ['οὐκ', 'chapt_7_g_voc8a'], ['οὐχ', 'chapt_7_g_voc8b']]],
+      ['chapt_8', 'c8_qr_vocab', 'ἐγώ / ἡμεῖς',
+        [['ἐγώ', 'chapt_8_h_voc3a'], ['ἡμεῖς', 'chapt_8_h_voc3b']]],
+      ['chapt_8', 'c8_qr_vocab', 'σύ / ὑμεῖς',
+        [['σύ', 'chapt_8_h_voc9a'], ['ὑμεῖς', 'chapt_8_h_voc9b']]],
+      ['chapt_11', 'c11_qr_vocab', 'οὗτος, αὕτη, τοῦτο',
+        [['οὗτος', 'chapt_11_k_voc7a'], ['αὕτη', 'chapt_11_k_voc7b'], ['τοῦτο', 'chapt_11_k_voc7c']]]
+    ];
+    for (const [chapterId, activityId, printed, forms] of ROWS) {
+      await go(`#/activity/${chapterId}/${activityId}`);
+      await page.waitForSelector('.review-vocab .rv-row');
+      const cell = page.locator('.review-vocab .rv-greek.rv-forms', { hasText: forms[0][0] }).first();
+      const shape = await cell.evaluate(node => ({
+        text: node.innerText.replace(/\s+/g, ' ').trim(),
+        taps: [...node.querySelectorAll('.rv-form')].map(button => button.innerText.trim()),
+        // Directive 8: the punctuation between the forms is NOT a tap, so it
+        // must not be painted like one. The cell gives its blue back.
+        cellColour: getComputedStyle(node).color,
+        tapColours: [...new Set([...node.querySelectorAll('.rv-form')]
+          .map(button => getComputedStyle(button).color))]
+      }));
+      check(`5H-SPEC3 4.2 ${chapterId} chart row "${printed}": ${forms.length} taps, and only the forms are blue`,
+        shape.text === printed
+          && JSON.stringify(shape.taps) === JSON.stringify(forms.map(form => form[0]))
+          && shape.cellColour !== 'rgb(22, 99, 199)'
+          && JSON.stringify(shape.tapColours) === JSON.stringify(['rgb(22, 99, 199)']),
+        JSON.stringify(shape));
+      for (const [form, id] of forms) {
+        const tap = cell.locator('.rv-form', { hasText: form }).first();
+        const played = await exactAudioTap(tap, id);
+        check(`5H-SPEC3 4.2 ${chapterId} chart row "${printed}": ${form} plays ${id}`,
+          played.clipCount === 1 && played.fetched.join(' ').includes(played.path),
+          `${played.clipCount} clip(s), fetched ${JSON.stringify(played.fetched)}`);
+      }
+    }
+
+    // THE OTHER HALF OF THE TWO-SURFACE RULE. The flashcard ignores `parts`
+    // and plays the lemma's own clip. Chapter 7's is the 4.3 positive that
+    // came with Nathanael's listens -- g_voc8a is the clip that recites all
+    // three, so it is BOTH the second tap on the chart and the whole card
+    // here, which is exactly what the lexicon says and would look like a bug
+    // without this line. Chapters 8 and 11 keep their own flashcard checks in
+    // the 5H-SPEC2 2.7 block above; this is the negative they imply, stated
+    // where a reader of the (v) ruling will look for it.
+    const flashcard = async (chapterId, activityId, contains, limit) => {
+      await go(`#/activity/${chapterId}/${activityId}`);
+      for (let step = 0; step < limit; step += 1) {
+        const shown = normalizeText(await page.locator('.card .flash-pane .value').first().innerText());
+        if (shown.includes(contains)) return true;
+        const next = cardButton('Next');
+        if (!await next.count() || await next.isDisabled()) return false;
+        await next.click();
+        await page.waitForTimeout(60);
+      }
+      return false;
+    };
+    const reachedOu = await flashcard('chapt_7', 'c7_learn_vocab', 'οὐχ', 16);
+    check('5H-SPEC3 4.3 ch7 flashcard: reached the three-form card', reachedOu);
+    if (reachedOu) {
+      const splitTargets = await page.locator('.card .flash-pane .value .rv-form').count();
+      check('5H-SPEC3 4.3 ch7 flashcard: the card is ONE tap, not three -- parts is a chart rule',
+        splitTargets === 0, `${splitTargets} per-form buttons on the card`);
+      const played = await exactAudioTap(
+        page.locator('.card .flash-pane .value.greek-say').first(), 'chapt_7_g_voc8a');
+      check('5H-SPEC3 4.3 ch7 flashcard: the card plays g_voc8a, the clip that recites all three',
+        played.clipCount === 1 && played.fetched.join(' ').includes(played.path),
+        `${played.clipCount} clip(s), fetched ${JSON.stringify(played.fetched)}`);
+    }
+
+    // ...and NOTHING ELSE in twelve chapters gained per-form taps. The list of
+    // rows that carry them is computed from the lexicons, not typed here, so a
+    // thirteenth chapter that ships a `parts` row is covered by this census
+    // without an edit -- and a row that quietly grows one shows up as a
+    // difference between what the data declares and what the charts draw.
+    const declared = [];
+    for (const chapterId of Object.keys(CHAPTERS)) {
+      const lexicon = LEXICON(chapterId);
+      for (const [bucket, lemmas] of Object.entries(lexicon)) {
+        if (!lemmas || typeof lemmas !== 'object') continue;
+        for (const [ref, lemma] of Object.entries(lemmas)) {
+          if (lemma && Array.isArray(lemma.parts) && lemma.parts.length) {
+            declared.push(`${chapterId}.${bucket}.${ref}(${lemma.parts.length})`);
+          }
+        }
+      }
+    }
+    const DECLARED = ['chapt_7.lemmas.ou(3)', 'chapt_8.lemmas.ego(2)', 'chapt_8.lemmas.su(2)',
+      'chapt_11.lemmas.houtos(3)'];
+    check('5H-SPEC3 4.2 census: exactly four lemmas in twelve chapters declare per-form clips',
+      JSON.stringify(declared.sort()) === JSON.stringify(DECLARED.sort()), JSON.stringify(declared));
+    // 4.1: the relative pronoun lost its `parts` this round, because K_VOC5
+    // says only the first form and is meant to. The census above is what
+    // proves it; this names it so the row cannot come back without a ruling.
+    const hos = LEXICON('chapt_11').lemmas.hos;
+    check('5H-SPEC3 4.1 ch11 relative pronoun: no per-form clips, on either surface',
+      !hos.parts && hos.audio === 'chapt_11_k_voc5', JSON.stringify(hos.audio));
+    const drawn = [];
+    for (const [chapterId, chapter] of Object.entries(CHAPTERS)) {
+      const chart = activitiesOf(chapter).find(activity => activity && activity.mode === 'reviewVocab');
+      if (!chart) continue;
+      await go(`#/activity/${chapterId}/${chart.id}`);
+      await page.waitForSelector('.review-vocab .rv-row');
+      const rows = await page.evaluate(() => [...document.querySelectorAll('.review-vocab .rv-greek.rv-forms')]
+        .map(cell => cell.querySelectorAll('.rv-form').length));
+      for (const count of rows) drawn.push(`${chapterId}(${count})`);
+    }
+    check('5H-SPEC3 4.2 census: and exactly those four rows draw them, chart by chart',
+      JSON.stringify(drawn.sort()) === JSON.stringify(['chapt_11(3)', 'chapt_7(3)', 'chapt_8(2)', 'chapt_8(2)'].sort()),
+      JSON.stringify(drawn));
+    // (k2), closed: nothing plays the two homeless chapter-12 clips. They ship
+    // in the pack because the ISO ships them; no surface in the port names
+    // them, and this is the assertion that keeps it that way (the D-39 class).
+    const homeless = JSON.stringify(ch12).match(/chapt_12_l_(a1s|ap9)/g) || [];
+    check('5H-SPEC3 4.4 (k2): chapter 12 names neither of the two unwired clips anywhere in its data',
+      homeless.length === 0, JSON.stringify(homeless));
   }
 }
 

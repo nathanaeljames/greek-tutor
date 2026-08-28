@@ -34,7 +34,7 @@
   // policy machinery as a one-stage item, so no timing or advance rule below
   // has a special case for it.
   import { onDestroy } from 'svelte';
-  import { authoredOptionSource, buildSelectQuestions, buildTwoStageQuestions, paradigmToggleLabels, randomFeedback, resolveContentById, resolveHintBlocks, resolveHintPage, resolveHintRef } from '../lib/content.js';
+  import { authoredOptionSource, buildSelectQuestions, buildTwoStageQuestions, headingCovers, headingKey, paradigmToggleLabels, randomFeedback, resolveContentById, resolveHintBlocks, resolveHintPage, resolveHintRef } from '../lib/content.js';
   import { combiningForMarkName, firstAccentCluster, markOverlayParts } from '../lib/greek.js';
   import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
@@ -263,9 +263,10 @@
   // 5F-FEEDBACK2 items 13/28 (Nathanael, 2026-08-09): a MULTI-PAGE hint, the
   // original's More/Back-paged popup. ui.hintPages lists pages by reference —
   // { hintRef } (a chart; a stack of N charts flattens to N pages, one chart
-  // per page, so the MODAL owns all the paging), { contentRef } (a Learn
-  // topic's whole content array, by topic id) or inline { content } — plus an
-  // optional title. Nav uses item 27's fixed-slot model: Back always left,
+  // per page, so the MODAL owns all the paging, and `chartIndex` picks ONE
+  // chart of that stack for this page), { contentRef } (a Learn topic's whole
+  // content array, by topic id) or inline { content } — plus an optional
+  // title. Nav uses item 27's fixed-slot model: Back always left,
   // More always right, neither ever moves between pages.
   $: hintPages = buildHintPages(chapter, activity.ui?.hintPages);
   let hintPageIndex = 0;
@@ -283,8 +284,36 @@
         const charts = Array.isArray(target.paradigms) && target.paradigms.length
           ? target.paradigms
           : (Array.isArray(target.charts) && target.charts.length ? target.charts : [target]);
-        for (const chart of charts) {
-          pages.push({ chart: { ...target, charts: [chart] }, title: def.title || target.title || null });
+        // 5H-SPEC3 2 (VERIFY-5H-2 (s), DOSBox): A PAGE MAY NAME ONE CHART OF A
+        // STACK. Chapter 8's Aὐτός Translation Drill opens the same four-page
+        // Hint on every item -- the Third Person Paradigm's Masculine,
+        // Feminine and Neuter charts, then the Three Uses teaching page -- and
+        // all three charts live under ONE ref (`thirdPersonParadigm`). Without
+        // `chartIndex` the flatten below would turn each of the data's three
+        // entries into three pages and the hint would be ten pages long,
+        // three of them repeated. With it, a page names its own chart and the
+        // data's title is the one on screen, so the page ORDER is the data's
+        // rather than the stack's.
+        const selected = Number.isInteger(def.chartIndex) ? [charts[def.chartIndex]] : charts;
+        for (const chart of selected) {
+          if (!chart) continue;
+          const title = def.title || target.title || null;
+          // The SAME heading said at two lengths, which is what the
+          // deduplication rule in content.js is for. A page that names one
+          // chart of a stack titles itself "Third Person Paradigm: Masculine"
+          // while the chart under it carries "Masculine" as its own green
+          // section label, and printing both puts the word on screen twice.
+          // The page title is the fuller one and it is the one the data
+          // authored for this page, so it stands and the label it repeats is
+          // dropped. A page whose title does NOT say what the subtitle says
+          // (chapter 7's "Adjective Paradigm" over Singular / Plural) keeps
+          // both, unchanged.
+          const covered = chart.subtitle
+            && (headingKey(title) === headingKey(chart.subtitle) || headingCovers(title, chart.subtitle));
+          pages.push({
+            chart: { ...target, charts: [covered ? { ...chart, subtitle: null } : chart] },
+            title
+          });
         }
       } else if (def.contentRef) {
         const blocks = resolveContentById(chapterData, def.contentRef);

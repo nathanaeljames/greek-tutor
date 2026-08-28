@@ -332,6 +332,29 @@ SPELL_UI = {'fields': ['English Phrase', 'Spell Greek Phrase'],
             'defaults': {'pronounceEach': True}}
 
 
+# Per-item Hint routing for the Case Drill, READ 2026-08-26 from the
+# WordCounter dispatch table at 8_PRONS.TBK 0x10d820 and ratified by
+# DOSBox (VERIFY-5H-2 (s)). Frozen here so a rebuild needs no re-decode.
+CASE_HINT = [
+    'thirdPersonParadigm', 'firstPersonParadigm',
+    'secondPersonParadigm', 'thirdPersonParadigm',
+    'firstPersonParadigm', 'thirdPersonParadigm',
+    'firstPersonParadigm', 'secondPersonParadigm',
+    'thirdPersonParadigm', 'secondPersonParadigm',
+    'secondPersonParadigm', 'firstPersonParadigm',
+    'thirdPersonParadigm', 'thirdPersonParadigm',
+    'secondPersonParadigm', 'secondPersonParadigm',
+    'thirdPersonParadigm', 'thirdPersonParadigm',
+    'firstPersonParadigm', 'thirdPersonParadigm',
+    'firstPersonParadigm', 'thirdPersonParadigm',
+    'thirdPersonParadigm', 'secondPersonParadigm',
+    'firstPersonParadigm', 'thirdPersonParadigm',
+    'thirdPersonParadigm', 'firstPersonParadigm',
+    'thirdPersonParadigm', 'secondPersonParadigm',
+    'firstPersonParadigm',
+]
+
+
 def stepper_ui(hint=None):
     ui = {'buttons': ['Previous', 'Next', 'Pronounce', 'Hint', 'Score'],
           'checkboxes': ['Pronounce Each Drill'],
@@ -1040,6 +1063,27 @@ def build_lexicon(tbk, conv):
                         'glossShort': m['glossShort'], 'audio': m['audio']}
                        for m in members],
         }
+        # RATIFIED 2026-08-27 (VERIFY-5H-2 (v)): a Review chart row taps EACH
+        # printed form; the flashcard plays the lemma clip. The paired
+        # pronouns are the only ch8 rows that print two full forms.
+        if key in ('ego', 'su'):
+            # The lemma clip is the PAIRED recording that says both words
+            # (h_voc3 / h_voc9, listen-confirmed 2026-08-15, VERIFY-5F-3
+            # item 4) -- NOT members[0]'s single-form clip, which is what
+            # the generic path above picks.
+            paired = aud('h_voc3' if key == 'ego' else 'h_voc9')
+            lemmas[key]['audio'] = paired
+            lemmas[key]['_audio_note'] = (
+                'Paired flashcard: %s says BOTH words (listen-confirmed '
+                '2026-08-15, VERIFY-5F-3 item 4); senses keep the '
+                'single-form clips.' % paired)
+            lemmas[key]['parts'] = [{'greek': m['greek'], 'audio': m['audio']}
+                                    for m in members]
+            lemmas[key]['_parts_note'] = (
+                'VERIFY-5H-2 (v) ruling 2026-08-27: the Review Vocabulary '
+                'Chart taps each printed form independently (parts); the '
+                'Learn flashcard plays the lemma audio, which recites both '
+                'forms.')
     return {'_comment': (
                 'Chapter 8 lexicon, assembled from 8_PRONS.TBK (cohort 5F). '
                 'TEN lemmas, THIRTEEN flashcard entries and FIFTEEN drill '
@@ -1050,6 +1094,50 @@ def build_lexicon(tbk, conv):
                 'split; ntFreq values are the Review Vocabulary Chart\'s '
                 'own counts (0x0f01bc).'),
             'lemmas': lemmas, 'exampleWords': {}}
+
+
+def post_patches(ch):
+    """Stage 8.7: ratified rulings re-applied on any rebuild (2026-08-26/27),
+    so a regeneration cannot reverse a hand-approved fix. Update THIS
+    function when a new ruling lands against chapter 8."""
+    by_id = {a['id']: a for a in ch['drill']}
+    # 5H-SPEC2 3.1 (LOOKBACK): the Case Drill's Hint is FORM-DEPENDENT in the
+    # original (D-46 class) -- read from the WordCounter dispatch at
+    # 8_PRONS.TBK 0x10d820: first person -> Hint (field 0xc5d4a), second ->
+    # Hint2 (0xc6cd4), autos -> Hint3 (0xc4676). DOSBox-confirmed
+    # (VERIFY-5H-2 (s)): each person opens its own chart, Cancel only.
+    case = by_id['c8_drill_case']
+    if len(case['items']) != len(CASE_HINT):
+        raise SystemExit('STOP: Case Drill has %d items, the ratified hint '
+                         'routing has %d -- re-read the dispatch at 0x10d820'
+                         % (len(case['items']), len(CASE_HINT)))
+    for it, ref in zip(case['items'], CASE_HINT):
+        it['hintRef'] = ref
+    case['_hint_note'] = (
+        'FORM-DEPENDENT HINT (D-46 class), dispatch at 8_PRONS.TBK 0x10d820; '
+        'DOSBox-confirmed VERIFY-5H-2 (s). Ratified 2026-08-27.')
+    # VERIFY-5H-2 (s): the Autos Translation Drill shows the SAME hint on
+    # every item -- a four-page Back/More stack (the third-person paradigm
+    # split by gender, then the Three Uses page). Per-item routing REMOVED;
+    # D-57 covers four pages where the original draws two.
+    autos = by_id['c8_drill_translation_autos']
+    for it in autos['items']:
+        it.pop('hintRef', None)
+    autos['ui'].pop('hintRef', None)
+    autos['ui']['hintPages'] = [
+        {'hintRef': 'thirdPersonParadigm', 'chartIndex': 0,
+         'title': 'Third Person Paradigm: Masculine'},
+        {'hintRef': 'thirdPersonParadigm', 'chartIndex': 1,
+         'title': 'Third Person Paradigm: Feminine'},
+        {'hintRef': 'thirdPersonParadigm', 'chartIndex': 2,
+         'title': 'Third Person Paradigm: Neuter'},
+        {'contentRef': 'threeUses', 'title': 'Three Uses'}]
+    autos['_hint_note'] = (
+        'VERIFY-5H-2 (s) ruling 2026-08-27: the original shows one paged '
+        'hint on every item; the WordCounter dispatch at 0x7bf39 does not '
+        'select the opening page in practice. Neuter page KEPT: items 1 and '
+        '9 are neuter forms. D-57.')
+    return ch
 
 
 def validate(ch):
@@ -1069,6 +1157,7 @@ def main():
     tbk = Tbk(tbkpath)
     conv = make_conv(json.load(open(fontpath)))
     ch = build(tbk, conv)
+    ch = post_patches(ch)
     validate(ch)
     lex = build_lexicon(tbk, conv)
     for name, obj in (('chapt-08.json', ch), ('lexicon-chapt08.json', lex)):

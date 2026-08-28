@@ -979,9 +979,49 @@ function segment_(text) { return new Intl.Segmenter('el', { granularity: 'graphe
   }
 }
 
+// ---- A LEXICON `parts` LIST IS A PROMISE THE ROW CAN KEEP (5H-SPEC3 4.2) ----
+// ONBOARD section 7: when a new defect class is found, add the check that
+// would have caught it. `parts[]` is how a lemma says "each of my printed
+// forms has its own clip", and the Review Vocabulary Chart renders it by
+// splitting the printed `lexicalForm` on those exact strings. A form that is
+// not IN that lexicalForm therefore renders as nothing at all -- the row draws
+// one fewer tap and no error is raised anywhere, which is the same silent-gap
+// class as the dangling hintRef 5H-SPEC2 found. Both halves are checked here:
+// the form must be in the text the row prints, and its clip must exist.
+{
+  const manifest = JSON.parse(readFileSync('public/audio/audio-manifest.json', 'utf-8'));
+  for (const file of readdirSync(DATA).filter(name => /^lexicon-.*\.json$/.test(name))) {
+    const lexicon = JSON.parse(readFileSync(join(DATA, file), 'utf-8'));
+    for (const [bucket, lemmas] of Object.entries(lexicon)) {
+      if (!lemmas || typeof lemmas !== 'object') continue;
+      for (const [ref, lemma] of Object.entries(lemmas)) {
+        if (!lemma || typeof lemma !== 'object' || !('parts' in lemma)) continue;
+        const path = `${file} ${bucket}.${ref}`;
+        if (!Array.isArray(lemma.parts) || !lemma.parts.length) {
+          problems.push(`${path}: "parts" must be a non-empty array of { greek, audio }.`);
+          continue;
+        }
+        const printed = String(lemma.lexicalForm || lemma.greek || '');
+        for (const [index, part] of lemma.parts.entries()) {
+          if (!part || typeof part !== 'object' || !part.greek || !part.audio) {
+            problems.push(`${path}.parts[${index}]: every part needs both a "greek" form and an "audio" id.`);
+            continue;
+          }
+          if (!printed.includes(part.greek)) {
+            problems.push(`${path}.parts[${index}]: "${part.greek}" does not appear in the printed form "${printed}" — the Review chart splits that text, so this part would render as no tap at all.`);
+          }
+          if (!(part.audio in manifest)) {
+            problems.push(`${path}.parts[${index}]: audio id "${part.audio}" is not in audio-manifest.json — the tap would toast "Audio not found" at runtime.`);
+          }
+        }
+      }
+    }
+  }
+}
+
 if (problems.length) {
   for (const problem of problems) console.error(`FAIL: ${problem}`);
   process.exit(1);
 }
 
-console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; formula lines have exclusive whole-line/inline tap contracts; spellVerse answers are single words; retired Repeat controls are absent; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras; every presentFutureRows row has both sides; every termList item has a term and a definition; every wordUsage carries a heading and its examples; every poolKind is "vocabulary"; every hintChart has paradigmRefs or inline charts; every hintRef, paradigmRef, [[link:id]], termList link and topic titleLink resolves; every audio id the data names exists in the audio manifest).`);
+console.log(`PASS: content shapes intact — ${files.join(', ')} checked (biblist entries are strings; numbered items render something; greekRows rows carry content; paradigm rows match their columns; formula lines have exclusive whole-line/inline tap contracts; spellVerse answers are single words; retired Repeat controls are absent; every contentAudio mode has a branch; every advanceClass is one of the four and every audioTiming one of the five; every reddened cluster has a font-derived geometry row; every spelling answer is typeable on the shared keyboard; every displayed elision mark is U+0027; no numbered point is hand-numbered inside a plain para; no paragraph is split line-by-line across consecutive paras; every presentFutureRows row has both sides; every termList item has a term and a definition; every wordUsage carries a heading and its examples; every poolKind is "vocabulary"; every hintChart has paradigmRefs or inline charts; every hintRef, paradigmRef, [[link:id]], termList link and topic titleLink resolves; every audio id the data names exists in the audio manifest; every lexicon parts form is in its own printed lexicalForm and has a clip).`);

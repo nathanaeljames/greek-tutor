@@ -125,6 +125,23 @@ const hintAtPrompt = (chapterId, activityId, prompt, itemCount, disclosureState 
   if (disclosureState !== null) await setHintDisclosureState(disclosureState);
 };
 
+// A PAGED hint is N surfaces, not one. 5H-SPEC3 2 put chapter 8's translation
+// hint back to a four-page stack (VERIFY-5H-2 (s)), and a page nobody opens is
+// a page nobody measures -- which is the whole reason this file exists. The
+// modal's own Back/More pair is the navigation, so stepping it is how each
+// page gets its turn at all five heights.
+const hintPage = (chapterId, activityId, pageIndex) => async () => {
+  await go(`#/activity/${chapterId}/${activityId}`);
+  await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
+  await page.waitForTimeout(180);
+  for (let step = 0; step < pageIndex; step++) {
+    const more = page.locator('.modal [data-hint-page-nav="more"]');
+    if (!await more.count() || await more.isDisabled()) throw new Error(`hint has no page ${pageIndex + 1}`);
+    await more.click();
+    await page.waitForTimeout(160);
+  }
+};
+
 const SURFACES = [
   // Chapter 2's four Hint surfaces, added 2026-08-13. Two of them are the ONLY
   // coverage of DivideActivity and PlaceAccentActivity, which -- with
@@ -223,22 +240,25 @@ const SURFACES = [
     await page.waitForTimeout(180);
   }],
   ['ch7-adjective-case-hint', hint('chapt_7', 'c7_drill_case', false)],
-  // 5H-SPEC2 3.1 (LOOKBACK): chapter 8's two form-dependent Hints, which the
-  // port never had. The Case Drill routes each form to its OWN person's
-  // paradigm -- three modals off one drill, so all three are sought by form --
-  // and the Aὐτός Translation Drill alternates between the third-person
-  // paradigm and the Learn topic "Three Uses", which is the first hint in the
-  // app whose body is a TEACHING PAGE reached by topic id. That page is prose
-  // with two levels of numbered list and three accordions; it is exactly the
-  // sort of body that fits at 844px and overflows at 360, which is what this
-  // file is for.
+  // 5H-SPEC2 3.1 (LOOKBACK): chapter 8's Case Drill routes each form to its OWN
+  // person's paradigm -- three modals off one drill, so all three are sought
+  // by form. Its dispatch was confirmed in DOSBox and it is unchanged.
   ['ch8-case-hint-first-person', hintAtPrompt('chapt_8', 'c8_drill_case', 'ἡμεῖς', 31)],
   ['ch8-case-hint-second-person', hintAtPrompt('chapt_8', 'c8_drill_case', 'σοι', 31)],
   ['ch8-case-hint-third-person', hintAtPrompt('chapt_8', 'c8_drill_case', 'αὐτή', 31)],
-  ['ch8-autos-translation-hint-paradigm',
-    hintAtPrompt('chapt_8', 'c8_drill_translation_autos', 'κατὰ τὸ αὐτὸ πνεῦμα', 21)],
-  ['ch8-autos-translation-hint-three-uses',
-    hintAtPrompt('chapt_8', 'c8_drill_translation_autos', 'ἡ ὥρα αὐτοῦ', 21)],
+  // 5H-SPEC3 2: TWO SURFACES BECAME FOUR, because the surface did. The
+  // translation drill's hint was a per-item route to one of two payloads;
+  // VERIFY-5H-2 (s) settled in DOSBox that the original opens the same
+  // four-page stack on every item, so it is measured page by page and NOT
+  // sought by form -- every item opens the same thing now, which is the
+  // ruling. Page 4 is the Learn topic "Three Uses", the one hint in the app
+  // whose body is a TEACHING PAGE reached by topic id: prose, two levels of
+  // numbered list and three accordions, exactly the sort of body that fits at
+  // 844px and overflows at 360, which is what this file is for.
+  ['ch8-autos-translation-hint-p1-masculine', hintPage('chapt_8', 'c8_drill_translation_autos', 0)],
+  ['ch8-autos-translation-hint-p2-feminine', hintPage('chapt_8', 'c8_drill_translation_autos', 1)],
+  ['ch8-autos-translation-hint-p3-neuter', hintPage('chapt_8', 'c8_drill_translation_autos', 2)],
+  ['ch8-autos-translation-hint-p4-three-uses', hintPage('chapt_8', 'c8_drill_translation_autos', 3)],
   // 5H: chapter 11's four hints are form-dependent (D-46), so the two that
   // route to two different charts are sought by FORM rather than trusted to
   // shuffle -- an οὗτος item and an ἐκεῖνος item open different modals, and

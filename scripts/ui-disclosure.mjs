@@ -597,21 +597,17 @@ const shot = async name => {
     // than left to the generic sweep.
     ['ch7 Adjective Translation hint (review A2 GOOD pane)', '#/activity/chapt_7/c7_drill_translation', 'hint', 'pair', 1],
     ['ch8 Personal Pronoun Case hint (review A2 BAD pane)', '#/activity/chapt_8/c8_drill_case', 'hint', 'pair', 2],
-    // 5H-SPEC2 3.1: ONE ENTRY BECAME TWO, because the surface did. This drill
-    // used to open a four-page stack for every item (`ui.hintPages`); the
-    // original dispatches ONE page per item, so which composition you get now
-    // depends on which item you are standing on -- and the items are
-    // shuffled, so a walk that just opens the Hint measures whichever it drew.
-    // The eighth tuple field seeks a named prompt first. Two compositions, one
-    // per route: the third-person paradigm is a three-chart stack and keeps
-    // the §4.2 pinned pair; the Three Uses teaching page has no navigation of
-    // its own and must pin nothing, exactly like the Augment Drill's prose.
-    ['ch8 Autos Translation hint (paradigm route, 3 charts)',
-      '#/activity/chapt_8/c8_drill_translation_autos', 'hint', 'pair', 2, true, /close|cancel/i,
-      'κατὰ τὸ αὐτὸ πνεῦμα'],
-    ['ch8 Autos Translation hint (Three Uses route, no nav)',
-      '#/activity/chapt_8/c8_drill_translation_autos', 'hint', 'none', 0, true, /close|cancel/i,
-      'ἡ ὥρα αὐτοῦ'],
+    // ONE ENTRY BECAME TWO AND IS NOW ONE AGAIN, because the surface went the
+    // same way. 5H-SPEC2 read a per-item dispatch out of the TBK and split
+    // this into a paradigm route and a Three Uses route, each sought by form;
+    // VERIFY-5H-2 (s) settled it in DOSBox -- the original opens the SAME hint
+    // on every item -- and 5H-SPEC3 2 restored the four-page stack. So there
+    // is one composition again, no form to seek, and the §4.2 pinned pair is
+    // walked across all four pages: three charts and then the Three Uses
+    // teaching page, which draws no navigation of its own and rides the
+    // modal's.
+    ['ch8 Autos Translation hint (four-page stack)',
+      '#/activity/chapt_8/c8_drill_translation_autos', 'hint', 'pair', 3, true, /close|cancel/i],
     ['ch9 Parsing hint (composite, 2 states)', '#/activity/chapt_9/c9_drill_parsing', 'hint', 'toggle', 1],
     // §4.5's lone centred toggle: the one state in the app with no say button.
     ['ch10 Parsing hint (εἰμί, no say button)', '#/activity/chapt_10/c10_drill_parsing', 'hint', 'toggle', 1],

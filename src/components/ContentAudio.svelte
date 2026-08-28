@@ -168,6 +168,13 @@
     if (a) play(a);
   }
 
+  // 5H-SPEC3 4.2: the lexicon's `parts[]` in the { form: clip } shape splitTaps
+  // already takes, so a multi-form Review row splits exactly the way an
+  // audioMap splits a sentence -- the forms become buttons and everything
+  // between them stays text. resolveItems has already checked that every form
+  // is in the printed lexicalForm.
+  const partTaps = parts => Object.fromEntries(parts.map(part => [part.greek, part.audio]));
+
   function next() { idx = Math.min(idx + 1, items.length - 1); revealed = false; revealG = false; revealE = false; onStep(); maybeComplete(); }
   function prev() { idx = Math.max(idx - 1, 0); revealed = false; revealG = false; revealE = false; onStep(); }
   function onStep(speak = play) {
@@ -601,12 +608,25 @@
 {:else if mode === 'reviewVocab'}
   <!-- Review Vocabulary Chart: Greek (tap = lemma audio, blue) + STATIC gloss
        (dark green) + ntFreq. A17/A6: only the Greek word is tappable. -->
+  <!-- 5H-SPEC3 4.2 (VERIFY-5H-2 (v), Nathanael's ruling from the original):
+       ONE ROW MAY BE SEVERAL TAPS. Where a lemma prints more than one form --
+       ἐγώ / ἡμεῖς, σύ / ὑμεῖς, οὗτος, αὕτη, τοῦτο, οὐ, οὐκ, οὐχ -- the
+       original's chart speaks the form you touched, not the whole set, so
+       each printed form is its own tap here and the punctuation between them
+       is inert ink (directive 8: blue is tappable and nothing else). The
+       lexicon says which forms have their own clip (`parts`); a row without
+       it is the single button it has always been, and the Learn flashcard
+       ignores `parts` entirely and keeps playing the lemma's all-forms clip. -->
   <div class="card">
     <div class="review-vocab" class:two-columns={activity.columns === 2}
          style={`--rv-rows:${Math.ceil(items.length / (activity.columns || 1))}`}>
       {#each items as r}
         <div class="rv-row">
-          <button class="rv-greek greek" on:click={() => r.audio && play(r.audio)}>{r.display}</button>
+          {#if r.parts}
+            <span class="rv-greek rv-forms greek" data-rv-parts={r.parts.length}>{#each splitTaps(r.display, partTaps(r.parts)) as seg}{#if seg.audio}<button class="rv-form greek" data-audio-id={seg.audio} on:click={() => play(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}</span>
+          {:else}
+            <button class="rv-greek greek" on:click={() => r.audio && play(r.audio)}>{r.display}</button>
+          {/if}
           <span class="rv-gloss">{r.secondary}{#if activity.showNtFreq && r.meta && r.meta.ntFreq} <span class="rv-freq">({r.meta.ntFreq})</span>{/if}</span>
         </div>
       {/each}

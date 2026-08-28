@@ -276,7 +276,30 @@ export function getNextChapter(chapterId) {
   return { id: next.id, number: next.number, title: next.title, available: isChapterAvailable(next.id) };
 }
 
-// Resolve an activity's items into a uniform [{display, secondary, audio, meta}]
+// THE FORMS OF A ONE-CARD-MANY-FORMS LEMMA (5H-SPEC3 4.2, VERIFY-5H-2 (v)).
+//
+// Nathanael's ruling, read off the original: its two vocabulary surfaces do
+// NOT play the same thing. The Learn flashcard plays the lemma clip that
+// recites every printed form; the Review Vocabulary Chart taps EACH printed
+// form independently -- ἐγώ speaks its own clip and ἡμεῖς speaks its own. The
+// lexicon records the second half as `parts[]` ({greek, audio} per form), and
+// only the reviewVocab surface reads it: every other consumer of these rows,
+// the flashcard included, keeps playing `audio` and is unchanged.
+//
+// A row carries its parts only when the DISPLAY it is about to print actually
+// says every one of those forms. That is the case-split guard: chapter 8's
+// παρά and ὑπό senses print one form plus a case tag and have no business
+// carrying the lemma's whole set. check-content-shapes enforces the same
+// relation at build time, so a `parts` entry that does not appear in its own
+// lexicalForm cannot ship as a silently missing tap.
+function vocabParts(lemma, display) {
+  const parts = lemma && Array.isArray(lemma.parts) ? lemma.parts.filter(part => part && part.greek && part.audio) : [];
+  if (!parts.length) return null;
+  const text = String(display || '');
+  return parts.every(part => text.includes(part.greek)) ? parts : null;
+}
+
+// Resolve an activity's items into a uniform [{display, secondary, audio, parts, meta}]
 export function resolveItems(chapter, activity) {
   const vocabDisplay = lemma => ((activity.mode === 'flashcard' || activity.mode === 'reviewVocab')
     && lemma.lexicalForm) || lemma.greek;
@@ -319,6 +342,7 @@ export function resolveItems(chapter, activity) {
         const lemma = getLemma(item.ref, chapter.id, item.pool);
         return lemma ? {
           display: vocabDisplay(lemma), secondary: stripMarkup(lemma.gloss), audio: lemma.audio,
+          parts: vocabParts(lemma, vocabDisplay(lemma)),
           meta: { ...lemma, ref: item.ref }
         } : { display: item.ref, secondary: '(missing lemma)', audio: null, meta: {} };
       }
@@ -330,7 +354,8 @@ export function resolveItems(chapter, activity) {
   // sensePool() for why it is not simply "one card per sense".
   if (activity.pool === 'senses') {
     return sensePool(chapter).map(card => ({
-      display: card.display, secondary: stripMarkup(card.gloss), audio: card.audio, meta: card
+      display: card.display, secondary: stripMarkup(card.gloss), audio: card.audio,
+      parts: vocabParts(card.lemma, card.display), meta: card
     }));
   }
   // 5D convention: instead of spelling out ten {ref} items, an activity names
@@ -339,7 +364,8 @@ export function resolveItems(chapter, activity) {
   // untouched.
   if (activity.pool || (activity.promptFrom && activity.promptFrom.lexicon)) {
     return lemmaPool(chapter, activity).map(lemma => ({
-      display: vocabDisplay(lemma), secondary: stripMarkup(lemma.gloss), audio: lemma.audio, meta: lemma
+      display: vocabDisplay(lemma), secondary: stripMarkup(lemma.gloss), audio: lemma.audio,
+      parts: vocabParts(lemma, vocabDisplay(lemma)), meta: lemma
     }));
   }
   return [];

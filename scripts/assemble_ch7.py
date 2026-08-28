@@ -1078,10 +1078,22 @@ def build_lexicon(tbk, conv):
             'audio': r['audio'], 'ntFreq': freq,
             'lexicalForm': r['lexicalForm'],
         }
-    lemmas['ou']['audioAlt'] = [aud('g_voc8a'), aud('g_voc8b')]
+    # RATIFIED 2026-08-27 (VERIFY-5H-3 4.3, Nathanael's listens): the chart
+    # taps each printed form -- ou -> g_voc8, ouk -> g_voc8a, ouch -> g_voc8b
+    # -- and g_voc8a is ALSO the all-three recitation, so the flashcard plays
+    # it under the (v) two-surface rule. audioAlt is retired for parts.
+    lemmas['ou']['audio'] = aud('g_voc8a')
+    lemmas['ou'].pop('audioAlt', None)
+    lemmas['ou']['parts'] = [{'greek': 'οὐ', 'audio': aud('g_voc8')},
+                             {'greek': 'οὐκ', 'audio': aud('g_voc8a')},
+                             {'greek': 'οὐχ', 'audio': aud('g_voc8b')}]
     lemmas['ou']['_audio_note'] = (
-        'The lemma is the three-form set ou / ouk / ouch; the chapter ships '
-        'g_voc8, g_voc8a and g_voc8b, one per form.')
+        'VERIFY-5H-3 (x) answered pre-round (Nathanael, 2026-08-27): each '
+        'form taps its own clip on the Review chart (ou -> g_voc8, ouk -> '
+        'g_voc8a, ouch -> g_voc8b, his stated mapping); g_voc8a is also the '
+        'clip that recites all three, so per the (v) two-surface rule the '
+        'flashcard plays g_voc8a. Verify visually via the previous-response '
+        'checklist.')
     example = {}
     for pop in [a for a in [] ]:
         pass
@@ -1094,6 +1106,27 @@ def build_lexicon(tbk, conv):
                 'the four cumulative Scripture review charts; the data '
                 'references those LOCAL copies.'),
             'lemmas': lemmas, 'exampleWords': example}
+
+
+def post_patches(ch):
+    """Stage 8.7: ratified rulings re-applied on any rebuild, so a
+    regeneration cannot reverse a hand-approved fix. Update THIS function
+    when a new ruling lands against chapter 7."""
+    # 5H-SPEC2 2.5 (VERIFY-5H (o)): objectives may carry per-word audio.
+    hit = [i for i, o in enumerate(ch['objectives'])
+           if isinstance(o, str) and 'εἰμί' in o]
+    if len(hit) != 1:
+        raise SystemExit('STOP: expected exactly one objective naming eimi, '
+                         'found %r -- the objectives text moved and the '
+                         'audioMap index must be re-derived' % hit)
+    i = hit[0]
+    ch['objectives'][i] = {
+        'text': ch['objectives'][i],
+        'audioMap': {'εἰμί': aud('g_eimi1s')},
+        '_source': ('Objectives page WordSelection table dispatches g_eimi1s '
+                    '(7_ADJS.TBK, 0xf34b6 region); VERIFY-5H (o) confirmed '
+                    'both original objectives taps speak.')}
+    return ch
 
 
 def validate(ch):
@@ -1113,6 +1146,7 @@ def main():
     tbk = Tbk(tbkpath)
     conv = make_conv(json.load(open(fontpath)))
     ch = build(tbk, conv)
+    ch = post_patches(ch)
     validate(ch)
     lex = build_lexicon(tbk, conv)
     for name, obj in (('chapt-07.json', ch), ('lexicon-chapt07.json', lex)):

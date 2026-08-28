@@ -49,7 +49,13 @@ const readWork = (rel) => {
   } catch { return null; }   // not in the index = deleted in this commit
 };
 
-let tracked = execSync('git ls-files buildout', { cwd: ROOT }).toString()
+// `maxBuffer` for the same reason the three calls around it carry it, and this
+// one was simply missed: `buildout` holds every round's screenshot corpus, and
+// the file list crossed execSync's 1 MB default at some point before this
+// round -- 12,442 paths, 1,085,518 bytes -- after which this script died with
+// ENOBUFS out of spawnSync before it read a single document. 1 << 26 is the
+// value the rest of the file already uses.
+let tracked = execSync('git ls-files buildout', { cwd: ROOT, maxBuffer: 1 << 26 }).toString()
   .split('\n').filter(f => /\.(md|csv)$/.test(f));
 
 if (STAGED) {
