@@ -8,7 +8,7 @@
   // panels; their per-mode data contracts are documented in HANDOFF-4 §5 (B1).
   import { onDestroy } from 'svelte';
   import { getGreekTapMap, headingKey, resolveItems, shuffle } from '../lib/content.js';
-  import { splitGreekRuns } from '../lib/greek.js';
+  import { splitGreekRuns, splitTaps } from '../lib/greek.js';
   import { play, playOnLoad, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
   import { providePopups, popupFor } from '../lib/popups.js';
@@ -276,9 +276,23 @@
        strings themselves are extracted verbatim from the TBK -- round 1
        authored chapter 3's four lines from scratch, which is what
        VERIFY-5D-RESPONSE2 item 1 is about; they are never paraphrased. -->
+  <!-- 5H-SPEC2 2.5 (VERIFY-5H (o), DOSBox-confirmed): AN OBJECTIVE MAY SPEAK.
+       Chapter 11's first objective names ἐκεῖνος and οὗτος, chapter 7's fifth
+       names εἰμί, and the Objectives page's own WordSelection table in each
+       TBK dispatches a clip for those words — the original's objectives are
+       tap targets like every other displayed Greek (directive 9). The
+       objectives array was plain strings and had nowhere to carry a clip, so
+       an entry is now EITHER a string (every other objective in twelve
+       chapters, unchanged) or `{ text, audioMap }`, the same form -> clip map
+       topics already use. splitTaps does the wrapping, so a Greek word here
+       renders exactly as it does in prose. -->
   <div class="card textpage">
     <strong>{chapter.objectivesPreamble}</strong>
-    <ol class="objectives-list">{#each chapter.objectives as o}<li>{o}</li>{/each}</ol>
+    <ol class="objectives-list">{#each chapter.objectives as o}
+      {@const text = typeof o === 'string' ? o : (o.text || '')}
+      {@const taps = typeof o === 'string' ? null : o.audioMap}
+      <li>{#if taps}{#each splitTaps(text, taps) as part}{#if part.audio}<button class="greek-tap greek" on:click={() => play(part.audio)}>{part.t}</button>{:else}{part.t}{/if}{/each}{:else}{text}{/if}</li>
+    {/each}</ol>
   </div>
 
 {:else if mode === 'topicPages'}

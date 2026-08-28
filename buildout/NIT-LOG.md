@@ -33,6 +33,19 @@ Instances to date (clip -> halves):
   original recorded (ch5 article E_ARTSG/E_ARTPL, ch7 adjectives
   G_AGPARS/G_AGPARP, ch8 third person H_3MPAR/H_3FPAR/H_3NPAR).
 - Chapter 12: none (its charts are two columns and fit unsplit).
+- APPLIED 2026-08-27 (5H-SPEC2 2.9, implementer). The Quick Review half of
+  the ruling now ships: `c11_qr_this_that` 2 buttons over 4 halves,
+  `c11_qr_relative` 1 over 2, `c11_qr_reflexive` 3 over 6 -- twelve buttons
+  down to six, each after its Plural half. The Learn toggles and every modal
+  are untouched, which is the other half of the same ruling; ui-behavior
+  asserts both directions ("named toggle keeps its say-all" for the toggles,
+  "no Singular half carries the button" for the Review pages) so neither can
+  drift into the other.
+- FULL SPLIT LIST, for the future audio-pipeline job. Six recordings, twelve
+  half-charts each side of the Learn/Review divide:
+  K_EKEPAR, K_OUTPAR, K_OSPAR, K_AUTPAR, K_SEAPAR, K_EAUPAR. Nothing in
+  chapters 1-10 or 12 joins them. This is the complete record Nathanael asked
+  for before deciding whether to cut the clips.
 
 **N-2 | Two-state toggles whose only contrast is a Greek word.**
 DISCLOSURE-RULES §4.1 sends a lexical contrast to More/Back
@@ -42,6 +55,17 @@ two-form pair in chapters 1-12 supplied with 5H-SPEC2 section 3.3;
 decision pending Nathanael. Instances: ch4 Learn Nouns λόγος/ἄνθρωπος
 (More/Back), ch5 Learn Nouns ὥρα/δόξα (More/Back), ch12 Parsing Drill
 hint εἰμί/ἔχω (Greek labels).
+
+DEFAULT APPLIED 2026-08-27 (5H-SPEC2 3.3, no kickoff ruling to the
+contrary). `paradigmToggleLabels` falls back to More/Back whenever the one
+differing word of the two titles is GREEK, so the ch12 εἰμί/ἔχω hint now
+reads More / Back and joins the other two lexical contrasts. Stated as the
+§4.1 rule rather than as a chapter-12 exception, so it is one rule in one
+place. The five English contrasts in the section 3.3 matrix are asserted
+UNCHANGED in the same ui-behavior pass (Present/Future on ch10,
+Middle/Passive on ch12's λύω pair, Singular/Plural on ch11). Reversing it is
+a one-line revert plus those assertions; VERIFY-5H-2 (t) asks Nathanael to
+confirm or reverse.
 
 **N-3 | Interlinear verses flow instead of breaking at the original's
 three fixed lines** (5H RESULTS 5.6; the shape has flowed since ch1).

@@ -620,6 +620,43 @@ for (const file of files) {
   };
   for (const key of SECTION_KEYS) collect(data[key]);
 
+  // ---- AND RESOLVES TO SOMETHING THE HINT CAN DRAW (5H-SPEC2 3.1) ----
+  // `chartRefs` above answers "does this name exist", which is weaker than the
+  // renderer's question, "does it resolve". Chapter 8's per-item
+  // `hintRef: "threeUses"` names a real topic id and passed this file cleanly
+  // while resolveHintRef returned null for it — a Hint button that silently
+  // does not render, the exact failure the block above was written to catch,
+  // one level down. So the two resolution paths the app actually has are
+  // modelled here: a CHART (a paradigm block anywhere under the named node, a
+  // bare `paradigm` object on a Review page, a chart title slug, or a
+  // `hintCharts` composite) or a PAGE (a topic id with its own non-empty
+  // `content`). A ref that is neither is a dangling reference no matter how
+  // many nodes happen to carry that string as an id.
+  const resolvableRefs = new Set(Object.keys(data.hintCharts || {}));
+  const holdsChart = node => {
+    if (Array.isArray(node)) return node.some(holdsChart);
+    if (!node || typeof node !== 'object') return false;
+    if (node.type === 'paradigm' || node.type === 'pronounParadigm') return true;
+    return Object.values(node).some(holdsChart);
+  };
+  const collectResolvable = node => {
+    if (Array.isArray(node)) { node.forEach(collectResolvable); return; }
+    if (!node || typeof node !== 'object') return;
+    if (node.type === 'paradigm' || node.type === 'pronounParadigm') {
+      chartRefs.add(node.type);
+      resolvableRefs.add(node.type);
+      if (typeof node.title === 'string') resolvableRefs.add(slugOf(node.title));
+    }
+    if (typeof node.chartTitle === 'string') resolvableRefs.add(slugOf(node.chartTitle));
+    if (typeof node.id === 'string') {
+      const chart = holdsChart(node) || (node.paradigm && typeof node.paradigm === 'object');
+      const page = Array.isArray(node.content) && node.content.length > 0;
+      if (chart || page) resolvableRefs.add(node.id);
+    }
+    for (const value of Object.values(node)) collectResolvable(value);
+  };
+  for (const key of SECTION_KEYS) collectResolvable(data[key]);
+
   for (const [name, composite] of Object.entries(data.hintCharts || {})) {
     const refs = composite && composite.paradigmRefs;
     const charts = composite && composite.charts;
@@ -652,8 +689,8 @@ for (const file of files) {
     // Walking every object reaches ui, item and hint-page records alike, so
     // one own-property check covers both drill defaults and item overrides.
     const ref = node.hintRef;
-    if (typeof ref === 'string' && !chartRefs.has(ref)) {
-      problems.push(`${path}.hintRef: "${ref}" resolves to nothing — the Hint control would silently not render.`);
+    if (typeof ref === 'string' && !resolvableRefs.has(ref)) {
+      problems.push(`${path}.hintRef: "${ref}" resolves to no chart and no content page — the Hint control would silently not render.`);
     }
   });
 

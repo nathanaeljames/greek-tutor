@@ -223,6 +223,22 @@ const SURFACES = [
     await page.waitForTimeout(180);
   }],
   ['ch7-adjective-case-hint', hint('chapt_7', 'c7_drill_case', false)],
+  // 5H-SPEC2 3.1 (LOOKBACK): chapter 8's two form-dependent Hints, which the
+  // port never had. The Case Drill routes each form to its OWN person's
+  // paradigm -- three modals off one drill, so all three are sought by form --
+  // and the Aὐτός Translation Drill alternates between the third-person
+  // paradigm and the Learn topic "Three Uses", which is the first hint in the
+  // app whose body is a TEACHING PAGE reached by topic id. That page is prose
+  // with two levels of numbered list and three accordions; it is exactly the
+  // sort of body that fits at 844px and overflows at 360, which is what this
+  // file is for.
+  ['ch8-case-hint-first-person', hintAtPrompt('chapt_8', 'c8_drill_case', 'ἡμεῖς', 31)],
+  ['ch8-case-hint-second-person', hintAtPrompt('chapt_8', 'c8_drill_case', 'σοι', 31)],
+  ['ch8-case-hint-third-person', hintAtPrompt('chapt_8', 'c8_drill_case', 'αὐτή', 31)],
+  ['ch8-autos-translation-hint-paradigm',
+    hintAtPrompt('chapt_8', 'c8_drill_translation_autos', 'κατὰ τὸ αὐτὸ πνεῦμα', 21)],
+  ['ch8-autos-translation-hint-three-uses',
+    hintAtPrompt('chapt_8', 'c8_drill_translation_autos', 'ἡ ὥρα αὐτοῦ', 21)],
   // 5H: chapter 11's four hints are form-dependent (D-46), so the two that
   // route to two different charts are sought by FORM rather than trusted to
   // shuffle -- an οὗτος item and an ἐκεῖνος item open different modals, and

@@ -441,8 +441,22 @@ for (const size of WIDTHS) {
           } else {
             await hint.click();
             const modal = page.locator('.hint-modal');
-            if (!await modal.count() || !await modal.isVisible() || !await modal.locator('.paradigm').count()) {
-              report.interactionErrors.push({ ...evidence, state: activityId, error: 'Hint did not open a paradigm' });
+            // 5H-SPEC2 3.1: A HINT PAYLOAD IS NOT ALWAYS A CHART. Chapter 8's
+            // Aὐτός Translation Drill routes eight of its twenty-one items to
+            // the Learn topic "Three Uses" — prose, by topic id — and the rest
+            // to the Third Person Paradigm. The items are shuffled, so which
+            // one this walk lands on is a draw; before this the walk reported
+            // an interaction error on the draws that opened the page. A page
+            // route is captured as itself, by the ref it resolved, and the
+            // chart assertions below stay chart-only.
+            const pageRef = await modal.count() ? await modal.getAttribute('data-hint-page-ref') : null;
+            if (pageRef) {
+              await recordExtra(`${activityId}--hint`, `hint page: ${pageRef}`);
+              await modal.getByRole('button', { name: /close|cancel/i }).first().click();
+              await page.waitForTimeout(120);
+              if (await modal.count()) report.interactionErrors.push({ ...evidence, state: activityId, error: 'Hint page did not close' });
+            } else if (!await modal.count() || !await modal.isVisible() || !await modal.locator('.paradigm').count()) {
+              report.interactionErrors.push({ ...evidence, state: activityId, error: 'Hint did not open a paradigm or a page' });
             } else {
               const titles = (await modal.locator('.pg-title:visible').allInnerTexts())
                 .map(text => text.replace(/\s+/g, ' ').trim()).filter(Boolean);

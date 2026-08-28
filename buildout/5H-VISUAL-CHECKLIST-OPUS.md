@@ -133,3 +133,74 @@ Modal sizing at five device heights (390x844, 390x734, 390x664, 320x360,
 768x1024) is covered by `ui-modals.mjs`, extended this round with sixteen new
 surfaces including both form-dependent hint routes of each D-46 drill and both
 new Greek-keyboard references.
+
+---
+
+# 5H-VISUAL-CHECKLIST-2 (5H-SPEC2, section 6.2)
+
+Every page whose DATA or RENDERER changed in 5H-SPEC2, at 320 px and 768 px,
+compared against its rail-walk panel. Appended to this file rather than opened
+as a new one, per spec 6.2.
+
+METHOD. `npm run preview`, then
+`node scripts/ui-walk.mjs --chapters=chapt_7,chapt_8,chapt_11,chapt_12 --out=buildout/screenshots/5h2-walk-opus`
+and `node scripts/ui-modals.mjs --out=buildout/screenshots/5h2-modals-opus`.
+The rail-walk panels were rendered from the PDFs with pymupdf at 200 dpi and
+cropped to the quadrant named in each row — `ch7railwalk.pdf` (16 pages),
+`ch8railwalk.pdf` (15), `ch11railwalk.pdf` (24), `ch12railwalk.pdf` (21).
+Modal states come from the modal corpus, which photographs every surface at
+five device heights; the row names the height it was read at.
+
+320 px OVERFLOW: **zero stops overflow** in any of the four chapters
+(`ui-walk.mjs`: "no horizontal overflow in chapt_7, chapt_8, chapt_11,
+chapt_12"). The walk also reports zero interaction errors, all rail counts and
+Next actions live, and all authored expanders and chart states opened.
+
+Status: PASS / PASS+note / FAIL. Every row is PASS at the state delivered.
+
+| # | Page or state | Rail walk | What was compared | Status |
+| --- | --- | --- | --- | --- |
+| 2.1 | `chapt_11/c11_learn_objectives` | ch11 p1 top-right | Seven objectives, objective 1 wrapping onto an indented second line, **ἐκεῖνος** and **οὗτος** now BLUE taps with "(that)" and "(this)" left in ink beside them; word order and punctuation unchanged | PASS (the two words were ink before this round; VERIFY-5H (o)) |
+| 2.2 | `chapt_7/c7_learn_objectives` | ch7 p1 top-right | Seven objectives; **εἰμί** on objective 5 is a tap, objective 4 is a plain string again after Revision 1a's off-by-one fix | PASS |
+| 2.3 | ...every other objectives page, chapters 1-12 | — | No page gained a tap and none lost a line | PASS (machine census, `ui-behavior` 5H-SPEC2 2.5) |
+| 2.4 | `chapt_11` Demonstrative Examples modal, Jn 13:35 | ch11 p3 bottom-right | **One flowing Greek line** — ἐμοὶ and μαθηταί are no longer split across a hard break; the line wraps where the column ends, as the original's does | PASS (RESPONSE 1) |
+| 2.5 | ...the same modal, Jn 8:23 | ch11 p3 bottom-right | **τούτου** with an ACUTE on the penult, matching the drill pool and the rest of the chapter | PASS (D-53) |
+| 2.6 | `chapt_11/c11_drill_translation_this_that` item 13 | ch11 p8 | **ἐκεῖνοί** with its smooth breathing restored; the second acute is unchanged (the enclitic accent thrown back by εἰσιν) | PASS (D-53) |
+| 2.7 | `chapt_11/c11_learn_relatives` topic 2, Neut.-A cell | ch11 p12 top-left | The ὅς chart's plural neuter accusative **ἅ**; the cell is unchanged on screen and its clip is now `k_osnns` | PASS (D-56; the change is audible, not visible) |
+| 2.8 | `chapt_11/c11_learn_relatives` topic 1 (Introduction) | ch11 p11 top-right | The TBK's own "Relative Pronouns" text and its (cont.) rule, **with no pending-verification banner** — the data key is `_verify_note` now | PASS (D-52; the 5H row 11.15 note is discharged) |
+| 2.9 | `chapt_11/c11_ex_speller_relative` prompt 24 | ch11 p17 top-right | Reads **"who (masc. nom. pl.)"**; the answer οἵ and the tile keyboard are unchanged | PASS (D-54) |
+| 2.10 | `chapt_11/c11_qr_this_that` | ch11 p20 bottom-left, bottom-right | Four stacked halves, **TWO Say Paradigm buttons**, each after its Plural half; the αὐ/ου note on both halves of the οὗτος pair | PASS (VERIFY-5H (p); the original prints one button per paradigm on one screen, which is what two matches) |
+| 2.11 | `chapt_11/c11_qr_relative` | ch11 p21 top-left | Two stacked halves, **ONE Say Paradigm button** after the Plural half, the "Note how similar…" line on both halves | PASS |
+| 2.12 | `chapt_11/c11_qr_reflexive` | ch11 p21 top-right, p22 | Six stacked halves, **THREE Say Paradigm buttons**, one after each person's Plural half; the no-nominative note on all six | PASS |
+| 2.13 | `chapt_11/c11_learn_vocab`, the οὗτος card | ch11 p17 bottom-left | Card prints **οὗτος, αὕτη, τοῦτο** and now plays `k_voc7`, the three-form recitation, rather than `k_voc7a` | PASS (RESPONSE 6; audible, not visible) |
+| 2.14 | `chapt_11/c11_qr_vocab`, the οὗτος row | ch11 p20 top-right | Same row text and the same "(1388)" frequency; the row's tap is now `k_voc7` | PASS (RESPONSE 6) |
+| 2.15 | `chapt_12/c12_qr_vocab`, the μέν row | ch12 p17 bottom-left | Gloss reads **"on the one hand, indeed (179)"**; the drills' and flashcard's short gloss "indeed" is untouched | PASS (D-55) |
+| 2.16 | `chapt_12/c12_drill_augment` Hint | ch12 p6 (Augments cont.), read at 390x844 | Four numbered rules on one screen; **ἐκβάλλω, ἐξεβάλλον, ἀποκτείνω, ἀπέκτεινον in points 3 and 4 are blue taps**; the contraction table in point 2 and the augment vowel in point 1 stay INK | PASS (RESPONSE 5; the two kinds of Greek on one screen are flagged for Nathanael in VERIFY-5H-2 (u)) |
+| 2.17 | `chapt_8/c8_drill_case` Hint, three routes | ch8 p8 bottom-left | A first-person form opens the First Person paradigm, a second-person form the Second, an αὐτ- form the Third — three different modal titles off one drill. The original's panel (the third-person route) carries **Cancel only**, which the port matches | PASS (spec 3.1; whether the original routes all three is VERIFY-5H-2 (s)) |
+| 2.18 | `chapt_8/c8_drill_translation_autos` Hint, paradigm route | ch8 p7 bottom-right | The Third Person Paradigm, Masculine / Feminine / Neuter on the §4.2 Back-More pair | PASS+note (**the original's panel carries More \| Cancel and the port carries Close** — see RESULTS §5.1 and VERIFY-5H-2 (s)) |
+| 2.19 | ...its Three Uses route | ch8 p8 top-left | The teaching page as a Hint: title, the "αὐτός can be used in three ways" line, three numbered points with hanging indents and their underlined lead terms, and the three Examples accordions the C2 conversion put there | PASS+note (**the original's panel carries Back \| Cancel**; same item) |
+| 2.20 | ...both routes at 320x360 | — | Both fit with the overlay unscrolled and Close pinned; the Three Uses body scrolls inside the modal, the shell does not | PASS (`ui-modals.mjs`, 47 surfaces x 5 heights, zero BAD) |
+| 2.21 | `chapt_12/c12_drill_parsing` Hint on an εἰμί form | ch12 p8 top-right | The "Imperfect of εἰμί" chart with its toggle now reading **More** / **Back** rather than **ἔχω** / **εἰμί** | PASS+note (**the original's panel shows BOTH charts stacked on one screen with a single Cancel** — RESULTS §5.3, VERIFY-5H-2 (w)) |
+| 2.22 | ...on a λύω form | ch12 p8 | The Active chart with its toggle still reading **Middle/Passive** — an English contrast, untouched by the 3.3 rule | PASS |
+| 2.23 | `chapt_10/c10_drill_parsing` Hint on an εἰμί form | ch10 p (5G corpus) | Toggle still reads **Future** / **Present** | PASS (regression row for 3.3) |
+| 2.24 | `chapt_11` four drill hints | ch11 p5, p6, p14 | Toggles still read **Singular** / **Plural** | PASS (regression row for 3.3) |
+| 2.25 | `chapt_3/c3_drill_greek_verb`, `chapt_4/c4_drill_greek_noun`, `chapt_5/c5_drill_first_decl_noun` | ch3 p, ch4 p, ch5 p (5D/5E corpora) | English prompt in ink (unchanged — these prompts were never taps), Greek options unchanged, **Pronounce greyed until the item is answered and live afterwards** | PASS (D-51 amend; the ink-prompt half of the gate is vacuous here because the prompt is English) |
+
+## Modal states added this round
+
+| # | Modal state | Route | Status |
+| --- | --- | --- | --- |
+| S2.1 | ch8 Case Drill hint, First Person | `chapt_8/c8_drill_case` → seek ἡμεῖς → Hint | PASS |
+| S2.2 | ch8 Case Drill hint, Second Person | ...seek σοι → Hint | PASS |
+| S2.3 | ch8 Case Drill hint, Third Person | ...seek αὐτή → Hint | PASS |
+| S2.4 | ch8 Aὐτός Translation hint, paradigm route | `chapt_8/c8_drill_translation_autos` → seek κατὰ τὸ αὐτὸ πνεῦμα → Hint | PASS |
+| S2.5 | ch8 Aὐτός Translation hint, Three Uses route | ...seek ἡ ὥρα αὐτοῦ → Hint | PASS |
+
+All five are sought by FORM rather than trusted to the shuffle: this drill's
+Hint payload now depends on which item is on screen, so opening "the Hint"
+would photograph whichever the draw gave (`ui-modals.mjs`, `ui-disclosure.mjs`
+and `ui-behavior.mjs` all seek).
+
+`ui-disclosure.mjs` D13 covers the same two translation routes at 390x520
+under forced scroll: the paradigm route keeps the §4.2 pinned pair, the Three
+Uses route pins nothing, and each seeks its own form first.

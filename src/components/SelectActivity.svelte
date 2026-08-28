@@ -34,7 +34,7 @@
   // policy machinery as a one-stage item, so no timing or advance rule below
   // has a special case for it.
   import { onDestroy } from 'svelte';
-  import { authoredOptionSource, buildSelectQuestions, buildTwoStageQuestions, paradigmToggleLabels, randomFeedback, resolveContentById, resolveHintBlocks, resolveHintRef } from '../lib/content.js';
+  import { authoredOptionSource, buildSelectQuestions, buildTwoStageQuestions, paradigmToggleLabels, randomFeedback, resolveContentById, resolveHintBlocks, resolveHintPage, resolveHintRef } from '../lib/content.js';
   import { combiningForMarkName, firstAccentCluster, markOverlayParts } from '../lib/greek.js';
   import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
@@ -203,6 +203,24 @@
   // activity-level Hint.
   $: activeHintRef = current?.hintRef ?? activity.ui?.hintRef;
   $: hintChart = activeHintRef ? resolveHintRef(chapter, activeHintRef) : null;
+  // 5H-SPEC2 3.1: A PER-ITEM hintRef MAY NAME A TEACHING PAGE, not only a
+  // chart. Chapter 8's Aὐτός Translation Drill routes eight of its twenty-one
+  // items to the Learn topic "Three Uses" and the rest to the Third Person
+  // paradigm — the original's own WordCounter dispatch (8_PRONS.TBK 0x7bf39),
+  // one page per item. The port used to stack BOTH as a two-page hintPages
+  // popup, which showed every item both answers; the data has dropped that key
+  // so this per-item routing governs.
+  //
+  // resolveHintRef answers "which CHART" and three call sites feed its result
+  // straight to Paradigm, so the topic-id fall-through lands here rather than
+  // inside it: when a ref resolves to no chart, ask resolveContentById for the
+  // topic's own blocks — the identical array the retired `contentRef` page
+  // rendered. A ref that resolves to neither still yields no Hint button,
+  // which is what check:shapes now refuses to let ship.
+  $: hintRefPage = activeHintRef && !hintChart
+    ? resolveHintPage(chapter, activeHintRef)
+    : { blocks: [], title: null };
+  $: hintRefBlocks = hintRefPage.blocks;
   // 5G-SPEC3 / D-48f1: a composite drill hint discloses one chart at a time,
   // and the button always names the OTHER state so the learner sees where it
   // goes rather than a generic "switch" instruction.
@@ -294,7 +312,8 @@
     stopAudio();
     hintParadigmIndex = Math.max(0, Math.min(hintBundle.length - 1, hintParadigmIndex + delta));
   }
-  $: showHintButton = hintPages.length > 0 || hintBlocks.length > 0 || !!hintChart;
+  $: showHintButton = hintPages.length > 0 || hintBlocks.length > 0 || !!hintChart
+    || hintRefBlocks.length > 0;
   $: orderedRevealControls = orderControls([
     ...revealButtons.map(reveal => ({ kind: 'reveal', label: reveal.label, reveal })),
     ...(showHintButton ? [{ kind: 'hint', label: 'Hint' }] : [])
@@ -317,17 +336,32 @@
   // 108, CONFIRMED) records the AUGMENTED ANSWER, not the lemma on screen, so
   // the prompt tap and Pronounce would hand the answer over before the guess.
   //
-  // Stated structurally rather than by activity id: when the prompt is Greek
-  // AND the options are Greek AND the clip is afterGuess, that clip cannot be
-  // the prompt's own -- the answer is one of the displayed forms and the
-  // recording is of it. Until the item is answered the lemma renders in INK
-  // (the Syllable Division exception treatment, directive 9) and Pronounce is
-  // disabled; afterwards both go live and replay the clip. The triple matches
-  // exactly one activity across all twelve chapters today and covers the next
-  // drill built this way without an edit here. English-prompt Greek-option
-  // drills (every Vocabulary: English to Greek) are untouched -- their prompt
-  // is not Greek.
-  $: answerClipPrompt = promptIsGreek && greekOptions && audioTiming === 'afterGuess';
+  // Stated structurally rather than by activity id: when the options are Greek
+  // AND the clip is afterGuess, that clip cannot be the prompt's own -- the
+  // answer is one of the displayed forms and the recording is of it. Until the
+  // item is answered the Greek prompt renders in INK (the Syllable Division
+  // exception treatment, directive 9) and Pronounce is disabled; afterwards
+  // both go live and replay the clip.
+  //
+  // 5H-SPEC2 4.1, ADOPTED FORWARD AND BACKWARD (Nathanael, VERIFY-5H (d)):
+  // DOSBox confirms the ORIGINAL leaks -- its Pronounce speaks the augmented
+  // answer before the guess -- and the gate is kept anyway, as a deliberate
+  // improvement, everywhere the same shape occurs. The condition's first leg
+  // was "the prompt is Greek", which fenced it to chapter 12; the leg that
+  // actually states the rule is the ADVANCE CLASS:
+  //   afterGuess + Greek options + NOT autoBoth
+  // `autoBoth` is every English-to-Greek vocabulary drill, and there a
+  // disabled Pronounce is a dead button -- the item auto-advances on any
+  // answer, so the control would never come alive while its item is on screen.
+  // Excluded by the same ruling, structurally rather than by name: the
+  // spellers, where pronouncing the target IS the exercise (they are not this
+  // component at all). What that leaves, across the 270-activity census, is
+  // FOUR: chapter 12's Augment Drill and the English-prompt form drills of
+  // chapters 3, 4 and 5, whose Pronounce speaks the Greek ANSWER. Their
+  // prompts are English, so only the Pronounce half of the gate bites there --
+  // the ink-prompt half is vacuous, not skipped.
+  $: answerClipPrompt = greekOptions && audioTiming === 'afterGuess'
+    && advancePolicy.advanceClass !== 'autoBoth';
   // Whether the prompt tap and Pronounce may speak the clip right now.
   $: promptClipLive = !answerClipPrompt || answered;
   // §5.5: the item is final and nothing is going to move it. Which outcomes
@@ -765,7 +799,11 @@
       {#if showPronounce}
         <!-- Speaks the prompt where the prompt is the Greek; on the Greek Verb
              Drill (English prompt) it speaks the answer form, which is what
-             the original's Pronounce does there. -->
+             the original's Pronounce does there -- but only once the guess is
+             in. `promptClipLive` is the 4.1 gate: the original speaks the
+             answer whenever it is asked, and Nathanael's ruling on VERIFY-5H
+             (d) keeps that clip from arriving before the learner has answered
+             on all four drills where the clip IS the answer. -->
         {@const say = promptClipLive ? (current.promptAudio || current.answerAudio) : null}
         <button class="btn" disabled={!say} on:click={() => say && play(say)}>Pronounce</button>
       {/if}
@@ -923,6 +961,24 @@
       </div>
     </div>
   </div>
+{:else if showHint && hintRefBlocks.length}
+  <!-- 5H-SPEC2 3.1: the per-item hintRef resolved to a TEACHING PAGE rather
+       than a chart (chapter 8's "Three Uses"). Same modal shell as every other
+       Hint route; the topic's own title heads it, so the data does not author
+       the heading a second time. -->
+  <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
+    <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint"
+         data-hint-page-ref={activeHintRef}>
+      <div class="modal-scroll">
+        {#if hintRefPage.title}<div class="rc-heading">{hintRefPage.title}</div>{/if}
+        <RichContent blocks={hintRefBlocks} />
+      </div>
+      <div class="modal-actions">
+        <!-- svelte-ignore a11y-autofocus -->
+        <button class="btn" autofocus on:click={() => (showHint = false)}>Close</button>
+      </div>
+    </div>
+  </div>
 {:else if showHint && hintBlocks.length}
   <!-- 5F-FEEDBACK.pdf item 15/16 root cause: this branch used to render a
        bare .card stacked under the drill -- no dim overlay, no Close, easy
@@ -933,8 +989,15 @@
        prose. -->
   <div class="modal-overlay" on:click|self={() => (showHint = false)} role="presentation">
     <div class="modal hint-modal" role="dialog" aria-modal="true" aria-label="Hint">
+      <!-- 5H-SPEC2 2.6 (VERIFY-5H-RESPONSE 5): the hint's own Greek taps. An
+           inline hint carries an `audioMap` exactly as a teaching TOPIC does,
+           and it is applied the same way — chapter 12's Augment hint prints
+           ἐκβάλλω / ἐξεβάλλον / ἀποκτείνω / ἀπέκτεινον in points 3 and 4 and
+           each speaks its own clip. The map lists what speaks, so the Greek
+           in the rule lines above (the bare ε of the augment rule) stays
+           inert, which is the map doing its job rather than an exception. -->
       <div class="modal-scroll">
-        <RichContent blocks={hintBlocks} />
+        <RichContent blocks={hintBlocks} greekTaps={activity.hint?.audioMap || null} />
       </div>
       <div class="modal-actions">
         <!-- svelte-ignore a11y-autofocus -->

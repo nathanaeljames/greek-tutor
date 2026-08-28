@@ -597,7 +597,21 @@ const shot = async name => {
     // than left to the generic sweep.
     ['ch7 Adjective Translation hint (review A2 GOOD pane)', '#/activity/chapt_7/c7_drill_translation', 'hint', 'pair', 1],
     ['ch8 Personal Pronoun Case hint (review A2 BAD pane)', '#/activity/chapt_8/c8_drill_case', 'hint', 'pair', 2],
-    ['ch8 Autos Translation hint (4 pages)', '#/activity/chapt_8/c8_drill_translation_autos', 'hint', 'pair', 3],
+    // 5H-SPEC2 3.1: ONE ENTRY BECAME TWO, because the surface did. This drill
+    // used to open a four-page stack for every item (`ui.hintPages`); the
+    // original dispatches ONE page per item, so which composition you get now
+    // depends on which item you are standing on -- and the items are
+    // shuffled, so a walk that just opens the Hint measures whichever it drew.
+    // The eighth tuple field seeks a named prompt first. Two compositions, one
+    // per route: the third-person paradigm is a three-chart stack and keeps
+    // the §4.2 pinned pair; the Three Uses teaching page has no navigation of
+    // its own and must pin nothing, exactly like the Augment Drill's prose.
+    ['ch8 Autos Translation hint (paradigm route, 3 charts)',
+      '#/activity/chapt_8/c8_drill_translation_autos', 'hint', 'pair', 2, true, /close|cancel/i,
+      'κατὰ τὸ αὐτὸ πνεῦμα'],
+    ['ch8 Autos Translation hint (Three Uses route, no nav)',
+      '#/activity/chapt_8/c8_drill_translation_autos', 'hint', 'none', 0, true, /close|cancel/i,
+      'ἡ ὥρα αὐτοῦ'],
     ['ch9 Parsing hint (composite, 2 states)', '#/activity/chapt_9/c9_drill_parsing', 'hint', 'toggle', 1],
     // §4.5's lone centred toggle: the one state in the app with no say button.
     ['ch10 Parsing hint (εἰμί, no say button)', '#/activity/chapt_10/c10_drill_parsing', 'hint', 'toggle', 1],
@@ -720,8 +734,24 @@ const shot = async name => {
   // max-height:420px compaction, which is a different composition question.
   await page.setViewportSize({ width: 390, height: 520 });
   let scrolledStates = 0;
-  for (const [label, hash, how, expect, steps, mustScroll = true, escape = /close|cancel/i] of MODALS) {
+  for (const [label, hash, how, expect, steps, mustScroll = true, escape = /close|cancel/i, seek = null] of MODALS) {
     await go(hash);
+    // A form-dependent Hint has to be opened on a NAMED form, or the shuffle
+    // decides which composition this walk measures (5H-SPEC2 3.1).
+    if (seek) {
+      const want = String(seek).replace(/\s+/g, ' ').trim().normalize('NFC');
+      let onItem = false;
+      for (let step = 0; step < 30; step += 1) {
+        const shown = String(await page.locator('.card .prompt').first().innerText())
+          .replace(/\s+/g, ' ').trim().normalize('NFC');
+        if (shown === want) { onItem = true; break; }
+        const next = page.locator('.card').getByRole('button', { name: 'Next', exact: true });
+        if (!await next.count() || await next.isDisabled()) break;
+        await next.click();
+        await page.waitForTimeout(40);
+      }
+      check(`D13 ${label}: reached the form this composition belongs to`, onItem, seek);
+    }
     if (how === 'hint') {
       await page.getByRole('button', { name: 'Hint', exact: true }).click();
     } else if (how === 'endings') {

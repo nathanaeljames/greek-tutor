@@ -548,6 +548,34 @@ D-51 | ch12 | AUGMENT DRILL: THE ANSWER-CLIP PROMPT GATE. The drill's
      half is a deliberate improvement or a mirror. | 5H-SPEC1 3.5,
      implementer.
 
+D-51 (amend) | app | The Augment Drill gate generalised to the section
+     4.1 triple; applies to ch3/ch4/ch5's English-prompt form drills;
+     English-to-Greek vocabulary drills and spellers excluded by
+     ruling. | Nathanael, VERIFY-5H (d), 2026-08-26.
+
+D-52 | ch11 | RELATIVE PRONOUNS INTRODUCTION RESTORED. The original's
+     Introduction radio shows the Reflexive/Reciprocal box (rail walk
+     p11-12, DOSBox-confirmed); the port shows the TBK's own unshown
+     "Relative Pronouns" + "(cont.)" fields (0x4136e, 0x420fc). Six
+     clips (k_agree1-4, k_under1-2) remain unwired. | Nathanael,
+     VERIFY-5H (a), 2026-08-26.
+
+D-53 | ch11 | Two typographic slips of the original corrected: τοὺτου ->
+     τούτου (Demonstrative Examples, Jn 8:23); εκεῖνοί -> ἐκεῖνοί (This
+     and That Translation item 13). | Nathanael, VERIFY-5H (m).
+
+D-54 | ch11 | Relative and Reflexive Spelling prompt 24 "whom (masc.
+     nom. pl.)" -> "who (masc. nom. pl.)"; answer οἵ unchanged. |
+     VERIFY-5H (h).
+
+D-55 | ch12 | Review Vocabulary Chart μέν gloss "one the one hand,
+     indeed" -> "on the one hand, indeed". | VERIFY-5H (g).
+
+D-56 | ch11 | K_OSNAP records οὕς, not the neuter ἅ its name implies;
+     every ἅ cell now plays K_OSNNS (same form); the speller item whose
+     answer is οὕς mirrors the original and keeps K_OSNAP. | Nathanael
+     listen, VERIFY-5H (q) + RESPONSE 2.
+
 ## Auto-progress / advance rule matrix
 
 MOVED. The full exercise-by-exercise, chapter-by-chapter matrix —

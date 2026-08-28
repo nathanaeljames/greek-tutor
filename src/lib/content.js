@@ -405,7 +405,15 @@ function sensePool(chapter) {
           greek: lemma.greek,
           gloss: lemma.gloss || lemma.glossShort || '',
           ntFreq: freqFor(),
-          audio: (sense && sense.audio) || lemma.audio || null
+          // 5H-SPEC2 2.7 (VERIFY-5H-RESPONSE 6): THE LEMMA'S OWN CLIP, not the
+          // first sense's. This card is the one-card-for-every-form case — it
+          // prints the whole `lexicalForm` (οὗτος, αὕτη, τοῦτο; ἐγώ / ἡμεῖς) —
+          // so the recording that matches what is on screen is the lemma's
+          // recitation of all of them. A sense clip speaks ONE form and belongs
+          // to the drills, which reach it through their own authored items.
+          // Chapter 11's Learn Vocabulary flashcard and Review Vocabulary Chart
+          // were speaking k_voc7a (οὗτος alone) under a card reading all three.
+          audio: lemma.audio || (sense && sense.audio) || null
         });
         continue;
       }
@@ -715,6 +723,17 @@ function optionClassForLayout(layout, activity, activityOptions, questions) {
 // The returned array is indexed BY STATE: entry i is the contrast word of
 // title i. Callers index it by the TARGET state, so the button names where
 // it goes, not where it is.
+//
+// 5H-SPEC2 3.3 / NIT-LOG N-2: a contrast word that is GREEK is not a label.
+// DISCLOSURE-RULES 4.1 sends a LEXICAL contrast to More/Back -- the rule was
+// settled on chapter 4's Masculine Declension, where the two screens are
+// logos and anthropos and the buttons read More/Back rather than the words
+// themselves. Chapter 12's Imperfect hint for the eimi/echo forms is the one
+// pair in twelve chapters whose single differing word is Greek, and it
+// shipped labelled with the words (5H-SPEC1). Stated structurally so the rule
+// is the same one 4.1 states rather than a chapter-12 exception: the five
+// other shipped pairs differ in an ENGLISH word (Present/Future,
+// Middle/Passive, Singular/Plural) and are untouched.
 export function paradigmToggleLabels(titles) {
   const words = (titles || []).map(title => String(title || '').trim().split(/\s+/));
   const fallback = (titles || []).map((_, index) => (index === 0 ? 'Back' : 'More'));
@@ -723,8 +742,15 @@ export function paradigmToggleLabels(titles) {
     (found, differs, index) => (differs ? [...found, index] : found), []);
   if (differing.length !== 1) return fallback;
   const at = differing[0];
+  if (GREEK_LETTER.test(words[0][at]) || GREEK_LETTER.test(words[1][at])) return fallback;
   return [words[0][at], words[1][at]];
 }
+
+// Greek + Greek Extended. A local copy of lib/greek.js's own test rather than
+// an import: content.js is the module every route gates on, and it has no
+// dependency on the typography layer (which pulls mark-geometry.json in with
+// it). One regex, stated in both places, is cheaper than that edge.
+const GREEK_LETTER = /[Ͱ-Ͽἀ-῿]/;
 
 // A hintRef names a chart source in the chapter: an existing chart by id/type/
 // title, or a chapter-level hintCharts entry. Chapter 3's three verb drills all
@@ -881,18 +907,32 @@ export function resolveHintBlocks(chapter, hint) {
 // (5F-FEEDBACK2 item 28: the Aὐτός Translation Drill's last hint page is the
 // Three Uses teaching page). Resolving by id keeps the hint from duplicating —
 // or drifting from — the authored page, same principle as resolveHintBlocks.
-export function resolveContentById(chapter, ref) {
-  if (!chapter || !ref) return [];
+//
+// 5H-SPEC2 3.1: the page's own TITLE travels with its blocks. A teaching topic
+// carries its heading in `title`, beside the content rather than inside it, so
+// a hint that borrows the topic and prints only the blocks arrives untitled —
+// which is how the retired `hintPages` route had to author "Three Uses" a
+// second time in the data. One walk answers both questions.
+export function resolveHintPage(chapter, ref) {
+  const empty = { blocks: [], title: null };
+  if (!chapter || !ref) return empty;
   let found = null;
   const walk = node => {
     if (found || !node) return;
     if (Array.isArray(node)) { node.forEach(walk); return; }
     if (typeof node !== 'object') return;
-    if (node.id === ref && Array.isArray(node.content)) { found = node.content; return; }
+    if (node.id === ref && Array.isArray(node.content)) {
+      found = { blocks: node.content, title: node.title || null };
+      return;
+    }
     for (const key of Object.keys(node)) walk(node[key]);
   };
   for (const section of SECTIONS) walk(chapter[section]);
-  return found || [];
+  return found || empty;
+}
+
+export function resolveContentById(chapter, ref) {
+  return resolveHintPage(chapter, ref).blocks;
 }
 
 export function shuffle(arr) {
