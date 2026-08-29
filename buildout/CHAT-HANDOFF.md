@@ -15,52 +15,68 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
 internet. Full license from the author. Secondary goal: portfolio
 piece. Nathanael goes by "Fable" when addressing Claude (chat).
 
-## Live state (2026-08-25 — DISCLOSURE SPIKE CLOSED, 5H NEXT)
+## Live state (2026-08-28 — COHORT 5H CLOSED AND ACCEPTED, 5I NEXT)
 
-The disclosure spike is CLOSED and merged: DISCLOSURE-SPEC1 (Opus win,
-no XPATCH), DISCLOSURE-SPEC2 (Opus solo), DISCLOSURE-SPEC3 (Opus win;
-Sol XPATCH ported the ui-disclosure3 census harness and the ui-walk
-location-proven console waiver), plus a same-day modal-padding patch
-(RESULTS §12). Accepted head: `cc89c9f`. Tally: Sol 4, Opus 10, Ties 0
-(Opus total includes solo rounds). All ten chapters' data is committed
-and disclosure-conformant; nothing is staged.
+Cohort 5H (chapters 11 Demonstrative/Relative Pronouns, 12 Imperfect
+Verbs) is CLOSED and accepted, plus the LOOKBACK pass it absorbed.
+Three spec rounds, all Opus, no cross-patches: 5H-SPEC1 (buildout),
+5H-SPEC2 (VERIFY-5H closure + LOOKBACK over chapters 3-12), 5H-SPEC3
+(VERIFY-5H-2 closure). Accepted head: `6a4369c`. Tally: Sol 4, Opus 13
+(includes solo rounds), Ties 0. Twelve chapters' data committed and
+disclosure-conformant; nothing staged.
 
-What the spike settled (canon lives in DISCLOSURE-RULES.md, amended
-2026-08-17 and 2026-08-18, and DRILL-BEHAVIOR-RULES.md B-last):
+New canon from 5H (rules live in their own documents; this is the
+index):
 
-- Accordions are BOXED (green title, left caret, #fffdf3 on #fdf9e7,
-  minimal padding, no inner indent); Meanings is the sole exception.
-- "<Qualifier> Examples" titles everywhere; bare "Examples" only when
-  no short qualifier exists. Greek allowed in titles as inert control
-  labels.
-- Pinning is MODALS ONLY; one footer composition (one divider, padding
-  above and below MEASURED as painted strips, nav line never divided
-  from Close); say buttons never pinned alone; 3+ modals pin only the
-  Back/More pair. The D13 harness measures strips, not declarations —
-  declared padding passed on a build the eye rejected.
-- Review (C9) pages NEVER page, regardless of chart names (printable).
-- Green underline is EXCLUSIVE to tappable elements; headerUnderline
-  is inert provenance; title links (titleLink) are green.
-- Sequence-stepped activities load item 1 on mount (pronounce per
-  advance behavior); selection-driven keep their empty start
-  (DRILL-BEHAVIOR-RULES B-last). Census pinned by ui-disclosure3:
-  13 changed / 202 already-loaded / 4 exempt over 219 activities.
-- Hints transcribe their OWN original screens (§4.7); rows never merge
-  unless the original merges; the railwalk HAND CURSOR is binding for
-  tappability. The ch5 hint chart was rebuilt from ch5railwalk.pdf.
-- Speller keyboard has a one-shot Shift (bottom-left, width from the
-  spacebar); capitals map through one table, tiles and physical alike.
-- The half-screen modal bug: root-caused to a stale --modal-vh
-  (missed resize on iOS resume with keyboard height snapshotted);
-  fixed with pageshow/visibilitychange/focusout/modal-open re-measure
-  plus a plausibility clamp. DEVICE SOAK STILL PENDING — the fix is
-  proven at the trigger level, not yet over days of real use.
+- **A1b** (DRILL-BEHAVIOR-RULES): audio timing follows what the CLIP
+  contains, not what the prompt displays. Broke A1's assumption; the
+  ch12 Augment Drill records the augmented ANSWER, so afterGuess.
+- **A1c** (same): the audio-leak gate. afterGuess + Greek options +
+  not autoBoth means the prompt carries no tap and Pronounce is
+  disabled until the item is answered. Four activities app-wide: ch12
+  Augment Drill, ch3 Greek Verb, ch4 Greek Noun, ch5 First Declension
+  Noun. Spellers and English-to-Greek vocabulary drills EXCLUDED by
+  ruling. D-51.
+- **DISCLOSURE-RULES §4.1**: a GREEK-ONLY contrast is lexical, so the
+  toggle is More/Back, never the Greek pair. NIT-LOG N-2 RESOLVED.
+- **Form-dependent hints (D-46 class) are now swept for, not stumbled
+  on.** The TBK signature is a WordCounter conditional that shows a
+  different Hint object per item. Full 28-chapter scan done: none in
+  1-7 or 9; ch8 has TWO the port had never carried (Case Drill, Autos
+  Translation Drill — both now shipped); ch10 one; 5H five. Re-run
+  the scan on every new chapter.
+- **Two-surface vocabulary audio rule (v)**: the Learn flashcard plays
+  the lemma clip that recites ALL printed forms; the Review chart taps
+  EACH printed form independently (`parts`). Five rows app-wide: ch7
+  οὐ/οὐκ/οὐχ, ch8 ἐγώ/ἡμεῖς and σύ/ὑμεῖς, ch11 οὗτος/αὕτη/τοῦτο, and
+  ὅς/ἥ/ὅ which stays single-clip by ruling.
+- **Objectives may carry taps**: an `objectives[]` entry is a string OR
+  `{text, audioMap}`. Only ch7 (εἰμί) and ch11 (ἐκεῖνος, οὗτος)
+  qualify in twelve chapters; both ship.
+- **NIT-LOG.md exists** (opened 2026-08-26): the running catch-all for
+  deferred botherances. N-1 (shared say-all recordings on split
+  charts) is the open one that needs a COMPLETE instance record before
+  Nathanael decides on splitting the clips — append every new instance
+  in the round that ships it.
 
-Gates at close: shapes/build/lazy-chunk green; ui-disclosure 206/206;
-ui-disclosure3 73/73; ui-behavior 902/902; ui-modals 155/155; ui-walk
-105 stops x 2 widths clean; offline 44 stops. Standing debt:
-check:docs fails on ~45 docs from a CRLF-vs-LF guard defect (pre-
-existing, cause documented in DISCLOSURE-SPEC1 RESULTS §7.1).
+Say-all ruling (N-1, VERIFY-5H (p)): Learn/Drill/Exercise surfaces keep
+the button on every half (one half is on screen at a time, so the
+button is the whole paradigm's); Quick Review pages, which stack both
+halves, get ONE button after the Plural half.
+
+Gates at close: shapes/build/lazy-chunk green; ui-behavior 1125/1125;
+ui-modals 270/270; ui-disclosure 303/303; ui-disclosure3 84/84;
+ui-walk chapters 7/8/11 zero overflow; ui-offline ch8 25 stops.
+check:docs reports 44 failures — the SAME pre-existing CRLF-guard
+baseline, but note it had been silently dead (ENOBUFS on a 1 MB
+execSync buffer against a 12,442-file buildout) until 5H-SPEC3
+restored it.
+
+Two machine-level cautions from 5H-SPEC3, worth knowing before a long
+round: the implementer's F: volume hit zero bytes free mid-round and
+killed a ui-modals run (a build that dies mid-run can leave a stale
+`dist` behind a green gate), and the advance-timing harness had a race
+against clips longer than its 7 s floor (fixed).
 
 ## Buildout process v2 (established 2026-07-26; applies to buildout phases)
 
@@ -203,6 +219,42 @@ files carry only what a new chat needs.
    can pull it on demand. Project files are a WORKING SET, not an
    archive, and should stay small enough that the whole set is worth
    reading at the start of a session.
+
+### Process rules added during 5H (2026-08-25 to 08-28)
+
+- **Three deliverables per spec.** Every spec produces BUILD, RESULTS
+  AND its VERIFY document in the same round, authored by the
+  implementer. The VERIFY document opens with a PREVIOUS-RESPONSE
+  CHECKLIST: every ask from the last VERIFY response, one or two lines
+  each, as boxes Nathanael ticks by LOOKING rather than assuming, plus
+  a route line per row telling him where on the device to look. It
+  then carries forward any item of the previous VERIFY the response
+  did not mark resolved, then the new items.
+- **No airplane-mode items in VERIFY documents.** The scripted offline
+  walk during implementation testing suffices; all later testing is
+  assumed offline and Nathanael reports what does not play.
+- **Ask before the spec lands.** A question whose answer would reshape
+  the round is asked in the pipeline turn that finds it, not deferred
+  to VERIFY. VERIFY is for questions whose answer does not force a
+  spec revision.
+- **Rail-walk departures are reported immediately.** When a rail-walk
+  screen departs from what extraction expects — text the TBK holds
+  that the screen never shows, a screen duplicating another, a clip
+  whose name does not match what it records — the pipeline says so in
+  the SAME turn, as the headline, before any spec or data work.
+- **Wrong document means STOP the whole turn.** Not "STOP" followed by
+  an answer anyway. Name what was expected, ask, do nothing else.
+- **Cursor semantics in rail walks:** ARROW over a word means NOT
+  clickable; HAND means clickable. Both are evidence.
+- **Pipeline debts are a real category and must be VERIFIED, not
+  asserted.** Rules documents, logs, the ledger and the assemblers are
+  pipeline-only (implementers never touch them, which also keeps the
+  dual-run diffs comparable). A debt is cleared only after
+  regenerating the affected chapter through the assembler and diffing
+  against the shipped data — "I patched it" is not evidence. Two
+  assemblers were declared clear at 5H-SPEC3 and were not; the
+  regeneration test caught a paired-clip regression a read-through had
+  missed.
 
 ## Harvested 5A/5B/5C lessons (settled — do not re-derive)
 
@@ -444,26 +496,26 @@ files carry only what a new chat needs.
   i_rm623b pre-ships in CHAPT_8). Full taxonomy:
   buildout/5C-RECON-FINDINGS.md §3.
 
-## Immediate queue (2026-08-25)
+## Immediate queue (2026-08-28)
 
-1. **Cohort 5H opens: chapters 11-12 (Demonstratives; Imperfect).**
-   Launch in a FRESH CHAT with the project files and the ISO (the ISO
-   does not persist across conversations and extraction needs it).
-   Recon first, per the standard: rail-walk PDFs for both chapters,
-   answered-screen capture for every TRANSLATION-type drill, watch for
-   form-dependent hints (D-46), resize check on the provisional 11-28
-   grouping (title sweep surfaced extra activities in 11 and 13).
-   Ledger rows for the new chapters' drills before any spec.
-2. Extraction pipeline: assemble_ch11/ch12 assemblers with Stage 8.7
-   provenance banners and post_patches() guards; new-chapter data
-   passes are DISCLOSURE-CONFORMANT FROM BIRTH (boxed-accordion
-   labels with qualifiers, no bare "Examples", C2 interspersing,
-   hints from their own screens, hand-cursor tap wiring, C9 stacked
-   review pages, initial-load classification per B-last).
-3. VERIFY-DISCLOSURE3 residue rides along: the half-screen fix device
-   soak, Shift-key feel, ch8 swapped clips by ear, ch7 rule-line taps,
-   title-link green — confirm during normal 5H device use, no
-   dedicated round needed unless something fails.
+1. **Cohort 5I opens: chapters 13-16 (3rd Declension, Aorists,
+   Passives) — the first VOLUME run.** Launch in a FRESH CHAT with the
+   project files and the ISO (the ISO does not persist across
+   conversations and extraction needs it). Confirm the four-chapter
+   grouping against the extraction pass before committing to it; the
+   corrected title sweep flagged EXTRA activities in chapter 13, so
+   the inventory decides the grouping, not the roadmap.
+2. Recon per standard: rail-walk PDFs for every chapter in the cohort,
+   answered-screen capture for every TRANSLATION-type drill, the
+   form-dependent-hint scan (D-46 signature), ledger rows extrapolated
+   and compared against Nathanael's DOSBox pass BEFORE any spec.
+3. Assemblers with Stage 8.7 banners and post_patches() from birth;
+   data disclosure-conformant from birth. New-chapter data must carry
+   the 5H canon: objectives audioMap where the TBK dispatches taps,
+   `parts` on multi-form vocabulary rows, one Quick Review say-all per
+   recording, A1b/A1c timing and gates.
+4. Riding along, no dedicated round: the half-screen modal device
+   soak, and the check:docs CRLF guard defect (now visible again).
 
 ## Known open questions
 
@@ -474,7 +526,15 @@ files carry only what a new chat needs.
 - **check:docs CRLF guard defect** (~45 false failures, documented
   DISCLOSURE-SPEC1 RESULTS §7.1): fix the guard's normalizer or the
   blob/working-tree comparison in a future round; it is noise today.
-- The eimi two-state hint extension (D-48f3e) objection window
-  remains open; reversing it is a two-line change.
-- Cohort 5H+ grouping remains provisional pending each cohort opening.
+- **NIT-LOG N-1 (shared say-all recordings) is deliberately open**
+  pending a complete instance record across all 28 chapters; splitting
+  the clips is an audio-pipeline job Nathanael may take once.
+- N-3 (interlinear verses flow rather than breaking at the original's
+  fixed lines) and N-4 (empty grid cells) are recorded, unasked.
+- Cohort 5I+ grouping remains provisional pending each cohort opening.
+- Chapters 7 and 8 remain FROZEN at 5F close for full regeneration:
+  their assemblers differ from shipped data in 666 and 819 fields
+  (behavior matrix applied separately, PATCH1-3 hand-applied). Their
+  post_patches() now carry the ratified 5H rulings, but a full
+  back-port has not been done and Stage 8.7 blocks rebuilds.
 - Standing pipeline debt: the phi-arisaios redMarkCluster off-by-one.

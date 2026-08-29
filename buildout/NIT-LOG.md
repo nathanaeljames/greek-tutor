@@ -33,6 +33,11 @@ Instances to date (clip -> halves):
   original recorded (ch5 article E_ARTSG/E_ARTPL, ch7 adjectives
   G_AGPARS/G_AGPARP, ch8 third person H_3MPAR/H_3FPAR/H_3NPAR).
 - Chapter 12: none (its charts are two columns and fit unsplit).
+- APPLIED 2026-08-28 across the cohort; the Quick Review half of the
+  ruling ships and ui-behavior asserts both directions. Every FUTURE
+  chapter must append its instances here in the round that ships them
+  -- the complete record is what Nathanael will decide the clip
+  splitting against.
 - APPLIED 2026-08-27 (5H-SPEC2 2.9, implementer). The Quick Review half of
   the ruling now ships: `c11_qr_this_that` 2 buttons over 4 halves,
   `c11_qr_relative` 1 over 2, `c11_qr_reflexive` 3 over 6 -- twelve buttons
@@ -56,6 +61,17 @@ page. Not yet asked; recorded so it is not forgotten.
 option grids leave a dead cell when the pool is 11 or 7 (ch11 Greek to
 English drill, ch12 Scripture Memory Drill); the port's responsive
 grid draws none (5H RESULTS 4.4). Recorded as a deliberate difference.
+
+**N-5 | Hint page headings the original does not print.** The ch8 Aὐτός
+Translation Drill's four-page hint titles each page "Third Person
+Paradigm: Masculine / Feminine / Neuter"; the original prints ONE
+heading with the gender as a section label, and pages the same three
+charts that way on its own Review page (ch8railwalk p13). Nathanael
+ruled KEEP AS IS 2026-08-28 (VERIFY-5H-3 (y)) and it is logged as D-57,
+so this is not open work -- it is recorded because the same choice will
+recur wherever a multi-chart paradigm becomes a paged hint, and a later
+sweep may want them consistent. Instances: ch8 Autos Translation Drill
+(3 gender pages).
 
 ## RESOLVED
 

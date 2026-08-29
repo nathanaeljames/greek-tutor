@@ -35,7 +35,7 @@ see, say so and it goes to the front of the next round.
 - [x] ch11 chart row οὗτος αὕτη τοῦτο: three independent taps; flashcard
       plays k_voc7 (v).
 - [x] Nothing anywhere plays l_a1s / l_ap9 (k2, closed).
-- [ ] ch7 chart row οὐ, οὐκ, οὐχ: three independent taps (g_voc8 /
+- [x] ch7 chart row οὐ, οὐκ, οὐχ: three independent taps (g_voc8 /
       g_voc8a / g_voc8b); flashcard plays g_voc8a (all three) (4.3).
 
 **One correction to that last line, which is yours (2026-08-28).** The row is

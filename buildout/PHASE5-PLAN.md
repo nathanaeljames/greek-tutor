@@ -1,8 +1,9 @@
 # PHASE5-PLAN.md — vertical buildout roadmap (LIVING DOCUMENT)
 
-Status date: 2026-08-16 (5G CLOSED after three spec rounds and three
-cross-patches, walkthrough answer-key verification and a device pass;
-next is DISCLOSURE-SPEC1, an APP-WIDE SPIKE, not a cohort).
+Status date: 2026-08-28 (5H CLOSED AND ACCEPTED after three spec
+rounds, all Opus, no cross-patches, with the LOOKBACK pass over
+chapters 3-12 absorbed into 5H-SPEC2/3; next is COHORT 5I, chapters
+13-16, the first volume run).
 Roadmap only; per-cohort detail lives in
 the numbered specs. Updated at every cohort boundary.
 
@@ -221,13 +222,37 @@ COHORT 5G — Chapters 9 + 10 (Present Middle/Passive; Future), OPENING.
   time under PIPELINE-INSIGHTS Stage 8, then one spec (5G-SPEC1.md)
   for both chapters.
 
-COHORT 5H+ (INFERENCE, pending each cohort's extraction pass) —
+COHORT 5H — Chapters 11 + 12 (Demonstrative/Relative Pronouns;
+  Imperfect Verbs), CLOSED 2026-08-28, accepted head `6a4369c`.
+  Inventory: ch11 eleven activities (7 drills, 4 exercises — the
+  "extra activities" chapter the corrected sweep flagged, with TWO
+  case-style drills, TWO translation drills and TWO chapter spellers),
+  ch12 nine. Novelties settled: the Augment Drill (a new drill shape
+  whose clips record the ANSWER, producing rules A1b and A1c and the
+  prompt gate D-51); three-stage option grids; six-chart Back/More
+  paradigm stacks; per-item form-dependent hints at scale.
+  Extrapolated ledger rows 96-115 scored 19/20 against Nathanael's
+  DOSBox pass, the miss being the Augment Drill's timing.
+  The cohort also absorbed a LOOKBACK pass over everything already
+  shipped: chapter 8's two never-carried form-dependent hints, the
+  objectives tap contract for chapters 7 and 11, the two-surface
+  vocabulary audio rule across five rows, the audio-leak gate applied
+  back to chapters 3-5, and the Quick Review say-all consolidation.
+  Process lessons of the cohort: pipeline debts must be verified by
+  REGENERATION, not asserted; questions that reshape a round are asked
+  before the spec lands; every VERIFY document opens with a
+  previous-response checklist.
+
+COHORT 5I+ (INFERENCE, pending each cohort's extraction pass) —
   chapters 11-28 grouped by grammatical family. An early "9-28 are
   uniform, consider consolidating" reading was RETRACTED when the
   corrected title sweep surfaced extra activities in chapters 11, 13
   and 18; keep the split below until each cohort's own pass:
-  * 5H: 11-12 (Demonstratives, Imperfect).
-  * 5I: 13-14-15-16 (3rd Declension, Aorists, Passives) — volume run.
+  * 5H: 11-12 (Demonstratives, Imperfect) — CLOSED 2026-08-28.
+  * 5I: 13-14-15-16 (3rd Declension, Aorists, Passives) — volume run,
+    NEXT. Chapter 13 is the one the corrected title sweep flagged for
+    extra activities; let its inventory decide whether four chapters
+    is one cohort or two.
   * 5J: 17-18 (Contract, Perfect).
   * 5K: 19-20-21 (Participles) — likely one new paradigm-display
     wrinkle at 19, then reuse.
