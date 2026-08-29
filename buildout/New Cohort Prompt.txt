@@ -1,6 +1,6 @@
 This is a continuation of our conversation 'xxxx' and several other conversations in this project. Read CHAT-HANDOFF.md and other relevant project files before proceeding.
 
-I am attaching chapters XX-XX rail walk PDFs. Please note, when the cursor appears as a "hand", this indicates the element it is hovering nearby is clickable. I have used this to indicate on several screens that words should be clickable to play audio, but note this is not exhaustive (I didn't hover near every word) so please still check against the extraction pipeline. 
+I am attaching chapters XX-XX rail walk PDFs within a zip file. Please note, when the cursor appears as a "hand", this indicates the element it is hovering nearby is clickable. I have used this to indicate on several screens that words should be clickable to play audio, but note this is not exhaustive (I didn't hover near every word) so please still check against the extraction pipeline. 
 
 Cohort XX is now accepted and complete. Please draft the data and assembly script for chapter XX now. Please also extrapolate DRILLBEHAVIORLEDGER.csv for chapters XX-XX according to the principles of DRILL-BEHAVIOR-RULES.md. I will compare your results against mine to see if any revisions are required.
 
@@ -9,6 +9,8 @@ Cohort XX is now accepted and complete. Please draft the data and assembly scrip
 
 Now please give me the data and assembly script for chapter XX.
 
+--------
+Are there any items/ outstanding questions/ DOSBOX lookups I should verify BEFORE drafting the implementation spec? 
 --------
 
 Now please draft the final XX-SPEC1.md document. Remember, specs should contain instructions for full visual walkthrough, instructions to consider the rail walk documents I will be attaching but defer to the specs, instructions to generate a RESULTS document, a BUILD document (and the BUILD document MUST contain the full git diff for the assessment pipeline), and a VERIFY document. The spec should also keep track of implementation time via wall clock. To accommodate for downtimes the wall clock should record the start and stop time of each TURN rather than the entire implementation and the final BUILD document should return the cumulative active time spent across all TURNS required to produce the full spec, not including downtime.

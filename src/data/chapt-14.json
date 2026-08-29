@@ -1,0 +1,3064 @@
+{
+ "_comment": "Chapter 14 (Second Aorist Verbs), assembled from 14_2AOR.TBK + CHAPT_14 audio + ch14railwalk.pdf under PIPELINE-INSIGHTS-v3 Stage 8 and DISCLOSURE-RULES. Behavior fields per DRILLBEHAVIORLEDGER.csv rows 125-134 (CONFIRMED 2026-08-29).",
+ "id": "chapt_14",
+ "number": 14,
+ "title": "Second Aorist Verbs",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "recognize and write the second aorist paradigm,",
+  "write out the second aorist stems of the verbs learned in previous lessons,",
+  "translate the second aorist form,",
+  "gain more practice in translating and working with Greek,",
+  "master 10 more high frequency vocabulary words,",
+  "memorize Mat 6:10b in Greek."
+ ],
+ "vocab": [
+  "haima",
+  "airo",
+  "didasko",
+  "idios",
+  "kalos",
+  "mello",
+  "hodos",
+  "polus",
+  "soma",
+  "psuche"
+ ],
+ "learn": [
+  {
+   "id": "c14_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives",
+   "instructions": ""
+  },
+  {
+   "id": "c14_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "In English we have two ways of forming the past tense."
+      },
+      {
+       "type": "numbered",
+       "gapBefore": true,
+       "items": [
+        "Add the \"-ed\" suffix to the word: I [[u]]laugh[[/u]] at Elliott's jokes (present). I [[u]]laughed[[/u]] at Elliott's jokes (past).",
+        "Change the root of the verb: Zach [[u]]runs[[/u]] down the court (present). Zach [[u]]ran[[/u]] down the court (past)."
+       ]
+      }
+     ]
+    },
+    {
+     "id": "comparison",
+     "title": "Comparison with Greek",
+     "content": [
+      {
+       "type": "para",
+       "text": "Like English, Greek forms the past in two ways."
+      },
+      {
+       "type": "para",
+       "text": "The first aorist is formed from the present stem with an augment and a suffixed sa.",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "The second aorist is built from a different aorist root by adding second active personal endings which are identical to the imperfect forms.",
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "aoristComments",
+     "title": "Aorist Comments",
+     "content": [
+      {
+       "type": "para",
+       "text": "The aorist is the most frequently used tense in the New Testament. Both the first and second aorists are usually translated as a simple past (i.e. He came...). The two types of aorists function in exactly the same way in sentences."
+      },
+      {
+       "type": "para",
+       "text": "The second aorist is presented first because of its similarity to the imperfect.",
+       "gapBefore": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c14_learn_second_aorist",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Second Aorist Indicative Verbs",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "The aorist is used for undefined action in the past (e.g. He loosed). The imperfect was used for continuous action in the past (e.g. He was loosing)."
+      },
+      {
+       "type": "para",
+       "text": "While the endings parallel those of the imperfect, note carefully that the aorist root is different. There is no way to predict how the second aorist root is formed; thus it must be learned by memory. First aorists use the present stem.",
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "form",
+     "title": "Form",
+     "content": [
+      {
+       "type": "para",
+       "text": "The second aorist is built from the second aorist verb stem. It is preceded by an \"ε\" augment and followed by secondary endings like the imperfect."
+      },
+      {
+       "type": "formula",
+       "align": "center",
+       "gapBefore": true,
+       "lines": [
+        {
+         "text": "Augment + Verb stem + Connecting vowel"
+        },
+        {
+         "text": "+ Secondary endings"
+        },
+        {
+         "text": "ε + λαβ + ο + ν = ἔλαβον",
+         "audio": "chapt_14_n_lab1s",
+         "tapUnit": true
+        },
+        {
+         "text": "Aug   Stem   CV   Ending"
+        }
+       ],
+       "_note": "D-48f2 shape: the Greek line is one tap unit playing elabon (n_lab1s); the English lines are inert."
+      },
+      {
+       "type": "para",
+       "text": "The connecting vowel will be:",
+       "gapBefore": true
+      },
+      {
+       "type": "para",
+       "text": "ο before μ and ν\nε elsewhere",
+       "flush": true,
+       "_disclosure": "C5: \"Form (cont.)\" is the same header with a continuation marker; merged."
+      }
+     ]
+    },
+    {
+     "id": "secondAoristActive",
+     "title": "Second Aorist Active",
+     "titleAudio": "chapt_14_n_lamp",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "learnSecondAoristActive",
+       "title": "Second Aorist Active Indicative of λαμβάνω",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1",
+         "cells": [
+          {
+           "greek": "ἔλαβον",
+           "gloss": "I took",
+           "audio": "chapt_14_n_lab1s"
+          },
+          {
+           "greek": "ἐλάβομεν",
+           "gloss": "We took",
+           "audio": "chapt_14_n_lab1p"
+          }
+         ]
+        },
+        {
+         "label": "2",
+         "cells": [
+          {
+           "greek": "ἔλαβες",
+           "gloss": "You took",
+           "audio": "chapt_14_n_lab2s"
+          },
+          {
+           "greek": "ἐλάβετε",
+           "gloss": "You took",
+           "audio": "chapt_14_n_lab2p"
+          }
+         ]
+        },
+        {
+         "label": "3",
+         "cells": [
+          {
+           "greek": "ἔλαβε(ν)",
+           "gloss": "He/she/it took",
+           "audio": "chapt_14_n_lab3s"
+          },
+          {
+           "greek": "ἔλαβον",
+           "gloss": "They took",
+           "audio": "chapt_14_n_lab3p"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_14_n_labpar"
+       }
+      }
+     ]
+    },
+    {
+     "id": "secondAoristMiddle",
+     "title": "Second Aorist Middle",
+     "titleAudio": "chapt_14_n_ginp",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "learnSecondAoristMiddle",
+       "title": "Second Aorist Middle Indicative of γίνομαι",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1",
+         "cells": [
+          {
+           "greek": "ἐγενόμην",
+           "gloss": "I became",
+           "audio": "chapt_14_n_gin1s"
+          },
+          {
+           "greek": "ἐγενόμεθα",
+           "gloss": "We became",
+           "audio": "chapt_14_n_gin1p"
+          }
+         ]
+        },
+        {
+         "label": "2",
+         "cells": [
+          {
+           "greek": "ἐγένου",
+           "gloss": "You became",
+           "audio": "chapt_14_n_gin2s"
+          },
+          {
+           "greek": "ἐγένεσθε",
+           "gloss": "You became",
+           "audio": "chapt_14_n_gin2p"
+          }
+         ]
+        },
+        {
+         "label": "3",
+         "cells": [
+          {
+           "greek": "ἐγένετο",
+           "gloss": "He/she/it became",
+           "audio": "chapt_14_n_gin3s"
+          },
+          {
+           "greek": "ἐγένοντο",
+           "gloss": "They became",
+           "audio": "chapt_14_n_gin3p"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_14_n_ginpar"
+       },
+       "note": "The aorist and future passives will be formed from a different stem and learned later. Note that this aorist paradigm is deponent. Middles are usually \"I brought (for myself).\""
+      }
+     ]
+    },
+    {
+     "id": "augments",
+     "title": "Augments",
+     "content": [
+      {
+       "type": "para",
+       "text": "Aorist Augments = Imperfect Augments"
+      },
+      {
+       "type": "para",
+       "text": "The augment is added in four ways:"
+      },
+      {
+       "type": "numbered",
+       "gapBefore": true,
+       "items": [
+        {
+         "text": "before consonants it is \"ε\""
+        },
+        {
+         "text": "before vowels the augment contracts with the vowel according to the following rules:\nα + ε = η      ε + ε = η      ο + ε = ω\nει + ε = ῃ     αι + ε = ῃ     οι + ε = ῳ\nαυ + ε = ηυ    ευ + ε = ηυ",
+         "below": [
+          {
+           "type": "expander",
+           "label": "Contraction Examples",
+           "content": [
+            {
+             "type": "greekRows",
+             "layout": "contraction",
+             "rows": [
+              {
+               "greek": "ἤκουον",
+               "audio": "chapt_14_l_ex1",
+               "gloss": "ε + α = η",
+               "parts": [
+                {
+                 "greek": "ἀκούω",
+                 "audio": "chapt_14_l_ex2"
+                },
+                {
+                 "text": "+ ε augment"
+                }
+               ]
+              },
+              {
+               "greek": "ἤγειρον",
+               "audio": "chapt_14_l_ex3",
+               "gloss": "ε + ε = η",
+               "parts": [
+                {
+                 "greek": "ἐγείρω",
+                 "audio": "chapt_14_l_ex4"
+                },
+                {
+                 "text": "+ ε augment"
+                }
+               ]
+              },
+              {
+               "greek": "ὠρχούμην",
+               "audio": "chapt_14_l_ex5",
+               "gloss": "ε + ο = ω",
+               "parts": [
+                {
+                 "greek": "ὀρχέομαι",
+                 "audio": "chapt_14_l_ex6"
+                },
+                {
+                 "text": "+ ε augment"
+                }
+               ]
+              },
+              {
+               "greek": "ᾖρον",
+               "audio": "chapt_14_l_ex7",
+               "gloss": "ε + αι = ῃ",
+               "parts": [
+                {
+                 "greek": "αἴρω",
+                 "audio": "chapt_14_l_ex8"
+                },
+                {
+                 "text": "+ ε augment"
+                }
+               ]
+              },
+              {
+               "greek": "ᾠκοδόμουν",
+               "audio": "chapt_14_l_ex9",
+               "gloss": "ε + οι = ῳ",
+               "parts": [
+                {
+                 "greek": "οἰκοδομέω",
+                 "audio": "chapt_14_l_ex10"
+                },
+                {
+                 "text": "+ ε augment"
+                }
+               ]
+              }
+             ]
+            }
+           ],
+           "_disclosure": "C1: chart payload behind an in-text \"Examples\" link -> accordion. The clips are chapter 12's l_ex1-10, duplicated into the CHAPT_14 pack by the ISO (Stage 6 self-containment)."
+          }
+         ]
+        },
+        {
+         "text": "Compound verbs with prepositions ending in a consonant: insert the augment between the prepositional prefix and the verb stem.\nἐκβάλλω becomes ἐξέβαλον"
+        },
+        {
+         "text": "Compound verbs with prepositions ending in a vowel: the final vowel of the preposition is dropped and the ε augment inserted in its place.\nἀποκτείνω becomes ἀπέκτεινα"
+        }
+       ],
+       "_disclosure": "C5: \"Augments (cont.)\" continues the list 1-4."
+      }
+     ],
+     "audioMap": {
+      "ἐκβάλλω": "chapt_14_l_ex11",
+      "ἐξέβαλον": "chapt_14_l_ex12",
+      "ἀποκτείνω": "chapt_14_l_ex13",
+      "ἀπέκτεινα": "chapt_14_l_ex14"
+     },
+     "_greek_note": "Rule lines are bare font-Greek letters in the TBK; converted as notation, not taps."
+    },
+    {
+     "id": "aoristStems",
+     "title": "Aorist Stems of Verbs",
+     "content": [
+      {
+       "type": "para",
+       "text": "Here is a list of second aorist forms of verbs already learned.  Master these forms."
+      },
+      {
+       "type": "greekRows",
+       "layout": "stemList",
+       "gapBefore": true,
+       "rows": [
+        {
+         "greek": "ἀπέρχομαι",
+         "audio": "chapt_14_n_apep",
+         "gloss": "(I departed)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "ἀπῆλθον",
+           "audio": "chapt_14_n_apea"
+          }
+         ]
+        },
+        {
+         "greek": "ἀποθνῄσκω",
+         "audio": "chapt_14_n_apop",
+         "gloss": "(I died)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "ἀπέθανον",
+           "audio": "chapt_14_n_apoa"
+          }
+         ]
+        },
+        {
+         "greek": "βάλλω",
+         "audio": "chapt_14_n_balp",
+         "gloss": "(I threw)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "ἔβαλον",
+           "audio": "chapt_14_n_bala"
+          }
+         ]
+        },
+        {
+         "greek": "βλέπω",
+         "audio": "chapt_14_n_blep",
+         "gloss": "(I saw)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "εἶδον",
+           "audio": "chapt_14_n_blea"
+          }
+         ],
+         "popupRef": "blepwEidon",
+         "_popup_note": "C3 in-chart trigger: eidon is the hot text in the original (blue in the rail walk, hand cursor on p8)."
+        },
+        {
+         "greek": "γίνομαι",
+         "audio": "chapt_14_n_ginp",
+         "gloss": "(I became)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "ἐγενόμην",
+           "audio": "chapt_14_n_gina"
+          }
+         ]
+        },
+        {
+         "greek": "γινώσκω",
+         "audio": "chapt_14_n_ginwp",
+         "gloss": "(I knew)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "ἔγνων",
+           "audio": "chapt_14_n_ginwa"
+          }
+         ]
+        },
+        {
+         "greek": "εἰσέρχομαι",
+         "audio": "chapt_14_n_eisp",
+         "gloss": "(I entered)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "εἰσῆλθον",
+           "audio": "chapt_14_n_eisa"
+          }
+         ]
+        },
+        {
+         "greek": "ἐξέρχομαι",
+         "audio": "chapt_14_n_ecep",
+         "gloss": "(I went out)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "ἐξῆλθον",
+           "audio": "chapt_14_n_ecea"
+          }
+         ]
+        },
+        {
+         "greek": "ἔρχομαι",
+         "audio": "chapt_14_n_erxp",
+         "gloss": "(I came, went)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "ἦλθον",
+           "audio": "chapt_14_n_erxa"
+          }
+         ]
+        },
+        {
+         "greek": "εὑρίσκω",
+         "audio": "chapt_14_n_eurp",
+         "gloss": "(I found)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "εὗρον",
+           "audio": "chapt_14_n_eura"
+          }
+         ]
+        },
+        {
+         "greek": "ἔχω",
+         "audio": "chapt_14_n_exwp",
+         "gloss": "(I had)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "ἔσχον",
+           "audio": "chapt_14_n_exwa"
+          }
+         ]
+        },
+        {
+         "greek": "λαμβάνω",
+         "audio": "chapt_14_n_lamp",
+         "gloss": "(I took)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "ἔλαβον",
+           "audio": "chapt_14_n_lama"
+          }
+         ]
+        },
+        {
+         "greek": "λέγω",
+         "audio": "chapt_14_n_legp",
+         "gloss": "(I said)",
+         "parts": [
+          {
+           "text": "—"
+          },
+          {
+           "greek": "εἶπον",
+           "audio": "chapt_14_n_lega"
+          }
+         ]
+        }
+       ],
+       "_disclosure": "C5 (NIT-LOG N-6 standing method): the original pages the list five-and-eight behind More/Back; STACKED here as one list."
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "id": "blepwEidon",
+     "title": "βλέπω  —  εἶδον  (I saw)",
+     "content": [
+      {
+       "type": "para",
+       "text": "Most would see ἔβλεψα as the aorist of βλέπω and have εἶδον come from ὁράω (I see). In any case, it is a second aorist and is translated \"I saw.\""
+      }
+     ],
+     "audioMap": {
+      "ἔβλεψα": "chapt_14_n_ebl",
+      "εἶδον": "chapt_14_n_blea",
+      "ὁράω": "chapt_14_n_ora"
+     }
+    }
+   ],
+   "greekTaps": true
+  },
+  {
+   "id": "c14_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "senses"
+  },
+  {
+   "id": "c14_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory",
+   "reference": "Mat 6:10c",
+   "words": [
+    {
+     "greek": "ὡς",
+     "gloss": "as",
+     "audio": "chapt_14_n_sm1"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_14_n_sm2"
+    },
+    {
+     "greek": "οὐρανῷ",
+     "gloss": "heaven",
+     "audio": "chapt_14_n_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "so also",
+     "audio": "chapt_14_n_sm4"
+    },
+    {
+     "greek": "ἐπὶ",
+     "gloss": "on",
+     "audio": "chapt_14_n_sm5"
+    },
+    {
+     "greek": "γῆς·",
+     "gloss": "earth",
+     "audio": "chapt_14_n_sm6"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_14_n_mt610c"
+   }
+  },
+  {
+   "id": "c14_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham. New Testament Greek for Beginners (Toronto: The Macmillan Company, 1923), pp. 87-91.",
+      "Mounce, William D. Basics of Biblical Greek: Grammar (Grand Rapids: Zondervan, 1993), pp. 189-196.",
+      "Summers, Ray and Thomas Sawyer. Essentials of New Testament Greek (Nashville: Broadman & Holman, 1995), pp. 73-75.",
+      "Wenham, J. W. The Elements of New Testament Greek (Cambridge: Cambridge University Press, 1965), pp. 52-56, 100-104, 109-112."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c14_drill_parsing",
+   "type": "select",
+   "mode": "twoStageGrid",
+   "title": "Second Aorist Indicative Parsing Drill",
+   "instructions": "Click on the voice, then person and number",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionStages": [
+    {
+     "label": "Voice",
+     "values": [
+      "Active",
+      "Middle"
+     ]
+    },
+    {
+     "label": "Person / Number",
+     "values": [
+      "First Singular",
+      "First Plural",
+      "Second Singular",
+      "Second Plural",
+      "Third Singular",
+      "Third Plural"
+     ],
+     "optionGroups": [
+      2,
+      2,
+      2
+     ]
+    }
+   ],
+   "revealButtons": [
+    {
+     "label": "Translate",
+     "field": "translate"
+    }
+   ],
+   "items": [
+    {
+     "greek": "ἐλάβετε",
+     "translate": "you took",
+     "answer": [
+      "Active",
+      "Second Plural"
+     ],
+     "audio": "chapt_14_n_lab2p",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἐγένετο",
+     "translate": "he/she/it became",
+     "answer": [
+      "Middle",
+      "Third Singular"
+     ],
+     "audio": "chapt_14_n_gin3s",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἐγένεσθε",
+     "translate": "you became",
+     "answer": [
+      "Middle",
+      "Second Plural"
+     ],
+     "audio": "chapt_14_n_gin2p",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἔλαβον",
+     "translate": "I took or they took",
+     "answer": [
+      "Active",
+      "First Singular"
+     ],
+     "audio": "chapt_14_n_lab3p",
+     "hintRef": "secondAoristParadigms",
+     "answerAlt": [
+      [
+       "Active",
+       "Third Plural"
+      ]
+     ],
+     "_ambiguous_note": "elabon is First Singular AND Third Plural; the original's key accepts both and its own Translate string prints \"I took or they took\". ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ἐγενόμεθα",
+     "translate": "we became",
+     "answer": [
+      "Middle",
+      "First Plural"
+     ],
+     "audio": "chapt_14_n_gin1p",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἐγένου",
+     "translate": "you became",
+     "answer": [
+      "Middle",
+      "Second Singular"
+     ],
+     "audio": "chapt_14_n_gin2s",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἔλαβες",
+     "translate": "you took",
+     "answer": [
+      "Active",
+      "Second Singular"
+     ],
+     "audio": "chapt_14_n_lab2s",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἔλαβον",
+     "translate": "I took or they took",
+     "answer": [
+      "Active",
+      "First Singular"
+     ],
+     "audio": "chapt_14_n_lab3p",
+     "hintRef": "secondAoristParadigms",
+     "answerAlt": [
+      [
+       "Active",
+       "Third Plural"
+      ]
+     ],
+     "_ambiguous_note": "elabon is First Singular AND Third Plural; the original's key accepts both and its own Translate string prints \"I took or they took\". ACCEPT ANY of answer + answerAlt."
+    },
+    {
+     "greek": "ἐγένοντο",
+     "translate": "they became",
+     "answer": [
+      "Middle",
+      "Third Plural"
+     ],
+     "audio": "chapt_14_n_gin3p",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἔλαβε",
+     "translate": "he/she/it took",
+     "answer": [
+      "Active",
+      "Third Singular"
+     ],
+     "audio": "chapt_14_n_lab3s",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἐγενόμην",
+     "translate": "I became",
+     "answer": [
+      "Middle",
+      "First Singular"
+     ],
+     "audio": "chapt_14_n_gin1s",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἐλάβομεν",
+     "translate": "we took",
+     "answer": [
+      "Active",
+      "First Plural"
+     ],
+     "audio": "chapt_14_n_lab1p",
+     "hintRef": "secondAoristParadigms"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Translate",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "secondAoristParadigms"
+   },
+   "_stage_note": "Twelve items (TotalNumberOfWords at 0x74c99). Voice x person/number keys, including both readings of elabon (items 4 and 8), read from the AnalyzeAnswer script; clips are the paradigm CELL clips.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c14_drill_forms",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Second Aorist Indicative Forms Drill",
+   "instructions": "Click on the correct matching aorist form",
+   "promptIsGreek": true,
+   "promptGloss": true,
+   "options": "perItem",
+   "optionsAreGreek": true,
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "λέγω",
+     "gloss": "I say",
+     "options": [
+      "ἐλέγον",
+      "ἦλθον",
+      "εἶπον"
+     ],
+     "answer": "εἶπον",
+     "audio": "chapt_14_n_lega"
+    },
+    {
+     "greek": "ἔχω",
+     "gloss": "I have",
+     "options": [
+      "ἔσχον",
+      "ἤχον",
+      "εἴχον"
+     ],
+     "answer": "ἔσχον",
+     "audio": "chapt_14_n_exwa"
+    },
+    {
+     "greek": "βλέπω",
+     "gloss": "I see",
+     "options": [
+      "ἔβλεπον",
+      "εἶδον",
+      "ἤβλεππον"
+     ],
+     "answer": "εἶδον",
+     "audio": "chapt_14_n_blea"
+    },
+    {
+     "greek": "γινώσκω",
+     "gloss": "I know",
+     "options": [
+      "ἔγνων",
+      "ἐγίνωσκον",
+      "γνῶνον"
+     ],
+     "answer": "ἔγνων",
+     "audio": "chapt_14_n_ginwa"
+    },
+    {
+     "greek": "λαμβάνω",
+     "gloss": "I take, receive",
+     "options": [
+      "ἤλαμβον",
+      "λάμψον",
+      "ἔλαβον"
+     ],
+     "answer": "ἔλαβον",
+     "audio": "chapt_14_n_lama"
+    },
+    {
+     "greek": "εὑρίσκω",
+     "gloss": "I find",
+     "options": [
+      "εὕριξον",
+      "εὕρισκον",
+      "εὗρον"
+     ],
+     "answer": "εὗρον",
+     "audio": "chapt_14_n_eura"
+    },
+    {
+     "greek": "βάλλω",
+     "gloss": "I throw",
+     "options": [
+      "ἔβαλλον",
+      "ἔβαλον",
+      "ἤβαλλον"
+     ],
+     "answer": "ἔβαλον",
+     "audio": "chapt_14_n_bala"
+    },
+    {
+     "greek": "ἔρχομαι",
+     "gloss": "I come, go",
+     "options": [
+      "ἤρχον",
+      "εἶπον",
+      "ἦλθον"
+     ],
+     "answer": "ἦλθον",
+     "audio": "chapt_14_n_erxa"
+    },
+    {
+     "greek": "γίνομαι",
+     "gloss": "I become",
+     "options": [
+      "ἐγενόμην",
+      "ἐγινόμην",
+      "ἐγινέμην"
+     ],
+     "answer": "ἐγενόμην",
+     "audio": "chapt_14_n_gina"
+    },
+    {
+     "greek": "εἰσέρχομαι",
+     "gloss": "I enter",
+     "options": [
+      "εἰσηρχόμην",
+      "εἰσῆλθον",
+      "εἴσερχον"
+     ],
+     "answer": "εἰσῆλθον",
+     "audio": "chapt_14_n_eisa"
+    },
+    {
+     "greek": "ἐξέρχομαι",
+     "gloss": "I go out",
+     "options": [
+      "ἐξῆλθον",
+      "ἐξεῆλθον",
+      "ἔκερχον"
+     ],
+     "answer": "ἐξῆλθον",
+     "audio": "chapt_14_n_ecea"
+    },
+    {
+     "greek": "ἀπέρχομαι",
+     "gloss": "I depart",
+     "options": [
+      "ἄπερχον",
+      "ἄπελθον",
+      "ἀπῆλθον"
+     ],
+     "answer": "ἀπῆλθον",
+     "audio": "chapt_14_n_apea"
+    },
+    {
+     "greek": "ἀποθνῄσκω",
+     "gloss": "I die",
+     "options": [
+      "ἀπέθανον",
+      "ἠπέθανον",
+      "ἀπήθανον"
+     ],
+     "answer": "ἀπέθανον",
+     "audio": "chapt_14_n_apoa"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "secondAoristForms"
+   },
+   "_shape_note": "Prompt panel shows the PRESENT lemma (Greek) and its gloss; three GREEK options stacked. The correct column per item (A/B/C) comes from the AnalyzeAnswer script at 0x105f86 and is cross-checked against the chapter's own Aorist Stems list -- all thirteen agree.",
+   "_audio_note": "A1b, CONFIRMED: the SayWord table at 0x106c4c dispatches the AORIST clips (n_lega, n_exwa, n_blea ...), never the paired present clips (n_legp, n_exwp ...), so the recording is the ANSWER form, not the lemma shown. afterGuess, and the A1c gate applies: the prompt carries no tap and Pronounce is disabled until the item is answered. Ledger row 126.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c14_drill_translation",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Second Aorist Indicative Translation Drill",
+   "instructions": "Click on the correct translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "Μαριάμ, εὗρες γὰρ χάριν παρὰ τῷ θεῷ",
+     "ref": "Luk 1:30",
+     "options": [
+      "Mary by grace found God",
+      "for Mary found favor with God",
+      "Mary, for you have found favor with God"
+     ],
+     "answer": "Mary, for you have found favor with God",
+     "audio": "chapt_14_n_td1",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "πιστεύεις;"
+    },
+    {
+     "greek": "καὶ ἔβαλεν εἰς τὴν γῆν",
+     "ref": "Rev 8:5",
+     "options": [
+      "and he threw [it] to the earth",
+      "and you threw [it] to the earth",
+      "and they threw [it] to the earth"
+     ],
+     "answer": "and he threw [it] to the earth",
+     "audio": "chapt_14_n_td2",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "Ὅτι εἶπόν σοι ὅτι εἶδόν σε ὑποκάτω τῆς συκῆς,",
+     "ref": "Jn 1:50",
+     "options": [
+      "Because I said to you that I saw you under the fig tree, you believe?",
+      "Because they said to you that we saw you under the fig tree, you believe?",
+      "Because he said to you that he saw you under the fig tree, you believe?"
+     ],
+     "answer": "Because I said to you that I saw you under the fig tree, you believe?",
+     "audio": "chapt_14_n_td3",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἐγενόμην ἐν πνεύματι ἐν τῇ κυριακῇ ἡμέρᾳ",
+     "ref": "Rev 1:10",
+     "options": [
+      "he was in the Spirit on the Lord's day",
+      "we were in the Spirit on the Lord's day",
+      "I was in the Spirit on the Lord's day"
+     ],
+     "answer": "I was in the Spirit on the Lord's day",
+     "audio": "chapt_14_n_td4",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἐν τῷ κόσμῳ ἦν, καὶ ὁ κόσμος δι' αὐτοῦ ἐγένετο",
+     "ref": "Jn 1:10",
+     "options": [
+      "we were in the world, and the world was made by him",
+      "he was in the world, and the world was made by him",
+      "they were in the world, and the world was made by them"
+     ],
+     "answer": "he was in the world, and the world was made by him",
+     "audio": "chapt_14_n_td5",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "καρδίαν μου"
+    },
+    {
+     "greek": "εἶπαν οὖν οἱ μαθηταὶ αὐτῷ, Κύριε ...",
+     "ref": "Jn 11:12",
+     "options": [
+      "Therefore they said to his disciples, \"Lord...",
+      "Therefore he said to the disciples, \"The Lord...",
+      "Therefore the disciples said to him, \"Lord..."
+     ],
+     "answer": "Therefore the disciples said to him, \"Lord...",
+     "audio": "chapt_14_n_td6",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "καὶ Ἀνδρέαν τὸν ἀδελφὸν αὐτοῦ"
+    },
+    {
+     "greek": "Εὗρον Δαυὶδ τὸν τοῦ Ἰεσσαί, ἄνδρα κατὰ τὴν",
+     "ref": "Acts 13:22",
+     "options": [
+      "We found David son of Jesse a man after my heart",
+      "I found David son of Jesse a man after my heart",
+      "He found David son of Jesse a man after my heart"
+     ],
+     "answer": "I found David son of Jesse a man after my heart",
+     "audio": "chapt_14_n_td7",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "σε ἔγνων"
+    },
+    {
+     "greek": "εἶδεν δύο ἀδελφούς, Σίμωνα τὸν λεγόμενον Πέτρον",
+     "ref": "Mat 4:18",
+     "options": [
+      "They saw two brothers, Simon called Peter, and Andrew his brother",
+      "I saw two brothers, Simon called Peter, and Andrew his brother",
+      "He saw two brothers, Simon called Peter, and Andrew his brother"
+     ],
+     "answer": "He saw two brothers, Simon called Peter, and Andrew his brother",
+     "audio": "chapt_14_n_td8",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "τοῦτον ἦλθον"
+    },
+    {
+     "greek": "πάτερ δίκαιε, καὶ ὁ κόσμος σε οὐκ ἔγνω, ἐγὼ δέ",
+     "ref": "Jn 17:25",
+     "options": [
+      "Righteous father, although the world does not know you, I know you",
+      "Righteous father, although the world does not know me, you know me",
+      "Righteous father, although the world does not know them, they know me"
+     ],
+     "answer": "Righteous father, although the world does not know you, I know you",
+     "audio": "chapt_14_n_td9",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "καὶ εἶπεν ὁ Ἰησοῦς, Εἰς κρίμα ἐγὼ εἰς τὸν κόσμον",
+     "ref": "Jn 9:39",
+     "options": [
+      "And Jesus said, \"For judgment I came into this world\"",
+      "And Jesus said, \"For judgment you came into this world\"",
+      "And Jesus said, \"For judgment he came into this world\""
+     ],
+     "answer": "And Jesus said, \"For judgment I came into this world\"",
+     "audio": "chapt_14_n_td10",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ὅτε οὖν εἶδεν ὁ ὄχλος ὅτι Ἰησοῦς οὐκ ἔστιν ἐκεῖ",
+     "ref": "Jn 6:24",
+     "options": [
+      "When, therefore, the crowd saw Jesus was not there",
+      "When, therefore, they saw Jesus was not in the crowd",
+      "When, therefore, we saw Jesus was not in the crowd"
+     ],
+     "answer": "When, therefore, the crowd saw Jesus was not there",
+     "audio": "chapt_14_n_td11",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "οὐχ εὗρον τὸ σῶμα τοῦ κυρίου Ἰησοῦ",
+     "ref": "Luk 24:3",
+     "options": [
+      "he did not find the body of the Lord Jesus",
+      "we did not find the body of the Lord Jesus",
+      "they did not find the body of the Lord Jesus"
+     ],
+     "answer": "they did not find the body of the Lord Jesus",
+     "audio": "chapt_14_n_td12",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "οὐρανὸν οἱ ἄγγελοι"
+    },
+    {
+     "greek": "καὶ ἐξῆλθον οἱ μαθηταὶ καὶ ἦλθον εἰς τὴν πόλιν",
+     "ref": "Mar 14:16",
+     "options": [
+      "and the disciples went out and came into the city",
+      "and the disciples went out and he came into the city",
+      "and the disciples went out and we came into the city"
+     ],
+     "answer": "and the disciples went out and came into the city",
+     "audio": "chapt_14_n_td13",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "Καὶ ἐγένετο ὡς ἀπῆλθον ἀπ' αὐτῶν εἰς τὸν",
+     "ref": "Luk 2:15",
+     "options": [
+      "And it happened as the angels came to them from heaven",
+      "And it happened as the angels went from them into heaven",
+      "And it happened as the angels were going from them into heaven"
+     ],
+     "answer": "And it happened as the angels went from them into heaven",
+     "audio": "chapt_14_n_td14",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ἀλλὰ διὰ τοῦτο ἦλθον εἰς τὴν ὥραν ταύτην",
+     "ref": "Jn 12:27",
+     "options": [
+      "but on account of this he came to this hour",
+      "but on account of this I came to this hour",
+      "but on account of this we have come to this hour"
+     ],
+     "answer": "but on account of this I came to this hour",
+     "audio": "chapt_14_n_td15",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "σχίσμα οὖν ἐγένετο ἐν τῷ ὄχλῳ δι' αὐτόν",
+     "ref": "Jn 7:43",
+     "options": [
+      "Thus there was a division in the crowd because of Him",
+      "Thus there was a division in the crowds because of Him",
+      "Thus there was a division in the crowd because of them"
+     ],
+     "answer": "Thus there was a division in the crowd because of Him",
+     "audio": "chapt_14_n_td16",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "ὅτι εἶπον ὅτι Οὐκ εἰμὶ ἐγὼ ὁ Χριστός",
+     "ref": "Jn 3:28",
+     "options": [
+      "that he said that he was not the Christ",
+      "that he said \"I am not the Christ\"",
+      "that I said \"I am not the Christ\""
+     ],
+     "answer": "that I said \"I am not the Christ\"",
+     "audio": "chapt_14_n_td17",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "Καὶ ἐν ἐκείνῃ τῇ ὥρᾳ ἐγένετο σεισμὸς μέγας",
+     "ref": "Rev 11:13",
+     "options": [
+      "and in that hour there were great earthquakes",
+      "and in that hour there was a great earthquake",
+      "and in that hour they were in a great earthquake"
+     ],
+     "answer": "and in that hour there was a great earthquake",
+     "audio": "chapt_14_n_td18",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "Ῥαββί ..."
+    },
+    {
+     "greek": "Οὐκ ἐγώ σε εἶδον ἐν τῷ κήπῳ μετ' αὐτοῦ;",
+     "ref": "Jn 18:26",
+     "options": [
+      "I saw you in the garden with him didn't I?",
+      "We saw you in the garden with him didn't we?",
+      "She saw you in the garden with him didn't she?"
+     ],
+     "answer": "I saw you in the garden with him didn't I?",
+     "audio": "chapt_14_n_td19",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "εἶ ὁ Χριστὸς"
+    },
+    {
+     "greek": "καὶ ἦλθον πρὸς τὸν Ἰωάννην καὶ εἶπαν αὐτῷ,",
+     "ref": "Jn 3:26",
+     "options": [
+      "and they came to John and said to him, \"Rabbi ...\"",
+      "and he came to John and said to him, \"Rabbi ...\"",
+      "and they came to John and he said to him, \"Rabbi ...\""
+     ],
+     "answer": "and they came to John and said to him, \"Rabbi ...\"",
+     "audio": "chapt_14_n_td20",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "μετὰ Ἰησοῦ"
+    },
+    {
+     "greek": "καὶ εἶπαν αὐτῷ, Τί οὖν Βαπτίζεις εἰ σὺ οὐκ",
+     "ref": "Jn 1:25",
+     "options": [
+      "we said to him, \"Why then are you baptizing if you are not the Christ\"",
+      "he said to him, \"Why then are you baptizing if you are not the Christ\"",
+      "they said to him, \"Why then are you baptizing if you are not the Christ\""
+     ],
+     "answer": "they said to him, \"Why then are you baptizing if you are not the Christ\"",
+     "audio": "chapt_14_n_td21",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "εἶδεν αὐτὸν ἄλλη καὶ λέγει τοῖς ἐκεῖ, Οὗτος ἦν",
+     "ref": "Mat 26:71",
+     "options": [
+      "another saw him and said to the ones there \"This one was with Jesus\"",
+      "others saw him and said to the ones there \"This one was with Jesus\"",
+      "we saw him and said to the ones there \"This one was with Jesus\""
+     ],
+     "answer": "another saw him and said to the ones there \"This one was with Jesus\"",
+     "audio": "chapt_14_n_td22",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "καὶ εἶπαν αὐτῷ, Ὁ πατὴρ ἡμῶν Ἀβραάμ ἐστιν",
+     "ref": "Jn 8:39",
+     "options": [
+      "and he said to him, \"Abraham is our father\"",
+      "and they said to him, \"Abraham is our father\"",
+      "and we said to him, \"Abraham is our father\""
+     ],
+     "answer": "and they said to him, \"Abraham is our father\"",
+     "audio": "chapt_14_n_td23",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "ἐν τῷ ἱερῷ"
+    },
+    {
+     "greek": "εἶδον τὴν δόξαν αὐτοῦ",
+     "ref": "Luk 9:32",
+     "options": [
+      "we saw his glory",
+      "he saw his glory",
+      "they saw his glory"
+     ],
+     "answer": "they saw his glory",
+     "audio": "chapt_14_n_td24",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "αὐτοῦ εἰς τὴν Ἰουδαίαν γῆν"
+    },
+    {
+     "greek": "καὶ ἐγένετο μετὰ ἡμέρας τρεῖς εὗρον αὐτὸν",
+     "ref": "Luk 2:46",
+     "options": [
+      "And it happened after three days she found him in the temple",
+      "And it happened after three days they found him in the temple",
+      "And it happened after three days we found him in the temple"
+     ],
+     "answer": "And it happened after three days they found him in the temple",
+     "audio": "chapt_14_n_td25",
+     "hintRef": "secondAoristParadigms",
+     "greek2": "ἀνθρώποις"
+    },
+    {
+     "greek": "Μετὰ ταῦτα ἦλθεν ὁ Ἰησοῦς καὶ οἱ μαθηταὶ",
+     "ref": "Jn 3:22",
+     "options": [
+      "After these things Jesus came to the disciples in the land of Judea",
+      "After these things Jesus' disciples came to the land of Judea",
+      "After these things Jesus and his disciples came to the land of Judea"
+     ],
+     "answer": "After these things Jesus and his disciples came to the land of Judea",
+     "audio": "chapt_14_n_td26",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "καὶ ἀπῆλθεν εἰς τὴν πόλιν καὶ λέγει τοῖς",
+     "ref": "Jn 4:28",
+     "options": [
+      "and she went into the city and said to the men",
+      "and they went into the city and said to the men",
+      "and we went into the city and said to the men"
+     ],
+     "answer": "and she went into the city and said to the men",
+     "audio": "chapt_14_n_td27",
+     "hintRef": "secondAoristParadigms"
+    },
+    {
+     "greek": "εἶπον οὖν πρὸς αὐτὸν οἱ ἀδελφοὶ αὐτοῦ",
+     "ref": "Jn 7:3",
+     "options": [
+      "Therefore he said to his brothers",
+      "Therefore his brothers said to him",
+      "Therefore they said to his brothers"
+     ],
+     "answer": "Therefore his brothers said to him",
+     "audio": "chapt_14_n_td28",
+     "hintRef": "secondAoristParadigms"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "secondAoristParadigms"
+   },
+   "_answer_note": "TWENTY-EIGHT items (TotalNumberOfWords at 0xcb9a1), the largest translation drill in the project. The A/B/C key script yields 27 of 28 and agrees with the BLUE option on ch14railwalk.pdf p11-p18 for every one of them; item 28 is the rail walk's alone (column B, \"Therefore his brothers said to him\" -- hoi adelphoi is the subject of the third-plural eipon). Second Greek lines come from the positional pool at 0xa4ad0 indexed DIRECTLY by item number.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c14_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "blood",
+    "I raise",
+    "I teach",
+    "one's own",
+    "good",
+    "I intend",
+    "way, road",
+    "much, many",
+    "body",
+    "soul, self"
+   ],
+   "items": [
+    {
+     "greek": "αἷμα",
+     "answer": "blood",
+     "audio": "chapt_14_n_voc1"
+    },
+    {
+     "greek": "αἴρω",
+     "answer": "I raise",
+     "audio": "chapt_14_n_voc2"
+    },
+    {
+     "greek": "διδάσκω",
+     "answer": "I teach",
+     "audio": "chapt_14_n_voc3"
+    },
+    {
+     "greek": "ἴδιος",
+     "answer": "one's own",
+     "audio": "chapt_14_n_voc4"
+    },
+    {
+     "greek": "καλός",
+     "answer": "good",
+     "audio": "chapt_14_n_voc5"
+    },
+    {
+     "greek": "μέλλω",
+     "answer": "I intend",
+     "audio": "chapt_14_n_voc6"
+    },
+    {
+     "greek": "ὁδός",
+     "answer": "way, road",
+     "audio": "chapt_14_n_voc7"
+    },
+    {
+     "greek": "πολύς",
+     "answer": "much, many",
+     "audio": "chapt_14_n_voc8"
+    },
+    {
+     "greek": "σῶμα",
+     "answer": "body",
+     "audio": "chapt_14_n_voc9"
+    },
+    {
+     "greek": "ψυχή",
+     "answer": "soul, self",
+     "audio": "chapt_14_n_voc10"
+    }
+   ],
+   "audioTiming": "beforeGuess",
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "poolKind": "vocabulary",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c14_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary: English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "options": "static",
+   "optionsAreGreek": true,
+   "optionValues": [
+    "αἷμα",
+    "αἴρω",
+    "διδάσκω",
+    "ἴδιος",
+    "καλός",
+    "μέλλω",
+    "ὁδός",
+    "πολύς",
+    "σῶμα",
+    "ψυχή"
+   ],
+   "items": [
+    {
+     "prompt": "blood",
+     "answer": "αἷμα",
+     "audio": "chapt_14_n_voc1"
+    },
+    {
+     "prompt": "I raise",
+     "answer": "αἴρω",
+     "audio": "chapt_14_n_voc2"
+    },
+    {
+     "prompt": "I teach",
+     "answer": "διδάσκω",
+     "audio": "chapt_14_n_voc3"
+    },
+    {
+     "prompt": "one's own",
+     "answer": "ἴδιος",
+     "audio": "chapt_14_n_voc4"
+    },
+    {
+     "prompt": "good",
+     "answer": "καλός",
+     "audio": "chapt_14_n_voc5"
+    },
+    {
+     "prompt": "I intend",
+     "answer": "μέλλω",
+     "audio": "chapt_14_n_voc6"
+    },
+    {
+     "prompt": "way, road",
+     "answer": "ὁδός",
+     "audio": "chapt_14_n_voc7"
+    },
+    {
+     "prompt": "much, many",
+     "answer": "πολύς",
+     "audio": "chapt_14_n_voc8"
+    },
+    {
+     "prompt": "body",
+     "answer": "σῶμα",
+     "audio": "chapt_14_n_voc9"
+    },
+    {
+     "prompt": "soul, self",
+     "answer": "ψυχή",
+     "audio": "chapt_14_n_voc10"
+    }
+   ],
+   "audioTiming": "afterGuess",
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "poolKind": "vocabulary",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c14_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "as",
+    "in",
+    "earth",
+    "on",
+    "heaven",
+    "so also"
+   ],
+   "items": [
+    {
+     "greek": "ὡς",
+     "answer": "as",
+     "audio": "chapt_14_n_sm1"
+    },
+    {
+     "greek": "ἐν",
+     "answer": "in",
+     "audio": "chapt_14_n_sm2"
+    },
+    {
+     "greek": "οὐρανῷ",
+     "answer": "heaven",
+     "audio": "chapt_14_n_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "answer": "so also",
+     "audio": "chapt_14_n_sm4"
+    },
+    {
+     "greek": "ἐπὶ",
+     "answer": "on",
+     "audio": "chapt_14_n_sm5"
+    },
+    {
+     "greek": "γῆς",
+     "answer": "earth",
+     "audio": "chapt_14_n_sm6"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "_audio_note": "Six prompts, the whole of Mat 6:10c. The SayWord table at 0x1093b1 declares a SEVENTH entry, n_sm7, which the six-word pool never reaches AND WHICH THE PACK DOES NOT SHIP -- a dangling dispatch entry, the inverse of the usual D-39 stray. Not wired; VERIFY.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c14_ex_speller",
+   "type": "spell",
+   "title": "Second Aorist Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "you (pl.) took",
+     "answer": "ἐλάβετε",
+     "audio": "chapt_14_n_lab2p"
+    },
+    {
+     "prompt": "she became",
+     "answer": "ἐγένετο",
+     "audio": "chapt_14_n_gin3s"
+    },
+    {
+     "prompt": "you (pl.) became",
+     "answer": "ἐγένεσθε",
+     "audio": "chapt_14_n_gin2p"
+    },
+    {
+     "prompt": "I took",
+     "answer": "ἔλαβον",
+     "audio": "chapt_14_n_lab3p"
+    },
+    {
+     "prompt": "we became",
+     "answer": "ἐγενόμεθα",
+     "audio": "chapt_14_n_gin1p"
+    },
+    {
+     "prompt": "you (sg.) became",
+     "answer": "ἐγένου",
+     "audio": "chapt_14_n_gin2s"
+    },
+    {
+     "prompt": "you (sg.) took",
+     "answer": "ἔλαβες",
+     "audio": "chapt_14_n_lab2s"
+    },
+    {
+     "prompt": "they took",
+     "answer": "ἔλαβον",
+     "audio": "chapt_14_n_lab3p"
+    },
+    {
+     "prompt": "they became",
+     "answer": "ἐγένοντο",
+     "audio": "chapt_14_n_gin3p"
+    },
+    {
+     "prompt": "he took",
+     "answer": "ἔλαβε",
+     "audio": "chapt_14_n_lab3s"
+    },
+    {
+     "prompt": "I became",
+     "answer": "ἐγενόμην",
+     "audio": "chapt_14_n_gin1s"
+    },
+    {
+     "prompt": "we took",
+     "answer": "ἐλάβομεν",
+     "audio": "chapt_14_n_lab1p"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English",
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "The 12 answers ARE the Parsing Drill pool (0xfc894) in order; the prompts (0x7f454) name the person and number the parsing key gives.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c14_ex_speller_forms",
+   "type": "spell",
+   "title": "Second Aorist Forms Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell the aorist form.",
+   "prompt": "item",
+   "promptLabel": "Present Tense",
+   "promptIsGreek": true,
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "λέγω",
+     "answer": "εἶπον",
+     "audio": "chapt_14_n_lega"
+    },
+    {
+     "prompt": "ἔχω",
+     "answer": "ἔσχον",
+     "audio": "chapt_14_n_exwa"
+    },
+    {
+     "prompt": "βλέπω",
+     "answer": "εἶδον",
+     "audio": "chapt_14_n_blea"
+    },
+    {
+     "prompt": "γινώσκω",
+     "answer": "ἔγνων",
+     "audio": "chapt_14_n_ginwa"
+    },
+    {
+     "prompt": "λαμβάνω",
+     "answer": "ἔλαβον",
+     "audio": "chapt_14_n_lama"
+    },
+    {
+     "prompt": "εὑρίσκω",
+     "answer": "εὗρον",
+     "audio": "chapt_14_n_eura"
+    },
+    {
+     "prompt": "βάλλω",
+     "answer": "ἔβαλον",
+     "audio": "chapt_14_n_bala"
+    },
+    {
+     "prompt": "ἔρχομαι",
+     "answer": "ἦλθον",
+     "audio": "chapt_14_n_erxa"
+    },
+    {
+     "prompt": "γίνομαι",
+     "answer": "ἐγενόμην",
+     "audio": "chapt_14_n_gina"
+    },
+    {
+     "prompt": "εἰσέρχομαι",
+     "answer": "εἰσῆλθον",
+     "audio": "chapt_14_n_eisa"
+    },
+    {
+     "prompt": "ἐξέρχομαι",
+     "answer": "ἐξῆλθον",
+     "audio": "chapt_14_n_ecea"
+    },
+    {
+     "prompt": "ἀπέρχομαι",
+     "answer": "ἀπῆλθον",
+     "audio": "chapt_14_n_apea"
+    },
+    {
+     "prompt": "ἀποθνῄσκω",
+     "answer": "ἀπέθανον",
+     "audio": "chapt_14_n_apoa"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "Present Tense",
+     "Second Aorist Form"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_audio_note": "A1b again: the prompt is the PRESENT lemma and the clip is the aorist ANSWER, so afterGuess. The A1c gate does NOT apply -- spellers are excluded by ruling (pronouncing the target is the exercise's design). Ledger row 132.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c14_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Meaning",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "blood",
+     "answer": "αἷμα",
+     "audio": "chapt_14_n_voc1"
+    },
+    {
+     "prompt": "I raise",
+     "answer": "αἴρω",
+     "audio": "chapt_14_n_voc2"
+    },
+    {
+     "prompt": "I teach",
+     "answer": "διδάσκω",
+     "audio": "chapt_14_n_voc3"
+    },
+    {
+     "prompt": "one's own",
+     "answer": "ἴδιος",
+     "audio": "chapt_14_n_voc4"
+    },
+    {
+     "prompt": "good",
+     "answer": "καλός",
+     "audio": "chapt_14_n_voc5"
+    },
+    {
+     "prompt": "I intend",
+     "answer": "μέλλω",
+     "audio": "chapt_14_n_voc6"
+    },
+    {
+     "prompt": "way, road",
+     "answer": "ὁδός",
+     "audio": "chapt_14_n_voc7"
+    },
+    {
+     "prompt": "much, many",
+     "answer": "πολύς",
+     "audio": "chapt_14_n_voc8"
+    },
+    {
+     "prompt": "body",
+     "answer": "σῶμα",
+     "audio": "chapt_14_n_voc9"
+    },
+    {
+     "prompt": "soul, self",
+     "answer": "ψυχή",
+     "audio": "chapt_14_n_voc10"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c14_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of Mat 6:10c then click \"Check Answer\"",
+   "reference": "Mat 6:10c",
+   "answerWords": [
+    "ὡς",
+    "ἐν",
+    "οὐρανῷ",
+    "καὶ",
+    "ἐπὶ",
+    "γῆς·"
+   ],
+   "translation": "as in heaven so also on earth",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "audio": "chapt_14_n_mt610c",
+   "spellerTilesRef": "chapt_1",
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents"
+    ],
+    "_reveal_note": "RULES C8 / D-30."
+   },
+   "_repeat_note": "\"Repeat This Exercise\" NOT ported (D-42 retired).",
+   "_punct_note": "The ano teleia after ges is U+00B7 (NFC).",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c14_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "senses",
+   "columns": 2,
+   "showNtFreq": true,
+   "footnote": "The number after the translation is the number of times the word occurs in the New Testament.",
+   "playAll": {
+    "label": "Say Whole List",
+    "audio": "chapt_14_n_vocl14"
+   },
+   "_note": "One page, one recording in this chapter -- unlike chapter 13, whose chart the original paged with two half-list clips (NIT-LOG N-6)."
+  },
+  {
+   "id": "c14_qr_paradigms",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Second Aorist Paradigms",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "id": "qrSecondAoristActive",
+     "title": "Second Aorist Active Indicative of λαμβάνω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἔλαβον",
+         "gloss": "i took",
+         "audio": "chapt_14_n_lab1s"
+        },
+        {
+         "greek": "ἐλάβομεν",
+         "gloss": "we took",
+         "audio": "chapt_14_n_lab1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἔλαβες",
+         "gloss": "you took",
+         "audio": "chapt_14_n_lab2s"
+        },
+        {
+         "greek": "ἐλάβετε",
+         "gloss": "you took",
+         "audio": "chapt_14_n_lab2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἔλαβε(ν)",
+         "gloss": "he/she/it took",
+         "audio": "chapt_14_n_lab3s"
+        },
+        {
+         "greek": "ἔλαβον",
+         "gloss": "they took",
+         "audio": "chapt_14_n_lab3p"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_14_n_labpar"
+     },
+     "name": "Second Aorist Active"
+    },
+    {
+     "type": "paradigm",
+     "id": "qrSecondAoristMiddle",
+     "title": "Second Aorist Middle Indicative of γίνομαι",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἐγενόμην",
+         "gloss": "I became",
+         "audio": "chapt_14_n_gin1s"
+        },
+        {
+         "greek": "ἐγενόμεθα",
+         "gloss": "We became",
+         "audio": "chapt_14_n_gin1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἐγένου",
+         "gloss": "You became",
+         "audio": "chapt_14_n_gin2s"
+        },
+        {
+         "greek": "ἐγένεσθε",
+         "gloss": "You became",
+         "audio": "chapt_14_n_gin2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἐγένετο",
+         "gloss": "He/she/it became",
+         "audio": "chapt_14_n_gin3s"
+        },
+        {
+         "greek": "ἐγένοντο",
+         "gloss": "They became",
+         "audio": "chapt_14_n_gin3p"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_14_n_ginpar"
+     },
+     "note": "The aorist and future passives will be formed from a different stem and learned later. Note that this aorist paradigm is deponent. Middles are usually \"I brought (for myself).\"",
+     "name": "Second Aorist Middle"
+    }
+   ],
+   "_disclosure": "C9 (4.6): the original pages Active/Middle behind a toggle; stacked, one Say Paradigm per chart."
+  },
+  {
+   "id": "c14_qr_forms",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Review Second Aorist Indicative Forms",
+   "content": [
+    {
+     "type": "para",
+     "text": "Here is a list of second aorist forms of verbs already learned.  Master these forms."
+    },
+    {
+     "type": "greekRows",
+     "layout": "stemList",
+     "gapBefore": true,
+     "rows": [
+      {
+       "greek": "ἀπέρχομαι",
+       "audio": "chapt_14_n_apep",
+       "gloss": "(I departed)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "ἀπῆλθον",
+         "audio": "chapt_14_n_apea"
+        }
+       ]
+      },
+      {
+       "greek": "ἀποθνῄσκω",
+       "audio": "chapt_14_n_apop",
+       "gloss": "(I died)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "ἀπέθανον",
+         "audio": "chapt_14_n_apoa"
+        }
+       ]
+      },
+      {
+       "greek": "βάλλω",
+       "audio": "chapt_14_n_balp",
+       "gloss": "(I threw)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "ἔβαλον",
+         "audio": "chapt_14_n_bala"
+        }
+       ]
+      },
+      {
+       "greek": "βλέπω",
+       "audio": "chapt_14_n_blep",
+       "gloss": "(I saw)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "εἶδον",
+         "audio": "chapt_14_n_blea"
+        }
+       ],
+       "popupRef": "blepwEidon",
+       "_popup_note": "C3 in-chart trigger: eidon is the hot text in the original (blue in the rail walk, hand cursor on p8)."
+      },
+      {
+       "greek": "γίνομαι",
+       "audio": "chapt_14_n_ginp",
+       "gloss": "(I became)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "ἐγενόμην",
+         "audio": "chapt_14_n_gina"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "greekRows",
+     "layout": "stemList",
+     "rows": [
+      {
+       "greek": "γινώσκω",
+       "audio": "chapt_14_n_ginwp",
+       "gloss": "(I knew)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "ἔγνων",
+         "audio": "chapt_14_n_ginwa"
+        }
+       ]
+      },
+      {
+       "greek": "εἰσέρχομαι",
+       "audio": "chapt_14_n_eisp",
+       "gloss": "(I entered)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "εἰσῆλθον",
+         "audio": "chapt_14_n_eisa"
+        }
+       ]
+      },
+      {
+       "greek": "ἐξέρχομαι",
+       "audio": "chapt_14_n_ecep",
+       "gloss": "(I went out)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "ἐξῆλθον",
+         "audio": "chapt_14_n_ecea"
+        }
+       ]
+      },
+      {
+       "greek": "ἔρχομαι",
+       "audio": "chapt_14_n_erxp",
+       "gloss": "(I came, went)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "ἦλθον",
+         "audio": "chapt_14_n_erxa"
+        }
+       ]
+      },
+      {
+       "greek": "εὑρίσκω",
+       "audio": "chapt_14_n_eurp",
+       "gloss": "(I found)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "εὗρον",
+         "audio": "chapt_14_n_eura"
+        }
+       ]
+      },
+      {
+       "greek": "ἔχω",
+       "audio": "chapt_14_n_exwp",
+       "gloss": "(I had)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "ἔσχον",
+         "audio": "chapt_14_n_exwa"
+        }
+       ]
+      },
+      {
+       "greek": "λαμβάνω",
+       "audio": "chapt_14_n_lamp",
+       "gloss": "(I took)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "ἔλαβον",
+         "audio": "chapt_14_n_lama"
+        }
+       ]
+      },
+      {
+       "greek": "λέγω",
+       "audio": "chapt_14_n_legp",
+       "gloss": "(I said)",
+       "parts": [
+        {
+         "text": "—"
+        },
+        {
+         "greek": "εἶπον",
+         "audio": "chapt_14_n_lega"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "popups": [
+    {
+     "id": "blepwEidon",
+     "title": "βλέπω  —  εἶδον  (I saw)",
+     "content": [
+      {
+       "type": "para",
+       "text": "Most would see ἔβλεψα as the aorist of βλέπω and have εἶδον come from ὁράω (I see). In any case, it is a second aorist and is translated \"I saw.\""
+      }
+     ],
+     "audioMap": {
+      "ἔβλεψα": "chapt_14_n_ebl",
+      "εἶδον": "chapt_14_n_blea",
+      "ὁράω": "chapt_14_n_ora"
+     }
+    }
+   ],
+   "_disclosure": "C9 + NIT-LOG N-6 standing method (ruled 2026-08-29): the original pages the list five-and-eight behind More/Back. STACKED here, in the original's own split, with no pager. Neither half carries a say-all recording in this chapter, so no button is drawn."
+  },
+  {
+   "id": "c14_qr_scripture_mat633a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:33a",
+   "reference": "Mat 6:33a",
+   "words": [
+    {
+     "greek": "ζητεῖτε",
+     "gloss": "Seek",
+     "audio": "chapt_14_j_sm1"
+    },
+    {
+     "greek": "δὲ",
+     "gloss": "but",
+     "audio": "chapt_14_j_sm2"
+    },
+    {
+     "greek": "πρῶτον",
+     "gloss": "first",
+     "audio": "chapt_14_j_sm3"
+    },
+    {
+     "greek": "τὴν",
+     "gloss": "the",
+     "audio": "chapt_14_j_sm4"
+    },
+    {
+     "greek": "βασιλείαν",
+     "gloss": "kingdom",
+     "audio": "chapt_14_j_sm5"
+    },
+    {
+     "greek": "τοῦ",
+     "gloss": "of",
+     "audio": "chapt_14_j_sm6"
+    },
+    {
+     "greek": "θεοῦ",
+     "gloss": "God",
+     "audio": "chapt_14_j_sm7"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_14_j_sm8"
+    },
+    {
+     "greek": "τὴν",
+     "gloss": "the",
+     "audio": "chapt_14_j_sm9"
+    },
+    {
+     "greek": "δικαιοσύνην",
+     "gloss": "righteousness",
+     "audio": "chapt_14_j_sm10"
+    },
+    {
+     "greek": "αὐτοῦ,",
+     "gloss": "his",
+     "audio": "chapt_14_j_sm11"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_14_j_mt633a"
+   }
+  },
+  {
+   "id": "c14_qr_scripture_mat633b",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:33b",
+   "reference": "Mat 6:33b",
+   "words": [
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_14_k_sm1"
+    },
+    {
+     "greek": "ταῦτα",
+     "gloss": "these",
+     "audio": "chapt_14_k_sm2"
+    },
+    {
+     "greek": "πάντα",
+     "gloss": "all",
+     "audio": "chapt_14_k_sm3"
+    },
+    {
+     "greek": "προστεθήσεται",
+     "gloss": "will be added",
+     "audio": "chapt_14_k_sm4"
+    },
+    {
+     "greek": "ὑμῖν.",
+     "gloss": "to you.",
+     "audio": "chapt_14_k_sm5"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_14_k_mt633b"
+   }
+  },
+  {
+   "id": "c14_qr_scripture_mat69",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:9",
+   "reference": "Mat 6:9",
+   "words": [
+    {
+     "greek": "Πάτερ",
+     "gloss": "Father",
+     "audio": "chapt_14_l_sm1"
+    },
+    {
+     "greek": "ἡμῶν",
+     "gloss": "our",
+     "audio": "chapt_14_l_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_14_l_sm3"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_14_l_sm4"
+    },
+    {
+     "greek": "τοῖς",
+     "gloss": "the",
+     "audio": "chapt_14_l_sm5"
+    },
+    {
+     "greek": "οὐρανοῖς·",
+     "gloss": "heavens",
+     "audio": "chapt_14_l_sm6"
+    },
+    {
+     "greek": "ἁγιασθήτω",
+     "gloss": "hallowed",
+     "audio": "chapt_14_l_sm7"
+    },
+    {
+     "greek": "τὸ",
+     "gloss": "the",
+     "audio": "chapt_14_l_sm8"
+    },
+    {
+     "greek": "ὄνομά",
+     "gloss": "name",
+     "audio": "chapt_14_l_sm9"
+    },
+    {
+     "greek": "σου·",
+     "gloss": "your",
+     "audio": "chapt_14_l_sm10"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_14_l_mt6_9"
+   }
+  },
+  {
+   "id": "c14_qr_scripture_mat610a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:10a",
+   "reference": "Mat 6:10a",
+   "words": [
+    {
+     "greek": "ἐλθέτω",
+     "gloss": "let come",
+     "audio": "chapt_14_m_sm1"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_14_m_sm2"
+    },
+    {
+     "greek": "βασιλεία",
+     "gloss": "kingdom",
+     "audio": "chapt_14_m_sm3"
+    },
+    {
+     "greek": "σου·",
+     "gloss": "your",
+     "audio": "chapt_14_m_sm4"
+    },
+    {
+     "greek": "γενηθήτω",
+     "gloss": "let happen",
+     "audio": "chapt_14_m_sm5"
+    },
+    {
+     "greek": "τό",
+     "gloss": "the",
+     "audio": "chapt_14_m_sm6"
+    },
+    {
+     "greek": "θέλημά",
+     "gloss": "will",
+     "audio": "chapt_14_m_sm7"
+    },
+    {
+     "greek": "σου,",
+     "gloss": "your",
+     "audio": "chapt_14_m_sm8"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_14_m_mt610a"
+   }
+  },
+  {
+   "id": "c14_qr_scripture_mat610c",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:10c",
+   "reference": "Mat 6:10c",
+   "words": [
+    {
+     "greek": "ὡς",
+     "gloss": "as",
+     "audio": "chapt_14_n_sm1"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_14_n_sm2"
+    },
+    {
+     "greek": "οὐρανῷ",
+     "gloss": "heaven",
+     "audio": "chapt_14_n_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "so also",
+     "audio": "chapt_14_n_sm4"
+    },
+    {
+     "greek": "ἐπὶ",
+     "gloss": "on",
+     "audio": "chapt_14_n_sm5"
+    },
+    {
+     "greek": "γῆς·",
+     "gloss": "earth",
+     "audio": "chapt_14_n_sm6"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_14_n_mt610c"
+   }
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Great!",
+   "Congratulations",
+   "Perfect!",
+   "Right On!",
+   "Fantastic!",
+   "Yes"
+  ],
+  "incorrect": [
+   "Try again",
+   "Swing and a miss",
+   "Repetition will get it",
+   "Never give up",
+   "Keep trying"
+  ]
+ },
+ "sequence": [
+  "c14_learn_objectives",
+  "c14_learn_english_concepts",
+  "c14_learn_second_aorist",
+  "c14_drill_parsing",
+  "c14_drill_forms",
+  "c14_drill_translation",
+  "c14_ex_speller",
+  "c14_ex_speller_forms",
+  "c14_learn_vocab",
+  "c14_drill_vocab_gk_en",
+  "c14_drill_vocab_en_gk",
+  "c14_ex_vocab_speller",
+  "c14_learn_scripture",
+  "c14_drill_scripture_memory",
+  "c14_ex_scripture_speller",
+  "c14_qr_vocab",
+  "c14_qr_paradigms",
+  "c14_qr_forms",
+  "c14_qr_scripture_mat633a",
+  "c14_qr_scripture_mat633b",
+  "c14_qr_scripture_mat69",
+  "c14_qr_scripture_mat610a",
+  "c14_qr_scripture_mat610c",
+  "c14_learn_bibliography"
+ ],
+ "_audioVerify": "CHAPT_14 ships 144 WAVs. Every verb carries a PAIR: n_<verb>p is the present lemma and n_<verb>a the second aorist. The Forms Drill and the Forms Speller both dispatch the AORIST half (A1b). Strays: n_sm7 (the SayWord table lists it; the six-word Mat 6:10c pool never reaches it).",
+ "_sequence_note": "Rail order from ch14railwalk.pdf, cross-checked against the Drill / Exercise / Quick Review menus on its last page.",
+ "hintCharts": {
+  "secondAoristParadigms": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "id": "hintSecondAoristActive",
+     "title": "Aorist Active of λαμβάνω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἔλαβον",
+         "gloss": "i took",
+         "audio": "chapt_14_n_lab1s"
+        },
+        {
+         "greek": "ἐλάβομεν",
+         "gloss": "we took",
+         "audio": "chapt_14_n_lab1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἔλαβες",
+         "gloss": "you took",
+         "audio": "chapt_14_n_lab2s"
+        },
+        {
+         "greek": "ἐλάβετε",
+         "gloss": "you took",
+         "audio": "chapt_14_n_lab2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἔλαβε(ν)",
+         "gloss": "he/she/it took",
+         "audio": "chapt_14_n_lab3s"
+        },
+        {
+         "greek": "ἔλαβον",
+         "gloss": "they took",
+         "audio": "chapt_14_n_lab3p"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "id": "hintSecondAoristMiddle",
+     "title": "Aorist Middle of γίνομαι  (I become)",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἐγενόμην",
+         "gloss": "I became",
+         "audio": "chapt_14_n_gin1s"
+        },
+        {
+         "greek": "ἐγενόμεθα",
+         "gloss": "We became",
+         "audio": "chapt_14_n_gin1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἐγένου",
+         "gloss": "You became",
+         "audio": "chapt_14_n_gin2s"
+        },
+        {
+         "greek": "ἐγένεσθε",
+         "gloss": "You became",
+         "audio": "chapt_14_n_gin2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἐγένετο",
+         "gloss": "He/she/it became",
+         "audio": "chapt_14_n_gin3s"
+        },
+        {
+         "greek": "ἐγένοντο",
+         "gloss": "They became",
+         "audio": "chapt_14_n_gin3p"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "_note": "Field 0xfcff0 holds BOTH charts on one hint screen (4.7 source fidelity: transcribed from the hint's own screen, whose titles read \"Aorist\", not \"Second Aorist\", and which carries no say-all and no deponent note). Two charts -> the 4.1 toggle; the one differing word is Greek, so the label is More/Back, never the Greek pair (4.1, N-2)."
+  },
+  "secondAoristForms": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "id": "hintSecondAoristForms",
+     "title": "Second Aorist Verb Forms",
+     "columns": [
+      "Present",
+      "Second Aorist"
+     ],
+     "rows": [
+      {
+       "label": "I departed",
+       "cells": [
+        {
+         "greek": "ἀπέρχομαι",
+         "audio": "chapt_14_n_apep"
+        },
+        {
+         "greek": "ἀπῆλθον",
+         "audio": "chapt_14_n_apea"
+        }
+       ]
+      },
+      {
+       "label": "I died",
+       "cells": [
+        {
+         "greek": "ἀποθνῄσκω",
+         "audio": "chapt_14_n_apop"
+        },
+        {
+         "greek": "ἀπέθανον",
+         "audio": "chapt_14_n_apoa"
+        }
+       ]
+      },
+      {
+       "label": "I threw",
+       "cells": [
+        {
+         "greek": "βάλλω",
+         "audio": "chapt_14_n_balp"
+        },
+        {
+         "greek": "ἔβαλον",
+         "audio": "chapt_14_n_bala"
+        }
+       ]
+      },
+      {
+       "label": "I saw",
+       "cells": [
+        {
+         "greek": "βλέπω",
+         "audio": "chapt_14_n_blep"
+        },
+        {
+         "greek": "εἶδον",
+         "audio": "chapt_14_n_blea"
+        }
+       ]
+      },
+      {
+       "label": "I became",
+       "cells": [
+        {
+         "greek": "γίνομαι",
+         "audio": "chapt_14_n_ginp"
+        },
+        {
+         "greek": "ἐγενόμην",
+         "audio": "chapt_14_n_gina"
+        }
+       ]
+      },
+      {
+       "label": "I knew",
+       "cells": [
+        {
+         "greek": "γινώσκω",
+         "audio": "chapt_14_n_ginwp"
+        },
+        {
+         "greek": "ἔγνων",
+         "audio": "chapt_14_n_ginwa"
+        }
+       ]
+      },
+      {
+       "label": "I entered",
+       "cells": [
+        {
+         "greek": "εἰσέρχομαι",
+         "audio": "chapt_14_n_eisp"
+        },
+        {
+         "greek": "εἰσῆλθον",
+         "audio": "chapt_14_n_eisa"
+        }
+       ]
+      },
+      {
+       "label": "I went out",
+       "cells": [
+        {
+         "greek": "ἐξέρχομαι",
+         "audio": "chapt_14_n_ecep"
+        },
+        {
+         "greek": "ἐξῆλθον",
+         "audio": "chapt_14_n_ecea"
+        }
+       ]
+      },
+      {
+       "label": "I came, went",
+       "cells": [
+        {
+         "greek": "ἔρχομαι",
+         "audio": "chapt_14_n_erxp"
+        },
+        {
+         "greek": "ἦλθον",
+         "audio": "chapt_14_n_erxa"
+        }
+       ]
+      },
+      {
+       "label": "I found",
+       "cells": [
+        {
+         "greek": "εὑρίσκω",
+         "audio": "chapt_14_n_eurp"
+        },
+        {
+         "greek": "εὗρον",
+         "audio": "chapt_14_n_eura"
+        }
+       ]
+      },
+      {
+       "label": "I had",
+       "cells": [
+        {
+         "greek": "ἔχω",
+         "audio": "chapt_14_n_exwp"
+        },
+        {
+         "greek": "ἔσχον",
+         "audio": "chapt_14_n_exwa"
+        }
+       ]
+      },
+      {
+       "label": "I took",
+       "cells": [
+        {
+         "greek": "λαμβάνω",
+         "audio": "chapt_14_n_lamp"
+        },
+        {
+         "greek": "ἔλαβον",
+         "audio": "chapt_14_n_lama"
+        }
+       ]
+      },
+      {
+       "label": "I said",
+       "cells": [
+        {
+         "greek": "λέγω",
+         "audio": "chapt_14_n_legp"
+        },
+        {
+         "greek": "εἶπον",
+         "audio": "chapt_14_n_lega"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "_note": "The Forms Drill hint (0xaf024) prints the whole verb list as a two-column present/aorist table; emitted as a paradigm so both columns tap."
+  }
+ }
+}

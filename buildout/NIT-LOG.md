@@ -73,6 +73,38 @@ recur wherever a multi-chart paradigm becomes a paged hint, and a later
 sweep may want them consistent. Instances: ch8 Autos Translation Drill
 (3 gender pages).
 
+**N-6 | Half-list say-all recordings on a merged Review Vocabulary
+Chart.** Chapter 13 is the first chapter whose Review Vocabulary Chart
+the ORIGINAL pages: five rows, More, five rows, Back, with a SEPARATE
+recording per half (`vocl13a` / `vocl13b` = `m_vocla` / `m_voclb`)
+behind one Say List button keyed on a `FirstHalf` flag (13_3DECL.TBK
+page script 0xfc4c6). DISCLOSURE-RULES 4.6 forbids a pager on a C9
+Review page, so the port shows all ten rows in one scroll. Nathanael
+ruled 2026-08-29: DO NOT PAGE, and keep both recordings where they
+are -- five rows, a Say List button playing `m_vocla`, five more rows,
+a Say List button playing `m_voclb`. This is the first chart app-wide
+carrying MORE THAN ONE say-all (chapters 1-12 each ship a single
+`playAll` id), so `playAllGroups` is a new renderer contract.
+
+RECORDED FOR THE FINAL AUDIO PASS: this is the shape Nathanael may want
+to revisit when he takes the one-time audio split/merge job -- merging
+`m_vocla` + `m_voclb` into a single whole-list recording would collapse
+this back to one button and one `playAll`, matching every other
+chapter. `m_vocl` already exists in the CHAPT_13 pack and is declared
+as an alias at 0x10294 but is played by NOTHING; if a listen confirms
+it is the whole ten-word list, the merge is already done and only the
+wiring changes. Sits alongside N-1, which is the same decision from the
+other direction (one recording shared across split halves).
+STANDING METHOD (ruled 2026-08-29, applies from here on): wherever the
+original pages a Review list or chart behind More/Back, the port STACKS
+it in the original's own split and keeps ONE say-all per half, drawn
+between the halves -- five rows, button, five rows, button. No pager.
+Where a half has no recording of its own, no button is drawn there.
+Instances so far: ch13 Review Vocabulary Chart (two half-list clips,
+m_vocla / m_voclb); ch14 Review Second Aorist Indicative Forms (paged
+five-and-eight, NO half recordings, so it stacks with no buttons).
+Chapters 15-16 not yet checked.
+
 ## RESOLVED
 
 **N-2 | Two-state toggles whose only contrast is a Greek word --

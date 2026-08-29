@@ -1,0 +1,176 @@
+{
+ "_comment": "Chapter 13 lexicon, assembled from 13_3DECL.TBK (cohort 5I). Ten lemmas, no case splits. gloss = Review Vocabulary Chart (0xde674, verbatim); glossShort = flashcard pool (0x17fdc); senses[].glossShort = drill pool (0x52724). Every lexical form prints as ONE entry with one clip (m_voc1-10): the two-surface parts rule (5H canon (v)) does NOT apply here -- pas, pasa, pan is a single lexical citation with a single recording, not three independently recorded words.",
+ "lemmas": {
+  "aner": {
+   "greek": "ἀνήρ",
+   "translit": "aner",
+   "lexicalForm": "ἀνήρ, ἀνδρός, ὁ",
+   "gloss": "man, husband",
+   "glossShort": "man, husband",
+   "audio": "chapt_13_m_voc1",
+   "ntFreq": 216,
+   "senses": [
+    {
+     "greek": "ἀνήρ",
+     "caseTag": null,
+     "glossShort": "man",
+     "audio": "chapt_13_m_voc1"
+    }
+   ]
+  },
+  "basileus": {
+   "greek": "βασιλεύς",
+   "translit": "basileus",
+   "lexicalForm": "βασιλεύς, βασιλέως, ὁ",
+   "gloss": "king",
+   "glossShort": "king",
+   "audio": "chapt_13_m_voc2",
+   "ntFreq": 115,
+   "senses": [
+    {
+     "greek": "βασιλεύς",
+     "caseTag": null,
+     "glossShort": "king",
+     "audio": "chapt_13_m_voc2"
+    }
+   ]
+  },
+  "dunamis": {
+   "greek": "δύναμις",
+   "translit": "dunamis",
+   "lexicalForm": "δύναμις, -εως, ἡ",
+   "gloss": "power, miracle",
+   "glossShort": "power",
+   "audio": "chapt_13_m_voc3",
+   "ntFreq": 119,
+   "senses": [
+    {
+     "greek": "δύναμις",
+     "caseTag": null,
+     "glossShort": "power",
+     "audio": "chapt_13_m_voc3"
+    }
+   ]
+  },
+  "onoma": {
+   "greek": "ὄνομα",
+   "translit": "onoma",
+   "lexicalForm": "ὄνομα, -ματος, τό",
+   "gloss": "name, reputation",
+   "glossShort": "name",
+   "audio": "chapt_13_m_voc4",
+   "ntFreq": 231,
+   "senses": [
+    {
+     "greek": "ὄνομα",
+     "caseTag": null,
+     "glossShort": "name",
+     "audio": "chapt_13_m_voc4"
+    }
+   ]
+  },
+  "pas": {
+   "greek": "πᾶς",
+   "translit": "pas",
+   "lexicalForm": "πᾶς, πᾶσα, πᾶν",
+   "gloss": "each, every, all",
+   "glossShort": "each, every, all",
+   "audio": "chapt_13_m_voc5",
+   "ntFreq": 1244,
+   "senses": [
+    {
+     "greek": "πᾶς",
+     "caseTag": null,
+     "glossShort": "every, all",
+     "audio": "chapt_13_m_voc5"
+    }
+   ]
+  },
+  "pater": {
+   "greek": "πατήρ",
+   "translit": "pater",
+   "lexicalForm": "πατήρ, πατρός, ὁ",
+   "gloss": "father",
+   "glossShort": "father",
+   "audio": "chapt_13_m_voc6",
+   "ntFreq": 413,
+   "senses": [
+    {
+     "greek": "πατήρ",
+     "caseTag": null,
+     "glossShort": "father",
+     "audio": "chapt_13_m_voc6"
+    }
+   ]
+  },
+  "pistis": {
+   "greek": "πίστις",
+   "translit": "pistis",
+   "lexicalForm": "πίστις, πίστεως, ἡ",
+   "gloss": "faith, belief",
+   "glossShort": "faith, belief",
+   "audio": "chapt_13_m_voc7",
+   "ntFreq": 243,
+   "senses": [
+    {
+     "greek": "πίστις",
+     "caseTag": null,
+     "glossShort": "faith",
+     "audio": "chapt_13_m_voc7"
+    }
+   ]
+  },
+  "pneuma": {
+   "greek": "πνεῦμα",
+   "translit": "pneuma",
+   "lexicalForm": "πνεῦμα, -ατος, τό",
+   "gloss": "spirit, wind",
+   "glossShort": "spirit, wind",
+   "audio": "chapt_13_m_voc8",
+   "ntFreq": 379,
+   "senses": [
+    {
+     "greek": "πνεῦμα",
+     "caseTag": null,
+     "glossShort": "spirit, wind",
+     "audio": "chapt_13_m_voc8"
+    }
+   ]
+  },
+  "sarx": {
+   "greek": "σάρξ",
+   "translit": "sarx",
+   "lexicalForm": "σάρξ, σαρκός, ἡ",
+   "gloss": "flesh, body",
+   "glossShort": "flesh, body",
+   "audio": "chapt_13_m_voc9",
+   "ntFreq": 147,
+   "senses": [
+    {
+     "greek": "σάρξ",
+     "caseTag": null,
+     "glossShort": "flesh, body",
+     "audio": "chapt_13_m_voc9"
+    }
+   ]
+  },
+  "charis": {
+   "greek": "χάρις",
+   "translit": "charis",
+   "lexicalForm": "χάρις, -ιτος, ἡ",
+   "gloss": "grace, kindness",
+   "glossShort": "grace, kindness",
+   "audio": "chapt_13_m_voc10",
+   "ntFreq": 155,
+   "senses": [
+    {
+     "greek": "χάρις",
+     "caseTag": null,
+     "glossShort": "grace",
+     "audio": "chapt_13_m_voc10"
+    }
+   ]
+  }
+ },
+ "exampleWords": {}
+}

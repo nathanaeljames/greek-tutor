@@ -1,0 +1,3803 @@
+{
+ "_comment": "Chapter 16 (Aorist and Future Passive Verbs), assembled from 16_FAPAS.TBK + CHAPT_16 audio + ch16railwalk.pdf under PIPELINE-INSIGHTS-v3 Stage 8 and DISCLOSURE-RULES. Behavior fields per DRILLBEHAVIORLEDGER.csv rows 145-154 (CONFIRMED 2026-08-29). Closing chapter of cohort 5I.",
+ "id": "chapt_16",
+ "number": 16,
+ "title": "Aorist and Future Passive Verbs",
+ "objectivesPreamble": "You will be able to:",
+ "objectives": [
+  "recognize and write the aorist and future passive indicative paradigms,",
+  "know the passive stem forms of some of the major verbs learned in previous lessons,",
+  "translate aorist and future passive indicative forms,",
+  "gain more practice in translating and working with Greek,",
+  "master 10 more high frequency vocabulary words,",
+  "memorize Mat 6:12a in Greek."
+ ],
+ "vocab": [
+  "aion",
+  "allelon",
+  "archiereus",
+  "gune",
+  "dunamai",
+  "ethnos",
+  "hosos",
+  "polis",
+  "te",
+  "cheir"
+ ],
+ "learn": [
+  {
+   "id": "c16_learn_objectives",
+   "type": "contentAudio",
+   "mode": "objectivesPage",
+   "title": "Learn Chapter Objectives",
+   "instructions": ""
+  },
+  {
+   "id": "c16_learn_english_concepts",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn English Concepts",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "In English we form the past passive indicative by using a helping verb (e.g. I was struck by the foul ball)."
+      },
+      {
+       "type": "para",
+       "text": "Similarly, the future passive indicative is formed with the helping \"will be\" (e.g. I will be flown to Indianapolis).",
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "comparison",
+     "title": "Comparison with Greek",
+     "content": [
+      {
+       "type": "para",
+       "text": "Rather than using a helping verb, Greek uses a different stem to indicate the passive indicative for aorist and future tenses. In the lexicon this stem will be the sixth (last) principal part. [[u]]Present Future Aorist[[/u]] βάλλω, βαλῶ, ἔβαλον, [[u]]Perfect Perf mid/pass Aorist pass[[/u]] βέβληκα, βέβλημαι, ἐβλήθην"
+      },
+      {
+       "type": "greekRows",
+       "layout": "principalParts",
+       "gapBefore": true,
+       "rows": [
+        {
+         "label": "Present",
+         "parts": [
+          {
+           "greek": "βάλλω,",
+           "audio": "chapt_16_p_balp"
+          }
+         ]
+        },
+        {
+         "label": "Future",
+         "parts": [
+          {
+           "greek": "βαλῶ,",
+           "audio": "chapt_16_p_balf"
+          }
+         ]
+        },
+        {
+         "label": "Aorist",
+         "parts": [
+          {
+           "greek": "ἔβαλον,",
+           "audio": "chapt_16_p_bala"
+          }
+         ]
+        },
+        {
+         "label": "Perfect",
+         "parts": [
+          {
+           "greek": "βέβληκα,",
+           "audio": "chapt_16_p_balr"
+          }
+         ]
+        },
+        {
+         "label": "Perf mid/pass",
+         "parts": [
+          {
+           "greek": "βέβλημαι,",
+           "audio": "chapt_16_p_balrp"
+          }
+         ]
+        },
+        {
+         "label": "Aorist pass",
+         "parts": [
+          {
+           "greek": "ἐβλήθην",
+           "audio": "chapt_16_p_balap"
+          }
+         ]
+        }
+       ],
+       "_disclosure": "The six principal parts print as a labelled two-row grid in the original; emitted as labelled rows so every form taps. The labels are underlined in the original and render WITHOUT the underline (3.2: green underline is exclusive to tappable elements, and a column label is not one)."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c16_learn_passives",
+   "type": "contentAudio",
+   "mode": "topicPages",
+   "title": "Learn Aorist and Future Passive Verbs",
+   "topics": [
+    {
+     "id": "introduction",
+     "title": "Introduction",
+     "content": [
+      {
+       "type": "para",
+       "text": "Greek aorist and future passive forms are translated like the English past passive and future passives."
+      },
+      {
+       "type": "para",
+       "text": "They are built from the sixth principal part of the verb. They are easily recognized because of the characteristic q just before the ending. Like other past tense verb forms aorist passives take the augment.",
+       "gapBefore": true
+      }
+     ]
+    },
+    {
+     "id": "form",
+     "title": "Form",
+     "content": [
+      {
+       "type": "para",
+       "text": "The aorist passives are formed by adding qh before the ending:"
+      },
+      {
+       "type": "formula",
+       "align": "center",
+       "gapBefore": true,
+       "lines": [
+        {
+         "text": "ἐ + λυ + θη + ν = ἐλύθην",
+         "audio": "chapt_16_p_luw1s",
+         "tapUnit": true
+        },
+        {
+         "text": "Aug   Stem   Pass   Ending   (I was loosed)"
+        }
+       ]
+      },
+      {
+       "type": "para",
+       "text": "The future passives add qhs before the ending and drop the augment. lu + qhs + n = λυθήσομαι Stem Pass Ending (I will be loosed)",
+       "gapBefore": true
+      },
+      {
+       "type": "formula",
+       "align": "center",
+       "gapBefore": true,
+       "lines": [
+        {
+         "text": "λυ + θησ + ν = λυθήσομαι",
+         "audio": "chapt_16_p_luwf1s",
+         "tapUnit": true
+        },
+        {
+         "text": "Stem   Pass   Ending   (I will be loosed)"
+        }
+       ],
+       "_verify_note": "The original prints \"lu + qhs + n = luqh<somai\" -- the ending shown is nu although the form ends -omai. Carried VERBATIM; an original slip, not a conversion error. VERIFY."
+      }
+     ]
+    },
+    {
+     "id": "endingTransformations",
+     "title": "Ending Transformations",
+     "content": [
+      {
+       "type": "para",
+       "text": "When a stem ends in a consonant the following changes take place when the qh is added. Palatals: k and g become x diwk + qh = ἐδιώχθην Labials: p and b become f λείπ + qh = ἐλείφθην f causes the q to drop out graf + qh = ἐγράφην"
+      },
+      {
+       "type": "greekRows",
+       "layout": "endingTransformation",
+       "gapBefore": true,
+       "rows": [
+        {
+         "label": "Palatals:",
+         "parts": [
+          {
+           "text": "κ and γ  become  χ"
+          }
+         ],
+         "note": "διωκ + θη = ἐδιώχθην"
+        },
+        {
+         "label": "Labials:",
+         "parts": [
+          {
+           "text": "π and β  become  φ"
+          }
+         ],
+         "note": "λείπ + θη = ἐλείφθην"
+        },
+        {
+         "label": null,
+         "parts": [
+          {
+           "text": "φ causes the θ to drop out"
+          }
+         ],
+         "note": "γραφ + θη = ἐγράφην"
+        }
+       ]
+      }
+     ],
+     "audioMap": {
+      "ἐδιώχθην": "chapt_16_p_diwa",
+      "ἐλείφθην": "chapt_16_p_leia",
+      "ἐγράφην": "chapt_16_p_graa"
+     }
+    },
+    {
+     "id": "consonantShifts",
+     "title": "Consonant Shifts",
+     "content": [
+      {
+       "type": "greekRows",
+       "layout": "endingTransformation",
+       "rows": [
+        {
+         "label": "Dentals:",
+         "parts": [
+          {
+           "text": "τ, δ, and θ  become  σ"
+          }
+         ],
+         "note": "πειθ + θη = ἐπείσθην"
+        },
+        {
+         "label": "Sibilants:",
+         "parts": [
+          {
+           "text": "ζ, ξ, and ψ  become  σ"
+          }
+         ],
+         "note": "δοξαζ + θη = ἐδοξάσθην"
+        }
+       ]
+      },
+      {
+       "type": "greekRows",
+       "layout": "shiftSummary",
+       "gapBefore": true,
+       "rows": [
+        {
+         "label": null,
+         "parts": [
+          {
+           "text": "κ, γ      —  χ"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "parts": [
+          {
+           "text": "π, β      —  φ"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "parts": [
+          {
+           "text": "τ, δ, θ   —  σ"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "parts": [
+          {
+           "text": "ζ, ξ, ψ   —  σ"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "audioMap": {
+      "ἐπείσθην": "chapt_16_p_peia",
+      "ἐδοξάσθην": "chapt_16_p_doca"
+     },
+     "_disclosure": "C6: \"Consonant Shifts\" carries its OWN header in the original, so it is a distinct topic rather than a continuation of Ending Transformations (2.7 header test)."
+    },
+    {
+     "id": "firstAoristPassive",
+     "title": "First Aorist Passive",
+     "titleAudio": "chapt_16_p_luw",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "learnFirstAoristPassive",
+       "title": "First Aorist Passive Indicative of λύω",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1",
+         "cells": [
+          {
+           "greek": "ἐλύθην",
+           "gloss": "I was loosed",
+           "audio": "chapt_16_p_luw1s"
+          },
+          {
+           "greek": "ἐλύθημεν",
+           "gloss": "We were loosed",
+           "audio": "chapt_16_p_luw1p"
+          }
+         ]
+        },
+        {
+         "label": "2",
+         "cells": [
+          {
+           "greek": "ἐλύθης",
+           "gloss": "You were loosed",
+           "audio": "chapt_16_p_luw2s"
+          },
+          {
+           "greek": "ἐλύθητε",
+           "gloss": "You were loosed",
+           "audio": "chapt_16_p_luw2p"
+          }
+         ]
+        },
+        {
+         "label": "3",
+         "cells": [
+          {
+           "greek": "ἐλύθη",
+           "gloss": "He/she/it was loosed",
+           "audio": "chapt_16_p_luw3s"
+          },
+          {
+           "greek": "ἐλύθησαν",
+           "gloss": "They were loosed",
+           "audio": "chapt_16_p_luw3p"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_16_p_luapar"
+       }
+      }
+     ]
+    },
+    {
+     "id": "secondAoristPassive",
+     "title": "Second Aorist Passive",
+     "titleAudio": "chapt_16_p_grap",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "learnSecondAoristPassive",
+       "title": "Second Aorist Passive Indicative of γράφω",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1",
+         "cells": [
+          {
+           "greek": "ἐγράφην",
+           "gloss": "I was written",
+           "audio": "chapt_16_p_gra1s"
+          },
+          {
+           "greek": "ἐγράφημεν",
+           "gloss": "We were written",
+           "audio": "chapt_16_p_gra1p"
+          }
+         ]
+        },
+        {
+         "label": "2",
+         "cells": [
+          {
+           "greek": "ἐγράφης",
+           "gloss": "You were written",
+           "audio": "chapt_16_p_gra2s"
+          },
+          {
+           "greek": "ἐγράφητε",
+           "gloss": "You were written",
+           "audio": "chapt_16_p_gra2p"
+          }
+         ]
+        },
+        {
+         "label": "3",
+         "cells": [
+          {
+           "greek": "ἐγράφη",
+           "gloss": "He/she/it was written",
+           "audio": "chapt_16_p_gra3s"
+          },
+          {
+           "greek": "ἐγράφησαν",
+           "gloss": "They were written",
+           "audio": "chapt_16_p_gra3p"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_16_p_grapar"
+       }
+      }
+     ]
+    },
+    {
+     "id": "futurePassive",
+     "title": "Future Passive",
+     "titleAudio": "chapt_16_p_luw",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "learnFuturePassive",
+       "title": "Future Passive Indicative of λύω",
+       "columns": [
+        "Singular",
+        "Plural"
+       ],
+       "rows": [
+        {
+         "label": "1",
+         "cells": [
+          {
+           "greek": "λυθήσομαι",
+           "gloss": "I will be loosed",
+           "audio": "chapt_16_p_luwf1s"
+          },
+          {
+           "greek": "λυθησόμεθα",
+           "gloss": "We will be loosed",
+           "audio": "chapt_16_p_luwf1p"
+          }
+         ]
+        },
+        {
+         "label": "2",
+         "cells": [
+          {
+           "greek": "λυθήσῃ",
+           "gloss": "You will be loosed",
+           "audio": "chapt_16_p_luwf2s"
+          },
+          {
+           "greek": "λυθήσεσθε",
+           "gloss": "You will be loosed",
+           "audio": "chapt_16_p_luwf2p"
+          }
+         ]
+        },
+        {
+         "label": "3",
+         "cells": [
+          {
+           "greek": "λυθήσεται",
+           "gloss": "He/she/it will be loosed",
+           "audio": "chapt_16_p_luwf3s"
+          },
+          {
+           "greek": "λυθήσονται",
+           "gloss": "They will be loosed",
+           "audio": "chapt_16_p_luwf3p"
+          }
+         ]
+        }
+       ],
+       "sayWhole": {
+        "label": "Say Paradigm",
+        "audio": "chapt_16_p_lufpar"
+       }
+      }
+     ]
+    },
+    {
+     "id": "deponent",
+     "title": "Deponent",
+     "content": [
+      {
+       "type": "para",
+       "text": "Some verbs that are deponent in the present will use a passive form in the aorist (ἀπεκρίθην) rather than the expected middle (deponent) form. Regardless of the form (middle or passive), deponent aorist verbs will be translated with an active sense. Thus, ἀπεκρίθην is translated \"I answered\". Others have both middle (ἐγενόμην) and passive forms (ἐγενήθην)."
+      }
+     ],
+     "audioMap": {
+      "ἀπεκρίθην": "chapt_16_p_apea",
+      "ἐγενήθην": "chapt_16_p_gina"
+     },
+     "_audio_note": "egenomen is the ch14 second aorist middle and has no clip in this pack; only the two forms the chapter itself records are tapped."
+    },
+    {
+     "id": "passiveStems",
+     "title": "Passive Stems",
+     "content": [
+      {
+       "type": "paradigm",
+       "id": "learnPassiveStems1",
+       "title": "Passive Stems",
+       "columns": [
+        "Present Active",
+        "Aorist Passive",
+        "Future Passive"
+       ],
+       "rows": [
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "ἀποστέλλω",
+           "audio": "chapt_16_p_apop"
+          },
+          {
+           "greek": "ἀπεστάλην",
+           "audio": "chapt_16_p_apoa"
+          },
+          {
+           "text": "—"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "βάλλω",
+           "audio": "chapt_16_p_balp"
+          },
+          {
+           "greek": "ἐβλήθην",
+           "audio": "chapt_16_p_bala"
+          },
+          {
+           "greek": "βληθήσομαι",
+           "audio": "chapt_16_p_balf"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "γίνομαι",
+           "audio": "chapt_16_p_ginp"
+          },
+          {
+           "greek": "ἐγενήθην",
+           "audio": "chapt_16_p_gina"
+          },
+          {
+           "text": "—"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "γινώσκω",
+           "audio": "chapt_16_p_ginwp"
+          },
+          {
+           "greek": "ἐγνώσθην",
+           "audio": "chapt_16_p_ginwa"
+          },
+          {
+           "greek": "γνωσθήσομαι",
+           "audio": "chapt_16_p_ginwf"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "διδάσκω",
+           "audio": "chapt_16_p_didp"
+          },
+          {
+           "greek": "ἐδιδάχθην",
+           "audio": "chapt_16_p_dida"
+          },
+          {
+           "text": "—"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "δύναμαι",
+           "audio": "chapt_16_p_dunp"
+          },
+          {
+           "greek": "ἠδυνήθην",
+           "audio": "chapt_16_p_duna"
+          },
+          {
+           "text": "—"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "ἐγείρω",
+           "audio": "chapt_16_p_egep"
+          },
+          {
+           "greek": "ἠγέρθην",
+           "audio": "chapt_16_p_egea"
+          },
+          {
+           "greek": "ἐγερθήσομαι",
+           "audio": "chapt_16_p_egef"
+          }
+         ]
+        }
+       ],
+       "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
+      },
+      {
+       "type": "paradigm",
+       "id": "learnPassiveStems2",
+       "title": "Passive Stems",
+       "columns": [
+        "Present Active",
+        "Aorist Passive",
+        "Future Passive"
+       ],
+       "rows": [
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "εὑρίσκω",
+           "audio": "chapt_16_p_eurp"
+          },
+          {
+           "greek": "εὑρέθην",
+           "audio": "chapt_16_p_eura"
+          },
+          {
+           "greek": "εὑρεθήσομαι",
+           "audio": "chapt_16_p_euraf"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "θέλω",
+           "audio": "chapt_16_p_thep"
+          },
+          {
+           "greek": "ἠθελήθην",
+           "audio": "chapt_16_p_thea"
+          },
+          {
+           "text": "—"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "κρίνω",
+           "audio": "chapt_16_p_krip"
+          },
+          {
+           "greek": "ἐκρίθην",
+           "audio": "chapt_16_p_kria"
+          },
+          {
+           "greek": "ἐκριθήσομαι",
+           "audio": "chapt_16_p_kriaf"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "λαμβάνω",
+           "audio": "chapt_16_p_lamp"
+          },
+          {
+           "greek": "ἐλήμφθην",
+           "audio": "chapt_16_p_lama"
+          },
+          {
+           "text": "—"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "λέγω",
+           "audio": "chapt_16_p_legp"
+          },
+          {
+           "greek": "ἐρρέθην",
+           "audio": "chapt_16_p_lega"
+          },
+          {
+           "text": "—"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "πιστεύω",
+           "audio": "chapt_16_p_pisp"
+          },
+          {
+           "greek": "ἐπιστεύθην",
+           "audio": "chapt_16_p_pisa"
+          },
+          {
+           "text": "—"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "πορεύομαι",
+           "audio": "chapt_16_p_porp"
+          },
+          {
+           "greek": "ἐπορεύθην",
+           "audio": "chapt_16_p_pora"
+          },
+          {
+           "text": "—"
+          }
+         ]
+        },
+        {
+         "label": null,
+         "cells": [
+          {
+           "greek": "σῴζω",
+           "audio": "chapt_16_p_swzp"
+          },
+          {
+           "greek": "ἐσώθην",
+           "audio": "chapt_16_p_swza"
+          },
+          {
+           "greek": "σωθήσομαι",
+           "audio": "chapt_16_p_swzf"
+          }
+         ]
+        }
+       ],
+       "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
+      }
+     ],
+     "_disclosure": "C5 (NIT-LOG N-6 standing method): the original pages the stem table seven-and-eight behind More/Back; STACKED here in the original's own split. Neither half carries a say-all recording, so no button is drawn."
+    }
+   ],
+   "greekTaps": true
+  },
+  {
+   "id": "c16_learn_vocab",
+   "type": "contentAudio",
+   "mode": "flashcard",
+   "title": "Learn Vocabulary",
+   "pool": "senses"
+  },
+  {
+   "id": "c16_learn_scripture",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Learn Scripture Memory",
+   "reference": "Mat 6:12a",
+   "words": [
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_16_p_sm1"
+    },
+    {
+     "greek": "ἄφες",
+     "gloss": "forgive",
+     "audio": "chapt_16_p_sm2"
+    },
+    {
+     "greek": "ἡμῖν",
+     "gloss": "for us",
+     "audio": "chapt_16_p_sm3"
+    },
+    {
+     "greek": "τὰ",
+     "gloss": "the",
+     "audio": "chapt_16_p_sm4"
+    },
+    {
+     "greek": "ὀφειλήματα",
+     "gloss": "debts",
+     "audio": "chapt_16_p_sm5"
+    },
+    {
+     "greek": "ἡμῶν,",
+     "gloss": "our",
+     "audio": "chapt_16_p_sm6"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_16_p_mt612a"
+   }
+  },
+  {
+   "id": "c16_learn_bibliography",
+   "type": "contentAudio",
+   "mode": "textPage",
+   "title": "Learn Bibliography",
+   "content": [
+    {
+     "type": "biblist",
+     "items": [
+      "Machen, J. Gresham. New Testament Greek for Beginners (Toronto: The Macmillan Company, 1923), pp. 92-96.",
+      "Mounce, William D. Basics of Biblical Greek: Grammar (Grand Rapids: Zondervan, 1993), pp. 207-217.",
+      "Summers, Ray and Thomas Sawyer. Essentials of New Testament Greek (Nashville: Broadman & Holman, 1995), pp. 77-81.",
+      "Wenham, J. W. The Elements of New Testament Greek (Cambridge: Cambridge University Press, 1965), pp. 143-46."
+     ]
+    }
+   ]
+  }
+ ],
+ "drill": [
+  {
+   "id": "c16_drill_parsing",
+   "type": "select",
+   "mode": "twoStageGrid",
+   "title": "Passive Verbs Parsing Drill",
+   "instructions": "Click on the tense, then person and number",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionStages": [
+    {
+     "label": "Tense",
+     "values": [
+      "Aorist",
+      "Future"
+     ]
+    },
+    {
+     "label": "Person / Number",
+     "values": [
+      "First Singular",
+      "First Plural",
+      "Second Singular",
+      "Second Plural",
+      "Third Singular",
+      "Third Plural"
+     ],
+     "optionGroups": [
+      2,
+      2,
+      2
+     ]
+    }
+   ],
+   "revealButtons": [
+    {
+     "label": "Translate",
+     "field": "translate"
+    }
+   ],
+   "items": [
+    {
+     "greek": "λυθήσονται",
+     "translate": "they will be loosed",
+     "answer": [
+      "Future",
+      "Third Plural"
+     ],
+     "audio": "chapt_16_p_luwf3p",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐλύθην",
+     "translate": "I was loosed",
+     "answer": [
+      "Aorist",
+      "First Singular"
+     ],
+     "audio": "chapt_16_p_luw1s",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐλύθητε",
+     "translate": "you (pl.) were loosed",
+     "answer": [
+      "Aorist",
+      "Second Plural"
+     ],
+     "audio": "chapt_16_p_luw2p",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "λυθήσῃ",
+     "translate": "you (sg.) will be loosed",
+     "answer": [
+      "Future",
+      "Second Singular"
+     ],
+     "audio": "chapt_16_p_luwf2s",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐγράφημεν",
+     "translate": "we were written",
+     "answer": [
+      "Aorist",
+      "First Plural"
+     ],
+     "audio": "chapt_16_p_gra1p",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐγράφης",
+     "translate": "you (sg.) were written",
+     "answer": [
+      "Aorist",
+      "Second Singular"
+     ],
+     "audio": "chapt_16_p_gra2s",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "λυθήσομαι",
+     "translate": "I will be loosed",
+     "answer": [
+      "Future",
+      "First Singular"
+     ],
+     "audio": "chapt_16_p_luwf1s",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐλύθησαν",
+     "translate": "they were loosed",
+     "answer": [
+      "Aorist",
+      "Third Plural"
+     ],
+     "audio": "chapt_16_p_luw3p",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐγράφη",
+     "translate": "she was written",
+     "answer": [
+      "Aorist",
+      "Third Singular"
+     ],
+     "audio": "chapt_16_p_gra3s",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐλύθης",
+     "translate": "you (sg.) were loosed",
+     "answer": [
+      "Aorist",
+      "Second Singular"
+     ],
+     "audio": "chapt_16_p_luw2s",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "λυθησόμεθα",
+     "translate": "we will be loosed",
+     "answer": [
+      "Future",
+      "First Plural"
+     ],
+     "audio": "chapt_16_p_luwf1p",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐγράφητε",
+     "translate": "you (pl.) were written",
+     "answer": [
+      "Aorist",
+      "Second Plural"
+     ],
+     "audio": "chapt_16_p_gra2p",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐλύθημεν",
+     "translate": "we were loosed",
+     "answer": [
+      "Aorist",
+      "First Plural"
+     ],
+     "audio": "chapt_16_p_luw1p",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐλύθη",
+     "translate": "he was loosed",
+     "answer": [
+      "Aorist",
+      "Third Singular"
+     ],
+     "audio": "chapt_16_p_luw3s",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "λυθήσεσθε",
+     "translate": "you (pl.) will be loosed",
+     "answer": [
+      "Future",
+      "Second Plural"
+     ],
+     "audio": "chapt_16_p_luwf2p",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "λυθήσεται",
+     "translate": "it will be loosed",
+     "answer": [
+      "Future",
+      "Third Singular"
+     ],
+     "audio": "chapt_16_p_luwf3s",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐγράφην",
+     "translate": "I was written",
+     "answer": [
+      "Aorist",
+      "First Singular"
+     ],
+     "audio": "chapt_16_p_gra1s",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐγράφησαν",
+     "translate": "they were written",
+     "answer": [
+      "Aorist",
+      "Third Plural"
+     ],
+     "audio": "chapt_16_p_gra3p",
+     "hintRef": "passiveParadigms"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Translate",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "passiveParadigms"
+   },
+   "_stage_note": "Eighteen items (0xfa356). Stage one is TENSE (Aorist | Future), NOT voice -- the only parsing drill in the project with that axis, because the whole chapter is one voice. Every item has exactly ONE accepted cell and the assembler fails if a key names two. Each dispatched clip is asserted to be the prompt form's own paradigm cell.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c16_drill_forms",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Passive Verbs Form Drill",
+   "instructions": "Click on the correct matching aorist form",
+   "promptIsGreek": true,
+   "promptGloss": true,
+   "options": "perItem",
+   "optionsAreGreek": true,
+   "optionLayout": "stack1col",
+   "instructionsPerItem": true,
+   "items": [
+    {
+     "greek": "βάλλω",
+     "gloss": "I cast, throw",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἐβλήθην",
+      "ἐβάλθην",
+      "ἐβάληθην"
+     ],
+     "answer": "ἐβλήθην",
+     "audio": "chapt_16_p_balap"
+    },
+    {
+     "greek": "βάλλω",
+     "gloss": "I cast, throw",
+     "tense": "future",
+     "instructions": "Click on the correct matching future form",
+     "options": [
+      "βληθήσομαι",
+      "βαληθήσομαι",
+      "βαλθήσομαι"
+     ],
+     "answer": "βληθήσομαι",
+     "audio": "chapt_16_p_balfp"
+    },
+    {
+     "greek": "ἀποστέλλω",
+     "gloss": "I send",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἀποστάλην",
+      "ἀπεστάλην",
+      "ἀπεστήλην"
+     ],
+     "answer": "ἀπεστάλην",
+     "audio": "chapt_16_p_apoa"
+    },
+    {
+     "greek": "ἐγείρω",
+     "gloss": "I rise",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἠγέρθην",
+      "ἐγήρθην",
+      "ἠγείρθην"
+     ],
+     "answer": "ἠγέρθην",
+     "audio": "chapt_16_p_egea"
+    },
+    {
+     "greek": "ἐγείρω",
+     "gloss": "I rise",
+     "tense": "future",
+     "instructions": "Click on the correct matching future form",
+     "options": [
+      "ἐγειρθήσομαι",
+      "ἐγερθήσομαι",
+      "ἐγερηθήσομαι"
+     ],
+     "answer": "ἐγερθήσομαι",
+     "audio": "chapt_16_p_egef"
+    },
+    {
+     "greek": "εὑρίσκω",
+     "gloss": "I find",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "εὑρισήθην",
+      "εὑρίσθην",
+      "εὑρέθην"
+     ],
+     "answer": "εὑρέθην",
+     "audio": "chapt_16_p_eura"
+    },
+    {
+     "greek": "εὑρίσκω",
+     "gloss": "I find",
+     "tense": "future",
+     "instructions": "Click on the correct matching future form",
+     "options": [
+      "εὑρεθήσομαι",
+      "εὑριθήσομαι",
+      "εὑρισθήσομαι"
+     ],
+     "answer": "εὑρεθήσομαι",
+     "audio": "chapt_16_p_euraf"
+    },
+    {
+     "greek": "γράφω",
+     "gloss": "I write",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἐγράψθην",
+      "ἐγράφθην",
+      "ἐγράφην"
+     ],
+     "answer": "ἐγράφην",
+     "audio": "chapt_16_p_graa"
+    },
+    {
+     "greek": "λαμβάνω",
+     "gloss": "I take",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἐλαμβάνθην",
+      "ἐλήμφθην",
+      "ἐλάμφθην"
+     ],
+     "answer": "ἐλήμφθην",
+     "audio": "chapt_16_p_lama"
+    },
+    {
+     "greek": "πορεύομαι",
+     "gloss": "I go",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἐπορευήθην",
+      "ἐπορεύθην",
+      "ἐπορύθην"
+     ],
+     "answer": "ἐπορεύθην",
+     "audio": "chapt_16_p_pora"
+    },
+    {
+     "greek": "δύναμαι",
+     "gloss": "I can, am able",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἐδυνάθην",
+      "ἐδυνήθην",
+      "ἠδυνήθην"
+     ],
+     "answer": "ἠδυνήθην",
+     "audio": "chapt_16_p_duna"
+    },
+    {
+     "greek": "δύναμαι",
+     "gloss": "I can, am able",
+     "tense": "future",
+     "instructions": "Click on the correct matching future form",
+     "options": [
+      "δυνήσομαι",
+      "δυνάσομαι",
+      "δυνάθσομαι"
+     ],
+     "answer": "δυνήσομαι",
+     "audio": "chapt_16_p_dunf",
+     "_verify_note": "The Passive Stems chart prints \"--\" for this verb's future passive, but the drill asks for one and its own key gives 'δυνήσομαι' (clip p_dunf). Taken from the key; an inconsistency in the original. VERIFY."
+    },
+    {
+     "greek": "διδάσκω",
+     "gloss": "I teach",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἐδιδάσθην",
+      "ἐδιδάψθην",
+      "ἐδιδάχθην"
+     ],
+     "answer": "ἐδιδάχθην",
+     "audio": "chapt_16_p_dida"
+    },
+    {
+     "greek": "πιστεύω",
+     "gloss": "I believe",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἐπιστευήθην",
+      "ἐπιστύθην",
+      "ἐπιστεύθην"
+     ],
+     "answer": "ἐπιστεύθην",
+     "audio": "chapt_16_p_pisa"
+    },
+    {
+     "greek": "γίνομαι",
+     "gloss": "I become",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἐγινήθην",
+      "ἐγενήθην",
+      "ἐγινόθην"
+     ],
+     "answer": "ἐγενήθην",
+     "audio": "chapt_16_p_gina"
+    },
+    {
+     "greek": "γινώσκω",
+     "gloss": "I know",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἐγινώχθην",
+      "ἐγινώσθην",
+      "ἐγνώσθην"
+     ],
+     "answer": "ἐγνώσθην",
+     "audio": "chapt_16_p_ginwa"
+    },
+    {
+     "greek": "γινώσκω",
+     "gloss": "I know",
+     "tense": "future",
+     "instructions": "Click on the correct matching future form",
+     "options": [
+      "γνωσθήσομαι",
+      "γινωσθήσομαι",
+      "γινωχθήσομαι"
+     ],
+     "answer": "γνωσθήσομαι",
+     "audio": "chapt_16_p_ginwf"
+    },
+    {
+     "greek": "λέγω",
+     "gloss": "I say",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "λεγήθην",
+      "ἐρρέθην",
+      "εἰπήθην"
+     ],
+     "answer": "ἐρρέθην",
+     "audio": "chapt_16_p_lega"
+    },
+    {
+     "greek": "θέλω",
+     "gloss": "I will, wish",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἠθελήθην",
+      "ἐθελήθην",
+      "ἐθέλθην"
+     ],
+     "answer": "ἠθελήθην",
+     "audio": "chapt_16_p_thea"
+    },
+    {
+     "greek": "κρίνω",
+     "gloss": "I judge",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἠκρίθην",
+      "ἐκρίθην",
+      "ἐκρείθην"
+     ],
+     "answer": "ἐκρίθην",
+     "audio": "chapt_16_p_kria"
+    },
+    {
+     "greek": "σῴζω",
+     "gloss": "I save",
+     "tense": "aorist",
+     "instructions": "Click on the correct matching aorist form",
+     "options": [
+      "ἐσώθην",
+      "ἐσώζθην",
+      "ἐσώσθην"
+     ],
+     "answer": "ἐσώθην",
+     "audio": "chapt_16_p_swza"
+    },
+    {
+     "greek": "σῴζω",
+     "gloss": "I save",
+     "tense": "future",
+     "instructions": "Click on the correct matching future form",
+     "options": [
+      "σωσθήσομαι",
+      "σωζθήσομαι",
+      "σωθήσομαι"
+     ],
+     "answer": "σωθήσομαι",
+     "audio": "chapt_16_p_swzf"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "passiveStemsHint"
+   },
+   "_shape_note": "TWENTY-TWO items for fifteen verbs: SIX verbs (ballo, egeiro, heurisko, dunamai, ginosko, sozo) appear TWICE, once for the aorist passive and once for the future. Which one an item asks for is NOT in the prompt -- the page carries TWO instruction strings (0xa046a) and switches between them -- so the tense is derived from the DISPATCHED CLIP (p_balap vs p_balfp, p_egea vs p_egef ...) and cross-checked against the Passive Stems chart. Every item ships its own instruction line.",
+   "_audio_note": "A1b, CONFIRMED at source: the clips are the ANSWER forms and the assembler FAILS if any item dispatches its present-tense clip. afterGuess, and the A1c gate applies. Ledger row 146 -- with this read all three of the cohort's Forms Drills are confirmed rather than inferred.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c16_drill_translation",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Passive Verbs Translation Drill",
+   "instructions": "Click on the correct translation",
+   "promptIsGreek": true,
+   "options": "perItem",
+   "optionLayout": "stack1col",
+   "items": [
+    {
+     "greek": "Ὁ προφήτης εἶ σύ; καὶ ἀπεκρίθη, Οὔ",
+     "ref": "Jn 1:21",
+     "options": [
+      "Are you the prophet? and he said, \"No\"",
+      "Are you the prophet? and they answered, \"No\"",
+      "Are you the prophet? and he answered, \"No\""
+     ],
+     "answer": "Are you the prophet? and he answered, \"No\"",
+     "audio": "chapt_16_p_td1",
+     "hintRef": "passiveParadigms",
+     "greek2": "με, Ἐγώ εἰμι Ἰησοῦς"
+    },
+    {
+     "greek": "Ἀπεκρίθησαν καὶ εἶπαν αὐτῷ, Ὁ πατὴρ ἡμῶν",
+     "ref": "Jn 8:39",
+     "options": [
+      "he answered and said to him, \"Our father is Abraham\"",
+      "they answered and said to him, \"Our father is Abraham\"",
+      "he answered and said to them, \"My father is Abraham\""
+     ],
+     "answer": "they answered and said to him, \"Our father is Abraham\"",
+     "audio": "chapt_16_p_td2",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐγὼ δὲ ἀπεκρίθην, Τίς εἶ, κύριε; εἶπέν τε πρός",
+     "ref": "Acts 22:8",
+     "options": [
+      "And I answered, \"Who are you Lord?\" and he said to me, \"I am Jesus\"",
+      "And we answered, \"Who are you Lord?\" and he said to me, \"I am Jesus\"",
+      "And they answered me, \"Who are you Lord?\" and I said to them, \"I am Jesus\""
+     ],
+     "answer": "And I answered, \"Who are you Lord?\" and he said to me, \"I am Jesus\"",
+     "audio": "chapt_16_p_td3",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "Καὶ ὅτε εἶδεν ὁ δράκων ὅτι ἐβλήθη εἰς τὴν γῆν",
+     "ref": "Rev 12:13",
+     "options": [
+      "and when they saw the dragon that he was cast to the earth",
+      "and when the dragon saw that he was cast to the earth",
+      "and when the dragon saw that they were cast to the earth"
+     ],
+     "answer": "and when the dragon saw that he was cast to the earth",
+     "audio": "chapt_16_p_td4",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "καὶ οἱ ἄγγελοι αὐτοῦ μετ' αὐτοῦ ἐβλήθησαν",
+     "ref": "Rev 12:9",
+     "options": [
+      "and his angels were cast down with him",
+      "and the angels against him cast him down",
+      "and he was cast down with his angels"
+     ],
+     "answer": "and his angels were cast down with him",
+     "audio": "chapt_16_p_td5",
+     "hintRef": "passiveParadigms",
+     "greek2": "ναὸν τοῦτον καὶ ... ἐγερῶ αὐτόν"
+    },
+    {
+     "greek": "καὶ εἴ τις οὐχ εὑρέθη ἐν τῇ βίβλῳ τῆς ζωῆς",
+     "ref": "Rev 20:15",
+     "options": [
+      "and if you are not found in the book of life",
+      "and if they were not found in the book of life",
+      "and if anyone was not found in the book of life"
+     ],
+     "answer": "and if anyone was not found in the book of life",
+     "audio": "chapt_16_p_td6",
+     "hintRef": "passiveParadigms",
+     "greek2": "λέγω σοι"
+    },
+    {
+     "greek": "ἀπεκρίθη Ἰησοῦς καὶ εἶπεν αὐτοῖς, Λύσατε τὸν",
+     "ref": "Jn 2:19",
+     "options": [
+      "He answered and said to Jesus, \"Destroy this temple and I will raise it\"",
+      "Jesus answered and said to him, \"Destroy this temple and I will raise it\"",
+      "Jesus answered and said to them, \"Destroy this temple and I will raise it\""
+     ],
+     "answer": "Jesus answered and said to them, \"Destroy this temple and I will raise it\"",
+     "audio": "chapt_16_p_td7",
+     "hintRef": "passiveParadigms",
+     "greek2": "ἀπολωλότα οἴκου Ἰσραήλ"
+    },
+    {
+     "greek": "ἀπεκρίθη Ἰησοῦς καὶ εἶπεν αὐτῷ , Ἀμὴν ἀμὴν",
+     "ref": "Jn 3:3",
+     "options": [
+      "Jesus answered and said to him, \"Truly, truly, I say to you\"",
+      "Jesus answered and said to them, \"Truly, truly, I say to you\"",
+      "Jesus answered and they said to him, \"Truly, truly, We say to you\""
+     ],
+     "answer": "Jesus answered and said to him, \"Truly, truly, I say to you\"",
+     "audio": "chapt_16_p_td8",
+     "hintRef": "passiveParadigms",
+     "greek2": "ἠγέρθη ἀπὸ τῶν νεκρῶν"
+    },
+    {
+     "greek": "εἶπεν, Οὐκ ἀπεστάλην εἰ μὴ εἰς τὰ πρόβατα τὰ",
+     "ref": "Mat 15:24",
+     "options": [
+      "he said, \"I was not sent except to the lost sheep of the house of Israel\"",
+      "he said, \"They were not sent except to the lost sheep of the house of Israel\"",
+      "he said, \"We were not sent except to the lost sheep of the house of Israel\""
+     ],
+     "answer": "he said, \"I was not sent except to the lost sheep of the house of Israel\"",
+     "audio": "chapt_16_p_td9",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "Οὗτός ἐστιν Ἰωάννης ὁ βαπτιστής: αὐτὸς",
+     "ref": "Mat 14:2",
+     "options": [
+      "This is John the Baptist; I was rised from the dead",
+      "This is John the Baptist; you were raised from the dead",
+      "This is John the Baptist; he was raised from the dead"
+     ],
+     "answer": "This is John the Baptist; he was raised from the dead",
+     "audio": "chapt_16_p_td10",
+     "hintRef": "passiveParadigms",
+     "greek2": "ἐγερθήσεται"
+    },
+    {
+     "greek": "ἀπεκρίθη ἡ γυνὴ καὶ εἶπεν αὐτῷ, Οὐκ ἔχω ἄνδρα",
+     "ref": "Jn 4:17",
+     "options": [
+      "the woman answered and said to them, \"I do not have a husband\"",
+      "the woman answered and said to him, \"I do not have a husband\"",
+      "the woman answered and they said to her, \"You have no husband?\""
+     ],
+     "answer": "the woman answered and said to him, \"I do not have a husband\"",
+     "audio": "chapt_16_p_td11",
+     "hintRef": "passiveParadigms",
+     "greek2": "ἐπὶ βασιλείαν"
+    },
+    {
+     "greek": "καὶ ἀποκτενοῦσιν αὐτόν, καὶ τῇ τρίτῃ ἡμέρᾳ",
+     "ref": "Mat 17:23",
+     "options": [
+      "and they will kill him, and he will be raised on the third day",
+      "and they will kill them, and they will be raised on the third day",
+      "and he will kill him, and he will be raised on the third day"
+     ],
+     "answer": "and they will kill him, and he will be raised on the third day",
+     "audio": "chapt_16_p_td12",
+     "hintRef": "passiveParadigms",
+     "greek2": "πλανήσουσιν πολλούς"
+    },
+    {
+     "greek": "ἐγερθήσεται γὰρ ἔθνος ἐπὶ ἔθνος καὶ βασιλεία",
+     "ref": "Mat 24:7",
+     "options": [
+      "for nations will rise against nations and kingdoms against kingdoms",
+      "for nation will rise against nation and kingdom against kingdom",
+      "for they will raise up nation against nation and kingdom against kingdom"
+     ],
+     "answer": "for nation will rise against nation and kingdom against kingdom",
+     "audio": "chapt_16_p_td13",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "καὶ πολλοὶ ψευδοπροφῆται ἐγερθήσονται καὶ",
+     "ref": "Mat 24:11",
+     "options": [
+      "and he will raise up many false prophets and they will deceive many",
+      "and many false prophets will arise and deceive many",
+      "and false prophets will raise many and deceive many"
+     ],
+     "answer": "and many false prophets will arise and deceive many",
+     "audio": "chapt_16_p_td14",
+     "hintRef": "passiveParadigms",
+     "greek2": "Γαλιλαίαν"
+    },
+    {
+     "greek": "οὐδὲ τόπος εὑρέθη αὐτῶν ἔτι ἐν τῷ οὐρανῷ",
+     "ref": "Rev 12:8",
+     "options": [
+      "nor were they found any longer in heaven",
+      "nor was a place found for him any longer in heaven",
+      "nor was a place found for them any longer in heaven"
+     ],
+     "answer": "nor was a place found for them any longer in heaven",
+     "audio": "chapt_16_p_td15",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "Οἱ δὲ ἕνδεκα μαθηταὶ ἐπορεύθησαν εἰς τὴν",
+     "ref": "Mat 28:16",
+     "options": [
+      "But the eleven disciples went into Galilee",
+      "But the eleven disciples he sent into Galilee",
+      "But I went with the eleven disciples into Galilee"
+     ],
+     "answer": "But the eleven disciples went into Galilee",
+     "audio": "chapt_16_p_td16",
+     "hintRef": "passiveParadigms",
+     "greek2": "τὸ ἔργον τοῦ θεοῦ"
+    },
+    {
+     "greek": "καὶ οὐκ ἠδυνήθησαν αὐτὸν θεραπεῦσαι",
+     "ref": "Mat 17:16",
+     "options": [
+      "and he was not able to heal him",
+      "and we were not able to heal him",
+      "and they were not able to heal him"
+     ],
+     "answer": "and they were not able to heal him",
+     "audio": "chapt_16_p_td17",
+     "hintRef": "passiveParadigms",
+     "greek2": "δι' ἀπιστίαν"
+    },
+    {
+     "greek": "ἀπεκρίθη ὁ Ἰησοῦς καὶ εἶπεν αὐτοῖς, Τοῦτό ἐστιν",
+     "ref": "Jn 6:29",
+     "options": [
+      "Jesus answered and said to him, \"This is the work of God\"",
+      "Jesus answered and said to them, \"This is the work of God\"",
+      "Jesus answered and said to them, \"These are the works of God\""
+     ],
+     "answer": "Jesus answered and said to them, \"This is the work of God\"",
+     "audio": "chapt_16_p_td18",
+     "hintRef": "passiveParadigms",
+     "greek2": "Χριστοῦ"
+    },
+    {
+     "greek": "καὶ βλέπομεν ὅτι οὐκ ἠδυνήθησαν εἰσελθεῖν",
+     "ref": "Heb 3:19",
+     "options": [
+      "and we see that they were not able to enter because of unbelief",
+      "and they see that they were not able to enter because of unbelief",
+      "and I see that he was not able to enter because of unbelief"
+     ],
+     "answer": "and we see that they were not able to enter because of unbelief",
+     "audio": "chapt_16_p_td19",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "οὔτε ἐδιδάχθην ἀλλὰ δι' ἀποκαλύψεως Ἰησοῦ",
+     "ref": "Gal 1:12",
+     "options": [
+      "nor were they taught but through a revelation of Jesus Christ",
+      "nor was he taught but through a revelation of Jesus Christ",
+      "nor was I taught but through a revelation of Jesus Christ"
+     ],
+     "answer": "nor was I taught but through a revelation of Jesus Christ",
+     "audio": "chapt_16_p_td20",
+     "hintRef": "passiveParadigms",
+     "greek2": "χάριτος τοῦ θεοῦ"
+    },
+    {
+     "greek": "ὅς ἐγενήθη σοφία ἡμῖν ἀπὸ θεοῦ",
+     "ref": "1 Cor 1:30",
+     "options": [
+      "who became wisdom from God to us",
+      "wisdom came to us from God",
+      "I am wisdom come from God to you"
+     ],
+     "answer": "who became wisdom from God to us",
+     "audio": "chapt_16_p_td21",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "οὗ ἐγενήθην διάκονος κατὰ τὴν δωρεὰν τῆς",
+     "ref": "Eph 3:7",
+     "options": [
+      "of which we became ministers according to the gift of God's grace",
+      "of which I became a minister according to the gift of God's grace",
+      "of which you became a minister according to the gift of God's grace"
+     ],
+     "answer": "of which I became a minister according to the gift of God's grace",
+     "audio": "chapt_16_p_td22",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἐγενήθητε ἐγγὺς ἐν τῷ αἵματι τοῦ Χριστοῦ",
+     "ref": "Eph 2:13",
+     "options": [
+      "you (pl.) have come near by the blood of Christ",
+      "you (sg.) have come near by the blood of Christ",
+      "we have come near by the blood of Christ"
+     ],
+     "answer": "you (pl.) have come near by the blood of Christ",
+     "audio": "chapt_16_p_td23",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "Ἠκούσατε ὅτι ἐρρέθη, Ὀφθαλμὸν ἀντὶ ὀφθαλμοῦ",
+     "ref": "Mat 5:38",
+     "options": [
+      "You (pl.) have heard what they said, \"Eye for an eye\"",
+      "You (sg.) have heard that it was said, \"Eye for an eye\"",
+      "You (pl.) have heard that it was said, \"Eye for an eye\""
+     ],
+     "answer": "You (pl.) have heard that it was said, \"Eye for an eye\"",
+     "audio": "chapt_16_p_td24",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "καὶ ἐκρίθησαν ἕκαστος κατὰ τὰ ἔργα αὐτῶν",
+     "ref": "Rev 20:13",
+     "options": [
+      "and he was judged, each according to his works",
+      "and they were judged, each according to their works",
+      "and they were judged, each according to his works"
+     ],
+     "answer": "and they were judged, each according to their works",
+     "audio": "chapt_16_p_td25",
+     "hintRef": "passiveParadigms",
+     "greek2": "σωθήσεται"
+    },
+    {
+     "greek": "καὶ ἐσώθη ἡ γυνὴ ἀπὸ τῆς ὥρας ἐκείνης",
+     "ref": "Mat 9:22",
+     "options": [
+      "and they made the woman well from that hour",
+      "and he made the woman well from that hour",
+      "and the woman was made well from that hour"
+     ],
+     "answer": "and the woman was made well from that hour",
+     "audio": "chapt_16_p_td26",
+     "hintRef": "passiveParadigms",
+     "greek2": "τοῦ θεοῦ"
+    },
+    {
+     "greek": "Πᾶς γὰρ ὅς ἄν ἐπικαλέσηται τὸ ὄνομα κυρίου",
+     "ref": "Rom 10:13",
+     "options": [
+      "for anyone who calls on the name of the Lord will be saved",
+      "for all who call on the name of the Lord they will be saved",
+      "for everyone who calls on the name of the Lord and be saved"
+     ],
+     "answer": "for anyone who calls on the name of the Lord will be saved",
+     "audio": "chapt_16_p_td27",
+     "hintRef": "passiveParadigms"
+    },
+    {
+     "greek": "ἀπεκρίθη αὐτῳ Ναθαναήλ, Ῥαββί, σύ εἶ ὁ υἱὸς",
+     "ref": "Jn 1:49",
+     "options": [
+      "he answered Nathanael, \"Rabbi, are you the son of God?\"",
+      "Nathanael answered him, \"Rabbi, you are the son of God\"",
+      "Nathanael answered them, \"Rabbi, he is the son of God\""
+     ],
+     "answer": "Nathanael answered him, \"Rabbi, you are the son of God\"",
+     "audio": "chapt_16_p_td28",
+     "hintRef": "passiveParadigms"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Previous",
+     "Next",
+     "Pronounce",
+     "Hint",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true,
+    "hintRef": "passiveParadigms"
+   },
+   "_answer_note": "Twenty-eight items (0x7bf9b); the A/B/C key script yields all 28 and agrees with the BLUE option on ch16railwalk.pdf p10-p17. The refs pool's last entry carries a stale tail (\"Jn 1:49  Cor 6:2\") cut at the screen's own value.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "manualOnIncorrect",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c16_drill_vocab_gk_en",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary:  Greek to English Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "age",
+    "one another",
+    "high priest",
+    "woman",
+    "I can",
+    "nation",
+    "as great as",
+    "city",
+    "and so",
+    "hand"
+   ],
+   "items": [
+    {
+     "greek": "αἰών",
+     "answer": "age",
+     "audio": "chapt_16_p_voc1"
+    },
+    {
+     "greek": "ἀλλήλων",
+     "answer": "one another",
+     "audio": "chapt_16_p_voc2"
+    },
+    {
+     "greek": "ἀρχιερεύς",
+     "answer": "high priest",
+     "audio": "chapt_16_p_voc3"
+    },
+    {
+     "greek": "γυνή",
+     "answer": "woman",
+     "audio": "chapt_16_p_voc4"
+    },
+    {
+     "greek": "δύναμαι",
+     "answer": "I can",
+     "audio": "chapt_16_p_voc5"
+    },
+    {
+     "greek": "ἔθνος",
+     "answer": "nation",
+     "audio": "chapt_16_p_voc6"
+    },
+    {
+     "greek": "ὅσος",
+     "answer": "as great as",
+     "audio": "chapt_16_p_voc7"
+    },
+    {
+     "greek": "πόλις",
+     "answer": "city",
+     "audio": "chapt_16_p_voc8"
+    },
+    {
+     "greek": "τε",
+     "answer": "and so",
+     "audio": "chapt_16_p_voc9"
+    },
+    {
+     "greek": "χείρ",
+     "answer": "hand",
+     "audio": "chapt_16_p_voc10"
+    }
+   ],
+   "audioTiming": "beforeGuess",
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "poolKind": "vocabulary",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c16_drill_vocab_en_gk",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Vocabulary: English to Greek Drill",
+   "instructions": "Click on the matching word",
+   "options": "static",
+   "optionsAreGreek": true,
+   "optionValues": [
+    "αἰών",
+    "ἀλλήλων",
+    "ἀρχιερεύς",
+    "γυνή",
+    "δύναμαι",
+    "ἔθνος",
+    "ὅσος",
+    "πόλις",
+    "τε",
+    "χείρ"
+   ],
+   "items": [
+    {
+     "prompt": "age",
+     "answer": "αἰών",
+     "audio": "chapt_16_p_voc1"
+    },
+    {
+     "prompt": "one another",
+     "answer": "ἀλλήλων",
+     "audio": "chapt_16_p_voc2"
+    },
+    {
+     "prompt": "high priest",
+     "answer": "ἀρχιερεύς",
+     "audio": "chapt_16_p_voc3"
+    },
+    {
+     "prompt": "woman",
+     "answer": "γυνή",
+     "audio": "chapt_16_p_voc4"
+    },
+    {
+     "prompt": "I can",
+     "answer": "δύναμαι",
+     "audio": "chapt_16_p_voc5"
+    },
+    {
+     "prompt": "nation",
+     "answer": "ἔθνος",
+     "audio": "chapt_16_p_voc6"
+    },
+    {
+     "prompt": "as great as",
+     "answer": "ὅσος",
+     "audio": "chapt_16_p_voc7"
+    },
+    {
+     "prompt": "city",
+     "answer": "πόλις",
+     "audio": "chapt_16_p_voc8"
+    },
+    {
+     "prompt": "and so",
+     "answer": "τε",
+     "audio": "chapt_16_p_voc9"
+    },
+    {
+     "prompt": "hand",
+     "answer": "χείρ",
+     "audio": "chapt_16_p_voc10"
+    }
+   ],
+   "audioTiming": "afterGuess",
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "poolKind": "vocabulary",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  },
+  {
+   "id": "c16_drill_scripture_memory",
+   "type": "select",
+   "mode": "fullOptionGrid",
+   "title": "Scripture Memory Drill",
+   "instructions": "Click on the matching word",
+   "promptIsGreek": true,
+   "options": "static",
+   "optionValues": [
+    "and",
+    "forgive",
+    "for us",
+    "debts",
+    "our"
+   ],
+   "items": [
+    {
+     "greek": "καὶ",
+     "answer": "and",
+     "audio": "chapt_16_p_sm1"
+    },
+    {
+     "greek": "ἄφες",
+     "answer": "forgive",
+     "audio": "chapt_16_p_sm2"
+    },
+    {
+     "greek": "ἡμῖν",
+     "answer": "for us",
+     "audio": "chapt_16_p_sm3"
+    },
+    {
+     "greek": "ὀφειλήματα",
+     "answer": "debts",
+     "audio": "chapt_16_p_sm5"
+    },
+    {
+     "greek": "ἡμῶν",
+     "answer": "our",
+     "audio": "chapt_16_p_sm6"
+    }
+   ],
+   "scored": true,
+   "ui": {
+    "buttons": [
+     "Pronounce",
+     "Score"
+    ],
+    "checkboxes": [
+     "Pronounce Each Drill"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    },
+    "liveScore": true
+   },
+   "_audio_note": "Five prompts on VERSE-POSITION clips p_sm1, 2, 3, 5, 6 (table at 0xfe569) -- ta, verse position 4, is not drilled. Stage 8.2.",
+   "audioTiming": "beforeGuess",
+   "answerPolicy": {
+    "advanceClass": "autoBoth",
+    "attemptsPerItem": 1
+   }
+  }
+ ],
+ "exercise": [
+  {
+   "id": "c16_ex_speller",
+   "type": "spell",
+   "title": "Passive Verbs Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "they will be loosed",
+     "answer": "λυθήσονται",
+     "audio": "chapt_16_p_luwf3p"
+    },
+    {
+     "prompt": "I was loosed",
+     "answer": "ἐλύθην",
+     "audio": "chapt_16_p_luw1s"
+    },
+    {
+     "prompt": "you (pl.) were loosed",
+     "answer": "ἐλύθητε",
+     "audio": "chapt_16_p_luw2p"
+    },
+    {
+     "prompt": "you (sg.) will be loosed",
+     "answer": "λυθήσῃ",
+     "audio": "chapt_16_p_luwf2s"
+    },
+    {
+     "prompt": "we were written",
+     "answer": "ἐγράφημεν",
+     "audio": "chapt_16_p_gra1p"
+    },
+    {
+     "prompt": "you (sg.) were written",
+     "answer": "ἐγράφης",
+     "audio": "chapt_16_p_gra2s"
+    },
+    {
+     "prompt": "I will be loosed",
+     "answer": "λυθήσομαι",
+     "audio": "chapt_16_p_luwf1s"
+    },
+    {
+     "prompt": "they were loosed",
+     "answer": "ἐλύθησαν",
+     "audio": "chapt_16_p_luw3p"
+    },
+    {
+     "prompt": "she was written",
+     "answer": "ἐγράφη",
+     "audio": "chapt_16_p_gra3s"
+    },
+    {
+     "prompt": "you (sg.) were loosed",
+     "answer": "ἐλύθης",
+     "audio": "chapt_16_p_luw2s"
+    },
+    {
+     "prompt": "we will be loosed",
+     "answer": "λυθησόμεθα",
+     "audio": "chapt_16_p_luwf1p"
+    },
+    {
+     "prompt": "you (pl.) were written",
+     "answer": "ἐγράφητε",
+     "audio": "chapt_16_p_gra2p"
+    },
+    {
+     "prompt": "we were loosed",
+     "answer": "ἐλύθημεν",
+     "audio": "chapt_16_p_luw1p"
+    },
+    {
+     "prompt": "he was loosed",
+     "answer": "ἐλύθη",
+     "audio": "chapt_16_p_luw3s"
+    },
+    {
+     "prompt": "you (pl.) will be loosed",
+     "answer": "λυθήσεσθε",
+     "audio": "chapt_16_p_luwf2p"
+    },
+    {
+     "prompt": "it will be loosed",
+     "answer": "λυθήσεται",
+     "audio": "chapt_16_p_luwf3s"
+    },
+    {
+     "prompt": "I was written",
+     "answer": "ἐγράφην",
+     "audio": "chapt_16_p_gra1s"
+    },
+    {
+     "prompt": "they were written",
+     "answer": "ἐγράφησαν",
+     "audio": "chapt_16_p_gra3p"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English",
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "The 18 answers ARE the Parsing Drill pool (0xb8c28) in order and the prompts are that drill's own Translate pool verbatim. Item 18 is corroborated by the check literal \"e]gra<fhsan\" at 0xac6fa.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c16_ex_speller_forms",
+   "type": "spell",
+   "title": "Passive Verbs Forms Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell the aorist or future form as called for.",
+   "prompt": "item",
+   "promptLabel": "Present Tense",
+   "promptIsGreek": true,
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "βάλλω",
+     "answer": "ἐβλήθην",
+     "audio": "chapt_16_p_balap",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "βάλλω",
+     "answer": "βληθήσομαι",
+     "audio": "chapt_16_p_balfp",
+     "tense": "future",
+     "answerLabel": "Passive Future Form"
+    },
+    {
+     "prompt": "ἀποστέλλω",
+     "answer": "ἀπεστάλην",
+     "audio": "chapt_16_p_apoa",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "ἐγείρω",
+     "answer": "ἠγέρθην",
+     "audio": "chapt_16_p_egea",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "ἐγείρω",
+     "answer": "ἐγερθήσομαι",
+     "audio": "chapt_16_p_egef",
+     "tense": "future",
+     "answerLabel": "Passive Future Form"
+    },
+    {
+     "prompt": "εὑρίσκω",
+     "answer": "εὑρέθην",
+     "audio": "chapt_16_p_eura",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "εὑρίσκω",
+     "answer": "εὑρεθήσομαι",
+     "audio": "chapt_16_p_euraf",
+     "tense": "future",
+     "answerLabel": "Passive Future Form"
+    },
+    {
+     "prompt": "γράφω",
+     "answer": "ἐγράφην",
+     "audio": "chapt_16_p_graa",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "λαμβάνω",
+     "answer": "ἐλήμφθην",
+     "audio": "chapt_16_p_lama",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "πορεύομαι",
+     "answer": "ἐπορεύθην",
+     "audio": "chapt_16_p_pora",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "δύναμαι",
+     "answer": "ἠδυνήθην",
+     "audio": "chapt_16_p_duna",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "δύναμαι",
+     "answer": "δυνήσομαι",
+     "audio": "chapt_16_p_dunf",
+     "tense": "future",
+     "answerLabel": "Passive Future Form"
+    },
+    {
+     "prompt": "διδάσκω",
+     "answer": "ἐδιδάχθην",
+     "audio": "chapt_16_p_dida",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "πιστεύω",
+     "answer": "ἐπιστεύθην",
+     "audio": "chapt_16_p_pisa",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "γίνομαι",
+     "answer": "ἐγενήθην",
+     "audio": "chapt_16_p_gina",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "γινώσκω",
+     "answer": "ἐγνώσθην",
+     "audio": "chapt_16_p_ginwa",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "γινώσκω",
+     "answer": "γνωσθήσομαι",
+     "audio": "chapt_16_p_ginwf",
+     "tense": "future",
+     "answerLabel": "Passive Future Form"
+    },
+    {
+     "prompt": "λέγω",
+     "answer": "ἐρρέθην",
+     "audio": "chapt_16_p_lega",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "θέλω",
+     "answer": "ἠθελήθην",
+     "audio": "chapt_16_p_thea",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "κρίνω",
+     "answer": "ἐκρίθην",
+     "audio": "chapt_16_p_kria",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "σῴζω",
+     "answer": "ἐσώθην",
+     "audio": "chapt_16_p_swza",
+     "tense": "aorist",
+     "answerLabel": "Passive Aorist Form"
+    },
+    {
+     "prompt": "σῴζω",
+     "answer": "σωθήσομαι",
+     "audio": "chapt_16_p_swzf",
+     "tense": "future",
+     "answerLabel": "Passive Future Form"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "Present Tense",
+     "Passive Aorist Form"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_shape_note": "The answer FIELD LABEL changes per item -- \"Passive Aorist Form\" or \"Passive Future Form\", the two strings the original stores together at 0x88d5a. Each item carries its own answerLabel. Corroborated by the check literal \"swqhsomai\" at 0x89f56, a FUTURE answer.",
+   "_audio_note": "A1b: the clip is the aorist/future ANSWER, so afterGuess. The A1c gate does NOT apply -- spellers are excluded by ruling. Ledger row 152.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c16_ex_vocab_speller",
+   "type": "spell",
+   "title": "Vocabulary Spelling Exercise",
+   "instructions": "Click letters below or use your keyboard to spell it out.",
+   "prompt": "item",
+   "promptLabel": "English Meaning",
+   "accentsOptional": true,
+   "spellerTilesRef": "chapt_1",
+   "items": [
+    {
+     "prompt": "age, eternity",
+     "answer": "αἰών",
+     "audio": "chapt_16_p_voc1"
+    },
+    {
+     "prompt": "one another",
+     "answer": "ἀλλήλων",
+     "audio": "chapt_16_p_voc2"
+    },
+    {
+     "prompt": "high priest",
+     "answer": "ἀρχιερεύς",
+     "audio": "chapt_16_p_voc3"
+    },
+    {
+     "prompt": "woman, wife",
+     "answer": "γυνή",
+     "audio": "chapt_16_p_voc4"
+    },
+    {
+     "prompt": "I can, am able",
+     "answer": "δύναμαι",
+     "audio": "chapt_16_p_voc5"
+    },
+    {
+     "prompt": "nation, people",
+     "answer": "ἔθνος",
+     "audio": "chapt_16_p_voc6"
+    },
+    {
+     "prompt": "as great as",
+     "answer": "ὅσος",
+     "audio": "chapt_16_p_voc7"
+    },
+    {
+     "prompt": "city, town",
+     "answer": "πόλις",
+     "audio": "chapt_16_p_voc8"
+    },
+    {
+     "prompt": "and, and so",
+     "answer": "τε",
+     "audio": "chapt_16_p_voc9"
+    },
+    {
+     "prompt": "hand, arm",
+     "answer": "χείρ",
+     "audio": "chapt_16_p_voc10"
+    }
+   ],
+   "ui": {
+    "fields": [
+     "English Meaning",
+     "Spell Greek Word"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Previous",
+     "Score",
+     "Next",
+     "Check Answer",
+     "Greek Keyboard"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents",
+     "Pronounce Each Exercise"
+    ],
+    "defaults": {
+     "pronounceEach": true
+    }
+   },
+   "_answer_note": "The check literal \"xei<r\" at 0x4ab6 corroborates item 10.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  },
+  {
+   "id": "c16_ex_scripture_speller",
+   "type": "spellVerse",
+   "title": "Scripture Memory Spelling Exercise",
+   "instructions": "Enter all of Mat 6:12a then click \"Check Answer\"",
+   "reference": "Mat 6:12a",
+   "answerWords": [
+    "καὶ",
+    "ἄφες",
+    "ἡμῖν",
+    "τὰ",
+    "ὀφειλήματα",
+    "ἡμῶν,"
+   ],
+   "translation": "and pardon for us our debts",
+   "accentsOptional": true,
+   "punctuationOptional": true,
+   "audio": "chapt_16_p_mt612a",
+   "spellerTilesRef": "chapt_1",
+   "ui": {
+    "fields": [
+     "Spell Greek"
+    ],
+    "buttons": [
+     "Pronounce",
+     "Check Answer",
+     "Greek Keyboard",
+     "Restart Exercise"
+    ],
+    "checkboxes": [
+     "Show Answer",
+     "With Accents"
+    ],
+    "_reveal_note": "RULES C8 / D-30."
+   },
+   "_repeat_note": "\"Repeat This Exercise\" NOT ported (D-42 retired).",
+   "_verify_note": "The Learn page glosses aphes \"forgive\" while the speller hint reads \"pardon\"; both carried verbatim from their own screens.",
+   "audioTiming": "afterGuess",
+   "answerPolicy": {
+    "advanceClass": "retryUntilRight",
+    "attemptsPerItem": "retry"
+   }
+  }
+ ],
+ "quickReview": [
+  {
+   "id": "c16_qr_vocab",
+   "type": "contentAudio",
+   "mode": "reviewVocab",
+   "title": "Review Vocabulary Chart",
+   "pool": "senses",
+   "columns": 2,
+   "showNtFreq": true,
+   "footnote": "The number after the translation is the number of times the word occurs in the New Testament.",
+   "playAll": {
+    "label": "Say Whole List",
+    "audio": "chapt_16_vocl16"
+   }
+  },
+  {
+   "id": "c16_qr_aorist1",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review First Aorist Passive Verbs",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "id": "qrFirstAoristPassive",
+     "title": "First Aorist Passive Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἐλύθην",
+         "gloss": "I was loosed",
+         "audio": "chapt_16_p_luw1s"
+        },
+        {
+         "greek": "ἐλύθημεν",
+         "gloss": "We were loosed",
+         "audio": "chapt_16_p_luw1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἐλύθης",
+         "gloss": "You were loosed",
+         "audio": "chapt_16_p_luw2s"
+        },
+        {
+         "greek": "ἐλύθητε",
+         "gloss": "You were loosed",
+         "audio": "chapt_16_p_luw2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἐλύθη",
+         "gloss": "He/she/it was loosed",
+         "audio": "chapt_16_p_luw3s"
+        },
+        {
+         "greek": "ἐλύθησαν",
+         "gloss": "They were loosed",
+         "audio": "chapt_16_p_luw3p"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_16_p_luapar"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c16_qr_aorist2",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Second Aorist Passive Verbs",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "id": "qrSecondAoristPassive",
+     "title": "Second Aorist Passive Indicative of γράφω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἐγράφην",
+         "gloss": "I was written",
+         "audio": "chapt_16_p_gra1s"
+        },
+        {
+         "greek": "ἐγράφημεν",
+         "gloss": "We were written",
+         "audio": "chapt_16_p_gra1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἐγράφης",
+         "gloss": "You were written",
+         "audio": "chapt_16_p_gra2s"
+        },
+        {
+         "greek": "ἐγράφητε",
+         "gloss": "You were written",
+         "audio": "chapt_16_p_gra2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἐγράφη",
+         "gloss": "He/she/it was written",
+         "audio": "chapt_16_p_gra3s"
+        },
+        {
+         "greek": "ἐγράφησαν",
+         "gloss": "They were written",
+         "audio": "chapt_16_p_gra3p"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_16_p_grapar"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c16_qr_future",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Future Passive Verbs",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "id": "qrFuturePassive",
+     "title": "Future Passive Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "λυθήσομαι",
+         "gloss": "I will be loosed",
+         "audio": "chapt_16_p_luwf1s"
+        },
+        {
+         "greek": "λυθησόμεθα",
+         "gloss": "We will be loosed",
+         "audio": "chapt_16_p_luwf1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "λυθήσῃ",
+         "gloss": "You will be loosed",
+         "audio": "chapt_16_p_luwf2s"
+        },
+        {
+         "greek": "λυθήσεσθε",
+         "gloss": "You will be loosed",
+         "audio": "chapt_16_p_luwf2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "λυθήσεται",
+         "gloss": "He/she/it will be loosed",
+         "audio": "chapt_16_p_luwf3s"
+        },
+        {
+         "greek": "λυθήσονται",
+         "gloss": "They will be loosed",
+         "audio": "chapt_16_p_luwf3p"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_16_p_lufpar"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c16_qr_forms",
+   "type": "contentAudio",
+   "mode": "paradigmChart",
+   "title": "Review Passive Indicative Forms",
+   "paradigms": [
+    {
+     "type": "paradigm",
+     "id": "qrStems1",
+     "title": "Passive Stems",
+     "columns": [
+      "Present Active",
+      "Aorist Passive",
+      "Future Passive"
+     ],
+     "rows": [
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "ἀποστέλλω",
+         "audio": "chapt_16_p_apop"
+        },
+        {
+         "greek": "ἀπεστάλην",
+         "audio": "chapt_16_p_apoa"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "βάλλω",
+         "audio": "chapt_16_p_balp"
+        },
+        {
+         "greek": "ἐβλήθην",
+         "audio": "chapt_16_p_bala"
+        },
+        {
+         "greek": "βληθήσομαι",
+         "audio": "chapt_16_p_balf"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "γίνομαι",
+         "audio": "chapt_16_p_ginp"
+        },
+        {
+         "greek": "ἐγενήθην",
+         "audio": "chapt_16_p_gina"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "γινώσκω",
+         "audio": "chapt_16_p_ginwp"
+        },
+        {
+         "greek": "ἐγνώσθην",
+         "audio": "chapt_16_p_ginwa"
+        },
+        {
+         "greek": "γνωσθήσομαι",
+         "audio": "chapt_16_p_ginwf"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "διδάσκω",
+         "audio": "chapt_16_p_didp"
+        },
+        {
+         "greek": "ἐδιδάχθην",
+         "audio": "chapt_16_p_dida"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "δύναμαι",
+         "audio": "chapt_16_p_dunp"
+        },
+        {
+         "greek": "ἠδυνήθην",
+         "audio": "chapt_16_p_duna"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "ἐγείρω",
+         "audio": "chapt_16_p_egep"
+        },
+        {
+         "greek": "ἠγέρθην",
+         "audio": "chapt_16_p_egea"
+        },
+        {
+         "greek": "ἐγερθήσομαι",
+         "audio": "chapt_16_p_egef"
+        }
+       ]
+      }
+     ],
+     "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
+    },
+    {
+     "type": "paradigm",
+     "id": "qrStems2",
+     "title": "Passive Stems",
+     "columns": [
+      "Present Active",
+      "Aorist Passive",
+      "Future Passive"
+     ],
+     "rows": [
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "εὑρίσκω",
+         "audio": "chapt_16_p_eurp"
+        },
+        {
+         "greek": "εὑρέθην",
+         "audio": "chapt_16_p_eura"
+        },
+        {
+         "greek": "εὑρεθήσομαι",
+         "audio": "chapt_16_p_euraf"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "θέλω",
+         "audio": "chapt_16_p_thep"
+        },
+        {
+         "greek": "ἠθελήθην",
+         "audio": "chapt_16_p_thea"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "κρίνω",
+         "audio": "chapt_16_p_krip"
+        },
+        {
+         "greek": "ἐκρίθην",
+         "audio": "chapt_16_p_kria"
+        },
+        {
+         "greek": "ἐκριθήσομαι",
+         "audio": "chapt_16_p_kriaf"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "λαμβάνω",
+         "audio": "chapt_16_p_lamp"
+        },
+        {
+         "greek": "ἐλήμφθην",
+         "audio": "chapt_16_p_lama"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "λέγω",
+         "audio": "chapt_16_p_legp"
+        },
+        {
+         "greek": "ἐρρέθην",
+         "audio": "chapt_16_p_lega"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "πιστεύω",
+         "audio": "chapt_16_p_pisp"
+        },
+        {
+         "greek": "ἐπιστεύθην",
+         "audio": "chapt_16_p_pisa"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "πορεύομαι",
+         "audio": "chapt_16_p_porp"
+        },
+        {
+         "greek": "ἐπορεύθην",
+         "audio": "chapt_16_p_pora"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "σῴζω",
+         "audio": "chapt_16_p_swzp"
+        },
+        {
+         "greek": "ἐσώθην",
+         "audio": "chapt_16_p_swza"
+        },
+        {
+         "greek": "σωθήσομαι",
+         "audio": "chapt_16_p_swzf"
+        }
+       ]
+      }
+     ],
+     "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
+    }
+   ],
+   "_disclosure": "C9 + NIT-LOG N-6 standing method: the original pages the stem table seven-and-eight behind More/Back. STACKED here in the original's own split, no pager. Neither half carries a say-all recording, so no button is drawn."
+  },
+  {
+   "id": "c16_qr_scripture_mat69",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:9",
+   "reference": "Mat 6:9",
+   "words": [
+    {
+     "greek": "Πάτερ",
+     "gloss": "Father",
+     "audio": "chapt_16_l_sm1"
+    },
+    {
+     "greek": "ἡμῶν",
+     "gloss": "our",
+     "audio": "chapt_16_l_sm2"
+    },
+    {
+     "greek": "ὁ",
+     "gloss": "the",
+     "audio": "chapt_16_l_sm3"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_16_l_sm4"
+    },
+    {
+     "greek": "τοῖς",
+     "gloss": "the",
+     "audio": "chapt_16_l_sm5"
+    },
+    {
+     "greek": "οὐρανοῖς·",
+     "gloss": "heavens",
+     "audio": "chapt_16_l_sm6"
+    },
+    {
+     "greek": "ἁγιασθήτω",
+     "gloss": "hallowed",
+     "audio": "chapt_16_l_sm7"
+    },
+    {
+     "greek": "τὸ",
+     "gloss": "the",
+     "audio": "chapt_16_l_sm8"
+    },
+    {
+     "greek": "ὄνομά",
+     "gloss": "name",
+     "audio": "chapt_16_l_sm9"
+    },
+    {
+     "greek": "σου·",
+     "gloss": "your",
+     "audio": "chapt_16_l_sm10"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_16_l_mt6_9"
+   }
+  },
+  {
+   "id": "c16_qr_scripture_mat611",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:11",
+   "reference": "Mat 6:11",
+   "words": [
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_16_o_sm1"
+    },
+    {
+     "greek": "ἄρτον",
+     "gloss": "bread",
+     "audio": "chapt_16_o_sm2"
+    },
+    {
+     "greek": "ἡμῶν",
+     "gloss": "our",
+     "audio": "chapt_16_o_sm3"
+    },
+    {
+     "greek": "τὸν",
+     "gloss": "the",
+     "audio": "chapt_16_o_sm4"
+    },
+    {
+     "greek": "ἐπιούσιον",
+     "gloss": "daily portion",
+     "audio": "chapt_16_o_sm5"
+    },
+    {
+     "greek": "δὸς",
+     "gloss": "give",
+     "audio": "chapt_16_o_sm6"
+    },
+    {
+     "greek": "ἡμῖν",
+     "gloss": "us",
+     "audio": "chapt_16_o_sm7"
+    },
+    {
+     "greek": "σήμερον·",
+     "gloss": "today",
+     "audio": "chapt_16_o_sm8"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_16_o_mt6_11"
+   }
+  },
+  {
+   "id": "c16_qr_scripture_mat610",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:10",
+   "reference": "Mat 6:10",
+   "words": [
+    {
+     "greek": "ἐλθέτω",
+     "gloss": "let come",
+     "audio": "chapt_16_m_sm1"
+    },
+    {
+     "greek": "ἡ",
+     "gloss": "the",
+     "audio": "chapt_16_m_sm2"
+    },
+    {
+     "greek": "βασιλεία",
+     "gloss": "kingdom",
+     "audio": "chapt_16_m_sm3"
+    },
+    {
+     "greek": "σου·",
+     "gloss": "your",
+     "audio": "chapt_16_m_sm4"
+    },
+    {
+     "greek": "γενηθήτω",
+     "gloss": "let happen",
+     "audio": "chapt_16_m_sm5"
+    },
+    {
+     "greek": "τό",
+     "gloss": "the",
+     "audio": "chapt_16_m_sm6"
+    },
+    {
+     "greek": "θέλημά",
+     "gloss": "will",
+     "audio": "chapt_16_m_sm7"
+    },
+    {
+     "greek": "σου,",
+     "gloss": "your",
+     "audio": "chapt_16_m_sm8"
+    },
+    {
+     "greek": "ὡς",
+     "gloss": "as",
+     "audio": "chapt_16_n_sm1"
+    },
+    {
+     "greek": "ἐν",
+     "gloss": "in",
+     "audio": "chapt_16_n_sm2"
+    },
+    {
+     "greek": "οὐρανῷ",
+     "gloss": "heaven",
+     "audio": "chapt_16_n_sm3"
+    },
+    {
+     "greek": "καὶ",
+     "gloss": "so also",
+     "audio": "chapt_16_n_sm4"
+    },
+    {
+     "greek": "ἐπὶ",
+     "gloss": "on",
+     "audio": "chapt_16_n_sm5"
+    },
+    {
+     "greek": "γῆς·",
+     "gloss": "earth",
+     "audio": "chapt_16_n_sm6"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_16_m_mt610"
+   },
+   "_note": "The original MERGES 6:10a and 6:10c here; the Quick Review Menu prints \"Mat 6:10\". The say-all is m_mt610, a recording of the whole verse that exists only for this page."
+  },
+  {
+   "id": "c16_qr_scripture_mat612a",
+   "type": "contentAudio",
+   "mode": "interlinearVerse",
+   "title": "Review Scripture Memory:  Mat 6:12a",
+   "reference": "Mat 6:12a",
+   "words": [
+    {
+     "greek": "καὶ",
+     "gloss": "and",
+     "audio": "chapt_16_p_sm1"
+    },
+    {
+     "greek": "ἄφες",
+     "gloss": "forgive",
+     "audio": "chapt_16_p_sm2"
+    },
+    {
+     "greek": "ἡμῖν",
+     "gloss": "for us",
+     "audio": "chapt_16_p_sm3"
+    },
+    {
+     "greek": "τὰ",
+     "gloss": "the",
+     "audio": "chapt_16_p_sm4"
+    },
+    {
+     "greek": "ὀφειλήματα",
+     "gloss": "debts",
+     "audio": "chapt_16_p_sm5"
+    },
+    {
+     "greek": "ἡμῶν,",
+     "gloss": "our",
+     "audio": "chapt_16_p_sm6"
+    }
+   ],
+   "sayWhole": {
+    "label": "Say Whole Verse",
+    "audio": "chapt_16_p_mt612a"
+   }
+  }
+ ],
+ "feedback": {
+  "correct": [
+   "Great!",
+   "Congratulations",
+   "Perfect!",
+   "Right On!",
+   "Fantastic!",
+   "Yes"
+  ],
+  "incorrect": [
+   "Try again",
+   "Swing and a miss",
+   "Repetition will get it",
+   "Never give up",
+   "Keep trying"
+  ]
+ },
+ "sequence": [
+  "c16_learn_objectives",
+  "c16_learn_english_concepts",
+  "c16_learn_passives",
+  "c16_drill_parsing",
+  "c16_drill_forms",
+  "c16_drill_translation",
+  "c16_ex_speller",
+  "c16_ex_speller_forms",
+  "c16_learn_vocab",
+  "c16_drill_vocab_gk_en",
+  "c16_drill_vocab_en_gk",
+  "c16_ex_vocab_speller",
+  "c16_learn_scripture",
+  "c16_drill_scripture_memory",
+  "c16_ex_scripture_speller",
+  "c16_qr_vocab",
+  "c16_qr_aorist1",
+  "c16_qr_aorist2",
+  "c16_qr_future",
+  "c16_qr_forms",
+  "c16_qr_scripture_mat69",
+  "c16_qr_scripture_mat610",
+  "c16_qr_scripture_mat611",
+  "c16_qr_scripture_mat612a",
+  "c16_learn_bibliography"
+ ],
+ "_audioVerify": "Verbs carry up to SIX clips here (p_<v>p present, p_<v>a aorist passive, p_<v>f future passive, plus p_balr / p_balrp / p_balap for the principal-parts chart). The Form Drill and the Forms Speller dispatch the ANSWER half (A1b, table 0x100e07).",
+ "_sequence_note": "Rail order from ch16railwalk.pdf, cross-checked against the Drill / Exercise / Quick Review menus on its last page.",
+ "hintCharts": {
+  "passiveParadigms": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "id": "hintFirstAoristPassive",
+     "title": "First Aorist Passive Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἐλύθην",
+         "gloss": "I was loosed",
+         "audio": "chapt_16_p_luw1s"
+        },
+        {
+         "greek": "ἐλύθημεν",
+         "gloss": "We were loosed",
+         "audio": "chapt_16_p_luw1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἐλύθης",
+         "gloss": "You were loosed",
+         "audio": "chapt_16_p_luw2s"
+        },
+        {
+         "greek": "ἐλύθητε",
+         "gloss": "You were loosed",
+         "audio": "chapt_16_p_luw2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἐλύθη",
+         "gloss": "He/she/it was loosed",
+         "audio": "chapt_16_p_luw3s"
+        },
+        {
+         "greek": "ἐλύθησαν",
+         "gloss": "They were loosed",
+         "audio": "chapt_16_p_luw3p"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "id": "hintFuturePassive",
+     "title": "Future Passive Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "λυθήσομαι",
+         "gloss": "I will be loosed",
+         "audio": "chapt_16_p_luwf1s"
+        },
+        {
+         "greek": "λυθησόμεθα",
+         "gloss": "We will be loosed",
+         "audio": "chapt_16_p_luwf1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "λυθήσῃ",
+         "gloss": "You will be loosed",
+         "audio": "chapt_16_p_luwf2s"
+        },
+        {
+         "greek": "λυθήσεσθε",
+         "gloss": "You will be loosed",
+         "audio": "chapt_16_p_luwf2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "λυθήσεται",
+         "gloss": "He/she/it will be loosed",
+         "audio": "chapt_16_p_luwf3s"
+        },
+        {
+         "greek": "λυθήσονται",
+         "gloss": "They will be loosed",
+         "audio": "chapt_16_p_luwf3p"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "id": "hintSecondAoristPassive",
+     "title": "Second Aorist Passive Indicative of γράφω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἐγράφην",
+         "gloss": "I was written",
+         "audio": "chapt_16_p_gra1s"
+        },
+        {
+         "greek": "ἐγράφημεν",
+         "gloss": "We were written",
+         "audio": "chapt_16_p_gra1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἐγράφης",
+         "gloss": "You were written",
+         "audio": "chapt_16_p_gra2s"
+        },
+        {
+         "greek": "ἐγράφητε",
+         "gloss": "You were written",
+         "audio": "chapt_16_p_gra2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἐγράφη",
+         "gloss": "He/she/it was written",
+         "audio": "chapt_16_p_gra3s"
+        },
+        {
+         "greek": "ἐγράφησαν",
+         "gloss": "They were written",
+         "audio": "chapt_16_p_gra3p"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "switch": "moreBack",
+   "_note": "THREE charts -> DISCLOSURE 4.2: Back and More as a pair on their own centred line, both always visible, Back disabled on the first page and More on the last. Field 0xb9382 holds the first aorist AND the future on one hint screen; 0xbaa3e holds the second aorist on its own. Neither carries a say-all, so the pair is centred (4.5)."
+  },
+  "passiveStemsHint": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "id": "hintStems1",
+     "title": "Passive Stems",
+     "columns": [
+      "Present Active",
+      "Aorist Passive",
+      "Future Passive"
+     ],
+     "rows": [
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "ἀποστέλλω",
+         "audio": "chapt_16_p_apop"
+        },
+        {
+         "greek": "ἀπεστάλην",
+         "audio": "chapt_16_p_apoa"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "βάλλω",
+         "audio": "chapt_16_p_balp"
+        },
+        {
+         "greek": "ἐβλήθην",
+         "audio": "chapt_16_p_bala"
+        },
+        {
+         "greek": "βληθήσομαι",
+         "audio": "chapt_16_p_balf"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "γίνομαι",
+         "audio": "chapt_16_p_ginp"
+        },
+        {
+         "greek": "ἐγενήθην",
+         "audio": "chapt_16_p_gina"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "γινώσκω",
+         "audio": "chapt_16_p_ginwp"
+        },
+        {
+         "greek": "ἐγνώσθην",
+         "audio": "chapt_16_p_ginwa"
+        },
+        {
+         "greek": "γνωσθήσομαι",
+         "audio": "chapt_16_p_ginwf"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "διδάσκω",
+         "audio": "chapt_16_p_didp"
+        },
+        {
+         "greek": "ἐδιδάχθην",
+         "audio": "chapt_16_p_dida"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "δύναμαι",
+         "audio": "chapt_16_p_dunp"
+        },
+        {
+         "greek": "ἠδυνήθην",
+         "audio": "chapt_16_p_duna"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "ἐγείρω",
+         "audio": "chapt_16_p_egep"
+        },
+        {
+         "greek": "ἠγέρθην",
+         "audio": "chapt_16_p_egea"
+        },
+        {
+         "greek": "ἐγερθήσομαι",
+         "audio": "chapt_16_p_egef"
+        }
+       ]
+      }
+     ],
+     "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
+    },
+    {
+     "type": "paradigm",
+     "id": "hintStems2",
+     "title": "Passive Stems",
+     "columns": [
+      "Present Active",
+      "Aorist Passive",
+      "Future Passive"
+     ],
+     "rows": [
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "εὑρίσκω",
+         "audio": "chapt_16_p_eurp"
+        },
+        {
+         "greek": "εὑρέθην",
+         "audio": "chapt_16_p_eura"
+        },
+        {
+         "greek": "εὑρεθήσομαι",
+         "audio": "chapt_16_p_euraf"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "θέλω",
+         "audio": "chapt_16_p_thep"
+        },
+        {
+         "greek": "ἠθελήθην",
+         "audio": "chapt_16_p_thea"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "κρίνω",
+         "audio": "chapt_16_p_krip"
+        },
+        {
+         "greek": "ἐκρίθην",
+         "audio": "chapt_16_p_kria"
+        },
+        {
+         "greek": "ἐκριθήσομαι",
+         "audio": "chapt_16_p_kriaf"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "λαμβάνω",
+         "audio": "chapt_16_p_lamp"
+        },
+        {
+         "greek": "ἐλήμφθην",
+         "audio": "chapt_16_p_lama"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "λέγω",
+         "audio": "chapt_16_p_legp"
+        },
+        {
+         "greek": "ἐρρέθην",
+         "audio": "chapt_16_p_lega"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "πιστεύω",
+         "audio": "chapt_16_p_pisp"
+        },
+        {
+         "greek": "ἐπιστεύθην",
+         "audio": "chapt_16_p_pisa"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "πορεύομαι",
+         "audio": "chapt_16_p_porp"
+        },
+        {
+         "greek": "ἐπορεύθην",
+         "audio": "chapt_16_p_pora"
+        },
+        {
+         "text": "—"
+        }
+       ]
+      },
+      {
+       "label": null,
+       "cells": [
+        {
+         "greek": "σῴζω",
+         "audio": "chapt_16_p_swzp"
+        },
+        {
+         "greek": "ἐσώθην",
+         "audio": "chapt_16_p_swza"
+        },
+        {
+         "greek": "σωθήσομαι",
+         "audio": "chapt_16_p_swzf"
+        }
+       ]
+      }
+     ],
+     "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
+    }
+   ],
+   "switch": "moreBack",
+   "_note": "The Form Drill hint prints the Passive Stems table in the original's own two halves."
+  }
+ }
+}

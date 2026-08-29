@@ -1,0 +1,176 @@
+{
+ "_comment": "Chapter 15 lexicon, assembled from 15_1AOR.TBK (cohort 5I). Ten lemmas, no case splits. gloss/glossShort = flashcard pool (0x14fe8); senses[].glossShort = drill pool (0x9441a), REALIGNED from the original's artos-first ordering; ntFreq from the Review chart (0xdcbd0).",
+ "lemmas": {
+  "allos": {
+   "greek": "ἄλλος",
+   "translit": "allos",
+   "lexicalForm": "ἄλλος, -η, -ο",
+   "gloss": "other, another",
+   "glossShort": "other, another",
+   "audio": "chapt_15_o_voc1",
+   "ntFreq": 155,
+   "senses": [
+    {
+     "greek": "ἄλλος",
+     "caseTag": null,
+     "glossShort": "other",
+     "audio": "chapt_15_o_voc1"
+    }
+   ]
+  },
+  "artos": {
+   "greek": "ἄρτος",
+   "translit": "artos",
+   "lexicalForm": "ἄρτος, -ου, ὁ",
+   "gloss": "bread",
+   "glossShort": "bread",
+   "audio": "chapt_15_o_voc2",
+   "ntFreq": 97,
+   "senses": [
+    {
+     "greek": "ἄρτος",
+     "caseTag": null,
+     "glossShort": "bread",
+     "audio": "chapt_15_o_voc2"
+    }
+   ]
+  },
+  "dei": {
+   "greek": "δεῖ",
+   "translit": "dei",
+   "lexicalForm": "δεῖ",
+   "gloss": "it is necessary",
+   "glossShort": "it is necessary",
+   "audio": "chapt_15_o_voc3",
+   "ntFreq": 101,
+   "senses": [
+    {
+     "greek": "δεῖ",
+     "caseTag": null,
+     "glossShort": "it is necessary",
+     "audio": "chapt_15_o_voc3"
+    }
+   ]
+  },
+  "exousia": {
+   "greek": "ἐξουσία",
+   "translit": "exousia",
+   "lexicalForm": "ἐξουσία, -ας, ἡ",
+   "gloss": "authority",
+   "glossShort": "authority",
+   "audio": "chapt_15_o_voc4",
+   "ntFreq": 100,
+   "senses": [
+    {
+     "greek": "ἐξουσία",
+     "caseTag": null,
+     "glossShort": "authority",
+     "audio": "chapt_15_o_voc4"
+    }
+   ]
+  },
+  "heteros": {
+   "greek": "ἕτερος",
+   "translit": "heteros",
+   "lexicalForm": "ἕτερος, -α, -ον",
+   "gloss": "different, other",
+   "glossShort": "different, other",
+   "audio": "chapt_15_o_voc5",
+   "ntFreq": 98,
+   "senses": [
+    {
+     "greek": "ἕτερος",
+     "caseTag": null,
+     "glossShort": "different",
+     "audio": "chapt_15_o_voc5"
+    }
+   ]
+  },
+  "eti": {
+   "greek": "ἔτι",
+   "translit": "eti",
+   "lexicalForm": "ἔτι",
+   "gloss": "still, yet",
+   "glossShort": "still, yet",
+   "audio": "chapt_15_o_voc6",
+   "ntFreq": 93,
+   "senses": [
+    {
+     "greek": "ἔτι",
+     "caseTag": null,
+     "glossShort": "still, yet",
+     "audio": "chapt_15_o_voc6"
+    }
+   ]
+  },
+  "ophthalmos": {
+   "greek": "ὀφθαλμός",
+   "translit": "ophthalmos",
+   "lexicalForm": "ὀφθαλμός, -οῦ, ὁ",
+   "gloss": "eye",
+   "glossShort": "eye",
+   "audio": "chapt_15_o_voc7",
+   "ntFreq": 100,
+   "senses": [
+    {
+     "greek": "ὀφθαλμός",
+     "caseTag": null,
+     "glossShort": "eye",
+     "audio": "chapt_15_o_voc7"
+    }
+   ]
+  },
+  "teknon": {
+   "greek": "τέκνον",
+   "translit": "teknon",
+   "lexicalForm": "τέκνον, -ου, τό",
+   "gloss": "child",
+   "glossShort": "child",
+   "audio": "chapt_15_o_voc8",
+   "ntFreq": 99,
+   "senses": [
+    {
+     "greek": "τέκνον",
+     "caseTag": null,
+     "glossShort": "child",
+     "audio": "chapt_15_o_voc8"
+    }
+   ]
+  },
+  "topos": {
+   "greek": "τόπος",
+   "translit": "topos",
+   "lexicalForm": "τόπος, -ου, ὁ",
+   "gloss": "place",
+   "glossShort": "place",
+   "audio": "chapt_15_o_voc9",
+   "ntFreq": 94,
+   "senses": [
+    {
+     "greek": "τόπος",
+     "caseTag": null,
+     "glossShort": "place",
+     "audio": "chapt_15_o_voc9"
+    }
+   ]
+  },
+  "phos": {
+   "greek": "φῶς",
+   "translit": "phos",
+   "lexicalForm": "φῶς, φωτός, τό",
+   "gloss": "light",
+   "glossShort": "light",
+   "audio": "chapt_15_o_voc10",
+   "ntFreq": 73,
+   "senses": [
+    {
+     "greek": "φῶς",
+     "caseTag": null,
+     "glossShort": "light",
+     "audio": "chapt_15_o_voc10"
+    }
+   ]
+  }
+ },
+ "exampleWords": {}
+}

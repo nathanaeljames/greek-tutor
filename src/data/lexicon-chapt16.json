@@ -1,0 +1,176 @@
+{
+ "_comment": "Chapter 16 lexicon, assembled from 16_FAPAS.TBK (cohort 5I). Ten lemmas, no case splits. gloss/glossShort = flashcard pool (0x14b2e), which is IDENTICAL to the speller pool; senses[].glossShort = the shorter drill pool (0x9e432); ntFreq from the Review chart (0xe8e52).",
+ "lemmas": {
+  "aion": {
+   "greek": "αἰών",
+   "translit": "aion",
+   "lexicalForm": "αἰών, -ῶνος, ὁ",
+   "gloss": "age, eternity",
+   "glossShort": "age, eternity",
+   "audio": "chapt_16_p_voc1",
+   "ntFreq": 122,
+   "senses": [
+    {
+     "greek": "αἰών",
+     "caseTag": null,
+     "glossShort": "age",
+     "audio": "chapt_16_p_voc1"
+    }
+   ]
+  },
+  "allelon": {
+   "greek": "ἀλλήλων",
+   "translit": "allelon",
+   "lexicalForm": "ἀλλήλων",
+   "gloss": "one another",
+   "glossShort": "one another",
+   "audio": "chapt_16_p_voc2",
+   "ntFreq": 100,
+   "senses": [
+    {
+     "greek": "ἀλλήλων",
+     "caseTag": null,
+     "glossShort": "one another",
+     "audio": "chapt_16_p_voc2"
+    }
+   ]
+  },
+  "archiereus": {
+   "greek": "ἀρχιερεύς",
+   "translit": "archiereus",
+   "lexicalForm": "ἀρχιερεύς, -έως, ὁ",
+   "gloss": "high priest",
+   "glossShort": "high priest",
+   "audio": "chapt_16_p_voc3",
+   "ntFreq": 122,
+   "senses": [
+    {
+     "greek": "ἀρχιερεύς",
+     "caseTag": null,
+     "glossShort": "high priest",
+     "audio": "chapt_16_p_voc3"
+    }
+   ]
+  },
+  "gune": {
+   "greek": "γυνή",
+   "translit": "gune",
+   "lexicalForm": "γυνή, -αικός, ἡ",
+   "gloss": "woman, wife",
+   "glossShort": "woman, wife",
+   "audio": "chapt_16_p_voc4",
+   "ntFreq": 215,
+   "senses": [
+    {
+     "greek": "γυνή",
+     "caseTag": null,
+     "glossShort": "woman",
+     "audio": "chapt_16_p_voc4"
+    }
+   ]
+  },
+  "dunamai": {
+   "greek": "δύναμαι",
+   "translit": "dunamai",
+   "lexicalForm": "δύναμαι",
+   "gloss": "I can, am able",
+   "glossShort": "I can, am able",
+   "audio": "chapt_16_p_voc5",
+   "ntFreq": 210,
+   "senses": [
+    {
+     "greek": "δύναμαι",
+     "caseTag": null,
+     "glossShort": "I can",
+     "audio": "chapt_16_p_voc5"
+    }
+   ]
+  },
+  "ethnos": {
+   "greek": "ἔθνος",
+   "translit": "ethnos",
+   "lexicalForm": "ἔθνος, -ους, τό",
+   "gloss": "nation, people",
+   "glossShort": "nation, people",
+   "audio": "chapt_16_p_voc6",
+   "ntFreq": 162,
+   "senses": [
+    {
+     "greek": "ἔθνος",
+     "caseTag": null,
+     "glossShort": "nation",
+     "audio": "chapt_16_p_voc6"
+    }
+   ]
+  },
+  "hosos": {
+   "greek": "ὅσος",
+   "translit": "hosos",
+   "lexicalForm": "ὅσος, -η, -ον",
+   "gloss": "as great as",
+   "glossShort": "as great as",
+   "audio": "chapt_16_p_voc7",
+   "ntFreq": 110,
+   "senses": [
+    {
+     "greek": "ὅσος",
+     "caseTag": null,
+     "glossShort": "as great as",
+     "audio": "chapt_16_p_voc7"
+    }
+   ]
+  },
+  "polis": {
+   "greek": "πόλις",
+   "translit": "polis",
+   "lexicalForm": "πόλις, -εως, ἡ",
+   "gloss": "city, town",
+   "glossShort": "city, town",
+   "audio": "chapt_16_p_voc8",
+   "ntFreq": 162,
+   "senses": [
+    {
+     "greek": "πόλις",
+     "caseTag": null,
+     "glossShort": "city",
+     "audio": "chapt_16_p_voc8"
+    }
+   ]
+  },
+  "te": {
+   "greek": "τε",
+   "translit": "te",
+   "lexicalForm": "τε",
+   "gloss": "and, and so",
+   "glossShort": "and, and so",
+   "audio": "chapt_16_p_voc9",
+   "ntFreq": 215,
+   "senses": [
+    {
+     "greek": "τε",
+     "caseTag": null,
+     "glossShort": "and so",
+     "audio": "chapt_16_p_voc9"
+    }
+   ]
+  },
+  "cheir": {
+   "greek": "χείρ",
+   "translit": "cheir",
+   "lexicalForm": "χείρ, χειρός, ἡ",
+   "gloss": "hand, arm",
+   "glossShort": "hand, arm",
+   "audio": "chapt_16_p_voc10",
+   "ntFreq": 177,
+   "senses": [
+    {
+     "greek": "χείρ",
+     "caseTag": null,
+     "glossShort": "hand",
+     "audio": "chapt_16_p_voc10"
+    }
+   ]
+  }
+ },
+ "exampleWords": {}
+}

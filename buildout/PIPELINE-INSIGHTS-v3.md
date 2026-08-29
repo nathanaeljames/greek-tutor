@@ -238,6 +238,32 @@ def field(off):
     return seg.decode('latin-1')
 ```
 
+**THE RECORD HAS TWO LENGTH WORDS; MAKE SURE YOU ARE AT THE RIGHT ONE
+(added 2026-08-29, 5I/chapter 13).** A field record is
+`[buffer size:u16][text length:u16][text][stale tail out to buffer size]`.
+The rule above is correct and lands on the TEXT LENGTH word -- chapters
+1-12 all read it correctly, and sampling the 66 offsets their assemblers
+use found not one exception. The hazard is OFFSET SELECTION.
+`tbk_fields.scan()` locates a field by testing whether the `u16` at
+`off-2` yields a plausible read, and prefers the LONGEST non-overlapping
+candidate; the buffer-size word also passes that test and is longer, so
+`scan()` can report the record TWO BYTES EARLY. A prefix read from there
+returns the whole buffer, stale tail and all -- and it looks exactly like
+the buffer-reuse phenomenon this section describes, which is why chapter
+13's extraction misdiagnosed it as a framing defect in every earlier
+chapter. **When a length-prefixed read comes back with a stale tail, the
+FIRST thing to test is `off+2`.** If the `u16` there fits inside the
+outer length, that is the real text length and the tail vanishes exactly,
+with no screenshot needed for the cut. Twelve of chapter 13's twenty-five
+fields are this case. The guard is that a never-rewritten field has no
+second word, so the test must be conditional (`0 < inner <= outer - 2`)
+and fall back to the plain read; the other thirteen do.
+NOT every stale tail has a length to recover -- `assemble_ch12`'s
+`re.sub(r'\s+Pe<troj.*$', '')` on the vocabulary Greek pool is
+legitimate, because that field has no usable length word at either
+offset, and the prefix-versus-screenshot rule in `tbk_fields.py` still
+governs there.
+
 Two corollaries. First, NEVER "clean" a field with a
 trailing-garbage heuristic (`re.sub(r'(.)\1{3,}$', ...)` and friends);
 if a field needs cleaning, the read is wrong. Second, a pool field may

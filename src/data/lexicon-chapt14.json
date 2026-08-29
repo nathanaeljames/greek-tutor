@@ -1,0 +1,176 @@
+{
+ "_comment": "Chapter 14 lexicon, assembled from 14_2AOR.TBK (cohort 5I). Ten lemmas, no case splits. The flashcard pool (0x16a34), the drill pool (0xb2d9a) and the speller pool (0xf3572) are IDENTICAL in this chapter, so gloss and glossShort carry the same string; ntFreq from the Review chart (0xd96c0).",
+ "lemmas": {
+  "haima": {
+   "greek": "αἷμα",
+   "translit": "haima",
+   "lexicalForm": "αἷμα, -ματος, τό",
+   "gloss": "blood",
+   "glossShort": "blood",
+   "audio": "chapt_14_n_voc1",
+   "ntFreq": 97,
+   "senses": [
+    {
+     "greek": "αἷμα",
+     "caseTag": null,
+     "glossShort": "blood",
+     "audio": "chapt_14_n_voc1"
+    }
+   ]
+  },
+  "airo": {
+   "greek": "αἴρω",
+   "translit": "airo",
+   "lexicalForm": "αἴρω",
+   "gloss": "I raise",
+   "glossShort": "I raise",
+   "audio": "chapt_14_n_voc2",
+   "ntFreq": 101,
+   "senses": [
+    {
+     "greek": "αἴρω",
+     "caseTag": null,
+     "glossShort": "I raise",
+     "audio": "chapt_14_n_voc2"
+    }
+   ]
+  },
+  "didasko": {
+   "greek": "διδάσκω",
+   "translit": "didasko",
+   "lexicalForm": "διδάσκω",
+   "gloss": "I teach",
+   "glossShort": "I teach",
+   "audio": "chapt_14_n_voc3",
+   "ntFreq": 97,
+   "senses": [
+    {
+     "greek": "διδάσκω",
+     "caseTag": null,
+     "glossShort": "I teach",
+     "audio": "chapt_14_n_voc3"
+    }
+   ]
+  },
+  "idios": {
+   "greek": "ἴδιος",
+   "translit": "idios",
+   "lexicalForm": "ἴδιος, -α, -ον",
+   "gloss": "one's own",
+   "glossShort": "one's own",
+   "audio": "chapt_14_n_voc4",
+   "ntFreq": 114,
+   "senses": [
+    {
+     "greek": "ἴδιος",
+     "caseTag": null,
+     "glossShort": "one's own",
+     "audio": "chapt_14_n_voc4"
+    }
+   ]
+  },
+  "kalos": {
+   "greek": "καλός",
+   "translit": "kalos",
+   "lexicalForm": "καλός, -ή, -όν",
+   "gloss": "good",
+   "glossShort": "good",
+   "audio": "chapt_14_n_voc5",
+   "ntFreq": 100,
+   "senses": [
+    {
+     "greek": "καλός",
+     "caseTag": null,
+     "glossShort": "good",
+     "audio": "chapt_14_n_voc5"
+    }
+   ]
+  },
+  "mello": {
+   "greek": "μέλλω",
+   "translit": "mello",
+   "lexicalForm": "μέλλω",
+   "gloss": "I intend",
+   "glossShort": "I intend",
+   "audio": "chapt_14_n_voc6",
+   "ntFreq": 109,
+   "senses": [
+    {
+     "greek": "μέλλω",
+     "caseTag": null,
+     "glossShort": "I intend",
+     "audio": "chapt_14_n_voc6"
+    }
+   ]
+  },
+  "hodos": {
+   "greek": "ὁδός",
+   "translit": "hodos",
+   "lexicalForm": "ὁδός, -οῦ, ἡ",
+   "gloss": "way, road",
+   "glossShort": "way, road",
+   "audio": "chapt_14_n_voc7",
+   "ntFreq": 101,
+   "senses": [
+    {
+     "greek": "ὁδός",
+     "caseTag": null,
+     "glossShort": "way, road",
+     "audio": "chapt_14_n_voc7"
+    }
+   ]
+  },
+  "polus": {
+   "greek": "πολύς",
+   "translit": "polus",
+   "lexicalForm": "πολύς, πολλή, πολύ",
+   "gloss": "much, many",
+   "glossShort": "much, many",
+   "audio": "chapt_14_n_voc8",
+   "ntFreq": 416,
+   "senses": [
+    {
+     "greek": "πολύς",
+     "caseTag": null,
+     "glossShort": "much, many",
+     "audio": "chapt_14_n_voc8"
+    }
+   ]
+  },
+  "soma": {
+   "greek": "σῶμα",
+   "translit": "soma",
+   "lexicalForm": "σῶμα, -ματος, τό",
+   "gloss": "body",
+   "glossShort": "body",
+   "audio": "chapt_14_n_voc9",
+   "ntFreq": 142,
+   "senses": [
+    {
+     "greek": "σῶμα",
+     "caseTag": null,
+     "glossShort": "body",
+     "audio": "chapt_14_n_voc9"
+    }
+   ]
+  },
+  "psuche": {
+   "greek": "ψυχή",
+   "translit": "psuche",
+   "lexicalForm": "ψυχή, -ῆς, ἡ",
+   "gloss": "soul, self",
+   "glossShort": "soul, self",
+   "audio": "chapt_14_n_voc10",
+   "ntFreq": 103,
+   "senses": [
+    {
+     "greek": "ψυχή",
+     "caseTag": null,
+     "glossShort": "soul, self",
+     "audio": "chapt_14_n_voc10"
+    }
+   ]
+  }
+ },
+ "exampleWords": {}
+}
