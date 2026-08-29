@@ -1078,22 +1078,28 @@ def build_lexicon(tbk, conv):
             'audio': r['audio'], 'ntFreq': freq,
             'lexicalForm': r['lexicalForm'],
         }
-    # RATIFIED 2026-08-27 (VERIFY-5H-3 4.3, Nathanael's listens): the chart
-    # taps each printed form -- ou -> g_voc8, ouk -> g_voc8a, ouch -> g_voc8b
-    # -- and g_voc8a is ALSO the all-three recitation, so the flashcard plays
-    # it under the (v) two-surface rule. audioAlt is retired for parts.
+    # RATIFIED 2026-08-27 (VERIFY-5H-3 4.3) and CORRECTED 2026-08-28 by
+    # Nathanael after seeing it on the device: on the Review chart
+    # ou -> g_voc8, and ouk AND ouch BOTH -> g_voc8b. 5H-SPEC3 4.3 put the
+    # middle form on g_voc8a; that was the spec's reading of his mapping, not
+    # his mapping. g_voc8a is the all-three recitation and is the LEMMA clip
+    # only -- what the flashcard plays under the (v) two-surface rule, and
+    # nothing the chart taps. audioAlt is retired for parts.
     lemmas['ou']['audio'] = aud('g_voc8a')
     lemmas['ou'].pop('audioAlt', None)
     lemmas['ou']['parts'] = [{'greek': 'οὐ', 'audio': aud('g_voc8')},
-                             {'greek': 'οὐκ', 'audio': aud('g_voc8a')},
+                             {'greek': 'οὐκ', 'audio': aud('g_voc8b')},
                              {'greek': 'οὐχ', 'audio': aud('g_voc8b')}]
     lemmas['ou']['_audio_note'] = (
-        'VERIFY-5H-3 (x) answered pre-round (Nathanael, 2026-08-27): each '
-        'form taps its own clip on the Review chart (ou -> g_voc8, ouk -> '
-        'g_voc8a, ouch -> g_voc8b, his stated mapping); g_voc8a is also the '
-        'clip that recites all three, so per the (v) two-surface rule the '
-        'flashcard plays g_voc8a. Verify visually via the previous-response '
-        'checklist.')
+        'VERIFY-5H-3 (x) answered pre-round (Nathanael, 2026-08-27) and '
+        'CORRECTED by him 2026-08-28 after seeing it on the device: on the '
+        'Review chart ou -> g_voc8, and ouk AND ouch BOTH -> g_voc8b. '
+        '5H-SPEC3 4.3 rendered the middle form as g_voc8a; that was the '
+        "spec's reading of his mapping, not his mapping. g_voc8a is the clip "
+        'that recites all three and is now the LEMMA clip only, which per the '
+        '(v) two-surface rule is what the flashcard plays. Implementer '
+        'hand-edit, 5H-SPEC3-RESULTS section 3.6; the pipeline needs to '
+        'absorb it.')
     example = {}
     for pop in [a for a in [] ]:
         pass

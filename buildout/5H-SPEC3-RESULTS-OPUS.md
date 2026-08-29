@@ -5,7 +5,13 @@ round. Base: `8f285be` ("updating project files before 5h spec 3"), working
 tree clean at start.
 
 No git was run beyond read-only `git status` / `git diff` / `git show`. Nothing
-is staged, committed or pushed.
+is staged, committed or pushed by me. **Nathanael committed the round himself
+as `0409019` ("saving 5H spec 3, opus 5 only") while the confirmation harness
+pass was still running**, and cleared two pipeline debts in the same commit
+(section 6); the work after that point — his ch7 clip correction (3.6), its
+harness pin, the two-literal fix to `assemble_ch7.py`, and these documents —
+sits on top of it, uncommitted. The BUILD document's diff is taken against
+`8f285be` so that it remains the round's complete cumulative diff either way.
 
 Companion documents: `5H-SPEC3-BUILD-OPUS.md` (the complete cumulative diff,
 the tool log and the wall clock), `VERIFY-5H-3.md` (authored this round per
@@ -52,10 +58,16 @@ heading-deduplication rule covers exactly this relation and I applied it. That
 leaves a heading the original does not print, which is `VERIFY-5H-3` (y).
 Section 3.2.
 
-**Fourth, two pipeline debts are OPEN despite section 8's "ALL CLEARED".**
-`assemble_ch7.py` and `assemble_ch8.py` do not know about this round's
-`parts` rulings, so regenerating either chapter would silently drop them.
-Section 6.
+**Fourth, two pipeline debts were open despite section 8's "ALL CLEARED"** —
+`assemble_ch7.py` and `assemble_ch8.py` did not know about this round's `parts`
+rulings — **and Nathanael closed both mid-round**, in `0409019`. One line of
+that fix predates his own correction below and would have reversed it at the
+next regeneration; section 6 says what I changed and why.
+
+**Fifth, ONE data file was hand-edited after the round's first pass**, on
+Nathanael's direct correction: spec 4.3 had chapter 7's οὐκ tapping `g_voc8a`,
+and his mapping is that οὐκ and οὐχ BOTH tap `g_voc8b`. Section 3.6 has the
+before/after so the pipeline can absorb it.
 
 | Spec item | State |
 | --- | --- |
@@ -64,7 +76,7 @@ Section 6.
 | 3 (t) / (w) ratified | no implementer work, as the spec says; both confirmed still in place by assertion |
 | 4.1 (r) ὅς | data only; asserted by name so it cannot come back silently |
 | 4.2 (v) per-form chart taps | done — `parts` renders as independent taps on the Review chart only (3.3) |
-| 4.3 ch7 οὐ/οὐκ/οὐχ | done — same renderer, three taps plus the flashcard positive |
+| 4.3 ch7 οὐ/οὐκ/οὐχ | done — same renderer, three taps plus the flashcard positive; the spec's clip mapping was corrected by Nathanael after the first pass (3.6) |
 | 4.4 (k2) | closed; asserted that chapter 12's data names neither clip |
 | 5 previous-response checklist | carried verbatim into `VERIFY-5H-3.md` section 1 |
 | 6 VERIFY-5H-3 | done — the checklist plus (y), and it says that is all |
@@ -85,7 +97,7 @@ Checked before any code was written. Every claim holds.
 | 4.1 `parts` REMOVED from the hos lemma, `audio` still `k_voc5` | yes |
 | 4.2 `parts` added to ch8 ἐγώ/ἡμεῖς (h_voc3a/b) and σύ/ὑμεῖς (h_voc9a/b) | yes |
 | 4.2 ch11 οὗτος αὕτη τοῦτο already carries k_voc7a/b/c | yes |
-| 4.3 `lexicon-chapt07.json` carries `parts` (g_voc8 / g_voc8a / g_voc8b) and `audio: g_voc8a`, `audioAlt` retired | yes, all four |
+| 4.3 `lexicon-chapt07.json` carries `parts` (g_voc8 / g_voc8a / g_voc8b) and `audio: g_voc8a`, `audioAlt` retired | yes, all four **as delivered** — and the middle clip was corrected to `g_voc8b` afterwards, section 3.6 |
 | 4.2 the ONLY multi-form rows with per-form clips in twelve chapters are those four | yes — computed over every lexicon, not read off the spec |
 | every part's form appears in its own printed `lexicalForm` | yes, all ten parts across the four lemmas |
 | every part's clip is in `audio-manifest.json` | yes, all ten |
@@ -248,6 +260,41 @@ immediately. `git diff` and `git status` on `src/data/` are both empty.
 - **`check-doc-integrity.mjs`**: one `maxBuffer`, which is what made the gate
   runnable again (section 7).
 
+### 3.6 One hand edit to `src/data/lexicon-chapt07.json`, on Nathanael's correction
+
+Reported here in full, per ONBOARD §2b: a hand edit is lost at the next regen
+unless the pipeline knows about it.
+
+Spec 4.3 states the ch7 chart mapping as "οὐ -> g_voc8, οὐκ -> g_voc8a,
+οὐχ -> g_voc8b", and that is what the delivered lexicon carried and what the
+round first shipped. Seeing it on the device, Nathanael corrected it: **οὐκ and
+οὐχ BOTH tap `g_voc8b`**, which is what he had originally specified. The spec
+had read his mapping as one clip per form.
+
+```diff
+   "parts": [
+    { "greek": "οὐ",  "audio": "chapt_7_g_voc8"  },
+-   { "greek": "οὐκ", "audio": "chapt_7_g_voc8a" },
++   { "greek": "οὐκ", "audio": "chapt_7_g_voc8b" },
+    { "greek": "οὐχ", "audio": "chapt_7_g_voc8b" }
+   ]
+```
+
+`_audio_note` on the lemma is rewritten to say the same thing and to name this
+section, so a reader of the data finds the correction rather than the reading
+it replaced. **The lemma's own `audio` is unchanged at `g_voc8a`** — it is the
+clip that recites all three, so the flashcard still plays it and the (v)
+two-surface rule is untouched. What changes is that `g_voc8a` is now on the
+card ONLY and appears nowhere in the chart's taps, which makes chapter 7 the
+clearest instance in the app of the two surfaces deliberately differing.
+
+Nothing else in the round moves: the renderer already handles two forms
+pointing at one clip (the tap map is keyed by FORM, not by clip), and the
+harness pins each form separately so the two rows that share a recording are
+still asserted on their own. Verified end to end before the full pass — οὐ
+fetches `g_voc8.m4a`, οὐκ and οὐχ each fetch `g_voc8b.m4a` from an evicted
+store, and the flashcard fetches `g_voc8a.m4a` and carries no per-form buttons.
+
 ---
 
 ## 4. Acceptance
@@ -324,26 +371,44 @@ Two smaller repairs, both ONBOARD §7 ("grep the harness for the OLD shape"):
 
 ## 6. Two pipeline debts that section 8 says are cleared
 
-Spec section 8 says "ALL CLEARED with Revision 2" and lists `assemble_ch11.py`
-and `assemble_ch12.py`. Chapters 7 and 8 also changed this round, and their
-assemblers do not know it:
+Raised here, closed by Nathanael mid-round, and one line of his fix corrected
+in turn. The heading is kept as it was first written so `check:docs` does not
+read an hour-old rename as a lost section; the sequence below is the update.
 
-- **`scripts/assemble_ch7.py` line 1081** still writes
-  `lemmas['ou']['audioAlt'] = [g_voc8a, g_voc8b]` and leaves `audio` at
-  `g_voc8`. Regenerating chapter 7 would drop the `parts` list, retire the
-  three taps, and put the flashcard back on the wrong clip — a straight
-  reversal of 4.3.
-- **`scripts/assemble_ch8.py`** has no `parts` for `ego` or `su` and no
-  `post_patches_lexicon` at all, so the same is true of 4.2's two rows.
+**Raised.** Spec section 8 says "ALL CLEARED with Revision 2" and lists
+`assemble_ch11.py` and `assemble_ch12.py`. Chapters 7 and 8 also changed this
+round, and their assemblers did not know it: `assemble_ch7.py` still wrote
+`lemmas['ou']['audioAlt']` with `audio` at `g_voc8`, and `assemble_ch8.py` had
+no `parts` for `ego` or `su` and no `post_patches` at all. Regenerating either
+chapter would have silently reversed 4.2 or 4.3. Neither would be caught by
+`check:shapes` — an absent `parts` list is a legal shape — though the
+twelve-chapter census in `ui-behavior` 5H-SPEC3 4.2 would have caught it after
+the fact, which is partly what that census is for.
 
-Neither would be caught by `check:shapes`, because an absent `parts` list is a
-legal shape. It WOULD be caught by the twelve-chapter census in
-`ui-behavior` 5H-SPEC3 4.2, which compares the lexicons' declarations against
-the charts — that census exists partly for this — but the guard is a red gate
-after the fact, not a pipeline that carries the ruling forward.
+**Closed by Nathanael in `0409019`**, committed while this round's confirmation
+harness pass was still running: both assemblers now carry the `parts` rulings,
+ch7 gains a `post_patches` that re-applies the objectives audioMap, and ch8's
+paired-pronoun block is correct as written.
 
-I have not edited either script: they are pipeline files and the rulings they
-need are the pipeline's to write.
+**One line of that is now wrong, and I changed it.** `assemble_ch7.py` was
+written against spec 4.3's mapping — `ouk -> g_voc8a` — which is the mapping he
+corrected an hour later (section 3.6). Left alone it would put `g_voc8a` back
+on the middle form at the next regeneration, which is exactly the failure mode
+the debt was raised about, and the function's own docstring says to update it
+when a new ruling lands. It now reads:
+
+```diff
+     lemmas['ou']['parts'] = [{'greek': 'οὐ', 'audio': aud('g_voc8')},
+-                             {'greek': 'οὐκ', 'audio': aud('g_voc8a')},
++                             {'greek': 'οὐκ', 'audio': aud('g_voc8b')},
+                              {'greek': 'οὐχ', 'audio': aud('g_voc8b')}]
+```
+
+plus the `_audio_note` string beside it, so the script and the delivered file
+say the same sentence. **I could not prove byte-identity by regenerating**, the
+way the spec says ch11 and ch12 were verified: `7_ADJS.TBK` is not in this
+workspace. The change is two literals and a comment, and `assemble_ch7.py`
+parses; that is the whole of what I can assert.
 
 ---
 
@@ -411,6 +476,14 @@ completion afterwards — but it is worth knowing the machine did it once.
 5. **One line added to `check-doc-integrity.mjs`** (section 7), so that the
    count the spec asks me to note could actually be read. It is the same
    `maxBuffer` its three sibling calls already carry.
+6. **`src/data/lexicon-chapt07.json` was hand-edited** (section 3.6) under
+   ONBOARD §2b's second case, the authority being Nathanael directly rather
+   than a spec section. Before/after is in 3.6 for the pipeline to absorb.
+7. **`scripts/assemble_ch7.py` was edited too** (section 6), which is a
+   pipeline file. Two literals, so that the generator cannot reverse the
+   correction in 3.6 at the next regeneration. Flagged rather than assumed:
+   if the pipeline would rather own that edit, revert it there and the data
+   still stands.
 
 ---
 
@@ -424,7 +497,9 @@ completion afterwards — but it is worth knowing the machine did it once.
 - `check:docs` had stopped running some rounds ago, silently, for a reason
   that has nothing to do with documents: the screenshot corpus pushed a file
   list past a 1 MB buffer.
-- Chapter 7's `parts` mapping is genuinely odd on its face and correct: `οὐκ`
-  taps `g_voc8a`, which is also the clip that recites all three and therefore
-  also what the flashcard plays. That is your listen and your mapping; the
-  harness comment says so, so nobody "fixes" it later.
+- Chapter 7's `parts` mapping looked odd and WAS wrong, though not in the way
+  I expected: the spec had οὐκ on `g_voc8a`, the all-three clip, which I
+  flagged in the first pass of this document as odd-but-ruled. Nathanael's
+  correction is that οὐκ and οὐχ share `g_voc8b` (section 3.6). The lesson is
+  the one ONBOARD §10 already states — the flag was right and stopping to ask
+  would have been better than shipping it with a note.

@@ -7,6 +7,11 @@ excerpts; (b) the work log; (c) the wall clock.
 Base commit: `8f285be` ("updating project files before 5h spec 3").
 Handoff: `5H-SPEC3-RESULTS-OPUS.md`. VERIFY document: `VERIFY-5H-3.md`.
 
+Nathanael committed the round himself as `0409019` part-way through, so the
+diff below is taken against `8f285be` rather than against HEAD: it spans both
+his commit and the work that followed it (his ch7 clip correction and its
+consequences), which is what "cumulative" has to mean here.
+
 ---
 
 ## (c) Wall clock
@@ -14,8 +19,8 @@ Handoff: `5H-SPEC3-RESULTS-OPUS.md`. VERIFY document: `VERIFY-5H-3.md`.
 | | |
 | --- | --- |
 | Start | 2026-08-28 15:25 UTC |
-| End | 2026-08-28 17:20 UTC |
-| **Elapsed** | **1 h 55 m** |
+| End | 2026-08-28 22:15 UTC |
+| **Elapsed** | **2 h 50 m** |
 
 There is no prior blocked attempt to add to this total: the data was already in
 the tree at the base commit and the STOP check passed on the first read
@@ -24,9 +29,9 @@ the standing rule.
 
 As in 5H-SPEC2, most of that clock is browser-harness runtime rather than
 authoring. `ui-behavior.mjs` takes about 45 minutes per pass on this machine
-and was run twice end to end — the first full pass over the new assertions
+and was run three times end to end — the first full pass over the new assertions
 (1124/1125, the one failure being the advance-timing race in RESULTS section 5)
-and a confirmation pass over the final tree (1125/1125) — plus one `ui-modals`
+a confirmation pass after that repair (1125/1125) and a third over the tree carrying his ch7 correction (1125/1125) — plus one `ui-modals`
 pass over 54 surfaces at 5 heights, one `ui-walk` over three chapters at two
 widths, one `ui-offline`, one `ui-disclosure`, one `ui-disclosure3`, four
 `npm run build` cycles and three short measurement scripts written for this
@@ -83,6 +88,15 @@ boxes. Identical on all four rows at 320 px, so nothing re-wrapped.
 in its own lexicalForm and another's clip to an id that does not exist; both
 reported by name; data restored from a copy; `git diff` on `src/data/` empty.
 
+**The ch7 correction (2026-08-28).** Nathanael, on the device: οὐκ and οὐχ
+BOTH tap `g_voc8b`, not `g_voc8a` as spec 4.3 read it. Edited the lexicon,
+repinned the harness per FORM rather than per clip, verified all three taps and
+the flashcard end to end against an evicted store before committing to a full
+pass, then ran the full pass (1125/1125) and re-walked chapter 7. Found while
+regenerating the diff that his own `0409019` had just added an
+`assemble_ch7.py` block carrying the pre-correction mapping, and corrected the
+two literals there so a regeneration cannot undo him.
+
 **Harness.** The new block, then the removals the rulings require, then the
 three repairs — W1 (its item-level `hintRef` no longer exists), P3.2 (renamed
 for the third time, once per shape) and, found by running rather than by
@@ -105,18 +119,18 @@ sibling calls already carry. RESULTS section 7.
 ## (a) The complete cumulative diff
 
 
-The diff below is the tree at the moment this document was written, with the
-three round documents split out: the tracked files first, then the two new
-ones in full. `5H-SPEC3-BUILD-OPUS.md` itself is the only file of the round
-not reproduced inside it, for the obvious reason. The screenshot corpora
-under `buildout/screenshots/5h3-*` are binary and are named in
+The diff below is the tree against `8f285be`, with the three round documents
+split out: the code and the pre-existing documents first, then the two new
+documents in full. `5H-SPEC3-BUILD-OPUS.md` itself is the only file of the
+round not reproduced inside it, for the obvious reason. The screenshot
+corpora under `buildout/screenshots/5h3-*` are binary and are named in
 `5H-VISUAL-CHECKLIST-3` rather than diffed here.
 
-### Tracked files
+### Code and existing documents
 
 ```diff
 diff --git a/buildout/5H-VISUAL-CHECKLIST-OPUS.md b/buildout/5H-VISUAL-CHECKLIST-OPUS.md
-index a404d57..b9d3bb9 100644
+index a404d57..4472fd6 100644
 --- a/buildout/5H-VISUAL-CHECKLIST-OPUS.md
 +++ b/buildout/5H-VISUAL-CHECKLIST-OPUS.md
 @@ -204,3 +204,71 @@ and `ui-behavior.mjs` all seek).
@@ -165,7 +179,7 @@ index a404d57..b9d3bb9 100644
 +| 3.7 | ...page 3 | ch8 p13 top-right | **Neuter**: the αὐτό set. The original's HINT does not show this chart at all; its Review page does, and it is here because your (s) answer said to keep it once the drill turned out to use neuter forms (items 1 and 9) | PASS+note (a deliberate departure — DIVERGENCE-LOG D-57) |
 +| 3.8 | ...page 4 | ch8 p8 top-left | **Three Uses**: title, the "αὐτός can be used in three ways" line, three numbered points with hanging indents and their underlined lead terms, the three Examples accordions; **Back live, More greyed**, Close last | PASS |
 +| 3.9 | ...all four pages at 320x360 and 768x1024 | — | Each fits with the overlay unscrolled and Close pinned; the body scrolls inside the modal, the shell does not; exactly one divider, and the strip above it equals the strip below at forced scroll | PASS (`ui-modals` 270/270 states, `ui-disclosure` D13 four states) |
-+| 3.10 | `chapt_7/c7_qr_vocab`, the οὐ row | ch7 p14 top-left | Row text **οὐ, οὐκ, οὐχ** and gloss "no, not (1606)" unchanged; the three forms are now separate blue taps and **the commas between them are ink** | PASS |
++| 3.10 | `chapt_7/c7_qr_vocab`, the οὐ row | ch7 p14 top-left | Row text **οὐ, οὐκ, οὐχ** and gloss "no, not (1606)" unchanged; the three forms are now separate blue taps and **the commas between them are ink**. Nothing on screen distinguishes οὐκ from οὐχ, which is correct: they are two tap targets sharing one recording (`g_voc8b`) after Nathanael's 2026-08-28 correction, and the row must not hint at that | PASS |
 +| 3.11 | `chapt_8/c8_qr_vocab`, the ἐγώ and σύ rows | ch8 p12 top-left | Row texts **ἐγώ / ἡμεῖς** "I / we (2666)" and **σύ / ὑμεῖς** "you / you (pl) (2905)" unchanged; two blue taps each and **the slash between them is ink** (sampled at 768 px: forms rgb(22,99,199), separator rgb(34,37,42)) | PASS |
 +| 3.12 | `chapt_11/c11_qr_vocab`, the οὗτος row | ch11 p20 top-right | Row text **οὗτος, αὕτη, τοῦτο** and "(1388)" unchanged; three blue taps, commas ink | PASS |
 +| 3.13 | ...the four rows' BOX METRICS at 320 px | — | The multi-tap cell occupies the identical box as the single button it replaces, row for row: 112x66, 112x66, 112x33, 112x99. Nothing re-wrapped and no row grew | PASS (A/B measured in one page load) |
@@ -221,6 +235,199 @@ index 9174a13..9c8d1d4 100644
  ## Auto-progress / advance rule matrix
  
  MOVED. The full exercise-by-exercise, chapter-by-chapter matrix —
+diff --git a/scripts/assemble_ch7.py b/scripts/assemble_ch7.py
+index cd681b8..3b8156b 100644
+--- a/scripts/assemble_ch7.py
++++ b/scripts/assemble_ch7.py
+@@ -1078,10 +1078,28 @@ def build_lexicon(tbk, conv):
+             'audio': r['audio'], 'ntFreq': freq,
+             'lexicalForm': r['lexicalForm'],
+         }
+-    lemmas['ou']['audioAlt'] = [aud('g_voc8a'), aud('g_voc8b')]
++    # RATIFIED 2026-08-27 (VERIFY-5H-3 4.3) and CORRECTED 2026-08-28 by
++    # Nathanael after seeing it on the device: on the Review chart
++    # ou -> g_voc8, and ouk AND ouch BOTH -> g_voc8b. 5H-SPEC3 4.3 put the
++    # middle form on g_voc8a; that was the spec's reading of his mapping, not
++    # his mapping. g_voc8a is the all-three recitation and is the LEMMA clip
++    # only -- what the flashcard plays under the (v) two-surface rule, and
++    # nothing the chart taps. audioAlt is retired for parts.
++    lemmas['ou']['audio'] = aud('g_voc8a')
++    lemmas['ou'].pop('audioAlt', None)
++    lemmas['ou']['parts'] = [{'greek': 'οὐ', 'audio': aud('g_voc8')},
++                             {'greek': 'οὐκ', 'audio': aud('g_voc8b')},
++                             {'greek': 'οὐχ', 'audio': aud('g_voc8b')}]
+     lemmas['ou']['_audio_note'] = (
+-        'The lemma is the three-form set ou / ouk / ouch; the chapter ships '
+-        'g_voc8, g_voc8a and g_voc8b, one per form.')
++        'VERIFY-5H-3 (x) answered pre-round (Nathanael, 2026-08-27) and '
++        'CORRECTED by him 2026-08-28 after seeing it on the device: on the '
++        'Review chart ou -> g_voc8, and ouk AND ouch BOTH -> g_voc8b. '
++        '5H-SPEC3 4.3 rendered the middle form as g_voc8a; that was the '
++        "spec's reading of his mapping, not his mapping. g_voc8a is the clip "
++        'that recites all three and is now the LEMMA clip only, which per the '
++        '(v) two-surface rule is what the flashcard plays. Implementer '
++        'hand-edit, 5H-SPEC3-RESULTS section 3.6; the pipeline needs to '
++        'absorb it.')
+     example = {}
+     for pop in [a for a in [] ]:
+         pass
+@@ -1096,6 +1114,27 @@ def build_lexicon(tbk, conv):
+             'lemmas': lemmas, 'exampleWords': example}
+ 
+ 
++def post_patches(ch):
++    """Stage 8.7: ratified rulings re-applied on any rebuild, so a
++    regeneration cannot reverse a hand-approved fix. Update THIS function
++    when a new ruling lands against chapter 7."""
++    # 5H-SPEC2 2.5 (VERIFY-5H (o)): objectives may carry per-word audio.
++    hit = [i for i, o in enumerate(ch['objectives'])
++           if isinstance(o, str) and 'εἰμί' in o]
++    if len(hit) != 1:
++        raise SystemExit('STOP: expected exactly one objective naming eimi, '
++                         'found %r -- the objectives text moved and the '
++                         'audioMap index must be re-derived' % hit)
++    i = hit[0]
++    ch['objectives'][i] = {
++        'text': ch['objectives'][i],
++        'audioMap': {'εἰμί': aud('g_eimi1s')},
++        '_source': ('Objectives page WordSelection table dispatches g_eimi1s '
++                    '(7_ADJS.TBK, 0xf34b6 region); VERIFY-5H (o) confirmed '
++                    'both original objectives taps speak.')}
++    return ch
++
++
+ def validate(ch):
+     ids = set()
+     for sec in ('learn', 'drill', 'exercise', 'quickReview'):
+@@ -1113,6 +1152,7 @@ def main():
+     tbk = Tbk(tbkpath)
+     conv = make_conv(json.load(open(fontpath)))
+     ch = build(tbk, conv)
++    ch = post_patches(ch)
+     validate(ch)
+     lex = build_lexicon(tbk, conv)
+     for name, obj in (('chapt-07.json', ch), ('lexicon-chapt07.json', lex)):
+diff --git a/scripts/assemble_ch8.py b/scripts/assemble_ch8.py
+index 09a6e14..befdc83 100644
+--- a/scripts/assemble_ch8.py
++++ b/scripts/assemble_ch8.py
+@@ -332,6 +332,29 @@ SPELL_UI = {'fields': ['English Phrase', 'Spell Greek Phrase'],
+             'defaults': {'pronounceEach': True}}
+ 
+ 
++# Per-item Hint routing for the Case Drill, READ 2026-08-26 from the
++# WordCounter dispatch table at 8_PRONS.TBK 0x10d820 and ratified by
++# DOSBox (VERIFY-5H-2 (s)). Frozen here so a rebuild needs no re-decode.
++CASE_HINT = [
++    'thirdPersonParadigm', 'firstPersonParadigm',
++    'secondPersonParadigm', 'thirdPersonParadigm',
++    'firstPersonParadigm', 'thirdPersonParadigm',
++    'firstPersonParadigm', 'secondPersonParadigm',
++    'thirdPersonParadigm', 'secondPersonParadigm',
++    'secondPersonParadigm', 'firstPersonParadigm',
++    'thirdPersonParadigm', 'thirdPersonParadigm',
++    'secondPersonParadigm', 'secondPersonParadigm',
++    'thirdPersonParadigm', 'thirdPersonParadigm',
++    'firstPersonParadigm', 'thirdPersonParadigm',
++    'firstPersonParadigm', 'thirdPersonParadigm',
++    'thirdPersonParadigm', 'secondPersonParadigm',
++    'firstPersonParadigm', 'thirdPersonParadigm',
++    'thirdPersonParadigm', 'firstPersonParadigm',
++    'thirdPersonParadigm', 'secondPersonParadigm',
++    'firstPersonParadigm',
++]
++
++
+ def stepper_ui(hint=None):
+     ui = {'buttons': ['Previous', 'Next', 'Pronounce', 'Hint', 'Score'],
+           'checkboxes': ['Pronounce Each Drill'],
+@@ -1040,6 +1063,27 @@ def build_lexicon(tbk, conv):
+                         'glossShort': m['glossShort'], 'audio': m['audio']}
+                        for m in members],
+         }
++        # RATIFIED 2026-08-27 (VERIFY-5H-2 (v)): a Review chart row taps EACH
++        # printed form; the flashcard plays the lemma clip. The paired
++        # pronouns are the only ch8 rows that print two full forms.
++        if key in ('ego', 'su'):
++            # The lemma clip is the PAIRED recording that says both words
++            # (h_voc3 / h_voc9, listen-confirmed 2026-08-15, VERIFY-5F-3
++            # item 4) -- NOT members[0]'s single-form clip, which is what
++            # the generic path above picks.
++            paired = aud('h_voc3' if key == 'ego' else 'h_voc9')
++            lemmas[key]['audio'] = paired
++            lemmas[key]['_audio_note'] = (
++                'Paired flashcard: %s says BOTH words (listen-confirmed '
++                '2026-08-15, VERIFY-5F-3 item 4); senses keep the '
++                'single-form clips.' % paired)
++            lemmas[key]['parts'] = [{'greek': m['greek'], 'audio': m['audio']}
++                                    for m in members]
++            lemmas[key]['_parts_note'] = (
++                'VERIFY-5H-2 (v) ruling 2026-08-27: the Review Vocabulary '
++                'Chart taps each printed form independently (parts); the '
++                'Learn flashcard plays the lemma audio, which recites both '
++                'forms.')
+     return {'_comment': (
+                 'Chapter 8 lexicon, assembled from 8_PRONS.TBK (cohort 5F). '
+                 'TEN lemmas, THIRTEEN flashcard entries and FIFTEEN drill '
+@@ -1052,6 +1096,50 @@ def build_lexicon(tbk, conv):
+             'lemmas': lemmas, 'exampleWords': {}}
+ 
+ 
++def post_patches(ch):
++    """Stage 8.7: ratified rulings re-applied on any rebuild (2026-08-26/27),
++    so a regeneration cannot reverse a hand-approved fix. Update THIS
++    function when a new ruling lands against chapter 8."""
++    by_id = {a['id']: a for a in ch['drill']}
++    # 5H-SPEC2 3.1 (LOOKBACK): the Case Drill's Hint is FORM-DEPENDENT in the
++    # original (D-46 class) -- read from the WordCounter dispatch at
++    # 8_PRONS.TBK 0x10d820: first person -> Hint (field 0xc5d4a), second ->
++    # Hint2 (0xc6cd4), autos -> Hint3 (0xc4676). DOSBox-confirmed
++    # (VERIFY-5H-2 (s)): each person opens its own chart, Cancel only.
++    case = by_id['c8_drill_case']
++    if len(case['items']) != len(CASE_HINT):
++        raise SystemExit('STOP: Case Drill has %d items, the ratified hint '
++                         'routing has %d -- re-read the dispatch at 0x10d820'
++                         % (len(case['items']), len(CASE_HINT)))
++    for it, ref in zip(case['items'], CASE_HINT):
++        it['hintRef'] = ref
++    case['_hint_note'] = (
++        'FORM-DEPENDENT HINT (D-46 class), dispatch at 8_PRONS.TBK 0x10d820; '
++        'DOSBox-confirmed VERIFY-5H-2 (s). Ratified 2026-08-27.')
++    # VERIFY-5H-2 (s): the Autos Translation Drill shows the SAME hint on
++    # every item -- a four-page Back/More stack (the third-person paradigm
++    # split by gender, then the Three Uses page). Per-item routing REMOVED;
++    # D-57 covers four pages where the original draws two.
++    autos = by_id['c8_drill_translation_autos']
++    for it in autos['items']:
++        it.pop('hintRef', None)
++    autos['ui'].pop('hintRef', None)
++    autos['ui']['hintPages'] = [
++        {'hintRef': 'thirdPersonParadigm', 'chartIndex': 0,
++         'title': 'Third Person Paradigm: Masculine'},
++        {'hintRef': 'thirdPersonParadigm', 'chartIndex': 1,
++         'title': 'Third Person Paradigm: Feminine'},
++        {'hintRef': 'thirdPersonParadigm', 'chartIndex': 2,
++         'title': 'Third Person Paradigm: Neuter'},
++        {'contentRef': 'threeUses', 'title': 'Three Uses'}]
++    autos['_hint_note'] = (
++        'VERIFY-5H-2 (s) ruling 2026-08-27: the original shows one paged '
++        'hint on every item; the WordCounter dispatch at 0x7bf39 does not '
++        'select the opening page in practice. Neuter page KEPT: items 1 and '
++        '9 are neuter forms. D-57.')
++    return ch
++
++
+ def validate(ch):
+     ids = set()
+     for sec in ('learn', 'drill', 'exercise', 'quickReview'):
+@@ -1069,6 +1157,7 @@ def main():
+     tbk = Tbk(tbkpath)
+     conv = make_conv(json.load(open(fontpath)))
+     ch = build(tbk, conv)
++    ch = post_patches(ch)
+     validate(ch)
+     lex = build_lexicon(tbk, conv)
+     for name, obj in (('chapt-08.json', ch), ('lexicon-chapt08.json', lex)):
 diff --git a/scripts/check-content-shapes.mjs b/scripts/check-content-shapes.mjs
 index 416888a..61287c2 100644
 --- a/scripts/check-content-shapes.mjs
@@ -296,7 +503,7 @@ index e99be54..d3618a6 100644
  
  if (STAGED) {
 diff --git a/scripts/ui-behavior.mjs b/scripts/ui-behavior.mjs
-index f832b11..109f866 100644
+index f832b11..ed708cd 100644
 --- a/scripts/ui-behavior.mjs
 +++ b/scripts/ui-behavior.mjs
 @@ -2268,11 +2268,26 @@ async function fiveFItemOnScreen(chapterId, activity) {
@@ -538,7 +745,7 @@ index f832b11..109f866 100644
      await go('#/activity/chapt_8/c8_learn_vocab');
      let reachedEgo = false;
      for (let step = 0; step < 16; step += 1) {
-@@ -5209,13 +5194,300 @@ for (const [itemIndex, greek, personNumber] of [
+@@ -5209,13 +5194,307 @@ for (const [itemIndex, greek, personNumber] of [
      if (reachedEgo) {
        const egoCard = await exactAudioTap(
          page.locator('.card .flash-pane .value.greek-say').first(), 'chapt_8_h_voc3');
@@ -718,8 +925,15 @@ index f832b11..109f866 100644
 +  // tap in this run -- cannot pass.
 +  {
 +    const ROWS = [
++      // TWO FORMS, ONE CLIP, and it is the mapping rather than a slip.
++      // Nathanael corrected this on the device (2026-08-28): οὐ speaks
++      // `g_voc8` and BOTH οὐκ and οὐχ speak `g_voc8b`. 5H-SPEC3 4.3 had the
++      // middle form on `g_voc8a`, which is the clip that recites all three
++      // and is the LEMMA's -- what the flashcard plays under the (v) rule,
++      // and nothing the chart taps. Pinned per form rather than per clip, so
++      // the two rows that share one recording are each asserted on their own.
 +      ['chapt_7', 'c7_qr_vocab', 'οὐ, οὐκ, οὐχ',
-+        [['οὐ', 'chapt_7_g_voc8'], ['οὐκ', 'chapt_7_g_voc8a'], ['οὐχ', 'chapt_7_g_voc8b']]],
++        [['οὐ', 'chapt_7_g_voc8'], ['οὐκ', 'chapt_7_g_voc8b'], ['οὐχ', 'chapt_7_g_voc8b']]],
 +      ['chapt_8', 'c8_qr_vocab', 'ἐγώ / ἡμεῖς',
 +        [['ἐγώ', 'chapt_8_h_voc3a'], ['ἡμεῖς', 'chapt_8_h_voc3b']]],
 +      ['chapt_8', 'c8_qr_vocab', 'σύ / ὑμεῖς',
@@ -756,13 +970,13 @@ index f832b11..109f866 100644
 +    }
 +
 +    // THE OTHER HALF OF THE TWO-SURFACE RULE. The flashcard ignores `parts`
-+    // and plays the lemma's own clip. Chapter 7's is the 4.3 positive that
-+    // came with Nathanael's listens -- g_voc8a is the clip that recites all
-+    // three, so it is BOTH the second tap on the chart and the whole card
-+    // here, which is exactly what the lexicon says and would look like a bug
-+    // without this line. Chapters 8 and 11 keep their own flashcard checks in
-+    // the 5H-SPEC2 2.7 block above; this is the negative they imply, stated
-+    // where a reader of the (v) ruling will look for it.
++    // and plays the lemma's own clip. Chapter 7 is the sharpest case of the
++    // two surfaces differing: `g_voc8a` recites all three forms, and after
++    // Nathanael's correction it is on the CARD and nowhere on the chart --
++    // the chart's three taps are g_voc8, g_voc8b, g_voc8b. Chapters 8 and 11
++    // keep their own flashcard checks in the 5H-SPEC2 2.7 block above; this
++    // is the negative they imply, stated where a reader of the (v) ruling
++    // will look for it.
 +    const flashcard = async (chapterId, activityId, contains, limit) => {
 +      await go(`#/activity/${chapterId}/${activityId}`);
 +      for (let step = 0; step < limit; step += 1) {
@@ -1105,6 +1319,28 @@ index a0e4d5b..2bcf4d8 100644
          }
        } else if (def.contentRef) {
          const blocks = resolveContentById(chapterData, def.contentRef);
+diff --git a/src/data/lexicon-chapt07.json b/src/data/lexicon-chapt07.json
+index 7245223..3c03c3d 100644
+--- a/src/data/lexicon-chapt07.json
++++ b/src/data/lexicon-chapt07.json
+@@ -80,7 +80,7 @@
+    "audio": "chapt_7_g_voc8a",
+    "ntFreq": 1606,
+    "lexicalForm": "οὐ, οὐκ, οὐχ",
+-   "_audio_note": "VERIFY-5H-3 (x) answered pre-round (Nathanael, 2026-08-27): each form taps its own clip on the Review chart (ou -> g_voc8, ouk -> g_voc8a, ouch -> g_voc8b, his stated mapping); g_voc8a is also the clip that recites all three, so per the (v) two-surface rule the flashcard plays g_voc8a. Verify visually via the previous-response checklist.",
++   "_audio_note": "VERIFY-5H-3 (x) answered pre-round (Nathanael, 2026-08-27) and CORRECTED by him 2026-08-28 after seeing it on the device: on the Review chart ou -> g_voc8, and ouk AND ouch BOTH -> g_voc8b. 5H-SPEC3 4.3 rendered the middle form as g_voc8a; that was the spec's reading of his mapping, not his mapping. g_voc8a is the clip that recites all three and is now the LEMMA clip only, which per the (v) two-surface rule is what the flashcard plays. Implementer hand-edit, 5H-SPEC3-RESULTS section 3.6; the pipeline needs to absorb it.",
+    "parts": [
+     {
+      "greek": "οὐ",
+@@ -88,7 +88,7 @@
+     },
+     {
+      "greek": "οὐκ",
+-     "audio": "chapt_7_g_voc8a"
++     "audio": "chapt_7_g_voc8b"
+     },
+     {
+      "greek": "οὐχ",
 diff --git a/src/lib/content.js b/src/lib/content.js
 index ddaf166..8d8468f 100644
 --- a/src/lib/content.js
@@ -1172,139 +1408,15 @@ index ddaf166..8d8468f 100644
 
 ```
 
-### New files added this round
+### New documents added this round
 
 ```diff
-diff --git a/buildout/VERIFY-5H-3.md b/buildout/VERIFY-5H-3.md
-new file mode 100644
-index 0000000..67759b5
---- /dev/null
-+++ b/buildout/VERIFY-5H-3.md
-@@ -0,0 +1,118 @@
-+# VERIFY-5H-3.md — the items only Nathanael can settle
-+
-+Chapters 1, 7, 8 and 11 after 5H-SPEC3 (Opus): the VERIFY-5H-2 closure
-+round. Authored by the implementer in the same round, per standing rule 0.2.
-+
-+**This document is the previous-response checklist plus ONE item, and it says
-+so on purpose.** Rule 0.2's checklist is section 1: every ask from
-+VERIFY-5H2-RESPONSE, one or two lines each, for you to LOOK at rather than
-+assume. Section 2 is (y), the only question this round raised that no machine
-+and no rail walk can settle. There is nothing else: every other item of the
-+round is either mechanical and pinned, or answered by you already and applied.
-+
-+Per standing rule 0.5 there is **no airplane-mode section**. The scripted
-+offline walk ran (chapter 8, every rail stop, refresh on an activity route,
-+no console errors) and everything after it is assumed offline; report anything
-+that does not play.
-+
-+---
-+
-+## 1. Previous-response checklist
-+
-+Section 5 of 5H-SPEC3, verbatim. Tick what you can see; anything you cannot
-+see, say so and it goes to the front of the next round.
-+
-+- [ ] Objectives spacing back to pre-5H-SPEC2 on every chapter; ch7/ch11
-+      words still tap (item 1).
-+- [ ] ch8 Autos drill: Hint identical on every item; four pages
-+      Masc -> Fem -> Neut -> Three Uses via More/Back (s).
-+- [ ] ch8 Case Drill unchanged: per-person chart, Cancel only (s).
-+- [ ] ch12 εἰμί/ἔχω hint labelled More/Back (t).
-+- [ ] ch12 εἰμί/ἔχω hint still a one-chart-at-a-time toggle (w).
-+- [ ] ὅς card and chart row: k_voc5 only, no per-form taps (r).
-+- [ ] ch8 chart rows ἐγώ/ἡμεῖς and σύ/ὑμεῖς: each form taps its own
-+      clip; flashcards play the both-form clips (v).
-+- [ ] ch11 chart row οὗτος αὕτη τοῦτο: three independent taps; flashcard
-+      plays k_voc7 (v).
-+- [ ] Nothing anywhere plays l_a1s / l_ap9 (k2, closed).
-+- [ ] ch7 chart row οὐ, οὐκ, οὐχ: three independent taps (g_voc8 /
-+      g_voc8a / g_voc8b); flashcard plays g_voc8a (all three) (4.3).
-+
-+Where to find each on the device, in one line apiece:
-+
-+| Row | Route |
-+| --- | --- |
-+| Objectives spacing | Learn > Chapter Objectives, any chapter (ch1 is the plain-string case, ch11 the tapping one) |
-+| ch8 Autos hint | ch8 Drill > Aὐτός Translation Drill > Hint, on any two different items |
-+| ch8 Case Drill hint | ch8 Drill > Personal Pronoun Case Drill > Hint, on a ἡμεῖς, a σοι and an αὐτ- item |
-+| ch12 toggle label and shape | ch12 Drill > Imperfect Indicative Parsing Drill > Hint on an ἦμεν item |
-+| ὅς | ch11 Learn > Vocabulary (the ὅς, ἥ, ὅ card) and Review > Vocabulary Chart (the ὅς, ἥ, ὅ row) |
-+| ch8 rows | ch8 Review > Vocabulary Chart, the ἐγώ / ἡμεῖς and σύ / ὑμεῖς rows; then ch8 Learn > Vocabulary |
-+| ch11 row | ch11 Review > Vocabulary Chart, the οὗτος, αὕτη, τοῦτο row; then ch11 Learn > Vocabulary |
-+| ch7 row | ch7 Review > Vocabulary Chart, the οὐ, οὐκ, οὐχ row; then ch7 Learn > Vocabulary |
-+
-+---
-+
-+## 2. The one new item
-+
-+### (y) The four hint pages have longer headings than the original's panel *(judgement — implementer-raised, from the visual pass)*
-+
-+- [ ] Your (s) answer is what shipped: the Aὐτός Translation Drill opens the
-+      same Hint on every item, four pages, Masculine -> Feminine -> Neuter ->
-+      Three Uses, on the §4.2 Back/More pair with Close throughout. The neuter
-+      page stays, because items 1 (κατὰ τὸ αὐτὸ πνεῦμα) and 9
-+      (κἀγὼ γινώσκω αὐτὰ) are neuter forms — that is the conditional in your
-+      answer, resolved.
-+
-+      **What the visual pass turned up.** The original's panel
-+      (`ch8railwalk` p7 bottom-right, and the screenshot in your own response)
-+      prints ONE heading, **"Third Person Paradigm"**, with **Masculine** and
-+      **Feminine** as section labels down the page. The port's pages print the
-+      heading the data authored for each page — **"Third Person Paradigm:
-+      Masculine"**, then ": Feminine", then ": Neuter" — and the gender is
-+      therefore said once, in the title, rather than twice (the renderer drops
-+      the chart's own green gender label when the page title already says it,
-+      which is the existing heading-deduplication rule doing its job).
-+
-+      So the wording on screen is the pipeline's, and it is a heading the
-+      original does not print. The alternative reads exactly like the ch8
-+      **Learn > Third Person Paradigm** page you already have: "Third Person
-+      Paradigm" in the title, **Masculine** in green under it, changing to
-+      Feminine and Neuter as More steps.
-+
-+      **The original does it the second way when it pages this same stack.**
-+      `ch8railwalk` **p13** is Review Personal Pronouns: 3rd Person, and it
-+      pages Feminine -> Neuter on Back/More under a heading that stays
-+      "Third Person Pronouns" throughout, with the gender as the line beneath
-+      it. That is the only place the original itself pages these three charts,
-+      and it is the shape option two produces. I did not simply do it, because
-+      the page titles are the pipeline's words and quietly discarding delivered
-+      data is worse than a heading you can rule on in one line.
-+
-+      Cost either way is small and neither is a renderer change: the second
-+      option is three page titles in `chapt-08.json` becoming "Third Person
-+      Paradigm", after which the green gender label comes back on its own.
-+
-+      → **Keep "Third Person Paradigm: Masculine" / match the Learn page and
-+      p13 ("Third Person Paradigm" + green Masculine):** ______________
-+
-+      Notes:
-+
-+---
-+
-+## 3. Appendix — settled this round, not asked
-+
-+| Item | How it was settled |
-+| --- | --- |
-+| Objectives spacing on all twelve chapters | Reproduced first: the card is `white-space: pre-wrap`, and the newline 5H-SPEC2 left between the list items drew a full line box under every objective. `ui-behavior.mjs` 5H-SPEC3 1 pins the line-box metrics on one plain-string chapter and one audioMap chapter |
-+| The ch8 hint is the same on every item | `ui-behavior.mjs` 5H-SPEC3 2: the hint is walked from a former paradigm item AND a former Three Uses item and the two walks must be byte-identical, plus page order, chart-then-page shape, and the §4.2 bounds |
-+| The ch8 Case Drill did not move | Same block: its three per-person routes are asserted on screen (5H-SPEC2 3.1) and its data relation is restated |
-+| Per-form taps, and only where declared | `ui-behavior.mjs` 5H-SPEC3 4.2: every form of all four rows is an evict-and-refetch tap, the separators are asserted NOT blue, and a twelve-chapter census matches what the lexicons declare against what the charts draw |
-+| The flashcards are the other half of the rule | The ch7 positive is in the same block (`g_voc8a`, the all-three clip, and NOT split into three taps); ch8's and ch11's stay in the 5H-SPEC2 2.7 block where they were settled |
-+| ὅς has no per-form clips on either surface | Same block, asserted by name so the row cannot come back without a ruling |
-+| (k2) | Same block: chapter 12's data names neither clip anywhere |
-+| A `parts` list that could not render is now a build failure | `check-content-shapes.mjs`: every part's form must appear in its own printed lexicalForm and its clip must be in the manifest; negative-tested against both halves |
-+| Three stale harness assertions | `ui-behavior.mjs` W1 (walks the pager to its last page again), P3.2 (renamed for the third time, to the shape it now measures), and the two 5H-SPEC2 assertions the (s) and (v) rulings retired |
-+| Modal sizing for the four hint pages | `ui-modals.mjs`, two surfaces became four; 54 surfaces at five device heights, 270/270 clean |
-+| No page whose data changed overflows at 320 px | `ui-walk.mjs` over chapters 7, 8 and 11 |
-+| Offline behaviour did not regress | `ui-offline.mjs` over chapter 8 |
 diff --git a/buildout/5H-SPEC3-RESULTS-OPUS.md b/buildout/5H-SPEC3-RESULTS-OPUS.md
 new file mode 100644
-index 0000000..7989778
+index 0000000..7d1062f
 --- /dev/null
 +++ b/buildout/5H-SPEC3-RESULTS-OPUS.md
-@@ -0,0 +1,430 @@
+@@ -0,0 +1,505 @@
 +# 5H-SPEC3-RESULTS-OPUS
 +
 +Implementation handoff for 5H-SPEC3 Revision 2 — the VERIFY-5H-2 closure
@@ -1312,7 +1424,13 @@ index 0000000..7989778
 +tree clean at start.
 +
 +No git was run beyond read-only `git status` / `git diff` / `git show`. Nothing
-+is staged, committed or pushed.
++is staged, committed or pushed by me. **Nathanael committed the round himself
++as `0409019` ("saving 5H spec 3, opus 5 only") while the confirmation harness
++pass was still running**, and cleared two pipeline debts in the same commit
++(section 6); the work after that point — his ch7 clip correction (3.6), its
++harness pin, the two-literal fix to `assemble_ch7.py`, and these documents —
++sits on top of it, uncommitted. The BUILD document's diff is taken against
++`8f285be` so that it remains the round's complete cumulative diff either way.
 +
 +Companion documents: `5H-SPEC3-BUILD-OPUS.md` (the complete cumulative diff,
 +the tool log and the wall clock), `VERIFY-5H-3.md` (authored this round per
@@ -1359,10 +1477,16 @@ index 0000000..7989778
 +leaves a heading the original does not print, which is `VERIFY-5H-3` (y).
 +Section 3.2.
 +
-+**Fourth, two pipeline debts are OPEN despite section 8's "ALL CLEARED".**
-+`assemble_ch7.py` and `assemble_ch8.py` do not know about this round's
-+`parts` rulings, so regenerating either chapter would silently drop them.
-+Section 6.
++**Fourth, two pipeline debts were open despite section 8's "ALL CLEARED"** —
++`assemble_ch7.py` and `assemble_ch8.py` did not know about this round's `parts`
++rulings — **and Nathanael closed both mid-round**, in `0409019`. One line of
++that fix predates his own correction below and would have reversed it at the
++next regeneration; section 6 says what I changed and why.
++
++**Fifth, ONE data file was hand-edited after the round's first pass**, on
++Nathanael's direct correction: spec 4.3 had chapter 7's οὐκ tapping `g_voc8a`,
++and his mapping is that οὐκ and οὐχ BOTH tap `g_voc8b`. Section 3.6 has the
++before/after so the pipeline can absorb it.
 +
 +| Spec item | State |
 +| --- | --- |
@@ -1371,7 +1495,7 @@ index 0000000..7989778
 +| 3 (t) / (w) ratified | no implementer work, as the spec says; both confirmed still in place by assertion |
 +| 4.1 (r) ὅς | data only; asserted by name so it cannot come back silently |
 +| 4.2 (v) per-form chart taps | done — `parts` renders as independent taps on the Review chart only (3.3) |
-+| 4.3 ch7 οὐ/οὐκ/οὐχ | done — same renderer, three taps plus the flashcard positive |
++| 4.3 ch7 οὐ/οὐκ/οὐχ | done — same renderer, three taps plus the flashcard positive; the spec's clip mapping was corrected by Nathanael after the first pass (3.6) |
 +| 4.4 (k2) | closed; asserted that chapter 12's data names neither clip |
 +| 5 previous-response checklist | carried verbatim into `VERIFY-5H-3.md` section 1 |
 +| 6 VERIFY-5H-3 | done — the checklist plus (y), and it says that is all |
@@ -1392,7 +1516,7 @@ index 0000000..7989778
 +| 4.1 `parts` REMOVED from the hos lemma, `audio` still `k_voc5` | yes |
 +| 4.2 `parts` added to ch8 ἐγώ/ἡμεῖς (h_voc3a/b) and σύ/ὑμεῖς (h_voc9a/b) | yes |
 +| 4.2 ch11 οὗτος αὕτη τοῦτο already carries k_voc7a/b/c | yes |
-+| 4.3 `lexicon-chapt07.json` carries `parts` (g_voc8 / g_voc8a / g_voc8b) and `audio: g_voc8a`, `audioAlt` retired | yes, all four |
++| 4.3 `lexicon-chapt07.json` carries `parts` (g_voc8 / g_voc8a / g_voc8b) and `audio: g_voc8a`, `audioAlt` retired | yes, all four **as delivered** — and the middle clip was corrected to `g_voc8b` afterwards, section 3.6 |
 +| 4.2 the ONLY multi-form rows with per-form clips in twelve chapters are those four | yes — computed over every lexicon, not read off the spec |
 +| every part's form appears in its own printed `lexicalForm` | yes, all ten parts across the four lemmas |
 +| every part's clip is in `audio-manifest.json` | yes, all ten |
@@ -1555,6 +1679,41 @@ index 0000000..7989778
 +- **`check-doc-integrity.mjs`**: one `maxBuffer`, which is what made the gate
 +  runnable again (section 7).
 +
++### 3.6 One hand edit to `src/data/lexicon-chapt07.json`, on Nathanael's correction
++
++Reported here in full, per ONBOARD §2b: a hand edit is lost at the next regen
++unless the pipeline knows about it.
++
++Spec 4.3 states the ch7 chart mapping as "οὐ -> g_voc8, οὐκ -> g_voc8a,
++οὐχ -> g_voc8b", and that is what the delivered lexicon carried and what the
++round first shipped. Seeing it on the device, Nathanael corrected it: **οὐκ and
++οὐχ BOTH tap `g_voc8b`**, which is what he had originally specified. The spec
++had read his mapping as one clip per form.
++
++```diff
++   "parts": [
++    { "greek": "οὐ",  "audio": "chapt_7_g_voc8"  },
++-   { "greek": "οὐκ", "audio": "chapt_7_g_voc8a" },
+++   { "greek": "οὐκ", "audio": "chapt_7_g_voc8b" },
++    { "greek": "οὐχ", "audio": "chapt_7_g_voc8b" }
++   ]
++```
++
++`_audio_note` on the lemma is rewritten to say the same thing and to name this
++section, so a reader of the data finds the correction rather than the reading
++it replaced. **The lemma's own `audio` is unchanged at `g_voc8a`** — it is the
++clip that recites all three, so the flashcard still plays it and the (v)
++two-surface rule is untouched. What changes is that `g_voc8a` is now on the
++card ONLY and appears nowhere in the chart's taps, which makes chapter 7 the
++clearest instance in the app of the two surfaces deliberately differing.
++
++Nothing else in the round moves: the renderer already handles two forms
++pointing at one clip (the tap map is keyed by FORM, not by clip), and the
++harness pins each form separately so the two rows that share a recording are
++still asserted on their own. Verified end to end before the full pass — οὐ
++fetches `g_voc8.m4a`, οὐκ and οὐχ each fetch `g_voc8b.m4a` from an evicted
++store, and the flashcard fetches `g_voc8a.m4a` and carries no per-form buttons.
++
 +---
 +
 +## 4. Acceptance
@@ -1631,26 +1790,44 @@ index 0000000..7989778
 +
 +## 6. Two pipeline debts that section 8 says are cleared
 +
-+Spec section 8 says "ALL CLEARED with Revision 2" and lists `assemble_ch11.py`
-+and `assemble_ch12.py`. Chapters 7 and 8 also changed this round, and their
-+assemblers do not know it:
++Raised here, closed by Nathanael mid-round, and one line of his fix corrected
++in turn. The heading is kept as it was first written so `check:docs` does not
++read an hour-old rename as a lost section; the sequence below is the update.
 +
-+- **`scripts/assemble_ch7.py` line 1081** still writes
-+  `lemmas['ou']['audioAlt'] = [g_voc8a, g_voc8b]` and leaves `audio` at
-+  `g_voc8`. Regenerating chapter 7 would drop the `parts` list, retire the
-+  three taps, and put the flashcard back on the wrong clip — a straight
-+  reversal of 4.3.
-+- **`scripts/assemble_ch8.py`** has no `parts` for `ego` or `su` and no
-+  `post_patches_lexicon` at all, so the same is true of 4.2's two rows.
++**Raised.** Spec section 8 says "ALL CLEARED with Revision 2" and lists
++`assemble_ch11.py` and `assemble_ch12.py`. Chapters 7 and 8 also changed this
++round, and their assemblers did not know it: `assemble_ch7.py` still wrote
++`lemmas['ou']['audioAlt']` with `audio` at `g_voc8`, and `assemble_ch8.py` had
++no `parts` for `ego` or `su` and no `post_patches` at all. Regenerating either
++chapter would have silently reversed 4.2 or 4.3. Neither would be caught by
++`check:shapes` — an absent `parts` list is a legal shape — though the
++twelve-chapter census in `ui-behavior` 5H-SPEC3 4.2 would have caught it after
++the fact, which is partly what that census is for.
 +
-+Neither would be caught by `check:shapes`, because an absent `parts` list is a
-+legal shape. It WOULD be caught by the twelve-chapter census in
-+`ui-behavior` 5H-SPEC3 4.2, which compares the lexicons' declarations against
-+the charts — that census exists partly for this — but the guard is a red gate
-+after the fact, not a pipeline that carries the ruling forward.
++**Closed by Nathanael in `0409019`**, committed while this round's confirmation
++harness pass was still running: both assemblers now carry the `parts` rulings,
++ch7 gains a `post_patches` that re-applies the objectives audioMap, and ch8's
++paired-pronoun block is correct as written.
 +
-+I have not edited either script: they are pipeline files and the rulings they
-+need are the pipeline's to write.
++**One line of that is now wrong, and I changed it.** `assemble_ch7.py` was
++written against spec 4.3's mapping — `ouk -> g_voc8a` — which is the mapping he
++corrected an hour later (section 3.6). Left alone it would put `g_voc8a` back
++on the middle form at the next regeneration, which is exactly the failure mode
++the debt was raised about, and the function's own docstring says to update it
++when a new ruling lands. It now reads:
++
++```diff
++     lemmas['ou']['parts'] = [{'greek': 'οὐ', 'audio': aud('g_voc8')},
++-                             {'greek': 'οὐκ', 'audio': aud('g_voc8a')},
+++                             {'greek': 'οὐκ', 'audio': aud('g_voc8b')},
++                              {'greek': 'οὐχ', 'audio': aud('g_voc8b')}]
++```
++
++plus the `_audio_note` string beside it, so the script and the delivered file
++say the same sentence. **I could not prove byte-identity by regenerating**, the
++way the spec says ch11 and ch12 were verified: `7_ADJS.TBK` is not in this
++workspace. The change is two literals and a comment, and `assemble_ch7.py`
++parses; that is the whole of what I can assert.
 +
 +---
 +
@@ -1718,6 +1895,14 @@ index 0000000..7989778
 +5. **One line added to `check-doc-integrity.mjs`** (section 7), so that the
 +   count the spec asks me to note could actually be read. It is the same
 +   `maxBuffer` its three sibling calls already carry.
++6. **`src/data/lexicon-chapt07.json` was hand-edited** (section 3.6) under
++   ONBOARD §2b's second case, the authority being Nathanael directly rather
++   than a spec section. Before/after is in 3.6 for the pipeline to absorb.
++7. **`scripts/assemble_ch7.py` was edited too** (section 6), which is a
++   pipeline file. Two literals, so that the generator cannot reverse the
++   correction in 3.6 at the next regeneration. Flagged rather than assumed:
++   if the pipeline would rather own that edit, revert it there and the data
++   still stands.
 +
 +---
 +
@@ -1731,9 +1916,143 @@ index 0000000..7989778
 +- `check:docs` had stopped running some rounds ago, silently, for a reason
 +  that has nothing to do with documents: the screenshot corpus pushed a file
 +  list past a 1 MB buffer.
-+- Chapter 7's `parts` mapping is genuinely odd on its face and correct: `οὐκ`
-+  taps `g_voc8a`, which is also the clip that recites all three and therefore
-+  also what the flashcard plays. That is your listen and your mapping; the
-+  harness comment says so, so nobody "fixes" it later.
++- Chapter 7's `parts` mapping looked odd and WAS wrong, though not in the way
++  I expected: the spec had οὐκ on `g_voc8a`, the all-three clip, which I
++  flagged in the first pass of this document as odd-but-ruled. Nathanael's
++  correction is that οὐκ and οὐχ share `g_voc8b` (section 3.6). The lesson is
++  the one ONBOARD §10 already states — the flag was right and stopping to ask
++  would have been better than shipping it with a note.
+diff --git a/buildout/VERIFY-5H-3.md b/buildout/VERIFY-5H-3.md
+new file mode 100644
+index 0000000..396984a
+--- /dev/null
++++ b/buildout/VERIFY-5H-3.md
+@@ -0,0 +1,126 @@
++# VERIFY-5H-3.md — the items only Nathanael can settle
++
++Chapters 1, 7, 8 and 11 after 5H-SPEC3 (Opus): the VERIFY-5H-2 closure
++round. Authored by the implementer in the same round, per standing rule 0.2.
++
++**This document is the previous-response checklist plus ONE item, and it says
++so on purpose.** Rule 0.2's checklist is section 1: every ask from
++VERIFY-5H2-RESPONSE, one or two lines each, for you to LOOK at rather than
++assume. Section 2 is (y), the only question this round raised that no machine
++and no rail walk can settle. There is nothing else: every other item of the
++round is either mechanical and pinned, or answered by you already and applied.
++
++Per standing rule 0.5 there is **no airplane-mode section**. The scripted
++offline walk ran (chapter 8, every rail stop, refresh on an activity route,
++no console errors) and everything after it is assumed offline; report anything
++that does not play.
++
++---
++
++## 1. Previous-response checklist
++
++Section 5 of 5H-SPEC3, verbatim. Tick what you can see; anything you cannot
++see, say so and it goes to the front of the next round.
++
++- [x] Objectives spacing back to pre-5H-SPEC2 on every chapter; ch7/ch11
++      words still tap (item 1).
++- [x] ch8 Autos drill: Hint identical on every item; four pages
++      Masc -> Fem -> Neut -> Three Uses via More/Back (s).
++- [x] ch8 Case Drill unchanged: per-person chart, Cancel only (s).
++- [x] ch12 εἰμί/ἔχω hint labelled More/Back (t).
++- [x] ch12 εἰμί/ἔχω hint still a one-chart-at-a-time toggle (w).
++- [x] ὅς card and chart row: k_voc5 only, no per-form taps (r).
++- [x] ch8 chart rows ἐγώ/ἡμεῖς and σύ/ὑμεῖς: each form taps its own
++      clip; flashcards play the both-form clips (v).
++- [x] ch11 chart row οὗτος αὕτη τοῦτο: three independent taps; flashcard
++      plays k_voc7 (v).
++- [x] Nothing anywhere plays l_a1s / l_ap9 (k2, closed).
++- [ ] ch7 chart row οὐ, οὐκ, οὐχ: three independent taps (g_voc8 /
++      g_voc8a / g_voc8b); flashcard plays g_voc8a (all three) (4.3).
++
++**One correction to that last line, which is yours (2026-08-28).** The row is
++carried verbatim above because rule 0.2 says verbatim, but the mapping in it is
++the spec's reading rather than yours. Shipped: **οὐ -> g_voc8, οὐκ -> g_voc8b,
++οὐχ -> g_voc8b** — three taps, two of them the same recording. The flashcard
++still plays g_voc8a, the clip that recites all three, so g_voc8a is now on the
++CARD only and nowhere in the chart. Tick the row against that.
++
++Where to find each on the device, in one line apiece:
++
++| Row | Route |
++| --- | --- |
++| Objectives spacing | Learn > Chapter Objectives, any chapter (ch1 is the plain-string case, ch11 the tapping one) |
++| ch8 Autos hint | ch8 Drill > Aὐτός Translation Drill > Hint, on any two different items |
++| ch8 Case Drill hint | ch8 Drill > Personal Pronoun Case Drill > Hint, on a ἡμεῖς, a σοι and an αὐτ- item |
++| ch12 toggle label and shape | ch12 Drill > Imperfect Indicative Parsing Drill > Hint on an ἦμεν item |
++| ὅς | ch11 Learn > Vocabulary (the ὅς, ἥ, ὅ card) and Review > Vocabulary Chart (the ὅς, ἥ, ὅ row) |
++| ch8 rows | ch8 Review > Vocabulary Chart, the ἐγώ / ἡμεῖς and σύ / ὑμεῖς rows; then ch8 Learn > Vocabulary |
++| ch11 row | ch11 Review > Vocabulary Chart, the οὗτος, αὕτη, τοῦτο row; then ch11 Learn > Vocabulary |
++| ch7 row | ch7 Review > Vocabulary Chart, the οὐ, οὐκ, οὐχ row; then ch7 Learn > Vocabulary |
++
++---
++
++## 2. The one new item
++
++### (y) The four hint pages have longer headings than the original's panel *(judgement — implementer-raised, from the visual pass)*
++
++- [ ] Your (s) answer is what shipped: the Aὐτός Translation Drill opens the
++      same Hint on every item, four pages, Masculine -> Feminine -> Neuter ->
++      Three Uses, on the §4.2 Back/More pair with Close throughout. The neuter
++      page stays, because items 1 (κατὰ τὸ αὐτὸ πνεῦμα) and 9
++      (κἀγὼ γινώσκω αὐτὰ) are neuter forms — that is the conditional in your
++      answer, resolved.
++
++      **What the visual pass turned up.** The original's panel
++      (`ch8railwalk` p7 bottom-right, and the screenshot in your own response)
++      prints ONE heading, **"Third Person Paradigm"**, with **Masculine** and
++      **Feminine** as section labels down the page. The port's pages print the
++      heading the data authored for each page — **"Third Person Paradigm:
++      Masculine"**, then ": Feminine", then ": Neuter" — and the gender is
++      therefore said once, in the title, rather than twice (the renderer drops
++      the chart's own green gender label when the page title already says it,
++      which is the existing heading-deduplication rule doing its job).
++
++      So the wording on screen is the pipeline's, and it is a heading the
++      original does not print. The alternative reads exactly like the ch8
++      **Learn > Third Person Paradigm** page you already have: "Third Person
++      Paradigm" in the title, **Masculine** in green under it, changing to
++      Feminine and Neuter as More steps.
++
++      **The original does it the second way when it pages this same stack.**
++      `ch8railwalk` **p13** is Review Personal Pronouns: 3rd Person, and it
++      pages Feminine -> Neuter on Back/More under a heading that stays
++      "Third Person Pronouns" throughout, with the gender as the line beneath
++      it. That is the only place the original itself pages these three charts,
++      and it is the shape option two produces. I did not simply do it, because
++      the page titles are the pipeline's words and quietly discarding delivered
++      data is worse than a heading you can rule on in one line.
++
++      Cost either way is small and neither is a renderer change: the second
++      option is three page titles in `chapt-08.json` becoming "Third Person
++      Paradigm", after which the green gender label comes back on its own.
++
++      → **Keep "Third Person Paradigm: Masculine" / match the Learn page and
++      p13 ("Third Person Paradigm" + green Masculine):** ______________
++
++      Notes: Keep as is
++
++---
++
++## 3. Appendix — settled this round, not asked
++
++| Item | How it was settled |
++| --- | --- |
++| Objectives spacing on all twelve chapters | Reproduced first: the card is `white-space: pre-wrap`, and the newline 5H-SPEC2 left between the list items drew a full line box under every objective. `ui-behavior.mjs` 5H-SPEC3 1 pins the line-box metrics on one plain-string chapter and one audioMap chapter |
++| The ch8 hint is the same on every item | `ui-behavior.mjs` 5H-SPEC3 2: the hint is walked from a former paradigm item AND a former Three Uses item and the two walks must be byte-identical, plus page order, chart-then-page shape, and the §4.2 bounds |
++| The ch8 Case Drill did not move | Same block: its three per-person routes are asserted on screen (5H-SPEC2 3.1) and its data relation is restated |
++| Per-form taps, and only where declared | `ui-behavior.mjs` 5H-SPEC3 4.2: every form of all four rows is an evict-and-refetch tap, the separators are asserted NOT blue, and a twelve-chapter census matches what the lexicons declare against what the charts draw |
++| The flashcards are the other half of the rule | The ch7 positive is in the same block (`g_voc8a`, the all-three clip, and NOT split into three taps); ch8's and ch11's stay in the 5H-SPEC2 2.7 block where they were settled |
++| The ch7 clip mapping you corrected | `lexicon-chapt07.json` hand-edited (RESULTS 3.6) and the harness repinned per FORM, so the two forms that share `g_voc8b` are each asserted on their own rather than as one row |
++| ὅς has no per-form clips on either surface | Same block, asserted by name so the row cannot come back without a ruling |
++| (k2) | Same block: chapter 12's data names neither clip anywhere |
++| A `parts` list that could not render is now a build failure | `check-content-shapes.mjs`: every part's form must appear in its own printed lexicalForm and its clip must be in the manifest; negative-tested against both halves |
++| Three stale harness assertions | `ui-behavior.mjs` W1 (walks the pager to its last page again), P3.2 (renamed for the third time, to the shape it now measures), and the two 5H-SPEC2 assertions the (s) and (v) rulings retired |
++| Modal sizing for the four hint pages | `ui-modals.mjs`, two surfaces became four; 54 surfaces at five device heights, 270/270 clean |
++| No page whose data changed overflows at 320 px | `ui-walk.mjs` over chapters 7, 8 and 11 |
++| Offline behaviour did not regress | `ui-offline.mjs` over chapter 8 |
 
 ```

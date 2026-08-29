@@ -5369,8 +5369,15 @@ for (const [itemIndex, greek, personNumber] of [
   // tap in this run -- cannot pass.
   {
     const ROWS = [
+      // TWO FORMS, ONE CLIP, and it is the mapping rather than a slip.
+      // Nathanael corrected this on the device (2026-08-28): οὐ speaks
+      // `g_voc8` and BOTH οὐκ and οὐχ speak `g_voc8b`. 5H-SPEC3 4.3 had the
+      // middle form on `g_voc8a`, which is the clip that recites all three
+      // and is the LEMMA's -- what the flashcard plays under the (v) rule,
+      // and nothing the chart taps. Pinned per form rather than per clip, so
+      // the two rows that share one recording are each asserted on their own.
       ['chapt_7', 'c7_qr_vocab', 'οὐ, οὐκ, οὐχ',
-        [['οὐ', 'chapt_7_g_voc8'], ['οὐκ', 'chapt_7_g_voc8a'], ['οὐχ', 'chapt_7_g_voc8b']]],
+        [['οὐ', 'chapt_7_g_voc8'], ['οὐκ', 'chapt_7_g_voc8b'], ['οὐχ', 'chapt_7_g_voc8b']]],
       ['chapt_8', 'c8_qr_vocab', 'ἐγώ / ἡμεῖς',
         [['ἐγώ', 'chapt_8_h_voc3a'], ['ἡμεῖς', 'chapt_8_h_voc3b']]],
       ['chapt_8', 'c8_qr_vocab', 'σύ / ὑμεῖς',
@@ -5407,13 +5414,13 @@ for (const [itemIndex, greek, personNumber] of [
     }
 
     // THE OTHER HALF OF THE TWO-SURFACE RULE. The flashcard ignores `parts`
-    // and plays the lemma's own clip. Chapter 7's is the 4.3 positive that
-    // came with Nathanael's listens -- g_voc8a is the clip that recites all
-    // three, so it is BOTH the second tap on the chart and the whole card
-    // here, which is exactly what the lexicon says and would look like a bug
-    // without this line. Chapters 8 and 11 keep their own flashcard checks in
-    // the 5H-SPEC2 2.7 block above; this is the negative they imply, stated
-    // where a reader of the (v) ruling will look for it.
+    // and plays the lemma's own clip. Chapter 7 is the sharpest case of the
+    // two surfaces differing: `g_voc8a` recites all three forms, and after
+    // Nathanael's correction it is on the CARD and nowhere on the chart --
+    // the chart's three taps are g_voc8, g_voc8b, g_voc8b. Chapters 8 and 11
+    // keep their own flashcard checks in the 5H-SPEC2 2.7 block above; this
+    // is the negative they imply, stated where a reader of the (v) ruling
+    // will look for it.
     const flashcard = async (chapterId, activityId, contains, limit) => {
       await go(`#/activity/${chapterId}/${activityId}`);
       for (let step = 0; step < limit; step += 1) {
