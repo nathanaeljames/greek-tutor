@@ -1,3 +1,11 @@
 node_modules/
 dist/
 .DS_Store
+# Visual-verification screenshot corpora (DEBT 3).
+# Regenerable from the ui-* harness scripts; the REPORTS are tracked, the
+# images are not. Tracking ~1000 PNGs per round pushed the tracked-file
+# list past execSync's 1 MB default and took check:docs out entirely.
+buildout/screenshots/
+buildout/**/screenshots/
+buildout/**/*.png
+!buildout/**/*-report.png
