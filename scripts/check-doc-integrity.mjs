@@ -29,7 +29,8 @@ import { execSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-const ROOT = execSync('git rev-parse --show-toplevel').toString().trim();
+const ROOT = execSync('git rev-parse --show-toplevel',
+  { maxBuffer: 1 << 26 }).toString().trim();
 const ACK = new Set((process.env.DOC_INTEGRITY_ACK || '')
   .split(',').map(s => s.trim()).filter(Boolean));
 
@@ -60,7 +61,11 @@ let tracked = execSync('git ls-files buildout', { cwd: ROOT, maxBuffer: 1 << 26 
 
 if (STAGED) {
   // Only the docs this commit touches; untouched files cannot lose anything.
-  const changed = new Set(execSync('git diff --cached --name-only', { cwd: ROOT })
+  // maxBuffer for the same reason as the ls-files call above: on a staged
+  // commit that touches a screenshot corpus this list is just as long, and
+  // execSync's 1 MB default is what took the whole gate out once already.
+  const changed = new Set(execSync('git diff --cached --name-only',
+    { cwd: ROOT, maxBuffer: 1 << 26 })
     .toString().split('\n').filter(Boolean));
   tracked = tracked.filter(f => changed.has(f));
   if (!tracked.length) {

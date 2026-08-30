@@ -3106,7 +3106,7 @@
   "c13_qr_scripture_mat610a",
   "c13_learn_bibliography"
  ],
- "_audioVerify": "CHAPT_13 ships 158 WAVs. UNREFERENCED (D-39 class): m_vocl (declared as an alias at 0x10294, played by nothing -- the Review chart plays the halves vocl13a/vocl13b instead), m_ad5 (an orphan of chapter 12's l_ad family), msargs (missing underscore, duplicate of m_sargs), m_onoss. Listens wanted: m_vocla / m_voclb (confirm they are the first and second five rows), m_pas (confirm it recites pas, pasa, pan and not pas alone), m_sm4 vs m_sm8 (both are sou).",
+ "_audioVerify": "CHAPT_13 ships 159 WAVs, all 159 present in the audio manifest. UNREFERENCED (D-39 class): m_vocl (declared as an alias at 0x10294, played by nothing -- the Review chart plays the halves vocl13a/vocl13b instead), m_ad5 (an orphan of chapter 12's l_ad family), msargs (missing underscore, duplicate of m_sargs), m_onoss. Listens wanted: m_vocla / m_voclb (confirm they are the first and second five rows), m_pas (confirm it recites pas, pasa, pan and not pas alone), m_sm4 vs m_sm8 (both are sou).",
  "_menu_note": "Drill Menu and page titles agree in this chapter; no title sweep divergence.",
  "_sequence_note": "Rail order from ch13railwalk.pdf, cross-checked against the Drill / Exercise / Quick Review menus on its last page.",
  "hintCharts": {

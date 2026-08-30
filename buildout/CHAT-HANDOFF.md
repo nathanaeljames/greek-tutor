@@ -173,7 +173,27 @@ have caught immediately. This applies to EVERY implementer round.
    2026-07-28. The edit must be listed in RESULTS with its
    before/after so the pipeline can absorb it; the pipeline fix still
    follows, because a hand edit is lost at the next regen.
-5. Automation: the repo drives the real UI with playwright-core
+5. SAME-COHORT ABSORPTION (added 2026-08-29, after the round-21 debt
+   handoff). Rule 4's promise that "the pipeline fix still follows" is
+   not self-executing, and twice now it has not followed: round 20's
+   ch7/ch8 `parts` rulings and round 21's fourteen ch13-16 edits both
+   sat unabsorbed until a grading pass went looking. EVERY implementer
+   `src/data` edit made under rule 4 must produce a matching pipeline
+   change — a `post_patches` entry, or better, a fix to the extraction
+   stage that makes the edit unnecessary — IN THE SAME COHORT, BEFORE
+   THE COHORT CLOSES. The RESULTS before/after table is already in
+   exactly the form needed to author it. A cohort does not close with
+   an unabsorbed rule-4 edit outstanding.
+   Two supports for this, both live from 5I:
+   - each of `assemble_ch13..16.py` DIFFS its own output against the
+     committed chapter and REFUSES to write on any difference, naming
+     the JSON paths, so an unabsorbed edit surfaces the moment anyone
+     regenerates rather than silently reverting;
+   - `scripts/scan_garble.py` is a HUMAN-READ Stage 8 report (never a
+     gate, exits 0 always) that catches the two defect classes round 21
+     found by hand: a paragraph that swallowed its own chart, and
+     romanised Greek-font runs.
+6. Automation: the repo drives the real UI with playwright-core
    (installed from a scratchpad for three rounds now — it becomes a
    devDependency this round). Page loads, clicks, typing and
    screenshots are all scriptable, so the great majority of a VERIFY
