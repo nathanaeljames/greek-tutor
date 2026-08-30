@@ -125,6 +125,53 @@ const hintAtPrompt = (chapterId, activityId, prompt, itemCount, disclosureState 
   if (disclosureState !== null) await setHintDisclosureState(disclosureState);
 };
 
+// 5I: a bundle of THREE OR MORE charts steps with the centred Back/More pair
+// (DISCLOSURE-RULES 4.2) rather than alternating with a single toggle, so
+// `setHintDisclosureState` -- which knows only the two-state toggle -- cannot
+// reach state 3 of chapter 16's passive paradigms or state 4 of chapter 15's
+// aorist-versus-imperfect stack. Each state is its own surface at every
+// height; a chart nobody opens is a chart nobody measures.
+const stepHintDisclosureTo = async stateIndex => {
+  const controls = page.locator('.modal [data-hint-paradigm-controls]');
+  await controls.waitFor({ state: 'visible' });
+  for (let step = 0; step < stateIndex; step++) {
+    const more = page.locator('.modal [data-hint-paradigm-nav="more"]');
+    if (!await more.count() || await more.isDisabled()) throw new Error(`hint bundle has no state ${stateIndex + 1}`);
+    await more.click();
+    await page.waitForTimeout(160);
+  }
+  await page.locator(`.modal [data-hint-paradigm-controls][data-state-index="${stateIndex}"]`).waitFor();
+  await page.waitForTimeout(120);
+};
+
+// A drill Hint whose bundle holds three or more charts.
+const hintState = (chapterId, activityId, stateIndex) => async () => {
+  await go(`#/activity/${chapterId}/${activityId}`);
+  await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
+  await page.waitForTimeout(180);
+  await stepHintDisclosureTo(stateIndex);
+};
+
+// An IN-CHART C3 trigger on a topicPages surface: step to the topic, then press
+// the named trigger. Chapter 13's Key Letter Box is the first chart in the app
+// with six of them, and chapters 14 and 15 add four more between them.
+const chartTrigger = (chapterId, activityId, topicIndex, ref) => async () => {
+  await go(`#/activity/${chapterId}/${activityId}`);
+  for (let i = 0; i < topicIndex; i++) {
+    await page.getByRole('button', { name: 'Next Topic', exact: true }).click();
+    await page.waitForTimeout(80);
+  }
+  await page.locator(`.card [data-chart-trigger="${ref}"]`).first().click();
+  await page.waitForTimeout(180);
+};
+
+// The tile keyboard, which is a modal of its own on every speller.
+const spellerKeyboard = (chapterId, activityId) => async () => {
+  await go(`#/activity/${chapterId}/${activityId}`);
+  await page.locator('.card').getByRole('button', { name: 'Greek Keyboard', exact: true }).click();
+  await page.waitForTimeout(180);
+};
+
 // A PAGED hint is N surfaces, not one. 5H-SPEC3 2 put chapter 8's translation
 // hint back to a four-page stack (VERIFY-5H-2 (s)), and a page nobody opens is
 // a page nobody measures -- which is the whole reason this file exists. The
@@ -313,6 +360,72 @@ const SURFACES = [
   // The Settings confirm dialog (added 2026-08-13). Two lines and two buttons
   // -- the smallest modal in the app, and the one a shared-CSS change is most
   // likely to leave behind.
+  // ---------------------------------------------------------------- 5I
+  // Chapters 13-16. THE KEY LETTER BOX is the new shape: six in-chart triggers
+  // on one chart, each opening its own popup, where no earlier chapter has more
+  // than three on a page. All six are listed rather than sampled -- the point
+  // of this file is that a modal nobody opens is a modal nobody checks.
+  ['ch13-klb-popup-unvoiced', chartTrigger('chapt_13', 'c13_learn_concepts', 1, 'unvoiced')],
+  ['ch13-klb-popup-voiced', chartTrigger('chapt_13', 'c13_learn_concepts', 1, 'voiced')],
+  ['ch13-klb-popup-aspirate', chartTrigger('chapt_13', 'c13_learn_concepts', 1, 'aspirate')],
+  ['ch13-klb-popup-labial', chartTrigger('chapt_13', 'c13_learn_concepts', 1, 'labial')],
+  ['ch13-klb-popup-velar', chartTrigger('chapt_13', 'c13_learn_concepts', 1, 'velar')],
+  ['ch13-klb-popup-dental', chartTrigger('chapt_13', 'c13_learn_concepts', 1, 'dental')],
+  ['ch13-declining-hint', hint('chapt_13', 'c13_drill_declining', false)],
+  ['ch13-pas-declining-hint', hint('chapt_13', 'c13_drill_pas_declining', false)],
+  ['ch13-translation-hint', hint('chapt_13', 'c13_drill_translation', false)],
+  ['ch13-speller-greek-keyboard', spellerKeyboard('chapt_13', 'c13_ex_speller')],
+  ['ch13-verse-speller-greek-keyboard', spellerKeyboard('chapt_13', 'c13_ex_scripture_speller')],
+  // Chapter 14's stem list carries ONE in-chart trigger, and it is reachable
+  // from two different hosts (the Learn topic and the Quick Review page), which
+  // is two registers and therefore two surfaces.
+  ['ch14-stem-popup-learn', chartTrigger('chapt_14', 'c14_learn_second_aorist', 5, 'blepwEidon')],
+  ['ch14-stem-popup-review', async () => {
+    await go('#/activity/chapt_14/c14_qr_forms');
+    await page.locator('.card [data-chart-trigger="blepwEidon"]').first().click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch14-parsing-hint-active', hint('chapt_14', 'c14_drill_parsing', false, 0), true, false],
+  ['ch14-parsing-hint-middle', hint('chapt_14', 'c14_drill_parsing', false, 1), true, false],
+  ['ch14-forms-hint', hint('chapt_14', 'c14_drill_forms', false)],
+  ['ch14-translation-hint-active', hint('chapt_14', 'c14_drill_translation', false, 0), true, false],
+  ['ch14-translation-hint-middle', hint('chapt_14', 'c14_drill_translation', false, 1), true, false],
+  ['ch14-speller-greek-keyboard', spellerKeyboard('chapt_14', 'c14_ex_speller_forms')],
+  ['ch14-verse-speller-greek-keyboard', spellerKeyboard('chapt_14', 'c14_ex_scripture_speller')],
+  // Chapter 15's four sound-description popups hang off the Ending
+  // Transformations chart; the fourth is reached from the prose beneath it.
+  ['ch15-popup-palatals', chartTrigger('chapt_15', 'c15_learn_first_aorist', 6, 'palatals')],
+  ['ch15-popup-labials', chartTrigger('chapt_15', 'c15_learn_first_aorist', 6, 'labials')],
+  ['ch15-popup-dentals', chartTrigger('chapt_15', 'c15_learn_first_aorist', 6, 'dentals')],
+  ['ch15-popup-liquids', async () => {
+    await go('#/activity/chapt_15/c15_learn_first_aorist');
+    for (let i = 0; i < 6; i++) { await page.getByRole('button', { name: 'Next Topic', exact: true }).click(); await page.waitForTimeout(80); }
+    await page.locator('.card .rc-para .popup-link').first().click();
+    await page.waitForTimeout(180);
+  }],
+  ['ch15-parsing-hint-active', hint('chapt_15', 'c15_drill_parsing', false, 0), true, false],
+  ['ch15-parsing-hint-middle', hint('chapt_15', 'c15_drill_parsing', false, 1), true, false],
+  ['ch15-forms-hint', hint('chapt_15', 'c15_drill_forms', false)],
+  // FOUR charts, the deepest bundle in the app: aorist active, aorist middle,
+  // then the two imperfects the drill is contrasting them against.
+  ['ch15-translation-hint-s1-aorist-active', hintState('chapt_15', 'c15_drill_translation', 0), true, false],
+  ['ch15-translation-hint-s2-aorist-middle', hintState('chapt_15', 'c15_drill_translation', 1), true, false],
+  ['ch15-translation-hint-s3-imperfect-active', hintState('chapt_15', 'c15_drill_translation', 2), true, false],
+  ['ch15-translation-hint-s4-imperfect-mp', hintState('chapt_15', 'c15_drill_translation', 3), true, false],
+  ['ch15-speller-greek-keyboard', spellerKeyboard('chapt_15', 'c15_ex_speller_forms')],
+  ['ch15-verse-speller-greek-keyboard', spellerKeyboard('chapt_15', 'c15_ex_scripture_speller')],
+  // Chapter 16: a three-chart bundle on both the parsing and translation
+  // drills, and a two-half stem table on the forms drill -- the widest chart
+  // this cohort puts inside a dialog.
+  ['ch16-parsing-hint-s1-first-aorist', hintState('chapt_16', 'c16_drill_parsing', 0), true, false],
+  ['ch16-parsing-hint-s2-future', hintState('chapt_16', 'c16_drill_parsing', 1), true, false],
+  ['ch16-parsing-hint-s3-second-aorist', hintState('chapt_16', 'c16_drill_parsing', 2), true, false],
+  ['ch16-translation-hint-s1-first-aorist', hintState('chapt_16', 'c16_drill_translation', 0), true, false],
+  ['ch16-translation-hint-s3-second-aorist', hintState('chapt_16', 'c16_drill_translation', 2), true, false],
+  ['ch16-forms-hint-half1', hint('chapt_16', 'c16_drill_forms', false, 0), true, false],
+  ['ch16-forms-hint-half2', hint('chapt_16', 'c16_drill_forms', false, 1), true, false],
+  ['ch16-speller-greek-keyboard', spellerKeyboard('chapt_16', 'c16_ex_speller_forms')],
+  ['ch16-verse-speller-greek-keyboard', spellerKeyboard('chapt_16', 'c16_ex_scripture_speller')],
   ['settings-clear-audio-confirm', async () => {
     await go('#/settings');
     await page.getByRole('button', { name: 'Clear downloaded audio', exact: true }).click();
@@ -353,7 +466,15 @@ for (const { name, width, height } of VIEWPORTS) {
       const hc = hintControls ? hintControls.getBoundingClientRect() : null;
       const hintSay = modal.querySelector('[data-hint-paradigm-say]');
       const hs = hintSay ? hintSay.getBoundingClientRect() : null;
-      const hintToggle = modal.querySelector('[data-hint-paradigm-toggle]');
+      // 5I: WHICH control a disclosed bundle draws depends on how many charts
+      // it holds -- the DISCLOSURE-RULES 4.1 single toggle at two, the 4.2
+      // Back/More pair at three or more. Chapter 15's four-chart hint and
+      // chapter 16's three-chart one are the first 3+ bundles inside a modal,
+      // and asserting only against the toggle would have reported them BAD for
+      // drawing the control the sheet actually asks for. Measure whichever the
+      // state draws; the assertion below is the same either way -- the control
+      // does not move when the content under it does.
+      const hintToggle = modal.querySelector('[data-hint-paradigm-toggle], [data-hint-paradigm-controls] .pg-nav');
       const ht = hintToggle ? hintToggle.getBoundingClientRect() : null;
       const bar = sel => { const el = document.querySelector(sel); return el ? el.getBoundingClientRect() : null; };
       const tb = bar('.topbar'), bb = bar('.bottom-bar');
@@ -394,7 +515,15 @@ for (const { name, width, height } of VIEWPORTS) {
       const a = action ? action.getBoundingClientRect() : null;
       const hintControls = modal.querySelector('[data-hint-paradigm-controls]');
       const hc = hintControls ? hintControls.getBoundingClientRect() : null;
-      const hintToggle = modal.querySelector('[data-hint-paradigm-toggle]');
+      // 5I: WHICH control a disclosed bundle draws depends on how many charts
+      // it holds -- the DISCLOSURE-RULES 4.1 single toggle at two, the 4.2
+      // Back/More pair at three or more. Chapter 15's four-chart hint and
+      // chapter 16's three-chart one are the first 3+ bundles inside a modal,
+      // and asserting only against the toggle would have reported them BAD for
+      // drawing the control the sheet actually asks for. Measure whichever the
+      // state draws; the assertion below is the same either way -- the control
+      // does not move when the content under it does.
+      const hintToggle = modal.querySelector('[data-hint-paradigm-toggle], [data-hint-paradigm-controls] .pg-nav');
       const ht = hintToggle ? hintToggle.getBoundingClientRect() : null;
       return {
         top: Math.round(m.top), bottom: Math.round(m.bottom),

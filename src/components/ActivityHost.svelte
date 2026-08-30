@@ -39,7 +39,13 @@
 </script>
 
 {#if chapter && activity}
-  {#if activity.instructions && !activity.instructions.startsWith('_verify')}
+  <!-- 5I-SPEC1 §4.4: an activity whose instruction line CHANGES PER ITEM draws
+       it itself, in this same slot and with this same class, because only the
+       activity knows which item is on screen. The activity-level string stays
+       in the data as the fallback for any surface that has not loaded an item
+       yet -- it is simply not drawn from here, or the line would appear
+       twice. -->
+  {#if activity.instructions && !activity.instructionsPerItem && !activity.instructions.startsWith('_verify')}
     <div class="instructions">{stripMarkup(activity.instructions)}</div>
   {/if}
   <!-- Consecutive routes often render the SAME component type; Svelte would

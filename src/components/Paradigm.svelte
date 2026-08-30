@@ -108,18 +108,79 @@
   $: columns = chart.columns || [];
   $: columnAudio = chart.columnAudio || [];
   $: columnGroups = chart.columnGroups || [];
+  // 5I-SPEC1 4.1 -- THE SIX-COLUMN CHART. Chapter 13's pas adjective is the
+  // widest chart in the app: Masculine / Feminine / Neuter twice over, under a
+  // spanning Singular / Plural header row. At 320px it does not fit and this
+  // app CLIPS rather than scrolls, so the shipped six-across render lost its
+  // right-hand columns and overprinted its headers with nothing to scroll and
+  // nothing to error (measured: the grid overran by 10px and individual cells
+  // by up to 10px, with headers reading "MASCULFEMININEUTER").
+  //
+  // A PAGER IS FORBIDDEN on the Quick Review copy (DISCLOSURE-RULES 4.6:
+  // students print Review pages, so everything must be in one flowing scroll)
+  // and inventing one is explicitly ruled out by the spec. What the same rule
+  // asks for instead is already written down: a C9 page "stacks paradigms
+  // vertically (Singular above Plural)". So a chart that declares
+  // `columnGroups` draws ONE BLOCK PER GROUP, stacked, each headed by its
+  // group label and carrying its own copy of the case-label column. Nothing is
+  // hidden, nothing pages, and the widest thing on screen becomes a
+  // three-column chart, the density chapter 5's article chart and chapter 16's
+  // passive stems already sit at comfortably.
+  //
+  // Every cell keeps its own clip and its own tap; the say-all still speaks the
+  // whole paradigm once, beneath both halves (NIT-LOG N-1: a stacked Quick
+  // Review chart gets ONE button, after the last half). Chapter 13's pas chart
+  // is the only chart in sixteen chapters that declares `columnGroups`, so no
+  // other chart's rendering moves.
+  $: groupedColumns = columnGroups.length > 1
+    ? columnGroups.reduce((acc, group) => {
+        const from = acc.at;
+        const span = group.span || 1;
+        acc.at = from + span;
+        acc.blocks.push({
+          label: group.label,
+          from,
+          columns: columns.slice(from, from + span),
+          columnAudio: columnAudio.slice(from, from + span)
+        });
+        return acc;
+      }, { at: 0, blocks: [] }).blocks
+    : [];
   $: rows = chart.rows || [];
   $: showGlosses = chart.showGlosses !== false;
   $: hasCaseLabels = rows.some(row => row.label != null);
   $: hasLongCaseLabels = rows.some(row => String(row.label || '').length > 5);
+  // 5I-SPEC1 4.7 -- A CHART WITH NO ROW LABELS AT ALL. Chapter 16's Passive
+  // Stems table is a list of verbs across three tense columns; every row's
+  // label is null, so the label gutter is a blank column stealing width from
+  // three columns of long forms, and none of the density rules fired because
+  // every one of them keys off having case labels. At 320px that put
+  // ἀποστέλλω, ἐγερθήσομαι and γνωσθήσομαι through the "break anywhere" rule
+  // and each printed across two lines mid-word.
+  //
+  // Scoped to THREE OR MORE columns so the one other label-less chart in
+  // sixteen chapters -- chapter 7's two-column εἰμί paradigm, device-verified
+  // as it stands -- is untouched.
+  $: hasRowLabels = rows.some(row => {
+    const label = row.label != null ? row.label : row.person;
+    return label != null && String(label) !== '';
+  });
+  $: labelFreeWideChart = !hasRowLabels && effectiveColumnCount >= 3;
   // How long a form has to be before the cells need shrinking depends on how
   // many columns share the width. Two columns tolerate a nine-letter form;
   // THREE do not — chapter 7's adjective paradigm sets ἀγαθῶν, ἀγαθοῖς and
   // ἀγαθούς three abreast and broke each of them across two lines at 380px
   // (rail-walk comparison against ch7railwalk p14). Chapter 5's three-column
   // article chart holds forms of three and four letters and is untouched.
-  $: formLimit = columns.length >= 3 ? 5 : 7;
-  $: hasLongForms = hasCaseLabels && rows.some(row => (row.cells || [])
+  // 4.1: how many columns are on screen AT ONCE, which is what the density
+  // tiers are about. A grouped chart draws one group at a time down the page,
+  // so a six-column paradigm is three columns wide and takes the three-column
+  // type sizes rather than the crushed six-column ones.
+  $: effectiveColumnCount = groupedColumns.length
+    ? Math.max(...groupedColumns.map(group => group.columns.length))
+    : columns.length;
+  $: formLimit = effectiveColumnCount >= 3 ? 5 : 7;
+  $: hasLongForms = (hasCaseLabels || labelFreeWideChart) && rows.some(row => (row.cells || [])
     .some(cell => [...String(cell.greek || '')].length > formLimit));
   // Endings rows are flat [ending, gloss, ending, gloss] tuples -- one pair per
   // number column, so the popup lines up with the chart above it.
@@ -242,8 +303,9 @@
   class:pg-case-labels={hasCaseLabels}
   class:pg-long-case-labels={hasLongCaseLabels}
   class:pg-long-forms={hasLongForms}
-  class:pg-three-columns={columns.length === 3}
-  class:pg-many-columns={columns.length > 3}
+  class:pg-no-row-labels={labelFreeWideChart}
+  class:pg-three-columns={effectiveColumnCount === 3}
+  class:pg-many-columns={effectiveColumnCount > 3}
   class:pg-modal-host={modalHost}
   class:pg-pins-nav={pinNav}
   data-chart-index={chartIndex}
@@ -308,21 +370,61 @@
            the paradigm back. -->
       <EndingsGrid rows={endingRows} {columns} />
     {:else}
-    <div class="pg-grid" style="--pg-cols:{columns.length}">
-      {#if columnGroups.length}
-        <div class="pg-head pg-group-head" style="--pg-cols:{columns.length}">
-          <span class="pg-person pg-head-spacer">&nbsp;</span>
-          {#each columnGroups as group, groupIndex}
-            <span
-              class="pg-column-group"
-              data-column-group={groupIndex}
-              style={`grid-column: span ${group.span || 1}`}>
-              {group.label}
-            </span>
+    <div class="pg-grid" class:pg-grouped={groupedColumns.length}
+         style="--pg-cols:{groupedColumns.length ? groupedColumns[0].columns.length : columns.length}">
+      {#each groupedColumns as group, groupIndex}
+        <!-- 4.1: one block per column group, stacked. The group label is the
+             block's heading rather than a spanning cell above six columns.
+             The row markup below is the ungrouped branch's, sliced to this
+             group's columns; the two are a PAIR and a change to a cell in one
+             belongs in the other. Svelte 4 has no snippet to share them with,
+             and factoring a component out for one chart in sixteen chapters
+             would cost more than it saves. -->
+        <div class="pg-group" data-column-group={groupIndex}
+             style="--pg-cols:{group.columns.length}">
+          <div class="pg-group-label">{group.label}</div>
+          <div class="pg-head">
+            <span class="pg-person pg-head-spacer">&nbsp;</span>
+            {#each group.columns as column, columnIndex}
+              {#if group.columnAudio[columnIndex]}
+                <button
+                  class="pg-column pg-column-audio"
+                  data-column-index={group.from + columnIndex}
+                  aria-label={`Play ${column}`}
+                  on:click={() => play(group.columnAudio[columnIndex])}>
+                  {column}
+                </button>
+              {:else}
+                <span class="pg-column" data-column-index={group.from + columnIndex}>{column}</span>
+              {/if}
+            {/each}
+          </div>
+          {#each rows as row, rowIndex}
+            <div class="pg-row" data-row-index={rowIndex}>
+              <span class="pg-person pg-row-label">{row.label ?? row.person ?? ''}</span>
+              {#each (row.cells || []).slice(group.from, group.from + group.columns.length) as cell, cellIndex}
+                <div
+                  class="pg-cell"
+                  class:pg-cell-gloss={showGlosses && !!cell.gloss}
+                  data-cell-index={group.from + cellIndex}>
+                  {#if cell.greek == null && cell.text != null}
+                    <span class="pg-cell-text" data-cell-text>{cell.text}</span>
+                  {:else}
+                    <button
+                      class="pg-greek-tap"
+                      disabled={!cell.audio}
+                      on:click={() => cell.audio && play(cell.audio)}>
+                      <span class="greek pg-greek">{cell.greek}</span>
+                    </button>
+                  {/if}
+                  {#if showGlosses && cell.gloss}<span class="pg-gloss">{cell.gloss}</span>{/if}
+                </div>
+              {/each}
+            </div>
           {/each}
         </div>
-      {/if}
-      {#if columns.length}
+      {/each}
+      {#if !groupedColumns.length && columns.length}
         <div class="pg-head">
           <span class="pg-person pg-head-spacer">&nbsp;</span>
           {#each columns as column, columnIndex}
@@ -340,7 +442,7 @@
           {/each}
         </div>
       {/if}
-      {#each rows as row, rowIndex}
+      {#each groupedColumns.length ? [] : rows as row, rowIndex}
         <!-- 5F: a chart whose rows run singular THEN plural down one column
              legends each block with its number, exactly where the number
              changes — chapter 7's Review Adjectives Paradigm prints
@@ -357,12 +459,26 @@
               class="pg-cell"
               class:pg-cell-gloss={showGlosses && !!cell.gloss}
               data-cell-index={cellIndex}>
-              <button
-                class="pg-greek-tap"
-                disabled={!cell.audio}
-                on:click={() => cell.audio && play(cell.audio)}>
-                <span class="greek pg-greek">{cell.greek}</span>
-              </button>
+              {#if cell.greek == null && cell.text != null}
+                <!-- 5I-SPEC1 4.7: A CELL THAT IS NOT A FORM. Chapter 16's
+                     Passive Stems chart prints an em dash where a verb has no
+                     future passive -- eight of its fifteen rows -- and the data
+                     ships that dash as a `text` cell rather than a `greek` one
+                     precisely so it cannot be mistaken for a word. It is
+                     notation: no clip, no tap, no Greek face, ink not blue
+                     (directive 8), and no button for a screen reader to offer.
+                     `greek` and `text` are alternatives on a cell; every chart
+                     in sixteen chapters that ships only `greek` cells is
+                     untouched. -->
+                <span class="pg-cell-text" data-cell-text>{cell.text}</span>
+              {:else}
+                <button
+                  class="pg-greek-tap"
+                  disabled={!cell.audio}
+                  on:click={() => cell.audio && play(cell.audio)}>
+                  <span class="greek pg-greek">{cell.greek}</span>
+                </button>
+              {/if}
               {#if showGlosses && cell.gloss}<span class="pg-gloss">{cell.gloss}</span>{/if}
             </div>
           {/each}

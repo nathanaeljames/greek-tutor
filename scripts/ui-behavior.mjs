@@ -51,6 +51,10 @@ const ch9 = JSON.parse(readFileSync('src/data/chapt-09.json', 'utf8'));
 const ch10 = JSON.parse(readFileSync('src/data/chapt-10.json', 'utf8'));
 const ch11 = JSON.parse(readFileSync('src/data/chapt-11.json', 'utf8'));
 const ch12 = JSON.parse(readFileSync('src/data/chapt-12.json', 'utf8'));
+const ch13 = JSON.parse(readFileSync('src/data/chapt-13.json', 'utf8'));
+const ch14 = JSON.parse(readFileSync('src/data/chapt-14.json', 'utf8'));
+const ch15 = JSON.parse(readFileSync('src/data/chapt-15.json', 'utf8'));
+const ch16 = JSON.parse(readFileSync('src/data/chapt-16.json', 'utf8'));
 const verse = (ch3.exercise.find(a => a.type === 'spellVerse').answerWords || []).join(' ');
 // UNACCENTED, not unmarked (5E-SPEC2 §4.2). "With Accents" OFF forgives the
 // acute, the grave and the circumflex and NOTHING else, so a fixture that
@@ -762,9 +766,13 @@ await page.setViewportSize({ width: 390, height: 900 });
 // assertion and every spelling rule below covers them without being restated.
 // That is the point of writing them as sweeps rather than as lists.
 // 5G: chapters 9 and 10 join it in turn, for the same reason.
+// 5I: chapters 13-16 join it in turn -- which is how the A1c audio-leak gate,
+// the advance-class census, the spelling rules and the option-grid census all
+// reach the new Forms Drills without a single one of them being restated.
 const CHAPTERS = { chapt_1: ch1, chapt_2: ch2, chapt_3: ch3, chapt_4: ch4, chapt_5: ch5,
                    chapt_6: ch6, chapt_7: ch7, chapt_8: ch8, chapt_9: ch9, chapt_10: ch10,
-                   chapt_11: ch11, chapt_12: ch12 };
+                   chapt_11: ch11, chapt_12: ch12, chapt_13: ch13, chapt_14: ch14,
+                   chapt_15: ch15, chapt_16: ch16 };
 const LEXICON = id => JSON.parse(readFileSync(`src/data/lexicon-chapt${String(id.split('_')[1]).padStart(2, '0')}.json`, 'utf8'));
 const promptGloss = () => page.locator('.card.speller .flash-pane .value').first().innerText();
 // WHICH ITEM the word speller is on. Not the prompt: chapter 7's adjective
@@ -1837,8 +1845,17 @@ await page.setViewportSize({ width: 390, height: 900 });
     headingKey('First Declension—Masc') === headingKey('First Declension—Masculine')
       && ABBREVIATIONS.test('First Declension—Masc'),
     'masc -> masculine');
-  check(`5E-R1 every REPLACED heading pair is a chapter-11 radio-label/panel-heading pair`,
-    replaced.every(pair => pair.startsWith('chapt_11')), replaced.join('; ') || 'none');
+  // 5I: chapter 13's πᾶς topic is the same shape -- the topic is named for the
+  // original's radio label ("πᾶς Adjective") while the panel is headed with the
+  // chart's own title ("πᾶς (all) Forms"), and the original drops the radio
+  // column on that screen. The allowlist is what keeps a genuinely doubled
+  // heading from slipping through as "just another replacement", so it names
+  // the chapters that legitimately do this rather than being dropped; the
+  // SURFACE assertion below is what proves each one prints exactly one heading.
+  const REPLACED_HEADING_CHAPTERS = ['chapt_11', 'chapt_13'];
+  check(`5E-R1 every REPLACED heading pair is a radio-label/panel-heading pair (chapters 11 and 13)`,
+    replaced.every(pair => REPLACED_HEADING_CHAPTERS.some(id => pair.startsWith(id))),
+    replaced.join('; ') || 'none');
 
   // ...and on the SURFACE: a covered pair prints ONE heading, the fuller one,
   // which is the heading the original prints in its panel. Two stacked
@@ -5025,9 +5042,10 @@ for (const [itemIndex, greek, personNumber] of [
   // VERIFY-5H (d): the original leaks -- its Pronounce speaks the augmented
   // answer before the guess -- and the gate is adopted anyway, forward and
   // backward. The rule is afterGuess + Greek options + NOT autoBoth, and the
-  // point of a census is that the FOUR is derived from the data here rather
-  // than typed here: if a thirteenth chapter ships a fifth, this check grows
-  // with it, and if the renderer's condition drifts from 4.1 the two part.
+  // point of a census is that the COUNT is derived from the data here rather
+  // than typed here: when a later cohort ships another the check grows with it,
+  // and if the renderer's condition drifts from 4.1 the two part. Cohort 5I is
+  // that later cohort -- four became seven.
   {
     const greekOptions = activity => activity.optionsAreGreek === true
       || activity.options === 'greek'
@@ -5043,9 +5061,19 @@ for (const [itemIndex, greek, personNumber] of [
         (triple ? gated : ungated).push([chapterId, activity.id, advanceClass]);
       }
     }
+    // 5I-SPEC1 4.10: the three new Forms Drills of chapters 14, 15 and 16 join
+    // them, and they join STRUCTURALLY -- no per-activity flag was added, and
+    // none was needed. Each shows a present-tense lemma and asks which of three
+    // Greek forms is its aorist or passive, and each item's clip is that ANSWER
+    // (A1b, confirmed at source in all three TBKs), so the same triple that
+    // selected the first four selects these. The census is the proof: it is
+    // derived from the data below and only the expected SET is typed here, so
+    // a fourth chapter shipping the shape appears as a failure rather than as
+    // silence.
     const GATED_IDS = ['c12_drill_augment', 'c3_drill_greek_verb',
-      'c4_drill_greek_noun', 'c5_drill_first_decl_noun'].sort();
-    check('5H-SPEC2 4.2 census: the 4.1 triple selects exactly FOUR activities in twelve chapters',
+      'c4_drill_greek_noun', 'c5_drill_first_decl_noun',
+      'c14_drill_forms', 'c15_drill_forms', 'c16_drill_forms'].sort();
+    check('5H-SPEC2 4.2 / 5I 4.10 census: the 4.1 triple selects exactly SEVEN activities in sixteen chapters',
       gated.length === GATED_IDS.length
         && gated.map(row => row[1]).sort().join(' ') === GATED_IDS.join(' '),
       JSON.stringify(gated));

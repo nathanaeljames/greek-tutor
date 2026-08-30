@@ -66,7 +66,7 @@
       },
       {
        "type": "para",
-       "text": "The first aorist is formed from the present stem with an augment and a suffixed sa.",
+       "text": "The first aorist is formed from the present stem with an augment and a suffixed σα.",
        "gapBefore": true
       },
       {
@@ -1111,8 +1111,7 @@
      ],
      "answer": "Mary, for you have found favor with God",
      "audio": "chapt_14_n_td1",
-     "hintRef": "secondAoristParadigms",
-     "greek2": "πιστεύεις;"
+     "hintRef": "secondAoristParadigms"
     },
     {
      "greek": "καὶ ἔβαλεν εἰς τὴν γῆν",
@@ -1136,7 +1135,8 @@
      ],
      "answer": "Because I said to you that I saw you under the fig tree, you believe?",
      "audio": "chapt_14_n_td3",
-     "hintRef": "secondAoristParadigms"
+     "hintRef": "secondAoristParadigms",
+     "greek2": "πιστεύεις;"
     },
     {
      "greek": "ἐγενόμην ἐν πνεύματι ἐν τῇ κυριακῇ ἡμέρᾳ",
@@ -1160,8 +1160,7 @@
      ],
      "answer": "he was in the world, and the world was made by him",
      "audio": "chapt_14_n_td5",
-     "hintRef": "secondAoristParadigms",
-     "greek2": "καρδίαν μου"
+     "hintRef": "secondAoristParadigms"
     },
     {
      "greek": "εἶπαν οὖν οἱ μαθηταὶ αὐτῷ, Κύριε ...",
@@ -1173,8 +1172,7 @@
      ],
      "answer": "Therefore the disciples said to him, \"Lord...",
      "audio": "chapt_14_n_td6",
-     "hintRef": "secondAoristParadigms",
-     "greek2": "καὶ Ἀνδρέαν τὸν ἀδελφὸν αὐτοῦ"
+     "hintRef": "secondAoristParadigms"
     },
     {
      "greek": "Εὗρον Δαυὶδ τὸν τοῦ Ἰεσσαί, ἄνδρα κατὰ τὴν",
@@ -1187,7 +1185,7 @@
      "answer": "I found David son of Jesse a man after my heart",
      "audio": "chapt_14_n_td7",
      "hintRef": "secondAoristParadigms",
-     "greek2": "σε ἔγνων"
+     "greek2": "καρδίαν μου"
     },
     {
      "greek": "εἶδεν δύο ἀδελφούς, Σίμωνα τὸν λεγόμενον Πέτρον",
@@ -1200,7 +1198,7 @@
      "answer": "He saw two brothers, Simon called Peter, and Andrew his brother",
      "audio": "chapt_14_n_td8",
      "hintRef": "secondAoristParadigms",
-     "greek2": "τοῦτον ἦλθον"
+     "greek2": "καὶ Ἀνδρέαν τὸν ἀδελφὸν αὐτοῦ"
     },
     {
      "greek": "πάτερ δίκαιε, καὶ ὁ κόσμος σε οὐκ ἔγνω, ἐγὼ δέ",
@@ -1212,7 +1210,8 @@
      ],
      "answer": "Righteous father, although the world does not know you, I know you",
      "audio": "chapt_14_n_td9",
-     "hintRef": "secondAoristParadigms"
+     "hintRef": "secondAoristParadigms",
+     "greek2": "σε ἔγνων"
     },
     {
      "greek": "καὶ εἶπεν ὁ Ἰησοῦς, Εἰς κρίμα ἐγὼ εἰς τὸν κόσμον",
@@ -1224,7 +1223,8 @@
      ],
      "answer": "And Jesus said, \"For judgment I came into this world\"",
      "audio": "chapt_14_n_td10",
-     "hintRef": "secondAoristParadigms"
+     "hintRef": "secondAoristParadigms",
+     "greek2": "τοῦτον ἦλθον"
     },
     {
      "greek": "ὅτε οὖν εἶδεν ὁ ὄχλος ὅτι Ἰησοῦς οὐκ ἔστιν ἐκεῖ",
@@ -1248,8 +1248,7 @@
      ],
      "answer": "they did not find the body of the Lord Jesus",
      "audio": "chapt_14_n_td12",
-     "hintRef": "secondAoristParadigms",
-     "greek2": "οὐρανὸν οἱ ἄγγελοι"
+     "hintRef": "secondAoristParadigms"
     },
     {
      "greek": "καὶ ἐξῆλθον οἱ μαθηταὶ καὶ ἦλθον εἰς τὴν πόλιν",
@@ -1273,7 +1272,8 @@
      ],
      "answer": "And it happened as the angels went from them into heaven",
      "audio": "chapt_14_n_td14",
-     "hintRef": "secondAoristParadigms"
+     "hintRef": "secondAoristParadigms",
+     "greek2": "οὐρανὸν οἱ ἄγγελοι"
     },
     {
      "greek": "ἀλλὰ διὰ τοῦτο ἦλθον εἰς τὴν ὥραν ταύτην",
@@ -1321,8 +1321,7 @@
      ],
      "answer": "and in that hour there was a great earthquake",
      "audio": "chapt_14_n_td18",
-     "hintRef": "secondAoristParadigms",
-     "greek2": "Ῥαββί ..."
+     "hintRef": "secondAoristParadigms"
     },
     {
      "greek": "Οὐκ ἐγώ σε εἶδον ἐν τῷ κήπῳ μετ' αὐτοῦ;",
@@ -1334,8 +1333,7 @@
      ],
      "answer": "I saw you in the garden with him didn't I?",
      "audio": "chapt_14_n_td19",
-     "hintRef": "secondAoristParadigms",
-     "greek2": "εἶ ὁ Χριστὸς"
+     "hintRef": "secondAoristParadigms"
     },
     {
      "greek": "καὶ ἦλθον πρὸς τὸν Ἰωάννην καὶ εἶπαν αὐτῷ,",
@@ -1348,7 +1346,7 @@
      "answer": "and they came to John and said to him, \"Rabbi ...\"",
      "audio": "chapt_14_n_td20",
      "hintRef": "secondAoristParadigms",
-     "greek2": "μετὰ Ἰησοῦ"
+     "greek2": "Ῥαββί ..."
     },
     {
      "greek": "καὶ εἶπαν αὐτῷ, Τί οὖν Βαπτίζεις εἰ σὺ οὐκ",
@@ -1360,7 +1358,8 @@
      ],
      "answer": "they said to him, \"Why then are you baptizing if you are not the Christ\"",
      "audio": "chapt_14_n_td21",
-     "hintRef": "secondAoristParadigms"
+     "hintRef": "secondAoristParadigms",
+     "greek2": "εἶ ὁ Χριστὸς"
     },
     {
      "greek": "εἶδεν αὐτὸν ἄλλη καὶ λέγει τοῖς ἐκεῖ, Οὗτος ἦν",
@@ -1372,7 +1371,8 @@
      ],
      "answer": "another saw him and said to the ones there \"This one was with Jesus\"",
      "audio": "chapt_14_n_td22",
-     "hintRef": "secondAoristParadigms"
+     "hintRef": "secondAoristParadigms",
+     "greek2": "μετὰ Ἰησοῦ"
     },
     {
      "greek": "καὶ εἶπαν αὐτῷ, Ὁ πατὴρ ἡμῶν Ἀβραάμ ἐστιν",
@@ -1384,8 +1384,7 @@
      ],
      "answer": "and they said to him, \"Abraham is our father\"",
      "audio": "chapt_14_n_td23",
-     "hintRef": "secondAoristParadigms",
-     "greek2": "ἐν τῷ ἱερῷ"
+     "hintRef": "secondAoristParadigms"
     },
     {
      "greek": "εἶδον τὴν δόξαν αὐτοῦ",
@@ -1397,8 +1396,7 @@
      ],
      "answer": "they saw his glory",
      "audio": "chapt_14_n_td24",
-     "hintRef": "secondAoristParadigms",
-     "greek2": "αὐτοῦ εἰς τὴν Ἰουδαίαν γῆν"
+     "hintRef": "secondAoristParadigms"
     },
     {
      "greek": "καὶ ἐγένετο μετὰ ἡμέρας τρεῖς εὗρον αὐτὸν",
@@ -1411,7 +1409,7 @@
      "answer": "And it happened after three days they found him in the temple",
      "audio": "chapt_14_n_td25",
      "hintRef": "secondAoristParadigms",
-     "greek2": "ἀνθρώποις"
+     "greek2": "ἐν τῷ ἱερῷ"
     },
     {
      "greek": "Μετὰ ταῦτα ἦλθεν ὁ Ἰησοῦς καὶ οἱ μαθηταὶ",
@@ -1423,7 +1421,8 @@
      ],
      "answer": "After these things Jesus and his disciples came to the land of Judea",
      "audio": "chapt_14_n_td26",
-     "hintRef": "secondAoristParadigms"
+     "hintRef": "secondAoristParadigms",
+     "greek2": "αὐτοῦ εἰς τὴν Ἰουδαίαν γῆν"
     },
     {
      "greek": "καὶ ἀπῆλθεν εἰς τὴν πόλιν καὶ λέγει τοῖς",
@@ -1435,7 +1434,8 @@
      ],
      "answer": "and she went into the city and said to the men",
      "audio": "chapt_14_n_td27",
-     "hintRef": "secondAoristParadigms"
+     "hintRef": "secondAoristParadigms",
+     "greek2": "ἀνθρώποις"
     },
     {
      "greek": "εἶπον οὖν πρὸς αὐτὸν οἱ ἀδελφοὶ αὐτοῦ",
@@ -2107,7 +2107,7 @@
        "cells": [
         {
          "greek": "ἔλαβον",
-         "gloss": "i took",
+         "gloss": "I took",
          "audio": "chapt_14_n_lab1s"
         },
         {
@@ -2774,7 +2774,7 @@
        "cells": [
         {
          "greek": "ἔλαβον",
-         "gloss": "i took",
+         "gloss": "I took",
          "audio": "chapt_14_n_lab1s"
         },
         {

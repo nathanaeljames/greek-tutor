@@ -29,7 +29,9 @@ const normalize = value => String(value ?? '').replace(/\s+/g, ' ').trim().norma
 
 const chapters = new Map();
 const lexicons = new Map();
-for (let number = 1; number <= 12; number += 1) {
+// 5I: chapters 13-16 join the swept set, which is what makes W2.1/W2.3's census
+// numbers cover them rather than silently stop at the cohort before.
+for (let number = 1; number <= 16; number += 1) {
   const nn = String(number).padStart(2, '0');
   chapters.set(`chapt_${number}`, JSON.parse(readFileSync(`src/data/chapt-${nn}.json`, 'utf8')));
   lexicons.set(`chapt_${number}`, JSON.parse(readFileSync(`src/data/lexicon-chapt${nn}.json`, 'utf8')));
@@ -94,7 +96,7 @@ const EXPECTED_CHANGED = [
   'c1_ex_phonetic',
   'c1_ex_pronounce',
   'c1_learn_letters',
-  ...Array.from({ length: 12 }, (_, index) => `c${index + 1}_learn_vocab`)
+  ...Array.from({ length: 16 }, (_, index) => `c${index + 1}_learn_vocab`)
 ].sort();
 const EXPECTED_EXEMPTED = [
   'c1_drill_capitals',
@@ -114,22 +116,24 @@ const behaviorEntries = stored.filter(entry => entry.section === 'drill' || entr
 const missingLedger = behaviorEntries.filter(entry => !ledgerRows.has(entry.activity.id)).map(entry => entry.activity.id);
 const orphanLedger = [...ledgerRows.keys()].filter(id => !byId.has(id));
 
-check('W2.1 all twelve chapter stores and rails contain exactly 270 activities',
-  stored.length === 270 && sequenced.length === 270,
+check('W2.1 all sixteen chapter stores and rails contain exactly 368 activities',
+  stored.length === 368 && sequenced.length === 368,
   `${stored.length} stored / ${sequenced.length} sequenced`);
 check('W2.2 every activity appears exactly once in its chapter sequence',
   duplicateStored.length === 0 && duplicateSequence.length === 0
     && missingFromSequence.length === 0 && unknownInSequence.length === 0,
   `duplicate store [${duplicateStored}], duplicate rail [${duplicateSequence}], missing [${missingFromSequence}], unknown [${unknownInSequence}]`);
-check('W2.3 every drill/exercise maps to one of the 115 exact ledger rows',
-  ledgerRows.size === 115 && behaviorEntries.length === 115
+check('W2.3 every drill/exercise maps to one of the 154 exact ledger rows',
+  ledgerRows.size === 154 && behaviorEntries.length === 154
     && missingLedger.length === 0 && orphanLedger.length === 0,
   `${ledgerRows.size} rows / ${behaviorEntries.length} activities; missing [${missingLedger}], orphan [${orphanLedger}]`);
 // 5H: chapters 11 and 12 added 51 activities, all sequence-stepped and all
 // already-loaded except their two Learn Vocabulary flashcard steppers, which
 // join the B-last changed set for the same reason every other chapter's did.
-check('W2.4 exhaustive classification is 15 changed / 251 already-loaded / 4 exempted',
-  changed.length === 15 && alreadyLoaded.length === 251 && exempted.length === 4,
+// 5I: chapters 13-16 add 98, of which four -- one Learn Vocabulary stepper
+// each -- join that same changed set, for that same reason.
+check('W2.4 exhaustive classification is 19 changed / 345 already-loaded / 4 exempted',
+  changed.length === 19 && alreadyLoaded.length === 345 && exempted.length === 4,
   `${changed.length} / ${alreadyLoaded.length} / ${exempted.length}`);
 check('W2.5 changed classification is the exact B-last sequence-mode set',
   JSON.stringify(changedIds) === JSON.stringify(EXPECTED_CHANGED), changedIds.join(', '));

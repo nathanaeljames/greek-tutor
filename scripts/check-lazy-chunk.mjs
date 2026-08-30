@@ -30,7 +30,15 @@ const expected = [
   { chapterPattern: /^chapt-09-.*\.js$/, lexiconPattern: /^lexicon-chapt09-.*\.js$/, needle: 'There are two voices in English.' },
   { chapterPattern: /^chapt-10-.*\.js$/, lexiconPattern: /^lexicon-chapt10-.*\.js$/, needle: 'In English we have several tenses.' },
   { chapterPattern: /^chapt-11-.*\.js$/, lexiconPattern: /^lexicon-chapt11-.*\.js$/, needle: 'We will explore three types of pronouns in this chapter.' },
-  { chapterPattern: /^chapt-12-.*\.js$/, lexiconPattern: /^lexicon-chapt12-.*\.js$/, needle: 'In English we have only one official past tense' }
+  { chapterPattern: /^chapt-12-.*\.js$/, lexiconPattern: /^lexicon-chapt12-.*\.js$/, needle: 'In English we have only one official past tense' },
+  // 5I. The needles are strings unique to ONE chapter file: chapters 14 and 15
+  // open with the same English-concepts paragraph, so neither may be keyed on
+  // it -- a needle that matches two chapters cannot prove which chunk it
+  // landed in, which is the whole assertion.
+  { chapterPattern: /^chapt-13-.*\.js$/, lexiconPattern: /^lexicon-chapt13-.*\.js$/, needle: 'So far we have learned second declension nouns' },
+  { chapterPattern: /^chapt-14-.*\.js$/, lexiconPattern: /^lexicon-chapt14-.*\.js$/, needle: 'The second aorist is presented first because of its similarity to the imperfect.' },
+  { chapterPattern: /^chapt-15-.*\.js$/, lexiconPattern: /^lexicon-chapt15-.*\.js$/, needle: 'First aorists use the present stem to which an augment is prefixed' },
+  { chapterPattern: /^chapt-16-.*\.js$/, lexiconPattern: /^lexicon-chapt16-.*\.js$/, needle: 'Greek aorist and future passive forms are translated like' }
 ];
 
 // 2. Chapter DATA must be ABSENT from the main bundle and PRESENT in its chunk.

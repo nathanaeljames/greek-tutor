@@ -66,7 +66,7 @@
       },
       {
        "type": "para",
-       "text": "The first aorist is formed off the present stem with an augment and a suffixed sa.",
+       "text": "The first aorist is formed off the present stem with an augment and a suffixed σα.",
        "gapBefore": true
       },
       {
@@ -109,7 +109,7 @@
       },
       {
        "type": "para",
-       "text": "First aorists use the present stem to which an augment is prefixed and an sa is affixed along with the pronominal endings of the first, second and third persons.",
+       "text": "First aorists use the present stem to which an augment is prefixed and an σα is affixed along with the pronominal endings of the first, second and third persons.",
        "gapBefore": true
       }
      ]
@@ -569,7 +569,7 @@
      "content": [
       {
        "type": "para",
-       "text": "The sigma ending is added in basically the same way as the sigma was added for future tense verbs. Palatals (k, g, x) + s become c διδάσκω + sa = ἐδίδαξα Labials (p, b, f) + s become y βλέπω + sa = ἔβλεψα Dentals (t, d, q) + s drops the dental πείθω + sa = ἔπεισα"
+       "text": "The sigma ending is added in basically the same way as the sigma was added for future tense verbs."
       },
       {
        "type": "greekRows",
@@ -623,12 +623,60 @@
       },
       {
        "type": "para",
-       "text": "With liquids (l and r) and nasals (m and n) ofen the sigma is dropped and the preceding vowel in the stem is changed.",
+       "text": "With [[link:liquids]]liquids[[/link]] (λ and ρ) and nasals (μ and ν) ofen the sigma is dropped and the preceding vowel in the stem is changed.",
        "gapBefore": true
       },
       {
+       "type": "greekRows",
+       "gapBefore": true,
+       "rows": [
+        {
+         "parts": [
+          {
+           "greek": "μένω",
+           "audio": "chapt_15_o_menp"
+          },
+          {
+           "text": "+"
+          },
+          {
+           "text": "σα"
+          },
+          {
+           "text": "="
+          },
+          {
+           "greek": "ἔμεινα",
+           "audio": "chapt_15_o_mena"
+          }
+         ]
+        },
+        {
+         "parts": [
+          {
+           "greek": "ἀποστέλλω",
+           "audio": "chapt_15_o_apop"
+          },
+          {
+           "text": "+"
+          },
+          {
+           "text": "σα"
+          },
+          {
+           "text": "="
+          },
+          {
+           "greek": "ἀπέστειλα",
+           "audio": "chapt_15_o_apoa"
+          }
+         ]
+        }
+       ]
+      },
+      {
        "type": "para",
-       "text": "μένω + sa = ἔμεινα ἀποστέλλω + sa = ἀπέστειλα These transformations are not always predictable. Thus it is necessary to learn the aorist for each verb.",
+       "text": "These transformations are not always predictable.  Thus it is necessary to learn the aorist for each verb.",
        "gapBefore": true
       }
      ],
@@ -2131,7 +2179,7 @@
        "cells": [
         {
          "greek": "ἔλυσα",
-         "gloss": "i loosed",
+         "gloss": "I loosed",
          "audio": "chapt_15_o_luwa1s"
         },
         {

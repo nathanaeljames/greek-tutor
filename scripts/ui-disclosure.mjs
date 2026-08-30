@@ -416,8 +416,12 @@ const shot = async name => {
   }
   check(`D6.1 W9 all ${pool.length} poolKind drills are two-up at 390px and four-up at 820px`,
     // 5H: chapters 11 and 12 declare `poolKind` on both of their vocabulary
-    // drills each, so the census is twelve.
-    pool.length === 12 && failures.length === 0, failures.join(', ') || `${pool.length} drills`);
+    // drills each, so the census was twelve.
+    // 5I: chapters 13-16 declare it on both of theirs, so it is TWENTY. The
+    // census number is asserted rather than derived on purpose -- it is what
+    // catches a chapter that quietly stops declaring the key -- so it moves
+    // with each cohort that adds one.
+    pool.length === 20 && failures.length === 0, failures.join(', ') || `${pool.length} drills`);
   const controlNarrow = await columnsAt(page, '#/activity/chapt_2/c2_drill_part_of_speech');
   const controlBroad = await columnsAt(widePage, '#/activity/chapt_2/c2_drill_part_of_speech');
   check('D6.2 W9 a non-vocabulary AUTHORED grid stays two-up at both widths',

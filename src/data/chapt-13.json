@@ -1408,8 +1408,7 @@
      ],
      "answer": "and the grace of God was upon him",
      "audio": "chapt_13_m_td1",
-     "hintRef": "tauDeltaParadigm",
-     "greek2": "καὶ κυρίου Ἰησοῦ Χριστοῦ"
+     "hintRef": "tauDeltaParadigm"
     },
     {
      "greek": "χάρις ὑμῖν καὶ εἰρήνη ἀπὸ θεοῦ πατρὸς ἡμῶν",
@@ -1421,7 +1420,8 @@
      ],
      "answer": "grace to you and peace from God our Father and the Lord Jesus Christ",
      "audio": "chapt_13_m_td2",
-     "hintRef": "tauDeltaParadigm"
+     "hintRef": "tauDeltaParadigm",
+     "greek2": "καὶ κυρίου Ἰησοῦ Χριστοῦ"
     },
     {
      "greek": "χάριτι δὲ θεοῦ εἰμι ὅ εἰμι",
@@ -1433,8 +1433,7 @@
      ],
      "answer": "but by the grace of God I am what I am",
      "audio": "chapt_13_m_td3",
-     "hintRef": "tauDeltaParadigm",
-     "greek2": "πνεύματος ὑμῶν"
+     "hintRef": "tauDeltaParadigm"
     },
     {
      "greek": "ἡ χάρις τοῦ κυρίου Ἰησοῦ Χριστοῦ μετὰ τοῦ",
@@ -1447,7 +1446,7 @@
      "answer": "the grace of the Lord Jesus Christ be with your spirit",
      "audio": "chapt_13_m_td4",
      "hintRef": "tauDeltaParadigm",
-     "greek2": "πάντων ὑμῶν"
+     "greek2": "πνεύματος ὑμῶν"
     },
     {
      "greek": "ἡ χάρις τοῦ κυρίου ἡμῶν Ἰησοῦ Χριστοῦ μετὰ",
@@ -1459,7 +1458,8 @@
      ],
      "answer": "the grace of our Lord Jesus Christ be with all of you",
      "audio": "chapt_13_m_td5",
-     "hintRef": "tauDeltaParadigm"
+     "hintRef": "tauDeltaParadigm",
+     "greek2": "πάντων ὑμῶν"
     },
     {
      "greek": "Ὁ δὲ θεὸς πάσης χάριτος",
@@ -1543,8 +1543,7 @@
      ],
      "answer": "for a spirit does not have flesh and bones",
      "audio": "chapt_13_m_td12",
-     "hintRef": "kappaParadigm",
-     "greek2": "οὐδένα"
+     "hintRef": "kappaParadigm"
     },
     {
      "greek": "ὑμεῖς κατὰ τὴν σάρκα κρίνετε, ἐγὼ οὐ κρίνω",
@@ -1556,7 +1555,8 @@
      ],
      "answer": "you judge according to the flesh, I judge no one",
      "audio": "chapt_13_m_td13",
-     "hintRef": "kappaParadigm"
+     "hintRef": "kappaParadigm",
+     "greek2": "οὐδένα"
     },
     {
      "greek": "καὶ καλέσεις τὸ ὄνομα αὐτοῦ Ἰησοῦν",
@@ -1580,8 +1580,7 @@
      ],
      "answer": "What is your name?",
      "audio": "chapt_13_m_td15",
-     "hintRef": "matParadigm",
-     "greek2": "ταῦτα:"
+     "hintRef": "matParadigm"
     },
     {
      "greek": "Τῶν δὲ δώδεκα ἀποστόλων τὰ ὀνόματά ἐστιν",
@@ -1593,7 +1592,8 @@
      ],
      "answer": "the names of the 12 apostles are these",
      "audio": "chapt_13_m_td16",
-     "hintRef": "matParadigm"
+     "hintRef": "matParadigm",
+     "greek2": "ταῦτα:"
     },
     {
      "greek": "νυνὶ δὲ μένει πίστις, ἐλπίς, ἀγάπη",

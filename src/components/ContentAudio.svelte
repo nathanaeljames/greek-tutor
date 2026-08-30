@@ -260,6 +260,38 @@
     return m.name || item.secondary || '';
   }
 
+  // 5I-SPEC1 4.3 / NIT-LOG N-6: A REVIEW CHART WITH MORE THAN ONE SAY-ALL.
+  // Chapter 13's Review Vocabulary Chart is the first. The original pages it
+  // five-and-five behind More/Back with a SEPARATE recording per half
+  // (m_vocla, m_voclb); DISCLOSURE-RULES 4.6 forbids a pager on a Review page
+  // (students print them), so the port shows all ten rows in one scroll and
+  // keeps both recordings -- five rows, a Say List button, five more rows, a
+  // second Say List button. Ruled by Nathanael 2026-08-29.
+  //
+  // `playAllGroups` and the single `playAll` are MUTUALLY EXCLUSIVE; every
+  // other chart in the app keeps `playAll` and renders exactly as before.
+  // `afterRow` is 1-BASED and counts DOWN THE PRINTED LIST, which is why the
+  // grouped chart also drops the desktop two-column flow: at 768px the
+  // column-major grid puts row 5 at the foot of the left column, and a button
+  // "after row 5" would land in the middle of the chart rather than under the
+  // half it speaks. The original's own ch13 page is a single column of five
+  // (ch13railwalk p16/p17), so one column is the faithful shape here as well.
+  $: playAllGroups = Array.isArray(activity.playAllGroups) && activity.playAllGroups.length
+    ? activity.playAllGroups
+    : null;
+  $: reviewVocabGroups = playAllGroups
+    ? playAllGroups.map((group, index) => {
+        const from = index === 0 ? 0 : (playAllGroups[index - 1].afterRow || 0);
+        return { rows: items.slice(from, group.afterRow ?? items.length), group };
+      // A trailing group is only drawn when it has rows; a chart whose last
+      // afterRow stops short of the list would otherwise lose the remainder.
+      }).concat(
+        (playAllGroups[playAllGroups.length - 1].afterRow ?? items.length) < items.length
+          ? [{ rows: items.slice(playAllGroups[playAllGroups.length - 1].afterRow), group: null }]
+          : []
+      ).filter(entry => entry.rows.length)
+    : [];
+
   // --- vowelStair groups (items resolved from alphabet.vowels carry group) ---
   $: vowelGroups = mode === 'vowelStair'
     ? [
@@ -300,6 +332,17 @@
       {@const taps = typeof o === 'string' ? null : o.audioMap}
       <li>{#if taps}{#each splitTaps(text, taps) as part}{#if part.audio}<button class="greek-tap greek" on:click={() => play(part.audio)}>{part.t}</button>{:else}{part.t}{/if}{/each}{:else}{text}{/if}</li>
     {/each}</ol>
+    <!-- 5I-SPEC1 4.2: A CLOSING PARAGRAPH BELOW THE LIST. Chapter 13's
+         objectives page ends "Congratulations! After mastering this chapter,
+         you will know all the noun forms in the New Testament." (TBK field
+         0x3020c) -- one paragraph under the numbered list, in ordinary body
+         style. It is NOT an objective: folding it into the <ol> would number
+         it seven and tell the learner it is something to be able to DO. Only
+         chapter 13 carries the key in sixteen chapters, so nothing else on
+         this surface changes. -->
+    {#if chapter.objectivesPostamble}
+      <p class="objectives-postamble">{chapter.objectivesPostamble}</p>
+    {/if}
   </div>
 
 {:else if mode === 'topicPages'}
@@ -618,24 +661,41 @@
        it is the single button it has always been, and the Learn flashcard
        ignores `parts` entirely and keeps playing the lemma's all-forms clip. -->
   <div class="card">
-    <div class="review-vocab" class:two-columns={activity.columns === 2}
-         style={`--rv-rows:${Math.ceil(items.length / (activity.columns || 1))}`}>
-      {#each items as r}
-        <div class="rv-row">
-          {#if r.parts}
-            <span class="rv-greek rv-forms greek" data-rv-parts={r.parts.length}>{#each splitTaps(r.display, partTaps(r.parts)) as seg}{#if seg.audio}<button class="rv-form greek" data-audio-id={seg.audio} on:click={() => play(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}</span>
-          {:else}
-            <button class="rv-greek greek" on:click={() => r.audio && play(r.audio)}>{r.display}</button>
-          {/if}
-          <span class="rv-gloss">{r.secondary}{#if activity.showNtFreq && r.meta && r.meta.ntFreq} <span class="rv-freq">({r.meta.ntFreq})</span>{/if}</span>
+    <!-- 5I-SPEC1 4.3: ONE block per say-all. Without `playAllGroups` this is
+         the single block every chart has always drawn, with the same class,
+         the same --rv-rows and the same two-column desktop flow. -->
+    {#each (playAllGroups ? reviewVocabGroups : [{ rows: items, group: null }]) as block, blockIndex}
+      <div class="review-vocab" class:two-columns={activity.columns === 2 && !playAllGroups}
+           data-rv-block={blockIndex}
+           style={`--rv-rows:${Math.ceil(block.rows.length / (playAllGroups ? 1 : (activity.columns || 1)))}`}>
+        {#each block.rows as r}
+          <div class="rv-row">
+            {#if r.parts}
+              <span class="rv-greek rv-forms greek" data-rv-parts={r.parts.length}>{#each splitTaps(r.display, partTaps(r.parts)) as seg}{#if seg.audio}<button class="rv-form greek" data-audio-id={seg.audio} on:click={() => play(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}</span>
+            {:else}
+              <button class="rv-greek greek" on:click={() => r.audio && play(r.audio)}>{r.display}</button>
+            {/if}
+            <span class="rv-gloss">{r.secondary}{#if activity.showNtFreq && r.meta && r.meta.ntFreq} <span class="rv-freq">({r.meta.ntFreq})</span>{/if}</span>
+          </div>
+        {/each}
+      </div>
+      {#if block.group}
+        <!-- The recording for THIS half, under the rows it speaks. Audio
+             buttons are not pagination (4.6), so nothing here is a pager and
+             every row above stays on screen. -->
+        <div class="controls rv-group-controls" data-rv-group={blockIndex}>
+          <button class="btn secondary" data-audio-id={block.group.audio}
+                  on:click={() => play(block.group.audio)}>{block.group.label || 'Say Whole List'}</button>
         </div>
-      {/each}
-    </div>
+      {/if}
+    {/each}
     <!-- The original prints the ntFreq legend under the chart, not as a note
          banner: it explains the numbers already on screen. -->
     {#if activity.footnote}<div class="rv-footnote">{activity.footnote}</div>{/if}
     <div class="controls">
-      {#if activity.playAll || activity.sayWholeListAudio}
+      <!-- `playAll` (single) and `playAllGroups` are mutually exclusive; a
+           grouped chart has already drawn its buttons above, one per half. -->
+      {#if !playAllGroups && (activity.playAll || activity.sayWholeListAudio)}
         <button class="btn secondary" on:click={() => play(activity.playAll?.audio || activity.sayWholeListAudio)}>{activity.playAll?.label || 'Say Whole List'}</button>
       {/if}
     </div>

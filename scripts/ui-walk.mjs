@@ -38,7 +38,11 @@ const RUN_ID = `${stamp.getFullYear()}${pad(stamp.getMonth() + 1)}${pad(stamp.ge
 const BASE = args.base || `http://localhost:${args.port || 4173}`;
 const OUT = args.out || `buildout/screenshots/walk-${RUN_ID}`;
 const WIDTHS = [{ name: '320', width: 320, height: 900 }, { name: '768', width: 768, height: 1100 }];
-const CHAPTERS = String(args.chapters || 'chapt_1,chapt_2,chapt_3,chapt_4,chapt_5').split(',');
+// 5I-SPEC1 8: the four chapters this cohort builds join the default set, so
+// `npm run ui:walk` with no arguments covers them. --chapters= still narrows
+// or widens it for a regression sweep over the shipped ones.
+const CHAPTERS = String(args.chapters
+  || 'chapt_1,chapt_2,chapt_3,chapt_4,chapt_5,chapt_13,chapt_14,chapt_15,chapt_16').split(',');
 // WHICH chapters get checklist evidence and a 320px overflow line. This used
 // to be a literal /^chapt_[45]$/ -- the cohort that first needed it -- so
 // cohort 5F walked chapters 6-8 and reported overflow for neither. A cohort

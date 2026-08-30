@@ -63,6 +63,14 @@
         alts: altSpellings(it),
         gloss: it.prompt != null ? it.prompt : (it.gloss || ''),
         note: it.note || null,
+        // 5I-SPEC1 §4.5: the ANSWER FIELD'S OWN CAPTION, per item. Chapter
+        // 16's Forms Spelling Exercise asks a verb's passive aorist on one
+        // item and its passive future on the next from an identical prompt
+        // panel, and the original switches the box's label between "Passive
+        // Aorist Form" and "Passive Future Form" (DOSBox-confirmed
+        // 2026-08-29). Where an item carries none, ui.fields[1] stands as it
+        // always has.
+        answerLabel: it.answerLabel || null,
         audio: it.audio || (lemma && lemma.audio) || null
       };
     }
@@ -76,6 +84,7 @@
       // case tag beside it as a note.
       gloss: it.prompt != null ? it.prompt : (l.gloss || ''),
       note: it.note || null,
+      answerLabel: it.answerLabel || null,
       audio: l.audio || null
     };
   });
@@ -282,7 +291,15 @@
            "from (gen.)" (p12), "good (acc. pl. masc.)" (ch7railwalk p6),
            "I (nom sg)" (ch8railwalk p9). Never tappable; nothing on this pane
            is. -->
-      <div class="value" style="font-size:1.2rem">{word ? word.gloss : ''}{#if word && word.note}<span class="spell-prompt-note">{word.note}</span>{/if}</div>
+      <!-- 5I-SPEC1: the prompt pane may hold GREEK. The three Forms spellers of
+           chapters 14-16 print the PRESENT LEMMA in the prompt box and ask for
+           its aorist or passive form, so `promptIsGreek` puts the bundled
+           Greek face on it -- no Greek surface in this app may fall through to
+           a different glyph source (typography canon, 5B closeout). It stays
+           INK and untappable: the item's clip is the ANSWER (A1b, afterGuess),
+           there is no present-tense clip wired for these prompts, and blue
+           means tappable and nothing else (directive 8). -->
+      <div class="value" class:greek={!!activity.promptIsGreek} style="font-size:1.2rem">{word ? word.gloss : ''}{#if word && word.note}<span class="spell-prompt-note">{word.note}</span>{/if}</div>
       <!-- §3: a null ref renders NOTHING, not an empty chip. -->
       {#if word && word.ref}<div class="spell-prompt-ref">{word.ref}</div>{/if}
     </div>
@@ -291,7 +308,7 @@
          words. ui.fields is [prompt caption, answer caption]. -->
     <SpellerField
       state={buffer}
-      label={(activity.ui?.fields && activity.ui.fields[1]) || 'Spell Greek Word'}
+      label={(word && word.answerLabel) || (activity.ui?.fields && activity.ui.fields[1]) || 'Spell Greek Word'}
       locked={solved}
       on:caret={e => { if (!solved) buffer = input.placeCaret(buffer, e.detail.index, e.detail.after); }}
       on:caretEnd={() => { if (!solved) buffer = input.caretToEnd(buffer); }} />

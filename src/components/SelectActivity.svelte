@@ -35,6 +35,7 @@
   // has a special case for it.
   import { onDestroy } from 'svelte';
   import { authoredOptionSource, buildSelectQuestions, buildTwoStageQuestions, headingCovers, headingKey, paradigmToggleLabels, randomFeedback, resolveContentById, resolveHintBlocks, resolveHintPage, resolveHintRef } from '../lib/content.js';
+  import { stripMarkup } from '../lib/markup.js';
   import { combiningForMarkName, firstAccentCluster, markOverlayParts } from '../lib/greek.js';
   import { play, playThrough, stop as stopAudio } from '../lib/audio.js';
   import { markCompleted } from '../lib/progress.js';
@@ -640,6 +641,19 @@
 </script>
 
 <svelte:window on:keydown={showHint ? (e) => { if (e.key === 'Escape') showHint = false; } : null} />
+
+<!-- 5I-SPEC1 §4.4: THE INSTRUCTION LINE, WHEN IT BELONGS TO THE ITEM. Chapter
+     16's Passive Verbs Form Drill shows the same prompt panel for a verb's
+     aorist question and its future one, and the original switches the line
+     above the options between "Click on the correct matching aorist form" and
+     "...future form" per item. ActivityHost stops drawing the static line for
+     an `instructionsPerItem` activity and this takes over the same slot,
+     immediately above the card, with the same class -- so the line does not
+     move, it only changes. The activity-level string is the fallback for an
+     item that carries none. -->
+{#if activity.instructionsPerItem && (current?.instructions || activity.instructions)}
+  <div class="instructions" data-instructions-per-item>{current?.instructions || stripMarkup(activity.instructions)}</div>
+{/if}
 
 <div class="card">
   {#if finished}

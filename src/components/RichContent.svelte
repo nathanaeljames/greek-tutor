@@ -418,6 +418,12 @@
            class:gloss-only={b.layout === 'glossOnly'} class:english-pairs={b.layout === 'englishPairs'}
            class:compound-verbs={b.layout === 'compoundVerbs'}
            class:contraction={b.layout === 'contraction'}
+           class:key-letter-box={b.layout === 'keyLetterBox'}
+           class:transformation={b.layout === 'transformation'}
+           class:stem-list={b.layout === 'stemList'}
+           class:ending-transformation={b.layout === 'endingTransformation'}
+           class:shift-summary={b.layout === 'shiftSummary'}
+           class:principal-parts={b.layout === 'principalParts'}
            class:titled={b.title} class:centered={b.centered} class:rc-gap-before={b.gapBefore}
            class:paired-gutter={b.pairedGutter}>
         <!-- `headerUnderline` USED TO BIND `head-underline` HERE, and does not
@@ -434,7 +440,32 @@
              "Punctuation:", "Apostrophe:  ( ᾽ )  elided letters"). The title
              owns its line in the heading green; the rows hang beneath it. -->
         {#if b.title}<div class="rc-greektitle"><Marked text={b.title} /></div>{/if}
-        {#if b.columns}
+        {#if b.layout === 'keyLetterBox'}
+          <!-- 5I-SPEC1 4.6: the Key Letter Box's COLUMN HEADERS are C3 in-chart
+               triggers, not labels: Unvoiced / Voiced / Aspirate each open
+               their own popup, as do the three row labels beside the grid --
+               six triggers in one chart, a shape no earlier chapter has.
+               DISCLOSURE-RULES 3.3: an in-chart trigger keeps its existing
+               appearance and takes NO green underline, which would collide
+               with the blue Greek-tap convention. The original prints these
+               six blue and unmarked, so that is what they are here: blue
+               because they are tappable (directive 8), and nothing else.
+               `columns` on this layout is a list of OBJECTS ({label,
+               popupRef}), which is why the shared string header below cannot
+               draw it. -->
+          <div class="rc-klb-head">
+            <span class="rc-klb-corner">&nbsp;</span>
+            {#each b.columns as column}
+              {@const columnPopup = linkedPopup(column.popupRef)}
+              {#if columnPopup}
+                <button class="popup-link rc-chart-trigger" data-chart-trigger={column.popupRef}
+                        on:click={() => openPopup(columnPopup)}>{column.label}</button>
+              {:else}
+                <span class="rc-klb-label">{column.label}</span>
+              {/if}
+            {/each}
+          </div>
+        {:else if b.columns}
           <div class="rc-greekhead" style={gridVars}>
             {#each b.columns as column}<span>{column}</span>{/each}
             {#if rowLabels}<span class="rc-headspacer">&nbsp;</span>{/if}
@@ -507,6 +538,142 @@
                 <span class="rc-contraction-form greek">{row.greek}</span>
               {/if}
               <span class="rc-parts">
+                {#each equationParts(row) as part}
+                  {#if part.greek}
+                    {#if part.audio}
+                      <button class="rc-part greek greek-say" on:click={() => playAudio(part.audio)}>{part.greek}</button>
+                    {:else}
+                      <span class="rc-part greek">{part.greek}</span>
+                    {/if}
+                  {:else}
+                    <span class="rc-parttext">{part.text}</span>
+                  {/if}
+                {/each}
+              </span>
+            </div>
+
+          {:else if b.layout === 'keyLetterBox'}
+            <!-- The nine consonant cells are NOTATION. No clip exists for any
+                 of them, the rail walk shows no hand cursor over one, and the
+                 chart teaches what the LETTERS look like across three voiced
+                 classes rather than how each sounds alone -- the same
+                 treatment chapter 12's augment rule lines get. So they render
+                 in the Greek face, in ink, with nothing to press; only the six
+                 labels around the grid are live. -->
+            {@const rowPopup = linkedPopup(row.popupRef)}
+            <div class="rc-greekrow rc-klb-row">
+              {#if rowPopup}
+                <button class="popup-link rc-chart-trigger" data-chart-trigger={row.popupRef}
+                        on:click={() => openPopup(rowPopup)}>{row.label}</button>
+              {:else}
+                <span class="rc-klb-label">{row.label}</span>
+              {/if}
+              {#each equationParts(row) as part}
+                <span class="rc-klb-cell greek">{part.greek != null ? part.greek : part.text}</span>
+              {/each}
+            </div>
+
+          {:else if b.layout === 'transformation' || b.layout === 'shiftSummary'}
+            <!-- 5I-SPEC1 4.6. `transformation` is chapter 13's three labelled
+                 rule lines ("Labials:" then the pi/beta/phi rule);
+                 `shiftSummary` is chapter 16's four label-less ones. Both are
+                 RULE NOTATION printed in the Greek face: a rule is not a word,
+                 no clip is wired to one, and the alignment of the columns
+                 INSIDE the line is the teaching -- which is why the text stays
+                 one preformatted run rather than being tokenised into taps.
+                 The label gutter is what keeps a set of rules stacked over
+                 each other. -->
+            <div class="rc-greekrow rc-rule-row" class:no-label={row.label == null}>
+              {#if row.label != null}<span class="rc-rule-label">{row.label}</span>{/if}
+              {#each equationParts(row) as part}
+                <span class="rc-rule-text greek">{part.greek != null ? part.greek : part.text}</span>
+              {/each}
+            </div>
+
+          {:else if b.layout === 'stemList'}
+            <!-- 5I-SPEC1 4.6 (chapters 14 and 15, the Aorist Stems of Verbs
+                 lists): lemma, dash, aorist, gloss. BOTH Greek forms are
+                 displayed Greek with a clip of their own, so both tap and
+                 neither speaks for the other (directive 9). The dash between
+                 them is the original's own connector and is inert. A row may
+                 additionally carry a popupRef: chapter 14 prints its aorist of
+                 blepo blue with a hand cursor over it (ch14railwalk p7/p8)
+                 because it opens a note on which verb that form really belongs
+                 to. The aorist cell is therefore BOTH an audio tap and an
+                 in-chart trigger, and the two cannot share one press -- the
+                 note gets its own marker beside the form rather than stealing
+                 the form's clip. -->
+            {@const stemPopup = linkedPopup(row.popupRef)}
+            <div class="rc-greekrow rc-stem-row">
+              {#if row.audio}
+                <button class="rc-stem-lemma greek greek-say" on:click={() => playAudio(row.audio)}>{row.greek}</button>
+              {:else}
+                <span class="rc-stem-lemma greek">{row.greek}</span>
+              {/if}
+              <span class="rc-stem-forms">
+                {#each equationParts(row) as part}
+                  {#if part.greek}
+                    {#if part.audio}
+                      <button class="rc-part greek greek-say" on:click={() => playAudio(part.audio)}>{part.greek}</button>
+                    {:else}
+                      <span class="rc-part greek">{part.greek}</span>
+                    {/if}
+                  {:else}
+                    <span class="rc-parttext">{part.text}</span>
+                  {/if}
+                {/each}
+                {#if stemPopup}
+                  <button class="popup-link rc-chart-trigger rc-stem-note" data-chart-trigger={row.popupRef}
+                          aria-label="About this form" on:click={() => openPopup(stemPopup)}>?</button>
+                {/if}
+              </span>
+              {#if row.gloss != null && row.gloss !== ''}<span class="rc-stem-gloss">{row.gloss}</span>{/if}
+            </div>
+
+          {:else if b.layout === 'endingTransformation'}
+            <!-- 5I-SPEC1 4.6 (chapters 15 and 16): a labelled rule line with a
+                 WORKED EXAMPLE indented beneath it. The label is an in-chart C3
+                 trigger where the chapter wires one (chapter 15's Palatals /
+                 Labials / Dentals open sound descriptions; chapter 16's do
+                 not), and chapter 16's third line carries no label at all. The
+                 rule itself is notation and stays ink. `noteAudioMap` maps the
+                 forms inside the example to clips, so both sides of the
+                 derivation tap and the connectors between them do not -- the
+                 same form-to-clip map chart notes already use. -->
+            {@const rulePopup = linkedPopup(row.popupRef)}
+            <div class="rc-etf-row">
+              <div class="rc-etf-rule" class:no-label={row.label == null}>
+                {#if row.label != null}
+                  {#if rulePopup}
+                    <button class="popup-link rc-chart-trigger rc-etf-label" data-chart-trigger={row.popupRef}
+                            on:click={() => openPopup(rulePopup)}>{row.label}</button>
+                  {:else}
+                    <span class="rc-etf-label">{row.label}</span>
+                  {/if}
+                {/if}
+                {#each equationParts(row) as part}
+                  <span class="rc-etf-text greek">{part.greek != null ? part.greek : part.text}</span>
+                {/each}
+              </div>
+              {#if row.note}
+                <div class="rc-etf-example greek">{#each splitTaps(row.note, row.noteAudioMap || null) as seg}{#if seg.audio}<button class="greek-tap greek" on:click={() => playAudio(seg.audio)}>{seg.t}</button>{:else}{seg.t}{/if}{/each}</div>
+              {/if}
+            </div>
+
+          {:else if b.layout === 'principalParts'}
+            <!-- 5I-SPEC1 4.6 (chapter 16's Comparison with Greek): the six
+                 principal parts of ballo. The original sets them as a
+                 three-across grid with each label over its form; the data
+                 emits SIX LABELLED ROWS, which is the shape the spec asks for
+                 and the one that leaves room for a label as long as
+                 "Perf mid/pass" at phone width. Every form keeps its own clip
+                 and its own tap. The labels are underlined in the original and
+                 render WITHOUT the underline: green underline is exclusive to
+                 tappable elements app-wide (DISCLOSURE-RULES 3.2), and a
+                 column label is not one. -->
+            <div class="rc-greekrow rc-pp-row">
+              <span class="rc-pp-label">{row.label}</span>
+              <span class="rc-pp-forms">
                 {#each equationParts(row) as part}
                   {#if part.greek}
                     {#if part.audio}

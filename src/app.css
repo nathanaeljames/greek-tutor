@@ -262,6 +262,12 @@ button { font: inherit; cursor: pointer; }
    pre-wrap so an objective's own text still renders exactly as authored. */
 .objectives-list { white-space: normal; }
 .objectives-list > li { white-space: pre-wrap; }
+/* 5I-SPEC1 4.2: the closing paragraph beneath the list (chapter 13 only).
+   Ordinary body style, no marker, no indent -- it is prose about the chapter,
+   not a seventh objective. The card is `pre-wrap`, so the newline between the
+   list and this block already draws the blank line the original prints above
+   "Congratulations!"; the paragraph adds no margin of its own on top of it. */
+.objectives-postamble { margin: 0; }
 .flash-pane { background: white; border-radius: 10px; padding: 14px; margin-bottom: 10px; min-height: 74px; }
 .flash-pane .label { font-size: 0.75rem; color: var(--teal-dark); font-weight: 700; text-transform: uppercase; }
 .flash-pane .value { font-size: 2rem; }
@@ -754,6 +760,114 @@ button { font: inherit; cursor: pointer; }
     grid-template-columns: minmax(4.5em, auto) minmax(0, 0.8fr) minmax(0, 1.2fr); }
   .rc-greekrows.contraction .rc-parts { grid-column: auto; }
 }
+
+/* ---- 5I-SPEC1 4.6: the five new greekRows layouts (chapters 13-16) ----
+   Each is a shape the original draws that no earlier chapter needed. They
+   share the greekRows shell -- the same stacked rows, the same ruled
+   separators -- and differ only in what a row is made of. */
+
+/* KEY LETTER BOX (ch13). A 3x3 consonant grid with a clickable label on every
+   edge: three column headers and three row labels, six in-chart C3 triggers.
+   The cells are boxed because the original boxes them, and the boxing is what
+   makes the three voiced classes read as columns rather than as a list. */
+.rc-greekrows.key-letter-box { margin: 6px 0 10px; }
+.rc-klb-head, .rc-greekrows.key-letter-box .rc-klb-row {
+  display: grid; grid-template-columns: minmax(3.1em, 0.95fr) repeat(3, minmax(0, 1fr));
+  gap: 0 5px; align-items: center; }
+/* 0.76rem is what keeps "Unvoiced" -- the longest of the six labels -- on one
+   line inside a third of a 320px card. Above that it breaks mid-word. */
+.rc-klb-head { padding: 4px 2px 6px; text-align: center; font-size: 0.76rem; font-weight: 700; }
+.rc-greekrows.key-letter-box .rc-klb-row { border-bottom: none; padding: 0 2px; }
+.rc-greekrows.key-letter-box .rc-klb-row + .rc-klb-row { margin-top: 4px; }
+.rc-klb-label { color: var(--teal-dark); font-weight: 700; font-size: 0.8rem;
+  overflow-wrap: break-word; line-height: 1.2; }
+.rc-greekrows.key-letter-box .rc-klb-row > .rc-chart-trigger { font-size: 0.8rem; }
+/* The Key Letter Box's own labels are left-aligned beside their row and
+   centred over their column, exactly as the original sets them. */
+.rc-greekrows.key-letter-box .rc-klb-row > .rc-chart-trigger,
+.rc-greekrows.key-letter-box .rc-klb-row > .rc-klb-label { text-align: left; font-weight: 700; }
+.rc-klb-cell { display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(0,0,0,0.35); border-radius: 4px; padding: 5px 2px;
+  font-size: 1.4rem; color: var(--ink); line-height: 1.15; min-width: 0; }
+
+/* IN-CHART C3 TRIGGER (DISCLOSURE-RULES 3.3). Blue because it is tappable
+   (directive 8) and NOT underlined: the original prints these labels blue and
+   unmarked, and a green underline here would collide with the blue Greek-tap
+   convention the same chart is full of. `.popup-link` supplies the button
+   reset; this overrides only the colour and the underline. */
+/* `button.` rather than the bare class: `.popup-link` supplies the colour and
+   the underline further down this file, and at equal specificity it would win
+   on source order. */
+button.rc-chart-trigger { color: var(--link); text-decoration: none; font-weight: 700; }
+button.rc-chart-trigger:active { opacity: 0.6; }
+
+/* RULE LINES. `transformation` (ch13) carries a label; `shiftSummary` (ch16)
+   does not. Both hold their internal spacing, because the columns inside the
+   line are how the original aligns one rule over the next. */
+.rc-greekrows.transformation .rc-rule-row,
+.rc-greekrows.shift-summary .rc-rule-row {
+  display: grid; grid-template-columns: minmax(4.6em, auto) minmax(0, 1fr);
+  gap: 4px 10px; border-bottom: none; padding: 4px 6px; align-items: baseline; }
+.rc-greekrows.shift-summary .rc-rule-row.no-label,
+.rc-greekrows.transformation .rc-rule-row.no-label { grid-template-columns: minmax(0, 1fr); }
+.rc-rule-label { color: var(--teal-dark); font-weight: 700; white-space: nowrap; }
+.rc-rule-text { color: var(--ink); font-size: 1.15rem; white-space: pre-wrap;
+  overflow-wrap: break-word; min-width: 0; }
+.rc-greekrows.shift-summary { margin: 4px 0 10px; }
+.rc-greekrows.shift-summary .rc-rule-text { font-size: 1.2rem; }
+
+/* STEM LIST (ch14, ch15). `lemma  --  aorist  (gloss)`. The lemma column is
+   sized off the longest lemma the two chapters ship (ἀποθνῄσκω,
+   ἀποστέλλω); at 320px the gloss drops to its own line under the pair rather
+   than squeezing the aorist, because the pair is the teaching and the gloss is
+   the annotation. */
+.rc-greekrows.stem-list .rc-stem-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2px 8px; padding: 6px 4px; align-items: baseline; }
+.rc-stem-lemma { min-width: 0; font-size: 1.2rem; color: var(--ink);
+  text-align: left; overflow-wrap: break-word; }
+.rc-stem-lemma.greek-say { background: transparent; border: none; padding: 0;
+  width: auto; color: var(--link); }
+.rc-stem-forms { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; min-width: 0; }
+.rc-greekrows.stem-list .rc-part { font-size: 1.2rem; }
+.rc-stem-gloss { grid-column: 1 / -1; color: var(--teal-dark); font-size: 0.9rem; }
+/* The in-chart note marker beside an aorist that carries one. It cannot be the
+   form itself: that form is already an audio tap, and one press cannot both
+   speak and open a page. */
+/* `button.` for the same reason as .rc-chart-trigger: .popup-link resets the
+   border further down this file and would win on source order. */
+button.rc-stem-note { font-size: 0.8rem; line-height: 1; width: 1.35em; height: 1.35em;
+  display: inline-flex; align-items: center; justify-content: center; padding: 0;
+  border: 1px solid var(--link); border-radius: 50%; align-self: center; flex: none; }
+@media (min-width: 560px) {
+  .rc-greekrows.stem-list .rc-stem-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.7fr); }
+  .rc-stem-gloss { grid-column: auto; }
+}
+
+/* ENDING TRANSFORMATIONS (ch15, ch16): a rule line, then its worked example
+   indented beneath. The indent is the original's, and it is what says the
+   example belongs to the rule above rather than standing beside it. */
+.rc-greekrows.ending-transformation { margin: 6px 0 10px; }
+.rc-etf-row { padding: 6px 4px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+.rc-etf-row:last-child { border-bottom: none; }
+.rc-etf-rule { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; }
+.rc-etf-label { color: var(--link); font-weight: 700; white-space: nowrap; }
+span.rc-etf-label { color: var(--teal-dark); }
+.rc-etf-text { color: var(--ink); font-size: 1.05rem; white-space: pre-wrap;
+  overflow-wrap: break-word; min-width: 0; }
+.rc-etf-example { margin: 4px 0 0 1.6em; font-size: 1.15rem; color: var(--ink);
+  overflow-wrap: break-word; }
+.rc-etf-example .greek-tap { font-size: inherit; }
+
+/* PRINCIPAL PARTS (ch16): six labelled rows, one Greek form each. */
+.rc-greekrows.principal-parts .rc-pp-row {
+  display: grid; grid-template-columns: minmax(6.4em, auto) minmax(0, 1fr);
+  gap: 4px 10px; padding: 5px 4px; border-bottom: none; align-items: baseline; }
+.rc-pp-label { color: var(--teal-dark); font-weight: 700; font-size: 0.9rem; }
+.rc-pp-forms { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; min-width: 0; }
+.rc-greekrows.principal-parts .rc-part { font-size: 1.2rem; }
+
 .rc-greekrows.english-pairs .rc-greekrow { text-align: center; }
 .rc-english-cell { min-width: 0; overflow-wrap: break-word; }
 .rc-greeklabel { font-weight: 600; overflow-wrap: anywhere; }
@@ -882,6 +996,10 @@ button { font: inherit; cursor: pointer; }
    why the chart read "but, yet(638)". */
 .rv-freq { color: #8a8472; font-size: 0.9rem; margin-left: 0.35em; }
 .rv-footnote { font-size: 0.85rem; color: #5a5a52; line-height: 1.45; margin-top: 10px; }
+/* 5I-SPEC1 4.3: the per-half say-all sits directly under the rows it speaks,
+   so it needs less air above it than the chart-wide row at the foot of the
+   card and none of that row's top border. */
+.controls.rv-group-controls { margin-top: 8px; margin-bottom: 4px; }
 /* The chapter-4/5 original charts split ten lemmas into two five-row columns.
    Keep the phone readable as one column, then restore that authored column-
    major order when the 768px evidence width has room. */
@@ -1027,13 +1145,49 @@ button { font: inherit; cursor: pointer; }
 .paradigm.pg-case-labels { --pg-label-col: 3.25em; }
 .paradigm.pg-long-case-labels { --pg-label-col: 4.65em; }
 .paradigm.pg-many-columns { --pg-label-col: 2.8em; --pg-gap: 2px; }
+/* 5I-SPEC1 4.7: a wide chart with no row labels reclaims the empty gutter --
+   chapter 16's Passive Stems needs every pixel for three columns of long
+   passive forms, and the column it was leaving blank held nothing. */
+/* The empty label span STAYS in the markup and simply sits in a zero-width
+   track: `display: none` on it would take it out of grid flow and shift every
+   cell in the row one column left, dropping the last one off the edge. */
+.paradigm.pg-no-row-labels { --pg-label-col: 0px; --pg-gap: 3px; }
+/* And its own type ramp. Chapter 16's longest passive form, γνωσθήσομαι, is
+   eleven glyphs; at the 320px floor a third of the card is about 85px, so it
+   sets at 0.86rem and grows back to the ordinary chart size as soon as there
+   is room. Below the floor the shared `pg-long-forms` nowrap would CLIP it --
+   silently, since overflow-x is hidden app-wide. */
+.paradigm.pg-no-row-labels.pg-long-forms .pg-greek { font-size: 0.82rem; }
+.paradigm.pg-no-row-labels .pg-cell-text { font-size: 0.82rem; }
+.paradigm.pg-no-row-labels .pg-head { font-size: 0.66rem; }
+@media (min-width: 400px) {
+  .paradigm.pg-no-row-labels.pg-long-forms .pg-greek,
+  .paradigm.pg-no-row-labels .pg-cell-text { font-size: 1rem; }
+}
+@media (min-width: 560px) {
+  .paradigm.pg-no-row-labels.pg-long-forms .pg-greek,
+  .paradigm.pg-no-row-labels .pg-cell-text { font-size: 1.2rem; }
+}
 .pg-head, .pg-row { display: grid; grid-template-columns: var(--pg-label-col) repeat(var(--pg-cols, 2), minmax(0, 1fr));
   gap: var(--pg-gap); align-items: stretch; }
 .pg-head { padding: 6px 2px; border-bottom: 2px solid rgba(0,0,0,0.1); color: var(--teal-dark);
   font-size: 0.75rem; font-weight: 700; text-transform: uppercase; text-align: center; }
 .pg-head > span { min-width: 0; overflow-wrap: break-word; }
-.pg-group-head { border-bottom-width: 1px; padding-bottom: 3px; }
-.pg-column-group { color: var(--accent-ink); }
+/* 5I-SPEC1 4.1 -- COLUMN GROUPS STACK. A chart that declares `columnGroups`
+   draws one block per group down the page instead of one grid across it: at
+   320px the six-across original overprinted its own headers and lost columns
+   off the right edge, and overflow is CLIPPED app-wide, so nothing scrolled
+   and nothing errored. DISCLOSURE-RULES 4.6 forbids paging the Review copy and
+   in the same breath describes the answer -- a C9 page stacks its paradigms
+   vertically, Singular above Plural. Each block heads itself with its group
+   label and repeats the case-label column, so no row loses its name. */
+.pg-grid.pg-grouped { gap: 14px; }
+.pg-group-label { text-align: center; font-size: 0.85rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.03em; color: var(--accent-ink);
+  padding-bottom: 2px; }
+/* The last block's final row keeps the rule under it that the ungrouped chart
+   draws; the blocks are separated by the grid gap above, not by a border. */
+.pg-group + .pg-group { padding-top: 2px; }
 .pg-column { display: flex; align-items: center; justify-content: center; min-width: 0;
   overflow-wrap: break-word; line-height: 1.2; }
 .pg-column-audio { background: transparent; border: none; padding: 0 2px; color: var(--link);
@@ -1056,6 +1210,14 @@ button { font: inherit; cursor: pointer; }
 .pg-long-forms { --pg-gap: 4px; }
 .pg-long-forms .pg-greek { font-size: 1.08rem; white-space: nowrap; overflow-wrap: normal; }
 .pg-greek-tap:disabled .pg-greek { color: var(--ink); }
+/* 5I-SPEC1 4.7: an inert `text` cell (chapter 16's "no future passive" em
+   dash). Same box and the same vertical rhythm as the tap it stands in for,
+   so the rows do not stagger where a dash sits beside a form -- but ink, no
+   Greek face, and nothing to press. */
+.pg-cell-text { display: flex; align-items: center; justify-content: center; width: 100%;
+  padding: 9px 0; color: var(--ink); font-size: 1.35rem; line-height: 1; }
+.pg-long-forms .pg-cell-text { font-size: 1.08rem; }
+.pg-many-columns .pg-cell-text { padding: 8px 0; font-size: 0.92rem; }
 .pg-gloss { min-width: 0; max-width: 100%; font-size: 0.78rem; line-height: 1.3;
   color: var(--teal-dark); overflow-wrap: anywhere; }
 .pg-many-columns .pg-head { font-size: 0.66rem; }
@@ -1790,6 +1952,18 @@ button.rc-term-name { font-weight: 700; }
      columns at the supported 320px floor. */
   .paradigm.pg-three-columns.pg-long-forms .pg-head { font-size: 0.7rem; }
   .paradigm.pg-three-columns.pg-long-forms .pg-greek { font-size: 1.04rem; }
+  /* ...except the label-less wide chart, which has its own ramp above and is
+     already at the size its eleven-glyph forms need. In a MODAL it has less
+     room again: the dialog is inset from the card the page draws. */
+  .paradigm.pg-no-row-labels.pg-long-forms .pg-greek { font-size: 0.82rem; }
+  .modal .paradigm.pg-no-row-labels.pg-long-forms .pg-greek { font-size: 0.76rem; }
+  /* 5I-SPEC1: the two Verb Forms hint charts of chapters 14 and 15 put an
+     English gloss in the row-label gutter and a ten-glyph Greek form in each of
+     two columns -- ἀποθνῄσκω against "I came, went". Nothing else in sixteen
+     chapters is 2-column with BOTH a long label and long forms, so this is the
+     pair, and at the 320px floor they clipped by 7-8px. */
+  .paradigm.pg-long-case-labels.pg-long-forms { --pg-label-col: 4.1em; }
+  .paradigm.pg-long-case-labels.pg-long-forms .pg-greek { font-size: 0.95rem; }
   .rc-item-below .rc-expander-body { padding-left: 8px; padding-right: 8px; }
   .rc-item-below .rc-pfrows.arrow-form { column-gap: 4px; }
   .rc-item-below .rc-pfrows.arrow-form .rc-pfgreek { font-size: 1.05rem; }

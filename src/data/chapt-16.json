@@ -59,7 +59,7 @@
      "content": [
       {
        "type": "para",
-       "text": "Rather than using a helping verb, Greek uses a different stem to indicate the passive indicative for aorist and future tenses. In the lexicon this stem will be the sixth (last) principal part. [[u]]Present Future Aorist[[/u]] βάλλω, βαλῶ, ἔβαλον, [[u]]Perfect Perf mid/pass Aorist pass[[/u]] βέβληκα, βέβλημαι, ἐβλήθην"
+       "text": "Rather than using a helping verb, Greek uses a different stem to indicate the passive indicative for aorist and future tenses. In the lexicon this stem will be the sixth (last) principal part."
       },
       {
        "type": "greekRows",
@@ -143,7 +143,7 @@
       },
       {
        "type": "para",
-       "text": "They are built from the sixth principal part of the verb. They are easily recognized because of the characteristic q just before the ending. Like other past tense verb forms aorist passives take the augment.",
+       "text": "They are built from the sixth principal part of the verb. They are easily recognized because of the characteristic θ just before the ending. Like other past tense verb forms aorist passives take the augment.",
        "gapBefore": true
       }
      ]
@@ -154,7 +154,7 @@
      "content": [
       {
        "type": "para",
-       "text": "The aorist passives are formed by adding qh before the ending:"
+       "text": "The aorist passives are formed by adding θη before the ending:"
       },
       {
        "type": "formula",
@@ -173,7 +173,7 @@
       },
       {
        "type": "para",
-       "text": "The future passives add qhs before the ending and drop the augment. lu + qhs + n = λυθήσομαι Stem Pass Ending (I will be loosed)",
+       "text": "The future passives add θησ before the ending and drop the augment.",
        "gapBefore": true
       },
       {
@@ -200,7 +200,7 @@
      "content": [
       {
        "type": "para",
-       "text": "When a stem ends in a consonant the following changes take place when the qh is added. Palatals: k and g become x diwk + qh = ἐδιώχθην Labials: p and b become f λείπ + qh = ἐλείφθην f causes the q to drop out graf + qh = ἐγράφην"
+       "text": "When a stem ends in a consonant the following changes take place when the θη is added."
       },
       {
        "type": "greekRows",
@@ -1478,8 +1478,7 @@
      ],
      "answer": "Are you the prophet? and he answered, \"No\"",
      "audio": "chapt_16_p_td1",
-     "hintRef": "passiveParadigms",
-     "greek2": "με, Ἐγώ εἰμι Ἰησοῦς"
+     "hintRef": "passiveParadigms"
     },
     {
      "greek": "Ἀπεκρίθησαν καὶ εἶπαν αὐτῷ, Ὁ πατὴρ ἡμῶν",
@@ -1503,7 +1502,8 @@
      ],
      "answer": "And I answered, \"Who are you Lord?\" and he said to me, \"I am Jesus\"",
      "audio": "chapt_16_p_td3",
-     "hintRef": "passiveParadigms"
+     "hintRef": "passiveParadigms",
+     "greek2": "με, Ἐγώ εἰμι Ἰησοῦς"
     },
     {
      "greek": "Καὶ ὅτε εἶδεν ὁ δράκων ὅτι ἐβλήθη εἰς τὴν γῆν",
@@ -1527,8 +1527,7 @@
      ],
      "answer": "and his angels were cast down with him",
      "audio": "chapt_16_p_td5",
-     "hintRef": "passiveParadigms",
-     "greek2": "ναὸν τοῦτον καὶ ... ἐγερῶ αὐτόν"
+     "hintRef": "passiveParadigms"
     },
     {
      "greek": "καὶ εἴ τις οὐχ εὑρέθη ἐν τῇ βίβλῳ τῆς ζωῆς",
@@ -1540,8 +1539,7 @@
      ],
      "answer": "and if anyone was not found in the book of life",
      "audio": "chapt_16_p_td6",
-     "hintRef": "passiveParadigms",
-     "greek2": "λέγω σοι"
+     "hintRef": "passiveParadigms"
     },
     {
      "greek": "ἀπεκρίθη Ἰησοῦς καὶ εἶπεν αὐτοῖς, Λύσατε τὸν",
@@ -1554,7 +1552,7 @@
      "answer": "Jesus answered and said to them, \"Destroy this temple and I will raise it\"",
      "audio": "chapt_16_p_td7",
      "hintRef": "passiveParadigms",
-     "greek2": "ἀπολωλότα οἴκου Ἰσραήλ"
+     "greek2": "ναὸν τοῦτον καὶ ... ἐγερῶ αὐτόν"
     },
     {
      "greek": "ἀπεκρίθη Ἰησοῦς καὶ εἶπεν αὐτῷ , Ἀμὴν ἀμὴν",
@@ -1567,7 +1565,7 @@
      "answer": "Jesus answered and said to him, \"Truly, truly, I say to you\"",
      "audio": "chapt_16_p_td8",
      "hintRef": "passiveParadigms",
-     "greek2": "ἠγέρθη ἀπὸ τῶν νεκρῶν"
+     "greek2": "λέγω σοι"
     },
     {
      "greek": "εἶπεν, Οὐκ ἀπεστάλην εἰ μὴ εἰς τὰ πρόβατα τὰ",
@@ -1579,7 +1577,8 @@
      ],
      "answer": "he said, \"I was not sent except to the lost sheep of the house of Israel\"",
      "audio": "chapt_16_p_td9",
-     "hintRef": "passiveParadigms"
+     "hintRef": "passiveParadigms",
+     "greek2": "ἀπολωλότα οἴκου Ἰσραήλ"
     },
     {
      "greek": "Οὗτός ἐστιν Ἰωάννης ὁ βαπτιστής: αὐτὸς",
@@ -1592,7 +1591,7 @@
      "answer": "This is John the Baptist; he was raised from the dead",
      "audio": "chapt_16_p_td10",
      "hintRef": "passiveParadigms",
-     "greek2": "ἐγερθήσεται"
+     "greek2": "ἠγέρθη ἀπὸ τῶν νεκρῶν"
     },
     {
      "greek": "ἀπεκρίθη ἡ γυνὴ καὶ εἶπεν αὐτῷ, Οὐκ ἔχω ἄνδρα",
@@ -1604,8 +1603,7 @@
      ],
      "answer": "the woman answered and said to him, \"I do not have a husband\"",
      "audio": "chapt_16_p_td11",
-     "hintRef": "passiveParadigms",
-     "greek2": "ἐπὶ βασιλείαν"
+     "hintRef": "passiveParadigms"
     },
     {
      "greek": "καὶ ἀποκτενοῦσιν αὐτόν, καὶ τῇ τρίτῃ ἡμέρᾳ",
@@ -1618,7 +1616,7 @@
      "answer": "and they will kill him, and he will be raised on the third day",
      "audio": "chapt_16_p_td12",
      "hintRef": "passiveParadigms",
-     "greek2": "πλανήσουσιν πολλούς"
+     "greek2": "ἐγερθήσεται"
     },
     {
      "greek": "ἐγερθήσεται γὰρ ἔθνος ἐπὶ ἔθνος καὶ βασιλεία",
@@ -1630,7 +1628,8 @@
      ],
      "answer": "for nation will rise against nation and kingdom against kingdom",
      "audio": "chapt_16_p_td13",
-     "hintRef": "passiveParadigms"
+     "hintRef": "passiveParadigms",
+     "greek2": "ἐπὶ βασιλείαν"
     },
     {
      "greek": "καὶ πολλοὶ ψευδοπροφῆται ἐγερθήσονται καὶ",
@@ -1643,7 +1642,7 @@
      "answer": "and many false prophets will arise and deceive many",
      "audio": "chapt_16_p_td14",
      "hintRef": "passiveParadigms",
-     "greek2": "Γαλιλαίαν"
+     "greek2": "πλανήσουσιν πολλούς"
     },
     {
      "greek": "οὐδὲ τόπος εὑρέθη αὐτῶν ἔτι ἐν τῷ οὐρανῷ",
@@ -1668,7 +1667,7 @@
      "answer": "But the eleven disciples went into Galilee",
      "audio": "chapt_16_p_td16",
      "hintRef": "passiveParadigms",
-     "greek2": "τὸ ἔργον τοῦ θεοῦ"
+     "greek2": "Γαλιλαίαν"
     },
     {
      "greek": "καὶ οὐκ ἠδυνήθησαν αὐτὸν θεραπεῦσαι",
@@ -1680,8 +1679,7 @@
      ],
      "answer": "and they were not able to heal him",
      "audio": "chapt_16_p_td17",
-     "hintRef": "passiveParadigms",
-     "greek2": "δι' ἀπιστίαν"
+     "hintRef": "passiveParadigms"
     },
     {
      "greek": "ἀπεκρίθη ὁ Ἰησοῦς καὶ εἶπεν αὐτοῖς, Τοῦτό ἐστιν",
@@ -1694,7 +1692,7 @@
      "answer": "Jesus answered and said to them, \"This is the work of God\"",
      "audio": "chapt_16_p_td18",
      "hintRef": "passiveParadigms",
-     "greek2": "Χριστοῦ"
+     "greek2": "τὸ ἔργον τοῦ θεοῦ"
     },
     {
      "greek": "καὶ βλέπομεν ὅτι οὐκ ἠδυνήθησαν εἰσελθεῖν",
@@ -1706,7 +1704,8 @@
      ],
      "answer": "and we see that they were not able to enter because of unbelief",
      "audio": "chapt_16_p_td19",
-     "hintRef": "passiveParadigms"
+     "hintRef": "passiveParadigms",
+     "greek2": "δι' ἀπιστίαν"
     },
     {
      "greek": "οὔτε ἐδιδάχθην ἀλλὰ δι' ἀποκαλύψεως Ἰησοῦ",
@@ -1719,7 +1718,7 @@
      "answer": "nor was I taught but through a revelation of Jesus Christ",
      "audio": "chapt_16_p_td20",
      "hintRef": "passiveParadigms",
-     "greek2": "χάριτος τοῦ θεοῦ"
+     "greek2": "Χριστοῦ"
     },
     {
      "greek": "ὅς ἐγενήθη σοφία ἡμῖν ἀπὸ θεοῦ",
@@ -1743,7 +1742,8 @@
      ],
      "answer": "of which I became a minister according to the gift of God's grace",
      "audio": "chapt_16_p_td22",
-     "hintRef": "passiveParadigms"
+     "hintRef": "passiveParadigms",
+     "greek2": "χάριτος τοῦ θεοῦ"
     },
     {
      "greek": "ἐγενήθητε ἐγγὺς ἐν τῷ αἵματι τοῦ Χριστοῦ",
@@ -1779,8 +1779,7 @@
      ],
      "answer": "and they were judged, each according to their works",
      "audio": "chapt_16_p_td25",
-     "hintRef": "passiveParadigms",
-     "greek2": "σωθήσεται"
+     "hintRef": "passiveParadigms"
     },
     {
      "greek": "καὶ ἐσώθη ἡ γυνὴ ἀπὸ τῆς ὥρας ἐκείνης",
@@ -1792,8 +1791,7 @@
      ],
      "answer": "and the woman was made well from that hour",
      "audio": "chapt_16_p_td26",
-     "hintRef": "passiveParadigms",
-     "greek2": "τοῦ θεοῦ"
+     "hintRef": "passiveParadigms"
     },
     {
      "greek": "Πᾶς γὰρ ὅς ἄν ἐπικαλέσηται τὸ ὄνομα κυρίου",
@@ -1805,7 +1803,8 @@
      ],
      "answer": "for anyone who calls on the name of the Lord will be saved",
      "audio": "chapt_16_p_td27",
-     "hintRef": "passiveParadigms"
+     "hintRef": "passiveParadigms",
+     "greek2": "σωθήσεται"
     },
     {
      "greek": "ἀπεκρίθη αὐτῳ Ναθαναήλ, Ῥαββί, σύ εἶ ὁ υἱὸς",
@@ -1817,7 +1816,8 @@
      ],
      "answer": "Nathanael answered him, \"Rabbi, you are the son of God\"",
      "audio": "chapt_16_p_td28",
-     "hintRef": "passiveParadigms"
+     "hintRef": "passiveParadigms",
+     "greek2": "τοῦ θεοῦ"
     }
    ],
    "scored": true,

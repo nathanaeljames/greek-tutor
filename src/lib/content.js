@@ -659,6 +659,16 @@ export function buildSelectQuestions(chapter, activity) {
         // from `gloss`, which chapter 2's one-attempt drills reveal on their
         // own once an item is answered — a translation is shown on request.
         translate: stripMarkup(item.translate) || null,
+        // 5I-SPEC1 §4.4: the item's OWN instruction line. Chapter 16's Form
+        // Drill asks twenty-two questions about fifteen verbs, and six of them
+        // appear twice with an IDENTICAL prompt panel ("βάλλω / I cast,
+        // throw") — once for the aorist passive, once for the future. The
+        // instruction line above the options is the only thing that tells them
+        // apart, and the original swaps it per item (DOSBox-confirmed
+        // 2026-08-29). Carried through the shuffle with the item it belongs
+        // to; a drill without the field is unchanged and shows the
+        // activity-level line.
+        instructions: stripMarkup(item.instructions) || null,
         hintRef: item.hintRef,
         reveals,
         correctForm: item.correctForm || null,
