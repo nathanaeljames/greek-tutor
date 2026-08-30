@@ -10,6 +10,8 @@ Format id 0x62e is UNDERLINE against a 0x502 body; 0x6d0 is Greek and
 0x594 the page heading. Verified across all three chapter TBKs.
 """
 import re
+
+import tbk_fields as _tbk_fields
 import struct
 import sys
 
@@ -81,7 +83,81 @@ def marked(data, off):
 DIACRITIC = re.compile(r"[a-zA-Z][<>?@#%^&$!]|[\]\[][a-zA-Z]|[a-zA-Z][\]\[]")
 
 
-def vote_greek_fmts(data, offsets):
+# Whole-word English markers. A legacy-Greek run is notation -- single
+# letters, rule lines, "--" separators -- and never contains two of these.
+_EN = re.compile(r'(?<![A-Za-z])(?:the|and|are|with|from|that|this|will|'
+                 r'was|were|for|not|but|verb|stem|form|forms|ending|endings|'
+                 r'aorist|present|future|tense|augment|added|before|after|'
+                 r'when|which|they|their|there|have|has|been|its|it)'
+                 r'(?![A-Za-z])', re.I)
+
+
+def _run_vote(chunk):
+    """GREEK, ENGLISH or ABSTAIN for one formatted run.
+
+    Three-way, not two-way. The old two-way vote counted every
+    diacritic-free run as ENGLISH, which buried the Greek format under
+    its own notation: chapter 14's Greek format carries 35 accented runs
+    and 28 runs that are single letters, "--" separators and rule lines
+    such as "a + e = h". Those 28 are Greek NOTATION, not English, and
+    counting them as English kept the format below the majority bar --
+    so `sa`, `qh`, `lu`, `diwk` and `graf` shipped as roman letters in
+    chapters 14, 15 and 16. A run now votes ENGLISH only on positive
+    evidence: two or more whole English words. Everything else abstains.
+    """
+    if DIACRITIC.search(chunk):
+        return 'GREEK'
+    if len(_EN.findall(chunk)) >= 2:
+        return 'ENGLISH'
+    return 'ABSTAIN'
+
+
+def vote_greek_fmts(data, offsets=None):
+    """Format ids that are GREEK, voted across every field in the file.
+
+    Voted over the CURATED teaching offsets, not the whole file: format
+    ids are reused across pages, and a stale buffer holding English under
+    the same id would veto a genuine Greek format.
+    """
+    votes, texts = {}, {}
+    for off in offsets:
+        sp = spans(data, off)
+        if not sp:
+            continue
+        text, _ = field(data, off)
+        for a, b, fmt in sp:
+            chunk = text[a:b].strip()
+            if fmt is None or not chunk:
+                continue
+            texts.setdefault(fmt, []).append(chunk)
+            g, e = votes.get(fmt, (0, 0))
+            v = _run_vote(chunk)
+            if v == 'GREEK':
+                votes[fmt] = (g + 1, e)
+            elif v == 'ENGLISH':
+                votes[fmt] = (g, e + 1)
+            else:
+                votes.setdefault(fmt, (g, e))
+    # A format is Greek when it carries accented Greek and NO English
+    # prose. Abstentions are silent on both sides.
+    greek = {fmt for fmt, (g, e) in votes.items() if g >= 1 and e == 0}
+    # A format whose every run is a SHORT all-lowercase token and which
+    # never votes either way is notation, and notation in these fields is
+    # Greek: chapter 15's suffixed sigma appears only as the two-letter
+    # run "sa", under a format that carries nothing else anywhere. The
+    # length and case test keeps headings ("Introduction"), continuation
+    # markers ("(cont.)") and glosses ("(I saw)") out, and the underline
+    # format is excluded outright.
+    for fmt, (g, e) in votes.items():
+        if g or e or fmt == UNDERLINE_FMT or fmt in greek:
+            continue
+        runs = texts.get(fmt, [])
+        if runs and all(re.fullmatch(r'[a-z]{1,4}[.,;:]?', r) for r in runs):
+            greek.add(fmt)
+    return greek
+
+
+def vote_greek_fmts_legacy(data, offsets):
     """Format ids that are GREEK, voted across MANY fields at once.
 
     A per-field vote misses a run that happens to carry no diacritic --
@@ -91,7 +167,7 @@ def vote_greek_fmts(data, offsets):
     Greek elsewhere. The vote is a MAJORITY of runs, so one English run
     that happens to match the diacritic pattern cannot flip a format.
     """
-    votes = {}
+    votes, texts = {}, {}
     for off in offsets:
         sp = spans(data, off)
         if not sp:

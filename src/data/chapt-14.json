@@ -120,7 +120,7 @@
      "content": [
       {
        "type": "para",
-       "text": "The second aorist is built from the second aorist verb stem. It is preceded by an \"ε\" augment and followed by secondary endings like the imperfect."
+       "text": "The second aorist is built from the second aorist verb stem. It is preceded by an (ε) augment and followed by secondary endings like the imperfect."
       },
       {
        "type": "formula",
@@ -2755,7 +2755,7 @@
   "c14_qr_scripture_mat610c",
   "c14_learn_bibliography"
  ],
- "_audioVerify": "CHAPT_14 ships 144 WAVs. Every verb carries a PAIR: n_<verb>p is the present lemma and n_<verb>a the second aorist. The Forms Drill and the Forms Speller both dispatch the AORIST half (A1b). Strays: n_sm7 (the SayWord table lists it; the six-word Mat 6:10c pool never reaches it).",
+ "_audioVerify": "CHAPT_14 ships 145 WAVs, all 145 present in the audio manifest. Every verb carries a PAIR: n_<verb>p is the present lemma and n_<verb>a the second aorist. The Forms Drill and the Forms Speller both dispatch the AORIST half (A1b). Strays: n_sm7 (the SayWord table lists it; the six-word Mat 6:10c pool never reaches it).",
  "_sequence_note": "Rail order from ch14railwalk.pdf, cross-checked against the Drill / Exercise / Quick Review menus on its last page.",
  "hintCharts": {
   "secondAoristParadigms": {

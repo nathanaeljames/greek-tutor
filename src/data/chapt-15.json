@@ -628,6 +628,7 @@
       },
       {
        "type": "greekRows",
+       "layout": "derivation",
        "gapBefore": true,
        "rows": [
         {
@@ -1528,7 +1529,8 @@
      ],
      "answer": "Because of your hard heart he wrote this command to you",
      "audio": "chapt_15_o_td29",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristVsImperfect",
+     "greek2": "τὴν ἐντολὴν ταύτην"
     }
    ],
    "scored": true,

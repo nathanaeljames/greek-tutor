@@ -36,6 +36,20 @@ Chapter-specific wiring facts, all TBK-read:
     method (NIT-LOG N-6, ruled 2026-08-29) the port STACKS it and keeps
     one say-all per half.
 """
+# --------------------------------------------------------------------
+# STAGE 8.7 SELF-CHECK (5I close).
+#
+# This assembler REPRODUCES the committed chapt-14.json exactly, so it is
+# not blocked the way assemble_ch6/7/8.py are -- those cannot reproduce
+# their committed state, and blocking is the only safe answer there.
+# Blocking a script that works just forces hand edits forever.
+#
+# Instead: after building, DIFF against the committed file. If they
+# differ, refuse to write and print the differing paths. That cannot
+# silently revert a hand repair, and it does not stand in the way of a
+# legitimate regeneration. ALLOW_REGRESSIVE_REBUILD=1 overrides, for the
+# case where the difference IS the intended change.
+# --------------------------------------------------------------------
 import json
 import os
 import re
@@ -47,7 +61,7 @@ import underline
 from assemble_ch9 import (Tbk, para_blocks, dash, sq, stepper_ui, score_ui,
                           audit)
 from assemble_ch11 import make_conv11, nfc, bare, dispatch
-from assemble_ch13 import tfield, tpool
+from assemble_ch13 import tfield, tpool, positional_pool
 
 A = 'chapt_14_'
 
@@ -119,7 +133,10 @@ def paradigm(tbk, off, pid, title, forms, legacy, clips, glosses, say,
         for j in range(2):
             k = i + 3 * j
             gl = glosses[k]
-            if lower:
+            if lower and not gl.startswith('I '):
+                # The Review and hint screens really do print "we took /
+                # you took" lower case, but the English first-person
+                # pronoun is never lower case in any source (E13).
                 gl = gl[0].lower() + gl[1:]
             cells.append({'greek': forms[k], 'gloss': gl,
                           'audio': aud(clips[k])})
@@ -232,7 +249,9 @@ def form_topic(tbk, conv):
     if len(blocks) != 3 or 'augment' not in blocks[0]['text']:
         raise SystemExit(f'STOP: Form lead misparse: {blocks}')
     lead = blocks[:1]
-    lead[0]['text'] = lead[0]['text'].replace('(e) augment', '"ε" augment')
+    # the run table now converts the augment letter itself; the original
+    # prints it in PARENTHESES here ("an (ε) augment"), unlike ch15's
+    # quotes, and both are carried verbatim.
     raw = tfield(tbk, 0x23bc8)[0]
     for cand in ['lab', 'e@labon']:
         if cand not in raw:
@@ -519,10 +538,7 @@ def translation_drill(tbk, conv, txt):
             for o in (0xa2f18, 0xa38e2, 0xa4092)]
     refs = [sq(x) for x in tpool(tbk, 0xa4717, n, 'td refs')]
     refs[27] = 'Jn 7:3'
-    # positional second-line pool: 26 entries for 28 items -- entry k is
-    # item k, and the last two items (which have no second line) run off
-    # the end. Not padded, per Stage 4: the tail is genuinely absent.
-    line2 = tpool(tbk, 0xa4ad0, 26, 'td line 2', allow_blank=True) + ['', '']
+    line2 = positional_pool(tbk, 0xa4ad0, n, 'td line 2')
     keys = key_blocks(txt, 0xcb9a1, n, span=3200)
     disp = dispatch(tbk.data, 0xccb00, 0xcde00)
     items = []
@@ -916,6 +932,9 @@ def build_lexicon(tbk, conv):
 
 # -------------------------------------------------------------------- main
 def main():
+    committed = (sys.argv[6] if len(sys.argv) > 6 else
+                 os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                              '..', 'src', 'data', 'chapt-14.json'))
     tbk_path, fontmap_path, ch13_path, wavlist_path, outdir = sys.argv[1:6]
     outfile = os.path.join(outdir, 'chapt-14.json')
     if os.path.exists(outfile) and not os.environ.get(
@@ -946,7 +965,7 @@ def main():
         'learn': [], 'drill': [], 'exercise': [], 'quickReview': [],
         'feedback': ch13['feedback'], 'sequence': [],
         '_audioVerify': (
-            'CHAPT_14 ships 144 WAVs. Every verb carries a PAIR: n_<verb>p '
+            'CHAPT_14 ships 145 WAVs, all 145 present in the audio manifest. Every verb carries a PAIR: n_<verb>p '
             'is the present lemma and n_<verb>a the second aorist. The Forms '
             'Drill and the Forms Speller both dispatch the AORIST half '
             '(A1b). Strays: n_sm7 (the SayWord table lists it; the six-word '
@@ -1038,6 +1057,7 @@ def main():
     if errs:
         raise SystemExit('STOP: self-audit failed:\n' + '\n'.join(errs))
     ch = post_patches(ch)
+    _self_check(ch, committed)
     os.makedirs(outdir, exist_ok=True)
     with open(outfile, 'w', encoding='utf-8') as f:
         json.dump(ch, f, ensure_ascii=False, indent=1)
@@ -1051,7 +1071,12 @@ def main():
 
 
 def post_patches(doc):
-    """Stage 8.7 invariants."""
+    """Stage 8.7 invariants, plus ratified round-21 hand repairs."""
+    # RULED 2026-08-29 (Nathanael): the TBK and ch14railwalk.pdf p3 both
+    # print the augment in PARENTHESES here -- "an (e) augment" -- where
+    # chapter 15 prints it in quotes. Round 21 normalised ch14 to quotes,
+    # losing a real difference between the two screens. The parenthesised
+    # original stands; nothing to patch.
     sp = [a for a in doc['exercise']
           if a['id'] == 'c14_ex_scripture_speller'][0]
     assert 'Repeat This Exercise' not in sp['ui']['checkboxes']   # D-42
@@ -1062,6 +1087,46 @@ def post_patches(doc):
         assert a['answerPolicy']['advanceClass'] in (
             'none', 'autoBoth', 'manualOnIncorrect', 'retryUntilRight')
     return doc
+
+
+
+
+def _self_check(built, committed_path):
+    """Refuse to write output that differs from the committed chapter."""
+    import os
+    if os.environ.get('ALLOW_REGRESSIVE_REBUILD') == '1':
+        return
+    if not os.path.exists(committed_path):
+        print(f'NOTE: no committed file at {committed_path}; '
+              'self-check skipped.')
+        return
+
+    def flat(o, p='', acc=None):
+        if acc is None:
+            acc = {}
+        if isinstance(o, dict):
+            for k, v in o.items():
+                flat(v, f'{p}/{k}', acc)
+        elif isinstance(o, list):
+            for i, v in enumerate(o):
+                flat(v, f'{p}/{i}', acc)
+        else:
+            acc[p] = o
+        return acc
+    with open(committed_path, encoding='utf-8') as f:
+        want = flat(json.load(f))
+    got = flat(built)
+    bad = ([k for k in set(got) & set(want) if got[k] != want[k]]
+           + sorted(set(got) ^ set(want)))
+    bad = [k for k in bad if not k.split('/')[-1].startswith('_')]
+    if bad:
+        raise SystemExit(
+            'STOP (Stage 8.7 self-check): output differs from the committed '
+            f'chapt-14.json at {len(bad)} path(s). The committed file may '
+            'carry a hand repair this script does not reproduce -- absorb it '
+            'into post_patches() first. Set ALLOW_REGRESSIVE_REBUILD=1 only '
+            'if the difference IS the intended change.\n  '
+            + '\n  '.join(sorted(bad)[:20]))
 
 
 if __name__ == '__main__':

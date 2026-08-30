@@ -31,6 +31,20 @@ Chapter-specific wiring facts, all TBK-read:
     hyphen for eight of eighteen verbs; those render as an em dash and
     carry no tap.
 """
+# --------------------------------------------------------------------
+# STAGE 8.7 SELF-CHECK (5I close).
+#
+# This assembler REPRODUCES the committed chapt-16.json exactly, so it is
+# not blocked the way assemble_ch6/7/8.py are -- those cannot reproduce
+# their committed state, and blocking is the only safe answer there.
+# Blocking a script that works just forces hand edits forever.
+#
+# Instead: after building, DIFF against the committed file. If they
+# differ, refuse to write and print the differing paths. That cannot
+# silently revert a hand repair, and it does not stand in the way of a
+# legitimate regeneration. ALLOW_REGRESSIVE_REBUILD=1 overrides, for the
+# case where the difference IS the intended change.
+# --------------------------------------------------------------------
 import json
 import os
 import re
@@ -42,7 +56,7 @@ import underline
 from assemble_ch9 import (Tbk, para_blocks, dash, sq, stepper_ui, score_ui,
                           audit)
 from assemble_ch11 import make_conv11, nfc, bare, dispatch
-from assemble_ch13 import tfield, tpool
+from assemble_ch13 import tfield, tpool, positional_pool
 from assemble_ch14 import text_off
 
 A = 'chapt_16_'
@@ -53,6 +67,26 @@ TEACH_OFFSETS = [0x19360, 0x1a164, 0x1c214, 0x20a2c, 0x248fa, 0x264be,
 
 def aud(name):
     return A + name
+
+
+def lead_para(conv, raw, marker):
+    """The topic's LEAD paragraph only, never its chart.
+
+    para_blocks merges consecutive non-blank lines, so a panel whose
+    chart rows follow the lead with no blank line between them collapses
+    into ONE run-on block -- and slicing [:1] then keeps the whole panel.
+    That is the swallowed-panel defect: the page printed the chart twice,
+    once garbled as prose and once correctly as the structured sibling.
+    Cut at the marker sentence instead.
+    """
+    blocks = para_blocks(conv, raw.split('\r\n'))
+    if not blocks:
+        raise SystemExit('STOP: lead_para found no blocks')
+    text = blocks[0]['text']
+    i = text.find(marker)
+    if i < 0:
+        raise SystemExit(f'STOP: lead marker {marker!r} not in {text[:90]!r}')
+    return [{'type': 'para', 'text': text[:i + len(marker)].strip()}]
 
 
 def marked(tbk, off):
@@ -106,7 +140,10 @@ def paradigm(tbk, off, pid, title, forms, legacy, clips, glosses, say,
         for j in range(2):
             k = i + 3 * j
             gl = glosses[k]
-            if lower:
+            if lower and not gl.startswith('I '):
+                # The Review and hint screens really do print "we took /
+                # you took" lower case, but the English first-person
+                # pronoun is never lower case in any source (E13).
                 gl = gl[0].lower() + gl[1:]
             cells.append({'greek': forms[k], 'gloss': gl,
                           'audio': aud(clips[k])})
@@ -205,7 +242,14 @@ def english_concepts(tbk, conv):
     topics = []
     for tid, title, off in [('introduction', 'Introduction', 0x19360),
                             ('comparison', 'Comparison with Greek', 0x1a164)]:
-        blocks = para_blocks(conv, marked(tbk, off).split('\r\n'))
+        if tid == 'comparison':
+            # E7: the six principal parts follow the lead with no blank
+            # line, so para_blocks merges the whole panel into the lead
+            # paragraph and the page prints the chart twice. Cut it.
+            blocks = lead_para(conv, marked(tbk, off),
+                               'the sixth (last) principal part.')
+        else:
+            blocks = para_blocks(conv, marked(tbk, off).split('\r\n'))
         topics.append({'id': tid, 'title': title, 'content': blocks})
     pp = tfield(tbk, 0x1a164)[0]
     for leg in ['ba<llw', 'balw?', 'e@balon', 'be<blhka', 'be<blhmai',
@@ -249,10 +293,16 @@ def form_topic(tbk, conv):
     lead = [b for b in blocks if 'adding' in b['text']][:1]
     if not lead:
         raise SystemExit(f'STOP: Form lead misparse: {blocks}')
-    tail = [b for b in blocks if 'future passives add' in b['text']][:1]
-    if not tail:
+    tail_src = [b for b in blocks if 'future passives add' in b['text']][:1]
+    if not tail_src:
         raise SystemExit('STOP: Form future paragraph missing')
-    tail[0]['gapBefore'] = True
+    t = tail_src[0]['text']
+    cut = 'and drop the augment.'
+    j = t.find(cut)
+    if j < 0:
+        raise SystemExit(f'STOP: future cut not in {t[:90]!r}')
+    tail = [{'type': 'para', 'text': t[:j + len(cut)].strip(),
+             'gapBefore': True}]
     need(tbk, 'p_luw1s', 'p_luwf1s')
     f1 = {'type': 'formula', 'align': 'center', 'gapBefore': True,
           'lines': [{'text': 'ἐ + λυ + θη + ν = ἐλύθην',
@@ -271,7 +321,7 @@ def form_topic(tbk, conv):
 
 
 def endings_topic(tbk, conv):
-    lead = para_blocks(conv, marked(tbk, 0x248fa).split('\r\n'))[:1]
+    lead = lead_para(conv, marked(tbk, 0x248fa), 'is added.')
     if 'consonant' not in lead[0]['text']:
         raise SystemExit(f'STOP: Ending Transformations lead: {lead}')
     raw = tfield(tbk, 0x248fa)[0]
@@ -552,10 +602,7 @@ def translation_drill(tbk, conv, txt):
             for o in (0xbe5d6, 0xbf074, 0xbf8f8)]
     refs = [sq(x) for x in tpool(tbk, 0xc0051, n, 'td refs')]
     refs[27] = 'Jn 1:49'
-    # the pool carries a LEADING blank, then entry i for item i; the last
-    # two items have no second line and run off the end.
-    line2 = tpool(tbk, 0xc040a, 27, 'td line 2',
-                  allow_blank=True)[1:] + ['', '']
+    line2 = positional_pool(tbk, 0xc040a, n, 'td line 2')
     keys = key_blocks(txt, 0x7bf9b, n, span=4400)
     disp = dispatch(tbk.data, 0x7d100, 0x7e600)
     items = []
@@ -968,6 +1015,9 @@ def build_lexicon(tbk, conv):
 
 # -------------------------------------------------------------------- main
 def main():
+    committed = (sys.argv[6] if len(sys.argv) > 6 else
+                 os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                              '..', 'src', 'data', 'chapt-16.json'))
     tbk_path, fontmap_path, ch15_path, wavlist_path, outdir = sys.argv[1:6]
     outfile = os.path.join(outdir, 'chapt-16.json')
     if os.path.exists(outfile) and not os.environ.get(
@@ -1086,6 +1136,7 @@ def main():
     if errs:
         raise SystemExit('STOP: self-audit failed:\n' + '\n'.join(errs))
     ch = post_patches(ch)
+    _self_check(ch, committed)
     os.makedirs(outdir, exist_ok=True)
     with open(outfile, 'w', encoding='utf-8') as f:
         json.dump(ch, f, ensure_ascii=False, indent=1)
@@ -1099,6 +1150,10 @@ def main():
 
 
 def post_patches(doc):
+    # RULED 2026-08-29 (Nathanael): the positional second-line pool supplies
+    # a continuation that round 21's hand move lost, and the rail walk shows
+    # that prompt on two lines with the first ending mid-clause. The
+    # recovered line stands; nothing to patch.
     sp = [a for a in doc['exercise']
           if a['id'] == 'c16_ex_scripture_speller'][0]
     assert 'Repeat This Exercise' not in sp['ui']['checkboxes']   # D-42
@@ -1109,6 +1164,46 @@ def post_patches(doc):
         assert a['answerPolicy']['advanceClass'] in (
             'none', 'autoBoth', 'manualOnIncorrect', 'retryUntilRight')
     return doc
+
+
+
+
+def _self_check(built, committed_path):
+    """Refuse to write output that differs from the committed chapter."""
+    import os
+    if os.environ.get('ALLOW_REGRESSIVE_REBUILD') == '1':
+        return
+    if not os.path.exists(committed_path):
+        print(f'NOTE: no committed file at {committed_path}; '
+              'self-check skipped.')
+        return
+
+    def flat(o, p='', acc=None):
+        if acc is None:
+            acc = {}
+        if isinstance(o, dict):
+            for k, v in o.items():
+                flat(v, f'{p}/{k}', acc)
+        elif isinstance(o, list):
+            for i, v in enumerate(o):
+                flat(v, f'{p}/{i}', acc)
+        else:
+            acc[p] = o
+        return acc
+    with open(committed_path, encoding='utf-8') as f:
+        want = flat(json.load(f))
+    got = flat(built)
+    bad = ([k for k in set(got) & set(want) if got[k] != want[k]]
+           + sorted(set(got) ^ set(want)))
+    bad = [k for k in bad if not k.split('/')[-1].startswith('_')]
+    if bad:
+        raise SystemExit(
+            'STOP (Stage 8.7 self-check): output differs from the committed '
+            f'chapt-16.json at {len(bad)} path(s). The committed file may '
+            'carry a hand repair this script does not reproduce -- absorb it '
+            'into post_patches() first. Set ALLOW_REGRESSIVE_REBUILD=1 only '
+            'if the difference IS the intended change.\n  '
+            + '\n  '.join(sorted(bad)[:20]))
 
 
 if __name__ == '__main__':

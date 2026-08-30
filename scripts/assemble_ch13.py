@@ -43,6 +43,20 @@ Chapter-specific wiring facts, all TBK-read:
     nothing), m_ad5 (an orphan of chapter 12's l_ad augment family),
     msargs (missing underscore, a duplicate of m_sargs), m_onoss.
 """
+# --------------------------------------------------------------------
+# STAGE 8.7 SELF-CHECK (5I close).
+#
+# This assembler REPRODUCES the committed chapt-13.json exactly, so it is
+# not blocked the way assemble_ch6/7/8.py are -- those cannot reproduce
+# their committed state, and blocking is the only safe answer there.
+# Blocking a script that works just forces hand edits forever.
+#
+# Instead: after building, DIFF against the committed file. If they
+# differ, refuse to write and print the differing paths. That cannot
+# silently revert a hand repair, and it does not stand in the way of a
+# legitimate regeneration. ALLOW_REGRESSIVE_REBUILD=1 overrides, for the
+# case where the difference IS the intended change.
+# --------------------------------------------------------------------
 import json
 import os
 import re
@@ -149,6 +163,23 @@ def tpool(tbk, off, n, label, allow_blank=False):
                          f'got {len(lines)} (second length word '
                          f'{"used" if trimmed else "absent"})')
     return lines[:n]
+
+
+def positional_pool(tbk, off, n, label):
+    """A pool whose LINE INDEX is its item number, blanks included.
+
+    The Translation Drills' second-prompt-line pools are positional: line
+    i is item i, and a blank line means that item has no continuation.
+    tpool() strips LEADING blanks, which silently shifts every entry --
+    that is the whole of the E12 defect (ch13 off by one, ch14 and ch16
+    off by two, ch15 correct only because it happened to carry exactly
+    one leading blank). Never strip; index directly, and let the caller
+    assert the count.
+    """
+    raw, _ = tfield(tbk, off)
+    lines = [l.strip() for l in raw.split('\r\n')]
+    lines += [''] * max(0, n + 1 - len(lines))
+    return lines[1:n + 1]
 
 
 # Format id 1744 is this file's GREEK run format (it carries pa?j, pa?sa,
@@ -738,9 +769,7 @@ def translation_drill(tbk, conv):
     cols = {k: [sq(x) for x in tpool(tbk, o, n, f'td col {k}')]
             for k, o in (('a', 0x732c2), ('b', 0x73acc), ('c', 0x7409c))}
     refs = [sq(x) for x in tpool(tbk, 0x7451c, n, 'td refs')]
-    # positional second-Greek-line pool: 18 lines for 19 items -- entry k is
-    # item k, and item 19 (which has no second line) simply runs off the end.
-    line2 = tpool(tbk, 0x748de, 18, 'td line 2', allow_blank=True) + ['']
+    line2 = positional_pool(tbk, 0x748de, n, 'td line 2')
     for (field, idx), want in TD_CUTS.items():
         src = {'greek': greek, 'ref': refs}.get(field, cols.get(field))
         if not src[idx - 1].startswith(want):
@@ -1152,6 +1181,9 @@ def build_lexicon(tbk, conv):
 
 # -------------------------------------------------------------------- main
 def main():
+    committed = (sys.argv[6] if len(sys.argv) > 6 else
+                 os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                              '..', 'src', 'data', 'chapt-13.json'))
     tbk_path, fontmap_path, ch12_path, wavlist_path, outdir = sys.argv[1:6]
     outfile = os.path.join(outdir, 'chapt-13.json')
     if os.path.exists(outfile) and not os.environ.get(
@@ -1209,7 +1241,7 @@ def main():
         'learn': [], 'drill': [], 'exercise': [], 'quickReview': [],
         'feedback': ch12['feedback'], 'sequence': [],
         '_audioVerify': (
-            'CHAPT_13 ships 158 WAVs. UNREFERENCED (D-39 class): m_vocl '
+            'CHAPT_13 ships 159 WAVs, all 159 present in the audio manifest. UNREFERENCED (D-39 class): m_vocl '
             '(declared as an alias at 0x10294, played by nothing -- the '
             'Review chart plays the halves vocl13a/vocl13b instead), m_ad5 '
             '(an orphan of chapter 12\'s l_ad family), msargs (missing '
@@ -1304,6 +1336,7 @@ def main():
     if errs:
         raise SystemExit('STOP: self-audit failed:\n' + '\n'.join(errs))
     ch = post_patches(ch)
+    _self_check(ch, committed)
     os.makedirs(outdir, exist_ok=True)
     with open(outfile, 'w', encoding='utf-8') as f:
         json.dump(ch, f, ensure_ascii=False, indent=1)
@@ -1328,6 +1361,46 @@ def post_patches(doc):
         assert a['answerPolicy']['advanceClass'] in (
             'none', 'autoBoth', 'manualOnIncorrect', 'retryUntilRight')  # B1
     return doc
+
+
+
+
+def _self_check(built, committed_path):
+    """Refuse to write output that differs from the committed chapter."""
+    import os
+    if os.environ.get('ALLOW_REGRESSIVE_REBUILD') == '1':
+        return
+    if not os.path.exists(committed_path):
+        print(f'NOTE: no committed file at {committed_path}; '
+              'self-check skipped.')
+        return
+
+    def flat(o, p='', acc=None):
+        if acc is None:
+            acc = {}
+        if isinstance(o, dict):
+            for k, v in o.items():
+                flat(v, f'{p}/{k}', acc)
+        elif isinstance(o, list):
+            for i, v in enumerate(o):
+                flat(v, f'{p}/{i}', acc)
+        else:
+            acc[p] = o
+        return acc
+    with open(committed_path, encoding='utf-8') as f:
+        want = flat(json.load(f))
+    got = flat(built)
+    bad = ([k for k in set(got) & set(want) if got[k] != want[k]]
+           + sorted(set(got) ^ set(want)))
+    bad = [k for k in bad if not k.split('/')[-1].startswith('_')]
+    if bad:
+        raise SystemExit(
+            'STOP (Stage 8.7 self-check): output differs from the committed '
+            f'chapt-13.json at {len(bad)} path(s). The committed file may '
+            'carry a hand repair this script does not reproduce -- absorb it '
+            'into post_patches() first. Set ALLOW_REGRESSIVE_REBUILD=1 only '
+            'if the difference IS the intended change.\n  '
+            + '\n  '.join(sorted(bad)[:20]))
 
 
 if __name__ == '__main__':
