@@ -71,11 +71,19 @@ def swallowed_panels(doc):
                              if isinstance(b, dict) and b.get('type') == 'para']
                     others = [b for b in v
                               if isinstance(b, dict) and b.get('type') != 'para']
+                    # A repeated fragment only means "swallowed panel" if
+                    # it is substantial. At a 4-character floor the detector
+                    # matched bare words a chart cell and its lead prose
+                    # legitimately share -- "word" in ch2, "with" in ch6 --
+                    # and a report that cries wolf is a report nobody reads.
+                    # Require a real phrase: 12+ characters, or 8+ with a
+                    # space in it.
                     strings = set()
                     for b in others:
                         for _p, s in displayed(b):
-                            if len(s.strip()) >= 4:
-                                strings.add(s.strip())
+                            s = s.strip()
+                            if len(s) >= 12 or (len(s) >= 8 and ' ' in s):
+                                strings.add(s)
                     for i, b in paras:
                         text = b.get('text', '')
                         for s in strings:
