@@ -53,9 +53,12 @@ Instances to date (clip -> halves):
   for before deciding whether to cut the clips.
 
 **N-3 | Interlinear verses flow instead of breaking at the original's
-three fixed lines** (5H RESULTS 5.6; the shape has flowed since ch1).
-Instances: every Learn Scripture Memory and Review Scripture Memory
-page. Not yet asked; recorded so it is not forgotten.
+three fixed lines -- RESOLVED 2026-08-30.** Ruled the RIGHT behavior by
+VERIFY-5I-RESPONSE G2/G3 and generalized as DISCLOSURE-RULES §4.10:
+every Bible verse everywhere in the app is CONTINUOUS text; line breaks
+come only from container width, never from the original's storage
+layout. The rule also converts the drill-prompt second line (`greek2`)
+from a forced break to a flowing continuation, app-wide, in 5I-SPEC2.
 
 **N-4 | Empty grid cells.** The original's fixed 12-cell and 8-cell
 option grids leave a dead cell when the pool is 11 or 7 (ch11 Greek to
@@ -104,6 +107,12 @@ Instances so far: ch13 Review Vocabulary Chart (two half-list clips,
 m_vocla / m_voclb); ch14 Review Second Aorist Indicative Forms (paged
 five-and-eight, NO half recordings, so it stacks with no buttons).
 Chapters 15-16 not yet checked.
+SCOPE CLARIFIED (VERIFY-5I-RESPONSE I-1, 2026-08-30): the stacking
+method is a REVIEW-SURFACE rule only. Learn pages and hint modals PAGE
+their multi-chart paradigms per DISCLOSURE-RULES §4.1/§4.2, exactly as
+chapters 5-12 do -- 5I shipped ch13's πᾶς Learn chart and hint modal
+stacked, which was the regression 5I-SPEC2 converts back. The full
+surface matrix now lives in DISCLOSURE-RULES §4.6.
 
 ## RESOLVED
 

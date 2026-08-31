@@ -595,6 +595,39 @@ D-57 | ch8 | AΥΤΟΣ TRANSLATION DRILL HINT: FOUR PAGES WHERE THE
      if the pipeline has already spent D-57. | Nathanael, VERIFY-5H-2
      (s) response, 2026-08-27.
 
+D-58 | ch13 | πᾶς DECLINING DRILL HINT GAINS A SAY PARADIGM BUTTON the
+     original's hint screen does not carry. The Learn page records
+     say-all audio for the same chart; the hint modal now carries the
+     button too. Ruled VERIFY-5I-RESPONSE item 1, 2026-08-30, and
+     GENERALIZED by DISCLOSURE-RULES §4.8: wherever a paradigm has a
+     say-all recording, its hint-modal copy carries the Say Paradigm
+     button even where the original's hint lacks it.
+
+D-59 | ch14 | THE NOTE MARKER BESIDE εἶδον. The original makes εἶδον
+     one click that plays the clip and then opens its note after a
+     delay. The port cannot make one press both speak and navigate, so
+     the form keeps its audio tap and a small circled marker beside it
+     opens the note. Accepted VERIFY-5I-RESPONSE I-2/item 8,
+     2026-08-30, and made the STANDARD for every future
+     audio-tap-plus-note word (DISCLOSURE-RULES §3.12). Instances:
+     ch14 Aorist Stems list (Learn topic 6) and Review Second Aorist
+     Indicative Forms, βλέπω row.
+
+D-60 | ch14, ch15 | PARADIGM GLOSSES CAPITALIZED APP-WIDE regardless of
+     the original's case. The original prints "we took / you took" in
+     lower case on ch14's Review and hint copies of the λαμβάνω
+     paradigm and ch15's Review copy of the λύω paradigm while
+     capitalizing the same glosses on the Learn copies. Ruled
+     VERIFY-5I-RESPONSE I-5, 2026-08-30: capitalize everywhere.
+     (The lower-case first-person "i" was already corrected as E13.)
+
+D-61 | ch16 | ENDING TRANSFORMATIONS AND CONSONANT SHIFTS MERGED into
+     one five-row chart under the single "Ending Transformations"
+     topic; the original's "Consonant Shifts" screen header is
+     DROPPED. Both screens show ending-transformation examples and the
+     second is a continuation of the first. Ruled VERIFY-5I-RESPONSE
+     item 7, 2026-08-30.
+
 ## Auto-progress / advance rule matrix
 
 MOVED. The full exercise-by-exercise, chapter-by-chapter matrix —

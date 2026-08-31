@@ -15,15 +15,31 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
 internet. Full license from the author. Secondary goal: portfolio
 piece. Nathanael goes by "Fable" when addressing Claude (chat).
 
-## Live state (2026-08-28 — COHORT 5H CLOSED AND ACCEPTED, 5I NEXT)
+## Live state (2026-08-31 — COHORT 5I FEEDBACK ROUND: 5I-SPEC2 ISSUED)
 
-Cohort 5H (chapters 11 Demonstrative/Relative Pronouns, 12 Imperfect
-Verbs) is CLOSED and accepted, plus the LOOKBACK pass it absorbed.
-Three spec rounds, all Opus, no cross-patches: 5H-SPEC1 (buildout),
-5H-SPEC2 (VERIFY-5H closure + LOOKBACK over chapters 3-12), 5H-SPEC3
-(VERIFY-5H-2 closure). Accepted head: `6a4369c`. Tally: Sol 4, Opus 13
-(includes solo rounds), Ties 0. Twelve chapters' data committed and
-disclosure-conformant; nothing staged.
+Cohort 5I (chapters 13-16: Third Declension Nouns, Second Aorist,
+First Aorist, Aorist/Future Passive) is BUILT but NOT CLOSED. 5I-SPEC1
+(Opus solo, round 21) shipped all four chapters; the pipeline-debt
+absorption followed (Greek-format three-way vote, positional pools,
+assembler self-checks, garble scanner — all committed at `1153363`).
+Nathanael's device pass came back as VERIFY-5I-RESPONSE (2026-08-30):
+NOT a clean round — twelve numbered regressions from rendering
+patterns that had held since 5G by convention rather than by written
+rule, plus two missed D-46 conditional hints. Those conventions are
+now WRITTEN CONTRACTS (DISCLOSURE-RULES §3.3 amended, §3.11-3.12,
+§4.6 surface matrix, §4.7 cursor amendment, §4.8-4.10; NIT-LOG N-6
+scoped Review-only; N-3 resolved; D-58..D-61 logged). **5I-SPEC2 is
+the closure round: DUAL MODEL (Sol + Opus) per the standing
+scheduling rule for patch/feedback rounds.** Head at spec issue:
+`a168c18`. Cohort 5H tally stands: Sol 4, Opus 13, Ties 0; 5I-SPEC1
+graded Opus-win, no XPATCH.
+
+Open against 5I close: the derived conditional-hint mappings in
+5I-SPEC2 §5 need TBK confirmation next ISO session (PIPELINE-INSIGHTS
+"Conditional-hint extraction"); every rule-4 data edit 5I-SPEC2
+authorizes must be absorbed into assemble_ch13..16.py the same
+cohort; VERIFY-5I item B1's three-word wiring ships on Nathanael's
+fallback ruling pending the same TBK read.
 
 New canon from 5H (rules live in their own documents; this is the
 index):
@@ -58,6 +74,34 @@ index):
   charts) is the open one that needs a COMPLETE instance record before
   Nathanael decides on splitting the clips — append every new instance
   in the round that ships it.
+
+New canon from the 5I feedback round (2026-08-30/31; rules live in
+DISCLOSURE-RULES and the logs — this is the index):
+
+- **The paradigm SURFACE MATRIX is written** (§4.6): Learn pages
+  toggle/page, hint modals page, Review pages stack. Stacking was
+  never license for other surfaces.
+- **Hint modals carry the say-all** where the paradigm has one (§4.8,
+  D-58).
+- **Tap-boundary canon is binding on the pipeline** (5G-SPEC3, now
+  §-cited in every spec): in a worked example only the resulting
+  Greek form is the tap (`greekTap`); `tapUnit` is for a pure
+  morpheme equation with no printed result form.
+- **All non-button modal triggers are green underlined** (§3.11);
+  the circled note-marker is the standard for audio-tap-plus-note
+  words (§3.12, D-59).
+- **Long single lists in modals scroll under a frozen header row**
+  (§4.9); multi-chart bundles still page.
+- **Bible verses are continuous text everywhere** (§4.10; N-3
+  resolved): `greek2` flows, never breaks.
+- **A normal cursor OVER a word in a railwalk is negative evidence**
+  (§4.7 amendment): that word is not clickable.
+- **A multi-chart drill hint is a D-46 candidate by default**
+  (PIPELINE-INSIGHTS, Conditional-hint extraction): the per-item
+  conditional is a positive extraction finding, never a fallback.
+- **Paradigm glosses capitalize app-wide** (D-60); ch16's Consonant
+  Shifts header is dropped into one Ending Transformations chart
+  (D-61).
 
 Say-all ruling (N-1, VERIFY-5H (p)): Learn/Drill/Exercise surfaces keep
 the button on every half (one half is on screen at a time, so the
@@ -244,12 +288,17 @@ files carry only what a new chat needs.
 
 - **Three deliverables per spec.** Every spec produces BUILD, RESULTS
   AND its VERIFY document in the same round, authored by the
-  implementer. The VERIFY document opens with a PREVIOUS-RESPONSE
-  CHECKLIST: every ask from the last VERIFY response, one or two lines
-  each, as boxes Nathanael ticks by LOOKING rather than assuming, plus
-  a route line per row telling him where on the device to look. It
-  then carries forward any item of the previous VERIFY the response
-  did not mark resolved, then the new items.
+  implementer. AMENDED 2026-08-30 (ratified during 5I; first delivered
+  then, committed now): the PREVIOUS-RESPONSE CHECKLIST belongs on a
+  CONTINUATION round's VERIFY only — every ask from the last VERIFY
+  response, one or two lines each, as boxes Nathanael ticks by LOOKING
+  rather than assuming, plus a route line per row. A NEW COHORT'S
+  FIRST VERIFY carries no checklist (the previous cohort closed), and
+  rulings Nathanael made during a cohort's DATA production were
+  settled in the pipeline chat and are NOT re-asked as device checks.
+  5I-SPEC1's VERIFY got both wrong. After the checklist, the document
+  carries forward any item of the previous VERIFY the response did not
+  mark resolved, then the new items.
 - **No airplane-mode items in VERIFY documents.** The scripted offline
   walk during implementation testing suffices; all later testing is
   assumed offline and Nathanael reports what does not play.

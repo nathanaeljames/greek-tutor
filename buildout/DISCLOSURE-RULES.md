@@ -114,9 +114,16 @@ header in the original?** Header → C6. No header → C5.
    εἰμί) are in-text links and take this same green underlined style;
    they were missed by the R1 conversion and no rule ever ratified
    them blue.
-3. **In-chart triggers (C3)**: keep their existing appearance — the
-   gloss itself is the hot text; no green underline (it would collide
-   with the blue Greek-tap convention).
+3. **In-chart triggers (C3)** (AMENDED 2026-08-31, VERIFY-5I-RESPONSE
+   item 9, superseding the keep-appearance rule): ENGLISH in-chart hot
+   text — labels, glosses, headers that open a modal — renders GREEN
+   UNDERLINED like any C3 link, and may keep bold. Only GREEK hot text
+   keeps the blue Greek-tap appearance, because there blue already
+   means "tappable" and green would collide with the audio convention.
+   The one surface shipped and device-accepted under the old rule is
+   ch13's Key Letter Box (six English labels around one grid); its
+   restyle to green underline rides the app-wide §3.11 sweep and is a
+   VERIFY eye item, not a silent change.
 4. **All other clickable blue** — audio taps, Greek forms, chart
    headers — stays blue, formatted as it currently appears.
 5. **C2 accordion titles** (AMENDED 2026-08-17, inverting the
@@ -146,6 +153,24 @@ header in the original?** Header → C6. No header → C5.
    into C1's placement rules.
 10. **Anything with a scroll bar in the original scrolls in the port**
    (ch1 bibliography, ch1 letters chart).
+11. **ALL non-button text that opens a modal or popup is green
+   underlined** (RATIFIED 2026-08-31, VERIFY-5I-RESPONSE item 9),
+   whatever block type carries it — paragraph links, list labels,
+   chart labels, greekRows labels, formula-line words. Bold may be
+   kept. Greek hot text is the §3.3 exception (blue Greek-tap
+   appearance). This is an APP-WIDE CHECKLIST ITEM for the next
+   implementation pass: sweep every modal/popup trigger in every
+   chapter and bring it to this style. Found instance that ratified
+   the rule: ch15 Ending Transformations' Palatals / Labials / Dentals
+   labels, which shipped without the underline.
+12. **The note marker** (RATIFIED 2026-08-31, VERIFY-5I-RESPONSE
+   item 8 / I-2): where a word is an audio tap AND carries a note or
+   modal of its own, the word keeps its clip and a small circled
+   question-mark marker beside it opens the modal. The original's
+   click-plays-then-opens-after-a-delay behavior is never reproduced.
+   The marker is a modal trigger and takes §3.11 styling. Standard for
+   every such instance moving forward; first instances are ch14's
+   εἶδον note (D-59).
 
 ## 4. Paged charts and toggles (C8 and main-area paradigm pairs)
 
@@ -207,7 +232,20 @@ header in the original?** Header → C6. No header → C5.
 
 6. **C9 pages** show everything at once: paradigms stack vertically
    (Singular above Plural, Middle above Passive), one say-all button
-   per chart, no toggles, no More/Back, no topic rail. Audio buttons
+   per chart, no toggles, no More/Back, no topic rail.
+   SURFACE MATRIX (made explicit 2026-08-31, VERIFY-5I-RESPONSE I-1 —
+   the stacking is REVIEW-ONLY and was never license for other
+   surfaces): the SAME paradigm renders by SURFACE, not by chart —
+   * LEARN page: split charts behind the §4.1 toggle or §4.2
+     Back/More, Say Paradigm on every half (NIT-LOG N-1 ruling);
+   * HINT MODAL: the same split, paged inside the modal per §4.3,
+     with the say-all button per §4.8;
+   * REVIEW page: stacked, no pager, one say-all per recorded half
+     (NIT-LOG N-6 standing method).
+   A chart wider than the phone (the six-column πᾶς case) becomes a
+   Singular chart and a Plural chart under this matrix; it does NOT
+   become a stacked pair on Learn or in a hint. 5I shipped ch13's πᾶς
+   Learn and hint copies stacked; 5I-SPEC2 converts them. Audio buttons
    are not pagination and stay. RATIONALE AND ENFORCEMENT (added
    2026-08-17): students may want to PRINT Review pages, so all
    content must be visible in one flowing scroll — pagers are fine on
@@ -229,6 +267,39 @@ header in the original?** Header → C6. No header → C5.
    cursor over gets a tap in the port (the ch7 οὐ/οὐκ/οὐχ rule lines
    are the found case). Both are visual-verification checklist items
    in every railwalk from now on.
+   AMENDED 2026-08-31 (VERIFY-5I-RESPONSE item 10): a NORMAL cursor
+   deliberately positioned OVER a word in a railwalk is NEGATIVE
+   evidence — that word is NOT clickable in the original. No cursor
+   near a word remains no evidence either way. The ch16 ἐγενόμην hand
+   cursor the port missed is the found case; read the cursors, both
+   ways, on every railwalk pass.
+
+8. **Hint modals carry the say-all** (RATIFIED 2026-08-31,
+   VERIFY-5I-RESPONSE item 1; D-58): where a paradigm has a say-all
+   recording anywhere in the chapter, its hint-modal copy carries the
+   Say Paradigm button too, even where the original's hint screen
+   lacks it. Per §4.3, on a paged hint the button behaves as any
+   modal say-all (pinned only when §4.3 pins it).
+9. **Long single lists in modals scroll under a FROZEN header row**
+   (RATIFIED 2026-08-31, VERIFY-5I-RESPONSE item 11): when a modal
+   holds ONE long list — not a multi-chart bundle — it is never split
+   into pages; it renders as one scrolling list whose header row
+   (e.g. Present Active / Aorist Passive / Future Passive) stays
+   pinned at the top of the modal's scroll area while the rows scroll
+   beneath it. Multi-CHART bundles still page per §4.2; this rule is
+   for one list that is merely tall. First instance: ch16 Passive
+   Verbs Form Drill's Passive Stems hint.
+10. **Bible verses are CONTINUOUS text, everywhere** (RATIFIED
+   2026-08-31, VERIFY-5I-RESPONSE G2/G3; resolves NIT-LOG N-3): a
+   verse breaks lines only where the container's width breaks it.
+   The original's two-line prompts and three-line interlinears are
+   storage/layout artifacts and are NEVER reproduced as forced
+   breaks. In data, a drill prompt's `greek2` remains the positional
+   pool's second entry (extraction provenance), but every surface
+   renders `greek` + `greek2` as one flowing line joined by a single
+   space — one tap target, one clip, no `display: block` between
+   them. App-wide scan item: no forced break inside any verse render
+   (drill prompts, Translate reveals, reviews, interlinears).
 
 ## 5. Data-model vocabulary (pipeline)
 

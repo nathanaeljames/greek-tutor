@@ -791,6 +791,46 @@ marker the implementer named (`pool` or `promptFrom.lexicon`); the
 renderer already handles it. Not worth its own round.
 
 
+## Conditional-hint extraction (PERMANENT, 2026-08-31 — from the 5I C4/C5 misses)
+
+Two 5I drills shipped their multi-chart hint bundles UNDIFFERENTIATED —
+every item's `hintRef` pointing at the same composite — when the
+original varies the hint by the form on screen. Both were caught only
+on device (VERIFY-5I-RESPONSE items 12, C4, C5), the exact failure
+class the D-46 sweep exists to prevent. Three rules, binding on every
+future chapter and on every regeneration of 13-16:
+
+1. **A drill hint holding MORE THAN ONE chart is a D-46 candidate BY
+   DEFAULT.** Run the WordCounter-conditional scan against that page's
+   script before shipping; "one bundle for all items" must be a
+   POSITIVE finding from the script, never the fallback shape.
+2. **An all-items-identical per-item `hintRef` set is a red flag, not
+   a completed extraction.** Emitting the per-item key and pointing
+   every item at the same composite reproduces the drill-level
+   fallback while LOOKING extracted. If the per-item dimension cannot
+   be read, say so in the delivery turn instead of emitting the
+   uniform set.
+3. **The unwired-clip audit runs before data DELIVERY, not before the
+   spec** (5I §3.3 lesson, now binding). An unwired clip is often a
+   screen or a wiring the extraction missed — ch16's merged Mat 6:10
+   page and ch15's wrong translation hint were both exposed this way,
+   and ch16's unwired `p_ginm` was the missed ἐγενόμην tap.
+
+Standing debt from this rule: the conditional tables for ch15's
+First Aorist Indicative Translation Drill and ch16's Passive Verbs
+Parsing and Translation Drills were DERIVED linguistically in
+5I-SPEC2 (mapping tables in that spec, marked provisional) because the
+ISO was not mounted in the ruling session. The NEXT pipeline session
+with the ISO mounted reads the three WordCounter conditionals from
+13-16's TBKs, confirms or corrects the shipped mapping, and absorbs
+the result into `assemble_ch15.py` / `assemble_ch16.py` — this is a
+same-cohort-absorption item and 5I does not close without it.
+
+Process corollary (standing since 5I, written here so it binds):
+**explain edits BEFORE making them.** The pipeline never presents a
+deviation from a verified target as a drop-in replacement; disputed
+readings ship as labelled, deletable blocks with the argument attached.
+
 ## Rich-document inspection (PERMANENT, 2026-08-25 — supersedes the PDF-only strikethrough rule)
 
 Every provided rich-text document — PDF, Excel/any spreadsheet, Word —
