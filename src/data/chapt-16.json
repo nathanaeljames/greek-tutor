@@ -163,13 +163,16 @@
        "lines": [
         {
          "text": "ἐ + λυ + θη + ν = ἐλύθην",
-         "audio": "chapt_16_p_luw1s",
-         "tapUnit": true
+         "greekTap": {
+          "word": "ἐλύθην",
+          "audio": "chapt_16_p_luw1s"
+         }
         },
         {
          "text": "Aug   Stem   Pass   Ending   (I was loosed)"
         }
-       ]
+       ],
+       "_note": "5G-SPEC3 tap-boundary canon (5I-SPEC2 4.3): in a worked example only the RESULTING Greek form is the tap; tapUnit is for a pure morpheme equation with no printed result. The morphemes building the form stay ink."
       },
       {
        "type": "para",
@@ -183,14 +186,17 @@
        "lines": [
         {
          "text": "λυ + θησ + ν = λυθήσομαι",
-         "audio": "chapt_16_p_luwf1s",
-         "tapUnit": true
+         "greekTap": {
+          "word": "λυθήσομαι",
+          "audio": "chapt_16_p_luwf1s"
+         }
         },
         {
          "text": "Stem   Pass   Ending   (I will be loosed)"
         }
        ],
-       "_verify_note": "The original prints \"lu + qhs + n = luqh<somai\" -- the ending shown is nu although the form ends -omai. Carried VERBATIM; an original slip, not a conversion error. VERIFY."
+       "_verify_note": "The original prints \"lu + qhs + n = luqh<somai\" -- the ending shown is nu although the form ends -omai. Carried VERBATIM; an original slip, not a conversion error. VERIFY.",
+       "_note": "5G-SPEC3 tap-boundary canon (5I-SPEC2 4.3): in a worked example only the RESULTING Greek form is the tap; tapUnit is for a pure morpheme equation with no printed result. The morphemes building the form stay ink."
       }
      ]
     },
@@ -214,7 +220,10 @@
            "text": "κ and γ  become  χ"
           }
          ],
-         "note": "διωκ + θη = ἐδιώχθην"
+         "note": "διωκ + θη = ἐδιώχθην",
+         "noteAudioMap": {
+          "ἐδιώχθην": "chapt_16_p_diwa"
+         }
         },
         {
          "label": "Labials:",
@@ -223,7 +232,10 @@
            "text": "π and β  become  φ"
           }
          ],
-         "note": "λείπ + θη = ἐλείφθην"
+         "note": "λείπ + θη = ἐλείφθην",
+         "noteAudioMap": {
+          "ἐλείφθην": "chapt_16_p_leia"
+         }
         },
         {
          "label": null,
@@ -232,25 +244,11 @@
            "text": "φ causes the θ to drop out"
           }
          ],
-         "note": "γραφ + θη = ἐγράφην"
-        }
-       ]
-      }
-     ],
-     "audioMap": {
-      "ἐδιώχθην": "chapt_16_p_diwa",
-      "ἐλείφθην": "chapt_16_p_leia",
-      "ἐγράφην": "chapt_16_p_graa"
-     }
-    },
-    {
-     "id": "consonantShifts",
-     "title": "Consonant Shifts",
-     "content": [
-      {
-       "type": "greekRows",
-       "layout": "endingTransformation",
-       "rows": [
+         "note": "γραφ + θη = ἐγράφην",
+         "noteAudioMap": {
+          "ἐγράφην": "chapt_16_p_graa"
+         }
+        },
         {
          "label": "Dentals:",
          "parts": [
@@ -258,7 +256,10 @@
            "text": "τ, δ, and θ  become  σ"
           }
          ],
-         "note": "πειθ + θη = ἐπείσθην"
+         "note": "πειθ + θη = ἐπείσθην",
+         "noteAudioMap": {
+          "ἐπείσθην": "chapt_16_p_peia"
+         }
         },
         {
          "label": "Sibilants:",
@@ -267,9 +268,13 @@
            "text": "ζ, ξ, and ψ  become  σ"
           }
          ],
-         "note": "δοξαζ + θη = ἐδοξάσθην"
+         "note": "δοξαζ + θη = ἐδοξάσθην",
+         "noteAudioMap": {
+          "ἐδοξάσθην": "chapt_16_p_doca"
+         }
         }
-       ]
+       ],
+       "_tap_note": "5I-SPEC2 4.3 / 5G-SPEC3 tap boundary: the worked example under each rule prints a RESULT, so the result form alone taps and the construction morphemes (\"diwk + qh =\") stay ink. noteAudioMap is the shape chapter 15's copy of this block already uses; no contract is added. For the record, the ORIGINAL page has buttons on eleifqhn and egrafhn only and the Consonant Shifts screen has none; all five tap in the port under the standing all-Greek-taps rule because all five clips exist. egrafhn plays p_graa, the page's own dispatch, not the gamma-rho-alpha-phi-omega paradigm cell."
       },
       {
        "type": "greekRows",
@@ -312,10 +317,13 @@
       }
      ],
      "audioMap": {
+      "ἐδιώχθην": "chapt_16_p_diwa",
+      "ἐλείφθην": "chapt_16_p_leia",
+      "ἐγράφην": "chapt_16_p_graa",
       "ἐπείσθην": "chapt_16_p_peia",
       "ἐδοξάσθην": "chapt_16_p_doca"
      },
-     "_disclosure": "C6: \"Consonant Shifts\" carries its OWN header in the original, so it is a distinct topic rather than a continuation of Ending Transformations (2.7 header test)."
+     "_disclosure": "D-61 (5I-SPEC2 4.4, VERIFY-5I-RESPONSE item 7): \"Consonant Shifts\" was a topic of its own under the 2.7 header test, because the original's second screen carries that header. Nathanael ruled on 2026-08-30 that the header does not belong there at all -- both screens show ending transformations and the second is a continuation of the first -- so the two are ONE topic with ONE five-row chart (Palatals, Labials, the phi row, Dentals, Sibilants) and the shiftSummary block beneath it. The header is dropped, which is the divergence D-61 records."
     },
     {
      "id": "firstAoristPassive",
@@ -529,9 +537,10 @@
      ],
      "audioMap": {
       "ἀπεκρίθην": "chapt_16_p_apea",
+      "ἐγενόμην": "chapt_16_p_ginm",
       "ἐγενήθην": "chapt_16_p_gina"
      },
-     "_audio_note": "egenomen is the ch14 second aorist middle and has no clip in this pack; only the two forms the chapter itself records are tapped."
+     "_audio_note": "TBK-CONFIRMED (5I-SPEC2 4.6): this page dispatches apea, apea, ginm, gina at 16_FAPAS.TBK 0x21828-0x21ab6, and ch16railwalk shows the hand cursor over egenomhn. The earlier note here was wrong: p_ginm ships in CHAPT_16 and is the aorist middle this page prints. egenomhn was the only Greek word on the page that did not tap; it does now. (The second apea dispatch is the repeat of apekriqhn later in the paragraph, which splitTaps already covers -- every standalone occurrence of a mapped form taps.)"
     },
     {
      "id": "passiveStems",
@@ -539,7 +548,7 @@
      "content": [
       {
        "type": "paradigm",
-       "id": "learnPassiveStems1",
+       "id": "learnPassiveStems",
        "title": "Passive Stems",
        "columns": [
         "Present Active",
@@ -661,20 +670,7 @@
            "audio": "chapt_16_p_egef"
           }
          ]
-        }
-       ],
-       "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
-      },
-      {
-       "type": "paradigm",
-       "id": "learnPassiveStems2",
-       "title": "Passive Stems",
-       "columns": [
-        "Present Active",
-        "Aorist Passive",
-        "Future Passive"
-       ],
-       "rows": [
+        },
         {
          "label": null,
          "cells": [
@@ -807,10 +803,10 @@
          ]
         }
        ],
-       "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
+       "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap. 5I-SPEC2 4.5 (VERIFY-5I-RESPONSE item 11): the original's seven-and-eight split is a page break in a fixed-size window, not two charts -- there is no split audio and no second heading worth printing -- so the fifteen rows are ONE list under ONE header row here."
       }
      ],
-     "_disclosure": "C5 (NIT-LOG N-6 standing method): the original pages the stem table seven-and-eight behind More/Back; STACKED here in the original's own split. Neither half carries a say-all recording, so no button is drawn."
+     "_disclosure": "C5 (5I-SPEC2 4.5): the original pages the stem table seven-and-eight behind More/Back. That is its window's page break, not a structure -- both halves carry the same \"Passive Stems\" heading and the same three columns, and neither half has a say-all recording -- so the port prints ONE fifteen-row list under ONE header. This supersedes the 5I reading, which reproduced the split as two stacked charts."
     }
    ],
    "greekTaps": true
@@ -932,7 +928,7 @@
       "Third Plural"
      ],
      "audio": "chapt_16_p_luwf3p",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "ἐλύθην",
@@ -942,7 +938,7 @@
       "First Singular"
      ],
      "audio": "chapt_16_p_luw1s",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "ἐλύθητε",
@@ -952,7 +948,7 @@
       "Second Plural"
      ],
      "audio": "chapt_16_p_luw2p",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "λυθήσῃ",
@@ -962,7 +958,7 @@
       "Second Singular"
      ],
      "audio": "chapt_16_p_luwf2s",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "ἐγράφημεν",
@@ -972,7 +968,7 @@
       "First Plural"
      ],
      "audio": "chapt_16_p_gra1p",
-     "hintRef": "passiveParadigms"
+     "hintRef": "graphoPassive"
     },
     {
      "greek": "ἐγράφης",
@@ -982,7 +978,7 @@
       "Second Singular"
      ],
      "audio": "chapt_16_p_gra2s",
-     "hintRef": "passiveParadigms"
+     "hintRef": "graphoPassive"
     },
     {
      "greek": "λυθήσομαι",
@@ -992,7 +988,7 @@
       "First Singular"
      ],
      "audio": "chapt_16_p_luwf1s",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "ἐλύθησαν",
@@ -1002,7 +998,7 @@
       "Third Plural"
      ],
      "audio": "chapt_16_p_luw3p",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "ἐγράφη",
@@ -1012,7 +1008,7 @@
       "Third Singular"
      ],
      "audio": "chapt_16_p_gra3s",
-     "hintRef": "passiveParadigms"
+     "hintRef": "graphoPassive"
     },
     {
      "greek": "ἐλύθης",
@@ -1022,7 +1018,7 @@
       "Second Singular"
      ],
      "audio": "chapt_16_p_luw2s",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "λυθησόμεθα",
@@ -1032,7 +1028,7 @@
       "First Plural"
      ],
      "audio": "chapt_16_p_luwf1p",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "ἐγράφητε",
@@ -1042,7 +1038,7 @@
       "Second Plural"
      ],
      "audio": "chapt_16_p_gra2p",
-     "hintRef": "passiveParadigms"
+     "hintRef": "graphoPassive"
     },
     {
      "greek": "ἐλύθημεν",
@@ -1052,7 +1048,7 @@
       "First Plural"
      ],
      "audio": "chapt_16_p_luw1p",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "ἐλύθη",
@@ -1062,7 +1058,7 @@
       "Third Singular"
      ],
      "audio": "chapt_16_p_luw3s",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "λυθήσεσθε",
@@ -1072,7 +1068,7 @@
       "Second Plural"
      ],
      "audio": "chapt_16_p_luwf2p",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "λυθήσεται",
@@ -1082,7 +1078,7 @@
       "Third Singular"
      ],
      "audio": "chapt_16_p_luwf3s",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "ἐγράφην",
@@ -1092,7 +1088,7 @@
       "First Singular"
      ],
      "audio": "chapt_16_p_gra1s",
-     "hintRef": "passiveParadigms"
+     "hintRef": "graphoPassive"
     },
     {
      "greek": "ἐγράφησαν",
@@ -1102,7 +1098,7 @@
       "Third Plural"
      ],
      "audio": "chapt_16_p_gra3p",
-     "hintRef": "passiveParadigms"
+     "hintRef": "graphoPassive"
     }
    ],
    "scored": true,
@@ -1122,14 +1118,15 @@
      "pronounceEach": true
     },
     "liveScore": true,
-    "hintRef": "passiveParadigms"
+    "hintRef": "luwPassivePair"
    },
    "_stage_note": "Eighteen items (0xfa356). Stage one is TENSE (Aorist | Future), NOT voice -- the only parsing drill in the project with that axis, because the whole chapter is one voice. Every item has exactly ONE accepted cell and the assembler fails if a key names two. Each dispatched clip is asserted to be the prompt form's own paradigm cell.",
    "audioTiming": "beforeGuess",
    "answerPolicy": {
     "advanceClass": "manualOnIncorrect",
     "attemptsPerItem": 1
-   }
+   },
+   "_hint_note": "5I-SPEC2 5.2, read from 16_FAPAS.TBK 0xb5e30 (D-46 class): the Hint button runs \"when it = 5 or 6 or 9 -> Hint2; when it = 12 or 17 or 18 -> Hint2; else Hint1\". Hint1 is the luw pair (first aorist passive + future passive), Hint2 the single grapho chart (second aorist passive). The six Hint2 items are exactly the six grapho forms in the pool, which is the read agreeing with the linguistics rather than being derived from it."
   },
   {
    "id": "c16_drill_forms",
@@ -1478,7 +1475,7 @@
      ],
      "answer": "Are you the prophet? and he answered, \"No\"",
      "audio": "chapt_16_p_td1",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "Ἀπεκρίθησαν καὶ εἶπαν αὐτῷ, Ὁ πατὴρ ἡμῶν",
@@ -1490,7 +1487,7 @@
      ],
      "answer": "they answered and said to him, \"Our father is Abraham\"",
      "audio": "chapt_16_p_td2",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "Ἀβραάμ ἐστιν"
     },
     {
@@ -1503,7 +1500,7 @@
      ],
      "answer": "And I answered, \"Who are you Lord?\" and he said to me, \"I am Jesus\"",
      "audio": "chapt_16_p_td3",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "με, Ἐγώ εἰμι Ἰησοῦς"
     },
     {
@@ -1516,7 +1513,7 @@
      ],
      "answer": "and when the dragon saw that he was cast to the earth",
      "audio": "chapt_16_p_td4",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "καὶ οἱ ἄγγελοι αὐτοῦ μετ' αὐτοῦ ἐβλήθησαν",
@@ -1528,7 +1525,7 @@
      ],
      "answer": "and his angels were cast down with him",
      "audio": "chapt_16_p_td5",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "καὶ εἴ τις οὐχ εὑρέθη ἐν τῇ βίβλῳ τῆς ζωῆς",
@@ -1540,7 +1537,7 @@
      ],
      "answer": "and if anyone was not found in the book of life",
      "audio": "chapt_16_p_td6",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "ἀπεκρίθη Ἰησοῦς καὶ εἶπεν αὐτοῖς, Λύσατε τὸν",
@@ -1552,7 +1549,7 @@
      ],
      "answer": "Jesus answered and said to them, \"Destroy this temple and I will raise it\"",
      "audio": "chapt_16_p_td7",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "ναὸν τοῦτον καὶ ... ἐγερῶ αὐτόν"
     },
     {
@@ -1565,7 +1562,7 @@
      ],
      "answer": "Jesus answered and said to him, \"Truly, truly, I say to you\"",
      "audio": "chapt_16_p_td8",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "λέγω σοι"
     },
     {
@@ -1578,7 +1575,7 @@
      ],
      "answer": "he said, \"I was not sent except to the lost sheep of the house of Israel\"",
      "audio": "chapt_16_p_td9",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "ἀπολωλότα οἴκου Ἰσραήλ"
     },
     {
@@ -1591,7 +1588,7 @@
      ],
      "answer": "This is John the Baptist; he was raised from the dead",
      "audio": "chapt_16_p_td10",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "ἠγέρθη ἀπὸ τῶν νεκρῶν"
     },
     {
@@ -1604,7 +1601,7 @@
      ],
      "answer": "the woman answered and said to him, \"I do not have a husband\"",
      "audio": "chapt_16_p_td11",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "καὶ ἀποκτενοῦσιν αὐτόν, καὶ τῇ τρίτῃ ἡμέρᾳ",
@@ -1616,7 +1613,7 @@
      ],
      "answer": "and they will kill him, and he will be raised on the third day",
      "audio": "chapt_16_p_td12",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "ἐγερθήσεται"
     },
     {
@@ -1629,7 +1626,7 @@
      ],
      "answer": "for nation will rise against nation and kingdom against kingdom",
      "audio": "chapt_16_p_td13",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "ἐπὶ βασιλείαν"
     },
     {
@@ -1642,7 +1639,7 @@
      ],
      "answer": "and many false prophets will arise and deceive many",
      "audio": "chapt_16_p_td14",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "πλανήσουσιν πολλούς"
     },
     {
@@ -1655,7 +1652,7 @@
      ],
      "answer": "nor was a place found for them any longer in heaven",
      "audio": "chapt_16_p_td15",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "Οἱ δὲ ἕνδεκα μαθηταὶ ἐπορεύθησαν εἰς τὴν",
@@ -1667,7 +1664,7 @@
      ],
      "answer": "But the eleven disciples went into Galilee",
      "audio": "chapt_16_p_td16",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "Γαλιλαίαν"
     },
     {
@@ -1680,7 +1677,7 @@
      ],
      "answer": "and they were not able to heal him",
      "audio": "chapt_16_p_td17",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "ἀπεκρίθη ὁ Ἰησοῦς καὶ εἶπεν αὐτοῖς, Τοῦτό ἐστιν",
@@ -1692,7 +1689,7 @@
      ],
      "answer": "Jesus answered and said to them, \"This is the work of God\"",
      "audio": "chapt_16_p_td18",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "τὸ ἔργον τοῦ θεοῦ"
     },
     {
@@ -1705,7 +1702,7 @@
      ],
      "answer": "and we see that they were not able to enter because of unbelief",
      "audio": "chapt_16_p_td19",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "δι' ἀπιστίαν"
     },
     {
@@ -1718,7 +1715,7 @@
      ],
      "answer": "nor was I taught but through a revelation of Jesus Christ",
      "audio": "chapt_16_p_td20",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "Χριστοῦ"
     },
     {
@@ -1731,7 +1728,7 @@
      ],
      "answer": "who became wisdom from God to us",
      "audio": "chapt_16_p_td21",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "οὗ ἐγενήθην διάκονος κατὰ τὴν δωρεὰν τῆς",
@@ -1743,7 +1740,7 @@
      ],
      "answer": "of which I became a minister according to the gift of God's grace",
      "audio": "chapt_16_p_td22",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "χάριτος τοῦ θεοῦ"
     },
     {
@@ -1756,7 +1753,7 @@
      ],
      "answer": "you (pl.) have come near by the blood of Christ",
      "audio": "chapt_16_p_td23",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "Ἠκούσατε ὅτι ἐρρέθη, Ὀφθαλμὸν ἀντὶ ὀφθαλμοῦ",
@@ -1768,7 +1765,7 @@
      ],
      "answer": "You (pl.) have heard that it was said, \"Eye for an eye\"",
      "audio": "chapt_16_p_td24",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "καὶ ἐκρίθησαν ἕκαστος κατὰ τὰ ἔργα αὐτῶν",
@@ -1780,7 +1777,7 @@
      ],
      "answer": "and they were judged, each according to their works",
      "audio": "chapt_16_p_td25",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "καὶ ἐσώθη ἡ γυνὴ ἀπὸ τῆς ὥρας ἐκείνης",
@@ -1792,7 +1789,7 @@
      ],
      "answer": "and the woman was made well from that hour",
      "audio": "chapt_16_p_td26",
-     "hintRef": "passiveParadigms"
+     "hintRef": "luwPassivePair"
     },
     {
      "greek": "Πᾶς γὰρ ὅς ἄν ἐπικαλέσηται τὸ ὄνομα κυρίου",
@@ -1804,7 +1801,7 @@
      ],
      "answer": "for anyone who calls on the name of the Lord will be saved",
      "audio": "chapt_16_p_td27",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "σωθήσεται"
     },
     {
@@ -1817,7 +1814,7 @@
      ],
      "answer": "Nathanael answered him, \"Rabbi, you are the son of God\"",
      "audio": "chapt_16_p_td28",
-     "hintRef": "passiveParadigms",
+     "hintRef": "luwPassivePair",
      "greek2": "τοῦ θεοῦ"
     }
    ],
@@ -1837,14 +1834,15 @@
      "pronounceEach": true
     },
     "liveScore": true,
-    "hintRef": "passiveParadigms"
+    "hintRef": "luwPassivePair"
    },
    "_answer_note": "Twenty-eight items (0x7bf9b); the A/B/C key script yields all 28 and agrees with the BLUE option on ch16railwalk.pdf p10-p17. The refs pool's last entry carries a stale tail (\"Jn 1:49  Cor 6:2\") cut at the screen's own value.",
    "audioTiming": "afterGuess",
    "answerPolicy": {
     "advanceClass": "manualOnIncorrect",
     "attemptsPerItem": 1
-   }
+   },
+   "_hint_note": "5I-SPEC2 5.3, read from 16_FAPAS.TBK 0xc08a7: this drill's Hint handler is UNCONDITIONAL -- a bare \"show Hint1\" -- and Hint1 (0xc1044-0xc11d1) holds the luw First Aorist Passive and Future Passive charts ONLY. The grapho chart does not belong on this drill at all. (VERIFY-5I-RESPONSE item 12 assumed this drill varied the way the Parsing Drill does; the TBK says it does not, and the spec wins.)"
   },
   {
    "id": "c16_drill_vocab_gk_en",
@@ -2784,7 +2782,7 @@
    "paradigms": [
     {
      "type": "paradigm",
-     "id": "qrStems1",
+     "id": "qrStems",
      "title": "Passive Stems",
      "columns": [
       "Present Active",
@@ -2906,20 +2904,7 @@
          "audio": "chapt_16_p_egef"
         }
        ]
-      }
-     ],
-     "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
-    },
-    {
-     "type": "paradigm",
-     "id": "qrStems2",
-     "title": "Passive Stems",
-     "columns": [
-      "Present Active",
-      "Aorist Passive",
-      "Future Passive"
-     ],
-     "rows": [
+      },
       {
        "label": null,
        "cells": [
@@ -3052,10 +3037,10 @@
        ]
       }
      ],
-     "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
+     "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap. 5I-SPEC2 4.5 (VERIFY-5I-RESPONSE item 11): the original's seven-and-eight split is a page break in a fixed-size window, not two charts -- there is no split audio and no second heading worth printing -- so the fifteen rows are ONE list under ONE header row here."
     }
    ],
-   "_disclosure": "C9 + NIT-LOG N-6 standing method: the original pages the stem table seven-and-eight behind More/Back. STACKED here in the original's own split, no pager. Neither half carries a say-all recording, so no button is drawn."
+   "_disclosure": "C9 (5I-SPEC2 4.5): everything on one flowing scroll, no pager. The original's seven-and-eight page break is its window's, not the table's, so the fifteen rows are ONE list under ONE header. Neither half carries a say-all recording, so no button is drawn."
   },
   {
    "id": "c16_qr_scripture_mat69",
@@ -3520,13 +3505,13 @@
     }
    ],
    "switch": "moreBack",
-   "_note": "THREE charts -> DISCLOSURE 4.2: Back and More as a pair on their own centred line, both always visible, Back disabled on the first page and More on the last. Field 0xb9382 holds the first aorist AND the future on one hint screen; 0xbaa3e holds the second aorist on its own. Neither carries a say-all, so the pair is centred (4.5)."
+   "_note": "THREE charts -> DISCLOSURE 4.2: Back and More as a pair on their own centred line, both always visible, Back disabled on the first page and More on the last. Field 0xb9382 holds the first aorist AND the future on one hint screen; 0xbaa3e holds the second aorist on its own. Neither carries a say-all, so the pair is centred (4.5). RETIRED AS A TARGET at 5I-SPEC2 5.1: nothing references passiveParadigms once the per-item tables land. The three-chart bundle was the 5I reading of two hints that the TBK shows are a CONDITIONAL pair and a single chart; kept here as extraction provenance only."
   },
   "passiveStemsHint": {
    "charts": [
     {
      "type": "paradigm",
-     "id": "hintStems1",
+     "id": "hintStems",
      "title": "Passive Stems",
      "columns": [
       "Present Active",
@@ -3648,20 +3633,7 @@
          "audio": "chapt_16_p_egef"
         }
        ]
-      }
-     ],
-     "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
-    },
-    {
-     "type": "paradigm",
-     "id": "hintStems2",
-     "title": "Passive Stems",
-     "columns": [
-      "Present Active",
-      "Aorist Passive",
-      "Future Passive"
-     ],
-     "rows": [
+      },
       {
        "label": null,
        "cells": [
@@ -3794,11 +3766,188 @@
        ]
       }
      ],
-     "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap."
+     "_note": "Eight of the fifteen verbs have NO future passive in the original and print \"--\"; emitted as an em dash (D2) with no tap. 5I-SPEC2 4.5 (VERIFY-5I-RESPONSE item 11): the original's seven-and-eight split is a page break in a fixed-size window, not two charts -- there is no split audio and no second heading worth printing -- so the fifteen rows are ONE list under ONE header row here."
     }
    ],
-   "switch": "moreBack",
-   "_note": "The Form Drill hint prints the Passive Stems table in the original's own two halves."
+   "_note": "5I-SPEC2 4.5 / DISCLOSURE-RULES 4.9: the Form Drill hint is ONE long list, never two pages. A modal holding one list that is merely tall scrolls under a FROZEN header row (Present Active / Aorist Passive / Future Passive) rather than paging; multi-CHART bundles still page per 4.2. This is the first instance of that rule. The original prints the table in its own two halves at 0xaf4ac-class offsets; that is its window's page break."
+  },
+  "luwPassivePair": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "id": "hintFirstAoristPassive",
+     "title": "First Aorist Passive Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἐλύθην",
+         "gloss": "I was loosed",
+         "audio": "chapt_16_p_luw1s"
+        },
+        {
+         "greek": "ἐλύθημεν",
+         "gloss": "We were loosed",
+         "audio": "chapt_16_p_luw1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἐλύθης",
+         "gloss": "You were loosed",
+         "audio": "chapt_16_p_luw2s"
+        },
+        {
+         "greek": "ἐλύθητε",
+         "gloss": "You were loosed",
+         "audio": "chapt_16_p_luw2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἐλύθη",
+         "gloss": "He/she/it was loosed",
+         "audio": "chapt_16_p_luw3s"
+        },
+        {
+         "greek": "ἐλύθησαν",
+         "gloss": "They were loosed",
+         "audio": "chapt_16_p_luw3p"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "id": "hintFuturePassive",
+     "title": "Future Passive Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "λυθήσομαι",
+         "gloss": "I will be loosed",
+         "audio": "chapt_16_p_luwf1s"
+        },
+        {
+         "greek": "λυθησόμεθα",
+         "gloss": "We will be loosed",
+         "audio": "chapt_16_p_luwf1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "λυθήσῃ",
+         "gloss": "You will be loosed",
+         "audio": "chapt_16_p_luwf2s"
+        },
+        {
+         "greek": "λυθήσεσθε",
+         "gloss": "You will be loosed",
+         "audio": "chapt_16_p_luwf2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "λυθήσεται",
+         "gloss": "He/she/it will be loosed",
+         "audio": "chapt_16_p_luwf3s"
+        },
+        {
+         "greek": "λυθήσονται",
+         "gloss": "They will be loosed",
+         "audio": "chapt_16_p_luwf3p"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "_note": "5I-SPEC2 5.1/5.2/5.3, read from 16_FAPAS.TBK: Hint1 of the Parsing Drill (0xb5e30) and the ONLY hint of the Translation Drill (0xc08a7, whose Hint1 at 0xc1044-0xc11d1 holds exactly these two charts). Two charts, so DISCLOSURE-RULES 4.1: one alternating toggle, labelled More/Back because \"First Aorist Passive Indicative of luw\" and \"Future Passive Indicative of luw\" have no one-word contrast between them."
+  },
+  "graphoPassive": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "id": "hintSecondAoristPassive",
+     "title": "Second Aorist Passive Indicative of γράφω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἐγράφην",
+         "gloss": "I was written",
+         "audio": "chapt_16_p_gra1s"
+        },
+        {
+         "greek": "ἐγράφημεν",
+         "gloss": "We were written",
+         "audio": "chapt_16_p_gra1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἐγράφης",
+         "gloss": "You were written",
+         "audio": "chapt_16_p_gra2s"
+        },
+        {
+         "greek": "ἐγράφητε",
+         "gloss": "You were written",
+         "audio": "chapt_16_p_gra2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἐγράφη",
+         "gloss": "He/she/it was written",
+         "audio": "chapt_16_p_gra3s"
+        },
+        {
+         "greek": "ἐγράφησαν",
+         "gloss": "They were written",
+         "audio": "chapt_16_p_gra3p"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "_note": "5I-SPEC2 5.1/5.2, read from 16_FAPAS.TBK 0xb5e30: Hint2 of the Parsing Drill -- \"when it = 5 or 6 or 9 -> Hint2; when it = 12 or 17 or 18 -> Hint2; else Hint1\". One chart, so the modal shows it with no paging at all."
   }
  }
 }

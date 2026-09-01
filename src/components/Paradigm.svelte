@@ -251,6 +251,18 @@
   //              three-plus the pinned line is the Back/More pair and the say
   //              button stays in the scrolling content with its chart, which
   //              is what keeps this to ONE pinned line.
+  // §4.9 (RATIFIED 2026-08-31, VERIFY-5I-RESPONSE item 11; 5I-SPEC2 §3.4):
+  // A LONG SINGLE LIST IN A MODAL SCROLLS UNDER A FROZEN HEADER ROW. When a
+  // modal holds ONE list — not a multi-chart bundle — it is never split into
+  // pages; it is one scrolling list whose column header ("Present Active /
+  // Aorist Passive / Future Passive") stays put at the top of the modal's
+  // scroll area while the rows move beneath it. So the condition is exactly
+  // "one chart, drawn as one grid, in a modal": a bundle still pages per §4.2
+  // and a grouped chart draws a header per group rather than one for the list.
+  // A list too short to scroll never shows the difference, which is why this
+  // needs no height threshold and gets no guess about one.
+  $: frozenHead = modalHost && charts.length === 1
+    && !groupedColumns.length && columns.length > 0;
   $: navControl = twoChartToggle || endingsInline ? 'toggle' : (hasMoreBackNav ? 'pair' : null);
   $: pinNav = modalHost && !actionsPinned && !!navControl;
   $: pinActions = pinNav && navControl === 'toggle' && hasActions;
@@ -307,6 +319,7 @@
   class:pg-three-columns={effectiveColumnCount === 3}
   class:pg-many-columns={effectiveColumnCount > 3}
   class:pg-modal-host={modalHost}
+  class:pg-frozen-head={frozenHead}
   class:pg-pins-nav={pinNav}
   data-chart-index={chartIndex}
   data-chart-count={charts.length}

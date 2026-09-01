@@ -677,9 +677,20 @@ for (const file of files) {
       });
     }
     if (hasCharts) {
+      // 5I-SPEC2 §4.7: A CHART ENTRY MAY BE A CONTENT BLOCK. Chapters 14 and
+      // 15's "Verb Forms" hints are the Learn page's own `stemList` — the shape
+      // that prints the gloss LAST, which the two-column paradigm they shipped
+      // as could not do (its label column put the gloss first). The hint route
+      // renders any non-paradigm entry through RichContent, so what this gate
+      // has to hold is "the entry is a block with a type the renderer knows",
+      // not "the entry is a paradigm".
       charts.forEach((chart, index) => {
-        if (!chart || typeof chart !== 'object' || Array.isArray(chart) || chart.type !== 'paradigm') {
-          problems.push(`${file}.hintCharts.${name}.charts[${index}]: expected an inline paradigm block.`);
+        const isBlock = chart && typeof chart === 'object' && !Array.isArray(chart)
+          && typeof chart.type === 'string' && chart.type.length > 0;
+        if (!isBlock) {
+          problems.push(`${file}.hintCharts.${name}.charts[${index}]: expected an inline paradigm block or a content block.`);
+        } else if (chart.type !== 'paradigm' && !BLOCK_TYPES.has(chart.type)) {
+          problems.push(`${file}.hintCharts.${name}.charts[${index}]: type "${chart.type}" is neither a paradigm nor a content block the renderer draws.`);
         }
       });
     }

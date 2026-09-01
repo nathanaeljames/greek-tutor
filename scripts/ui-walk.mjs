@@ -454,11 +454,27 @@ for (const size of WIDTHS) {
             // route is captured as itself, by the ref it resolved, and the
             // chart assertions below stay chart-only.
             const pageRef = await modal.count() ? await modal.getAttribute('data-hint-page-ref') : null;
+            // 5I-SPEC2 §4.7: A HINT PAYLOAD MAY ALSO BE A CONTENT BLOCK.
+            // Chapters 14 and 15's "Verb Forms" hints are the Learn page's own
+            // `stemList` now, because that is the shape that prints the gloss
+            // LAST (the two-column paradigm they used to be put it first). The
+            // modal has no `.paradigm` in it at all, which read to this walk as
+            // a broken Hint; it is captured as itself instead, the same way the
+            // 5H page route is.
+            const blockRows = await modal.count()
+              ? await modal.locator('.rc-greekrows .rc-stem-row').count()
+              : 0;
             if (pageRef) {
               await recordExtra(`${activityId}--hint`, `hint page: ${pageRef}`);
               await modal.getByRole('button', { name: /close|cancel/i }).first().click();
               await page.waitForTimeout(120);
               if (await modal.count()) report.interactionErrors.push({ ...evidence, state: activityId, error: 'Hint page did not close' });
+            } else if (!await modal.locator('.paradigm').count() && blockRows > 0) {
+              const title = (await modal.locator('.rc-greektitle').first().innerText().catch(() => '')).trim();
+              await recordExtra(`${activityId}--hint`, `hint block: ${title || activity.ui?.hintRef || 'stem list'} (${blockRows} rows)`);
+              await modal.getByRole('button', { name: /close|cancel/i }).first().click();
+              await page.waitForTimeout(120);
+              if (await modal.count()) report.interactionErrors.push({ ...evidence, state: activityId, error: 'Hint block did not close' });
             } else if (!await modal.count() || !await modal.isVisible() || !await modal.locator('.paradigm').count()) {
               report.interactionErrors.push({ ...evidence, state: activityId, error: 'Hint did not open a paradigm or a page' });
             } else {

@@ -1556,6 +1556,107 @@ if (SHOTS) {
 }
 
 // ===========================================================================
+// D21. §3.11 / §3.12 — THE APP-WIDE MODAL-TRIGGER SWEEP (5I-SPEC2 §6.1)
+// ---------------------------------------------------------------------------
+// Nathanael's ruling on VERIFY-5I-RESPONSE item 9 split what 5I had lumped
+// together. §3.3 STANDS and overrides §3.2 for the cells and labels of an
+// ACTUAL chart — the ch6 case-chart glosses, the ch13 Key Letter Box — and
+// those keep their blue. But a PROSE RULE LIST is text: hot words at the head
+// of rule lines in running teaching prose are C3 in-text links and take §3.2's
+// green underline (§3.11), and so does the circled note marker beside an
+// audio-tap word (§3.12).
+//
+// Every modal trigger in sixteen chapters comes from one of four data shapes,
+// and the census below is the whole population rather than a sample:
+//   `[[link:id]]` markup and termList links   — already green (D4, D5)
+//   `titleLink`                                — already green (D19)
+//   `popupRef` on a CHART row/column           — blue, exempt (§3.3)
+//   `popupRef` on a PROSE-layout row           — converts here (§3.11)
+// The last two are the ones this round moved, so both are asserted, together,
+// in one block: the failure to guard against is a restyle that takes them both.
+{
+  const styleOf = selector => page.locator(selector).evaluateAll(nodes => nodes.map(n => ({
+    text: n.textContent.trim(),
+    tag: n.tagName,
+    color: getComputedStyle(n).color,
+    decoration: getComputedStyle(n).textDecorationLine,
+    border: getComputedStyle(n).borderTopColor
+  })));
+
+  // §3.11 CONVERTS: chapter 15's Palatals / Labials / Dentals, the ratifying
+  // instance. The block is `endingTransformation`, which lays out the page's
+  // prose, not a chart.
+  await go('#/activity/chapt_15/c15_learn_first_aorist');
+  await gotoTopic(6);
+  const proseTriggers = await styleOf('.card button.rc-etf-label');
+  check('D21.1 §3.11 ch15 Ending Transformations: the three prose rule labels are GREEN and underlined',
+    proseTriggers.length === 3
+      && proseTriggers.every(t => t.color === GREEN && t.decoration === 'underline'),
+    JSON.stringify(proseTriggers));
+  check('D21.2 §3.11 ...and they keep their bold, which §3.2 never asked them to give up',
+    await page.locator('.card button.rc-etf-label').first()
+      .evaluate(n => Number(getComputedStyle(n).fontWeight) >= 700));
+  await shot('ch15-prose-rule-labels-green');
+
+  // §3.3 EXEMPT, and this is the half that must NOT move: the Key Letter Box.
+  // Nathanael named it in his ruling, so it is asserted by name.
+  await go('#/activity/chapt_13/c13_learn_concepts');
+  await gotoTopic(1);
+  const klb = await styleOf('.card .rc-greekrows.key-letter-box button.rc-chart-trigger');
+  check('D21.3 §3.3 ch13 Key Letter Box: all six in-chart triggers stay BLUE and unmarked',
+    klb.length === 6 && klb.every(t => t.color === BLUE && t.decoration === 'none'),
+    JSON.stringify(klb.map(t => `${t.text} ${t.color}/${t.decoration}`)));
+  await shot('ch13-key-letter-box-stays-blue');
+
+  // §3.12: the circled note marker. Its glyph and its ring both read as the
+  // trigger green now; the underline is the one part of §3.2 it does not take
+  // (a rule under a "?" inside a 1.35em circle reads as a drawing fault), and
+  // that judgement is recorded in RESULTS §6.1 rather than made silently.
+  for (const [label, hash, topic] of [
+    ['Learn', '#/activity/chapt_14/c14_learn_second_aorist', 5],
+    ['Review', '#/activity/chapt_14/c14_qr_forms', 0]
+  ]) {
+    await go(hash);
+    if (topic) await gotoTopic(topic);
+    const marker = await styleOf('.card button.rc-stem-note');
+    check(`D21.4 §3.12 ch14 ${label} note marker: green glyph in a green ring, never the Greek-tap blue`,
+      marker.length === 1 && marker[0].color === GREEN && marker[0].border === GREEN,
+      JSON.stringify(marker));
+  }
+
+  // THE CENSUS. Every `popupRef` in sixteen chapters, classified, so a
+  // seventeenth trigger cannot ship without landing in one of the two buckets
+  // on purpose. Computed from the data, not typed here.
+  {
+    const chart = [];
+    const prose = [];
+    for (const [chapterId, chapter] of chapters) {
+      const walk = (node, layout) => {
+        if (!node || typeof node !== 'object') return;
+        if (Array.isArray(node)) { node.forEach(item => walk(item, layout)); return; }
+        const here = node.layout || layout;
+        if (node.popupRef) {
+          const entry = `${chapterId}:${here}:${node.popupRef}`;
+          (here === 'endingTransformation' || here === 'stemList' ? prose : chart).push(entry);
+        }
+        for (const value of Object.values(node)) walk(value, here);
+      };
+      walk(chapter, null);
+    }
+    // 22 OCCURRENCES, 17 chart and 5 prose. The five prose ones are ch15's
+    // three rule labels plus the ch14 note marker, which is ONE popupRef
+    // reached from two hosts (the Learn stem list and the Review copy of it) —
+    // so the population is counted where it is DRAWN, which is where a style
+    // rule can reach it.
+    check('D21.5 §6.1 census: 22 popupRef triggers app-wide, 17 in charts (exempt) and 5 in prose (converted)',
+      chart.length === 17 && prose.length === 5
+        && chart.every(e => /prepositionSenses|keyLetterBox/.test(e))
+        && prose.every(e => /endingTransformation|stemList/.test(e)),
+      `chart(${chart.length}) ${JSON.stringify(chart)} prose(${prose.length}) ${JSON.stringify(prose)}`);
+  }
+}
+
+// ===========================================================================
 await browser.close();
 const failed = results.filter(r => !r.ok);
 console.log(`\n${results.length - failed.length}/${results.length} disclosure checks passed.`);

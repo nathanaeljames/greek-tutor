@@ -2666,24 +2666,58 @@ for (const [chapterId, id] of [
       .evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length) === 1);
 }
 
-// ---- §2.7 two-line Greek prompts ----------------------------------------
-// greek2 is a LINE BREAK in one prompt, not a second prompt: one tap target,
-// one clip. Null on the items that are one line only.
+// ---- §2.7 CONTINUED PROMPTS, NOW ONE FLOWING LINE ------------------------
+// 5I-SPEC2 §3.1 / DISCLOSURE-RULES §4.10: a Bible verse is continuous text
+// everywhere and breaks only where the container breaks it. `greek2` is still
+// the positional pool's second entry in the DATA — extraction provenance the
+// assemblers reproduce — but the render joins it to `greek` with one space
+// inside the same button. What is asserted has therefore gained a clause: one
+// tap target, one clip, the whole verse on screen, AND NO FORCED BREAK — the
+// continuation must sit on the same line box as the text before it whenever the
+// card is wide enough to hold both, which is what `display: block` made
+// impossible. Measured as a line-box top, because that is the only thing that
+// distinguishes "wrapped because it is long" from "broken because it was told
+// to". All twelve translation drills carry continuations; ch7 and ch8 are
+// sampled here and the app-wide list is in RESULTS §6.2.
 for (const [chapterId, id] of [['chapt_7', 'c7_drill_translation'], ['chapt_8', 'c8_drill_translation']]) {
   const activity = activityById(CH_5F[chapterId], id);
   let seenTwoLine = false;
   for (let i = 0; i < 25 && !seenTwoLine; i++) {
     await go(`#/activity/${chapterId}/${id}`);
     for (let step = 0; step < activity.items.length; step++) {
-      const lines = await page.locator('.prompt .prompt-line2').count();
+      const lines = await page.locator('.prompt .prompt-cont').count();
       if (lines === 1) {
         const prompt = await promptOnScreen();
         const item = activity.items.find(x => x.greek2 && prompt.startsWith(normalizeText(x.greek)));
-        check(`5F §2.7 ${chapterId} ${id}: a two-line prompt is ONE tap target with one clip`,
+        check(`5F §2.7 ${chapterId} ${id}: a continued prompt is ONE tap target with one clip`,
           !!item && await page.locator('.prompt.greek-say').count() === 1
             && normalizeText(await page.locator('.prompt').first().innerText())
                === normalizeText(`${item.greek} ${item.greek2}`),
           `on screen ${JSON.stringify(await page.locator('.prompt').first().innerText())}`);
+        // §3.1: the continuation is INLINE. Its first line box must start level
+        // with some line box of the text before it — never on a line of its own
+        // that a wider card could have avoided.
+        // MEASURED AGAINST A PROBE, because "does the continuation share a
+        // line with the head" is the wrong question: a verse long enough to
+        // wrap may legitimately wrap AT the join, and 54 of 514 items in the
+        // app do. The right question is whether the split COSTS A LINE. So the
+        // same string is laid out twice in the same box — once as it really is,
+        // once as a single text node — and the heights are compared. Equal
+        // means nothing forced a break, at any width, for any string.
+        const flow = await page.locator('.prompt').first().evaluate(el => {
+          const cont = el.querySelector('.prompt-cont');
+          const probe = el.cloneNode(true);
+          probe.textContent = el.textContent;
+          probe.style.visibility = 'hidden';
+          el.parentNode.appendChild(probe);
+          const real = Math.round(el.getBoundingClientRect().height);
+          const flat = Math.round(probe.getBoundingClientRect().height);
+          probe.remove();
+          return { display: getComputedStyle(cont).display, real, flat };
+        });
+        check(`5I-SPEC2 §3.1 ${chapterId} ${id}: the continuation flows on, it is not a forced line`,
+          flow.display === 'inline' && flow.real === flow.flat,
+          JSON.stringify(flow));
         seenTwoLine = true;
         break;
       }
@@ -2691,7 +2725,7 @@ for (const [chapterId, id] of [['chapt_7', 'c7_drill_translation'], ['chapt_8', 
       await page.waitForTimeout(40);
     }
   }
-  if (!seenTwoLine) check(`5F §2.7 ${chapterId} ${id}: a two-line prompt is ONE tap target with one clip`, false, 'never met a two-line item');
+  if (!seenTwoLine) check(`5F §2.7 ${chapterId} ${id}: a continued prompt is ONE tap target with one clip`, false, 'never met a continued item');
 }
 
 // ---- §2.5 the note beside a prompt is INK, never a tap ------------------
@@ -5520,6 +5554,429 @@ for (const [itemIndex, greek, personNumber] of [
     const homeless = JSON.stringify(ch12).match(/chapt_12_l_(a1s|ap9)/g) || [];
     check('5H-SPEC3 4.4 (k2): chapter 12 names neither of the two unwired clips anywhere in its data',
       homeless.length === 0, JSON.stringify(homeless));
+  }
+}
+
+// ===================================================================
+// 5I-SPEC2: the cohort-5I feedback round (chapters 13, 14, 15, 16)
+// ===================================================================
+// Twelve regressions from patterns that had held by convention rather than by
+// written rule. The rules exist now (DISCLOSURE-RULES §3.11, §3.12, §4.6's
+// surface matrix, §4.8, §4.9, §4.10), so each check below states the RULE and
+// asserts the whole set it governs, not the one screen that was reported.
+{
+  const cardButton = name => page.locator('.card').getByRole('button', { name, exact: true });
+
+  // ---- §4.1 THE πᾶς CHART PAGES ON LEARN AND IN THE HINT ----------------
+  // §4.6's surface matrix, made explicit after VERIFY-5I-RESPONSE I-1: the
+  // SAME paradigm renders by SURFACE. A Learn page splits it behind a toggle, a
+  // hint modal pages it, and a Review page stacks it with no pager at all. A
+  // chart wider than the phone does not become a stacked pair anywhere except
+  // Review. All three copies of the πᾶς chart are asserted together, because
+  // the failure being guarded against is exactly one of them drifting.
+  await go('#/activity/chapt_13/c13_learn_third_declension');
+  await gotoTopic(5);
+  {
+    const learn = await page.evaluate(() => {
+      const chart = document.querySelector('.card .paradigm');
+      return {
+        columns: [...chart.querySelectorAll('.pg-head .pg-column')].map(c => c.textContent.trim()),
+        subtitle: (chart.querySelector('.pg-subtitle') || {}).textContent?.trim() || null,
+        chartName: chart.getAttribute('data-chart-name'),
+        chartCount: Number(chart.getAttribute('data-chart-count')),
+        grouped: !!chart.querySelector('.pg-grouped'),
+        say: [...chart.querySelectorAll('.pg-actions .pg-say-whole')].map(b => b.textContent.trim()).length,
+        toggle: [...chart.querySelectorAll('.pg-actions .pg-switch-named')].map(b => b.textContent.trim())
+      };
+    });
+    check('5I-SPEC2 §4.1 ch13 Learn πᾶς: two three-column charts behind a named toggle, not one six-column stack',
+      learn.chartCount === 2 && learn.chartName === 'Singular' && learn.subtitle === 'Singular'
+        && learn.columns.length === 3 && !learn.grouped
+        && learn.say === 1 && learn.toggle.includes('Plural'),
+      JSON.stringify(learn));
+    await shot('5i2-ch13-learn-pas-singular');
+    await page.locator('.card .pg-actions .pg-switch-named').first().click();
+    await page.waitForTimeout(150);
+    const plural = await page.evaluate(() => {
+      const chart = document.querySelector('.card .paradigm');
+      return {
+        chartName: chart.getAttribute('data-chart-name'),
+        first: chart.querySelector('.pg-row .pg-greek').textContent.trim(),
+        say: [...chart.querySelectorAll('.pg-actions .pg-say-whole')].map(b => b.textContent.trim()).length,
+        toggle: [...chart.querySelectorAll('.pg-actions .pg-switch-named')].map(b => b.textContent.trim())
+      };
+    });
+    check('5I-SPEC2 §4.1 / NIT-LOG N-1 ch13 Learn πᾶς: the Plural half is πάντες and carries its OWN Say Paradigm',
+      plural.chartName === 'Plural' && plural.first === 'πάντες'
+        && plural.say === 1 && plural.toggle.includes('Singular'),
+      JSON.stringify(plural));
+    await shot('5i2-ch13-learn-pas-plural');
+  }
+  // The REVIEW copy is the control: it must still stack, with no pager.
+  await go('#/activity/chapt_13/c13_qr_pas');
+  {
+    const review = await page.evaluate(() => {
+      const chart = document.querySelector('.card .paradigm');
+      return {
+        grouped: !!chart.querySelector('.pg-grouped'),
+        groups: [...chart.querySelectorAll('.pg-group-label')].map(l => l.textContent.trim()),
+        pagers: chart.querySelectorAll('.pg-nav, [data-paradigm-switch]').length,
+        say: [...chart.querySelectorAll('.pg-actions .pg-say-whole')].length
+      };
+    });
+    check('5I-SPEC2 §4.1 / §4.6 ch13 Review πᾶς is UNCHANGED: stacked Singular over Plural, no pager',
+      review.grouped && JSON.stringify(review.groups) === JSON.stringify(['Singular', 'Plural'])
+        && review.pagers === 0 && review.say === 1,
+      JSON.stringify(review));
+  }
+  // ...and the HINT pages, with the D-58 say-all the original's screen lacks.
+  await go('#/activity/chapt_13/c13_drill_pas_declining');
+  await cardButton('Hint').click();
+  await page.waitForTimeout(200);
+  {
+    const hint = await page.evaluate(() => {
+      const modal = document.querySelector('.modal');
+      const controls = modal.querySelector('[data-hint-paradigm-controls]');
+      return {
+        columns: [...modal.querySelectorAll('.pg-head .pg-column')].map(c => c.textContent.trim()),
+        title: modal.querySelector('.pg-title').textContent.trim(),
+        say: modal.querySelector('[data-hint-paradigm-say]')?.getAttribute('data-audio-id') || null,
+        toggle: modal.querySelector('[data-hint-paradigm-toggle]')?.textContent.trim() || null,
+        stateIndex: controls?.getAttribute('data-state-index')
+      };
+    });
+    check('5I-SPEC2 §4.1 / §4.8 (D-58) ch13 πᾶς hint: paged Singular first, three columns, Say Paradigm present',
+      hint.columns.length === 3 && hint.title.includes('Singular')
+        && hint.say === 'chapt_13_m_paspar' && hint.toggle === 'Plural' && hint.stateIndex === '0',
+      JSON.stringify(hint));
+    await page.locator('.modal [data-hint-paradigm-toggle]').click();
+    await page.waitForTimeout(180);
+    const second = await page.evaluate(() => {
+      const modal = document.querySelector('.modal');
+      return {
+        title: modal.querySelector('.pg-title').textContent.trim(),
+        first: modal.querySelector('.pg-row .pg-greek').textContent.trim(),
+        say: modal.querySelector('[data-hint-paradigm-say]')?.getAttribute('data-audio-id') || null,
+        toggle: modal.querySelector('[data-hint-paradigm-toggle]')?.textContent.trim() || null
+      };
+    });
+    check('5I-SPEC2 §4.1 ch13 πᾶς hint: the toggle reaches the Plural half, which keeps the say-all',
+      second.title.includes('Plural') && second.first === 'πάντες'
+        && second.say === 'chapt_13_m_paspar' && second.toggle === 'Singular',
+      JSON.stringify(second));
+  }
+
+  // ---- §4.2 πᾶς, πᾶσα, πᾶν TAP INDEPENDENTLY ---------------------------
+  // TBK-confirmed: three WordSelection buttons over one citation, not one.
+  await go('#/activity/chapt_13/c13_learn_third_declension');
+  await gotoTopic(0);
+  {
+    const taps = await page.evaluate(() => [...document.querySelectorAll('.card .rc-para .greek-tap')]
+      .map(b => b.textContent.trim()));
+    check('5I-SPEC2 §4.2 ch13 Introduction: πᾶς, πᾶσα and πᾶν are three separate taps',
+      JSON.stringify(taps) === JSON.stringify(['πᾶς', 'πᾶσα', 'πᾶν']), JSON.stringify(taps));
+    const commasAreInk = await page.evaluate(() => {
+      const para = document.querySelector('.card .rc-para');
+      return /πᾶς\s*,\s*πᾶσα\s*,\s*πᾶν/.test(para.textContent.normalize('NFC'));
+    });
+    check('5I-SPEC2 §4.2 ch13 Introduction: the commas between them stay ink inside the citation',
+      commasAreInk);
+  }
+
+  // ---- §4.3 TAP BOUNDARIES: only the RESULT form speaks -----------------
+  // The 5G-SPEC3 canon. Three worked-example lines and five rule examples: in
+  // every one of them the morphemes that build the form are ink.
+  for (const [chapterId, activityId, topicIndex, expected] of [
+    ['chapt_14', 'c14_learn_second_aorist', 1, ['ἔλαβον']],
+    ['chapt_16', 'c16_learn_passives', 1, ['ἐλύθην', 'λυθήσομαι']]
+  ]) {
+    await go(`#/activity/${chapterId}/${activityId}`);
+    await gotoTopic(topicIndex);
+    const taps = await page.evaluate(() => [...document.querySelectorAll('.card .rc-formula .greek-tap')]
+      .map(b => b.textContent.trim()));
+    check(`5I-SPEC2 §4.3 ${chapterId} Form: only the resulting form taps, not the whole equation`,
+      JSON.stringify(taps) === JSON.stringify(expected), JSON.stringify(taps));
+  }
+  await go('#/activity/chapt_16/c16_learn_passives');
+  await gotoTopic(2);
+  {
+    const notes = await page.evaluate(() => [...document.querySelectorAll('.card .rc-etf-example')]
+      .map(row => ({
+        text: row.textContent.replace(/\s+/g, ' ').trim(),
+        taps: [...row.querySelectorAll('.greek-tap')].map(b => b.textContent.trim())
+      })));
+    check('5I-SPEC2 §4.3 ch16 Ending Transformations: the five result forms tap and the morphemes do not',
+      notes.length === 5
+        && JSON.stringify(notes.map(n => n.taps)) === JSON.stringify(
+          [['ἐδιώχθην'], ['ἐλείφθην'], ['ἐγράφην'], ['ἐπείσθην'], ['ἐδοξάσθην']]),
+      JSON.stringify(notes));
+
+    // ---- §4.4 ONE chart, no Consonant Shifts header (D-61) -------------
+    const merged = await page.evaluate(() => ({
+      rules: [...document.querySelectorAll('.card .rc-etf-row')].length,
+      labels: [...document.querySelectorAll('.card .rc-etf-label')].map(l => l.textContent.trim()),
+      summaryRows: document.querySelectorAll('.card .rc-greekrows.shift-summary .rc-rule-row').length,
+      heading: document.querySelector('.card .topic-heading, .card .rc-heading')?.textContent.trim() || null,
+      topicCount: document.querySelector('.topic-count')?.textContent.trim() || null
+    }));
+    check('5I-SPEC2 §4.4 (D-61) ch16: Ending Transformations is ONE five-row chart with the shift summary under it',
+      merged.rules === 5 && merged.summaryRows === 4
+        && JSON.stringify(merged.labels) === JSON.stringify(['Palatals:', 'Labials:', 'Dentals:', 'Sibilants:']),
+      JSON.stringify(merged));
+    check('5I-SPEC2 §4.4 ch16: the Consonant Shifts topic is gone and the rail counts 8 topics',
+      ch16.learn[2].topics.length === 8
+        && !ch16.learn[2].topics.some(t => t.id === 'consonantShifts')
+        && /of 8$/.test(merged.topicCount || ''),
+      `${merged.topicCount} / ${ch16.learn[2].topics.map(t => t.id).join(',')}`);
+    await shot('5i2-ch16-merged-ending-transformations');
+  }
+
+  // ---- §4.5 PASSIVE STEMS IS ONE LIST, in all three of its hosts -------
+  {
+    const stemsTopic = ch16.learn[2].topics.findIndex(t => t.id === 'passiveStems');
+    await go('#/activity/chapt_16/c16_learn_passives');
+    await gotoTopic(stemsTopic);
+    const learn = await page.evaluate(() => ({
+      charts: document.querySelectorAll('.card .paradigm').length,
+      heads: document.querySelectorAll('.card .pg-head').length,
+      rows: document.querySelectorAll('.card .pg-row').length
+    }));
+    check('5I-SPEC2 §4.5 ch16 Learn Passive Stems: one chart, one header row, fifteen verbs',
+      learn.charts === 1 && learn.heads === 1 && learn.rows === 15, JSON.stringify(learn));
+    await go('#/activity/chapt_16/c16_qr_forms');
+    const review = await page.evaluate(() => ({
+      charts: document.querySelectorAll('.card .paradigm').length,
+      heads: document.querySelectorAll('.card .pg-head').length,
+      rows: document.querySelectorAll('.card .pg-row').length,
+      pagers: document.querySelectorAll('.card .pg-nav, .card [data-paradigm-switch]').length
+    }));
+    check('5I-SPEC2 §4.5 ch16 Review Passive Indicative Forms: one list, one header, no pager',
+      review.charts === 1 && review.heads === 1 && review.rows === 15 && review.pagers === 0,
+      JSON.stringify(review));
+    // ...and in the modal, where §4.9's frozen header row applies.
+    await go('#/activity/chapt_16/c16_drill_forms');
+    await cardButton('Hint').click();
+    await page.waitForTimeout(200);
+    const hint = await page.evaluate(() => {
+      const modal = document.querySelector('.modal');
+      const head = modal.querySelector('.pg-head');
+      const scroller = modal.querySelector('.pg-body');
+      const scrollerTop = Math.round(scroller.getBoundingClientRect().top);
+      const before = Math.round(head.getBoundingClientRect().top);
+      scroller.scrollTop = scroller.scrollHeight;
+      const after = Math.round(head.getBoundingClientRect().top);
+      // The last row, to prove the LIST really moved while the header did not.
+      const rowsAll = [...modal.querySelectorAll('.pg-row')];
+      const lastRowTop = Math.round(rowsAll[rowsAll.length - 1].getBoundingClientRect().top);
+      return {
+        heads: modal.querySelectorAll('.pg-head').length,
+        rows: rowsAll.length,
+        pagers: modal.querySelectorAll('[data-hint-paradigm-nav], [data-paradigm-switch], .pg-nav').length,
+        sticky: getComputedStyle(head).position,
+        range: scroller.scrollHeight - scroller.clientHeight,
+        scrollerTop,
+        before,
+        after,
+        lastRowTop,
+        columns: [...head.querySelectorAll('.pg-column')].map(c => c.textContent.trim())
+      };
+    });
+    check('5I-SPEC2 §3.4 / §4.9 ch16 Passive Stems hint: one scrolling list, never two pages',
+      hint.heads === 1 && hint.rows === 15 && hint.pagers === 0
+        && JSON.stringify(hint.columns) === JSON.stringify(['Present Active', 'Aorist Passive', 'Future Passive']),
+      JSON.stringify(hint));
+    // WHAT "STAYS PUT" MEANS for a sticky element: it travels with the content
+    // until it reaches the top of the scroll area and then stops there. It
+    // starts BELOW that top (the chart's title is above it), so asserting that
+    // it never moves would be asserting the wrong thing. Asserted instead: it
+    // is sticky, the list really did scroll, the header ends flush with the top
+    // of the scroller, and the last row has climbed above where the header
+    // began — that is the list moving UNDER a header that has stopped.
+    check('5I-SPEC2 §3.4 / §4.9 ch16 Passive Stems hint: the header row stays put while the rows scroll under it',
+      hint.sticky === 'sticky' && hint.range > 0
+        && Math.abs(hint.after - hint.scrollerTop) <= 1
+        && hint.after < hint.before
+        && hint.lastRowTop > hint.after,
+      `range ${hint.range}px, header ${hint.before} -> ${hint.after}, scroller top ${hint.scrollerTop}, last row ${hint.lastRowTop}`);
+    await shot('5i2-ch16-passive-stems-hint-frozen-header');
+  }
+
+  // ---- §4.6 ἐγενόμην TAPS ---------------------------------------------
+  // The railwalk's hand cursor over it was the evidence 5I missed; §4.7 as
+  // amended makes the cursor readable in both directions from now on.
+  {
+    const deponent = ch16.learn[2].topics.findIndex(t => t.id === 'deponent');
+    await go('#/activity/chapt_16/c16_learn_passives');
+    await gotoTopic(deponent);
+    const taps = await page.evaluate(() => [...document.querySelectorAll('.card .rc-para .greek-tap')]
+      .map(b => b.textContent.trim()));
+    check('5I-SPEC2 §4.6 ch16 Deponent: every Greek word on the page taps, ἐγενόμην included',
+      taps.includes('ἐγενόμην') && taps.includes('ἀπεκρίθην') && taps.includes('ἐγενήθην'),
+      JSON.stringify(taps));
+  }
+
+  // ---- §4.7 THE FORMS HINTS READ GLOSS LAST (I-3) ----------------------
+  // The hint is the Learn page's own stem list now, so "gloss last" is not a
+  // second rendering to keep in step -- it is the same one.
+  for (const [chapterId, activityId, learnTopic, first] of [
+    ['chapt_14', 'c14_drill_forms', 5, ['ἀπέρχομαι', 'ἀπῆλθον', '(I departed)']],
+    ['chapt_15', 'c15_drill_forms', 5, ['ἀκούω', 'ἤκουσα', '(I heard)']]
+  ]) {
+    await go(`#/activity/${chapterId}/${activityId}`);
+    await cardButton('Hint').click();
+    await page.waitForTimeout(200);
+    const row = await page.evaluate(() => {
+      const first = document.querySelector('.modal .rc-greekrows.stem-list .rc-stem-row');
+      return {
+        lemma: first.querySelector('.rc-stem-lemma').textContent.trim(),
+        forms: [...first.querySelectorAll('.rc-stem-forms .rc-part')].map(p => p.textContent.trim()),
+        gloss: first.querySelector('.rc-stem-gloss').textContent.trim(),
+        taps: [...first.querySelectorAll('.greek-say')].map(b => b.textContent.trim()),
+        order: [...first.children].map(el => el.className.split(' ')[0])
+      };
+    });
+    check(`5I-SPEC2 §4.7 ${chapterId} Forms hint: reads "present — aorist (gloss)", gloss LAST, both forms tapping`,
+      row.lemma === first[0] && row.forms.includes(first[1]) && row.gloss === first[2]
+        && row.taps.length === 2
+        && row.order.indexOf('rc-stem-gloss') === row.order.length - 1,
+      JSON.stringify(row));
+    await shot(`5i2-${chapterId}-forms-hint-gloss-last`);
+  }
+
+  // ---- §4.8 CAPITALIZED PARADIGM GLOSSES (D-60) ------------------------
+  // Asserted over the WHOLE app, not the three charts that were reported: a
+  // lower-case paradigm gloss anywhere is now a failure.
+  {
+    // SCOPED TWICE, and both scopings are judgements worth stating.
+    //
+    // FIRST, to paradigm CELLS. A `gloss` key also appears on vocabulary rows,
+    // lexicon entries and a chart's Meanings affordance, where lower case is
+    // the dictionary convention and correct ("truly, verily", "a word / of a
+    // word / to a word"). Sweeping those in would assert a rule nobody made.
+    //
+    // SECOND, to the CHAPTERS THIS ROUND AUTHORIZED. 5I-SPEC2 §4.8 authorizes
+    // ch14's and ch15's copies of two verb paradigms; whether D-60 reaches
+    // further is a ruling, not an implementer's call. It does NOT reach further
+    // today: 110 paradigm cell glosses in chapters 5, 7, 8, 9, 10 and 12 are
+    // lower case, and every one of them is a NOUN-DECLENSION case meaning of
+    // the same register as the Meanings affordance ("a writing", "of writings
+    // (possessive)"), not the verb-person gloss D-60 is about ("We took"). They
+    // are reported to the pipeline in RESULTS §9.6 rather than edited here.
+    const lower = [];
+    const walk = (node, chapterId, inParadigm) => {
+      if (!node || typeof node !== 'object') return;
+      if (Array.isArray(node)) { node.forEach(item => walk(item, chapterId, inParadigm)); return; }
+      const here = inParadigm || node.type === 'paradigm' || node.type === 'pronounParadigm';
+      if (here && Array.isArray(node.cells)) {
+        for (const cell of node.cells) {
+          if (cell && typeof cell.gloss === 'string' && /^[a-z]/.test(cell.gloss)) {
+            lower.push(`${chapterId}: ${JSON.stringify(cell.gloss)}`);
+          }
+        }
+      }
+      for (const [key, value] of Object.entries(node)) {
+        if (key === 'meanings') continue;   // a chart AFFORDANCE, not its cells
+        walk(value, chapterId, here);
+      }
+    };
+    for (const chapterId of ['chapt_13', 'chapt_14', 'chapt_15', 'chapt_16']) {
+      walk(CHAPTERS[chapterId], chapterId, false);
+    }
+    check('5I-SPEC2 §4.8 (D-60) census: no paradigm cell gloss in chapters 13-16 starts lower case',
+      lower.length === 0, JSON.stringify(lower.slice(0, 8)));
+  }
+
+  // ---- §5 PER-ITEM HINT ROUTING, read from the TBKs --------------------
+  // D-46 class. The renderer already supported per-item `hintRef`; 5I emitted
+  // the key and pointed every item at one composite. Each mapping class is
+  // asserted by walking the drill's OWN Next control to a named form and
+  // opening the modal it routes to -- the drill shuffles, so nothing here may
+  // assume an order.
+  {
+    const hintTitlesAtPrompt = async (chapterId, activityId, prompt, itemCount) => {
+      await go(`#/activity/${chapterId}/${activityId}`);
+      let found = false;
+      for (let step = 0; step < itemCount; step++) {
+        const shown = normalizeText(await page.locator('.card .prompt').first().innerText());
+        if (shown === normalizeText(prompt)) { found = true; break; }
+        if (await stepper('Next').isDisabled()) break;
+        await stepper('Next').click();
+        await page.waitForTimeout(40);
+      }
+      if (!found) return { error: `never reached ${prompt}` };
+      await cardButton('Hint').click();
+      await page.waitForTimeout(200);
+      const titles = [];
+      for (let guard = 0; guard < 6; guard++) {
+        titles.push(normalizeText(await page.locator('.modal .pg-title').first().innerText()));
+        const toggle = page.locator('.modal [data-hint-paradigm-toggle], .modal [data-hint-paradigm-nav="more"]');
+        if (!await toggle.count() || await toggle.first().isDisabled()) break;
+        const target = await toggle.first().getAttribute('data-target-index');
+        if (target === '0') break;   // a two-state toggle has come back round
+        await toggle.first().click();
+        await page.waitForTimeout(160);
+      }
+      return { titles };
+    };
+
+    // ch16 Parsing Drill (16_FAPAS.TBK 0xb5e30): the six γράφω forms open the
+    // single γράφω chart; everything else opens the λύω pair.
+    const luwParse = await hintTitlesAtPrompt('chapt_16', 'c16_drill_parsing', 'λυθήσονται', 18);
+    check('5I-SPEC2 §5.2 ch16 Parsing Drill: a λύω form opens the λύω PAIR',
+      !luwParse.error && luwParse.titles.length === 2
+        && luwParse.titles[0].includes('First Aorist Passive') && luwParse.titles[1].includes('Future Passive'),
+      JSON.stringify(luwParse));
+    const graphoParse = await hintTitlesAtPrompt('chapt_16', 'c16_drill_parsing', 'ἐγράφημεν', 18);
+    check('5I-SPEC2 §5.2 ch16 Parsing Drill: a γράφω form opens the SINGLE γράφω chart, with no paging',
+      !graphoParse.error && graphoParse.titles.length === 1
+        && graphoParse.titles[0].includes('Second Aorist Passive Indicative of γράφω'),
+      JSON.stringify(graphoParse));
+
+    // ch16 Translation Drill (0xc08a7): unconditional, and the γράφω chart is
+    // not part of this drill's hint at all.
+    await go('#/activity/chapt_16/c16_drill_translation');
+    await cardButton('Hint').click();
+    await page.waitForTimeout(200);
+    const transTitles = await page.evaluate(() => {
+      const modal = document.querySelector('.modal');
+      return {
+        title: modal.querySelector('.pg-title').textContent.trim(),
+        toggle: modal.querySelector('[data-hint-paradigm-toggle]')?.textContent.trim() || null,
+        nav: modal.querySelectorAll('[data-hint-paradigm-nav]').length
+      };
+    });
+    check('5I-SPEC2 §5.3 ch16 Translation Drill: the hint is the λύω pair, a two-state toggle, no third chart',
+      transTitles.title.includes('First Aorist Passive') && transTitles.nav === 0
+        && transTitles.toggle !== null,
+      JSON.stringify(transTitles));
+    check('5I-SPEC2 §5.3 ch16 Translation Drill: no item anywhere in it routes to the γράφω chart',
+      ch16.drill.find(d => d.id === 'c16_drill_translation').items
+        .every(item => item.hintRef === 'luwPassivePair'));
+
+    // ch15 Translation Drill (15_1AOR.TBK 0x116f1e): items 1 and 11 only.
+    const imperfect = await hintTitlesAtPrompt('chapt_15', 'c15_drill_translation',
+      'καὶ ἐδίδασκεν αὐτοὺς ἐν παραβολαῖς πολλά καὶ ἔλεγεν αὐτοῖς', 29);
+    check('5I-SPEC2 §5.5 ch15 Translation Drill: Mar 4:2 opens the IMPERFECT pair',
+      !imperfect.error && imperfect.titles.length === 2
+        && imperfect.titles.every(t => t.includes('Imperfect')),
+      JSON.stringify(imperfect));
+    const aorist = await hintTitlesAtPrompt('chapt_15', 'c15_drill_translation',
+      'καὶ ἀπέστειλεν αὐτὸν εἰς οἶκον αὐτοῦ', 29);
+    check('5I-SPEC2 §5.5 ch15 Translation Drill: Mar 8:26 opens the AORIST pair',
+      !aorist.error && aorist.titles.length === 2
+        && aorist.titles.every(t => t.includes('Aorist') && !t.includes('Imperfect')),
+      JSON.stringify(aorist));
+    // ...and the census behind the two samples.
+    const ch15Trans = ch15.drill.find(d => d.id === 'c15_drill_translation');
+    const imperfectItems = ch15Trans.items
+      .map((item, index) => (item.hintRef === 'imperfectPair' ? index + 1 : null)).filter(Boolean);
+    check('5I-SPEC2 §5.5 ch15 census: exactly items 1 and 11 take the imperfect pair',
+      JSON.stringify(imperfectItems) === JSON.stringify([1, 11]), JSON.stringify(imperfectItems));
+    const ch16Parse = ch16.drill.find(d => d.id === 'c16_drill_parsing');
+    const graphoItems = ch16Parse.items
+      .map((item, index) => (item.hintRef === 'graphoPassive' ? index + 1 : null)).filter(Boolean);
+    check('5I-SPEC2 §5.2 ch16 census: exactly items 5, 6, 9, 12, 17 and 18 take the γράφω chart',
+      JSON.stringify(graphoItems) === JSON.stringify([5, 6, 9, 12, 17, 18]), JSON.stringify(graphoItems));
   }
 }
 

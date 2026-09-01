@@ -177,7 +177,20 @@
   // lost in silence (overflow-x is hidden app-wide). Declared here rather than
   // guessed in CSS, which cannot see how long a string is; chapter 1's letter
   // prompts and chapter 2's short words are below the threshold and unchanged.
-  $: longPrompt = promptIsGreek && [...String(current?.prompt || '')].length > 7;
+  // 5I-SPEC2 §3.1: the WHOLE prompt, continuation included. `prompt2` is no
+  // longer a second line but the tail of the same flowing verse, so it is part
+  // of what the type ramp has to fit.
+  $: promptFullText = [current?.prompt, current?.prompt2].filter(Boolean).join(' ');
+  $: longPrompt = promptIsGreek && [...String(promptFullText)].length > 7;
+  // The second step of the ramp. `two-line` used to mark a prompt that had a
+  // continuation and sized it down for the extra line; a joined verse needs the
+  // same step down for the same reason (it is the longest thing the panel ever
+  // holds), but it needs it because of its LENGTH rather than because a key is
+  // present. 47 clusters is the longest prompt in the app that has NO
+  // continuation and therefore already shipped at 2.2rem and was accepted;
+  // above it are the joined verses alone, which is exactly the set that wants
+  // the smaller step.
+  $: veryLongPrompt = promptIsGreek && [...String(promptFullText)].length > 47;
   $: uiButtons = activity.ui?.buttons || [];
   $: showPronounce = !authoredOptions || uiButtons.includes('Pronounce');
   $: showStepper = uiButtons.includes('Previous') || uiButtons.includes('Next');
@@ -247,7 +260,20 @@
     hintParadigmRef = activeHintRef;
     hintParadigmIndex = 0;
   }
-  $: hintBundle = Array.isArray(hintChart?.paradigms) ? hintChart.paradigms : [];
+  // 5I-SPEC2 §4.7 (VERIFY-5I I-3): A HINT MAY RESOLVE TO A CONTENT BLOCK, not
+  // only to a paradigm. Chapters 14 and 15 modelled their "Verb Forms" hints as
+  // two-column paradigms, which put the English gloss in the row-LABEL slot and
+  // therefore printed it FIRST; the original prints it last, and the Learn page
+  // of each chapter already draws the same list correctly as a `stemList`
+  // greekRows block. Rather than teach Paradigm a trailing-gloss column that
+  // exists to imitate a block the app already has, the hint now names that
+  // block: `hintCharts.<ref>.charts[0]` may be any RichContent block, and a
+  // resolved ref that is not a chart is rendered by RichContent in the same
+  // modal shell. The contract touched is `hintCharts`, which gains "a chart
+  // entry may be a content block"; nothing about the paradigm route changes.
+  $: hintChartIsBlock = !!hintChart && !!hintChart.type
+    && hintChart.type !== 'paradigm' && hintChart.type !== 'pronounParadigm';
+  $: hintBundle = !hintChartIsBlock && Array.isArray(hintChart?.paradigms) ? hintChart.paradigms : [];
   $: hintDisclosure = hintBundle.length >= 2;
   // §4.1 at exactly two, §4.2 at three or more — the same split Paradigm makes
   // for a charts[] stack, stated once per host because the two hosts own their
@@ -682,12 +708,24 @@
            mark offsets are em-relative and correct, and nothing about mark
            geometry moves in this round.
            5F §2.7: a two-line Greek prompt is ONE phrase and one clip, so the
-           second line lives inside the same tap target. -->
+           second line lives inside the same tap target.
+           5I-SPEC2 §3.1 / DISCLOSURE-RULES §4.10: AND IT IS NOT A LINE ANY
+           MORE. A verse is continuous text everywhere; the original's two-line
+           prompt is a storage artifact of its own fixed-width panel, never a
+           break the port reproduces. `prompt2` joins `prompt` with ONE SPACE
+           inside the same button and wraps only where the card's width wraps
+           it. The span survives so the surface can still say which items carry
+           a continuation (`greek2` stays in the data as extraction
+           provenance); it is inline and contributes nothing but that space. -->
+      <!-- The type ramp reads the JOINED string, not the first line alone: a
+           two-line verse became one long line in this round and sizing it off
+           `prompt` would leave the longest prompts in the app at the size a
+           short one wants. -->
       <!-- The note sits on the prompt's line but OUTSIDE its button, so it is
            not part of the tap target and can never speak. -->
       <div class="prompt-row" class:with-note={current.note}>
-        <button class="prompt greek greek-say" class:long={longPrompt} class:two-line={current.prompt2}
-                on:click={() => play(current.promptAudio)}>{current.prompt}{#if current.prompt2}<span class="prompt-line2">{current.prompt2}</span>{/if}</button>
+        <button class="prompt greek greek-say" class:long={longPrompt} class:very-long={veryLongPrompt}
+                on:click={() => play(current.promptAudio)}>{current.prompt}{#if current.prompt2}<span class="prompt-cont">{` ${current.prompt2}`}</span>{/if}</button>
         {#if current.note}<span class="prompt-note">{current.note}</span>{/if}
       </div>
     {:else if current.underline && sentenceParts(current.prompt, current.underline)}
@@ -934,7 +972,17 @@
       <!-- 5F-FEEDBACK.pdf §8.1 root-cause fix: every paradigm the Hint route
            can resolve now ships in the one standard cell-audio shape, so
            there is no second renderer to keep in sync. -->
-      {#if hintDisclosure}
+      {#if hintChartIsBlock}
+        <!-- 5I-SPEC2 §4.7: the resolved hint is a CONTENT BLOCK — chapters 14
+             and 15's Verb Forms lists, which are the Learn page's own
+             `stemList` and therefore already read "present — aorist (gloss)"
+             with the gloss last and both Greek forms tapping. Same modal shell
+             and the same scroller as every other Hint route; there is no
+             navigation, so nothing is pinned above Close (§4.3). -->
+        <div class="modal-scroll">
+          <RichContent blocks={[hintChart]} />
+        </div>
+      {:else if hintDisclosure}
         <!-- D-48f1: one chart at a time. A composite bundle is the one hint
              shape whose state the HOST owns — it picks which of the bundle's
              paradigms is on screen — so the host also owns the pinned line.

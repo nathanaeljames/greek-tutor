@@ -78,9 +78,77 @@
 // circumstantial fit; the bug is intermittent and device-bound, so what is
 // verified here is that the triggers fire and that the clamp rejects a phantom
 // height. It stays a VERIFY device-soak item.
+
+// ===========================================================================
+// 5I-SPEC2 §3.2 — THE SCREENSHOT PATH. DO NOT TRIM THIS BLOCK.
+//
+// The half-screen modal came back in cohort 5I. It is NOT a code revert: this
+// file is byte-identical to 6a4369c and the round's app.css changes are
+// typography only. What came back is a TRIGGER the clamp above never covered,
+// and Nathanael's report names it exactly: the modal regresses AFTER TAKING A
+// SCREENSHOT — with no modal open, on a page that has no modal at all. On iOS a
+// screenshot can background and foreground a standalone PWA, which is the
+// resume path this file already exists to survive.
+//
+// WHY THE W4.2 CLAMP LET IT THROUGH. That clamp compares the visual viewport
+// against `window.innerHeight` and calls the reading a phantom when it is much
+// smaller. Its premise — stated in the comment above — is that the software
+// keyboard does not shrink `innerHeight` on iOS. That holds in Safari's tab UI
+// and does NOT hold in a standalone home-screen PWA, which is the only way this
+// app is used: there the layout viewport is resized with the keyboard, so a
+// stale reading shrinks BOTH numbers together, their ratio stays near 1, and
+// the clamp sees nothing wrong with half a screen.
+//
+// SO THE CLAMP NEEDS A REFERENCE THAT IS NOT ALSO STALE, and the only honest
+// one is the app's OWN RECENT HISTORY: the last height this module published
+// while nothing was focused and the reading looked sane. A resume cannot change
+// how tall the screen is, so a height that collapses ACROSS a resume, with
+// nothing focused to explain it, is a stale reading and not a viewport.
+//
+// AND IT IS SCOPED TO THE RESUME. The history reference only arbitrates inside
+// a short window after a foreground/resume event. Outside that window an
+// ordinary resize is allowed to shrink the viewport by any amount it likes,
+// because a person dragging a window edge or rotating a phone is not this bug
+// and must not be second-guessed. That scoping is what keeps the harness's own
+// viewport switches, and a desktop window drag, out of the clamp's way.
+//
+// AND IT SETTLES RATHER THAN SNAPSHOTS. A resume does not deliver the right
+// numbers in the frame it fires; one rAF was enough for `pageshow` and is not
+// enough here. Every resume schedules a short chain of re-measurements, so the
+// last word belongs to a viewport that has stopped moving.
+//
+// GUARD (Nathanael's explicit ask, VERIFY-5I-RESPONSE item 4: "add a guard to
+// ensure THIS DOES NOT REVERT AGAIN"): scripts/ui-modals.mjs drives this path
+// under the heading "5I-SPEC2 §3.2" — it opens a modal, forges a shrunken
+// visual viewport, fires the resume events, and asserts `--modal-vh` and the
+// modal's own box survive. Any refactor that removes the resume window, the
+// history reference or the settle chain fails that assertion.
+// ===========================================================================
 const MIN_PLAUSIBLE_RATIO = 0.6;
 
+// How long after a foreground/resume event the history reference is allowed to
+// arbitrate, and when inside it the viewport is re-measured. iOS settles a
+// resumed PWA's viewport within a couple of frames; 600ms is generous cover
+// with no cost, since each step is one measurement.
+const RESUME_WINDOW_MS = 600;
+const RESUME_SETTLE_MS = [0, 60, 180, 400];
+// How long a MATERIALLY SMALLER height must keep being reported before it is
+// adopted as the reference. Without this the reference poisons itself: iOS is
+// free to deliver the phantom as an ordinary `resize` a few milliseconds BEFORE
+// the foreground event, and a reference that took that reading would then have
+// nothing left to compare the resume against. Sits just past RESUME_WINDOW_MS,
+// so a shrink that is real is confirmed by a measurement taken AFTER the resume
+// clamp has stopped arbitrating -- which is what makes a genuinely smaller
+// screen correct itself in under a second instead of never.
+const SHRINK_CONFIRM_MS = 750;
+
 let stop = null;
+
+// One clock for the resume window. `performance.now` is monotonic, so a device
+// clock change cannot make the window look open forever.
+const now = () => (typeof performance !== 'undefined' && performance.now
+  ? performance.now()
+  : Date.now());
 
 // A keyboard implies a focused editable. This is what lets the clamp tell "the
 // keyboard really is up" from "this reading is left over from when it was".
@@ -96,19 +164,77 @@ export function trackVisualViewport() {
   const vv = window.visualViewport || null;
   const root = document.documentElement;
 
+  // §3.2: the last height published while nothing was focused and the reading
+  // passed the clamp — the app's own record of how tall this screen really is.
+  // Reset on a genuine geometry change (rotation, a window whose WIDTH moved),
+  // where history is about a different rectangle and must not vote.
+  let lastGoodHeight = 0;
+  let lastGoodWidth = 0;
+  // Timestamp of the most recent foreground/resume event. Only inside
+  // RESUME_WINDOW_MS of it may `lastGoodHeight` overrule a measurement.
+  let resumedAt = 0;
+  const settleTimers = [];
+  // A materially smaller height, seen but not yet believed. See
+  // SHRINK_CONFIRM_MS: the reference must not take a reading that could be the
+  // phantom arriving as an ordinary resize a few milliseconds early.
+  let pendingShrink = 0;
+  let pendingSince = 0;
+  let shrinkTimer = 0;
+
   const apply = () => {
     const measured = vv ? vv.height : window.innerHeight;
     const innerHeight = window.innerHeight || 0;
+    const width = (vv ? vv.width : window.innerWidth) || window.innerWidth || 0;
+    // A different rectangle: rotation, or a desktop window dragged narrower.
+    // History about the old one is worthless and would only misfire.
+    if (width && lastGoodWidth && width !== lastGoodWidth) lastGoodHeight = 0;
     // W4.2, THE SANITY CLAMP. An implausibly small reading with nothing focused
     // is a phantom keyboard, and innerHeight — which the software keyboard does
-    // NOT shrink on iOS — is the better answer until a real measurement lands.
+    // not shrink in Safari's tab UI — is the better answer until a real
+    // measurement lands.
     let height = measured;
+    let rejected = false;
     if (innerHeight > 0 && measured > 0
         && measured < innerHeight * MIN_PLAUSIBLE_RATIO && !editableFocused()) {
       height = innerHeight;
-      schedule();
+      rejected = true;
     }
+    // §3.2, THE RESUME CLAMP. In a standalone PWA `innerHeight` shrinks with
+    // the keyboard too, so the test above can be handed two stale numbers whose
+    // ratio looks fine. Just after a resume, and only then, the last height the
+    // app itself published is the better reference: nothing about coming back
+    // from a screenshot makes the screen shorter.
+    const resuming = resumedAt && (now() - resumedAt) <= RESUME_WINDOW_MS;
+    if (resuming && lastGoodHeight > 0 && height > 0
+        && height < lastGoodHeight * MIN_PLAUSIBLE_RATIO && !editableFocused()) {
+      height = lastGoodHeight;
+      rejected = true;
+    }
+    // A rejection is not a verdict, only a refusal to publish a bad number:
+    // ask again next frame in case the viewport was merely mid-transition.
+    if (rejected) schedule();
     if (height > 0) root.style.setProperty('--modal-vh', `${Math.round(height)}px`);
+    // Remember only readings the clamps did not have to touch, and only with
+    // nothing focused — a keyboard-shortened viewport is real while it lasts
+    // and is exactly what must never become the reference. A reading that is
+    // MATERIALLY SMALLER than the reference is published (a real resize must
+    // take effect at once) but is not believed until it has been reported
+    // again SHRINK_CONFIRM_MS later, past the end of any resume window.
+    if (!rejected && height > 0 && !editableFocused()) {
+      if (width) lastGoodWidth = width;
+      const confirmedShrink = pendingShrink > 0
+        && Math.abs(height - pendingShrink) <= pendingShrink * 0.05
+        && now() - pendingSince >= SHRINK_CONFIRM_MS;
+      if (lastGoodHeight <= 0 || height >= lastGoodHeight * MIN_PLAUSIBLE_RATIO || confirmedShrink) {
+        lastGoodHeight = height;
+        pendingShrink = 0;
+      } else {
+        pendingShrink = height;
+        pendingSince = now();
+        if (shrinkTimer) clearTimeout(shrinkTimer);
+        shrinkTimer = setTimeout(() => { shrinkTimer = 0; apply(); }, SHRINK_CONFIRM_MS + 20);
+      }
+    }
 
     // Both bars are in the same client-coordinate space a position:fixed
     // overlay uses, so their rects ARE the answer, with no arithmetic.
@@ -136,8 +262,27 @@ export function trackVisualViewport() {
   // software keyboard being dismissed, which is where a phantom height is born.
   // All three go through the same per-frame coalescer as everything else, so a
   // resume that fires all three still measures once.
-  const onVisible = () => { if (!document.hidden) schedule(); };
-  const onPageShow = () => schedule();
+  //
+  // 5I-SPEC2 §3.2 adds `focus` and the Page Lifecycle `resume`, and makes a
+  // resume MEAN something rather than merely schedule a measurement. An iOS
+  // screenshot can hand the app back without a `visibilitychange` at all — the
+  // window blurs to the screenshot UI and refocuses — so `focus` is the trigger
+  // that covers the reported case, and `resume` covers a page that was frozen
+  // outright. Marking the resume opens the window in which `lastGoodHeight` may
+  // arbitrate, and the settle chain re-measures until the viewport stops
+  // moving; one frame was enough for bfcache and is not enough here.
+  const markResume = () => {
+    resumedAt = now();
+    for (const timer of settleTimers.splice(0)) clearTimeout(timer);
+    for (const delay of RESUME_SETTLE_MS) {
+      settleTimers.push(setTimeout(() => { apply(); }, delay));
+    }
+    schedule();
+  };
+  const onVisible = () => { if (!document.hidden) markResume(); };
+  const onPageShow = () => markResume();
+  const onWindowFocus = () => markResume();
+  const onResume = () => markResume();
   const onFocusOut = () => schedule();
 
   apply();
@@ -146,8 +291,13 @@ export function trackVisualViewport() {
   // and the height does not change during one.
   if (vv) vv.addEventListener('resize', schedule);
   window.addEventListener('resize', schedule);
-  window.addEventListener('orientationchange', schedule);
+  // A rotation is a new rectangle, so the height history from the old one is
+  // dropped before the measurement that follows it rather than after.
+  const onOrientation = () => { lastGoodHeight = 0; lastGoodWidth = 0; schedule(); };
+  window.addEventListener('orientationchange', onOrientation);
   window.addEventListener('pageshow', onPageShow);
+  window.addEventListener('focus', onWindowFocus);
+  window.addEventListener('resume', onResume);
   window.addEventListener('focusout', onFocusOut);
   document.addEventListener('visibilitychange', onVisible);
   // The bars mount and unmount with the route (no tab bar on the TOC), and a
@@ -177,10 +327,14 @@ export function trackVisualViewport() {
 
   stop = () => {
     if (queued) cancelAnimationFrame(queued);
+    for (const timer of settleTimers.splice(0)) clearTimeout(timer);
+    if (shrinkTimer) { clearTimeout(shrinkTimer); shrinkTimer = 0; }
     if (vv) vv.removeEventListener('resize', schedule);
     window.removeEventListener('resize', schedule);
-    window.removeEventListener('orientationchange', schedule);
+    window.removeEventListener('orientationchange', onOrientation);
     window.removeEventListener('pageshow', onPageShow);
+    window.removeEventListener('focus', onWindowFocus);
+    window.removeEventListener('resume', onResume);
     window.removeEventListener('focusout', onFocusOut);
     document.removeEventListener('visibilitychange', onVisible);
     if (observer) observer.disconnect();

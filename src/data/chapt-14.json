@@ -135,14 +135,16 @@
         },
         {
          "text": "ε + λαβ + ο + ν = ἔλαβον",
-         "audio": "chapt_14_n_lab1s",
-         "tapUnit": true
+         "greekTap": {
+          "word": "ἔλαβον",
+          "audio": "chapt_14_n_lab1s"
+         }
         },
         {
          "text": "Aug   Stem   CV   Ending"
         }
        ],
-       "_note": "D-48f2 shape: the Greek line is one tap unit playing elabon (n_lab1s); the English lines are inert."
+       "_note": "D-48f2 shape with the 5G-SPEC3 tap boundary applied: the Greek line prints a RESULT, so only elabon taps (n_lab1s) and the morphemes building it stay ink; the English lines are inert. 5G-SPEC3 tap-boundary canon (5I-SPEC2 4.3): in a worked example only the RESULTING Greek form is the tap. tapUnit is for a pure morpheme equation with no printed result; this line prints one, so elabon alone speaks and the morphemes that build it stay ink."
       },
       {
        "type": "para",
@@ -2112,7 +2114,7 @@
         },
         {
          "greek": "ἐλάβομεν",
-         "gloss": "we took",
+         "gloss": "We took",
          "audio": "chapt_14_n_lab1p"
         }
        ]
@@ -2122,12 +2124,12 @@
        "cells": [
         {
          "greek": "ἔλαβες",
-         "gloss": "you took",
+         "gloss": "You took",
          "audio": "chapt_14_n_lab2s"
         },
         {
          "greek": "ἐλάβετε",
-         "gloss": "you took",
+         "gloss": "You took",
          "audio": "chapt_14_n_lab2p"
         }
        ]
@@ -2137,12 +2139,12 @@
        "cells": [
         {
          "greek": "ἔλαβε(ν)",
-         "gloss": "he/she/it took",
+         "gloss": "He/she/it took",
          "audio": "chapt_14_n_lab3s"
         },
         {
          "greek": "ἔλαβον",
-         "gloss": "they took",
+         "gloss": "They took",
          "audio": "chapt_14_n_lab3p"
         }
        ]
@@ -2152,7 +2154,8 @@
       "label": "Say Paradigm",
       "audio": "chapt_14_n_labpar"
      },
-     "name": "Second Aorist Active"
+     "name": "Second Aorist Active",
+     "_note": "D-60 (5I-SPEC2 4.8, VERIFY-5I I-5): these glosses printed lower case while the Learn copy of the same paradigm capitalises them. The original appears to be inconsistent here; Nathanael ruled on 2026-08-30 that paradigm glosses capitalise regardless of the original, and the divergence is recorded rather than reproduced."
     },
     {
      "type": "paradigm",
@@ -2779,7 +2782,7 @@
         },
         {
          "greek": "ἐλάβομεν",
-         "gloss": "we took",
+         "gloss": "We took",
          "audio": "chapt_14_n_lab1p"
         }
        ]
@@ -2789,12 +2792,12 @@
        "cells": [
         {
          "greek": "ἔλαβες",
-         "gloss": "you took",
+         "gloss": "You took",
          "audio": "chapt_14_n_lab2s"
         },
         {
          "greek": "ἐλάβετε",
-         "gloss": "you took",
+         "gloss": "You took",
          "audio": "chapt_14_n_lab2p"
         }
        ]
@@ -2804,17 +2807,18 @@
        "cells": [
         {
          "greek": "ἔλαβε(ν)",
-         "gloss": "he/she/it took",
+         "gloss": "He/she/it took",
          "audio": "chapt_14_n_lab3s"
         },
         {
          "greek": "ἔλαβον",
-         "gloss": "they took",
+         "gloss": "They took",
          "audio": "chapt_14_n_lab3p"
         }
        ]
       }
-     ]
+     ],
+     "_note": "D-60 (5I-SPEC2 4.8, VERIFY-5I I-5): these glosses printed lower case while the Learn copy of the same paradigm capitalises them. The original appears to be inconsistent here; Nathanael ruled on 2026-08-30 that paradigm glosses capitalise regardless of the original, and the divergence is recorded rather than reproduced."
     },
     {
      "type": "paradigm",
@@ -2878,20 +2882,17 @@
   "secondAoristForms": {
    "charts": [
     {
-     "type": "paradigm",
-     "id": "hintSecondAoristForms",
+     "type": "greekRows",
+     "layout": "stemList",
      "title": "Second Aorist Verb Forms",
-     "columns": [
-      "Present",
-      "Second Aorist"
-     ],
      "rows": [
       {
-       "label": "I departed",
-       "cells": [
+       "greek": "ἀπέρχομαι",
+       "audio": "chapt_14_n_apep",
+       "gloss": "(I departed)",
+       "parts": [
         {
-         "greek": "ἀπέρχομαι",
-         "audio": "chapt_14_n_apep"
+         "text": "—"
         },
         {
          "greek": "ἀπῆλθον",
@@ -2900,11 +2901,12 @@
        ]
       },
       {
-       "label": "I died",
-       "cells": [
+       "greek": "ἀποθνῄσκω",
+       "audio": "chapt_14_n_apop",
+       "gloss": "(I died)",
+       "parts": [
         {
-         "greek": "ἀποθνῄσκω",
-         "audio": "chapt_14_n_apop"
+         "text": "—"
         },
         {
          "greek": "ἀπέθανον",
@@ -2913,11 +2915,12 @@
        ]
       },
       {
-       "label": "I threw",
-       "cells": [
+       "greek": "βάλλω",
+       "audio": "chapt_14_n_balp",
+       "gloss": "(I threw)",
+       "parts": [
         {
-         "greek": "βάλλω",
-         "audio": "chapt_14_n_balp"
+         "text": "—"
         },
         {
          "greek": "ἔβαλον",
@@ -2926,11 +2929,12 @@
        ]
       },
       {
-       "label": "I saw",
-       "cells": [
+       "greek": "βλέπω",
+       "audio": "chapt_14_n_blep",
+       "gloss": "(I saw)",
+       "parts": [
         {
-         "greek": "βλέπω",
-         "audio": "chapt_14_n_blep"
+         "text": "—"
         },
         {
          "greek": "εἶδον",
@@ -2939,11 +2943,12 @@
        ]
       },
       {
-       "label": "I became",
-       "cells": [
+       "greek": "γίνομαι",
+       "audio": "chapt_14_n_ginp",
+       "gloss": "(I became)",
+       "parts": [
         {
-         "greek": "γίνομαι",
-         "audio": "chapt_14_n_ginp"
+         "text": "—"
         },
         {
          "greek": "ἐγενόμην",
@@ -2952,11 +2957,12 @@
        ]
       },
       {
-       "label": "I knew",
-       "cells": [
+       "greek": "γινώσκω",
+       "audio": "chapt_14_n_ginwp",
+       "gloss": "(I knew)",
+       "parts": [
         {
-         "greek": "γινώσκω",
-         "audio": "chapt_14_n_ginwp"
+         "text": "—"
         },
         {
          "greek": "ἔγνων",
@@ -2965,11 +2971,12 @@
        ]
       },
       {
-       "label": "I entered",
-       "cells": [
+       "greek": "εἰσέρχομαι",
+       "audio": "chapt_14_n_eisp",
+       "gloss": "(I entered)",
+       "parts": [
         {
-         "greek": "εἰσέρχομαι",
-         "audio": "chapt_14_n_eisp"
+         "text": "—"
         },
         {
          "greek": "εἰσῆλθον",
@@ -2978,11 +2985,12 @@
        ]
       },
       {
-       "label": "I went out",
-       "cells": [
+       "greek": "ἐξέρχομαι",
+       "audio": "chapt_14_n_ecep",
+       "gloss": "(I went out)",
+       "parts": [
         {
-         "greek": "ἐξέρχομαι",
-         "audio": "chapt_14_n_ecep"
+         "text": "—"
         },
         {
          "greek": "ἐξῆλθον",
@@ -2991,11 +2999,12 @@
        ]
       },
       {
-       "label": "I came, went",
-       "cells": [
+       "greek": "ἔρχομαι",
+       "audio": "chapt_14_n_erxp",
+       "gloss": "(I came, went)",
+       "parts": [
         {
-         "greek": "ἔρχομαι",
-         "audio": "chapt_14_n_erxp"
+         "text": "—"
         },
         {
          "greek": "ἦλθον",
@@ -3004,11 +3013,12 @@
        ]
       },
       {
-       "label": "I found",
-       "cells": [
+       "greek": "εὑρίσκω",
+       "audio": "chapt_14_n_eurp",
+       "gloss": "(I found)",
+       "parts": [
         {
-         "greek": "εὑρίσκω",
-         "audio": "chapt_14_n_eurp"
+         "text": "—"
         },
         {
          "greek": "εὗρον",
@@ -3017,11 +3027,12 @@
        ]
       },
       {
-       "label": "I had",
-       "cells": [
+       "greek": "ἔχω",
+       "audio": "chapt_14_n_exwp",
+       "gloss": "(I had)",
+       "parts": [
         {
-         "greek": "ἔχω",
-         "audio": "chapt_14_n_exwp"
+         "text": "—"
         },
         {
          "greek": "ἔσχον",
@@ -3030,11 +3041,12 @@
        ]
       },
       {
-       "label": "I took",
-       "cells": [
+       "greek": "λαμβάνω",
+       "audio": "chapt_14_n_lamp",
+       "gloss": "(I took)",
+       "parts": [
         {
-         "greek": "λαμβάνω",
-         "audio": "chapt_14_n_lamp"
+         "text": "—"
         },
         {
          "greek": "ἔλαβον",
@@ -3043,11 +3055,12 @@
        ]
       },
       {
-       "label": "I said",
-       "cells": [
+       "greek": "λέγω",
+       "audio": "chapt_14_n_legp",
+       "gloss": "(I said)",
+       "parts": [
         {
-         "greek": "λέγω",
-         "audio": "chapt_14_n_legp"
+         "text": "—"
         },
         {
          "greek": "εἶπον",
@@ -3058,7 +3071,7 @@
      ]
     }
    ],
-   "_note": "The Forms Drill hint (0xaf024) prints the whole verb list as a two-column present/aorist table; emitted as a paradigm so both columns tap."
+   "_note": "5I-SPEC2 4.7 (VERIFY-5I I-3): this hint shipped as a two-column paradigm with the English gloss as the ROW LABEL, so the gloss printed FIRST. The original prints \"aperchomai -- aphlqon (I departed)\", gloss last, and this chapter's own Learn topic 6 already does. Reshaped to that same stemList block -- present, dash, aorist, gloss -- with both Greek forms tapping their own clips. Chapter 15's firstAoristForms is reshaped identically in the same round. The Forms Drill hint (0xaf024) prints the whole verb list as a two-column present/aorist table; emitted as a paradigm so both columns tap."
   }
  }
 }

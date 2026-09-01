@@ -273,9 +273,11 @@
       }
      ],
      "audioMap": {
-      "πᾶς, πᾶσα, πᾶν": "chapt_13_m_voc5"
+      "πᾶς": "chapt_13_m_pasmns",
+      "πᾶσα": "chapt_13_m_pasfns",
+      "πᾶν": "chapt_13_m_pasnns"
      },
-     "_audio_note": "CHAPT_13 ships NO m_pas lemma clip (unlike m_sar, m_xar, m_pis and m_ono). The three-form citation plays m_voc5, whose lexical form in the vocabulary pool IS \"pas, pasa, pan\"; the topic title plays m_pasmns, the chart's own masculine-nominative-singular cell, which is the single word the title prints. Both wanted on the listen list.",
+     "_audio_note": "TBK-CONFIRMED (5I-SPEC2 4.2): the original page carries THREE WordSelection buttons over this citation, not one -- 13_3DECL.TBK 0x21c0b, 0x21ce9, 0x21de4 -- dispatching m_pasmns, m_pasfns and m_pasnns. Each of pas, pasa and pan therefore taps its own word; the commas and spaces between them stay ink. m_voc5, which the phrase used to play as a unit, speaks pas ALONE (VERIFY-5I item B1, listened 2026-08-30) and is now unwired here. The topic title still plays m_pasmns, the chart's own masculine-nominative-singular cell, which is the single word the title prints.",
      "_underline_note": "genitive form is underlined on both screens (rail walk p5); [[u]] comes from the run table, not a fallback table."
     },
     {
@@ -602,148 +604,184 @@
       {
        "type": "paradigm",
        "id": "learnPasParadigm",
-       "title": "πᾶς  (all) Forms",
-       "columns": [
-        "Masculine",
-        "Feminine",
-        "Neuter",
-        "Masculine",
-        "Feminine",
-        "Neuter"
-       ],
-       "columnGroups": [
+       "switch": "named",
+       "charts": [
         {
-         "label": "Singular",
-         "span": 3
+         "type": "paradigm",
+         "id": "learnPasSingular",
+         "name": "Singular",
+         "title": "πᾶς  (all) Forms",
+         "subtitle": "Singular",
+         "columns": [
+          "Masculine",
+          "Feminine",
+          "Neuter"
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "Nom.",
+           "cells": [
+            {
+             "greek": "πᾶς",
+             "audio": "chapt_13_m_pasmns"
+            },
+            {
+             "greek": "πᾶσα",
+             "audio": "chapt_13_m_pasfns"
+            },
+            {
+             "greek": "πᾶν",
+             "audio": "chapt_13_m_pasnns"
+            }
+           ]
+          },
+          {
+           "label": "Gen.",
+           "cells": [
+            {
+             "greek": "παντός",
+             "audio": "chapt_13_m_pasmgs"
+            },
+            {
+             "greek": "πάσης",
+             "audio": "chapt_13_m_pasfgs"
+            },
+            {
+             "greek": "παντός",
+             "audio": "chapt_13_m_pasngs"
+            }
+           ]
+          },
+          {
+           "label": "Dat.",
+           "cells": [
+            {
+             "greek": "παντί",
+             "audio": "chapt_13_m_pasmds"
+            },
+            {
+             "greek": "πάσῃ",
+             "audio": "chapt_13_m_pasfds"
+            },
+            {
+             "greek": "παντί",
+             "audio": "chapt_13_m_pasnds"
+            }
+           ]
+          },
+          {
+           "label": "Acc.",
+           "cells": [
+            {
+             "greek": "πάντα",
+             "audio": "chapt_13_m_pasmas"
+            },
+            {
+             "greek": "πᾶσαν",
+             "audio": "chapt_13_m_pasfas"
+            },
+            {
+             "greek": "πᾶν",
+             "audio": "chapt_13_m_pasnas"
+            }
+           ]
+          }
+         ],
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_13_m_paspar"
+         }
         },
         {
-         "label": "Plural",
-         "span": 3
+         "type": "paradigm",
+         "id": "learnPasPlural",
+         "name": "Plural",
+         "title": "πᾶς  (all) Forms",
+         "subtitle": "Plural",
+         "columns": [
+          "Masculine",
+          "Feminine",
+          "Neuter"
+         ],
+         "showGlosses": false,
+         "rows": [
+          {
+           "label": "Nom.",
+           "cells": [
+            {
+             "greek": "πάντες",
+             "audio": "chapt_13_m_pasmnp"
+            },
+            {
+             "greek": "πᾶσαι",
+             "audio": "chapt_13_m_pasfnp"
+            },
+            {
+             "greek": "πάντα",
+             "audio": "chapt_13_m_pasnnp"
+            }
+           ]
+          },
+          {
+           "label": "Gen.",
+           "cells": [
+            {
+             "greek": "πάντων",
+             "audio": "chapt_13_m_pasmgp"
+            },
+            {
+             "greek": "πασῶν",
+             "audio": "chapt_13_m_pasfgp"
+            },
+            {
+             "greek": "πάντων",
+             "audio": "chapt_13_m_pasngp"
+            }
+           ]
+          },
+          {
+           "label": "Dat.",
+           "cells": [
+            {
+             "greek": "πᾶσι(ν)",
+             "audio": "chapt_13_m_pasmdp"
+            },
+            {
+             "greek": "πάσαις",
+             "audio": "chapt_13_m_pasfdp"
+            },
+            {
+             "greek": "πᾶσι(ν)",
+             "audio": "chapt_13_m_pasndp"
+            }
+           ]
+          },
+          {
+           "label": "Acc.",
+           "cells": [
+            {
+             "greek": "πάντας",
+             "audio": "chapt_13_m_pasmap"
+            },
+            {
+             "greek": "πάσας",
+             "audio": "chapt_13_m_pasfap"
+            },
+            {
+             "greek": "πάντα",
+             "audio": "chapt_13_m_pasnap"
+            }
+           ]
+          }
+         ],
+         "sayWhole": {
+          "label": "Say Paradigm",
+          "audio": "chapt_13_m_paspar"
+         }
         }
        ],
-       "rows": [
-        {
-         "label": "Nom.",
-         "cells": [
-          {
-           "greek": "πᾶς",
-           "audio": "chapt_13_m_pasmns"
-          },
-          {
-           "greek": "πᾶσα",
-           "audio": "chapt_13_m_pasfns"
-          },
-          {
-           "greek": "πᾶν",
-           "audio": "chapt_13_m_pasnns"
-          },
-          {
-           "greek": "πάντες",
-           "audio": "chapt_13_m_pasmnp"
-          },
-          {
-           "greek": "πᾶσαι",
-           "audio": "chapt_13_m_pasfnp"
-          },
-          {
-           "greek": "πάντα",
-           "audio": "chapt_13_m_pasnnp"
-          }
-         ]
-        },
-        {
-         "label": "Gen.",
-         "cells": [
-          {
-           "greek": "παντός",
-           "audio": "chapt_13_m_pasmgs"
-          },
-          {
-           "greek": "πάσης",
-           "audio": "chapt_13_m_pasfgs"
-          },
-          {
-           "greek": "παντός",
-           "audio": "chapt_13_m_pasngs"
-          },
-          {
-           "greek": "πάντων",
-           "audio": "chapt_13_m_pasmgp"
-          },
-          {
-           "greek": "πασῶν",
-           "audio": "chapt_13_m_pasfgp"
-          },
-          {
-           "greek": "πάντων",
-           "audio": "chapt_13_m_pasngp"
-          }
-         ]
-        },
-        {
-         "label": "Dat.",
-         "cells": [
-          {
-           "greek": "παντί",
-           "audio": "chapt_13_m_pasmds"
-          },
-          {
-           "greek": "πάσῃ",
-           "audio": "chapt_13_m_pasfds"
-          },
-          {
-           "greek": "παντί",
-           "audio": "chapt_13_m_pasnds"
-          },
-          {
-           "greek": "πᾶσι(ν)",
-           "audio": "chapt_13_m_pasmdp"
-          },
-          {
-           "greek": "πάσαις",
-           "audio": "chapt_13_m_pasfdp"
-          },
-          {
-           "greek": "πᾶσι(ν)",
-           "audio": "chapt_13_m_pasndp"
-          }
-         ]
-        },
-        {
-         "label": "Acc.",
-         "cells": [
-          {
-           "greek": "πάντα",
-           "audio": "chapt_13_m_pasmas"
-          },
-          {
-           "greek": "πᾶσαν",
-           "audio": "chapt_13_m_pasfas"
-          },
-          {
-           "greek": "πᾶν",
-           "audio": "chapt_13_m_pasnas"
-          },
-          {
-           "greek": "πάντας",
-           "audio": "chapt_13_m_pasmap"
-          },
-          {
-           "greek": "πάσας",
-           "audio": "chapt_13_m_pasfap"
-          },
-          {
-           "greek": "πάντα",
-           "audio": "chapt_13_m_pasnap"
-          }
-         ]
-        }
-       ],
-       "showGlosses": false,
-       "sayWhole": {
-        "label": "Say Paradigm",
-        "audio": "chapt_13_m_paspar"
-       }
+       "_split_note": "5I-SPEC2 4.1 / DISCLOSURE-RULES 4.6 surface matrix: the original prints ONE six-column chart, which does not fit a phone. On a LEARN page that becomes a Singular chart and a Plural chart behind the 4.1 named toggle -- the chapter-11 shape -- never the stacked pair, which 4.6 prescribes for REVIEW pages only. The Review copy (qrPas) keeps its columnGroups stacking and is untouched. NIT-LOG N-1: the one m_paspar recording rides BOTH halves."
       }
      ]
     }
@@ -3106,7 +3144,7 @@
   "c13_qr_scripture_mat610a",
   "c13_learn_bibliography"
  ],
- "_audioVerify": "CHAPT_13 ships 159 WAVs, all 159 present in the audio manifest. UNREFERENCED (D-39 class): m_vocl (declared as an alias at 0x10294, played by nothing -- the Review chart plays the halves vocl13a/vocl13b instead), m_ad5 (an orphan of chapter 12's l_ad family), msargs (missing underscore, duplicate of m_sargs), m_onoss. Listens wanted: m_vocla / m_voclb (confirm they are the first and second five rows), m_pas (confirm it recites pas, pasa, pan and not pas alone), m_sm4 vs m_sm8 (both are sou).",
+ "_audioVerify": "CHAPT_13 ships 159 WAVs, all 159 present in the audio manifest. UNREFERENCED (D-39 class): m_vocl (declared as an alias at 0x10294, played by nothing -- the Review chart plays the halves vocl13a/vocl13b instead), m_ad5 (an orphan of chapter 12's l_ad family), msargs (missing underscore, duplicate of m_sargs), m_onoss. m_voc5 JOINS that list at 5I-SPEC2 4.2: the Introduction's three-form citation now taps as three words (m_pasmns / m_pasfns / m_pasnns) per the TBK's own dispatch, and nothing plays m_voc5 any more. Listens wanted: m_vocla / m_voclb (confirm they are the first and second five rows). SETTLED: there is no m_pas clip in this pack -- the earlier note asked for a listen on a name that does not exist; the clip it meant was m_voc5, and VERIFY-5I B1 confirmed on 2026-08-30 that m_voc5 speaks pas ALONE, not the three-form citation. m_sm4 vs m_sm8 (both sou) listened the same round: no audible difference, and duplicate recordings of one word are ordinary in this source -- left as shipped.",
  "_menu_note": "Drill Menu and page titles agree in this chapter; no title sweep divergence.",
  "_sequence_note": "Rail order from ch13railwalk.pdf, cross-checked against the Drill / Exercise / Quick Review menus on its last page.",
  "hintCharts": {
@@ -3411,26 +3449,16 @@
    "charts": [
     {
      "type": "paradigm",
-     "id": "hintPas",
-     "title": "πᾶς  Forms",
+     "id": "hintPasSingular",
+     "name": "Singular",
+     "title": "πᾶς  Forms, Singular",
+     "subtitle": "Singular",
      "columns": [
-      "Masculine",
-      "Feminine",
-      "Neuter",
       "Masculine",
       "Feminine",
       "Neuter"
      ],
-     "columnGroups": [
-      {
-       "label": "Singular",
-       "span": 3
-      },
-      {
-       "label": "Plural",
-       "span": 3
-      }
-     ],
+     "showGlosses": false,
      "rows": [
       {
        "label": "Nom.",
@@ -3446,7 +3474,82 @@
         {
          "greek": "πᾶν",
          "audio": "chapt_13_m_pasnns"
+        }
+       ]
+      },
+      {
+       "label": "Gen.",
+       "cells": [
+        {
+         "greek": "παντός",
+         "audio": "chapt_13_m_pasmgs"
         },
+        {
+         "greek": "πάσης",
+         "audio": "chapt_13_m_pasfgs"
+        },
+        {
+         "greek": "παντός",
+         "audio": "chapt_13_m_pasngs"
+        }
+       ]
+      },
+      {
+       "label": "Dat.",
+       "cells": [
+        {
+         "greek": "παντί",
+         "audio": "chapt_13_m_pasmds"
+        },
+        {
+         "greek": "πάσῃ",
+         "audio": "chapt_13_m_pasfds"
+        },
+        {
+         "greek": "παντί",
+         "audio": "chapt_13_m_pasnds"
+        }
+       ]
+      },
+      {
+       "label": "Acc.",
+       "cells": [
+        {
+         "greek": "πάντα",
+         "audio": "chapt_13_m_pasmas"
+        },
+        {
+         "greek": "πᾶσαν",
+         "audio": "chapt_13_m_pasfas"
+        },
+        {
+         "greek": "πᾶν",
+         "audio": "chapt_13_m_pasnas"
+        }
+       ]
+      }
+     ],
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_13_m_paspar"
+     }
+    },
+    {
+     "type": "paradigm",
+     "id": "hintPasPlural",
+     "name": "Plural",
+     "title": "πᾶς  Forms, Plural",
+     "subtitle": "Plural",
+     "columns": [
+      "Masculine",
+      "Feminine",
+      "Neuter"
+     ],
+     "showGlosses": false,
+     "rows": [
+      {
+       "label": "Nom.",
+       "cells": [
         {
          "greek": "πάντες",
          "audio": "chapt_13_m_pasmnp"
@@ -3465,18 +3568,6 @@
        "label": "Gen.",
        "cells": [
         {
-         "greek": "παντός",
-         "audio": "chapt_13_m_pasmgs"
-        },
-        {
-         "greek": "πάσης",
-         "audio": "chapt_13_m_pasfgs"
-        },
-        {
-         "greek": "παντός",
-         "audio": "chapt_13_m_pasngs"
-        },
-        {
          "greek": "πάντων",
          "audio": "chapt_13_m_pasmgp"
         },
@@ -3493,18 +3584,6 @@
       {
        "label": "Dat.",
        "cells": [
-        {
-         "greek": "παντί",
-         "audio": "chapt_13_m_pasmds"
-        },
-        {
-         "greek": "πάσῃ",
-         "audio": "chapt_13_m_pasfds"
-        },
-        {
-         "greek": "παντί",
-         "audio": "chapt_13_m_pasnds"
-        },
         {
          "greek": "πᾶσι(ν)",
          "audio": "chapt_13_m_pasmdp"
@@ -3523,18 +3602,6 @@
        "label": "Acc.",
        "cells": [
         {
-         "greek": "πάντα",
-         "audio": "chapt_13_m_pasmas"
-        },
-        {
-         "greek": "πᾶσαν",
-         "audio": "chapt_13_m_pasfas"
-        },
-        {
-         "greek": "πᾶν",
-         "audio": "chapt_13_m_pasnas"
-        },
-        {
          "greek": "πάντας",
          "audio": "chapt_13_m_pasmap"
         },
@@ -3549,11 +3616,14 @@
        ]
       }
      ],
-     "showGlosses": false,
+     "sayWhole": {
+      "label": "Say Paradigm",
+      "audio": "chapt_13_m_paspar"
+     },
      "_verify_note": "This screen (0x11875e) misprints pa?saij where the Learn and Review charts print pa<saij. Shipped CORRECTED on the D-55 precedent; VERIFY."
     }
    ],
-   "_note": "The pas drill's own hint field at 0x11875e; its title is \"pas Forms\", NOT the Learn page's \"pas (all) Forms\"."
+   "_note": "The pas drill's own hint field at 0x11875e; its title is \"pas Forms\", NOT the Learn page's \"pas (all) Forms\". 5I-SPEC2 4.1: SPLIT Singular/Plural and paged in the modal per DISCLOSURE-RULES 4.3, matching chapter 11's paged hints. D-58: the Say Paradigm button (m_paspar) is ADDED on each half per 4.8 -- the original's hint screen has no say button, and a paradigm with a say-all recording anywhere in the chapter carries it in the hint too."
   }
  }
 }

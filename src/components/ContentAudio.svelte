@@ -113,6 +113,34 @@
     ? getGreekTapMap(chapter.id)
     : activity.greekTaps;
 
+  // 5I-SPEC2 §4.2 (VERIFY-5I-RESPONSE item 3): A TOPIC'S OWN `audioMap` REACHES
+  // ITS OWN PROSE. It did not, and chapter 13's Introduction is the page that
+  // showed it: πᾶς, πᾶσα and πᾶν were mapped to clips and NONE of the three was
+  // tappable, which is exactly what Nathanael reported.
+  //
+  // Why it looked like it worked everywhere else: `getGreekTapMap` folds every
+  // audioMap in a chapter — activity level AND topic level — into the
+  // chapter-wide map, so on any activity that declares `greekTaps: true` a
+  // topic's map arrives by that route. Eight of the nine topics in the app that
+  // carry an `audioMap` sit on such an activity. Chapter 13's Learn Third
+  // Declension Nouns is the ninth: no `greekTaps`, so `activityGreekTaps` is
+  // undefined, so the map reached `noteTaps` (chart notes) and nothing else.
+  // A topic that names a form-to-clip map is naming it for the page it is on;
+  // whether the ACTIVITY happens to opt into the chapter's lexicon map is a
+  // different decision and cannot be what makes it work.
+  //
+  // MERGED, not substituted, and merged LAST: nothing that taps today stops
+  // tapping, and where both maps name a form the topic's clip wins — which is
+  // what "the topic that prints the forms declares them" has to mean. For the
+  // eight topics already covered, `chapterAudioMap` had folded in the same
+  // pairs, so the merge changes nothing at all on those pages.
+  $: topicBaseTaps = currentTopic && currentTopic.greekTaps === true
+    ? getGreekTapMap(chapter.id)
+    : ((currentTopic && currentTopic.greekTaps) || activityGreekTaps);
+  $: topicPageTaps = currentTopic && currentTopic.audioMap
+    ? { ...(topicBaseTaps || {}), ...currentTopic.audioMap }
+    : topicBaseTaps;
+
   // paradigmChart: a Quick Review page's chart, or several of them. This mode
   // is used by quickReview activities and nothing else, so it IS the C9 host.
   $: paradigmPages = Array.isArray(activity.paradigms) && activity.paradigms.length
@@ -367,9 +395,7 @@
         suppressTitle={currentTopic.title}
         titleAudio={topicTitleCovered ? currentTopic.titleAudio || null : null}
         noteTaps={currentTopic.audioMap || null}
-        greekTaps={currentTopic.greekTaps === true
-          ? getGreekTapMap(chapter.id)
-          : (currentTopic.greekTaps || activityGreekTaps)} />
+        greekTaps={topicPageTaps} />
       {#if currentTopic._verify}<div class="pending-verification compact">Some topic details are pending verification.</div>{/if}
     {:else}
       <div class="pending-verification">Topic content pending verification.</div>

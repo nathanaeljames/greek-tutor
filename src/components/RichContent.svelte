@@ -418,6 +418,7 @@
            class:gloss-only={b.layout === 'glossOnly'} class:english-pairs={b.layout === 'englishPairs'}
            class:compound-verbs={b.layout === 'compoundVerbs'}
            class:contraction={b.layout === 'contraction'}
+           class:derivation={b.layout === 'derivation'}
            class:key-letter-box={b.layout === 'keyLetterBox'}
            class:transformation={b.layout === 'transformation'}
            class:stem-list={b.layout === 'stemList'}
@@ -623,7 +624,14 @@
                   {/if}
                 {/each}
                 {#if stemPopup}
-                  <button class="popup-link rc-chart-trigger rc-stem-note" data-chart-trigger={row.popupRef}
+                  <!-- 5I-SPEC2 §3.3 / DISCLOSURE-RULES §3.12: the note marker
+                       is a MODAL TRIGGER, not an in-chart one. It shipped
+                       carrying `.rc-chart-trigger`, which is the §3.3 exemption
+                       and made it blue and un-underlined beside a form that is
+                       itself a blue Greek tap — the one collision §3.3 exists
+                       to avoid. It is `.rc-prose-trigger` now, so its glyph and
+                       its ring are both the trigger green. -->
+                  <button class="popup-link rc-prose-trigger rc-stem-note" data-chart-trigger={row.popupRef}
                           aria-label="About this form" on:click={() => openPopup(stemPopup)}>?</button>
                 {/if}
               </span>
@@ -645,7 +653,20 @@
               <div class="rc-etf-rule" class:no-label={row.label == null}>
                 {#if row.label != null}
                   {#if rulePopup}
-                    <button class="popup-link rc-chart-trigger rc-etf-label" data-chart-trigger={row.popupRef}
+                    <!-- 5I-SPEC2 §3.3 / DISCLOSURE-RULES §3.11 (Nathanael's
+                         ruling on VERIFY-5I-RESPONSE item 9): A PROSE RULE LIST
+                         IS TEXT, NOT A CHART. This block lays out a page's
+                         running teaching prose — a rule line with a worked
+                         example under it — so its hot label is a C3 IN-TEXT
+                         link and takes §3.2's green underline, not the in-chart
+                         blue. It shipped as `.rc-chart-trigger` in 5I, which is
+                         the class §3.3 exempts, and that was the error the rule
+                         now names: §3.3 governs the cells and labels of an
+                         ACTUAL chart (paradigm, grid, table) — the ch13 Key
+                         Letter Box and the ch6 case-chart glosses — and this is
+                         neither. Bold is kept: the original sets these labels
+                         bold and nothing in §3.2 asks for the weight. -->
+                    <button class="popup-link rc-etf-label rc-prose-trigger" data-chart-trigger={row.popupRef}
                             on:click={() => openPopup(rulePopup)}>{row.label}</button>
                   {:else}
                     <span class="rc-etf-label">{row.label}</span>
@@ -734,8 +755,13 @@
             <div class="rc-greekrow rc-verse-example" style="--greek-cols:1">
               <button class="rc-verse-greek greek greek-say" disabled={!row.audio}
                       on:click={() => playAudio(row.audio)}>
-                <span class="rc-verse-line">{row.greek}</span>
-                {#if row.greek2}<span class="rc-verse-line">{row.greek2}</span>{/if}
+                <!-- 5I-SPEC2 §3.1 / DISCLOSURE-RULES §4.10: ONE FLOWING LINE.
+                     The original's second line is its panel's width, not the
+                     verse's punctuation, so the two join with a single space
+                     and wrap where the card wraps them. `greek2` stays in the
+                     data as extraction provenance (positional pool line 2);
+                     only the render joins. -->
+                <span class="rc-verse-line">{row.greek}</span>{#if row.greek2}<span class="rc-verse-line">{` ${row.greek2}`}</span>{/if}
               </button>
               {#if row.gloss}<span class="rc-greekgloss"><Marked text={row.gloss} /></span>{/if}
               {#if row.ref}<span class="rc-greekref">{row.ref}</span>{/if}

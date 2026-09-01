@@ -1177,7 +1177,7 @@
      ],
      "answer": "and he was teaching them many things in parables and was saying to them",
      "audio": "chapt_15_o_td1",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "imperfectPair",
      "greek2": "ἔλεγεν αὐτοῖς"
     },
     {
@@ -1190,7 +1190,7 @@
      ],
      "answer": "and he sent him to his home",
      "audio": "chapt_15_o_td2",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristPair"
     },
     {
      "greek": "Ὡς οὖν ἔγνω ὁ Ἰησοῦς ὅτι ἤκουσαν οἱ φαρισαῖοι",
@@ -1202,7 +1202,7 @@
      ],
      "answer": "Therefore when Jesus knew that the Pharisees heard",
      "audio": "chapt_15_o_td3",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristPair"
     },
     {
      "greek": "καὶ ἤκουσα φωνὴν ἐκ τοῦ οὐρανοῦ ὡς φωνὴν",
@@ -1214,7 +1214,7 @@
      ],
      "answer": "and I heard a voice from heaven like the sound of many waters",
      "audio": "chapt_15_o_td4",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "ὑδάτων πολλῶν"
     },
     {
@@ -1227,7 +1227,7 @@
      ],
      "answer": "And Mary remained with her about three months",
      "audio": "chapt_15_o_td5",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristPair"
     },
     {
      "greek": "καὶ πᾶς ὁ ὄχλος ἤρχετο πρὸς αὐτόν, καὶ",
@@ -1239,7 +1239,7 @@
      ],
      "answer": "and all the crowd came to him and he taught them",
      "audio": "chapt_15_o_td6",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "ἐδίδασκεν αὐτούς"
     },
     {
@@ -1252,7 +1252,7 @@
      ],
      "answer": "Yet he had one, a beloved son, he sent him last to them",
      "audio": "chapt_15_o_td7",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "ἔσχατον πρὸς αὐτοὺς"
     },
     {
@@ -1265,7 +1265,7 @@
      ],
      "answer": "and they heard a loud voice from heaven",
      "audio": "chapt_15_o_td8",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristPair"
     },
     {
      "greek": "Ἠκούσατε ... Ὀφθαλμὸν ἀντὶ ὀφθαλμοῦ καὶ",
@@ -1277,7 +1277,7 @@
      ],
      "answer": "You (pl) heard \"Eye for eye and tooth for tooth\"",
      "audio": "chapt_15_o_td9",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "ὀδόντα ἀντὶ ὀδόντος"
     },
     {
@@ -1290,7 +1290,7 @@
      ],
      "answer": "but according to his mercy he saved us",
      "audio": "chapt_15_o_td10",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristPair"
     },
     {
      "greek": "καὶ αὐτὸς ἐδίδασκεν ἐν ταῖς συναγωγαῖς αὐτῶν",
@@ -1302,7 +1302,7 @@
      ],
      "answer": "And he was teaching in their synagogues",
      "audio": "chapt_15_o_td11",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "imperfectPair"
     },
     {
      "greek": "οὐ γὰρ ἀπέστειλεν ὁ θεὸς τὸν υἱὸν εἰς τὸν",
@@ -1314,7 +1314,7 @@
      ],
      "answer": "For God did not send the son into the world to judge the world",
      "audio": "chapt_15_o_td12",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "κόσμον ἵνα κρίνῃ τὸν κόσμον"
     },
     {
@@ -1327,7 +1327,7 @@
      ],
      "answer": "You heard that I said to you, \"I go away and I will come to you\"",
      "audio": "chapt_15_o_td13",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "πρὸς ὑμᾶς"
     },
     {
@@ -1340,7 +1340,7 @@
      ],
      "answer": "Lord, I heard from many about this man",
      "audio": "chapt_15_o_td14",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "τούτου"
     },
     {
@@ -1353,7 +1353,7 @@
      ],
      "answer": "and they stayed with him that day",
      "audio": "chapt_15_o_td15",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristPair"
     },
     {
      "greek": "ἐγὼ πάντοτε ἐδίδαξα ἐν συναγωγῇ καὶ ἐν τῷ",
@@ -1365,7 +1365,7 @@
      ],
      "answer": "I always taught in synagogues and in the temple",
      "audio": "chapt_15_o_td16",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "ἱερῷ"
     },
     {
@@ -1378,7 +1378,7 @@
      ],
      "answer": "He sent his son, a propitiation for our sins",
      "audio": "chapt_15_o_td17",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "ἁμαρτιῶν ἡμῶν"
     },
     {
@@ -1391,7 +1391,7 @@
      ],
      "answer": "Children, it is the last hour, and just as you heard that anti-Christ comes",
      "audio": "chapt_15_o_td18",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "ὅτι ἀντίχριστος ἔρχεται"
     },
     {
@@ -1404,7 +1404,7 @@
      ],
      "answer": "for all things that I have heard from my father",
      "audio": "chapt_15_o_td19",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristPair"
     },
     {
      "greek": "ὅν ὁ θεὸς ἤγειρεν ἐκ νεκρῶν, οὗ ἡμεῖς μάρτυρές",
@@ -1416,7 +1416,7 @@
      ],
      "answer": "whom God raised from the dead, of which we are witnesses",
      "audio": "chapt_15_o_td20",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "ἐσμεν."
     },
     {
@@ -1429,7 +1429,7 @@
      ],
      "answer": "Therefore the sisters sent to him",
      "audio": "chapt_15_o_td21",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristPair"
     },
     {
      "greek": "Ἡμεῖς ἠκούσαμεν ἐκ τοῦ νόμου ὅτι ὁ Χριστὸς",
@@ -1441,7 +1441,7 @@
      ],
      "answer": "We heard from the law that the Christ remains forever",
      "audio": "chapt_15_o_td22",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "μένει εἰς τὸν αἰῶνα"
     },
     {
@@ -1454,7 +1454,7 @@
      ],
      "answer": "And I looked, and heard a voice of many angels around the throne",
      "audio": "chapt_15_o_td23",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "κύκλῳ τοῦ θρόνου"
     },
     {
@@ -1467,7 +1467,7 @@
      ],
      "answer": "I wrote to you in the letter",
      "audio": "chapt_15_o_td24",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristPair"
     },
     {
      "greek": "ὅτι παρὰ σοῦ ἐξῆλθον, καὶ ἐπίστευσαν ὅτι",
@@ -1479,7 +1479,7 @@
      ],
      "answer": "that I came forth from you and they believed that you sent me",
      "audio": "chapt_15_o_td25",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "σύ με ἀπέστειλας"
     },
     {
@@ -1492,7 +1492,7 @@
      ],
      "answer": "As you sent me into the world, I also sent them into the world",
      "audio": "chapt_15_o_td26",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "ἀπέστειλα αὐτοὺς εἰς τὸν κόσμον"
     },
     {
@@ -1505,7 +1505,7 @@
      ],
      "answer": "then Jesus sent the two disciples",
      "audio": "chapt_15_o_td27",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristPair"
     },
     {
      "greek": "ἴδε νῦν ἠκούσατε τὴν βλασφημίαν",
@@ -1517,7 +1517,7 @@
      ],
      "answer": "behold now you heard the blasphemy",
      "audio": "chapt_15_o_td28",
-     "hintRef": "aoristVsImperfect"
+     "hintRef": "aoristPair"
     },
     {
      "greek": "Πρὸς τὴν σκληροκαρδίαν ὑμῶν ἔγραψεν ὑμῖν",
@@ -1529,7 +1529,7 @@
      ],
      "answer": "Because of your hard heart he wrote this command to you",
      "audio": "chapt_15_o_td29",
-     "hintRef": "aoristVsImperfect",
+     "hintRef": "aoristPair",
      "greek2": "τὴν ἐντολὴν ταύτην"
     }
    ],
@@ -1549,14 +1549,15 @@
      "pronounceEach": true
     },
     "liveScore": true,
-    "hintRef": "aoristVsImperfect"
+    "hintRef": "aoristPair"
    },
    "_answer_note": "TWENTY-NINE items (0x70f65). The A/B/C key script yields all 29 and agrees with the BLUE option on ch15railwalk.pdf p14-p22. Second Greek lines from the positional pool at 0x116a34, which carries a LEADING blank so entry i+1 is item i.",
    "audioTiming": "afterGuess",
    "answerPolicy": {
     "advanceClass": "manualOnIncorrect",
     "attemptsPerItem": 1
-   }
+   },
+   "_hint_note": "5I-SPEC2 5.5, read from 15_1AOR.TBK 0x116f1e (D-46 class): the Hint button runs \"when it = 1 or it = 11 -> Hint2, else Hint1\". Hint1 is the aorist pair, Hint2 the imperfect pair -- the aorist-versus-imperfect contrast the drill is teaching, shown one side at a time against the verse on screen rather than as a four-page stack. Items 1 (Mar 4:2) and 11 (Luk 4:15) take the imperfect pair; the other 27 take the aorist pair. The drill-level ui.hintRef is the aorist pair, which is the else branch."
   },
   {
    "id": "c15_drill_vocab_gk_en",
@@ -2186,7 +2187,7 @@
         },
         {
          "greek": "ἐλύσαμεν",
-         "gloss": "we loosed",
+         "gloss": "We loosed",
          "audio": "chapt_15_o_luwa1p"
         }
        ]
@@ -2196,12 +2197,12 @@
        "cells": [
         {
          "greek": "ἔλυσας",
-         "gloss": "you loosed",
+         "gloss": "You loosed",
          "audio": "chapt_15_o_luwa2s"
         },
         {
          "greek": "ἐλύσατε",
-         "gloss": "you loosed",
+         "gloss": "You loosed",
          "audio": "chapt_15_o_luwa2p"
         }
        ]
@@ -2211,12 +2212,12 @@
        "cells": [
         {
          "greek": "ἔλυσε(ν)",
-         "gloss": "he/she/it loosed",
+         "gloss": "He/she/it loosed",
          "audio": "chapt_15_o_luwa3s"
         },
         {
          "greek": "ἔλυσαν",
-         "gloss": "they loosed",
+         "gloss": "They loosed",
          "audio": "chapt_15_o_luwa3p"
         }
        ]
@@ -2226,7 +2227,8 @@
       "label": "Say Paradigm",
       "audio": "chapt_15_o_luapar"
      },
-     "name": "First Aorist Active"
+     "name": "First Aorist Active",
+     "_note": "D-60 (5I-SPEC2 4.8, VERIFY-5I I-5): these glosses printed lower case while the Learn copy of the same paradigm capitalises them. The original appears to be inconsistent here; Nathanael ruled on 2026-08-30 that paradigm glosses capitalise regardless of the original, and the divergence is recorded rather than reproduced."
     },
     {
      "type": "paradigm",
@@ -2953,20 +2955,17 @@
   "firstAoristForms": {
    "charts": [
     {
-     "type": "paradigm",
-     "id": "hintFirstAoristForms",
+     "type": "greekRows",
+     "layout": "stemList",
      "title": "First Aorist Verb Forms",
-     "columns": [
-      "Present",
-      "First Aorist"
-     ],
      "rows": [
       {
-       "label": "I heard",
-       "cells": [
+       "greek": "ἀκούω",
+       "audio": "chapt_15_o_akop",
+       "gloss": "(I heard)",
+       "parts": [
         {
-         "greek": "ἀκούω",
-         "audio": "chapt_15_o_akop"
+         "text": "—"
         },
         {
          "greek": "ἤκουσα",
@@ -2975,11 +2974,12 @@
        ]
       },
       {
-       "label": "I sent",
-       "cells": [
+       "greek": "ἀποστέλλω",
+       "audio": "chapt_15_o_apop",
+       "gloss": "(I sent)",
+       "parts": [
         {
-         "greek": "ἀποστέλλω",
-         "audio": "chapt_15_o_apop"
+         "text": "—"
         },
         {
          "greek": "ἀπέστειλα",
@@ -2988,11 +2988,12 @@
        ]
       },
       {
-       "label": "I saw",
-       "cells": [
+       "greek": "βλέπω",
+       "audio": "chapt_15_o_blep",
+       "gloss": "(I saw)",
+       "parts": [
         {
-         "greek": "βλέπω",
-         "audio": "chapt_15_o_blep"
+         "text": "—"
         },
         {
          "greek": "ἔβλεψα",
@@ -3001,11 +3002,12 @@
        ]
       },
       {
-       "label": "I wrote",
-       "cells": [
+       "greek": "γράφω",
+       "audio": "chapt_15_o_grap",
+       "gloss": "(I wrote)",
+       "parts": [
         {
-         "greek": "γράφω",
-         "audio": "chapt_15_o_grap"
+         "text": "—"
         },
         {
          "greek": "ἔγραψα",
@@ -3014,11 +3016,12 @@
        ]
       },
       {
-       "label": "I taught",
-       "cells": [
+       "greek": "διδάσκω",
+       "audio": "chapt_15_o_didp",
+       "gloss": "(I taught)",
+       "parts": [
         {
-         "greek": "διδάσκω",
-         "audio": "chapt_15_o_didp"
+         "text": "—"
         },
         {
          "greek": "ἐδίδαξα",
@@ -3027,11 +3030,12 @@
        ]
       },
       {
-       "label": "I rose",
-       "cells": [
+       "greek": "ἐγείρω",
+       "audio": "chapt_15_o_egep",
+       "gloss": "(I rose)",
+       "parts": [
         {
-         "greek": "ἐγείρω",
-         "audio": "chapt_15_o_egep"
+         "text": "—"
         },
         {
          "greek": "ἤγειρα",
@@ -3040,11 +3044,12 @@
        ]
       },
       {
-       "label": "I judged",
-       "cells": [
+       "greek": "κρίνω",
+       "audio": "chapt_15_o_krip",
+       "gloss": "(I judged)",
+       "parts": [
         {
-         "greek": "κρίνω",
-         "audio": "chapt_15_o_krip"
+         "text": "—"
         },
         {
          "greek": "ἔκρινα",
@@ -3053,11 +3058,12 @@
        ]
       },
       {
-       "label": "I loosed",
-       "cells": [
+       "greek": "λύω",
+       "audio": "chapt_15_o_luwp",
+       "gloss": "(I loosed)",
+       "parts": [
         {
-         "greek": "λύω",
-         "audio": "chapt_15_o_luwp"
+         "text": "—"
         },
         {
          "greek": "ἔλυσα",
@@ -3066,11 +3072,12 @@
        ]
       },
       {
-       "label": "I remained",
-       "cells": [
+       "greek": "μένω",
+       "audio": "chapt_15_o_menp",
+       "gloss": "(I remained)",
+       "parts": [
         {
-         "greek": "μένω",
-         "audio": "chapt_15_o_menp"
+         "text": "—"
         },
         {
          "greek": "ἔμεινα",
@@ -3079,11 +3086,12 @@
        ]
       },
       {
-       "label": "I saved",
-       "cells": [
+       "greek": "σῴζω",
+       "audio": "chapt_15_o_swzp",
+       "gloss": "(I saved)",
+       "parts": [
         {
-         "greek": "σῴζω",
-         "audio": "chapt_15_o_swzp"
+         "text": "—"
         },
         {
          "greek": "ἔσωσα",
@@ -3094,7 +3102,7 @@
      ]
     }
    ],
-   "_note": "The Forms Drill hint (0xaf4ac) prints the whole verb list as a two-column present/aorist table."
+   "_note": "5I-SPEC2 4.7 (VERIFY-5I I-3): this hint shipped as a two-column paradigm with the English gloss as the ROW LABEL, so the gloss printed FIRST. The original prints the pair with the gloss LAST, and this chapter's own Learn topic 6 already does. Reshaped to that same stemList block -- present, dash, aorist, gloss -- with both Greek forms tapping their own clips. Chapter 14's secondAoristForms is reshaped identically in the same round. The Forms Drill hint (0xaf4ac) prints the whole verb list as a two-column present/aorist table."
   },
   "aoristVsImperfect": {
    "charts": [
@@ -3324,7 +3332,241 @@
     }
    ],
    "switch": "moreBack",
-   "_note": "DISCLOSURE 4.7, transcribed from the Translation Drill's OWN hint screens rather than assumed to be the Parsing Drill's: fields 0x11703e (Aorist Active + Aorist Middle) and 0x118df2 (Imperfect Active + Imperfect Middle/Passive). FOUR charts, so 4.2 Back/More as a centred pair -- the point of the hint is the AORIST-versus-IMPERFECT contrast while translating, which the Parsing Drill's hint does not show. The imperfect clips are chapter 12's, duplicated into this pack by the ISO."
+   "_note": "DISCLOSURE 4.7, transcribed from the Translation Drill's OWN hint screens rather than assumed to be the Parsing Drill's: fields 0x11703e (Aorist Active + Aorist Middle) and 0x118df2 (Imperfect Active + Imperfect Middle/Passive). FOUR charts, so 4.2 Back/More as a centred pair -- the point of the hint is the AORIST-versus-IMPERFECT contrast while translating, which the Parsing Drill's hint does not show. The imperfect clips are chapter 12's, duplicated into this pack by the ISO. RETIRED AS A TARGET at 5I-SPEC2 5.4: nothing references aoristVsImperfect once the per-item tables land. The four-chart bundle was the 5I reading of a hint that the TBK shows is CONDITIONAL, never a four-page stack; it is kept here as extraction provenance only."
+  },
+  "aoristPair": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "id": "hintTdAoristActive",
+     "title": "Aorist Active of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἔλυσα",
+         "gloss": "I loosed",
+         "audio": "chapt_15_o_luwa1s"
+        },
+        {
+         "greek": "ἐλύσαμεν",
+         "gloss": "We loosed",
+         "audio": "chapt_15_o_luwa1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἔλυσας",
+         "gloss": "You loosed",
+         "audio": "chapt_15_o_luwa2s"
+        },
+        {
+         "greek": "ἐλύσατε",
+         "gloss": "You loosed",
+         "audio": "chapt_15_o_luwa2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἔλυσε(ν)",
+         "gloss": "He/she/it loosed",
+         "audio": "chapt_15_o_luwa3s"
+        },
+        {
+         "greek": "ἔλυσαν",
+         "gloss": "They loosed",
+         "audio": "chapt_15_o_luwa3p"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "id": "hintTdAoristMiddle",
+     "title": "Aorist Middle of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἐλυσάμην",
+         "gloss": "I loosed\n(for myself)",
+         "audio": "chapt_15_o_luwm1s"
+        },
+        {
+         "greek": "ἐλυσάμεθα",
+         "gloss": "We loosed\n(for ourselves)",
+         "audio": "chapt_15_o_luwm1p"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἐλύσω",
+         "gloss": "You loosed\n(for yourself)",
+         "audio": "chapt_15_o_luwm2s"
+        },
+        {
+         "greek": "ἐλύσασθε",
+         "gloss": "You loosed\n(for yourselves)",
+         "audio": "chapt_15_o_luwm2p"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἐλύσατο",
+         "gloss": "He/she/it loosed\n(for himself/herself/itself)",
+         "audio": "chapt_15_o_luwm3s"
+        },
+        {
+         "greek": "ἐλύσαντο",
+         "gloss": "They loosed\n(for themselves)",
+         "audio": "chapt_15_o_luwm3p"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "_note": "5I-SPEC2 5.4/5.5, read from 15_1AOR.TBK 0x116f1e: the Translation Drill's Hint handler is conditional -- \"when it = 1 or it = 11 show Hint2, else show Hint1\". This is Hint1, the AORIST pair, and 27 of the 29 items open it."
+  },
+  "imperfectPair": {
+   "charts": [
+    {
+     "type": "paradigm",
+     "id": "hintTdImperfectActive",
+     "title": "Imperfect Active Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἔλυον",
+         "gloss": "I was loosing",
+         "audio": "chapt_15_l_as1"
+        },
+        {
+         "greek": "ἐλύομεν",
+         "gloss": "We were loosing",
+         "audio": "chapt_15_l_ap1"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἔλυες",
+         "gloss": "You were loosing",
+         "audio": "chapt_15_l_as2"
+        },
+        {
+         "greek": "ἐλύετε",
+         "gloss": "You were loosing",
+         "audio": "chapt_15_l_ap2"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἔλυε(ν)",
+         "gloss": "He/she/it was loosing",
+         "audio": "chapt_15_l_as3"
+        },
+        {
+         "greek": "ἔλυον",
+         "gloss": "They were loosing",
+         "audio": "chapt_15_l_ap3"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "paradigm",
+     "id": "hintTdImperfectMiddlePassive",
+     "title": "Imperfect Middle/Passive Indicative of λύω",
+     "columns": [
+      "Singular",
+      "Plural"
+     ],
+     "rows": [
+      {
+       "label": "1",
+       "cells": [
+        {
+         "greek": "ἐλυόμην",
+         "gloss": "I was being loosed",
+         "audio": "chapt_15_l_ms1"
+        },
+        {
+         "greek": "ἐλυόμεθα",
+         "gloss": "We were being loosed",
+         "audio": "chapt_15_l_mp1"
+        }
+       ]
+      },
+      {
+       "label": "2",
+       "cells": [
+        {
+         "greek": "ἐλύου",
+         "gloss": "You were being loosed",
+         "audio": "chapt_15_l_ms2"
+        },
+        {
+         "greek": "ἐλύεσθε",
+         "gloss": "You were being loosed",
+         "audio": "chapt_15_l_mp2"
+        }
+       ]
+      },
+      {
+       "label": "3",
+       "cells": [
+        {
+         "greek": "ἐλύετο",
+         "gloss": "He/she/it was being loosed",
+         "audio": "chapt_15_l_ms3"
+        },
+        {
+         "greek": "ἐλύοντο",
+         "gloss": "They were being loosed",
+         "audio": "chapt_15_l_mp3"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "_note": "5I-SPEC2 5.4/5.5, read from 15_1AOR.TBK 0x116f1e: Hint2, the IMPERFECT pair, shown on items 1 (Mar 4:2) and 11 (Luk 4:15) and on no others. Note for the record: item 6 (Mar 2:13) is an all-imperfect verse and item 7 (Mar 12:6) is mixed, yet the original shows the AORIST charts for both. Transcribed, not \"fixed\"."
   }
  }
 }

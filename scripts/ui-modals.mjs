@@ -21,7 +21,7 @@
 // zero: range there means the modal did not fit the screen.
 
 import { chromium } from 'playwright-core';
-import { mkdirSync, writeFileSync, readdirSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readdirSync, readFileSync } from 'node:fs';
 
 const args = Object.fromEntries(process.argv.slice(2)
   .filter(a => a.startsWith('--'))
@@ -372,7 +372,12 @@ const SURFACES = [
   ['ch13-klb-popup-velar', chartTrigger('chapt_13', 'c13_learn_concepts', 1, 'velar')],
   ['ch13-klb-popup-dental', chartTrigger('chapt_13', 'c13_learn_concepts', 1, 'dental')],
   ['ch13-declining-hint', hint('chapt_13', 'c13_drill_declining', false)],
-  ['ch13-pas-declining-hint', hint('chapt_13', 'c13_drill_pas_declining', false)],
+  // 5I-SPEC2 §4.1: the pas hint PAGES now -- Singular then Plural, the ch11
+  // model -- where 5I shipped one stacked six-column chart. Two surfaces, and
+  // each carries the D-58 Say Paradigm button beside its toggle, so both take
+  // the say/toggle order assertion.
+  ['ch13-pas-declining-hint-singular', hint('chapt_13', 'c13_drill_pas_declining', false, 0), true, true],
+  ['ch13-pas-declining-hint-plural', hint('chapt_13', 'c13_drill_pas_declining', false, 1), true, true],
   ['ch13-translation-hint', hint('chapt_13', 'c13_drill_translation', false)],
   ['ch13-speller-greek-keyboard', spellerKeyboard('chapt_13', 'c13_ex_speller')],
   ['ch13-verse-speller-greek-keyboard', spellerKeyboard('chapt_13', 'c13_ex_scripture_speller')],
@@ -406,24 +411,39 @@ const SURFACES = [
   ['ch15-parsing-hint-active', hint('chapt_15', 'c15_drill_parsing', false, 0), true, false],
   ['ch15-parsing-hint-middle', hint('chapt_15', 'c15_drill_parsing', false, 1), true, false],
   ['ch15-forms-hint', hint('chapt_15', 'c15_drill_forms', false)],
-  // FOUR charts, the deepest bundle in the app: aorist active, aorist middle,
-  // then the two imperfects the drill is contrasting them against.
-  ['ch15-translation-hint-s1-aorist-active', hintState('chapt_15', 'c15_drill_translation', 0), true, false],
-  ['ch15-translation-hint-s2-aorist-middle', hintState('chapt_15', 'c15_drill_translation', 1), true, false],
-  ['ch15-translation-hint-s3-imperfect-active', hintState('chapt_15', 'c15_drill_translation', 2), true, false],
-  ['ch15-translation-hint-s4-imperfect-mp', hintState('chapt_15', 'c15_drill_translation', 3), true, false],
+  // 5I-SPEC2 §5.5: NOT a four-chart bundle. 15_1AOR.TBK 0x116f1e routes items 1
+  // and 11 to the IMPERFECT pair and every other item to the AORIST pair, so
+  // the four charts are two two-chart hints and which one opens depends on the
+  // verse on screen. Each pair is two states, and both pairs are reached
+  // through the drill's own Next control at a named prompt -- state 4 no longer
+  // exists to step to.
+  // (Neither pair carries a say-all recording, so the toggle centres alone on
+  // the pinned line per §4.5 and `expectHintSay` stays false.)
+  ['ch15-translation-hint-aorist-active',
+    hintAtPrompt('chapt_15', 'c15_drill_translation', 'καὶ ἀπέστειλεν αὐτὸν εἰς οἶκον αὐτοῦ', 29, 0), true, false],
+  ['ch15-translation-hint-aorist-middle',
+    hintAtPrompt('chapt_15', 'c15_drill_translation', 'καὶ ἀπέστειλεν αὐτὸν εἰς οἶκον αὐτοῦ', 29, 1), true, false],
+  ['ch15-translation-hint-imperfect-active',
+    hintAtPrompt('chapt_15', 'c15_drill_translation', 'καὶ ἐδίδασκεν αὐτοὺς ἐν παραβολαῖς πολλά καὶ ἔλεγεν αὐτοῖς', 29, 0), true, false],
+  ['ch15-translation-hint-imperfect-mp',
+    hintAtPrompt('chapt_15', 'c15_drill_translation', 'καὶ ἐδίδασκεν αὐτοὺς ἐν παραβολαῖς πολλά καὶ ἔλεγεν αὐτοῖς', 29, 1), true, false],
   ['ch15-speller-greek-keyboard', spellerKeyboard('chapt_15', 'c15_ex_speller_forms')],
   ['ch15-verse-speller-greek-keyboard', spellerKeyboard('chapt_15', 'c15_ex_scripture_speller')],
-  // Chapter 16: a three-chart bundle on both the parsing and translation
-  // drills, and a two-half stem table on the forms drill -- the widest chart
-  // this cohort puts inside a dialog.
-  ['ch16-parsing-hint-s1-first-aorist', hintState('chapt_16', 'c16_drill_parsing', 0), true, false],
-  ['ch16-parsing-hint-s2-future', hintState('chapt_16', 'c16_drill_parsing', 1), true, false],
-  ['ch16-parsing-hint-s3-second-aorist', hintState('chapt_16', 'c16_drill_parsing', 2), true, false],
-  ['ch16-translation-hint-s1-first-aorist', hintState('chapt_16', 'c16_drill_translation', 0), true, false],
-  ['ch16-translation-hint-s3-second-aorist', hintState('chapt_16', 'c16_drill_translation', 2), true, false],
-  ['ch16-forms-hint-half1', hint('chapt_16', 'c16_drill_forms', false, 0), true, false],
-  ['ch16-forms-hint-half2', hint('chapt_16', 'c16_drill_forms', false, 1), true, false],
+  // 5I-SPEC2 §5.2/§5.3/§4.5. The three-chart bundle is gone: 16_FAPAS.TBK
+  // 0xb5e30 routes the Parsing Drill's six grapho forms to a SINGLE grapho
+  // chart and everything else to the luo pair, and 0xc08a7 shows the
+  // Translation Drill the luo pair unconditionally -- the grapho chart never
+  // appears on that drill at all. And the Form Drill's stem table is ONE list
+  // under a frozen header (§4.9), not two halves.
+  ['ch16-parsing-hint-luw-first-aorist',
+    hintAtPrompt('chapt_16', 'c16_drill_parsing', 'λυθήσονται', 18, 0), true, false],
+  ['ch16-parsing-hint-luw-future',
+    hintAtPrompt('chapt_16', 'c16_drill_parsing', 'λυθήσονται', 18, 1), true, false],
+  ['ch16-parsing-hint-grapho',
+    hintAtPrompt('chapt_16', 'c16_drill_parsing', 'ἐγράφημεν', 18)],
+  ['ch16-translation-hint-luw-first-aorist', hint('chapt_16', 'c16_drill_translation', false, 0), true, false],
+  ['ch16-translation-hint-luw-future', hint('chapt_16', 'c16_drill_translation', false, 1), true, false],
+  ['ch16-forms-hint-stems-one-list', hint('chapt_16', 'c16_drill_forms', false)],
   ['ch16-speller-greek-keyboard', spellerKeyboard('chapt_16', 'c16_ex_speller_forms')],
   ['ch16-verse-speller-greek-keyboard', spellerKeyboard('chapt_16', 'c16_ex_scripture_speller')],
   ['settings-clear-audio-confirm', async () => {
@@ -575,6 +595,138 @@ for (const { name, width, height } of VIEWPORTS) {
       expectHintControls, expectHintSay, atRest: rest, afterContentScroll: scrolled, ok
     });
   }
+}
+
+// ===========================================================================
+// 5I-SPEC2 §3.2 — THE HALF-SCREEN MODAL GUARD.
+//
+// Nathanael's ask in as many words: "add a guard to ensure THIS DOES NOT REVERT
+// AGAIN". The bug is a modal that opens at roughly half height after an iOS
+// SCREENSHOT — with no modal open at the time, on a page that has no modal —
+// and it is fixed by killing and reopening the app, which is nothing but a
+// fresh measurement. On iOS a screenshot can background and foreground a
+// standalone PWA; the app is handed a stale, shrunken viewport reading, latches
+// it into `--modal-vh`, and every later modal is sized from it.
+//
+// THE SCRIPTABLE PROXY. Headless Chromium cannot be screenshotted by iOS, but
+// every ingredient of the failure can be forged, and forging them is a stricter
+// test than the device would be:
+//   * `visualViewport.height` AND `window.innerHeight` are both overridden to
+//     45% of the real height. Both, deliberately: the pre-existing W4.2 clamp
+//     compares one against the other, and in a standalone PWA — the only way
+//     this app is used — the keyboard shrinks both, so a stale reading agrees
+//     with itself and that clamp sees nothing wrong. This is the exact hole the
+//     5I regression came through.
+//   * an ordinary `resize` is delivered FIRST, before any foreground event,
+//     because iOS is free to do that and a fix whose reference had already
+//     swallowed the bad number would be no fix at all;
+//   * then the foreground events a screenshot really does deliver.
+//
+// THREE ASSERTIONS, in order:
+//   G1 the proxy is REAL — with the fakes installed and a plain resize, the
+//      published height does drop. If this stops failing, the proxy has stopped
+//      reproducing anything and the two assertions under it are worthless.
+//   G2 the RESUME CLAMP refuses it — after the foreground events, `--modal-vh`
+//      is back at the true height even though the forged readings are still in
+//      place, and the open modal is full height again.
+//   G3 the SETTLE CHAIN finds the truth — with the fakes removed and NO further
+//      event fired, the published height stays correct on its own. One rAF, the
+//      pre-5I behaviour, fires long before the viewport settles; this is what
+//      makes the app re-ask instead of latching whatever it saw first.
+// Plus G4, a source assertion: the constants and the DO-NOT-TRIM comment block
+// are still in src/lib/viewport.js, so a refactor cannot quietly remove the
+// machinery while leaving a passing behavioural test that no longer tests it.
+{
+  const guard = [];
+  const gcheck = (label, ok, detail = '') => {
+    guard.push({ label, ok, detail });
+    if (!ok) bad += 1;
+    console.log(`${ok ? 'OK  ' : 'BAD '} §3.2 guard  ${label}${detail ? `  ${detail}` : ''}`);
+  };
+
+  // A TALL modal, deliberately: the symptom being guarded against is a modal
+  // at half height, and only a dialog whose content exceeds the available
+  // height has its box governed by `--modal-vh` at all. Chapter 16's Passive
+  // Stems hint is fifteen rows and is the tallest in the app.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await go('#/activity/chapt_16/c16_drill_forms');
+  await page.locator('.card').getByRole('button', { name: 'Hint', exact: true }).click();
+  await page.waitForTimeout(250);
+
+  const readState = () => page.evaluate(() => {
+    const modal = document.querySelector('.modal-overlay .modal');
+    return {
+      modalVh: parseInt(document.documentElement.style.getPropertyValue('--modal-vh'), 10) || 0,
+      modalHeight: modal ? Math.round(modal.getBoundingClientRect().height) : 0
+    };
+  });
+
+  const baseline = await readState();
+  gcheck('G0 the guard is pointed at a modal tall enough to be governed by --modal-vh',
+    baseline.modalVh > 0 && baseline.modalHeight > baseline.modalVh * 0.6,
+    `--modal-vh ${baseline.modalVh}px, modal ${baseline.modalHeight}px`);
+
+  // Forge the stale reading and deliver it the way iOS would: as a resize, with
+  // no foreground event anywhere near it.
+  await page.evaluate(() => {
+    window.__fakeHeight = Math.round(window.innerHeight * 0.45);
+    Object.defineProperty(window, 'innerHeight', { configurable: true, get: () => window.__fakeHeight });
+    if (window.visualViewport) {
+      Object.defineProperty(window.visualViewport, 'height', { configurable: true, get: () => window.__fakeHeight });
+    }
+    if (window.visualViewport) window.visualViewport.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(new Event('resize'));
+  });
+  await page.waitForTimeout(300);
+  const phantom = await readState();
+  gcheck('G1 the forged stale viewport really does shrink the published height and the modal with it',
+    phantom.modalVh > 0 && phantom.modalVh < baseline.modalVh * 0.75
+      && phantom.modalHeight < baseline.modalHeight * 0.75,
+    `--modal-vh ${baseline.modalVh} -> ${phantom.modalVh}px, modal ${baseline.modalHeight} -> ${phantom.modalHeight}px`);
+
+  // Now the screenshot's own return path. The forged readings STAY in place:
+  // what is being tested is that the app refuses them, not that it happens to
+  // measure after they are gone.
+  await page.evaluate(() => {
+    window.dispatchEvent(new Event('focus'));
+    document.dispatchEvent(new Event('visibilitychange'));
+    window.dispatchEvent(new Event('pageshow'));
+  });
+  await page.waitForTimeout(200);
+  const resumed = await readState();
+  gcheck('G2 the resume clamp refuses the phantom and the modal is full height again',
+    resumed.modalVh >= baseline.modalVh - 2
+      && resumed.modalHeight >= baseline.modalHeight - 2,
+    `--modal-vh ${resumed.modalVh}px (baseline ${baseline.modalVh}px), modal ${resumed.modalHeight}px (baseline ${baseline.modalHeight}px)`);
+
+  // THE SETTLE CHAIN, isolated. Mid-resume, and with NO event to announce it,
+  // the viewport becomes a real, plausible, DIFFERENT height. Only a re-measure
+  // can find that: the single rAF the pre-5I code scheduled fired long ago, and
+  // the value on screen is the clamp's substitute rather than a reading. If the
+  // published height follows the viewport to its new value, something looked
+  // again.
+  await page.evaluate(() => { window.__fakeHeight = 800; });
+  await page.waitForTimeout(500);
+  const settled = await readState();
+  gcheck('G3 the settle chain re-measures after the resume, with no further event',
+    settled.modalVh === 800,
+    `--modal-vh ${settled.modalVh}px, expected 800px (modal ${settled.modalHeight}px)`);
+  // Hand the page its real viewport back before anything else runs.
+  await page.evaluate(() => {
+    delete window.innerHeight;
+    if (window.visualViewport) delete window.visualViewport.height;
+    window.dispatchEvent(new Event('resize'));
+  });
+  await page.waitForTimeout(200);
+
+  const source = readFileSync('src/lib/viewport.js', 'utf8');
+  const marks = ['5I-SPEC2 §3.2', 'DO NOT TRIM THIS BLOCK', 'RESUME_WINDOW_MS',
+    'RESUME_SETTLE_MS', 'SHRINK_CONFIRM_MS', 'lastGoodHeight'];
+  const missing = marks.filter(mark => !source.includes(mark));
+  gcheck('G4 the clamp and its DO-NOT-TRIM block are still in src/lib/viewport.js',
+    missing.length === 0, missing.length ? `missing ${missing.join(', ')}` : '');
+
+  report.push({ guard: '5I-SPEC2 §3.2 screenshot path', baseline, phantom, resumed, settled, checks: guard });
 }
 
 writeFileSync(`${OUT}/modal-report.json`, JSON.stringify(report, null, 1));
