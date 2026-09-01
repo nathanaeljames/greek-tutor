@@ -114,16 +114,13 @@ header in the original?** Header → C6. No header → C5.
    εἰμί) are in-text links and take this same green underlined style;
    they were missed by the R1 conversion and no rule ever ratified
    them blue.
-3. **In-chart triggers (C3)** (AMENDED 2026-08-31, VERIFY-5I-RESPONSE
-   item 9, superseding the keep-appearance rule): ENGLISH in-chart hot
-   text — labels, glosses, headers that open a modal — renders GREEN
-   UNDERLINED like any C3 link, and may keep bold. Only GREEK hot text
-   keeps the blue Greek-tap appearance, because there blue already
-   means "tappable" and green would collide with the audio convention.
-   The one surface shipped and device-accepted under the old rule is
-   ch13's Key Letter Box (six English labels around one grid); its
-   restyle to green underline rides the app-wide §3.11 sweep and is a
-   VERIFY eye item, not a silent change.
+3. **In-chart triggers (C3)**: keep their existing appearance — the
+   gloss itself is the hot text; no green underline (it would collide
+   with the blue Greek-tap convention). REAFFIRMED 2026-08-31 by
+   Nathanael against a proposed app-wide green-underline rule: this
+   rule OVERRIDES §3.2 for chart cells and chart labels. The ch13 Key
+   Letter Box (six labels around a grid) is an in-chart trigger and
+   stays as shipped.
 4. **All other clickable blue** — audio taps, Greek forms, chart
    headers — stays blue, formatted as it currently appears.
 5. **C2 accordion titles** (AMENDED 2026-08-17, inverting the
@@ -153,16 +150,17 @@ header in the original?** Header → C6. No header → C5.
    into C1's placement rules.
 10. **Anything with a scroll bar in the original scrolls in the port**
    (ch1 bibliography, ch1 letters chart).
-11. **ALL non-button text that opens a modal or popup is green
-   underlined** (RATIFIED 2026-08-31, VERIFY-5I-RESPONSE item 9),
-   whatever block type carries it — paragraph links, list labels,
-   chart labels, greekRows labels, formula-line words. Bold may be
-   kept. Greek hot text is the §3.3 exception (blue Greek-tap
-   appearance). This is an APP-WIDE CHECKLIST ITEM for the next
-   implementation pass: sweep every modal/popup trigger in every
-   chapter and bring it to this style. Found instance that ratified
-   the rule: ch15 Ending Transformations' Palatals / Labials / Dentals
-   labels, which shipped without the underline.
+11. **A prose rule list is TEXT, not a chart** (classification
+   clarified 2026-08-31, VERIFY-5I-RESPONSE item 9 + ch15railwalk p8):
+   hot words at the head of rule lines in running teaching text —
+   ch15 Ending Transformations' Palatals / Labials / Dentals, blue in
+   the original — are C3 IN-TEXT links under §3.2 and render GREEN
+   UNDERLINED (bold may stay). A `greekRows` block that lays out a
+   page's prose does not make its labels in-chart triggers; §3.3
+   applies to cells and labels of an actual chart (paradigm, grid,
+   table). The 5I data tagged this block §3.3 in error. The next
+   implementation pass sweeps every modal/popup trigger app-wide for
+   §3.2 compliance; §3.3 surfaces are exempt from that sweep.
 12. **The note marker** (RATIFIED 2026-08-31, VERIFY-5I-RESPONSE
    item 8 / I-2): where a word is an audio tap AND carries a note or
    modal of its own, the word keeps its clip and a small circled

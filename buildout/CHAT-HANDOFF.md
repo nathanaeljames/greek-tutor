@@ -15,7 +15,7 @@ one learner: Nathanael's sister-in-law, iPhone-only, unreliable rural
 internet. Full license from the author. Secondary goal: portfolio
 piece. Nathanael goes by "Fable" when addressing Claude (chat).
 
-## Live state (2026-08-31 — COHORT 5I FEEDBACK ROUND: 5I-SPEC2 ISSUED)
+## Live state (2026-08-31 — COHORT 5I FEEDBACK ROUND: 5I-SPEC2 ISSUED, TBK-CONFIRMED)
 
 Cohort 5I (chapters 13-16: Third Declension Nouns, Second Aorist,
 First Aorist, Aorist/Future Passive) is BUILT but NOT CLOSED. 5I-SPEC1
@@ -31,15 +31,21 @@ now WRITTEN CONTRACTS (DISCLOSURE-RULES §3.3 amended, §3.11-3.12,
 scoped Review-only; N-3 resolved; D-58..D-61 logged). **5I-SPEC2 is
 the closure round: DUAL MODEL (Sol + Opus) per the standing
 scheduling rule for patch/feedback rounds.** Head at spec issue:
-`a168c18`. Cohort 5H tally stands: Sol 4, Opus 13, Ties 0; 5I-SPEC1
+`869b4d1` (interim spec; the TBK-confirmed final replaces it). Cohort 5H tally stands: Sol 4, Opus 13, Ties 0; 5I-SPEC1
 graded Opus-win, no XPATCH.
 
-Open against 5I close: the derived conditional-hint mappings in
-5I-SPEC2 §5 need TBK confirmation next ISO session (PIPELINE-INSIGHTS
-"Conditional-hint extraction"); every rule-4 data edit 5I-SPEC2
-authorizes must be absorbed into assemble_ch13..16.py the same
-cohort; VERIFY-5I item B1's three-word wiring ships on Nathanael's
-fallback ruling pending the same TBK read.
+The ISO was mounted 2026-08-31 and every drill Hint handler in
+13_3DECL / 14_2AOR / 15_1AOR / 16_FAPAS was decoded (recipe in
+PIPELINE-INSIGHTS, "Conditional-hint extraction"). Results: ch13
+Declining and Translation routing confirmed; ch13 πᾶς, all of ch14,
+ch15 Parsing and ch16 Form/Translation are UNCONDITIONAL (positive
+findings); ch15 Translation varies on items 1 and 11 only; ch16
+Parsing varies on items 5, 6, 9, 12, 17, 18; ch16 Translation's hint
+is the λύω pair alone. VERIFY-5I B1's three Introduction taps
+dispatch m_pasmns / m_pasfns / m_pasnns; ch16's ἐγενόμην dispatches
+p_ginm. 5I-SPEC2 §5 carries the read tables — nothing in the spec is
+provisional. Open against 5I close: absorption of every rule-4 edit
+5I-SPEC2 authorizes into assemble_ch13..16.py the same cohort.
 
 New canon from 5H (rules live in their own documents; this is the
 index):
@@ -87,9 +93,14 @@ DISCLOSURE-RULES and the logs — this is the index):
   §-cited in every spec): in a worked example only the resulting
   Greek form is the tap (`greekTap`); `tapUnit` is for a pure
   morpheme equation with no printed result form.
-- **All non-button modal triggers are green underlined** (§3.11);
-  the circled note-marker is the standard for audio-tap-plus-note
-  words (§3.12, D-59).
+- **In-chart triggers keep their appearance (§3.3 reaffirmed);
+  prose rule lines are TEXT and take §3.2 green underline** (§3.11
+  classification note); the circled note-marker is the standard for
+  audio-tap-plus-note words (§3.12, D-59).
+- **A multi-chart hint is decoded, not derived** (PIPELINE-INSIGHTS,
+  Conditional-hint extraction): the `get WordCounter / conditions /
+  when it = n` handler is readable in every TBK; 5I's linguistic
+  derivation was wrong in two of three drills.
 - **Long single lists in modals scroll under a frozen header row**
   (§4.9); multi-chart bundles still page.
 - **Bible verses are continuous text everywhere** (§4.10; N-3
@@ -288,17 +299,18 @@ files carry only what a new chat needs.
 
 - **Three deliverables per spec.** Every spec produces BUILD, RESULTS
   AND its VERIFY document in the same round, authored by the
-  implementer. AMENDED 2026-08-30 (ratified during 5I; first delivered
-  then, committed now): the PREVIOUS-RESPONSE CHECKLIST belongs on a
-  CONTINUATION round's VERIFY only — every ask from the last VERIFY
-  response, one or two lines each, as boxes Nathanael ticks by LOOKING
-  rather than assuming, plus a route line per row. A NEW COHORT'S
-  FIRST VERIFY carries no checklist (the previous cohort closed), and
-  rulings Nathanael made during a cohort's DATA production were
-  settled in the pipeline chat and are NOT re-asked as device checks.
-  5I-SPEC1's VERIFY got both wrong. After the checklist, the document
-  carries forward any item of the previous VERIFY the response did not
-  mark resolved, then the new items.
+  implementer. AMENDED 2026-08-31 (premise corrected by Nathanael):
+  a CONTINUATION round's VERIFY opens with a PREVIOUS-RESPONSE
+  CHECKLIST — every ask from the last VERIFY response, one or two
+  lines each, as boxes Nathanael ticks by LOOKING rather than
+  assuming, plus a route line per row — then carries forward any
+  item of the previous VERIFY the response did not mark resolved,
+  then the new items. A NEW COHORT'S FIRST VERIFY assumes every open
+  item of the previous cohort was closed and RE-LISTS NONE OF THEM.
+  It MAY open with a short DATA-RULING CHECKLIST of the current
+  cohort's own data-production rulings as device checks (VERIFY-5I
+  §A did exactly this and was right to; its only fault was calling
+  those four rulings a "previous-response" checklist).
 - **No airplane-mode items in VERIFY documents.** The scripted offline
   walk during implementation testing suffices; all later testing is
   assumed offline and Nathanael reports what does not play.

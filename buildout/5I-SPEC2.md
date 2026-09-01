@@ -1,8 +1,9 @@
 # 5I-SPEC2.md — cohort 5I feedback round (chapters 13-16)
 
 Issued by the chat pipeline (Fable), 2026-08-31, from
-VERIFY-5I-RESPONSE (Nathanael's device pass, 2026-08-30). Base:
-repo HEAD `a168c18`.
+VERIFY-5I-RESPONSE (Nathanael's device pass, 2026-08-30). FINAL,
+TBK-confirmed 2026-08-31 with the ISO mounted; supersedes the interim
+spec committed at `869b4d1`. Base: repo HEAD `869b4d1`.
 
 **DUAL MODEL.** Per the standing scheduling rule, this
 patch/feedback round runs on BOTH implementers (Sol/Codex and
@@ -11,7 +12,7 @@ GRADER-PROMPT.md follows.
 
 **Read first, in this order:** this spec; `DISCLOSURE-RULES.md` at
 the commit that carries this spec (it gains §3.11, §3.12, §4.8-4.10
-and amendments to §3.3, §4.6, §4.7 in the same commit — every one of
+and amendments to §4.6, §4.7 in the same commit; §3.3 is REAFFIRMED — every one of
 them is load-bearing here); `VERIFY-5I.md` + `VERIFY-5I-ADDENDUM.md`
 for what this round answers; `CHAT-HANDOFF.md` for the process rules.
 
@@ -88,22 +89,22 @@ it; only the RENDER joins.
 
 ### 3.2 The half-screen modal regression (VERIFY-5I-RESPONSE item 4)
 
-The half-page modal bug is back. Nathanael's observation, which is
-diagnostic: it regresses AFTER TAKING A SCREENSHOT, even when no
-modal is open, even on a page with no modal. On iOS a screenshot can
-background/foreground the PWA, which is exactly the
-resume-drops-resize path `src/lib/viewport.js` documents. Tasks:
+The half-page modal bug is back. NOT a code revert: `src/lib/viewport.js`
+is byte-identical to `6a4369c` (verified by the pipeline; the 5I
+`app.css` changes are typography only). It is the clamp's known-open
+device soak (CHAT-HANDOFF "Known open questions") failing on a
+trigger the clamp never covered. Nathanael's observation is
+diagnostic: it regresses AFTER TAKING A SCREENSHOT, even with no modal
+open, even on a page with no modal — on iOS a screenshot can
+background/foreground the PWA, exactly the resume-drops-resize path
+the file documents. Tasks:
 
-1. Determine whether the 5I shared-component changes reverted or
-   bypassed any part of the viewport clamp (diff `viewport.js` and
-   its consumers against `6a4369c` and read the 5I-SPEC1 build diff).
-   Report the finding either way.
-2. Make the clamp survive the screenshot path: re-measure on
-   `visibilitychange`/`pageshow`/foregrounding, and REJECT a phantom
-   shrunken height when no editable element is focused (the file's
-   own stated principle — verify the trigger list actually covers
-   this case and add what is missing).
-3. GUARD AGAINST RE-REGRESSION, which is Nathanael's explicit ask:
+1. Make the clamp survive the screenshot path: re-measure on
+   `visibilitychange` / `pageshow` / foregrounding, and REJECT a
+   phantom shrunken height when no editable element is focused (the
+   file's own stated principle — verify the trigger list actually
+   covers this case and add what is missing).
+2. GUARD AGAINST RE-REGRESSION, which is Nathanael's explicit ask:
    add an automated assertion to the ui harness that drives the
    resume path (or the closest scriptable proxy) and asserts modal
    height; and put a loud comment block on the clamp naming this
@@ -111,15 +112,20 @@ resume-drops-resize path `src/lib/viewport.js` documents. Tasks:
    proxy genuinely cannot reproduce the trigger, say so in RESULTS
    and the device soak in VERIFY carries it.
 
-### 3.3 Green-underline sweep support (§3.11) and the note marker (§3.12)
+### 3.3 Green-underline (§3.2) sweep support and the note marker (§3.12)
 
-Whatever component changes are needed so that EVERY non-button modal
-trigger can render green underlined (bold preserved) — including
-`greekRows` labels (ch15's Palatals/Labials/Dentals) and formula-line
-words. The app-wide sweep itself is §6.1. The circled note-marker
-(ch14 εἶδον, D-59) is already shipped; confirm it takes §3.11
-styling and codify nothing else — it is now the standard, not a
-one-off.
+Nathanael's ruling on item 9: DISCLOSURE §3.3 STANDS — in-chart
+triggers keep their appearance, and that overrides §3.2 for chart
+cells and labels. The ch15 Ending Transformations Palatals / Labials
+/ Dentals are NOT in-chart: the railwalk (ch15railwalk.pdf p8) shows
+prose rule lines with blue hot words, so they are C3 in-text links
+under §3.2 and should have shipped green underlined (new §3.11
+records the classification). Whatever component change lets a
+`greekRows` row LABEL with a `popupRef` render green underlined
+(bold kept) when the block is prose-layout, without touching actual
+chart triggers. The app-wide sweep is §6.1. The circled note-marker
+(ch14 εἶδον, D-59) is already shipped; confirm it takes §3.2 styling
+and codify nothing else — it is now the standard.
 
 ### 3.4 Frozen header row in long-list modals (§4.9)
 
@@ -173,20 +179,19 @@ The Review copy (`qrPas`) is CORRECT AS SHIPPED — do not touch it.
 - The corrected πάσαις cell (D-55 precedent) carries over unchanged
   into the split charts.
 
-### 4.2 ch13 — πᾶς, πᾶσα, πᾶν tap independently (item 3; B1)
+### 4.2 ch13 — πᾶς, πᾶσα, πᾶν tap independently (item 3; B1) — TBK-CONFIRMED
 
-Learn Third Declension Nouns → Introduction. Replace the single
-phrase mapping `{"πᾶς, πᾶσα, πᾶν": "chapt_13_m_voc5"}` with three
-word mappings:
+Learn Third Declension Nouns → Introduction. The original page
+carries three WordSelection buttons (13_3DECL.TBK 0x21c0b, 0x21ce9,
+0x21de4). Replace the single phrase mapping
+`{"πᾶς, πᾶσα, πᾶν": "chapt_13_m_voc5"}` with three word mappings:
 `πᾶς → chapt_13_m_pasmns`, `πᾶσα → chapt_13_m_pasfns`,
-`πᾶν → chapt_13_m_pasnas` (Nathanael's ruled fallback; the clips are
-the chart's own cells and sound identical to the citation forms).
-Commas and spaces stay ink. Add a `_note`: PROVISIONAL wiring per
-VERIFY-5I-RESPONSE B1; the pipeline confirms the original's dispatch
-from the TBK next ISO session. Update the topic's `_audio_note` to
-record that `m_voc5` speaks πᾶς alone (the B1 listen result), and
-fix the chapter `_audioVerify` string that still asks for a listen
-on the nonexistent "m_pas" — it should name `m_voc5` and carry B1's
+`πᾶν → chapt_13_m_pasnns` (nominative neuter — the original's own
+dispatch, not the `pasnas` fallback). Commas and spaces stay ink.
+Update the topic's `_audio_note` to record that `m_voc5` speaks πᾶς
+alone (the B1 listen result) and the three-button dispatch, and fix
+the chapter `_audioVerify` string that still asks for a listen on
+the nonexistent "m_pas" — it should name `m_voc5` and carry B1's
 outcome.
 
 ### 4.3 ch14 + ch16 — tap boundaries in worked examples (item 6)
@@ -202,12 +207,16 @@ The 5G-SPEC3 canon binds: only the resulting Greek form is the tap.
   stays).
 - ch16 Ending Transformations (after the §4.4 merge): the five
   result forms tap — ἐδιώχθην → `chapt_16_p_diwa`, ἐλείφθην →
-  `chapt_16_p_leia`, ἐγράφην → `chapt_16_p_gra1s`, ἐπείσθην →
+  `chapt_16_p_leia`, ἐγράφην → `chapt_16_p_graa` (the page's own dispatch; not the paradigm cell), ἐπείσθην →
   `chapt_16_p_peia`, ἐδοξάσθην → `chapt_16_p_doca`. These sit in
   `note` strings on `greekRows` rows today; if the row note cannot
   carry a word tap, extend the shape minimally (e.g. a
   `noteTap: {word, audio}` key) and report the contract addition.
-  The construction morphemes (`διωκ + θη =` …) stay ink.
+  The construction morphemes (`διωκ + θη =` …) stay ink. For the
+  record: the original page has buttons on ἐλείφθην and ἐγράφην only
+  and the Consonant Shifts page has none; all five tap in the port
+  under the standing all-Greek-taps rule because all five clips
+  exist.
 
 ### 4.4 ch16 — one Ending Transformations chart (item 7; D-61)
 
@@ -228,7 +237,8 @@ the rail drops by one; the toc/progress counts must follow.
 ### 4.6 ch16 — ἐγενόμην taps (item 10)
 
 Deponent topic: add `ἐγενόμην → chapt_16_p_ginm` to the `audioMap`
-(the pack ships it unwired; the railwalk shows the hand cursor).
+(TBK-confirmed: the page dispatches apea, apea, ginm, gina at
+16_FAPAS.TBK 0x21828-0x21ab6; the railwalk shows the hand cursor).
 Correct the topic's `_audio_note`, which wrongly claims no clip
 exists. VERIFY carries the listen.
 
@@ -251,52 +261,45 @@ Learn copies. Cite D-60 in a `_note` on each edited chart.
 
 ---
 
-## 5. Conditional hints (item 12; C4; C5) — per-item hintRef tables
+## 5. Conditional hints (item 12; C4; C5) — per-item hintRef tables, READ FROM THE TBKs
 
 The renderer already supports per-item `hintRef` with drill-level
 fallback; the 5I data emitted the key but pointed every item at one
-composite. Fix by adding split composites and rewriting the per-item
-values from the tables below.
-
-**PROVENANCE — READ BEFORE WIRING.** These tables are DERIVED by the
-pipeline from each item's form (morphology) and corroborated by
-Nathanael's DOSBox screenshots in VERIFY-5I-RESPONSE (λυθήσονται →
-the two λύω charts on one hint; ἐγράφημεν → the γράφω chart alone;
-Mar 4:2 → the imperfect pair; Mar 8:26 → the aorist pair). They are
-NOT yet read from the TBK WordCounter conditionals; that read is a
-pipeline follow-up recorded in PIPELINE-INSIGHTS, and the flagged
-items below go to VERIFY for a DOSBox look. Wire the tables as
-given; do not re-derive.
+composite. The pipeline decoded every Hint-button script in the four
+TBKs on 2026-08-31 (recipe and offsets in PIPELINE-INSIGHTS,
+"Conditional-hint extraction"). Wire the tables below AS GIVEN; they
+are transcriptions, not derivations. Every other 5I drill hint is
+confirmed uniform and stays as shipped (ch13 πᾶς Declining, all of
+ch14, ch15 Parsing, ch16 Form).
 
 ### 5.1 ch16 — new composites
 
 In `chapt-16.json` `hintCharts` add:
 - `luwPassivePair`: charts = [First Aorist Passive Indicative of
-  λύω, Future Passive Indicative of λύω] (reference or reuse the
-  existing two charts; §4.2 Back/More paging).
+  λύω, Future Passive Indicative of λύω] (reuse the existing two
+  charts; §4.2 Back/More paging).
 - `graphoPassive`: charts = [Second Aorist Passive Indicative of
   γράφω].
 `passiveParadigms` stays for provenance but nothing references it
 once the tables below land (note that in RESULTS).
 
-### 5.2 ch16 Passive Verbs Parsing Drill (18 items)
+### 5.2 ch16 Passive Verbs Parsing Drill (18 items) — 16_FAPAS.TBK 0xb5e30
 
-λύω forms → `luwPassivePair`; γράφω forms → `graphoPassive`:
+`when it = 5 or 6 or 9 → Hint2; when it = 12 or 17 or 18 → Hint2;
+else Hint1`. Hint1 is the λύω pair, Hint2 the γράφω chart:
 
 | Items | hintRef |
 | --- | --- |
-| 1, 2, 3, 4, 7, 8, 10, 11, 13, 14, 15, 16 | luwPassivePair |
 | 5, 6, 9, 12, 17, 18 | graphoPassive |
+| all other 12 | luwPassivePair |
 
-### 5.3 ch16 Passive Verbs Translation Drill (28 items)
+### 5.3 ch16 Passive Verbs Translation Drill (28 items) — 16_FAPAS.TBK 0xc08a7
 
-θη/θησ (first-aorist / future passive) verses → `luwPassivePair`;
-the one second-aorist passive (no θ) → `graphoPassive`:
-
-| Items | hintRef |
-| --- | --- |
-| 9 (Mat 15:24, ἀπεστάλην) | graphoPassive |
-| all other 27 | luwPassivePair |
+UNCONDITIONAL: `show Hint1`, and Hint1 (0xc1044-0xc11d1) holds the
+λύω First Aorist Passive and Future Passive charts ONLY — the γράφω
+chart does not belong on this drill at all. Set `ui.hintRef` and all
+28 per-item values to `luwPassivePair`. (VERIFY-5I-RESPONSE item 12
+assumed this drill varied like the Parsing Drill; it does not.)
 
 ### 5.4 ch15 — new composites
 
@@ -306,32 +309,41 @@ In `chapt-15.json` `hintCharts` add:
   Middle/Passive Indicative of λύω]
 `aoristVsImperfect` stays for provenance, unreferenced.
 
-### 5.5 ch15 First Aorist Indicative Translation Drill (29 items)
+### 5.5 ch15 First Aorist Indicative Translation Drill (29 items) — 15_1AOR.TBK 0x116f1e
+
+`when it = 1 or it = 11 → Hint2 (imperfect pair); else Hint1
+(aorist pair)`:
 
 | Items | hintRef |
 | --- | --- |
-| 1 (Mar 4:2), 6 (Mar 2:13), 11 (Luk 4:15) | imperfectPair |
-| 7 (Mar 12:6) | **FLAGGED**: mixed tense (εἶχεν imperfect + ἀπέστειλεν aorist). Wire `aoristPair` provisionally; VERIFY asks Nathanael for the DOSBox answer |
-| all other 25 | aoristPair |
+| 1 (Mar 4:2), 11 (Luk 4:15) | imperfectPair |
+| all other 27 | aoristPair |
 
-The ch15 Parsing Drill's `firstAoristParadigms` hint is aorist-only
-and CORRECT as shipped — untouched.
+Note for the record: item 6 (Mar 2:13) is an all-imperfect verse and
+item 7 (Mar 12:6) is mixed, yet the original shows the AORIST charts
+for both. Transcribe the original; do not "fix" it.
+
+The ch15 Parsing Drill's `firstAoristParadigms` hint is uniform in
+the original (15_1AOR.TBK 0x2a88, single `show Hint1`) and CORRECT
+as shipped — untouched.
 
 ---
 
 ## 6. App-wide sweeps (checklists in RESULTS, one row per finding)
 
-### 6.1 Green-underline modal triggers (§3.11; item 9)
+### 6.1 In-text modal triggers (§3.2; item 9)
 
 Walk EVERY modal/popup trigger in chapters 1-16 and bring every
-non-button English trigger to green underline (bold kept). Include:
-ch15 Palatals/Labials/Dentals (the ratifying instance), the
-`[[link:liquids]]` link, every C3 in-chart trigger under the amended
-§3.3, note markers, titleLinks (already green). The ONE surface to
-convert but FLAG for Nathanael's eye rather than assume: ch13's Key
-Letter Box six labels, which he accepted on device under the old
-styling — convert it, and VERIFY asks whether the green reads well
-there. Greek hot text keeps blue per §3.3.
+non-button, NON-CHART trigger to §3.2 green underline (bold kept):
+prose links, list labels, prose-layout `greekRows` labels (ch15
+Palatals / Labials / Dentals — the ratifying instance), the
+`[[link:liquids]]` link, note markers, titleLinks (already green).
+EXEMPT by Nathanael's ruling: every §3.3 in-chart trigger — chart
+cells, chart labels, the ch13 Key Letter Box — keeps its shipped
+appearance; do not touch them. Greek hot text keeps blue. Tabulate
+every conversion and every exemption you judged in RESULTS; a
+judgement call between "prose rule list" and "chart" is reported,
+not silently made.
 
 ### 6.2 Verse continuity (§4.10; G2/G3)
 
@@ -373,21 +385,17 @@ only; no airplane-mode items. Must include at least:
 
 - LISTEN: `p_ginm` on ἐγενόμην — is it the aorist middle?
 - LISTEN: the three Introduction taps πᾶς/πᾶσα/πᾶν
-  (m_pasmns/m_pasfns/m_pasnas) — right words, right order.
-- EYE: Key Letter Box under green underline (§6.1 flag).
+  (m_pasmns/m_pasfns/m_pasnns) — right words, right order.
+- EYE: ch15 Palatals / Labials / Dentals now green underlined in
+  prose; the Key Letter Box unchanged beside it.
 - EYE: frozen header row while scrolling the Passive Stems hint.
-- DOSBox: ch15 Translation Drill item 7 (Mar 12:6) — which hint pair
-  does the original open?
-- DOSBox spot-check: any TWO ch16 Translation Drill items against
-  the §5.3 mapping.
+- EYE: ch16 Translation Drill hint is the two λύω charts on every
+  item (no γράφω chart anywhere in that drill).
 - SOAK: the half-screen modal after screenshots, over days of use.
 - The §3.6 derivation block at its new size on the real screen.
 
 ## 10. Out of scope — pipeline-owned, recorded here so nobody waits
 
-- TBK reads of the three WordCounter conditionals and the B1
-  dispatch (next ISO session), then confirmation or correction of
-  §5's tables and §4.2's wiring.
 - Absorption of every §4-§5 edit into `assemble_ch13..16.py`
   (same-cohort rule; consumes your RESULTS tables).
 - NIT-LOG N-1/N-6 audio split/merge job — unchanged, deferred.

@@ -816,15 +816,45 @@ future chapter and on every regeneration of 13-16:
    page and ch15's wrong translation hint were both exposed this way,
    and ch16's unwired `p_ginm` was the missed ἐγενόμην tap.
 
-Standing debt from this rule: the conditional tables for ch15's
-First Aorist Indicative Translation Drill and ch16's Passive Verbs
-Parsing and Translation Drills were DERIVED linguistically in
-5I-SPEC2 (mapping tables in that spec, marked provisional) because the
-ISO was not mounted in the ruling session. The NEXT pipeline session
-with the ISO mounted reads the three WordCounter conditionals from
-13-16's TBKs, confirms or corrects the shipped mapping, and absorbs
-the result into `assemble_ch15.py` / `assemble_ch16.py` — this is a
-same-cohort-absorption item and 5I does not close without it.
+READ 2026-08-31 with the ISO mounted — the debt is discharged and the
+recipe is permanent. Every drill Hint button's script is stored as
+tokenized OpenScript source and is readable without a bytecode
+parser: search the TBK for the byte signature `\x92\x34WordCounter`
+(`get WordCounter`); the handler that follows reads, line by line
+with `\xe0` as the line token and `\x09` as tab,
+`set sysCursor to 4` / `get WordCounter` / `conditions` /
+`when it = n or it = m` / `show HintN` / `else` / `show Hint1` /
+`set sysCursor to default`. A handler with no `conditions` block and
+a single `show Hint1` is a POSITIVE uniform finding. Every 5I drill,
+decoded (handler offsets in the TBKs):
+- 13_3DECL: Declining Drill Hint1-4 by stem family; Translation
+  Drill `it<=6 HintXAR, 7-13 Hintsar, 14-16 Hintono, >=17 Hintpis`
+  (shipped routing matches); πᾶς Declining single Hint1 (0x1154cc).
+- 14_2AOR: every drill single Hint1 — Parsing, Forms, Translation all
+  uniform, as shipped.
+- 15_1AOR: Parsing single Hint1 (0x2a88); Translation (0x116f1e)
+  `when it=1 or it=11 -> Hint2 (imperfect pair) else Hint1 (aorist
+  pair)`.
+- 16_FAPAS: Parsing (0xb5e30) `when it=5 or 6 or 9 -> Hint2; when
+  it=12 or 17 or 18 -> Hint2; else Hint1` (Hint1 = λύω aorist+future
+  pair, Hint2 = γράφω); Translation (0xc08a7) single Hint1 = the λύω
+  PAIR ONLY (no γράφω chart); Form Drill single Hint1 = stems.
+The linguistic derivation attempted before the read was WRONG in two
+of three places (ch15 item 6 is all-imperfect but the original shows
+the aorist charts; ch16 Translation item 9 was assigned γράφω, and
+the whole γράφω chart does not belong on that drill). Observation
+outranks inference — the read costs minutes; the derivation cost a
+device round.
+
+Page-level SayWord dispatch is equally readable: each hot word is a
+button whose script is `set WordSelection to <clip>` / `send
+SayWord`; scan `WordSelection[^ -~]{0,6}=([A-Za-z0-9_]+)` between a
+page's text field and the next page's title to list its taps. Found
+this way: ch13 Introduction dispatches pasmns / pasfns / pasnns (the
+B1 answer); ch16 Deponent dispatches apea, apea, ginm, gina; ch16
+Ending Transformations has only leiA and graA (two buttons, five
+forms with clips — the port taps all five under the standing
+all-Greek-taps rule); ch16 Consonant Shifts has no buttons at all.
 
 Process corollary (standing since 5I, written here so it binds):
 **explain edits BEFORE making them.** The pipeline never presents a
